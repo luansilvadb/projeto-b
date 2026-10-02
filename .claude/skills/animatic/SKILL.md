@@ -31,8 +31,9 @@ A duração de cada cena vem da narração: não escreva durações fixas. Use `
 
 Siga o campo `visual` de cada cena. A direção de arte do canal mora no código e é o que dá unidade ao vídeo:
 
-- **Cores, texto, formas e ritmo**: sempre de `src/design/tokens.ts`. Não escreva cor ou tamanho de fonte solto numa cena. Se faltar um valor, acrescente-o aos tokens.
-- **Primitivos** em `src/components/`: `Backdrop` (fundo), `Camera` e `Layer` (parallax; `Layer light` para halos), `StarField`, `Glow`, `Grain`, `Place` (posiciona pelo centro), `Label` (texto), `Appear` (entrada padrão), `SvgLayer` (SVG em pixels do quadro).
+- **Cores, texto, formas e ritmo**: sempre de `src/design/tokens.ts`. Não escreva cor ou tamanho de fonte solto numa cena. Se faltar um valor, acrescente-o aos tokens. A composição `identity-sheet`, na pasta `design` do Studio, mostra tudo o que os tokens oferecem.
+- **Primitivos** em `src/components/`: `Backdrop` (fundo), `Camera` e `Layer` (parallax; `Layer light` para halos), `StarField`, `Glow`, `Grain`, `Place` (posiciona pelo centro), `Label` (texto solto ou, com `tag`, etiqueta), `Appear` (entrada padrão), `SvgLayer` (SVG em pixels do quadro).
+- **Etiquetas**: o texto que nomeia ou qualifica algo na cena vai em etiqueta (`<Label tag={palette.accent.base}>`); números de destaque ficam soltos. A cor da etiqueta é o tom `base` ou `light` de uma rampa da paleta, escolhido pelo assunto, e `accent` é o padrão.
 - **Desenhos** em `src/art/`: `Sun`, `Earth`, `LightPulse`. Um desenho novo que pode servir a outro vídeo nasce ali, feito de formas simples e cores da paleta. O que só serve a uma cena fica no arquivo da cena.
 
 Pense em vídeo, não em página: decida o que o espectador deve notar primeiro em cada cena e construa o quadro em torno disso. Mantenha texto importante dentro da margem `shape.safeArea` e nos tamanhos de `typography.size`. Texto de tela reforça a narração com o número ou o termo; não repete a frase.

@@ -5,7 +5,6 @@ import {
   useVideoConfig,
 } from "remotion";
 import { Sun } from "../../../art/Sun";
-import { Sfx } from "../../../audio/Sfx";
 import { Appear } from "../../../components/Appear";
 import { Backdrop } from "../../../components/Backdrop";
 import { Camera, Layer } from "../../../components/Camera";
@@ -49,7 +48,6 @@ export const SunScene: React.FC<SceneProps> = ({ scene }) => {
           <Label size="display">8 min 19 s</Label>
         </Appear>
       </Place>
-      <Sfx name="appear" from={timeAppears} />
       <Grain />
     </AbsoluteFill>
   );

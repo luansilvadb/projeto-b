@@ -18,6 +18,8 @@ pnpm setup:tools
 
 O `setup:tools` clona as ferramentas de IA em `vendor/`, cria os ambientes Python e baixa os modelos do ACE-Step (cerca de 20 GB). Os modelos de voz e de transcrição (mais uns 5 GB) descem no primeiro `pnpm narrate`. O comando pode ser repetido: cada passo confere se já foi feito.
 
+Para buscar efeitos sonoros no [Freesound](https://freesound.org), copie `.env.example` para `.env` e preencha a chave gratuita. É o único serviço externo do projeto, e só o `pnpm sfx` depende dele.
+
 Para narrar com a sua voz, grave de 5 a 10 segundos em ambiente silencioso e salve em `voice/reference.wav`. Sem esse arquivo a narração usa uma voz provisória, que serve para testar e não para publicar.
 
 ## Como um vídeo é feito
@@ -36,7 +38,7 @@ Cada etapa tem uma skill do Claude Code em `.claude/skills/` com o passo a passo
 
 `<vídeo>` é o nome da pasta em `src/videos/`. O vídeo `demo` percorre o caminho inteiro e serve de modelo.
 
-Outros comandos: `pnpm dev` abre o Remotion Studio, `pnpm lint` checa tipos e estilo, `pnpm test` roda os testes do código e das ferramentas Python.
+Outros comandos: `pnpm dev` abre o Remotion Studio, `pnpm lint` checa tipos e estilo, `pnpm test` roda os testes do código e das ferramentas Python, `pnpm sfx "<busca>"` lista efeitos sonoros CC0 do Freesound e `pnpm sfx <id>` baixa o escolhido, `pnpm identity` renderiza as direções de arte candidatas lado a lado em `out/identity/comparison.png`.
 
 ## Onde fica cada coisa
 
@@ -50,8 +52,8 @@ src/video/           montagem de um vídeo narrado
 src/videos/<vídeo>/  pesquisa, roteiro e cenas de cada vídeo
 scripts/             os comandos pnpm
 tools/               scripts Python que chamam os modelos de voz e de trilha
-public/fonts/        fonte Inter (OFL)
-public/sfx/          efeitos sonoros da Kenney (CC0)
+public/fonts/        fontes das direções de arte (OFL)
+public/sfx/          efeitos sonoros do Freesound (CC0)
 ```
 
 Ficam fora do git: `public/videos/` (narração e trilha geradas), `vendor/` (ferramentas clonadas), `voice/` (amostras de voz) e `out/` (renders).
@@ -60,7 +62,7 @@ Ficam fora do git: `public/videos/` (narração e trilha geradas), `vendor/` (fe
 
 - Nomes de arquivos, código, chaves do roteiro e skills em inglês. Comentários, documentação e o conteúdo dos vídeos em português do Brasil.
 - O nome da pasta de um vídeo é também o id da composição e o argumento de todos os comandos.
-- Cores, tamanhos de texto, formas e curvas de movimento vêm de `src/design/tokens.ts`, nunca de valores soltos numa cena. A identidade visual atual é provisória; trocá-la é editar esse arquivo.
+- Cores, tamanhos de texto, formas e curvas de movimento vêm de `src/design/tokens.ts`, nunca de valores soltos numa cena. A identidade visual ainda está em escolha entre três direções candidatas em `src/design/directions/`; `tokens.ts` expõe a ativa, e a pasta `design` do Studio mostra a folha de identidade e a amostra de movimento dela.
 - A duração de cada cena vem da narração. Cenas não têm durações fixas.
 - O volume da trilha é calculado em relação ao da voz (`src/audio/ducking.ts`), não ajustado cena a cena.
 - As versões do Remotion são fixas e iguais em todos os pacotes `@remotion/*`; atualize com `pnpm run upgrade`.

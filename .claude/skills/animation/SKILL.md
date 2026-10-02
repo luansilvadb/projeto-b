@@ -20,17 +20,26 @@ Boa parte da sensação de qualidade vem do movimento, e ele é barato em códig
 - **Movimento secundário**: nada fica totalmente parado. Um brilho que respira, um planeta que gira devagar, estrelas que cintilam, uma câmera que se aproxima.
 - **Profundidade**: `Camera` com `Layer` em profundidades diferentes dá parallax com uma linha por camada.
 - **Detalhe procedural**: muitos elementos pequenos gerados por código (partículas, estrelas, células) enchem o quadro sem desenhar um por um. Use `random("semente")` do Remotion para o sorteio ser o mesmo em todo render; `Math.random()` daria um vídeo diferente a cada quadro.
-- **Entradas escalonadas**: vários elementos entram em sequência, com poucos quadros entre um e outro, em vez de todos juntos.
+- **Entradas escalonadas**: vários elementos entram em sequência, com `motion.seconds.stagger` entre um e outro, em vez de todos juntos. A composição `motion-sample`, na pasta `design` do Studio, mostra o ritmo.
 
 Movimento que se repete em mais de uma cena vira um primitivo em `src/components/`, como o `Appear`. Lógica de cálculo que não seja trivial (trajetórias, distribuições, tempos) vai para uma função pura com teste, no padrão de `src/narration/` e `src/audio/ducking.ts`.
 
 ## Efeitos sonoros
 
 ```tsx
-<Sfx name="appear" from={cueFrame(scene, "oito")} />
+<Sfx name="<uso>" from={cueFrame(scene, "oito")} />
 ```
 
-O catálogo fica em `src/audio/Sfx.tsx`, com cada efeito nomeado pelo uso. Os arquivos são do pacote CC0 da Kenney em `public/sfx/kenney-interface/` (100 sons curtos de interface). Para um uso novo, acrescente uma entrada ao catálogo apontando para um desses arquivos. Você não ouve os sons: escolha pelo nome e pela duração, e peça ao usuário para conferir no render. Efeito demais cansa; reserve para entradas que importam.
+O catálogo fica em `src/audio/Sfx.tsx`, com cada efeito nomeado pelo uso, e começa vazio. Os arquivos ficam em `public/sfx/freesound/`. Texto que entra na tela não leva efeito; reserve o som para o que acontece na imagem, e só quando importa, porque efeito demais cansa.
+
+Para um uso novo, busque no Freesound (só CC0, até 10 s):
+
+```bash
+pnpm sfx "<busca em inglês>"   # lista id, duração, nota e link de cada candidato
+pnpm sfx <id>                  # baixa para public/sfx/freesound/<id>.ogg
+```
+
+Você não ouve os sons: descarte pelo nome, pela duração e pela nota, evite os que se anunciam como gerados por IA, mostre os links ao usuário e deixe que ele escolha ouvindo. Só então baixe e acrescente o arquivo ao catálogo, com um nome pelo uso. O comando precisa de `FREESOUND_API_KEY` no `.env`.
 
 ## Conferir
 

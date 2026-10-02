@@ -1,0 +1,51 @@
+---
+name: voz
+description: Define os mecanismos de voz do estilo e como fixar a voz específica de cada projeto.
+---
+
+## PERGUNTA
+Como definir a voz do projeto a partir dos mecanismos do estilo?
+
+## RESPOSTA
+
+**Mecanismos fixos do estilo.** Valem para todo projeto:
+
+1. **Curiosidade antes de autoridade**: o narrador descobre junto com o espectador; não dá aula.
+2. **Leigo inteligente**: nenhum conhecimento prévio é presumido, e a inteligência do espectador nunca é subestimada.
+3. **Honestidade sobre limites**: incerteza, simplificação e ignorância são ditas em voz alta.
+4. **Otimismo sóbrio**: temas assustadores são encarados sem pânico e sem consolo falso.
+5. **Humildade de escala**: o humano é pequeno diante do tema, e isso é tratado com espanto, não com desprezo.
+6. **Leveza pontual**: humor seco alivia a densidade sem virar o assunto.
+7. **Segunda pessoa**: o espectador é colocado dentro da situação ("você", "seu corpo", "imagine que"). No canal, "você" e variações são cerca de 1 em cada 100 palavras, e quase 2 nos vídeos recentes.
+8. **Autor visível**: quem escreve aparece como "nós", admite sua posição, seu interesse pessoal no tema e a dificuldade de fazer o vídeo quando isso ajuda o espectador a calibrar a confiança. Opinião é dita como opinião.
+
+**Variáveis por projeto.** Decididas com o usuário e registradas na ficha de voz:
+
+| Variável | Polos |
+|---|---|
+| Temperatura | contemplativa ↔ enérgica |
+| Distância | íntima ("você e eu") ↔ observadora |
+| Peso emocional | lúdico ↔ grave |
+| Dose de humor | rara ↔ frequente |
+| Densidade | uma ideia por bloco ↔ várias ideias encadeadas |
+| Posição diante do tema | maravilhamento ↔ alerta ↔ consolo |
+
+**Procedimento:**
+
+1. A partir da tese, proponha uma posição em cada variável e justifique pela natureza do tema (extinção pede peso; um "e se" absurdo pede ludicidade).
+2. Escreva um parágrafo de amostra de 60 a 80 palavras nessa voz, sobre o próprio tema.
+3. Escreva um segundo parágrafo com uma variável deslocada, para dar contraste real à escolha.
+4. Leve as duas amostras ao usuário; a aprovada vira a referência de voz do projeto.
+
+**Ficha de voz.** Posição em cada variável, o parágrafo de referência e de três a cinco regras de "soa assim / não soa assim" extraídas dele.
+
+## DEPENDÊNCIAS
+- angulo: fornece a tese e a promessa que determinam o peso emocional adequado.
+
+## LIMITES
+- Não imitar bordões, fechamentos típicos ou frases reconhecíveis de canais existentes; o alvo são os mecanismos, não o pastiche.
+- A técnica de frase pertence a `narracao`; o uso de humor, a `humor`.
+
+## EXEMPLO
+> Soa assim: "Ninguém sabe ao certo. E essa é a parte boa."
+> Não soa assim: "Os cientistas ainda não chegaram a um consenso definitivo acerca dessa questão."

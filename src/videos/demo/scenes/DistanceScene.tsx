@@ -7,7 +7,6 @@ import {
 import { Earth } from "../../../art/Earth";
 import { LightPulse } from "../../../art/LightPulse";
 import { Sun } from "../../../art/Sun";
-import { Sfx } from "../../../audio/Sfx";
 import { Appear } from "../../../components/Appear";
 import { Backdrop } from "../../../components/Backdrop";
 import { Layer } from "../../../components/Camera";
@@ -84,7 +83,6 @@ export const DistanceScene: React.FC<SceneProps> = ({ scene }) => {
           <Label size="headline">150 milhões de km</Label>
         </Appear>
       </Place>
-      <Sfx name="appear" from={distanceAppears} />
       <Grain />
     </AbsoluteFill>
   );

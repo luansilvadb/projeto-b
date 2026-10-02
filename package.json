@@ -11,7 +11,9 @@
     "check-script": "tsx scripts/check-script.ts",
     "narrate": "tsx scripts/narrate.ts",
     "music": "tsx scripts/music.ts",
+    "sfx": "tsx scripts/sfx.ts",
     "stills": "tsx scripts/stills.ts",
+    "identity": "tsx scripts/identity.ts",
     "render": "remotion render",
     "setup:tools": "tsx scripts/setup-tools.ts"
   },

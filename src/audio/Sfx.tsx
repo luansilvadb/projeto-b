@@ -3,13 +3,14 @@ import { createContext, useContext } from "react";
 import { staticFile, useVideoConfig } from "remotion";
 
 /**
- * Efeitos sonoros do canal, nomeados pelo uso. Os arquivos vêm do pacote
- * "Interface Sounds" da Kenney (CC0), em public/sfx/kenney-interface/.
+ * Efeitos sonoros do canal, nomeados pelo uso. Os arquivos vêm do Freesound
+ * (CC0), baixados com `pnpm sfx` para public/sfx/freesound/; o número no nome
+ * é o id do som em freesound.org/s/<id>/.
+ *
+ * Entrada de texto não leva efeito: o som é reservado para o que acontece na
+ * imagem. O catálogo começa vazio e cresce a cada uso novo.
  */
-const SFX = {
-  /** Um elemento surge na tela. */
-  appear: "sfx/kenney-interface/drop_002.ogg",
-} as const;
+const SFX = {} as const satisfies Record<string, string>;
 
 const SFX_VOLUME = 0.5;
 

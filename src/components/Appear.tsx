@@ -7,7 +7,7 @@ type AppearProps = {
   readonly children: React.ReactNode;
 };
 
-/** Entrada padrão do canal: o elemento surge crescendo, firme e sem quique. */
+/** Entrada padrão do canal: o elemento surge crescendo, na curva e no tempo dos tokens. */
 export const Appear: React.FC<AppearProps> = ({ at, children }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();

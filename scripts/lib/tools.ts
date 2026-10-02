@@ -41,6 +41,33 @@ export const run = (
   });
 
 /**
+ * Renderiza quadros avulsos de uma composição como PNG numa pasta, que é
+ * esvaziada antes.
+ */
+export const renderFrames = async (
+  composition: string,
+  frames: readonly number[],
+  output: string,
+  env: NodeJS.ProcessEnv = {},
+): Promise<void> => {
+  rmSync(output, { recursive: true, force: true });
+  await run(
+    process.execPath,
+    [
+      "node_modules/@remotion/cli/remotion-cli.js",
+      "render",
+      composition,
+      output,
+      `--frames=${frames.join(",")}`,
+      "--image-format=png",
+      // Sem áudio na composição: é ele que quebra o render de quadros avulsos.
+      `--props=${JSON.stringify({ silent: true })}`,
+    ],
+    env,
+  );
+};
+
+/**
  * Roda uma ferramenta Python num ambiente do uv. A ferramenta recebe um
  * arquivo JSON com o trabalho e responde com linhas JSON no stdout.
  */

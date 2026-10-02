@@ -6,6 +6,6 @@ import { typography } from "./tokens";
 // um único arquivo cobre todos os pesos. O loadFont segura o render até carregar.
 loadFont({
   family: typography.family,
-  url: staticFile("fonts/inter-latin-wght-normal.woff2"),
-  weight: "100 900",
+  url: staticFile(typography.file),
+  weight: typography.weightRange,
 });

@@ -1,7 +1,6 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { Earth } from "../../../art/Earth";
 import { LightPulse } from "../../../art/LightPulse";
-import { Sfx } from "../../../audio/Sfx";
 import { Appear } from "../../../components/Appear";
 import { Backdrop } from "../../../components/Backdrop";
 import { Grain } from "../../../components/Grain";
@@ -84,13 +83,11 @@ export const SpeedScene: React.FC<SceneProps> = ({ scene }) => {
       </Place>
       <Place x={1420} y={620}>
         <Appear at={lapsAppear}>
-          <Label size="note" color={palette.sun.light}>
+          <Label size="note" tag={palette.accent.base}>
             7,5 voltas por segundo
           </Label>
         </Appear>
       </Place>
-      <Sfx name="appear" from={speedAppears} />
-      <Sfx name="appear" from={lapsAppear} />
       <Grain />
     </AbsoluteFill>
   );
