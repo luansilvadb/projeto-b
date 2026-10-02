@@ -1,0 +1,33 @@
+[project]
+name = "narration-tools"
+version = "0.1.0"
+description = "Geração (OmniVoice) e transcrição (Whisper) da narração"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "torch==2.8.0",
+    "torchaudio==2.8.0",
+    # Os pesos do OmniVoice são CC-BY-NC: uso não comercial.
+    "omnivoice==0.2.1",
+    "numpy",
+    # Antes da 0.11 o librosa importava pkg_resources, que saiu do setuptools.
+    "librosa>=0.11",
+    "soundfile",
+    "faster-whisper==1.2.1",
+    # Praat: mede a altura da voz e amplia a entonação da amostra por PSOLA (pitch.py).
+    "praat-parselmouth==0.4.7",
+]
+
+[dependency-groups]
+dev = ["pytest"]
+
+[tool.uv]
+package = false
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+torchaudio = { index = "pytorch-cu128" }

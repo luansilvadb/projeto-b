@@ -1,0 +1,39 @@
+{
+  "name": "projeto-b",
+  "version": "1.0.0",
+  "description": "Vídeos educativos de ciência em motion graphics por código",
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion bundle",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src scripts && tsc",
+    "test": "vitest run && uv run --project tools/narration pytest tools/narration -q",
+    "check-script": "tsx scripts/check-script.ts",
+    "narrate": "tsx scripts/narrate.ts",
+    "music": "tsx scripts/music.ts",
+    "stills": "tsx scripts/stills.ts",
+    "render": "remotion render",
+    "setup:tools": "tsx scripts/setup-tools.ts"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@remotion/cli": "4.0.532",
+    "@remotion/fonts": "4.0.532",
+    "@remotion/media": "4.0.532",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.532"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.532",
+    "@types/node": "^24.19.0",
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "eslint": "9.39.5",
+    "prettier": "3.8.1",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "vitest": "5.0.3"
+  },
+  "private": true
+}

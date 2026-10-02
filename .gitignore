@@ -1,0 +1,20 @@
+node_modules
+dist
+.DS_Store
+.env
+
+# Ignore the output video from Git but not videos you import into src/.
+out
+
+# Ferramentas externas clonadas por `pnpm setup:tools`, em versões fixadas lá.
+vendor
+
+# Mídia gerada por vídeo (narração, tempos, trilha): regerável a partir do roteiro.
+public/videos
+
+# Amostras de voz são dado pessoal e ficam só na máquina.
+voice
+
+# Ambientes Python criados pelo uv.
+.venv
+__pycache__

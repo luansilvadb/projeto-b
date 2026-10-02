@@ -1,0 +1,28 @@
+{
+  "title": "Quanto tempo a luz do Sol leva para chegar à Terra?",
+  "scenes": [
+    {
+      "id": "sun",
+      "narration": "A luz que toca o seu rosto agora saiu do Sol há mais de oito minutos.",
+      "visual": "O Sol grande à esquerda, com o brilho pulsando sobre um céu estrelado, e a câmera se aproximando devagar. O tempo \"8 min 19 s\" surge à direita quando a narração diz \"oito\".",
+      "sources": [1, 2]
+    },
+    {
+      "id": "distance",
+      "narration": "Para chegar até aqui, ela atravessou cerca de cento e cinquenta milhões de quilômetros de espaço.",
+      "visual": "Sol à esquerda e Terra à direita, pequenos. Um pulso de luz cruza a distância entre os dois, deixando um rastro. A distância \"150 milhões de km\" surge quando a narração diz \"cento\".",
+      "sources": [1]
+    },
+    {
+      "id": "speed",
+      "narration": "E fez isso a quase trezentos mil quilômetros por segundo, rápido o bastante para dar sete voltas e meia na Terra em um único segundo.",
+      "visual": "A Terra à esquerda, girando, com um ponto de luz em órbita. Surgem \"300.000 km/s\" quando a narração diz \"trezentos\" e \"7,5 voltas por segundo\" quando diz \"sete\".",
+      "sources": [2, 3]
+    }
+  ],
+  "music": {
+    "caption": "calm cinematic ambient electronic, warm analog synth pads, soft plucked arpeggio, gentle sub bass, curious and hopeful mood, science documentary underscore",
+    "bpm": 90,
+    "keyScale": "D minor"
+  }
+}
