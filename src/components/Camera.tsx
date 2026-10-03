@@ -1,7 +1,8 @@
 import { createContext, useContext, useMemo } from "react";
 import { AbsoluteFill } from "remotion";
+import { HEIGHT, WIDTH } from "../format";
 
-type CameraState = {
+export type CameraState = {
   /** Deslocamento da câmera em pixels, no plano do assunto. */
   readonly x: number;
   readonly y: number;
@@ -9,6 +10,39 @@ type CameraState = {
 };
 
 const CameraContext = createContext<CameraState>({ x: 0, y: 0, zoom: 1 });
+
+type FramePoint = readonly [number, number];
+
+/**
+ * Câmera que enquadra um ponto do plano do assunto: com a aproximação pedida,
+ * o ponto `subject` do cenário vai parar em `at`, que por padrão é o centro
+ * do quadro. É assim que um plano aberto vira médio ou close sem redesenhar.
+ */
+export const framing = (
+  subject: FramePoint,
+  zoom: number,
+  at: FramePoint = [WIDTH / 2, HEIGHT / 2],
+): CameraState => ({
+  // As camadas crescem em volta do centro do quadro e depois se deslocam.
+  x: WIDTH / 2 + zoom * (subject[0] - WIDTH / 2) - at[0],
+  y: HEIGHT / 2 + zoom * (subject[1] - HEIGHT / 2) - at[1],
+  zoom,
+});
+
+/**
+ * A câmera a meio caminho entre dois enquadramentos, com `t` de 0 a 1. A
+ * aproximação interpola em escala geométrica, para a velocidade aparente ser
+ * a mesma indo de 1 para 2 ou de 2 para 4.
+ */
+export const cameraBetween = (
+  from: CameraState,
+  to: CameraState,
+  t: number,
+): CameraState => ({
+  x: from.x + (to.x - from.x) * t,
+  y: from.y + (to.y - from.y) * t,
+  zoom: from.zoom * (to.zoom / from.zoom) ** t,
+});
 
 type CameraProps = Partial<CameraState> & {
   readonly children: React.ReactNode;

@@ -1,0 +1,609 @@
+{
+  "title": "Até quem não tem cérebro dorme",
+  "scenes": [
+    {
+      "id": "jellyfish-pulse",
+      "narration": "Uma água-viva pulsa, de cabeça para baixo. Cinquenta e oito vezes por minuto.",
+      "shots": [
+        {
+          "staging": "A lagoa rasa vista de longe: raízes de mangue nas laterais, feixes de luz descendo, a água-viva pousada no fundo de areia, pequena. O peixe entra pela direita e para ao vê-la.",
+          "scale": "wide",
+          "palette": "lagoa-dia",
+          "entry": "cut"
+        },
+        {
+          "cue": "Cinquenta",
+          "staging": "O sino de perto, ocupando o quadro. A cada contração sai um anel na água; o peixe acompanha os anéis com os olhos. Texto preso ao sino: \"58 por minuto\".",
+          "scale": "close",
+          "palette": "lagoa-dia",
+          "entry": "camera"
+        }
+      ],
+      "sources": [7]
+    },
+    {
+      "id": "jellyfish-night",
+      "narration": "Quando a noite chega, ela desacelera. Trinta e nove. Demora mais a reagir.",
+      "shots": [
+        {
+          "staging": "A mesma lagoa escurece de cima para baixo. Os cachos acendem em ciano, os braços caem e os anéis saem mais espaçados; o peixe boceja. Texto preso ao sino: \"39 por minuto\".",
+          "scale": "medium",
+          "palette": "lagoa-noite",
+          "entry": "wipe"
+        },
+        {
+          "cue": "Demora",
+          "staging": "O peixe encosta o focinho num braço dela. Nada acontece; só depois de um instante o braço recolhe, devagar.",
+          "scale": "close",
+          "palette": "lagoa-noite",
+          "entry": "camera"
+        }
+      ],
+      "sources": [7]
+    },
+    {
+      "id": "jellyfish-sleeps",
+      "narration": "E se alguém a impede de descansar, ela compensa depois. Ela está dormindo.",
+      "shots": [
+        {
+          "staging": "Ainda de noite, jatos de água vêm de fora do quadro e a sacodem; os braços se agitam e o peixe acorda assustado.",
+          "scale": "medium",
+          "palette": "lagoa-noite",
+          "entry": "cut"
+        },
+        {
+          "cue": "ela",
+          "staging": "De dia, com a lagoa clara, ela está como de noite: braços caídos, anéis espaçados. A câmera chega perto dela, imóvel; o peixe se afasta devagar, sem fazer onda. Sem texto.",
+          "scale": "close",
+          "palette": "lagoa-dia",
+          "entry": "wipe"
+        }
+      ],
+      "sources": [7]
+    },
+    {
+      "id": "no-brain",
+      "narration": "O detalhe é que essa água-viva não tem cérebro. Para que serve o sono, afinal?",
+      "shots": [
+        {
+          "staging": "A lagoa escurece e a água-viva fica translúcida: uma rede fina de nervos acende em ciano por todo o corpo. O contorno tracejado de um cérebro procura lugar sobre ela, não encontra e fica vazio ao lado. O peixe olha, espantado.",
+          "scale": "medium",
+          "palette": "lagoa-noite",
+          "entry": "wipe"
+        },
+        {
+          "cue": "Para",
+          "staging": "A câmera recua até a lagoa inteira, de noite: ela pequena no fundo, o peixe dormindo ao lado, a lua na superfície. O título entra, escrito com os cachos acesos: \"Até quem não tem cérebro dorme\".",
+          "scale": "wide",
+          "palette": "lagoa-noite",
+          "entry": "camera"
+        }
+      ],
+      "sources": [7]
+    },
+    {
+      "id": "honest-warning",
+      "narration": "Um aviso honesto: ninguém tem a resposta completa. Mas existem boas pistas, e a primeira é a própria água-viva.",
+      "shots": [
+        {
+          "staging": "Cartela do capítulo: \"Uma péssima ideia\", em letras pousadas na areia da lagoa escura. Atrás delas, a sombra de um predador passa por cima da água-viva adormecida.",
+          "scale": "wide",
+          "palette": "lagoa-noite",
+          "entry": "cut"
+        },
+        {
+          "cue": "Mas",
+          "staging": "Fundo pêssego. A pessoa diante de um quebra-cabeça grande, cheio de buracos, coçando a cabeça. Uma peça com a água-viva desenhada desce e se encaixa no primeiro buraco; ela se anima.",
+          "scale": "medium",
+          "palette": "ideia",
+          "entry": "cut"
+        }
+      ],
+      "sources": [2, 3]
+    },
+    {
+      "id": "floor-test",
+      "narration": "Como alguém sabe que ela está dormindo, em vez de só parada? Pesquisadores fizeram o teste mais simples possível: tiraram o apoio de baixo dela.",
+      "shots": [
+        {
+          "staging": "O laboratório: a água-viva imóvel sobre uma plataforma, dentro de um tanque de vidro. Uma pesquisadora de jaleco e luvas se inclina para o vidro com uma prancheta; nela, duas caixas por marcar: \"dormindo?\" e \"parada?\".",
+          "scale": "medium",
+          "palette": "laboratorio",
+          "entry": "cut"
+        },
+        {
+          "cue": "Pesquisadores",
+          "staging": "De perto: a mão de luva violeta entra na água e segura a ponta da plataforma, por baixo da água-viva. Em \"tiraram\", ela puxa a plataforma de uma vez e a água-viva fica solta no meio da água.",
+          "scale": "close",
+          "palette": "laboratorio",
+          "entry": "camera"
+        }
+      ],
+      "sources": [7]
+    },
+    {
+      "id": "five-seconds",
+      "narration": "Uma água-viva dormindo fica boiando por até cinco segundos antes de perceber o que aconteceu.",
+      "shots": [
+        {
+          "staging": "O tanque inteiro: sem apoio, ela boia no meio da água, de braços caídos, enquanto a pesquisadora segura um cronômetro que conta de \"0,0 s\" a \"5,0 s\". No cinco, os braços se abrem de uma vez, ela se vira e nada para o fundo.",
+          "scale": "medium",
+          "palette": "laboratorio",
+          "entry": "camera"
+        }
+      ],
+      "sources": [7]
+    },
+    {
+      "id": "three-signs",
+      "narration": "Quieta à noite, lenta para reagir e com sono atrasado quando é impedida de descansar. Esses três sinais valem para qualquer animal. Inclusive você.",
+      "shots": [
+        {
+          "staging": "Fundo lilás. Três painéis lado a lado, no mesmo molde, um por sinal: a água-viva parada na lagoa de noite; boiando no tanque ao lado do cronômetro; caída de sono em pleno dia. Cada painel acende quando a fala chega nele: \"Quieta\", \"lenta\", \"atrasado\".",
+          "scale": "medium",
+          "palette": "ideia",
+          "entry": "transform"
+        },
+        {
+          "cue": "Esses",
+          "staging": "Fundo menta. Os três painéis encolhem e viram três selos redondos. Embaixo desfila uma fila de bichos em silhueta, cada um com um olho: o peixe, uma elefanta, um golfinho, uma fragata, um camundongo. Cada um recebe os três selos ao passar.",
+          "scale": "wide",
+          "palette": "ideia",
+          "entry": "camera"
+        },
+        {
+          "cue": "Inclusive",
+          "staging": "Fundo pêssego. A pessoa, de perto, bocejando; os três selos pousam sobre a cabeça dela, e ela aponta para si mesma, surpresa.",
+          "scale": "close",
+          "palette": "ideia",
+          "entry": "cut"
+        }
+      ],
+      "sources": [7]
+    },
+    {
+      "id": "sleep-cost",
+      "narration": "E o problema está nesses cinco segundos. Um animal dormindo fica parado e demora a notar o perigo. Você passa cerca de um terço da vida assim.",
+      "shots": [
+        {
+          "staging": "O cronômetro do laboratório enche o quadro, parado em \"5,0 s\"; o visor passa do verde ao coral.",
+          "scale": "detail",
+          "palette": "laboratorio",
+          "entry": "cut"
+        },
+        {
+          "cue": "Um",
+          "staging": "A lagoa de noite. O peixe dorme em primeiro plano, de olhos fechados; atrás dele, a sombra de um predador cresce devagar até cobrir o quadro. Só então ele abre um olho.",
+          "scale": "wide",
+          "palette": "lagoa-noite",
+          "entry": "transform"
+        },
+        {
+          "cue": "Você",
+          "staging": "Fundo pêssego. Três versões da pessoa lado a lado: uma com uma xícara, uma lendo, a terceira dormindo de pijama, abraçada ao travesseiro. A que dorme ganha a etiqueta \"1/3 da vida\".",
+          "scale": "medium",
+          "palette": "ideia",
+          "entry": "cut"
+        }
+      ],
+      "sources": [1]
+    },
+    {
+      "id": "shop-closes",
+      "narration": "Dá para imaginar o sono como uma loja que baixa a porta toda noite. Porta fechada é venda perdida. E mesmo assim toda loja fecha.",
+      "shots": [
+        {
+          "staging": "A pessoa que dormia abre os olhos numa rua lilás: agora é a lojista, de avental coral, diante da sua loja de vitrine acesa. Ela boceja e puxa a porta de enrolar até o chão.",
+          "scale": "medium",
+          "palette": "loja-aberta",
+          "entry": "transform"
+        },
+        {
+          "cue": "Porta",
+          "occurrence": 2,
+          "staging": "A noite cai sobre a rua e a lâmpada da loja acende. De perto, moedas rolam pela calçada, batem na porta fechada e tombam.",
+          "scale": "close",
+          "palette": "loja-fechada",
+          "entry": "wipe"
+        },
+        {
+          "cue": "mesmo",
+          "staging": "A câmera recua e sobe: a rua inteira de noite, loja após loja no mesmo molde, cada uma com a placa de um bicho (uma tromba, uma barbatana, uma asa), todas de porta baixada.",
+          "scale": "wide",
+          "palette": "loja-fechada",
+          "entry": "camera"
+        }
+      ],
+      "sources": []
+    },
+    {
+      "id": "almost-escaped",
+      "narration": "Será que nenhum animal encontrou um jeito de ficar aberto? Alguns chegaram perto.",
+      "shots": [
+        {
+          "staging": "Na rua escura de portas fechadas, a câmera corre pelas fachadas até achar, no fim, uma única vitrine acesa.",
+          "scale": "wide",
+          "palette": "loja-fechada",
+          "entry": "camera"
+        },
+        {
+          "cue": "Alguns",
+          "staging": "Cartela do capítulo: a luz da vitrine acesa cresce e vira o fundo de um letreiro luminoso de loja, que acende letra por letra: \"Ninguém escapou\".",
+          "scale": "medium",
+          "palette": "loja-fechada",
+          "entry": "transform"
+        }
+      ],
+      "sources": []
+    },
+    {
+      "id": "elephants",
+      "narration": "Duas elefantas selvagens foram acompanhadas por mais de um mês. Elas dormiam, em média, duas horas por dia. É o menor tempo já medido em um mamífero.",
+      "shots": [
+        {
+          "staging": "Duas silhuetas de elefante. Um calendário de 35 dias se preenche quando a narração diz \"mês\". A barra de 24 horas volta, com uma fatia estreita escurecida e o rótulo \"2 h\" quando a narração diz \"duas horas\", logo abaixo da barra humana com um terço escuro.",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [4]
+    },
+    {
+      "id": "elephants-awake",
+      "narration": "Em algumas noites, nem isso: chegaram a ficar quase dois dias inteiros acordadas. Mas nunca pararam de dormir.",
+      "shots": [
+        {
+          "staging": "Duas barras de 24 horas em sequência, totalmente claras, com o rótulo \"46 h\" quando a narração diz \"quase\". Uma fatia escura reaparece na barra seguinte quando a narração diz \"nunca\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [4]
+    },
+    {
+      "id": "dolphin-problem",
+      "narration": "O golfinho tem outro problema. Ele precisa subir para respirar, então não pode simplesmente apagar.",
+      "shots": [
+        {
+          "staging": "A linha da superfície do mar corta a tela. Uma silhueta de golfinho sobe até a linha e solta um jato de ar quando a narração diz \"respirar\", depois desce, em um movimento que se repete.",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [6]
+    },
+    {
+      "id": "half-brain",
+      "narration": "A solução é dormir com metade do cérebro de cada vez. Um lado descansa. O outro cuida de respirar e vigiar.",
+      "shots": [
+        {
+          "staging": "Um cérebro visto de cima, dividido em dois hemisférios. O hemisfério esquerdo escurece quando a narração diz \"descansa\". O direito fica aceso, com um olho aberto ao lado dele, quando a narração diz \"vigiar\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [6]
+    },
+    {
+      "id": "half-shop",
+      "narration": "Depois, eles trocam. É como fechar metade da loja e deixar um funcionário mau-humorado no caixa.",
+      "shots": [
+        {
+          "staging": "Os hemisférios invertem, o aceso apaga e o apagado acende, quando a narração diz \"trocam\". A loja volta com a porta baixada só de um lado quando a narração diz \"metade\", e uma figura pequena de braços cruzados aparece no lado aberto quando a narração diz \"funcionário\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [6]
+    },
+    {
+      "id": "frigatebird",
+      "narration": "E existe um pássaro que não tem onde fechar a loja. A fragata passa até dez dias seguidos no ar, sobre o oceano.",
+      "shots": [
+        {
+          "staging": "Céu acima e mar abaixo, sem terra à vista. A silhueta de um pássaro de asas longas plana em círculos. Um contador de dias sobe até \"10 dias\" quando a narração diz \"dez\", enquanto o sol e a lua cruzam o céu várias vezes.",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [5]
+    },
+    {
+      "id": "flying-naps",
+      "narration": "Ela dorme voando, em cochilos de uns onze segundos. Somando tudo, dá uns quarenta minutos por dia.",
+      "shots": [
+        {
+          "staging": "O pássaro continua planando. A tela pisca para escuro em intervalos curtos, com o rótulo \"11 s\" quando a narração diz \"onze\". A barra de 24 horas volta, quase toda clara, com muitas fatias finíssimas que se juntam em uma fatia só, rotulada \"41 min\", quando a narração diz \"quarenta\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [5]
+    },
+    {
+      "id": "almost-no-sleep",
+      "narration": "Então dá para viver quase sem dormir? Não exatamente. De volta à terra firme, ela dorme muito mais.",
+      "shots": [
+        {
+          "staging": "A barra de 24 horas da fragata ao lado das barras da elefanta e da pessoa. O pássaro pousa em um ninho quando a narração diz \"terra\", e a barra dele escurece em mais da metade quando a narração diz \"muito\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [5]
+    },
+    {
+      "id": "never-closes",
+      "narration": "A loja pode ficar aberta até tarde por uns dias. Mas e se ela nunca fechar?",
+      "shots": [
+        {
+          "staging": "A loja com a luz acesa enquanto as outras estão fechadas. Sol e lua passam várias vezes atrás dela e a porta não desce. A luz da loja começa a falhar quando a narração diz \"nunca\".",
+          "scale": "wide",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": []
+    },
+    {
+      "id": "rats-question",
+      "narration": "Em mil novecentos e oitenta e nove, pesquisadores fizeram essa pergunta a dez ratos. Um aparelho os impedia de dormir.",
+      "shots": [
+        {
+          "staging": "Cartela do capítulo \"Sem saída\". Fundo mais escuro e sem movimento decorativo. O ano \"1989\" surge quando a narração diz \"oitenta\". Dez círculos acesos se alinham em uma fileira quando a narração diz \"dez\". Nenhum rato é desenhado.",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [9]
+    },
+    {
+      "id": "rats-control",
+      "narration": "Outros ratos recebiam o mesmo incômodo, mas podiam dormir. Esses continuaram saudáveis.",
+      "shots": [
+        {
+          "staging": "Uma segunda fileira de círculos surge abaixo da primeira quando a narração diz \"Outros\". Os círculos de baixo piscam devagar, como quem dorme, e continuam acesos quando a narração diz \"saudáveis\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [9]
+    },
+    {
+      "id": "rats-decline",
+      "narration": "Os ratos sem dormir comiam cada vez mais e mesmo assim emagreciam. Todos morreram, ou chegaram à beira da morte, entre onze e trinta e dois dias.",
+      "shots": [
+        {
+          "staging": "Os círculos de cima encolhem aos poucos quando a narração diz \"emagreciam\". Uma linha do tempo em dias surge embaixo, e os dez círculos de cima se apagam um a um entre as marcas \"11\" e \"32\" quando a narração diz \"onze\". A fileira de baixo segue acesa.",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [9]
+    },
+    {
+      "id": "unknown-cause",
+      "narration": "Ninguém encontrou a causa. Décadas depois, ela continua desconhecida.",
+      "shots": [
+        {
+          "staging": "Os dez círculos apagados ficam sozinhos na tela. Um ponto de interrogação surge sobre eles quando a narração diz \"causa\". O ano na tela avança de 1989 para 2020 quando a narração diz \"Décadas\", e a interrogação continua lá.",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [9, 10]
+    },
+    {
+      "id": "not-optional",
+      "narration": "Pelo menos para um rato, fechar a loja não é opcional. E o que acontece lá dentro?",
+      "shots": [
+        {
+          "staging": "A loja volta, de porta baixada. Uma luz acende por dentro, visível pelas frestas da porta, quando a narração diz \"dentro\". A câmera se aproxima da porta.",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [9]
+    },
+    {
+      "id": "shop-works",
+      "narration": "Os detalhes complicam bastante. E muita coisa só foi medida em camundongos, sem teste em pessoas. Mas em resumo: de porta fechada, a loja trabalha.",
+      "shots": [
+        {
+          "staging": "Cartela do capítulo \"Para quê, afinal?\". Um selo pequeno com a silhueta de um camundongo surge no canto da tela quando a narração diz \"camundongos\" e fica ali até a cena \"cleaning-dispute\". A porta da loja fica transparente quando a narração diz \"trabalha\" e mostra o interior: balcão, prateleiras e uma porta para o depósito.",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [2]
+    },
+    {
+      "id": "stockroom",
+      "narration": "Primeiro, o estoque. Durante o sono profundo, o cérebro repassa as memórias recentes e as leva de um depósito provisório para um de longo prazo.",
+      "shots": [
+        {
+          "staging": "Interior da loja. Caixas empilhadas no balcão brilham uma a uma quando a narração diz \"repassa\". As caixas deslizam do balcão para o depósito dos fundos quando a narração diz \"leva\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [14]
+    },
+    {
+      "id": "shelves",
+      "narration": "Depois, as prateleiras. Em camundongos, as conexões entre os neurônios aparecem cerca de dezoito por cento menores depois do sono.",
+      "shots": [
+        {
+          "staging": "As prateleiras da loja, cheias de itens de tamanhos diferentes. Cada item é um ponto de contato entre duas linhas, que são os neurônios. Os itens encolhem juntos e o rótulo \"18% menores\" surge quando a narração diz \"dezoito\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [15]
+    },
+    {
+      "id": "shelves-spared",
+      "narration": "Só as maiores e mais firmes são poupadas. A ideia é tirar da prateleira o que não vendeu, para sobrar espaço amanhã.",
+      "shots": [
+        {
+          "staging": "Os itens maiores da prateleira ficam do mesmo tamanho e ganham um contorno quando a narração diz \"maiores\". Os menores encolhem mais um pouco e abrem vãos livres na prateleira quando a narração diz \"espaço\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [15]
+    },
+    {
+      "id": "cleaning",
+      "narration": "E existe a faxina. Em dois mil e treze, um estudo com camundongos viu uma coisa curiosa.",
+      "shots": [
+        {
+          "staging": "Os corredores da loja vistos de cima, estreitos, entre blocos que representam as células. O ano \"2013\" surge quando a narração diz \"treze\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [16]
+    },
+    {
+      "id": "cleaning-flow",
+      "narration": "Durante o sono, o espaço entre as células do cérebro aumentava sessenta por cento, e os resíduos saíam mais rápido. A ideia ficou famosa: o cérebro se lava enquanto você dorme.",
+      "shots": [
+        {
+          "staging": "Os blocos se afastam e os corredores alargam, com o rótulo \"+60%\" quando a narração diz \"sessenta\". Pontinhos espalhados pelos corredores são levados para fora por um fluxo de água quando a narração diz \"resíduos\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [16]
+    },
+    {
+      "id": "cleaning-dispute",
+      "narration": "Só que em dois mil e vinte e quatro, outro grupo mediu de novo e encontrou o contrário. A limpeza ficava mais lenta durante o sono. Os dois lados ainda discutem.",
+      "shots": [
+        {
+          "staging": "A cena de 2013 encolhe para a metade esquerda da tela. Na metade direita surge a mesma loja com o rótulo \"2024\" quando a narração diz \"vinte\", e nela os pontinhos saem mais devagar quando a narração diz \"lenta\". Um ponto de interrogação surge entre as duas metades quando a narração diz \"discutem\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [17, 18]
+    },
+    {
+      "id": "all-brains",
+      "narration": "Estoque, prateleiras, faxina. São boas respostas. Mas repare: todas foram encontradas em cérebros.",
+      "shots": [
+        {
+          "staging": "Três ícones lado a lado: uma caixa surge quando a narração diz \"Estoque\", uma prateleira quando diz \"prateleiras\" e uma gota quando diz \"faxina\". O contorno de um cérebro envolve os três quando a narração diz \"cérebros\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [14, 15, 16]
+    },
+    {
+      "id": "tiny-shop",
+      "narration": "E a água-viva tem nervos espalhados pelo corpo, mas nenhum cérebro. É uma loja minúscula, sem depósito nos fundos. E ela fecha do mesmo jeito, toda noite.",
+      "shots": [
+        {
+          "staging": "A água-viva volta, com uma rede de linhas finas desenhada pelo corpo quando a narração diz \"nervos\". Ao lado dela, a loja encolhe até virar uma banca mínima, e o depósito some, quando a narração diz \"minúscula\". A portinha da banca desce quando a narração diz \"fecha\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [7]
+    },
+    {
+      "id": "hydra",
+      "narration": "Ela não é a única. A hidra, outro animal sem cérebro, também tem um estado parecido com o sono. Isso sugere que o sono veio primeiro, e o cérebro, depois.",
+      "shots": [
+        {
+          "staging": "Ao lado da água-viva surge a hidra, um tubo fino com tentáculos no topo, quando a narração diz \"hidra\". Uma linha do tempo horizontal aparece embaixo: uma lua marca o ponto \"sono\" quando a narração diz \"primeiro\", e o contorno de um cérebro marca um ponto mais à direita quando a narração diz \"depois\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [7, 8]
+    },
+    {
+      "id": "why-sleep",
+      "narration": "Afinal, por que a gente dorme? Para guardar memórias. Para aparar conexões. Talvez para se limpar.",
+      "shots": [
+        {
+          "staging": "Fundo escuro e calmo. Os três ícones voltam, um por vez: a caixa quando a narração diz \"memórias\", a prateleira quando diz \"conexões\" e a gota, tracejada e com uma interrogação pequena, quando diz \"Talvez\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [14, 15, 16]
+    },
+    {
+      "id": "older-than-answers",
+      "narration": "Tudo isso parece verdade, e nada disso explica, sozinho, uma água-viva. O sono parece ser mais antigo que todas essas respostas.",
+      "shots": [
+        {
+          "staging": "Os três ícones ficam de um lado e a água-viva do outro, sem ligação entre eles, quando a narração diz \"sozinho\". A linha do tempo da cena \"hidra\" volta, e os três ícones se encaixam depois da lua quando a narração diz \"antigo\".",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [7, 8]
+    },
+    {
+      "id": "tonight",
+      "narration": "Hoje à noite, você vai se deitar e fazer uma coisa que ninguém entende por inteiro.",
+      "shots": [
+        {
+          "staging": "A fachada de um prédio à noite, com várias janelas acesas. Uma janela apaga quando a narração diz \"deitar\", e as outras apagam em seguida, uma a uma.",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [2, 3]
+    },
+    {
+      "id": "thirty-nine",
+      "narration": "E em algum lugar, de cabeça para baixo, uma água-viva vai desacelerar. Trinta e nove vezes por minuto.",
+      "shots": [
+        {
+          "staging": "Corte para a água-viva da primeira cena, no escuro, pulsando devagar. O contador de pulsos reaparece marcando \"39 por minuto\" quando a narração diz \"Trinta\". A imagem fica nela por alguns pulsos antes de escurecer.",
+          "scale": "medium",
+          "palette": "abissal",
+          "entry": "cut"
+        }
+      ],
+      "sources": [7]
+    }
+  ],
+  "music": {
+    "caption": "slow contemplative ambient electronic, soft warm synth pads, gentle felt piano, sparse mallet plucks, deep calm sub bass, nocturnal and curious mood, quiet wonder, science documentary underscore",
+    "bpm": 72,
+    "keyScale": "A minor"
+  }
+}

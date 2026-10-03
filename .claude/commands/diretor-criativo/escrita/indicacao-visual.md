@@ -12,14 +12,14 @@ O que a nota visual de cada bloco deve dizer, e o que não deve?
 
 **O que a nota contém**, em uma a três linhas:
 
-1. **Imagem dominante**: o objeto, cena ou metáfora central do bloco.
+1. **Assunto dominante**: o personagem, lugar ou metáfora central do bloco.
 2. **Movimento ou transformação**: o que muda durante o bloco (zoom, crescimento, comparação lado a lado, passagem de tempo).
 3. **Relação com a narração**: quando relevante, se a imagem ilustra, antecipa, contradiz ou faz a piada.
 
 **Regras:**
 
 - **Mostrar o que a narração não precisa dizer**: se a imagem carrega um detalhe, a frase correspondente pode ser cortada da narração.
-- **Uma imagem dominante por bloco**: se a nota pede duas, o bloco deve ser dividido em `arco`.
+- **Um assunto dominante por bloco**: se a nota pede dois, o bloco deve ser dividido em `arco`. O assunto é um só, mas as imagens são várias: a nota não precisa caber num quadro, porque cada oração do bloco vira um plano na decupagem.
 - **Continuidade**: objetos e metáforas reaparecem iguais; a analogia central mantém a mesma forma visual do começo ao fim.
 - **Escala visível**: toda comparação de tamanho mostra os dois termos no mesmo quadro ou num único movimento contínuo.
 - **Abstração ganha corpo**: processo invisível recebe um representante concreto e constante.
@@ -35,11 +35,11 @@ O que a nota visual de cada bloco deve dizer, e o que não deve?
 3. Redija a nota e confira a continuidade com os blocos vizinhos.
 
 ## DEPENDÊNCIAS
-- arco: fornece a divisão em blocos e a imagem dominante prevista para cada um.
+- arco: fornece a divisão em blocos e o assunto dominante previsto para cada um.
 - analogias: fornece as analogias que a nota precisa tornar visíveis.
 
 ## LIMITES
-- Sem paleta, estilo de traço, design de personagem, enquadramento de câmera, duração de plano ou trilha: isso é direção de arte e storyboard, fora do escopo.
+- Sem paleta, estilo de traço, design de personagem, enquadramento de câmera ou divisão em planos: isso pertence ao workflow `diretor-de-arte`, que parte desta nota. Sem trilha.
 - Sem descrição quadro a quadro.
 - A nota não introduz informação factual ausente da narração sem passar por `checagem`.
 

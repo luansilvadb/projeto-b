@@ -1,4 +1,5 @@
 import type { NarrationManifest } from "./manifest";
+import type { ShotCue } from "./shots";
 import { normalizeWord } from "./text";
 
 export type FrameRange = {
@@ -95,4 +96,29 @@ export const cueFrame = (
     );
   }
   return match.frame;
+};
+
+/** O que entra em cima da palavra parece atrasado: a imagem antecipa a fala por alguns quadros. */
+export const CUE_LEAD_FRAMES = 4;
+
+/**
+ * Trecho da cena, em quadros, que cada plano do roteiro ocupa: do começo da
+ * cena, ou de pouco antes da palavra de deixa, até a deixa do plano seguinte.
+ */
+export const shotRanges = (
+  scene: SceneTimeline,
+  shots: readonly ShotCue[],
+): FrameRange[] => {
+  const starts = shots.map((shot, index) =>
+    index === 0
+      ? 0
+      : Math.max(
+          0,
+          cueFrame(scene, shot.cue ?? "", shot.occurrence) - CUE_LEAD_FRAMES,
+        ),
+  );
+  return starts.map((from, index) => ({
+    from,
+    to: starts[index + 1] ?? scene.durationInFrames,
+  }));
 };

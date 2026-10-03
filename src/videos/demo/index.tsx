@@ -16,8 +16,10 @@ const scenes = {
   speed: SpeedScene,
 };
 
-export const demoMetadata = narratedVideoMetadata("demo", parseScript(script));
+const demoScript = parseScript(script);
+
+export const demoMetadata = narratedVideoMetadata("demo", demoScript);
 
 export const Demo: React.FC<NarratedVideoProps> = (props) => (
-  <NarratedVideo {...props} scenes={scenes} />
+  <NarratedVideo {...props} script={demoScript} scenes={scenes} />
 );

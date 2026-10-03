@@ -1,12 +1,28 @@
+import { shotStartWords, type ShotCue } from "./shots";
 import { findNarrationProblems } from "./text";
+
+export const SHOT_SCALES = ["wide", "medium", "close", "detail"] as const;
+export const SHOT_ENTRIES = ["cut", "camera", "transform", "wipe"] as const;
+
+/** Um plano: uma composição que fica na tela enquanto um trecho da narração toca. */
+export type ScriptShot = ShotCue & {
+  /** O que se encena: quem faz o quê, e onde. */
+  readonly staging: string;
+  /** Quão de perto o assunto é visto. */
+  readonly scale: (typeof SHOT_SCALES)[number];
+  /** Paleta do plano, entre as da ficha visual do vídeo. */
+  readonly palette: string;
+  /** Como a imagem anterior vira esta. */
+  readonly entry: (typeof SHOT_ENTRIES)[number];
+};
 
 export type ScriptScene = {
   /** Liga a cena do roteiro ao componente que a desenha. */
   readonly id: string;
   /** Exatamente o que é falado, já por extenso. */
   readonly narration: string;
-  /** O que aparece na tela enquanto a narração toca. */
-  readonly visual: string;
+  /** Os planos da cena, na ordem em que aparecem enquanto a narração toca. */
+  readonly shots: readonly ScriptShot[];
   /** Números das fontes em research.md que sustentam a cena. */
   readonly sources?: readonly number[];
 };
@@ -32,6 +48,119 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 const isFilledString = (value: unknown): value is string =>
   typeof value === "string" && value.trim() !== "";
 
+const isOneOf = (options: readonly string[], value: unknown): boolean =>
+  typeof value === "string" && options.includes(value);
+
+const quoteOptions = (options: readonly string[]): string =>
+  options.map((option) => `"${option}"`).join(", ");
+
+const findShotProblems = (
+  shot: unknown,
+  index: number,
+  label: string,
+): string[] => {
+  if (!isRecord(shot)) {
+    return [`${label}: precisa ser um objeto`];
+  }
+
+  const problems: string[] = [];
+  if (index === 0 && shot.cue !== undefined) {
+    problems.push(
+      `${label}: o primeiro plano começa com a cena e não leva "cue"`,
+    );
+  }
+  if (index > 0 && !isFilledString(shot.cue)) {
+    problems.push(
+      `${label}: falta "cue", a palavra da narração em que o plano começa`,
+    );
+  }
+  if (
+    shot.occurrence !== undefined &&
+    !(Number.isInteger(shot.occurrence) && Number(shot.occurrence) > 0)
+  ) {
+    problems.push(`${label}: "occurrence" precisa ser um inteiro positivo`);
+  }
+  if (!isFilledString(shot.staging)) {
+    problems.push(`${label}: falta "staging", o que se encena`);
+  }
+  if (!isOneOf(SHOT_SCALES, shot.scale)) {
+    problems.push(`${label}: "scale" precisa ser ${quoteOptions(SHOT_SCALES)}`);
+  }
+  if (!isFilledString(shot.palette)) {
+    problems.push(`${label}: falta "palette", a paleta do plano`);
+  }
+  if (!isOneOf(SHOT_ENTRIES, shot.entry)) {
+    problems.push(
+      `${label}: "entry" precisa ser ${quoteOptions(SHOT_ENTRIES)}`,
+    );
+  }
+  return problems;
+};
+
+/** Cada deixa precisa estar na narração da cena, e os planos seguem a ordem da fala. */
+const findCueProblems = (
+  narration: string,
+  shots: readonly unknown[],
+  label: string,
+): string[] => {
+  const cues = shots.map((shot): ShotCue => {
+    if (!isRecord(shot)) {
+      return {};
+    }
+    return {
+      cue: isFilledString(shot.cue) ? shot.cue : undefined,
+      occurrence:
+        typeof shot.occurrence === "number" ? shot.occurrence : undefined,
+    };
+  });
+  const starts = shotStartWords(narration, cues);
+
+  const problems: string[] = [];
+  let latest = 0;
+  cues.forEach(({ cue }, index) => {
+    if (index === 0 || cue === undefined) {
+      return;
+    }
+    const start = starts[index];
+    if (start === undefined) {
+      problems.push(
+        `${label}, plano ${index + 1}: a deixa "${cue}" não está na narração da cena`,
+      );
+    } else if (start <= latest) {
+      problems.push(
+        `${label}, plano ${index + 1}: a deixa "${cue}" precisa vir depois da deixa do plano anterior`,
+      );
+    } else {
+      latest = start;
+    }
+  });
+  return problems;
+};
+
+const findShotsProblems = (
+  scene: Record<string, unknown>,
+  label: string,
+): string[] => {
+  if (scene.visual !== undefined) {
+    return [
+      `${label}: "visual" deu lugar a "shots", a lista de planos da cena`,
+    ];
+  }
+  if (!Array.isArray(scene.shots) || scene.shots.length === 0) {
+    return [`${label}: "shots" precisa ter ao menos um plano`];
+  }
+
+  const shots: readonly unknown[] = scene.shots;
+  return [
+    ...shots.flatMap((shot, index) =>
+      findShotProblems(shot, index, `${label}, plano ${index + 1}`),
+    ),
+    ...(typeof scene.narration === "string"
+      ? findCueProblems(scene.narration, shots, label)
+      : []),
+  ];
+};
+
 const findSceneProblems = (scene: unknown, label: string): string[] => {
   if (!isRecord(scene)) {
     return [`${label}: precisa ser um objeto`];
@@ -43,9 +172,7 @@ const findSceneProblems = (scene: unknown, label: string): string[] => {
       `${label}: "id" precisa ser minúsculo com hífens, como "sol-nasce"`,
     );
   }
-  if (!isFilledString(scene.visual)) {
-    problems.push(`${label}: falta "visual"`);
-  }
+  problems.push(...findShotsProblems(scene, label));
   if (typeof scene.narration !== "string") {
     problems.push(`${label}: falta "narration"`);
   } else {

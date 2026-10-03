@@ -11,8 +11,10 @@ import { MUSIC_MIX, duckedVolume, gainBelowVoice } from "../audio/ducking";
 import { SoundContext } from "../audio/Sfx";
 import type { MusicTrack } from "../media";
 import type { NarrationManifest } from "../narration/manifest";
+import type { Script } from "../narration/script";
 import {
   buildTimeline,
+  shotRanges,
   type FrameRange,
   type SceneTimeline,
 } from "../narration/timeline";
@@ -20,6 +22,8 @@ import {
 export type SceneProps = {
   /** Tempos da cena: duração e o quadro em que cada palavra é falada. */
   readonly scene: SceneTimeline;
+  /** Trecho da cena, em quadros, que cada plano do roteiro ocupa. */
+  readonly shots: readonly FrameRange[];
 };
 
 export type NarratedVideoProps = {
@@ -75,6 +79,8 @@ const MusicBed: React.FC<MusicBedProps> = ({ track, voiceLufs, speech }) => {
 };
 
 type Props = NarratedVideoProps & {
+  /** O roteiro do vídeo: é dele que saem os planos de cada cena. */
+  readonly script: Script;
   /** Componente de cada cena, pela mesma chave "id" usada no roteiro. */
   readonly scenes: Readonly<Record<string, React.FC<SceneProps>>>;
 };
@@ -87,6 +93,7 @@ export const NarratedVideo: React.FC<Props> = ({
   narration,
   music,
   silent = false,
+  script,
   scenes,
 }) => {
   const { fps } = useVideoConfig();
@@ -110,6 +117,12 @@ export const NarratedVideo: React.FC<Props> = ({
               `A cena "${scene.id}" está no roteiro, mas não tem componente.`,
             );
           }
+          const scripted = script.scenes.find(({ id }) => id === scene.id);
+          if (!scripted) {
+            throw new Error(
+              `A cena "${scene.id}" está na narração, mas não no roteiro.`,
+            );
+          }
           return (
             <Series.Sequence
               key={scene.id}
@@ -117,7 +130,7 @@ export const NarratedVideo: React.FC<Props> = ({
               durationInFrames={scene.durationInFrames}
               premountFor={fps}
             >
-              <Scene scene={scene} />
+              <Scene scene={scene} shots={shotRanges(scene, scripted.shots)} />
               {silent
                 ? null
                 : scene.sentences.map((sentence) => (

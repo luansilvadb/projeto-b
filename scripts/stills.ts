@@ -1,11 +1,11 @@
 // Renderiza quadros de um vídeo como imagens PNG, para conferência visual:
-//   pnpm stills <vídeo>            um quadro de cada cena
+//   pnpm stills <vídeo>            um quadro de cada plano
 //   pnpm stills <vídeo> 30 120     os quadros indicados
 //
 // As imagens saem em out/stills/<vídeo>/.
 
 import { renderFrames } from "./lib/tools";
-import { exitWithError, sceneSampleFrames, slugFromArgs } from "./lib/videos";
+import { exitWithError, shotSampleFrames, slugFromArgs } from "./lib/videos";
 
 const main = async () => {
   const slug = slugFromArgs("pnpm stills <vídeo> [quadros...]");
@@ -14,7 +14,7 @@ const main = async () => {
     throw new Error("Os quadros precisam ser números inteiros.");
   }
 
-  const frames = requested.length > 0 ? requested : sceneSampleFrames(slug);
+  const frames = requested.length > 0 ? requested : shotSampleFrames(slug);
   const output = `out/stills/${slug}`;
   await renderFrames(slug, frames, output);
 

@@ -13,6 +13,7 @@
     "music": "tsx scripts/music.ts",
     "sfx": "tsx scripts/sfx.ts",
     "stills": "tsx scripts/stills.ts",
+    "critique": "tsx scripts/critique.ts",
     "identity": "tsx scripts/identity.ts",
     "render": "remotion render",
     "setup:tools": "tsx scripts/setup-tools.ts"

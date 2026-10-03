@@ -2,7 +2,7 @@
 //   pnpm identity
 //
 // Para cada direção saem, em out/identity/<direção>/, a folha de identidade,
-// quadros da amostra de movimento e um quadro de cada cena do demo. No fim,
+// quadros da amostra de movimento e um quadro de cada plano do demo. No fim,
 // out/identity/comparison.png junta tudo: uma coluna por direção.
 //
 // Este comando existe só enquanto a identidade está em escolha.
@@ -12,7 +12,7 @@ import path from "node:path";
 import { directions } from "../src/design/directions";
 import { FPS } from "../src/format";
 import { renderFrames, run } from "./lib/tools";
-import { exitWithError, sceneSampleFrames } from "./lib/videos";
+import { exitWithError, shotSampleFrames } from "./lib/videos";
 
 const OUTPUT = "out/identity";
 const MODEL_VIDEO = "demo";
@@ -34,7 +34,7 @@ const framesIn = (folder: string): string[] =>
 
 const main = async () => {
   const names = Object.keys(directions);
-  const sceneFrames = sceneSampleFrames(MODEL_VIDEO);
+  const demoFrames = shotSampleFrames(MODEL_VIDEO);
 
   // Uma lista de imagens por direção, todas na mesma ordem.
   const columns: string[][] = [];
@@ -44,7 +44,7 @@ const main = async () => {
     const env = { REMOTION_DIRECTION: name };
     await renderFrames("identity-sheet", [0], `${folder}/sheet`, env);
     await renderFrames("motion-sample", MOTION_FRAMES, `${folder}/motion`, env);
-    await renderFrames(MODEL_VIDEO, sceneFrames, `${folder}/demo`, env);
+    await renderFrames(MODEL_VIDEO, demoFrames, `${folder}/demo`, env);
     columns.push([
       ...framesIn(`${folder}/sheet`),
       framesIn(`${folder}/motion`)[MOTION_FRAME_COMPARED],

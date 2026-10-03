@@ -4,19 +4,40 @@
     {
       "id": "sun",
       "narration": "A luz que toca o seu rosto agora saiu do Sol há mais de oito minutos.",
-      "visual": "O Sol grande à esquerda, com o brilho pulsando sobre um céu estrelado, e a câmera se aproximando devagar. O tempo \"8 min 19 s\" surge à direita quando a narração diz \"oito\".",
+      "shots": [
+        {
+          "staging": "O Sol grande à esquerda, com o brilho pulsando sobre um céu estrelado, e a câmera se aproximando devagar. O tempo \"8 min 19 s\" surge à direita quando a narração diz \"oito\".",
+          "scale": "medium",
+          "palette": "espaço",
+          "entry": "cut"
+        }
+      ],
       "sources": [1, 2]
     },
     {
       "id": "distance",
       "narration": "Para chegar até aqui, ela atravessou cerca de cento e cinquenta milhões de quilômetros de espaço.",
-      "visual": "Sol à esquerda e Terra à direita, pequenos. Um pulso de luz cruza a distância entre os dois, deixando um rastro. A distância \"150 milhões de km\" surge quando a narração diz \"cento\".",
+      "shots": [
+        {
+          "staging": "Sol à esquerda e Terra à direita, pequenos. Um pulso de luz cruza a distância entre os dois, deixando um rastro. A distância \"150 milhões de km\" surge quando a narração diz \"cento\".",
+          "scale": "wide",
+          "palette": "espaço",
+          "entry": "cut"
+        }
+      ],
       "sources": [1]
     },
     {
       "id": "speed",
       "narration": "E fez isso a quase trezentos mil quilômetros por segundo, rápido o bastante para dar sete voltas e meia na Terra em um único segundo.",
-      "visual": "A Terra à esquerda, girando, com um ponto de luz em órbita. Surgem \"300.000 km/s\" quando a narração diz \"trezentos\" e \"7,5 voltas por segundo\" quando diz \"sete\".",
+      "shots": [
+        {
+          "staging": "A Terra à esquerda, girando, com um ponto de luz em órbita. Surgem \"300.000 km/s\" quando a narração diz \"trezentos\" e \"7,5 voltas por segundo\" quando diz \"sete\".",
+          "scale": "medium",
+          "palette": "espaço",
+          "entry": "cut"
+        }
+      ],
       "sources": [2, 3]
     }
   ],

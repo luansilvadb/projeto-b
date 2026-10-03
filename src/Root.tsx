@@ -3,6 +3,7 @@ import { IdentitySheet } from "./design/IdentitySheet";
 import { MOTION_SAMPLE_SECONDS, MotionSample } from "./design/MotionSample";
 import { FPS, HEIGHT, WIDTH } from "./format";
 import { Demo, demoMetadata } from "./videos/demo";
+import { WhyWeSleep, whyWeSleepMetadata } from "./videos/why-we-sleep";
 
 // O id de cada composição é o nome da pasta do vídeo em src/videos/.
 // A duração vem da narração, calculada pelo calculateMetadata de cada vídeo.
@@ -17,6 +18,15 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         defaultProps={{ narration: null, music: null }}
         calculateMetadata={demoMetadata}
+      />
+      <Composition
+        id="why-we-sleep"
+        component={WhyWeSleep}
+        width={WIDTH}
+        height={HEIGHT}
+        fps={30}
+        defaultProps={{ narration: null, music: null }}
+        calculateMetadata={whyWeSleepMetadata}
       />
       {/* Referência viva da direção de arte ativa em src/design/tokens.ts. */}
       <Folder name="design">

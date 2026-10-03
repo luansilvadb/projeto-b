@@ -2,9 +2,12 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { FPS } from "../../src/format";
 import { narrationManifestFile } from "../../src/media";
-import type { NarrationManifest } from "../../src/narration/manifest";
+import {
+  assertManifestMatchesScript,
+  type NarrationManifest,
+} from "../../src/narration/manifest";
 import { parseScript, type Script } from "../../src/narration/script";
-import { buildTimeline } from "../../src/narration/timeline";
+import { buildTimeline, shotRanges } from "../../src/narration/timeline";
 
 /** Caminho em disco de um arquivo de public/. */
 export const publicPath = (file: string) => path.resolve("public", file);
@@ -36,15 +39,25 @@ export const readNarration = (slug: string): NarrationManifest => {
   return JSON.parse(readFileSync(file, "utf8")) as NarrationManifest;
 };
 
-// Perto do fim da cena quase tudo que entra por deixa da narração já está na tela.
-const SCENE_SAMPLE_POINT = 0.8;
+// Perto do fim do plano quase tudo que entra por deixa da narração já está na tela.
+const SHOT_SAMPLE_POINT = 0.8;
 
-/** Um quadro representativo de cada cena do vídeo, no tempo do vídeo. */
-export const sceneSampleFrames = (slug: string): number[] =>
-  buildTimeline(readNarration(slug), FPS).scenes.map(
-    (scene) =>
-      scene.from + Math.floor(scene.durationInFrames * SCENE_SAMPLE_POINT),
+/** Um quadro representativo de cada plano do vídeo, no tempo do vídeo. */
+export const shotSampleFrames = (slug: string): number[] => {
+  const script = readScript(slug);
+  const narration = readNarration(slug);
+  // Garante que a cena de mesmo índice no roteiro e na narração é a mesma.
+  assertManifestMatchesScript(script, narration, slug);
+
+  return buildTimeline(narration, FPS).scenes.flatMap((scene, index) =>
+    shotRanges(scene, script.scenes[index].shots).map(
+      (shot) =>
+        scene.from +
+        shot.from +
+        Math.floor((shot.to - shot.from) * SHOT_SAMPLE_POINT),
+    ),
   );
+};
 
 /** Encerra o script com a mensagem do erro, sem o rastro de pilha. */
 export const exitWithError = (error: unknown): never => {

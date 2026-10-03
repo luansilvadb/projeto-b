@@ -41,7 +41,20 @@ describe("assembleScene", () => {
 describe("assertManifestMatchesScript", () => {
   const script: Script = {
     title: "Demo",
-    scenes: [{ id: "sun", narration: "Um. Dois.", visual: "Sol." }],
+    scenes: [
+      {
+        id: "sun",
+        narration: "Um. Dois.",
+        shots: [
+          {
+            staging: "Sol.",
+            scale: "wide",
+            palette: "espaço",
+            entry: "cut",
+          },
+        ],
+      },
+    ],
   };
   const manifestFor = (...texts: string[]): NarrationManifest => ({
     voice: "placeholder",

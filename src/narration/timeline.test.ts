@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { NarrationManifest } from "./manifest";
-import { buildTimeline, cueFrame } from "./timeline";
+import { buildTimeline, cueFrame, shotRanges } from "./timeline";
 
 const manifest: NarrationManifest = {
   voice: "placeholder",
@@ -86,5 +86,30 @@ describe("cueFrame", () => {
   it("falha quando a palavra não está na narração da cena", () => {
     expect(() => cueFrame(sun, "terra")).toThrowError(/cena "sun"/);
     expect(() => cueFrame(earth, "luz", 3)).toThrowError(/3ª ocorrência/);
+  });
+});
+
+describe("shotRanges", () => {
+  const [sun, earth] = buildTimeline(manifest, 30).scenes;
+
+  it("dá a cena inteira a um plano único", () => {
+    expect(shotRanges(sun, [{}])).toEqual([{ from: 0, to: 101 }]);
+  });
+
+  it("corta os planos pouco antes da deixa de cada um", () => {
+    expect(shotRanges(sun, [{}, { cue: "saiu" }])).toEqual([
+      { from: 0, to: 32 },
+      { from: 32, to: 101 },
+    ]);
+    expect(shotRanges(earth, [{}, { cue: "luz", occurrence: 2 }])).toEqual([
+      { from: 0, to: 23 },
+      { from: 23, to: 61 },
+    ]);
+  });
+
+  it("falha quando a deixa de um plano não está na narração", () => {
+    expect(() => shotRanges(sun, [{}, { cue: "terra" }])).toThrowError(
+      /cena "sun"/,
+    );
   });
 });

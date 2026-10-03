@@ -16,6 +16,7 @@ Confira antes de renderizar: descobrir uma pendência depois de meia hora de ren
 - **Trilha**: existe `public/videos/<vídeo>/music.json`? Sem ele o vídeo renderiza sem música.
 - **Fatos**: releia o roteiro contra `research.md`. Cada número na tela e na fala bate com a fonte?
 - **Código**: `pnpm lint` e `pnpm test` passam.
+- **Imagem**: `pnpm critique <vídeo>` com as sete medidas na faixa da referência, ou cada medida fora explicada e aceita pelo usuário na aprovação da animação.
 
 Não contorne uma pendência; leve-a ao usuário.
 
@@ -51,9 +52,12 @@ ffmpeg -hide_banner -nostats -i out/<vídeo>.final.mp4 -vf blackdetect=d=0.5 -af
 
 # Folha de contato: um quadro a cada 10 segundos.
 ffmpeg -y -i out/<vídeo>.final.mp4 -vf "fps=1/10,scale=480:-1,tile=6x10" -frames:v 1 out/<vídeo>.sheet.png
+
+# As medidas de imagem e movimento do arquivo final, contra a referência.
+pnpm critique out/<vídeo>.final.mp4
 ```
 
-Abra a folha de contato e percorra o vídeo inteiro com os olhos: alguma cena vazia, repetida, com texto cortado ou fora do estilo? Confira também se a duração do arquivo bate com a soma das cenas da narração.
+Abra a folha de contato e percorra o vídeo inteiro com os olhos: alguma cena vazia, repetida, com texto cortado ou fora do estilo? Confira também se a duração do arquivo bate com a soma das cenas da narração, e se as medidas do `critique` continuam as da animação aprovada.
 
 Você não assiste nem ouve o vídeo. Diga isso ao usuário com clareza: as verificações acima pegam defeitos grosseiros, e o julgamento de ritmo, voz e música é dele.
 

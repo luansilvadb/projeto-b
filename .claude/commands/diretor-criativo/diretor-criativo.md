@@ -21,7 +21,8 @@ Conduz a direção criativa e a escrita de roteiros de ensaio explicativo animad
 
 ## ANTI-ESCOPO
 
-- Storyboard, direção de arte, design de personagem e arte final de thumbnail.
+- Decupagem em planos, direção de arte e design de personagem: pertencem ao workflow `diretor-de-arte`, que parte do roteiro em blocos e devolve a este workflow os pedidos de mudança de texto que a imagem fizer.
+- Arte final de thumbnail.
 - Locução, trilha, desenho de som, animação e edição.
 - Descrição, tags, SEO, calendário e estratégia de canal.
 - Outros formatos de roteiro (ficção, publicidade, vídeo curto, vlog).

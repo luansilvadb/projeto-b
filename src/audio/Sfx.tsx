@@ -8,9 +8,14 @@ import { staticFile, useVideoConfig } from "remotion";
  * é o id do som em freesound.org/s/<id>/.
  *
  * Entrada de texto não leva efeito: o som é reservado para o que acontece na
- * imagem. O catálogo começa vazio e cresce a cada uso novo.
+ * imagem. O catálogo cresce a cada uso novo.
  */
-const SFX = {} as const satisfies Record<string, string>;
+const SFX = {
+  coinDrop: "sfx/freesound/510731.ogg",
+  shutterDown: "sfx/freesound/325585.ogg",
+  whoosh: "sfx/freesound/60011.ogg",
+  splash: "sfx/freesound/398032.ogg",
+} as const satisfies Record<string, string>;
 
 const SFX_VOLUME = 0.5;
 
