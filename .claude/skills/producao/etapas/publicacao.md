@@ -1,13 +1,8 @@
----
-name: publicacao
-description: "Procedimento da publicação neste repositório: como montar o título final e a descrição do vídeo, com as fontes citadas, em src/videos/<vídeo>/description.md, para o usuário publicar."
----
-
 # Publicação de um vídeo
 
-Oitava etapa, depois da terceira aprovação, registrada em `src/videos/<vídeo>/approvals.md`; sem a linha dela, volte ao `corte-final`. O que sai daqui é `src/videos/<vídeo>/description.md`: o título final e a descrição que o usuário cola no YouTube. Publicar é sempre ação dele.
+Oitava etapa, depois da terceira aprovação, registrada em `src/videos/<vídeo>/approvals.md`; sem a linha dela, volte ao `corte-final`. O que sai daqui é `src/videos/<vídeo>/description.md`: o título final e a descrição que o usuário cola no YouTube.
 
-Esta etapa monta, não escreve: toda frase vem do que já foi aprovado. Tags, SEO, calendário e redes ficam fora.
+Esta etapa monta, não escreve: toda frase vem do que já foi aprovado.
 
 ## De onde vem cada parte
 

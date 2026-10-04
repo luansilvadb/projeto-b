@@ -5,15 +5,11 @@ description: "Som e arquivo final de um vídeo do canal: narração com a voz cl
 
 ## FUNÇÃO
 
-Opera as ferramentas que transformam o roteiro e as cenas aprovados em som e em arquivo: gera a narração, gera a trilha, acha os efeitos sonoros, fecha o vídeo e monta a descrição. O arquivo passa pela **terceira aprovação do usuário**.
+Opera as ferramentas que transformam o roteiro e as cenas aprovados em som e em arquivo. O arquivo passa pela **terceira aprovação do usuário**.
 
 ## ESCOPO
 
-- Narração: geração, conferência das frases, estúdio de voz, amostra de voz e ritmo.
-- Trilha: geração por semente e mixagem sob a voz.
-- Efeitos sonoros: busca, escolha pelo ouvido do usuário e catálogo.
-- Corte final: pendências, render, volume, verificações no arquivo e entrega.
-- Publicação: título final e descrição com as fontes citadas.
+As cinco etapas da tabela de ETAPAS.
 
 **Entradas:** `script.json` aprovado (skill `diretor-criativo`); para o corte final, as cenas animadas e aprovadas (skill `diretor-de-arte`).
 
@@ -38,11 +34,16 @@ O pedido decide a etapa. Cada etapa tem um procedimento só, lido inteiro; esta 
 | 7. Corte final | render final, exportar, finalizar; saber se o vídeo está pronto para publicar | `etapas/corte-final.md` | `pnpm render <vídeo>` | `out/<vídeo>.final.mp4` e a **3ª aprovação** |
 | 8. Publicação | vídeo aprovado no corte final; escrever ou refazer a descrição | `etapas/publicacao.md` | | `description.md`, com título e fontes |
 
-`etapas/narracao-voz.md` guarda os casos fora do fluxo normal da narração (edição à mão no estúdio, amostra de voz, ritmo), uma seção por caso. `etapas/narracao-diagnostico.md` guarda o que já foi medido e descartado com a voz atual, uma seção por reclamação; leia a seção antes de mexer em parâmetro, amostra ou texto por causa de uma reclamação da voz.
+A narração tem dois arquivos de apoio, lidos só na seção do caso:
+
+| Apoio | Quando |
+|---|---|
+| `etapas/narracao-voz.md` | fora do fluxo normal: editar uma frase à mão no estúdio; achar as escolhas e as tomadas; ajustar a regra de escolha; trocar a amostra de voz; mudar o ritmo |
+| `etapas/narracao-diagnostico.md` | reclamação da voz (sem energia ou mal-humorada; robótica ou diferente da amostra; fim de frase cortado ou sumindo), antes de mexer em parâmetro, amostra ou texto: guarda o que já foi medido e descartado com a voz atual |
 
 ## SUBAGENTE
 
-No corte final, a conferência dos fatos é do subagente `checador` (`.claude/agents/`), que não escreveu o roteiro: recebe a pasta do vídeo e devolve cada afirmação classificada. Ele julga; levar a pendência ao usuário é desta skill.
+No corte final, a conferência dos fatos é do subagente `checador` (`.claude/agents/`), que não escreveu o roteiro. Ele julga; levar a pendência ao usuário é desta skill.
 
 ## LIMITES
 

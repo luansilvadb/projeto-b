@@ -1,11 +1,6 @@
----
-name: narracao-voz
-description: "Referência da voz neste repositório, uma seção por caso: editar uma frase à mão no estúdio, onde ficam as escolhas e as tomadas, ajustar a regra de escolha, trocar a amostra de voz e mudar o ritmo."
----
-
 # Referência da voz
 
-Os casos que o fluxo normal de `narracao.md` não percorre. Leia só a seção do caso.
+Os casos que o fluxo normal de `narracao.md` não percorre, uma seção por caso.
 
 ## Editar uma frase à mão no estúdio
 
@@ -19,13 +14,15 @@ As escolhas vão para `src/videos/<vídeo>/voice.json`, que vai para o git e o `
 
 `rejected` é o registro de onde a regra de escolha errou. Quando houver rejeições de alguns vídeos, compare a curva das tomadas rejeitadas com a das aceitas (as medidas `ending` e `pitchOffset` estão em cada tomada guardada) e ajuste os limites em `takes.ts`, com teste. A meta é o usuário marcar cada vez menos.
 
+Pronto quando: cada limite alterado tem teste e `pnpm test` passa.
+
 ## Trocar a amostra de voz
 
-O modelo usa `voice/reference.wav` inteira, e o tom da gravação passa para a narração. A amostra deve ter de 5 a 10 segundos, em ambiente silencioso, lida no tom de narrador que o usuário quer para o canal; mais longa que isso, a geração fica lenta e o clone piora. A pasta `voice/` não vai para o git. Trocar a amostra regera a narração inteira na execução seguinte.
+O modelo usa `voice/reference.wav` inteira, e o tom da gravação passa para a narração. A amostra deve ter de 5 a 10 segundos, em ambiente silencioso, lida no tom de narrador que o usuário quer para o canal; mais longa que isso, a geração fica lenta e o clone piora. Trocar a amostra regera a narração inteira na execução seguinte.
 
 O modelo precisa também do texto dito na amostra. Na primeira narração com uma amostra nova, o comando a transcreve com o Whisper e guarda o texto em `voice/reference.json`. Confira esse texto: se houver palavra errada, corrija o campo `text` à mão.
 
-Os pesos do OmniVoice são de uso não comercial (CC-BY-NC). O usuário escolheu o modelo sabendo disso; a etapa `corte-final` o lembra na hora de publicar.
+Pronto quando: o `text` de `voice/reference.json` diz o que a amostra diz, palavra por palavra.
 
 ## Mudar o ritmo
 

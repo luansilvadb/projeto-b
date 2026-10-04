@@ -1,18 +1,8 @@
----
-name: trilha
-description: "Procedimento da etapa de trilha neste repositório: o comando e as sementes, a descrição da música no roteiro, como avaliar sem ouvir e a mixagem sob a voz."
----
-
 # Trilha de um vídeo
 
-Sexta etapa. Pode rodar em qualquer momento depois da narração, porque só depende da duração da narração.
+Sexta etapa. Pode rodar em qualquer momento depois da narração, porque só depende da duração dela.
 
-```bash
-pnpm music <vídeo>           # semente 1
-pnpm music <vídeo> 2         # outra semente: outra música para a mesma descrição
-```
-
-O comando lê a descrição em `music` no roteiro, gera uma faixa instrumental do tamanho do vídeo com o ACE-Step 1.5 na GPU e grava `public/videos/<vídeo>/music.wav` e `music.json`. Leva cerca de dois minutos e ocupa quase toda a memória da máquina (uns 11 GB de RAM, mais a GPU).
+`pnpm music <vídeo> [semente]` lê a descrição em `music` no roteiro, gera uma faixa instrumental do tamanho do vídeo com o ACE-Step 1.5 na GPU e grava `public/videos/<vídeo>/music.wav` e `music.json`. Sem semente vale a 1; outra semente dá outra música para a mesma descrição. Leva cerca de dois minutos e ocupa quase toda a memória da máquina (uns 11 GB de RAM, mais a GPU).
 
 ## A descrição
 
@@ -33,11 +23,13 @@ Trilha de vídeo narrado serve à fala: prefira texturas contínuas e poucos ele
 
 ## Avaliar
 
-Você não ouve a música. Diga ao usuário onde está o arquivo e peça para ouvir; para ouvir no contexto, renderize (`pnpm render <vídeo>`). Se não agradar, mude a semente primeiro (mesma ideia, outra execução) e a descrição depois (outra ideia). Cada tentativa custa dois minutos, então proponha duas ou três sementes de uma vez quando o usuário quiser escolher.
+Diga ao usuário onde está o arquivo e peça para ouvir; para ouvir no contexto, renderize (`pnpm render <vídeo>`). Se não agradar, mude a semente primeiro (mesma ideia, outra execução) e a descrição depois (outra ideia). Cada tentativa custa dois minutos, então proponha duas ou três sementes de uma vez quando o usuário quiser escolher.
+
+Pronto quando: o usuário ouviu a trilha e a aceitou.
 
 ## Mixagem
 
-Não ajuste volume de trilha em cena nenhuma. A montagem mede o volume da narração e o da trilha e posiciona a música a uma distância fixa abaixo da voz: 18 dB enquanto alguém fala e 8 dB nos silêncios longos, com rampa suave. Os valores estão em `MUSIC_MIX`, em `src/audio/ducking.ts`, e valem para todos os vídeos. Se o usuário achar a trilha alta ou baixa de modo geral, é ali que se muda.
+A montagem mede o volume da narração e o da trilha e posiciona a música a uma distância fixa abaixo da voz: 18 dB enquanto alguém fala e 8 dB nos silêncios longos, com rampa suave. Os valores estão em `MUSIC_MIX`, em `src/audio/ducking.ts`, e valem para todos os vídeos: se o usuário achar a trilha alta ou baixa de modo geral, é ali que se muda, e cena nenhuma ajusta volume de trilha.
 
 Se a narração for regerada com outra voz ou mudar de duração, rode `pnpm music` de novo.
 
