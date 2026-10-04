@@ -64,7 +64,7 @@ pnpm critique <vídeo> animatic   # medidas do render contra os vídeos de refer
 
 Enquanto desenha, abra cada imagem gerada e corrija o que vir: nenhum quadro vai adiante sem ter sido aberto. Para ver um momento específico, passe os quadros: `pnpm stills <vídeo> 30 120`.
 
-Com os quadros de todos os planos renderizados, acione o subagente `critico-de-quadro`, que não desenhou nada e faz as oito passadas da unidade `critica-quadro`, começando pela encenação: sem som e sem etiqueta, o plano diz o que a oração afirma? Passe o nome da pasta do vídeo, o caminho dos quadros e a tabela do `pnpm critique`. Ele julga; quem decide e redesenha é você, pelos passos 4 a 6 do procedimento de `critica-quadro`, acionando-o de novo só com os planos alterados.
+Com os quadros de todos os planos renderizados, acione o subagente `critico-de-quadro`, que não desenhou nada e faz as passadas da unidade `critica-quadro`, começando pela encenação: sem som e sem etiqueta, o plano diz o que a oração afirma? Passe o nome da pasta do vídeo, o caminho dos quadros e a tabela do `pnpm critique`. Ele julga; quem decide e redesenha é você, pelos passos 4 a 6 do procedimento de `critica-quadro`, acionando-o de novo só com os planos alterados.
 
 Com `animatic`, o `pnpm critique` só reprova as medidas que já valem com os quadros parados (seção Medidas de `critica-quadro`).
 

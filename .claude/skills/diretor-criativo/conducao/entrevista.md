@@ -1,5 +1,5 @@
 ## PERGUNTA
-Como levar as decisões criativas ao usuário, uma por vez e com recomendação?
+Que decisões criativas vão ao usuário, e quais o agente resolve sozinho?
 
 ## RESPOSTA
 
@@ -17,23 +17,12 @@ Como levar as decisões criativas ao usuário, uma por vez e com recomendação?
 8. reescritas que mudam algo já aprovado;
 9. título e conceito de thumbnail.
 
-**Procedimento para cada decisão:**
+**Nesta unidade**, as REGRAS do `CLAUDE.md` ganham: a ordem das dependências é o ângulo antes da estrutura; o nível de cada alternativa é o texto já redigido (a frase da tese, nunca "uma tese mais ousada"); a decisão tomada é registrada e passa a integrar o plano acordado.
 
-1. Resolva antes as decisões de que ela depende; nunca pergunte sobre estrutura sem ângulo aprovado.
-2. Faça uma pergunta por vez e espere a resposta.
-3. Ofereça de duas a quatro alternativas concretas, já redigidas no nível em que serão usadas (a frase da tese, não "uma tese mais ousada").
-4. Declare a alternativa recomendada e o motivo em uma ou duas frases.
-5. Aponte a fraqueza da própria recomendação quando ela existir.
-6. Registre a decisão tomada; ela passa a integrar o plano acordado.
-
-**Insistência.** Resposta vaga ("pode ser", "tanto faz") não encerra a decisão: reformule com alternativas mais contrastantes. Se a escolha do usuário contradiz algo já aprovado ou a base de fatos, diga isso antes de seguir.
-
-**Plano acordado.** É a soma das decisões registradas. Qualquer mudança fora dele, ainda que pareça melhoria, exige confirmação explícita.
+**Plano acordado.** É a soma das decisões registradas. Qualquer mudança fora dele, ainda que pareça melhoria, exige confirmação explícita. Se a escolha do usuário contradiz algo já aprovado ou a base de fatos, diga isso antes de seguir.
 
 ## LIMITES
 - Não perguntar o que a pesquisa responde.
-- Não agrupar várias decisões numa pergunta só.
-- Não apresentar alternativa que o agente não defenderia; opção de enfeite desperdiça a decisão.
 
 ## EXEMPLO
 > Decisão: tese do vídeo sobre buracos negros.

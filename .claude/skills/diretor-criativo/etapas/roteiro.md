@@ -87,9 +87,9 @@ Confere todas as regras, lista os problemas de uma vez e estima a duração de c
 Com o validador passando, o roteiro vai a dois subagentes que não viram o texto ser escrito. Acione os dois na mesma mensagem, passando o nome da pasta do vídeo:
 
 - `checador`: classifica cada afirmação da fala e da tela contra `research.md` (unidade `pesquisa/checagem`).
-- `editor`: faz as oito passadas de `revisao/critica` e devolve os problemas por cena. Ele confere contra `script.md`: antes de acioná-lo, a coluna Cenas da estrutura está preenchida. Passe a ele só a decisão aprovada que ainda não estiver lá.
+- `editor`: faz as passadas de `revisao/critica` e devolve os problemas por cena. Ele confere contra `script.md`: antes de acioná-lo, a coluna Cenas da estrutura está preenchida. Passe a ele só a decisão aprovada que ainda não estiver lá.
 
-Eles julgam; quem decide e reescreve é você, pelos passos 2 a 5 do procedimento de `revisao/critica`. A cada rodada, rode o validador e acione de novo os dois, o `checador` só com as cenas alteradas; além do que a crítica exige, não pode restar afirmação *não verificada*.
+Eles julgam; quem decide e reescreve é você, pelos passos 2 a 5 do procedimento de `revisao/critica`. A lista **Para o diretor de arte** que o `editor` devolve vai à skill `diretor-de-arte` (etapa de decupagem), que refaz os planos apontados antes da aprovação. A cada rodada, rode o validador e acione de novo os dois, o `checador` só com as cenas alteradas; além do que a crítica exige, não pode restar afirmação *não verificada*.
 
 ## Primeira aprovação
 

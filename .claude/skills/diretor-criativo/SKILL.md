@@ -27,26 +27,20 @@ O texto do vídeo, pelas duas etapas e pelas categorias de ORGANIZAÇÃO.
 
 O pedido decide a etapa; a etapa decide o que ler. Leia o procedimento da etapa e, dele, as unidades do passo em curso.
 
-| Etapa | Quando | Procedimento | Comando | Entrega |
-|---|---|---|---|---|
-| 1. Pesquisa | tema novo; pesquisar ou checar um fato; o roteiro pede um fato que falta | `etapas/pesquisa.md` | | `research.md` |
-| 2. Roteiro | pesquisa pronta; escrever, revisar, encurtar ou alterar roteiro, narração ou cenas | `etapas/roteiro.md` | `pnpm check-script <vídeo>` | `script.json` e a **1ª aprovação** |
+| Etapa | Quando | Procedimento |
+|---|---|---|
+| 1. Pesquisa | tema novo; pesquisar ou checar um fato; o roteiro pede um fato que falta | `etapas/pesquisa.md` |
+| 2. Roteiro | pesquisa pronta; escrever, revisar, encurtar ou alterar roteiro, narração ou cenas | `etapas/roteiro.md` |
 
 A etapa seguinte é a narração, na skill `producao`.
 
 ## CONDUÇÃO
 
-A skill opera em modo entrevista, definido em `entrevista`: o agente resolve os fatos por conta própria e leva ao usuário apenas decisões, uma por vez e com recomendação. Nada fora do plano acordado é alterado sem confirmação explícita.
+A skill opera em modo entrevista: o agente resolve os fatos por conta própria e leva ao usuário apenas decisões, pelas REGRAS do `CLAUDE.md`; `entrevista` lista as decisões. Nada fora do plano acordado é alterado sem confirmação explícita.
 
 ## SUBAGENTES
 
-Esta skill dirige, na conversa com o usuário; os especialistas são subagentes em `.claude/agents/`, que recebem um pedido, leem as unidades desta pasta e devolvem um relatório, sem gravar arquivo. O procedimento da etapa diz quando acionar cada um.
-
-| Subagente | Quando | Recebe | Devolve |
-|---|---|---|---|
-| `pesquisador` | etapa de pesquisa, um por pergunta, em paralelo | pergunta, ideia central, `research.md` se existir | fatos com fonte aberta e conferida |
-| `checador` | antes da 1ª aprovação e depois de reescrever frase | pasta do vídeo, cenas alteradas | cada afirmação classificada |
-| `editor` | antes da 1ª aprovação e depois de cada reescrita | pasta do vídeo, decisões aprovadas | problemas por cena, critério e classificação |
+Esta skill dirige, na conversa com o usuário; os especialistas são os subagentes `pesquisador`, `checador` e `editor` (`.claude/agents/`), que leem as unidades desta pasta e devolvem um relatório, sem gravar arquivo. O procedimento da etapa diz quando acionar cada um e o que passar.
 
 O subagente julga ou levanta; decidir, escrever e falar com o usuário é desta skill. Relatório de subagente não é aprovação.
 
@@ -69,7 +63,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 
 | Unidade | Pergunta |
 |---|---|
-| `conducao/entrevista` | Como levar as decisões criativas ao usuário, uma por vez e com recomendação? |
+| `conducao/entrevista` | Que decisões criativas vão ao usuário, e quais o agente resolve sozinho? |
 | `pesquisa/levantamento` | Como pesquisar o tema e selecionar fontes confiáveis? |
 | `pesquisa/checagem` | Como verificar cada afirmação factual e tratar incerteza e simplificação? |
 | `conceito/ouvinte` | Para quem o texto do vídeo é escrito, e o que isso exige de cada trecho? |

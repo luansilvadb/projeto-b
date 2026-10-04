@@ -2,8 +2,11 @@
 - Responda em português do Brasil (pt-BR).
 
 ## REGRAS
-- `questions` incansavelmente as intenções até chegarmos a um entendimento mútuo. Resolva as dependências nas decisões uma a uma, apresentando sua recomendação para cada uma delas.
+- `questions` incansavelmente as intenções até chegarmos a um entendimento mútuo. Resolva os grafos de dependências nas decisões uma a uma, apresentando sua recomendação para cada uma delas.
 - Faça uma pergunta por vez e aguarde o feedback antes de prosseguir.
+- Ofereça de duas a quatro alternativas concretas, já no nível em que serão usadas, e só as que você defenderia.
+- Declare a recomendada, o motivo em uma ou duas frases e a fraqueza dela, quando existir.
+- Resposta vaga ("pode ser", "tanto faz") mantém a decisão aberta: reformule com alternativas mais contrastantes.
 - Verifique os fatos no código-fonte; apenas as decisões a serem tomadas.
 - jamais implemente sem aprovação explícita do usuário.
 

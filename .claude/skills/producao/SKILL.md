@@ -26,13 +26,13 @@ As cinco etapas da tabela de ETAPAS.
 
 O pedido decide a etapa. Cada etapa tem um procedimento só, lido inteiro; esta skill não tem unidades de estilo.
 
-| Etapa | Quando | Procedimento | Comando | Entrega |
-|---|---|---|---|---|
-| 3. Narração | roteiro aprovado ou alterado; palavra mal pronunciada; troca da amostra de voz; render que acusa narração ausente ou desatualizada | `etapas/narracao.md` | `pnpm narrate <vídeo>` | áudio e tempo de cada palavra |
-| 6. Trilha | vídeo sem trilha; outra música ou outro clima; música alta ou baixa contra a voz; narração que mudou de duração | `etapas/trilha.md` | `pnpm music <vídeo> [semente]` | trilha instrumental original |
-| Efeitos sonoros (dentro da animação) | a animação pede um uso que falta no catálogo; trocar um efeito; efeitos altos ou baixos | `etapas/efeitos-sonoros.md` | `pnpm sfx "<busca>"` | som escolhido pelo usuário, no catálogo |
-| 7. Corte final | render final, exportar, finalizar; saber se o vídeo está pronto para publicar | `etapas/corte-final.md` | `pnpm render <vídeo>` | `out/<vídeo>.final.mp4` e a **3ª aprovação** |
-| 8. Publicação | vídeo aprovado no corte final; escrever ou refazer a descrição | `etapas/publicacao.md` | | `description.md`, com título e fontes |
+| Etapa | Quando | Procedimento |
+|---|---|---|
+| 3. Narração | roteiro aprovado ou alterado; palavra mal pronunciada; troca da amostra de voz; render que acusa narração ausente ou desatualizada | `etapas/narracao.md` |
+| 6. Trilha | vídeo sem trilha; outra música ou outro clima; música alta ou baixa contra a voz; narração que mudou de duração | `etapas/trilha.md` |
+| Efeitos sonoros (dentro da animação) | a animação pede um uso que falta no catálogo; trocar um efeito; efeitos altos ou baixos | `etapas/efeitos-sonoros.md` |
+| 7. Corte final | render final, exportar, finalizar; saber se o vídeo está pronto para publicar | `etapas/corte-final.md` |
+| 8. Publicação | vídeo aprovado no corte final; escrever ou refazer a descrição | `etapas/publicacao.md` |
 
 A narração tem dois arquivos de apoio, lidos só na seção do caso:
 
@@ -43,7 +43,7 @@ A narração tem dois arquivos de apoio, lidos só na seção do caso:
 
 ## SUBAGENTE
 
-No corte final, a conferência dos fatos é do subagente `checador` (`.claude/agents/`), que não escreveu o roteiro. Ele julga; levar a pendência ao usuário é desta skill.
+A conferência dos fatos no corte final é do subagente `checador`, acionado em `etapas/corte-final.md`; levar a pendência ao usuário é desta skill.
 
 ## LIMITES
 
@@ -55,7 +55,7 @@ No corte final, a conferência dos fatos é do subagente `checador` (`.claude/ag
 
 Pare quando:
 
-- a etapa pedida entregou o que a tabela promete, com os avisos do comando resolvidos ou aceitos pelo usuário;
+- a etapa pedida entregou o que o procedimento dela promete, com os avisos do comando resolvidos ou aceitos pelo usuário;
 - uma frase pede reescrita ou a trilha pede outra descrição: devolva à skill `diretor-criativo`;
 - o corte final tem pendência que só o usuário resolve: relate e espere;
 - o pedido estiver no anti-escopo.

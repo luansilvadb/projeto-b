@@ -26,40 +26,25 @@ A imagem e o movimento do vídeo, pelas três etapas e pelas unidades do ÍNDICE
 
 O pedido decide a etapa; a etapa decide o que ler. Leia o procedimento da etapa e, dele, as unidades do passo em curso.
 
-| Etapa | Quando | Procedimento | Comando | Entrega |
-|---|---|---|---|---|
-| Decupagem (dentro do roteiro) | o texto do roteiro está escrito e ainda não aprovado; refazer elenco, paleta ou planos | `etapas/decupagem.md` | `pnpm check-script <vídeo>` | `art.md` e os `shots`, aprovados com o texto na **1ª aprovação** |
-| 4. Animatic | narração pronta; criar a pasta e as cenas de um vídeo; storyboard, desenho ou composição | `etapas/animatic.md` | `pnpm stills <vídeo>` | planos desenhados e a **2ª aprovação** |
-| 5. Animação | animatic aprovado; animar, ajustar tempo, transição ou câmera; marcar onde cabe som | `etapas/animacao.md` | `pnpm critique <vídeo>` | planos animados, medidos contra a referência |
+| Etapa | Quando | Procedimento |
+|---|---|---|
+| Decupagem (dentro do roteiro) | o texto do roteiro está escrito e ainda não aprovado; refazer elenco, paleta ou planos | `etapas/decupagem.md` |
+| 4. Animatic | narração pronta; criar a pasta e as cenas de um vídeo; storyboard, desenho ou composição | `etapas/animatic.md` |
+| 5. Animação | animatic aprovado; animar, ajustar tempo, transição ou câmera; marcar onde cabe som | `etapas/animacao.md` |
 
 A decupagem acontece antes de a narração ser gravada: enquanto o áudio não existe, a encenação ainda pode pedir uma frase diferente sem custo. A animação só começa com o animatic aprovado: movimento que pede outra composição devolve o plano ao passo Quadro.
 
 ## CONDUÇÃO
 
-A skill opera em modo entrevista: o agente resolve sozinho o que é fato ou execução e leva ao usuário só o que é decisão. `entrevista-imagem` define as decisões de imagem, tomadas diante de imagem renderizada; `entrevista-movimento`, as de movimento, tomadas diante de vídeo renderizado.
+A skill opera em modo entrevista: o agente resolve sozinho o que é fato ou execução e leva ao usuário só o que é decisão, pelas REGRAS do `CLAUDE.md`. `entrevista-imagem` define as decisões de imagem, tomadas diante de imagem renderizada; `entrevista-movimento`, as de movimento, tomadas diante de vídeo renderizado.
 
-Para cada decisão, nas duas:
-
-1. Resolva antes as decisões de que ela depende.
-2. Faça uma pergunta por vez e espere a resposta.
-3. Ofereça de duas a quatro alternativas concretas, cada uma já no nível em que será usada, e só as que você defenderia.
-4. Declare a recomendada, o motivo em uma ou duas frases e a fraqueza dela, quando existir.
-5. Registre a decisão; ela passa a integrar o plano acordado.
-
-Resposta vaga ("pode ser", "tanto faz") não encerra a decisão: mostre alternativas mais contrastantes. Se a escolha contradiz algo aprovado, a base de fatos ou um limite medido, diga isso antes de seguir. O **plano acordado** é a soma das decisões registradas: qualquer mudança fora dele, ainda que pareça melhoria, exige confirmação explícita.
+Se a escolha contradiz algo aprovado, a base de fatos ou um limite medido, diga isso antes de seguir. Cada decisão é registrada; o **plano acordado** é a soma das decisões registradas: qualquer mudança fora dele, ainda que pareça melhoria, exige confirmação explícita.
 
 ## SUBAGENTES
 
-Esta skill dirige, na conversa com o usuário; os especialistas são subagentes em `.claude/agents/`, que recebem um pedido, leem as unidades desta pasta e devolvem um relatório. O procedimento da etapa diz quando acionar cada um.
+Esta skill dirige, na conversa com o usuário; os especialistas são subagentes em `.claude/agents/`, que leem as unidades desta pasta e devolvem um relatório. O procedimento da etapa diz quando acionar cada um e o que passar.
 
-| Subagente | Quando | Recebe | Devolve |
-|---|---|---|---|
-| `ilustrador` | animatic, um por desenho ou por cena | pasta do vídeo, o desenho ou a cena, os arquivos que pode tocar | os arquivos escritos e os quadros renderizados |
-| `motion-designer` | animação, um por cena, com a partitura aprovada | pasta do vídeo, a cena, a partitura, os arquivos que pode tocar | a cena animada e as tiras de quadros |
-| `critico-de-quadro` | animatic, com os quadros de todos os planos renderizados | pasta do vídeo, caminho dos quadros, medidas | problemas por plano, critério e classificação |
-| `critico-de-movimento` | animação, com o trecho renderizado | pasta do vídeo, caminho do MP4, planos, partitura | problemas por plano, instante, critério e classificação, com as tiras |
-
-Quem faz não julga: o `ilustrador` e o `motion-designer` executam, os dois críticos julgam o que eles entregaram, e decidir, renderizar o vídeo e falar com o usuário é desta skill. Relatório de subagente não é aprovação.
+Quem faz não julga: o `ilustrador` e o `motion-designer` executam, o `critico-de-quadro` e o `critico-de-movimento` julgam o que eles entregaram, e decidir, renderizar o vídeo e falar com o usuário é desta skill. Relatório de subagente não é aprovação.
 
 - **Arquivos.** Cada pedido lista os arquivos que o subagente pode tocar. Dois subagentes só rodam em paralelo com listas que não se cruzam; `src/components/`, `src/design/tokens.ts`, `palette.ts`, `index.tsx` e `src/Root.tsx` são alterados aqui, um de cada vez.
 - **Decisão no meio do trabalho.** O subagente não fala com o usuário: o que for decisão (`entrevista-imagem`, `entrevista-movimento`) volta no relatório como pergunta, com as alternativas renderizadas, e é levado ao usuário daqui.

@@ -52,9 +52,9 @@ pnpm render <vídeo>              # ou uma composição de prévia com as cenas 
 pnpm critique <vídeo>            # ou pnpm critique out/<arquivo>.mp4
 ```
 
-Renderize o vídeo e leia as tiras de quadros consecutivos que `critica-movimento` pede; `ffmpeg -ss <s> -t <dur> -i out/<vídeo>.mp4 -vf "fps=5,scale=320:180,tile=6x5" -frames:v 1 tira.png` monta uma. Com uma medida do `pnpm critique` fora da faixa, o mapa segundo a segundo e o conserto de cada medida estão na seção Medidas da mesma unidade.
+Renderize o vídeo e leia as tiras de quadros consecutivos que `critica-movimento` pede; `ffmpeg -ss <s> -t <dur> -i out/<vídeo>.mp4 -vf "fps=8,scale=320:180,tile=6x5" -frames:v 1 tira.png` monta uma. Com uma medida do `pnpm critique` fora da faixa, o mapa segundo a segundo e o conserto de cada medida estão na seção Medidas da mesma unidade.
 
-Com o trecho renderizado e as suas próprias tiras lidas, acione o subagente `critico-de-movimento`, que não animou nada e faz as sete passadas de `critica-movimento`. Passe o nome da pasta do vídeo, o caminho do MP4, os planos a julgar e a partitura. Ele julga; quem decide e refaz é você, pelos passos 4 a 6 do procedimento de `critica-movimento`, acionando-o de novo só com os planos alterados.
+Com o trecho renderizado e as suas próprias tiras lidas, acione o subagente `critico-de-movimento`, que não animou nada e faz as passadas de `critica-movimento`. Passe o nome da pasta do vídeo, o caminho do MP4, os planos a julgar e a partitura. Ele julga; quem decide e refaz é você, pelos passos 4 a 6 do procedimento de `critica-movimento`, acionando-o de novo só com os planos alterados.
 
 Depois peça ao usuário para assistir, porque ritmo e suavidade só se julgam em movimento, e entregue junto as tiras das transições e as medidas. O "sim" dele é o **aceite da animação**: registre-o em `src/videos/<vídeo>/approvals.md` (formato nas convenções do `README.md`), com cada medida fora da faixa que ele aceitou.
 

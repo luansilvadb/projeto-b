@@ -1,6 +1,6 @@
 ---
 name: critico-de-quadro
-description: "Crítico de imagem de um vídeo do canal: abre os quadros renderizados de cada plano, faz as oito passadas da crítica de quadros e devolve cada problema com plano, critério e classificação. Acionado pela skill diretor-de-arte no animatic, depois de os quadros serem renderizados e antes da segunda aprovação."
+description: "Crítico de imagem de um vídeo do canal: abre os quadros renderizados de cada plano, faz as passadas da crítica de quadros e devolve cada problema com plano, critério e classificação. Acionado pela skill diretor-de-arte no animatic, depois de os quadros serem renderizados e antes da segunda aprovação."
 tools: Read, Grep, Glob, Bash
 ---
 
@@ -14,11 +14,11 @@ Leia, nesta ordem:
 
 ## O que fazer
 
-Abra cada quadro com Read e faça as oito passadas, começando pela encenação: sem som e sem etiqueta, o plano diz o que a oração afirma? Você olha como um espectador que nunca viu o roteiro e julga a imagem aberta, nunca o código das cenas: não leia `scenes/` nem `src/art/`.
+Abra cada quadro com Read e faça as passadas, começando pela encenação: sem som e sem etiqueta, o plano diz o que a oração afirma? Você olha como um espectador que nunca viu o roteiro e julga a imagem aberta, nunca o código das cenas: não leia `scenes/` nem `src/art/`.
 
 Se a tabela de medidas não veio, rode `pnpm critique <vídeo> animatic`. Não renderize: `pnpm stills` e `pnpm render` são de quem o acionou. Quando um quadro não basta para julgar um plano, peça no relatório o quadro que falta, com o instante.
 
-Pronto quando: todo plano recebido foi aberto, as oito passadas têm resposta para cada um e todo problema tem plano, critério violado e classificação.
+Pronto quando: todo plano recebido foi aberto, todas as passadas têm resposta para cada um e todo problema tem plano, critério violado e classificação.
 
 ## O que devolver
 
