@@ -28,7 +28,7 @@ Termos de comparação para o roteiro: adulto humano, 7 a 8 horas por noite [1].
 ### Todo animal estudado dorme
 
 - Entre mamíferos, o sono diário varia de cerca de 4 a 20 horas conforme a espécie. (estabelecido; ver o elefante abaixo, medido depois dessa revisão) [3]
-- Duas elefantas africanas selvagens, monitoradas por 35 dias, dormiram em média 2 horas por dia, o menor tempo já registrado em um mamífero, e chegaram a ficar até 46 horas sem dormir. (majoritário com ressalvas: só dois animais) [4]
+- Duas elefantas africanas selvagens, monitoradas por 35 dias em 2014 (o estudo saiu em 2017), dormiram em média 2 horas por dia, o menor tempo já registrado em um mamífero, e chegaram a ficar até 46 horas sem dormir. (majoritário com ressalvas: só dois animais) [4]
 - Fragatas dormem em pleno voo, em viagens de até 10 dias sobre o oceano, com um hemisfério do cérebro por vez ou com os dois ao mesmo tempo. Em voo dormem 0,69 hora por dia, em episódios de cerca de 11 segundos. (estabelecido para a espécie) [5]
   0,69 h × 60 = 41 minutos por dia.
 - Golfinhos, focas e peixes-boi dormem com um hemisfério cerebral de cada vez, o que permite continuar respirando e vigiando. (estabelecido) [6]
@@ -41,20 +41,27 @@ Termos de comparação para o roteiro: adulto humano, 7 a 8 horas por noite [1].
 ### O que acontece sem sono
 
 - Em um experimento de 1989, dez ratos submetidos a privação total de sono morreram, ou foram sacrificados à beira da morte, entre 11 e 32 dias. Nenhuma causa anatômica de morte foi encontrada; os ratos de controle, que recebiam o mesmo estímulo mas podiam dormir, continuaram saudáveis. (estabelecido o resultado; a causa da morte segue em disputa) [9]
+- O disco do experimento só girava quando o rato dava sinal de adormecer. O rato de teste e o de controle ficavam na mesma plataforma, e o de controle podia dormir enquanto o de teste estava acordado. (estabelecido; lido pelo checador em 04/10/2026) [19] [9]
+- A privação prolongada de sono também é fatal em moscas e baratas, segundo a revisão de Cirelli e Tononi; os ratos não são os únicos animais privados de sono em laboratório. (estabelecido; lido pelo checador em 04/10/2026) [20]
 - Em moscas e camundongos, a privação de sono leva ao acúmulo de espécies reativas de oxigênio no intestino. Em moscas, neutralizar essas moléculas com antioxidantes permitiu vida de duração normal com pouco ou nenhum sono. (majoritário com ressalvas: um estudo, sem confirmação em humanos) [10]
-- Em 1964, Randy Gardner, de 17 anos, ficou 264 horas acordado sob observação do pesquisador William Dement. Teve náusea, falhas de memória e irritabilidade; depois dormiu 14 horas. O Guinness deixou de registrar esse recorde em 1996, por considerá-lo perigoso. (estabelecido) [11]
+- Em 1964, Randy Gardner, de 17 anos, ficou 264 horas acordado sob observação do pesquisador William Dement. Teve náusea, falhas de memória e irritabilidade; depois dormiu 14 horas. (estabelecido) [11]
   264 h ÷ 24 = 11 dias.
+- Gardner não agiu sozinho: ele e dois amigos decidiram bater o recorde de 260 horas sem dormir, e foi ele a cobaia por ter perdido no cara ou coroa. A vigília começou em 28/12/1963 e terminou em janeiro de 1964. (estabelecido; lido pelo checador na reprodução da WAMC em 04/10/2026) [11]
+- Gardner não é quem ficou mais tempo acordado: o recorde dele caiu duas semanas depois (Jim Thomas, 266 h 30 min) e de novo no mesmo ano (Toimi Silvo, 276 h). O último recorde reconhecido é de Robert McDonald, em 1986: 453 h 40 min. O caso de Gardner não é o mais longo; a NPR o descreve como "um dos mais bem documentados" [11]. (estabelecido; lido em 04/10/2026) [22]
+  453 h 40 min ÷ 24 = 18,9 dias.
+- O Guinness deixou de acompanhar esse recorde por causa dos perigos da privação de sono. O ano diverge entre as fontes: 1997 segundo o próprio Guinness [22], 1996 segundo a NPR [11]. Vale o do Guinness, ou a frase sem o ano. (estabelecido o fato; o ano, em disputa entre as fontes)
 - A insônia familiar fatal é uma doença rara causada por mutação no gene PRNP que atinge o tálamo, a região do cérebro que controla o ciclo de sono e vigília. (estabelecido) [12]
 
 ### As respostas parciais
 
 - Pressão do sono: a concentração de adenosina fora das células, em uma região do cérebro ligada ao despertar, sobe durante a vigília, sobe ainda mais na vigília prolongada e cai devagar durante o sono de recuperação. Medido em gatos. (estabelecido) [13]
 - Memória: mais de um século de pesquisa estabeleceu que o sono favorece a retenção de memórias. Durante o sono de ondas lentas, o cérebro reativa as memórias recentes e as redistribui de um armazenamento temporário para o de longo prazo. (estabelecido o benefício; o mecanismo é majoritário com ressalvas) [14]
+- Memória, o experimento clássico: em 1924, Jenkins e Dallenbach testaram duas pessoas, todos os dias e noites por quase dois meses. Elas decoravam sílabas sem sentido e eram testadas 1, 2, 4 ou 8 horas depois, tendo passado esse tempo dormindo ou acordadas. O sono depois de aprender reduziu o esquecimento em todos os intervalos. (estabelecido; lido na revisão de Rasch e Born, texto completo em https://pmc.ncbi.nlm.nih.gov/articles/PMC3768102/, em 04/10/2026; o artigo de 1924 não foi aberto) [14]
 - Poda de sinapses: em camundongos, a medição de 6.920 sinapses mostrou que a área de contato entre os neurônios encolhe cerca de 18% depois do sono em comparação com a vigília. Cerca de 80% das sinapses encolhem; as maiores e mais estáveis são poupadas. (majoritário com ressalvas: a hipótese da homeostase sináptica tem críticos) [15]
 - Limpeza do cérebro, versão de 2013: em camundongos, o espaço entre as células do cérebro aumentou 60% durante o sono, e a proteína beta-amiloide foi removida duas vezes mais rápido do que na vigília. (em disputa) [16]
   Fração do volume ocupada pelo espaço entre as células: de 13,6–14,1% acordado para 22,7–23,4% dormindo; 23,05 ÷ 13,85 = 1,66, ou cerca de 60% a mais.
-- Limpeza do cérebro, contestação de 2024: outro grupo, também em camundongos, mediu a remoção de um corante e encontrou o contrário: cerca de 30% mais lenta no sono e 50% mais lenta sob anestesia. Outros pesquisadores criticaram o método, e a questão não está resolvida. (em disputa) [17] [18]
-- As hipóteses não se excluem: as revisões as dividem entre funções cognitivas (memória, plasticidade das sinapses) e funções de manutenção (energia do cérebro, síntese de moléculas, remoção de resíduos), e consideram provável que várias contribuam. (majoritário) [2]
+- Limpeza do cérebro, contestação de 2024: outro grupo, também em camundongos, mediu a remoção de um corante e encontrou o contrário: cerca de 30% mais lenta no sono e 50% mais lenta sob anestesia. Outros pesquisadores criticaram o método, entre outros pontos porque um corante pequeno não se comporta como uma proteína, e a questão não está resolvida. (em disputa; a crítica foi lida pelo checador em 04/10/2026) [17] [18]
+- As hipóteses não se excluem: as revisões as dividem entre funções cognitivas (memória, plasticidade das sinapses) e funções de manutenção (energia do cérebro, síntese de moléculas, remoção de resíduos), e dizem que cada uma pode contribuir com uma parte de uma função básica do sono ("may each contribute"); o "provável" do resumo vale só para as hipóteses cognitivas entre si. (majoritário; só o resumo foi lido) [2]
 
 ## Pontos em aberto
 
@@ -63,6 +70,8 @@ Termos de comparação para o roteiro: adulto humano, 7 a 8 horas por noite [1].
 - "Mais de um terço dos adultos dos EUA dorme menos de 7 horas" (CDC): visto só em resultado de busca. Além disso é dado dos EUA, não do Brasil.
 - Sobrevida na insônia familiar fatal (6 a 36 meses segundo resultado de busca): a página aberta [12] não traz o número. A doença também causa degeneração ampla do cérebro, então não prova sozinha que a falta de sono mata.
 - Fragatas em terra: a fonte [5] dá 53% do tempo dormindo em terra e, em outro trecho, diz que o sono em voo equivale a 7,4% do sono em terra. As duas leituras não fecham na mesma conta (0,69 h ÷ 12,8 h = 5,4%), então o número em terra precisa ser relido no artigo antes de ser usado.
+- Elefantas sem rebote: a fonte [4] diz que, depois das noites sem dormir (5 ocasiões, de 45 a 48 horas), elas não dormiram mais tempo para compensar, com uma exceção. Os autores ressalvam que mediram o sono pela tromba, sem EEG, e que a compensação pode ter vindo como sono mais profundo, que o método não detecta. Não contradiz a regra do roteiro ("dorme mais, ou mais fundo"), mas impede dizer que todo bicho compensa dormindo mais. (relido em 04/10/2026)
+- Função do sono em animais sem cérebro: um estudo de 2026 na Cassiopea (Aguillon et al., Nature Communications, DOI 10.1038/s41467-025-67400-5) propõe que o sono protege o DNA dos neurônios, e a fonte [8] liga o sono da hidra à proliferação de células. O checador leu só o resumo; não está na lista de fontes. Não afirmar "ninguém sabe" sobre isso sem abrir.
 - Ratos: a causa da morte nunca foi identificada, e há debate sobre quanto dela se deve ao sono em si e quanto ao estresse do método.
 - Nenhum humano foi privado de sono até a morte em experimento; a afirmação "ficar sem dormir mata" só tem base direta em animais.
 - As fontes [11] e [17] foram lidas em comunicados e reportagens que descrevem o artigo, não no artigo original. As fontes [2], [3], [6], [7], [8], [9], [10], [13], [14] e [15] foram lidas pelo resumo no Europe PMC, porque as páginas do PubMed e do PMC bloquearam o acesso.
@@ -91,3 +100,4 @@ Termos de comparação para o roteiro: adulto humano, 7 a 8 horas por noite [1].
 19. Matt Wood, University of Chicago News, "Allan Rechtschaffen, sleep research pioneer, 1927-2021", 2021. https://news.uchicago.edu/story/allan-rechtschaffen-sleep-research-pioneer-1927-2021 (consultada em 03/10/2026; a citação é atribuída a um texto de 1971, que não foi aberto)
 20. Cirelli e Tononi, "Is Sleep Essential?", PLOS Biology, 2008. https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0060216 (consultada em 03/10/2026)
 21. Stephanie Pappas, Scientific American, "Which Creature Was the First to Take a Nap?", 2023. https://www.scientificamerican.com/article/which-was-the-first-creature-to-take-a-nap (consultada em 03/10/2026; jornalismo científico, usado só para a ordem de grandeza da idade do sono)
+22. Guinness World Records, "What's the limit to how long a human can stay awake?", 2023. https://www.guinnessworldrecords.com/news/2023/1/whats-the-limit-to-how-long-a-human-can-stay-awake-733188 (consultada em 04/10/2026)
