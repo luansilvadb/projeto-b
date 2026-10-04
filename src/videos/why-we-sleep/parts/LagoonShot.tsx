@@ -1,4 +1,10 @@
-import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
+import {
+  AbsoluteFill,
+  Easing,
+  interpolate,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { Cassiopea } from "../../../art/Cassiopea";
 import { Fish, type FishMood } from "../../../art/Fish";
 import { Camera, type CameraState } from "../../../components/Camera";
@@ -9,7 +15,7 @@ import { SvgLayer } from "../../../components/SvgLayer";
 import { fish as fishColors, ink, jellyfish, lagoon } from "../palette";
 import { JELLYFISH_SPOT, Lagoon } from "./Lagoon";
 import { PulseRings } from "./PulseRings";
-import { type PulseRhythm, pulseCycles, pulseRate, pulseShape } from "./timing";
+import { type PulseRhythm, pulseCycles, pulseRate, pulseShape } from "./pulse";
 
 export type FishSpot = {
   /** Centro do corpo e comprimento do peixe, no plano do assunto. */
@@ -43,6 +49,13 @@ type LagoonShotProps = {
   readonly droop?: number;
   readonly sway?: number;
   readonly nerves?: number;
+  /**
+   * Quanto ela já chegou ao lugar dela, de 0 a 1. Em 0 vem nadando de cabeça
+   * para cima, como qualquer água-viva; no caminho vira e, em 1, está pousada
+   * de cabeça para baixo. É como o vídeo apresenta o bicho: sem ver a virada,
+   * quem assiste não reconhece uma água-viva na forma pousada.
+   */
+  readonly landed?: number;
   /** Mostra os anéis que cada pulso solta na água. */
   readonly rings?: boolean;
   readonly fish?: FishSpot;
@@ -52,8 +65,11 @@ type LagoonShotProps = {
 
 const SWAY_SECONDS = 5;
 const BOB_SECONDS = 2.4;
-// Do centro da borda do sino até onde ele encosta na areia, em relação à largura do sino.
+// Do centro do desenho da água-viva até onde o sino encosta na areia, em relação à largura do sino.
 const RESTING = 62 / 330;
+// De onde ela vem nadando, em relação ao lugar em que pousa, e em que trecho do caminho ela vira.
+const SWIM_IN = { x: -520, y: -400 };
+const TURNING = [0.4, 0.85] as const;
 
 /**
  * O molde de todo plano da lagoa: o cenário, a água-viva pousada no mesmo
@@ -90,6 +106,7 @@ const LagoonView: React.FC<LagoonShotProps> = ({
   droop = 0,
   sway = 0,
   nerves = 0,
+  landed = 1,
   rings = false,
   fish,
   children,
@@ -99,13 +116,23 @@ const LagoonView: React.FC<LagoonShotProps> = ({
   const seconds = frame / fps;
   const { x, y, width } = JELLYFISH_SPOT;
   const cycles = pulseCycles(frame, fps, rhythm);
+  // Ela avança de lado primeiro e só desce no fim, já virada.
+  const away = 1 - landed;
+  const turned = interpolate(landed, TURNING, [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.inOut(Easing.cubic),
+  });
 
   return (
     <Camera {...camera}>
       <Lagoon
         colors={lagoon[time]}
         night={time === "night"}
-        shadows={[{ x, y: y + width * RESTING, width: width * 1.12 }]}
+        shadows={[
+          // A sombra só cresce quando ela chega perto da areia.
+          { x, y: y + width * RESTING, width: width * 1.12 * landed ** 3 },
+        ]}
       >
         {rings ? (
           <SvgLayer>
@@ -119,7 +146,11 @@ const LagoonView: React.FC<LagoonShotProps> = ({
             />
           </SvgLayer>
         ) : null}
-        <Place x={x} y={y}>
+        <Place
+          x={x + SWIM_IN.x * away}
+          y={y + SWIM_IN.y * away ** 2}
+          style={{ rotate: `${180 * (1 - turned)}deg` }}
+        >
           <Cassiopea
             width={width}
             colors={jellyfish[time]}

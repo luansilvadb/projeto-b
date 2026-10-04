@@ -13,7 +13,8 @@ import { ink } from "../palette";
 import { FISH_WATCHING, LAGOON } from "../parts/lagoonCameras";
 import { JELLYFISH_SPOT } from "../parts/Lagoon";
 import { LagoonShot } from "../parts/LagoonShot";
-import { PULSES_ASLEEP, mix, ramp, steady, cue } from "../parts/timing";
+import { cue, linear, mix, ramp } from "../../../components/timing";
+import { PULSES_ASLEEP, steady } from "../parts/pulse";
 
 // A lua fica onde a luz entra na lagoa, acima do título.
 const MOON = { x: 806, y: 74, radius: 40 };
@@ -33,7 +34,9 @@ const RETURN_SECONDS = 0.6;
 // No plano aberto, o peixe desce até a areia e dorme.
 const FISH_BED = { x: 1092, y: 752 };
 const RECEDE_SECONDS = 1;
-const LINE_GAP_SECONDS = 0.4;
+const LINE_GAP_SECONDS = 0.6;
+// Um instante de lagoa em silêncio antes de o título começar a se escrever.
+const VIGNETTE_LEAD_SECONDS = 0.4;
 
 type NervesShotProps = {
   readonly nightAt: number;
@@ -100,19 +103,32 @@ const NervesShot: React.FC<NervesShotProps> = ({
 };
 
 /** A câmera recua até a lagoa inteira; o peixe desce para dormir e o título acende. */
-const TitleShot: React.FC = () => {
+type TitleShotProps = {
+  /** Quadros de silêncio no fim da cena: a vinheta, em que o título se escreve. */
+  readonly holdFrames: number;
+};
+
+const TitleShot: React.FC<TitleShotProps> = ({ holdFrames }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, durationInFrames } = useVideoConfig();
   const recede = ramp(frame, 0, RECEDE_SECONDS * fps);
   const arrived = RECEDE_SECONDS * fps;
-  const titleAt = arrived;
+  // A vinheta começa quando a fala termina; sem silêncio pedido, o título entra com a câmera parada.
+  const vignetteAt = Math.max(arrived, durationInFrames - holdFrames);
+  const titleAt = vignetteAt + VIGNETTE_LEAD_SECONDS * fps;
   const asleep = frame >= arrived;
+  // Durante a vinheta a câmera se aproxima devagar dela, para o quadro não congelar.
+  const drift = linear(frame, vignetteAt, durationInFrames - vignetteAt);
 
   return (
     <>
       <LagoonShot
         time="night"
-        camera={cameraBetween(LAGOON.inside, LAGOON.wide, recede)}
+        camera={cameraBetween(
+          cameraBetween(LAGOON.inside, LAGOON.wide, recede),
+          LAGOON.wideEnd,
+          drift,
+        )}
         rhythm={steady(PULSES_ASLEEP)}
         droop={0.8}
         fish={{
@@ -172,15 +188,15 @@ export const NoBrainScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="a rede de nervos">
       <NervesShot
-        nightAt={cue(scene, "detalhe")}
-        openAt={cue(scene, "essa")}
-        nervesAt={cue(scene, "água")}
-        brainAt={cue(scene, "não")}
-        asideAt={cue(scene, "cérebro")}
+        nightAt={cue(scene, "estava")}
+        openAt={cue(scene, "sono")}
+        nervesAt={cue(scene, "Só")}
+        brainAt={cue(scene, "cérebro")}
+        asideAt={cue(scene, "não")}
       />
     </Shot>
     <Shot range={shots[1]} name="a lagoa inteira e o título">
-      <TitleShot />
+      <TitleShot holdFrames={scene.holdFrames} />
     </Shot>
   </>
 );

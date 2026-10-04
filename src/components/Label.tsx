@@ -10,6 +10,8 @@ type LabelProps = {
    * `light` de uma rampa da paleta, que são os que dão leitura ao texto escuro.
    */
   readonly tag?: string;
+  /** Raio da etiqueta, quando não é o da direção de arte: 999 faz uma pílula. */
+  readonly radius?: number;
   readonly children: React.ReactNode;
 };
 
@@ -18,6 +20,7 @@ export const Label: React.FC<LabelProps> = ({
   size = "label",
   color,
   tag,
+  radius = shape.tagRadius,
   children,
 }) => (
   <div
@@ -31,7 +34,7 @@ export const Label: React.FC<LabelProps> = ({
       ...(tag
         ? {
             background: tag,
-            borderRadius: shape.tagRadius,
+            borderRadius: radius,
             padding: "0.22em 0.6em",
           }
         : null),

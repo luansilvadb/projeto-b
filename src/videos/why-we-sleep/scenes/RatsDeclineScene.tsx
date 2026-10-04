@@ -6,7 +6,7 @@ import { palette, shape } from "../../../design/tokens";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { RATS, RatRow } from "../parts/RatRow";
 import { Stage } from "../parts/Stage";
-import { cue, ramp } from "../parts/timing";
+import { cue, ramp } from "../../../components/timing";
 
 // Dias em que o primeiro e o último rato chegaram ao fim, segundo o estudo.
 const FIRST_DAY = 11;

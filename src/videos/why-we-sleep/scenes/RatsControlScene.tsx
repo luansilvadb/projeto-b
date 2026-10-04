@@ -1,43 +1,60 @@
-import { useCurrentFrame, useVideoConfig } from "remotion";
-import { Appear } from "../../../components/Appear";
-import { Label } from "../../../components/Label";
+import { Tag } from "../parts/Tag";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
+import { framing } from "../../../components/Camera";
+import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { palette } from "../../../design/tokens";
+import { Pop } from "../../../components/Pop";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { RatRow } from "../parts/RatRow";
-import { Stage } from "../parts/Stage";
-import { cue } from "../parts/timing";
+import { Shot } from "../../../video/Shot";
+import { LabWall } from "../parts/Laboratory";
+import { RatDiscs } from "../parts/RatDiscs";
+import { cue } from "../../../components/timing";
+import { Lab } from "./FloorTestScene";
+import { DISCS_Y } from "./RatsAwakeScene";
+import { Bench } from "./RatsQuestionScene";
 
-export const RatsControlScene: React.FC<SceneProps> = ({ scene }) => {
+// De perto: três dos dez ratos enchem o quadro.
+const CLOSE = framing([960, DISCS_Y - 30], 2.6);
+// O disco deles gira e para: é na parada que eles dormem.
+const SPIN_SECONDS = 3;
+
+type ControlShotProps = {
+  /** Quadro do plano em que a diferença deles ganha nome. */
+  readonly sleepAt: number;
+};
+
+/** Os ratos de comparação: os mesmos discos, e eles cochilando entre um giro e outro, inteiros e bem. */
+const ControlShot: React.FC<ControlShotProps> = ({ sleepAt }) => {
   const frame = useCurrentFrame();
-  const { fps, width } = useVideoConfig();
-  const controlsAppear = cue(scene, "Outros");
+  const { fps } = useVideoConfig();
+  const seconds = frame / fps;
+  const spinning = wave(seconds, SPIN_SECONDS) > 0.6;
 
   return (
-    <Stage scene={scene} grave>
-      <Place x={width / 2} y={300}>
-        <Label size="note" tag={palette.sun.light}>
-          sem dormir
-        </Label>
-      </Place>
-      <RatRow y={440} color={palette.sun.light} />
-      <Place x={width / 2} y={640}>
-        <Appear at={controlsAppear}>
-          <Label size="note" tag={palette.ocean.light}>
+    <AbsoluteFill>
+      <Lab camera={CLOSE}>
+        <LabWall />
+        <Bench />
+        <RatDiscs
+          y={DISCS_Y}
+          state={() => (spinning ? "awake" : "asleep")}
+          seconds={seconds}
+          spinning={spinning}
+        />
+      </Lab>
+      <Place x={960} y={200}>
+        <Pop at={sleepAt}>
+          <Tag size="note" on="mint">
             podiam dormir
-          </Label>
-        </Appear>
+          </Tag>
+        </Pop>
       </Place>
-      <RatRow
-        y={780}
-        color={palette.ocean.light}
-        // Os que dormem piscam devagar, cada um no seu tempo.
-        opacity={(index) =>
-          frame < controlsAppear
-            ? 0
-            : 0.75 + 0.25 * Math.sin((frame / fps) * 2 + index)
-        }
-      />
-    </Stage>
+    </AbsoluteFill>
   );
 };
+
+export const RatsControlScene: React.FC<SceneProps> = ({ scene, shots }) => (
+  <Shot range={shots[0]} name="os ratos de comparação">
+    <ControlShot sleepAt={cue(scene, "podiam")} />
+  </Shot>
+);

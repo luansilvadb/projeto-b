@@ -62,6 +62,10 @@ type PersonProps = {
   readonly heldInFront?: boolean;
   /** A piscada, de 0 (como a expressão manda) a 1 (fechado). */
   readonly blink?: number;
+  /** Figurante de mau humor: com o rosto de dois pontos, ganha sobrancelhas juntas e boca caída. */
+  readonly grumpy?: boolean;
+  /** Óculos redondos: a cor da armação. */
+  readonly glasses?: string;
 };
 
 // A figura cabe nesta caixa, com os pés no meio da base.
@@ -324,6 +328,8 @@ export const Person: React.FC<PersonProps> = ({
   held,
   heldInFront = false,
   blink = 0,
+  grumpy = false,
+  glasses,
 }) => {
   const id = useId();
   const face = blinking(FACES[expression], blink);
@@ -473,21 +479,61 @@ export const Person: React.FC<PersonProps> = ({
             fill={colors.hairLight}
           />
           {plainFace ? (
-            [-1, 1].map((side) => (
-              <circle
-                key={side}
-                cx={side * EYE.gap}
-                cy={EYE.y}
-                r={11}
-                fill={colors.pupil}
-              />
-            ))
+            <>
+              {[-1, 1].map((side) => (
+                <circle
+                  key={side}
+                  cx={side * EYE.gap}
+                  cy={EYE.y}
+                  r={11}
+                  fill={colors.pupil}
+                />
+              ))}
+              {grumpy ? (
+                <g
+                  stroke={colors.hair}
+                  strokeWidth={8}
+                  strokeLinecap="round"
+                  fill="none"
+                >
+                  {[-1, 1].map((side) => (
+                    <line
+                      key={side}
+                      x1={side * (EYE.gap + 22)}
+                      y1={EYE.y - 40}
+                      x2={side * (EYE.gap - 14)}
+                      y2={EYE.y - 26}
+                    />
+                  ))}
+                  <path
+                    d={`M-16,${EYE.y + 56} Q0,${EYE.y + 46} 16,${EYE.y + 56}`}
+                    stroke={colors.mouth}
+                    strokeWidth={7}
+                  />
+                </g>
+              ) : null}
+            </>
           ) : (
             <>
               {eyes(face, colors, id)}
               {mouth(face.mouth, colors.mouth)}
             </>
           )}
+          {glasses ? (
+            <g fill="none" stroke={glasses} strokeWidth={7}>
+              {[-1, 1].map((side) => (
+                <circle
+                  key={side}
+                  cx={side * EYE.gap}
+                  cy={EYE.y}
+                  r={EYE.radius + 9}
+                />
+              ))}
+              <path
+                d={`M${-EYE.gap + EYE.radius + 9},${EYE.y - 6} Q0,${EYE.y - 14} ${EYE.gap - EYE.radius - 9},${EYE.y - 6}`}
+              />
+            </g>
+          ) : null}
         </g>
       </g>
     </svg>

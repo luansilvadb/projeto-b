@@ -25,7 +25,15 @@ export type ScriptScene = {
   readonly shots: readonly ScriptShot[];
   /** Números das fontes em research.md que sustentam a cena. */
   readonly sources?: readonly number[];
+  /**
+   * Silêncio a mais depois da última frase, em milissegundos: a imagem segue
+   * sem fala, só com a trilha. É o tempo de uma vinheta ou de um respiro.
+   */
+  readonly holdMs?: number;
 };
+
+/** Mais que isto sem fala deixa de ser respiro e vira buraco na narração. */
+export const MAX_HOLD_MS = 8000;
 
 export type MusicSpec = {
   /** Descrição de estilo, clima e instrumentos, em inglês. */
@@ -187,6 +195,18 @@ const findSceneProblems = (scene: unknown, label: string): string[] => {
     !(Array.isArray(scene.sources) && scene.sources.every(Number.isInteger))
   ) {
     problems.push(`${label}: "sources" precisa ser uma lista de números`);
+  }
+  if (
+    scene.holdMs !== undefined &&
+    !(
+      Number.isInteger(scene.holdMs) &&
+      Number(scene.holdMs) > 0 &&
+      Number(scene.holdMs) <= MAX_HOLD_MS
+    )
+  ) {
+    problems.push(
+      `${label}: "holdMs" precisa ser um inteiro de 1 a ${MAX_HOLD_MS}`,
+    );
   }
   return problems;
 };

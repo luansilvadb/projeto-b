@@ -36,7 +36,7 @@ Um tema como sono, vacina ou buraco negro é do terceiro molde, e pode pegar emp
 8. **Termo técnico vem depois da explicação.** "Essas reações químicas complexas são chamadas de vias metabólicas." O mistério também só ganha nome depois de sentido ("Este é o paradoxo de Peto").
 9. **A pergunta é placa de trânsito.** O vídeo de Peto não faz nenhuma; o do leite faz seis, e todas abrem um bloco com a dúvida que o espectador teria ali ("Ok, mas se o leite tem sido uma parte valiosa da nossa dieta há milhares de anos, por que é tão controverso?"; "Muito bem. Então, o leite é saudável?"). Pergunta de efeito, que o texto não responde em seguida, não existe em nenhum dos nove.
 10. **Cada bloco fecha com um veredito em linguagem simples.** "Câncer matando câncer." "Portanto, não há nada de especial com que se preocupar." "E aqui os efeitos são muito reais." Antes de virar de capítulo, o texto pode resumir o que ficou ("Então, em poucas palavras, a gratidão redireciona sua atenção às coisas boas que você tem"). O espectador sai de cada bloco sabendo o que ficou decidido. No vídeo do clima, o bloco seguinte abre derrubando esse veredito ("Portanto... Mas isso ainda não é a história toda"), e é isso que puxa o espectador de um bloco para o outro.
-11. **O que acontece é contado acontecendo.** "A bolha cresce rapidamente... E então, quase tão rápido quanto emerge, ela para." "Com a mutação certa, uma célula perderá sua capacidade de autodestruição; outra mutação, e ela desenvolverá a capacidade de se esconder." O espectador assiste ao processo, no presente e passo a passo. "Pesquisadores mediram que..." é relato; quem mediu vai para a fonte no canto da tela.
+11. **O que acontece é contado acontecendo.** "A bolha cresce rapidamente... E então, quase tão rápido quanto emerge, ela para." "Com a mutação certa, uma célula perderá sua capacidade de autodestruição; outra mutação, e ela desenvolverá a capacidade de se esconder." O espectador assiste ao processo, no presente e passo a passo. "Pesquisadores mediram que..." é relato; quem mediu vai para a fonte no canto da tela, a não ser que seja personagem do vídeo, conforme `fio`.
 12. **O mapa é dito antes do caminho, e o narrador recapitula no meio.** "Para os cientistas, há duas respostas para o paradoxo." "Quatro fatores: dois explicam por que as emissões ainda estão aumentando e dois explicam como podemos impedir isso." "Pergunta 1 de 3." O espectador sabe quantas partes faltam e por que cada uma existe. Na virada do vídeo, uma frase junta o que ficou: "OK, até agora vimos que... O que é o oposto do que deveria estar acontecendo."
 13. **O fim devolve algo a quem assiste.** O que fazer, por que isso importa ("abrir caminho para novas terapias") ou uma frase para levar ("aproveite seu churrasco, mas também o respeite").
 
@@ -52,17 +52,9 @@ Um tema como sono, vacina ou buraco negro é do terceiro molde, e pode pegar emp
 
 Nos outros moldes muda o miolo: as alegações são pesadas uma a uma, cada uma com o que se disse, o que os estudos melhores mostram, a ressalva e o veredito (controvérsia); a metáfora ou a conta cresce bloco a bloco (vida de quem assiste); ou um lado do paradoxo é construído em degraus, o outro volta, e o vídeo termina no que fazer (fato do mundo).
 
-**Medidas do texto**, tiradas por `pnpm check-script` (faixa dos nove vídeos):
+**Medidas do texto.** O `pnpm check-script` tira cinco medidas e as compara com a faixa dos nove vídeos: palavras por frase, frases de até 6 palavras, frases de 25 ou mais, "você" e "nós" a cada 100 palavras, e conectivos a cada 100 palavras. As faixas estão num lugar só, `PROFILE_CRITERIA` em `src/narration/profile.ts`; o valor de cada vídeo, no estudo em `referencias/narracao-kurzgesagt.md`.
 
-| Medida | Faixa | Hábitos, semanas, carne, Peto, leite, gratidão, bomba, clima, clima 2 |
-|---|---|---|
-| Palavras por frase (mediana) | 13 a 18 | 16, 14,5, 15, 13,5, 14, 14, 16, 15,5 e 16 |
-| Frases de até 6 palavras | até 15% | 7%, 8%, 11%, 15%, 7%, 14%, 14%, 6% e 11% |
-| Frases de 25 palavras ou mais | 6% a 23% | 12%, 11%, 16%, 9%, 12%, 10%, 20%, 22% e 12% |
-| "você", "nós" e verbos como "usamos" a cada 100 palavras | 1 a 8 | 6,0, 6,3, 3,7, 1,3, 1,8, 4,4, 2,0, 1,8 e 3,4 |
-| Conectivos a cada 100 palavras | 2,6 a 7 | 4,9, 5,2, 4,0, 4,0, 3,6, 4,3, 3,6, 2,7 e 2,7 |
-
-**Medida é alarme, não qualidade.** O vídeo de Peto quase não diz "você" e prende do mesmo jeito; um texto ruim passa em todas escrevendo "você" à toa. Quem decide é a leitura pelas perguntas abaixo.
+**Medida é alarme, não qualidade.** O vídeo de Peto quase não diz "você" e prende do mesmo jeito; um texto ruim passa em todas escrevendo "você" à toa. A quinta versão do nosso primeiro roteiro passou nas cinco e foi reprovada como texto de IA; o que faltava está em `fio`. Quem decide é a leitura pelas perguntas abaixo.
 
 **Perguntas para cada bloco:**
 
@@ -86,14 +78,14 @@ Nos outros moldes muda o miolo: as alegações são pesadas uma a uma, cada uma 
 3. Liste o que o espectador precisa saber para esperar X. Isso é o bloco de mecanismo, e vem antes de qualquer evidência.
 4. Escolha os poucos elementos do vídeo (até quatro bichos, coisas ou personagens) e a ordem em que são medidos uns contra os outros.
 5. Para cada bloco, escreva em tópicos antes do texto: a cadeia ("A, então B, por isso C"), o "e daí?" que ele responde, a tradução de cada número e o veredito que o fecha.
-6. Só então escreva as frases, conforme `narracao`.
-7. Rode `pnpm check-script` e leia o perfil. Medida fora da faixa manda voltar ao passo 2 ou 5, não trocar palavras.
-8. Leia o bloco pelas perguntas acima.
+6. Monte a ficha do fio, conforme `fio`. Estes treze padrões dizem o que o texto explica; o fio diz como ele é contado, e um roteiro que cumpre só os treze soa montado.
+7. Só então escreva as frases, conforme `narracao`.
+8. Rode `pnpm check-script` e leia o perfil. Medida fora da faixa manda voltar ao passo 2 ou 5, não trocar palavras.
+9. Leia o bloco pelas perguntas acima.
 
 ## DEPENDÊNCIAS
 - angulo: fornece a tese; aqui ela é reformulada como expectativa e quebra.
 - analogias: fornece a construção da metáfora; aqui ela pode virar o dispositivo do vídeo inteiro.
-- narracao: fornece as regras de frase.
 
 ## LIMITES
 - Não copiar frases, exemplos ou metáforas dos vídeos de referência: o que se usa são os padrões.

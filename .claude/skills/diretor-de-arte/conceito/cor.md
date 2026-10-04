@@ -8,7 +8,7 @@ Que paletas o vídeo usa, e quando troca de uma para outra?
 
 ## RESPOSTA
 
-**O que a referência faz.** Um quadro tem em média 4,4 cores (de 2,6 a 5,7, conforme o vídeo), e a cor dominante ocupa cerca de metade dele. O fundo é claro em 42% do tempo, médio em 16% e escuro em 39%. A cor dominante troca 11 vezes por minuto (de 7 a 19). No vídeo inteiro, a família de cor mais comum fica com 26% das cores vivas (de 15% a 47%): nenhum vídeo é de uma cor só.
+**O que a referência faz.** Um quadro tem em média 4,4 cores, e a cor dominante ocupa cerca de metade dele. O fundo é claro em 42% do tempo, médio em 16% e escuro em 39%. A cor dominante troca 11 vezes por minuto. No vídeo inteiro, a família de cor mais comum fica com 26% das cores vivas: nenhum vídeo é de uma cor só. As faixas dessas três medidas são as que o `pnpm critique` confere.
 
 **Paleta de plano.** Quatro papéis:
 
@@ -52,7 +52,7 @@ Cada vídeo define de dois a quatro modos. O espectador os aprende no primeiro m
 
 ## DEPENDÊNCIAS
 - elenco: fornece os personagens, cujas cores próprias precisam funcionar em todos os modos.
-- entrevista: define que as paletas são decisão do usuário.
+- entrevista-imagem: define que as paletas são decisão do usuário.
 
 ## LIMITES
 - Sombra, brilho e borda de luz como forma pertencem a `forma`; luz de cenário, a `cenario`.

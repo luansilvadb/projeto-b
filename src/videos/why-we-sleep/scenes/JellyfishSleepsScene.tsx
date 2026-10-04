@@ -1,23 +1,32 @@
 import { useId } from "react";
-import { random, useCurrentFrame, useVideoConfig } from "remotion";
+import {
+  AbsoluteFill,
+  random,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
+import { Cassiopea } from "../../../art/Cassiopea";
 import { taperPath, type Point } from "../../../art/shapes";
 import { cameraBetween } from "../../../components/Camera";
 import { wave } from "../../../components/Idle";
+import { Onomatopoeia } from "../../../components/Onomatopoeia";
+import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { Shot, type Wipe } from "../../../video/Shot";
-import { ink } from "../palette";
+import { Shot } from "../../../video/Shot";
+import { ink, jellyfish, lagoon, sound } from "../palette";
+import { LAB, LabBench, LabWall, TANK_CENTER, Tank } from "../parts/Laboratory";
+import { JELLYFISH_SPOT } from "../parts/Lagoon";
 import { LAGOON } from "../parts/lagoonCameras";
 import { LagoonShot } from "../parts/LagoonShot";
+import { cue, mix, ramp, settle } from "../../../components/timing";
 import {
   PULSES_ASLEEP,
   PULSES_AWAKE,
-  cue,
-  mix,
-  ramp,
-  settle,
+  pulseShape,
   steady,
-} from "../parts/timing";
+} from "../parts/pulse";
+import { JELLYFISH_WIDTH, Lab, RESTING_Y } from "./FloorTestScene";
 
 // Altura de cada jato de água que a sacode, no plano do assunto.
 const JETS = [596, 634, 672];
@@ -27,14 +36,8 @@ const JET_SECONDS = 0.3;
 const SHAKE = 1.6;
 const SHAKE_SECONDS = 0.18;
 const ROUSE_SECONDS = 0.5;
-// O peixe dorme perto dela e pula quando a água chega.
-const FISH_ASLEEP = { x: 1250, y: 700 };
-const FISH_AWAKE = { x: 1230, y: 600 };
-const JUMP_SECONDS = 0.3;
-const DAY_WIPE: Wipe = { frames: 9, from: "left" };
-// De dia, o peixe se afasta devagar, sem fazer onda.
-const FISH_LEAVING = { from: 1150, to: 1320, y: 560 };
-
+// Quanto a luz apagada do laboratório escurece o quadro.
+const LIGHTS_OFF = 0.85;
 type JetsProps = {
   /** Quanto as correntes já avançaram, de 0 (fora do quadro) a 1 (nela). */
   readonly reach: number;
@@ -124,69 +127,106 @@ const Jets: React.FC<JetsProps> = ({ reach }) => {
   );
 };
 
+// No tanque, os jatos vêm da parede de vidro: o mesmo desenho da lagoa, deslocado até onde ela pousa.
+const TANK_OFFSET = [
+  TANK_CENTER - JELLYFISH_SPOT.x,
+  RESTING_Y - JELLYFISH_SPOT.y,
+];
+// O peixe chega perto e a cutuca com o focinho.
+const FISH_POKING = { x: 1150, y: 640, reach: 22 };
+const POKE_SECONDS = 0.9;
+
 type JetsShotProps = {
   /** Quadro do plano em que os jatos entram. */
   readonly jetsAt: number;
 };
 
-/** De noite, a água a sacode: os braços se agitam e o peixe acorda assustado. */
+/** No tanque, de noite, os jatos de água a cutucam sem parar: ela não consegue descansar. */
 const JetsShot: React.FC<JetsShotProps> = ({ jetsAt }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, durationInFrames } = useVideoConfig();
   const seconds = frame / fps;
   const reach = settle(frame, jetsAt, JET_SECONDS * fps);
-  const hit = jetsAt + JET_SECONDS * fps;
-  const roused = ramp(frame, hit, ROUSE_SECONDS * fps);
-  // O peixe reage alguns quadros depois da água chegar.
-  const jump = settle(frame, hit + 4, JUMP_SECONDS * fps);
+  const roused = ramp(frame, jetsAt + JET_SECONDS * fps, ROUSE_SECONDS * fps);
 
   return (
-    <LagoonShot
-      time="night"
-      camera={LAGOON.medium}
-      rhythm={[
-        { from: 0, perMinute: PULSES_ASLEEP },
-        { from: hit, perMinute: PULSES_AWAKE },
-      ]}
-      droop={mix(0.7, 0.15, roused)}
-      sway={reach >= 1 ? SHAKE * wave(seconds, SHAKE_SECONDS) : 0}
-      fish={{
-        x: mix(FISH_ASLEEP.x, FISH_AWAKE.x, jump),
-        y:
-          mix(FISH_ASLEEP.y, FISH_AWAKE.y, jump) -
-          40 * Math.sin(jump * Math.PI),
-        width: 110,
-        mood: jump > 0 ? "scared" : "asleep",
-        look: [-0.8, 0.3],
-        tilt: mix(8, 0, jump),
-        swimming: jump > 0 && jump < 1,
-      }}
-    >
-      <Jets reach={reach} />
-    </LagoonShot>
+    <AbsoluteFill>
+      <Lab
+        camera={cameraBetween(
+          LAB.medium,
+          LAB.mediumEnd,
+          frame / durationInFrames,
+        )}
+      >
+        <LabWall />
+        <LabBench />
+        <Tank platform={TANK_CENTER}>
+          <Place
+            x={TANK_CENTER}
+            y={RESTING_Y}
+            style={{
+              rotate: `${reach >= 1 ? SHAKE * wave(seconds, SHAKE_SECONDS) : 0}deg`,
+            }}
+          >
+            <Cassiopea
+              width={JELLYFISH_WIDTH}
+              colors={jellyfish.day}
+              droop={mix(0.7, 0.15, roused)}
+              pulse={pulseShape((seconds * PULSES_AWAKE) / 60)}
+            />
+          </Place>
+          <AbsoluteFill
+            style={{ translate: `${TANK_OFFSET[0]}px ${TANK_OFFSET[1]}px` }}
+          >
+            <Jets reach={reach} />
+          </AbsoluteFill>
+        </Tank>
+      </Lab>
+      {/* A noite no laboratório: a luz apagada escurece tudo, menos o que se entende do tanque. */}
+      <AbsoluteFill
+        style={{
+          // O tanque fica aceso no meio; em volta, o laboratório mergulha no índigo da noite.
+          background: `radial-gradient(ellipse 36% 46% at 50% 52%, #FFFFFF 50%, ${lagoon.night.water[1]})`,
+          opacity: LIGHTS_OFF,
+          mixBlendMode: "multiply",
+        }}
+      />
+      <Place x={520} y={330}>
+        <Onomatopoeia
+          at={jetsAt}
+          size={110}
+          color={sound.cool}
+          edge={sound.edge}
+        >
+          PSSST
+        </Onomatopoeia>
+      </Place>
+    </AbsoluteFill>
   );
 };
 
-/** De dia, com a lagoa clara, ela está como de noite; a câmera chega perto e o peixe se afasta. */
+/** De dia, com sol na lagoa, ela para de pulsar e cochila; o peixe a cutuca e ela não reage. */
 const AsleepShot: React.FC = () => {
   const frame = useCurrentFrame();
-  const { durationInFrames } = useVideoConfig();
-  const progress = frame / durationInFrames;
+  const { fps, durationInFrames } = useVideoConfig();
+  const poke = Math.max(0, wave(frame / fps, POKE_SECONDS));
 
   return (
     <LagoonShot
       time="day"
-      camera={cameraBetween(LAGOON.asleep, LAGOON.asleepEnd, progress)}
+      camera={cameraBetween(
+        LAGOON.medium,
+        LAGOON.asleep,
+        0.3 * (frame / durationInFrames),
+      )}
       rhythm={steady(PULSES_ASLEEP)}
       droop={1}
-      rings
       fish={{
-        x: mix(FISH_LEAVING.from, FISH_LEAVING.to, progress),
-        y: FISH_LEAVING.y,
+        x: FISH_POKING.x - FISH_POKING.reach * poke,
+        y: FISH_POKING.y,
         width: 110,
-        flip: true,
-        tilt: -6,
-        look: [0.4, 0.2],
+        look: [-1, 0.1],
+        swimming: poke > 0,
       }}
     />
   );
@@ -197,10 +237,10 @@ export const JellyfishSleepsScene: React.FC<SceneProps> = ({
   shots,
 }) => (
   <>
-    <Shot range={shots[0]} name="os jatos a sacodem" hold={DAY_WIPE.frames}>
-      <JetsShot jetsAt={cue(scene, "alguém")} />
+    <Shot range={shots[0]} name="os jatos a noite inteira">
+      <JetsShot jetsAt={cue(scene, "mantida")} />
     </Shot>
-    <Shot range={shots[1]} name="de dia, dormindo" wipe={DAY_WIPE}>
+    <Shot range={shots[1]} name="de dia, ela cochila">
       <AsleepShot />
     </Shot>
   </>

@@ -1,42 +1,63 @@
-import { Appear } from "../../../components/Appear";
+import { useVideoConfig } from "remotion";
+import { Grain } from "../../../components/Grain";
 import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
-import { palette } from "../../../design/tokens";
+import { Pop } from "../../../components/Pop";
+import { SlowPush } from "../../../components/SlowPush";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { Answers } from "../parts/Answers";
-import { Stage } from "../parts/Stage";
-import { cue } from "../parts/timing";
+import { Shot } from "../../../video/Shot";
+import { idea, ink } from "../palette";
+import { ANSWERS, AnswerIcon } from "../parts/AnswerIcon";
+import { IdeaBackdrop } from "../parts/IdeaBackdrop";
+import { ShopFront } from "../parts/ShopFront";
+import { DOOR_MARK } from "./ButWhatScene";
 
-const ICONS_Y = 440;
-const LABELS_Y = 690;
-// Cada resposta entra na palavra da narração que a nomeia.
-const ANSWERS = [
-  { x: 520, cue: "memórias", text: "memórias", tag: palette.sun.base },
-  { x: 960, cue: "conexões", text: "conexões", tag: palette.ocean.light },
-  { x: 1400, cue: "Talvez", text: "limpeza?", tag: palette.accent.base },
-] as const;
+const ICONS = { xs: [700, 1140, 1580], y: 560, size: 400 };
+const STAGGER_SECONDS = 0.3;
 
-export const WhySleepScene: React.FC<SceneProps> = ({ scene }) => (
-  <Stage scene={scene} grave>
-    <Answers
-      xs={[ANSWERS[0].x, ANSWERS[1].x, ANSWERS[2].x]}
-      y={ICONS_Y}
-      size={220}
-      at={[
-        cue(scene, ANSWERS[0].cue),
-        cue(scene, ANSWERS[1].cue),
-        cue(scene, ANSWERS[2].cue),
-      ]}
-      disputed
-    />
-    {ANSWERS.map((answer) => (
-      <Place key={answer.cue} x={answer.x} y={LABELS_Y}>
-        <Appear at={cue(scene, answer.cue)}>
-          <Label size="note" tag={answer.tag}>
-            {answer.text}
-          </Label>
-        </Appear>
+/** A porta baixada, por fora, de noite, ainda com a interrogação. */
+const StillAskingShot: React.FC = () => (
+  <ShopFront time="night" shutter={1} busy>
+    <Place x={DOOR_MARK.x - 40} y={DOOR_MARK.y}>
+      <Label size="display" color={ink.moon}>
+        ?
+      </Label>
+    </Place>
+  </ShopFront>
+);
+
+/** A interrogação fica pequena no canto, e as três respostas acendem ao lado dela. */
+const EnoughShot: React.FC = () => {
+  const { fps } = useVideoConfig();
+  return (
+    <SlowPush
+      focus={[1160, 560]}
+      backdrop={<IdeaBackdrop hue="lilac" spot={[0.6, 0.5]} />}
+    >
+      <Place x={300} y={560}>
+        <Label size="headline" color={idea.lilac.contact}>
+          ?
+        </Label>
       </Place>
-    ))}
-  </Stage>
+      {ANSWERS.map((answer, index) => (
+        <Place key={answer} x={ICONS.xs[index]} y={ICONS.y}>
+          <Pop at={(0.2 + index * STAGGER_SECONDS) * fps}>
+            <AnswerIcon answer={answer} size={ICONS.size} />
+          </Pop>
+        </Place>
+      ))}
+      <Grain />
+    </SlowPush>
+  );
+};
+
+export const WhySleepScene: React.FC<SceneProps> = ({ shots }) => (
+  <>
+    <Shot range={shots[0]} name="a ciência ainda está procurando">
+      <StillAskingShot />
+    </Shot>
+    <Shot range={shots[1]} name="mas já sabemos o bastante">
+      <EnoughShot />
+    </Shot>
+  </>
 );

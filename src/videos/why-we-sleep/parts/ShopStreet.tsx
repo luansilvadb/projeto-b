@@ -1,5 +1,6 @@
 import {
   AbsoluteFill,
+  interpolateColors,
   random,
   useCurrentFrame,
   useVideoConfig,
@@ -15,6 +16,38 @@ type ShopStreetProps = {
   readonly ground: number;
   /** Onde fica o sol ou a lua. */
   readonly orb?: readonly [number, number];
+  /** Entre o dia (1) e a noite (0), quando a rua passa de um ao outro; sem valor, vale `time`. */
+  readonly daylight?: number;
+};
+
+type StreetColors = {
+  readonly sky: readonly [string, string];
+  readonly far: string;
+  readonly farWindow: string;
+  readonly sidewalk: string;
+  readonly curb: string;
+  readonly road: string;
+  readonly orb: string;
+  readonly star: string;
+  readonly contact: string;
+};
+
+/** As cores da rua a meio caminho entre o dia e a noite. */
+const streetAt = (daylight: number): StreetColors => {
+  const { day, night } = street;
+  const mixed = (a: string, b: string) =>
+    interpolateColors(daylight, [0, 1], [a, b]);
+  return {
+    sky: [mixed(night.sky[0], day.sky[0]), mixed(night.sky[1], day.sky[1])],
+    far: mixed(night.far, day.far),
+    farWindow: mixed(night.farWindow, day.farWindow),
+    sidewalk: mixed(night.sidewalk, day.sidewalk),
+    curb: mixed(night.curb, day.curb),
+    road: mixed(night.road, day.road),
+    orb: mixed(night.orb, day.orb),
+    star: night.star,
+    contact: mixed(night.contact, day.contact),
+  };
 };
 
 // Prédios ao fundo: x, largura e altura acima da calçada. Vão além do quadro para a câmera poder deslizar.
@@ -47,12 +80,13 @@ export const ShopStreet: React.FC<ShopStreetProps> = ({
   time,
   ground,
   orb = [1560, 190],
+  daylight,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const seconds = frame / fps;
-  const colors = street[time];
-  const night = time === "night";
+  const colors = daylight === undefined ? street[time] : streetAt(daylight);
+  const night = daylight === undefined ? time === "night" : daylight < 0.5;
 
   return (
     <>

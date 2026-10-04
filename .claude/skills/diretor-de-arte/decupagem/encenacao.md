@@ -37,6 +37,7 @@ Texto solto na tela não é degrau nenhum.
 | Tempo passando | um ciclo visível: sol e lua, calendário que se preenche, estações mudando ao fundo |
 | Dentro e fora | a mesma cena pintada duas vezes, uma no mundo e outra por dentro |
 | Processo contínuo | um plano só, que muda de estado a cada oração |
+| Um bloco que percorre lugares vizinhos (dentro e fora, quem está e quem chega) | um cenário só, desenhado como o caminho do argumento: cada oração tem a sua estação, um personagem-guia leva a câmera de uma à outra, e a virada da fala cai numa passagem (porta, superfície, borda) |
 | Ausência ("não tem cérebro") | o lugar vazio onde a coisa estaria, em contorno |
 | Incerteza ou disputa | a imagem também hesita: duas versões lado a lado, interrogação presa ao objeto |
 | Fim de uma ideia | um plano curto de alguém reagindo |

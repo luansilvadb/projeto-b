@@ -1,3 +1,4 @@
+import { Leftovers } from "../../../components/Actors";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { Cassiopea } from "../../../art/Cassiopea";
 import { Person } from "../../../art/Person";
@@ -28,13 +29,12 @@ import {
 } from "../parts/Laboratory";
 import {
   ALREADY_SHOWN,
-  PULSES_ASLEEP,
   cue,
   mix,
-  pulseShape,
   ramp,
   settle,
-} from "../parts/timing";
+} from "../../../components/timing";
+import { PULSES_ASLEEP, pulseShape } from "../parts/pulse";
 
 /** Onde a pesquisadora fica nos planos de laboratório: os pés dela, atrás da bancada. */
 export const RESEARCHER = { x: 380, y: 980, height: 760, lean: 5 };
@@ -141,7 +141,10 @@ type LabProps = {
 export const Lab: React.FC<LabProps> = ({ camera, children }) => (
   <AbsoluteFill>
     <Camera {...camera}>
-      <Layer depth={1}>{children}</Layer>
+      <Layer depth={1}>
+        {children}
+        <Leftovers />
+      </Layer>
     </Camera>
     <Grain />
   </AbsoluteFill>
@@ -231,7 +234,7 @@ type PullShotProps = {
 };
 
 /** A câmera entra no tanque; a mão de luva segura a plataforma e a puxa de uma vez. */
-const PullShot: React.FC<PullShotProps> = ({ pulledAt }) => {
+export const PullShot: React.FC<PullShotProps> = ({ pulledAt }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const seconds = frame / fps;
@@ -291,12 +294,12 @@ export const FloorTestScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="dormindo ou parada?">
       <TankShot
-        leanAt={cue(scene, "alguém")}
-        questionsAt={[cue(scene, "dormindo"), cue(scene, "parada")]}
+        leanAt={cue(scene, "provar")}
+        questionsAt={[cue(scene, "dormia"), cue(scene, "parada")]}
       />
     </Shot>
     <Shot range={shots[1]} name="a mão puxa a plataforma">
-      <PullShot pulledAt={cue(scene, "tiraram") - shots[1].from} />
+      <PullShot pulledAt={cue(scene, "puxaram") - shots[1].from} />
     </Shot>
   </>
 );

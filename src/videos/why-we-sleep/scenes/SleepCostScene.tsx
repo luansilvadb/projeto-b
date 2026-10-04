@@ -1,3 +1,4 @@
+import { Tag } from "../parts/Tag";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { Person } from "../../../art/Person";
 import { Silhouette } from "../../../art/Silhouettes";
@@ -10,7 +11,6 @@ import {
 } from "../../../components/Camera";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
-import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
 import { POP_SECONDS, Pop, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
@@ -30,7 +30,8 @@ import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import { LabWall } from "../parts/Laboratory";
 import { LAGOON } from "../parts/lagoonCameras";
 import { LagoonShot } from "../parts/LagoonShot";
-import { PULSES_ASLEEP, cue, mix, ramp, steady } from "../parts/timing";
+import { cue, mix, ramp } from "../../../components/timing";
+import { PULSES_ASLEEP, steady } from "../parts/pulse";
 
 /** Fração do dia que uma pessoa passa dormindo: cerca de um terço. As barras de 24 horas das outras cenas usam o mesmo valor. */
 export const HUMAN_SLEEP = 1 / 3;
@@ -295,9 +296,9 @@ const ThirdShot: React.FC<ThirdShotProps> = ({ peopleAt, thirdAt }) => {
           </Place>
           <Place x={THIRDS.x[2]} y={sleeperTop - 140}>
             <Pop at={thirdAt}>
-              <Label size="note" color={ink.dark} tag={ink.tag}>
+              <Tag size="note" on="peach">
                 1/3 da vida
-              </Label>
+              </Tag>
             </Pop>
           </Place>
         </Layer>
@@ -314,16 +315,16 @@ export const SleepCostScene: React.FC<SceneProps> = ({ scene, shots }) => {
     <>
       <Shot range={shots[0]} name="cinco segundos" hold={DRAIN.frames}>
         <WatchShot
-          alarmAt={cue(scene, "problema")}
+          alarmAt={cue(scene, "segundos")}
           flashAt={cue(scene, "cinco")}
           diveAt={watchFrames - DIVE_SECONDS * fps}
         />
       </Shot>
       <Shot range={shots[1]} name="o predador chega" wipe={DRAIN}>
         <PredatorShot
-          loomAt={cue(scene, "dormindo") - shots[1].from}
-          noticeAt={cue(scene, "notar") - shots[1].from}
-          scareAt={cue(scene, "perigo") - shots[1].from}
+          loomAt={cue(scene, "tempo") - shots[1].from}
+          noticeAt={cue(scene, "virar") - shots[1].from}
+          scareAt={cue(scene, "comida") - shots[1].from}
         />
       </Shot>
       <Shot range={shots[2]} name="um terço da vida">

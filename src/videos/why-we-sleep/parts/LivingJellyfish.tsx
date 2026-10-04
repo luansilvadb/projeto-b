@@ -5,7 +5,7 @@ import {
   type PulseRhythm,
   pulseCycles,
   pulseShape,
-} from "./timing";
+} from "./pulse";
 
 type LivingJellyfishProps = {
   readonly size: number;

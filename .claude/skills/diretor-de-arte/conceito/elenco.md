@@ -54,12 +54,11 @@ Quem conduz o vídeo na tela, e o que ganha rosto?
 7. Depois da decupagem, conte os planos com uma figura de olhos na tela. Na referência são mais de 60% quando o tema tem gente ou bicho, e de 30% a 50% quando o assunto é planta, paisagem ou espaço.
 
 ## DEPENDÊNCIAS
-- entrevista: define que o elenco e o rosto de bicho sem olhos são decisões do usuário, e onde ficam registrados.
+- entrevista-imagem: define que o elenco e o rosto de bicho sem olhos são decisões do usuário, e onde ficam registrados.
 
 ## LIMITES
 - A construção do desenho pertence a `personagem` e a `forma`.
 - Nenhum personagem existente de outro canal serve de molde.
-- Rosto não entra onde afirmaria algo falso sobre o que é mostrado.
 
 ## EXEMPLO
 > Vídeo sobre por que dormimos.

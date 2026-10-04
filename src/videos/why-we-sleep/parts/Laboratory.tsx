@@ -7,6 +7,7 @@ import {
 } from "remotion";
 import { taperPath, type Point } from "../../../art/shapes";
 import { framing } from "../../../components/Camera";
+import { Wall } from "../../../components/Camera";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { lab, researcher } from "../palette";
 
@@ -34,23 +35,25 @@ const RISE = 70;
 
 /** A parede do laboratório, com a prateleira de vidraria ao fundo. Fica atrás de tudo. */
 export const LabWall: React.FC = () => (
-  <AbsoluteFill
-    style={{ background: `linear-gradient(${lab.wall[0]}, ${lab.wall[1]})` }}
-  >
-    <SvgLayer>
-      <rect x={0} y={206} width={1920} height={16} rx={8} fill={lab.shelf} />
-      {/* Vidraria na prateleira: em silhueta, perto da cor da parede, para não disputar com o tanque. */}
-      <g fill={lab.shelf}>
-        <rect x={120} y={96} width={64} height={110} rx={16} />
-        <path d="M250,206 L282,120 L282,84 L322,84 L322,120 L354,206 Z" />
-        <rect x={430} y={126} width={96} height={80} rx={14} />
-        <circle cx={640} cy={160} r={46} />
-        <rect x={622} y={84} width={36} height={50} rx={8} />
-        <rect x={1640} y={70} width={84} height={136} rx={18} />
-        <path d="M1790,206 L1816,132 L1816,96 L1850,96 L1850,132 L1876,206 Z" />
-      </g>
-    </SvgLayer>
-  </AbsoluteFill>
+  <Wall>
+    <AbsoluteFill
+      style={{ background: `linear-gradient(${lab.wall[0]}, ${lab.wall[1]})` }}
+    >
+      <SvgLayer>
+        <rect x={0} y={206} width={1920} height={16} rx={8} fill={lab.shelf} />
+        {/* Vidraria na prateleira: em silhueta, perto da cor da parede, para não disputar com o tanque. */}
+        <g fill={lab.shelf}>
+          <rect x={120} y={96} width={64} height={110} rx={16} />
+          <path d="M250,206 L282,120 L282,84 L322,84 L322,120 L354,206 Z" />
+          <rect x={430} y={126} width={96} height={80} rx={14} />
+          <circle cx={640} cy={160} r={46} />
+          <rect x={622} y={84} width={36} height={50} rx={8} />
+          <rect x={1640} y={70} width={84} height={136} rx={18} />
+          <path d="M1790,206 L1816,132 L1816,96 L1850,96 L1850,132 L1876,206 Z" />
+        </g>
+      </SvgLayer>
+    </AbsoluteFill>
+  </Wall>
 );
 
 /** A bancada: fica na frente de quem está atrás dela e por baixo do tanque. */

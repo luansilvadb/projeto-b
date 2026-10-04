@@ -2,11 +2,11 @@ import { useId } from "react";
 import { random } from "remotion";
 import { normalOnCurve, pointOnCurve, taperPath, type Point } from "./shapes";
 
-/** Tons de um cacho: centro, dois tons do anel, acento e brilho. */
+/** Tons de uma franja: três tons do babado, acento e brilho. */
 type FrillTones = readonly [string, string, string, string, string];
 
 export type CassiopeaColors = {
-  /** O lado de baixo do sino, que pousa no chão, e a sombra e a luz rebatida nele. */
+  /** O sino, por fora, e a sombra e a luz rebatida nele. */
   readonly dome: string;
   readonly domeShade: string;
   readonly bounce: string;
@@ -14,7 +14,7 @@ export type CassiopeaColors = {
   readonly rim: string;
   readonly rimBack: string;
   readonly marks: string;
-  /** O disco de dentro, côncavo: sombra em cima, luz embaixo, canais e centro. */
+  /** A boca do sino, côncava: sombra em cima, luz embaixo, canais e centro. */
   readonly inner: string;
   readonly innerLight: string;
   readonly canal: string;
@@ -28,7 +28,7 @@ export type CassiopeaColors = {
   /** Apêndice em folha: corpo e nervura. */
   readonly paddle: readonly [string, string];
   readonly rimLight: string;
-  /** Cor do halo dos cachos quando eles brilham no escuro. */
+  /** Cor do halo das franjas quando elas brilham no escuro. */
   readonly glow: string | null;
   readonly nerves: string;
 };
@@ -47,239 +47,154 @@ type CassiopeaProps = {
   readonly nerves?: number;
 };
 
-const RIM = { rx: 330, ry: 92 };
-const DOME = 124;
-const LAPPETS = 26;
-const CANALS = 18;
-// Margem do desenho em volta do centro da borda: os braços sobem, a sombra desce.
+// O sino, de lado: a borda fica em cima e a cúpula desce até o chão.
+const RIM = { rx: 330, ry: 66, y: -92 };
+const FLOOR = 124;
+const LAPPETS = 22;
+const CANALS = 5;
+// Margem do desenho em volta do centro: os braços sobem, a sombra desce.
 const VIEW = { x: -480, y: -520, width: 960, height: 1040 };
 
-// Cada braço: x da base, x e y da ponta, em relação ao centro da borda.
-// Os de trás são menores e ficam por baixo; os de fora, na frente, levam o apêndice em folha.
+// Cada braço: x da base, e x e altura da ponta acima da borda.
+// Os de trás são menores e ficam por baixo.
 const BACK_ARMS = [
-  [-70, -250, -330],
-  [-25, -95, -410],
-  [25, 85, -420],
-  [70, 245, -340],
+  [-90, -250, 260],
+  [-30, -95, 330],
+  [30, 90, 340],
+  [90, 245, 270],
 ] as const;
 const FRONT_ARMS = [
-  [-98, -400, -170],
-  [-36, -185, -300],
-  [36, 170, -310],
-  [98, 395, -185],
+  [-120, -360, 170],
+  [-45, -180, 280],
+  [45, 170, 290],
+  [120, 355, 180],
 ] as const;
-// Em que ponto do braço nasce cada galho.
-const BRANCHES = [0.46, 0.66, 0.84];
-const PADDLE_BRANCH = 0.66;
+// Quantos babados cada braço leva, da metade até a ponta.
+const RUFFLES = 9;
 
 type ArmStyle = {
   readonly widths: readonly [number, number];
   readonly tones: FrillTones;
   readonly stalk: string;
   readonly shade: string;
-  readonly paddle: readonly [string, string] | null;
   readonly glow: string | null;
 };
 
 type Pose = {
   readonly droop: number;
   readonly sway: number;
-  readonly lift: number;
+  /** A altura da borda, de onde os braços saem. */
+  readonly rimY: number;
 };
 
-/** A curva de um braço na pose pedida: dormindo, a ponta desce e abre para o lado. */
-const armCurve = (base: Point, tip: Point, { droop, sway, lift }: Pose) => {
-  const end: Point = [
-    tip[0] * (1 + 0.1 * droop) + sway * 16 * (Math.abs(tip[1]) / 420),
-    tip[1] * (1 - 0.3 * droop) * lift,
-  ];
-  const control: Point = [
-    base[0] + (end[0] - base[0]) * 0.12,
-    base[1] + (end[1] - base[1]) * 0.86,
-  ];
-  return { end, control };
-};
-
-/** Um cacho: uma bola grande cercada de menores, com a sombra do conjunto deslocada por baixo. */
-const floret = (
-  key: string,
-  [x, y]: Point,
-  size: number,
-  tones: FrillTones,
-  shade: string,
+/** A curva de um braço na pose pedida: mole, ele pende para fora; dormindo, pende mais. */
+const armCurve = (
+  baseX: number,
+  tipX: number,
+  rise: number,
+  { droop, sway, rimY }: Pose,
 ) => {
-  const turn = random(`${key}-turn`) * Math.PI;
-  const balls = [
-    { x, y, r: size, tone: tones[0] },
-    ...Array.from({ length: 6 }, (_, index) => {
-      const angle = turn + (index / 6) * Math.PI * 2;
-      const distance = size * (0.85 + random(`${key}-far-${index}`) * 0.2);
-      return {
-        x: x + Math.cos(angle) * distance,
-        y: y + Math.sin(angle) * distance * 0.85,
-        r: size * (0.48 + random(`${key}-size-${index}`) * 0.2),
-        tone: tones[1 + (index % 2)],
-      };
-    }),
+  const base: Point = [baseX, rimY - 6];
+  const end: Point = [
+    tipX * (1 + 0.12 * droop) + sway * 22 * (rise / 260),
+    rimY - rise * (1 - 0.45 * droop),
   ];
-
-  return (
-    <g key={key}>
-      {balls.map((ball, index) => (
-        <circle
-          key={`shade-${index}`}
-          cx={ball.x + size * 0.14}
-          cy={ball.y + size * 0.24}
-          r={ball.r}
-          fill={shade}
-        />
-      ))}
-      {balls.map((ball, index) => (
-        <circle
-          key={`ball-${index}`}
-          cx={ball.x}
-          cy={ball.y}
-          r={ball.r}
-          fill={ball.tone}
-        />
-      ))}
-      <circle
-        cx={x - size * 0.3}
-        cy={y - size * 0.32}
-        r={size * 0.3}
-        fill={tones[4]}
-        opacity={0.9}
-      />
-      <circle
-        cx={x + size * 0.55}
-        cy={y + size * 0.3}
-        r={size * 0.2}
-        fill={tones[3]}
-      />
-      <circle
-        cx={x - size * 0.75}
-        cy={y + size * 0.45}
-        r={size * 0.16}
-        fill={tones[3]}
-      />
-    </g>
-  );
+  // O braço sobe quase reto e só então abre: é o que o faz parecer mole, e não um galho.
+  const control: Point = [
+    base[0] + (end[0] - base[0]) * 0.2 + sway * 10,
+    rimY - rise * (1.05 - 0.3 * droop),
+  ];
+  return { base, end, control };
 };
 
-/** Um braço com os galhos, os cachos nas pontas e, se houver, o halo e o apêndice em folha. */
+/**
+ * Um braço oral: um talo mole e, da metade para a ponta, babados translúcidos
+ * dos dois lados, que diminuem até a ponta. É o babado, e não o talo, que se vê.
+ */
 const arm = (
   key: string,
-  base: Point,
-  tip: Point,
+  [baseX, tipX, rise]: readonly [number, number, number],
   style: ArmStyle,
   pose: Pose,
   glowId: string,
 ) => {
   const [startWidth, endWidth] = style.widths;
-  const { end, control } = armCurve(base, tip, pose);
-  // Tudo no braço é proporcional à largura dele: os de trás saem menores.
-  const size = startWidth / 46;
-  const shadeFrom: Point = [base[0] + startWidth * 0.22, base[1]];
-  const shadeControl: Point = [control[0] + startWidth * 0.2, control[1]];
-  const shadeTo: Point = [end[0] + endWidth * 0.2, end[1]];
+  const { base, end, control } = armCurve(baseX, tipX, rise, pose);
+  const size = startWidth / 40;
 
-  const stalks = [
-    <path
-      key="stalk"
-      d={taperPath(base, control, end, startWidth, endWidth)}
-      fill={style.stalk}
-    />,
-    // Faixa de sombra de um lado do braço: dá volume sem degradê.
-    <path
-      key="shade"
-      d={taperPath(
-        shadeFrom,
-        shadeControl,
-        shadeTo,
-        startWidth * 0.38,
-        endWidth * 0.3,
-      )}
-      fill={style.shade}
-    />,
-  ];
-  const florets: React.ReactElement[] = [];
-  const halos: React.ReactElement[] = [];
-  const paddles: React.ReactElement[] = [];
-  const bloom = (name: string, at: Point, radius: number) => {
-    florets.push(
-      floret(`${key}-${name}`, at, radius, style.tones, style.shade),
-    );
-    if (style.glow) {
-      halos.push(
-        <circle
-          key={name}
-          cx={at[0]}
-          cy={at[1]}
-          r={radius * 3.2}
-          fill={`url(#${glowId})`}
-        />,
-      );
-    }
-  };
-
-  let side = end[0] >= base[0] ? 1 : -1;
-  for (const t of BRANCHES) {
-    const from = pointOnCurve(base, control, end, t);
+  const ruffles = Array.from({ length: RUFFLES }, (_, index) => {
+    const t = 0.42 + (index / (RUFFLES - 1)) * 0.58;
+    const [x, y] = pointOnCurve(base, control, end, t);
     const [nx, ny] = normalOnCurve(base, control, end, t);
-    const length = (128 - t * 56) * size;
-    const to: Point = [
-      from[0] + nx * side * length * 0.9,
-      from[1] + ny * side * length * 0.9 - length * 0.5 * (1 - pose.droop),
-    ];
-    const middle: Point = [
-      from[0] + nx * side * length * 0.7,
-      from[1] + ny * side * length * 0.7 - length * 0.02,
-    ];
-    stalks.push(
-      <path
-        key={`branch-${t}`}
-        d={taperPath(from, middle, to, startWidth * 0.5, endWidth * 0.75)}
-        fill={style.stalk}
-      />,
-    );
-    bloom(`branch-${t}`, [to[0], to[1] - 6 * size], (25 - t * 8) * size);
-
-    if (style.paddle && t === PADDLE_BRANCH) {
-      const angle =
-        (Math.atan2(to[1] - middle[1], to[0] - middle[0]) * 180) / Math.PI;
-      paddles.push(
-        <g
-          key="paddle"
-          transform={`translate(${to[0]} ${to[1]}) rotate(${angle + side * 24}) translate(${52 * size} 0)`}
-        >
-          <ellipse rx={50 * size} ry={14 * size} fill={style.paddle[0]} />
-          <ellipse
-            cx={-4 * size}
-            rx={32 * size}
-            ry={4.5 * size}
-            fill={style.paddle[1]}
-          />
-        </g>,
-      );
-    }
-    side = -side;
-  }
-  bloom("tip", end, 27 * size);
+    const side = index % 2 === 0 ? 1 : -1;
+    const radius =
+      (40 - 16 * t) * size * (0.9 + 0.2 * random(`${key}-${index}`));
+    return {
+      x: x + nx * side * radius * 0.55,
+      y: y + ny * side * radius * 0.55,
+      radius,
+      tone: style.tones[index % 3],
+    };
+  });
 
   return (
     <g key={key}>
-      {halos}
-      {stalks}
-      {paddles}
-      {florets}
+      {style.glow ? (
+        <circle
+          cx={end[0]}
+          cy={end[1]}
+          r={95 * size}
+          fill={`url(#${glowId})`}
+        />
+      ) : null}
+      <path
+        d={taperPath(base, control, end, startWidth, endWidth)}
+        fill={style.stalk}
+      />
+      {ruffles.map((ruffle, index) => (
+        <ellipse
+          key={`shade-${index}`}
+          cx={ruffle.x + ruffle.radius * 0.16}
+          cy={ruffle.y + ruffle.radius * 0.26}
+          rx={ruffle.radius}
+          ry={ruffle.radius * 0.82}
+          fill={style.shade}
+          opacity={0.7}
+        />
+      ))}
+      {ruffles.map((ruffle, index) => (
+        <ellipse
+          key={`ruffle-${index}`}
+          cx={ruffle.x}
+          cy={ruffle.y}
+          rx={ruffle.radius}
+          ry={ruffle.radius * 0.82}
+          fill={ruffle.tone}
+          opacity={0.92}
+        />
+      ))}
+      {ruffles
+        .filter((_, index) => index % 3 === 1)
+        .map((ruffle, index) => (
+          <circle
+            key={`light-${index}`}
+            cx={ruffle.x - ruffle.radius * 0.3}
+            cy={ruffle.y - ruffle.radius * 0.3}
+            r={ruffle.radius * 0.28}
+            fill={style.tones[4]}
+            opacity={0.85}
+          />
+        ))}
     </g>
   );
 };
 
 /**
- * Cassiopea, a água-viva que vive pousada de cabeça para baixo: o sino vira um
- * disco raso no chão e os oito braços ramificados sobem. É vista um pouco de
- * cima. O centro do desenho é o centro da borda do sino.
+ * Cassiopea, a água-viva que vive pousada de cabeça para baixo: o sino, uma
+ * cúpula translúcida de borda em lóbulos, fica no chão com a boca para cima, e
+ * dela sobem os oito braços moles e franjados. É a mesma forma de uma
+ * água-viva comum, virada: de cabeça para cima, ela nada. O centro do desenho
+ * fica acima do chão, onde o sino pousa.
  */
 export const Cassiopea: React.FC<CassiopeaProps> = ({
   width,
@@ -292,29 +207,30 @@ export const Cassiopea: React.FC<CassiopeaProps> = ({
   const id = useId();
   const glowId = `${id}-glow`;
   const domeId = `${id}-dome`;
+  const sheenId = `${id}-sheen`;
   const scale = width / (RIM.rx * 2);
-  // No pulso, a borda fecha um pouco, o corpo engrossa e os braços sobem.
-  const rx = RIM.rx * (1 - 0.05 * pulse);
-  const ry = RIM.ry * (1 + 0.08 * pulse);
-  const dome = DOME * (1 + 0.04 * pulse);
-  const pose: Pose = { droop, sway, lift: 1 + 0.03 * pulse };
-  const domePath = `M${-rx * 0.976},8 C${-rx * 0.91},${dome * 0.78} ${-rx * 0.515},${dome - 2} 0,${dome} C${rx * 0.515},${dome - 2} ${rx * 0.91},${dome * 0.78} ${rx * 0.976},8 Z`;
+  // No pulso, a borda fecha e sobe: é o sino se contraindo, como o de qualquer água-viva.
+  const rx = RIM.rx * (1 - 0.13 * pulse);
+  const ry = RIM.ry * (1 - 0.1 * pulse);
+  const rimY = RIM.y - 20 * pulse;
+  const pose: Pose = { droop, sway, rimY };
+  const depth = FLOOR - rimY;
+  const domePath = `M${-rx},${rimY} C${-rx * 1.03},${rimY + depth * 0.78} ${-rx * 0.56},${FLOOR} 0,${FLOOR} C${rx * 0.56},${FLOOR} ${rx * 1.03},${rimY + depth * 0.78} ${rx},${rimY} Z`;
 
   const lappets = Array.from({ length: LAPPETS }, (_, index) => {
     const angle = (index / LAPPETS) * Math.PI * 2;
     return {
-      x: Math.cos(angle),
-      y: Math.sin(angle),
-      front: Math.sin(angle) > -0.15,
+      x: Math.cos(angle) * rx,
+      y: rimY + Math.sin(angle) * ry,
+      front: Math.sin(angle) > -0.1,
     };
   });
 
   const armStyle = (back: boolean): ArmStyle => ({
-    widths: back ? [34, 12] : [46, 17],
+    widths: back ? [30, 10] : [40, 14],
     tones: back ? colors.frillsBack : colors.frills,
     stalk: back ? colors.stalkBack : colors.stalk,
     shade: back ? colors.stalkBackShade : colors.stalkShade,
-    paddle: null,
     glow: back ? null : colors.glow,
   });
 
@@ -329,6 +245,10 @@ export const Cassiopea: React.FC<CassiopeaProps> = ({
         <clipPath id={domeId}>
           <path d={domePath} />
         </clipPath>
+        <linearGradient id={sheenId} x1={0} y1={0} x2={0} y2={1}>
+          <stop offset={0} stopColor={colors.innerLight} stopOpacity={0.75} />
+          <stop offset={1} stopColor={colors.innerLight} stopOpacity={0} />
+        </linearGradient>
         {colors.glow ? (
           <radialGradient id={glowId}>
             <stop offset={0} stopColor={colors.glow} stopOpacity={0.5} />
@@ -338,94 +258,113 @@ export const Cassiopea: React.FC<CassiopeaProps> = ({
       </defs>
 
       <g opacity={1 - 0.45 * nerves}>
-        <path d={domePath} fill={colors.dome} />
+        {/* Os lóbulos de trás da borda, por baixo de tudo. */}
+        {lappets
+          .filter((lappet) => !lappet.front)
+          .map((lappet, index) => (
+            <circle
+              key={index}
+              cx={lappet.x}
+              cy={lappet.y}
+              r={24}
+              fill={colors.rimBack}
+            />
+          ))}
+
+        {/* A cúpula: translúcida, deixa ver o fundo e os canais que descem da borda. */}
+        <path d={domePath} fill={colors.dome} opacity={0.72} />
         <g clipPath={`url(#${domeId})`}>
+          <rect
+            x={-rx}
+            y={rimY}
+            width={rx * 2}
+            height={depth * 0.6}
+            fill={`url(#${sheenId})`}
+          />
           <path
-            d={`M-300,${dome - 40} C-170,${dome - 2} 170,${dome - 2} 300,${dome - 40} L300,${dome + 4} L-300,${dome + 4} Z`}
+            d={`M${-rx},${FLOOR - depth * 0.3} C${-rx * 0.5},${FLOOR + 6} ${rx * 0.5},${FLOOR + 6} ${rx},${FLOOR - depth * 0.3} L${rx},${FLOOR + 10} L${-rx},${FLOOR + 10} Z`}
             fill={colors.domeShade}
+            opacity={0.8}
+          />
+          {Array.from({ length: CANALS }, (_, index) => {
+            const across = (index / (CANALS - 1)) * 2 - 1;
+            return (
+              <path
+                key={index}
+                d={`M${across * rx * 0.86},${rimY + ry * 0.6} Q${across * rx * 0.8},${rimY + depth * 0.7} ${across * rx * 0.34},${FLOOR - 8}`}
+                fill="none"
+                stroke={colors.canal}
+                strokeWidth={5}
+                strokeLinecap="round"
+                opacity={0.5}
+              />
+            );
+          })}
+          <ellipse
+            cx={-rx * 0.38}
+            cy={rimY + depth * 0.5}
+            rx={rx * 0.14}
+            ry={depth * 0.22}
+            fill={colors.bounce}
+            opacity={0.35}
+            transform={`rotate(18 ${-rx * 0.38} ${rimY + depth * 0.5})`}
           />
         </g>
-        <path
-          d={`M-150,${dome - 8} C-60,${dome} 60,${dome} 150,${dome - 8} C60,${dome - 5} -60,${dome - 5} -150,${dome - 8} Z`}
-          fill={colors.bounce}
-          opacity={0.7}
+
+        {/* A boca do sino, vista um pouco de cima. */}
+        <ellipse cy={rimY} rx={rx} ry={ry} fill={colors.rim} />
+        <ellipse
+          cy={rimY + 2}
+          rx={rx * 0.84}
+          ry={ry * 0.74}
+          fill={colors.inner}
         />
-
-        {lappets.map((lappet, index) => (
-          <circle
-            key={index}
-            cx={lappet.x * rx}
-            cy={lappet.y * ry}
-            r={lappet.front ? 30 : 24}
-            fill={lappet.front ? colors.rim : colors.rimBack}
-          />
-        ))}
-        <ellipse rx={rx} ry={ry} fill={colors.rim} />
-        {lappets.map((lappet, index) => (
-          <line
-            key={index}
-            x1={lappet.x * rx * 0.9}
-            y1={lappet.y * ry * 0.9}
-            x2={lappet.x * rx * 1.05}
-            y2={lappet.y * ry * 1.12}
-            stroke={colors.marks}
-            strokeWidth={lappet.front ? 9 : 6}
-            strokeLinecap="round"
-            opacity={lappet.front ? 0.95 : 0.6}
-          />
-        ))}
-
-        <ellipse cy={-4} rx={rx * 0.764} ry={ry * 0.696} fill={colors.inner} />
         <path
-          d={`M${-rx * 0.727},6 C${-rx * 0.455},${ry * 0.76} ${rx * 0.455},${ry * 0.76} ${rx * 0.727},6 C${rx * 0.455},${ry * 0.5} ${-rx * 0.455},${ry * 0.5} ${-rx * 0.727},6 Z`}
+          d={`M${-rx * 0.8},${rimY + 6} C${-rx * 0.5},${rimY + ry * 0.82} ${rx * 0.5},${rimY + ry * 0.82} ${rx * 0.8},${rimY + 6} C${rx * 0.5},${rimY + ry * 0.5} ${-rx * 0.5},${rimY + ry * 0.5} ${-rx * 0.8},${rimY + 6} Z`}
           fill={colors.innerLight}
         />
-        {Array.from({ length: CANALS }, (_, index) => {
-          const angle = (index / CANALS) * Math.PI * 2;
-          return (
-            <line
-              key={index}
-              x1={Math.cos(angle) * rx * 0.29}
-              y1={-4 + Math.sin(angle) * ry * 0.28}
-              x2={Math.cos(angle) * rx * 0.74}
-              y2={-4 + Math.sin(angle) * ry * 0.66}
-              stroke={colors.canal}
-              strokeWidth={4}
-              strokeLinecap="round"
-              opacity={0.55}
-            />
-          );
-        })}
-        <ellipse cy={-6} rx={rx * 0.358} ry={ry * 0.37} fill={colors.core} />
+        <ellipse
+          cy={rimY - 2}
+          rx={rx * 0.4}
+          ry={ry * 0.42}
+          fill={colors.core}
+        />
 
         <g opacity={0.92}>
-          {BACK_ARMS.map(([baseX, tipX, tipY], index) =>
-            arm(
-              `${id}-back-${index}`,
-              [baseX, -16],
-              [tipX, tipY],
-              armStyle(true),
-              pose,
-              glowId,
-            ),
+          {BACK_ARMS.map((shape, index) =>
+            arm(`${id}-back-${index}`, shape, armStyle(true), pose, glowId),
           )}
         </g>
-        {FRONT_ARMS.map(([baseX, tipX, tipY], index) =>
-          arm(
-            `${id}-front-${index}`,
-            [baseX, 6],
-            [tipX, tipY],
-            {
-              ...armStyle(false),
-              paddle: Math.abs(tipX) > 300 ? colors.paddle : null,
-            },
-            pose,
-            glowId,
-          ),
+        {FRONT_ARMS.map((shape, index) =>
+          arm(`${id}-front-${index}`, shape, armStyle(false), pose, glowId),
         )}
+
+        {/* Os lóbulos da frente da borda, com os traços claros: a marca do bicho. */}
+        {lappets
+          .filter((lappet) => lappet.front)
+          .map((lappet, index) => (
+            <g key={index}>
+              <circle
+                cx={lappet.x}
+                cy={lappet.y + 6}
+                r={28}
+                fill={colors.rim}
+              />
+              <line
+                x1={lappet.x * 0.97}
+                y1={lappet.y}
+                x2={lappet.x * 1.03}
+                y2={lappet.y + 22}
+                stroke={colors.marks}
+                strokeWidth={9}
+                strokeLinecap="round"
+                opacity={0.95}
+              />
+            </g>
+          ))}
         {/* Brilho na borda voltada para a luz. */}
         <path
-          d={`M${-rx * 0.91},${ry * 0.24} C${-rx * 0.667},${ry * 0.67} ${-rx * 0.273},${ry * 0.87} ${rx * 0.03},${ry * 0.89}`}
+          d={`M${-rx * 0.94},${rimY + ry * 0.3} C${-rx * 0.7},${rimY + ry * 0.86} ${-rx * 0.3},${rimY + ry} ${rx * 0.02},${rimY + ry * 1.02}`}
           fill="none"
           stroke={colors.rimLight}
           strokeWidth={7}
@@ -441,25 +380,20 @@ export const Cassiopea: React.FC<CassiopeaProps> = ({
           strokeLinecap="round"
           opacity={nerves}
         >
-          {/* Rede sem centro: um anel no sino, raios até a borda e um fio por braço. */}
-          <ellipse cy={-4} rx={rx * 0.56} ry={ry * 0.5} strokeWidth={5} />
-          <ellipse cy={0} rx={rx * 0.93} ry={ry * 0.9} strokeWidth={4} />
+          {/* Rede sem centro: um anel na borda, fios que descem pela cúpula e um fio por braço. */}
+          <ellipse cy={rimY} rx={rx * 0.93} ry={ry * 0.9} strokeWidth={5} />
           {Array.from({ length: CANALS }, (_, index) => {
-            const angle = ((index + 0.5) / CANALS) * Math.PI * 2;
+            const across = (index / (CANALS - 1)) * 2 - 1;
             return (
-              <line
+              <path
                 key={index}
-                x1={Math.cos(angle) * rx * 0.56}
-                y1={-4 + Math.sin(angle) * ry * 0.5}
-                x2={Math.cos(angle) * rx * 0.93}
-                y2={Math.sin(angle) * ry * 0.9}
+                d={`M${across * rx * 0.86},${rimY + ry * 0.6} Q${across * rx * 0.8},${rimY + depth * 0.7} ${across * rx * 0.34},${FLOOR - 8}`}
                 strokeWidth={3.5}
               />
             );
           })}
-          {[...BACK_ARMS, ...FRONT_ARMS].map(([baseX, tipX, tipY], index) => {
-            const base: Point = [baseX, index < BACK_ARMS.length ? -16 : 6];
-            const { end, control } = armCurve(base, [tipX, tipY], pose);
+          {[...BACK_ARMS, ...FRONT_ARMS].map(([baseX, tipX, rise], index) => {
+            const { base, end, control } = armCurve(baseX, tipX, rise, pose);
             return (
               <g key={index}>
                 <path

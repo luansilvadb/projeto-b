@@ -30,7 +30,7 @@ import {
   type ShopState,
 } from "../parts/ShopRow";
 import { ShopStreet, StreetShadow } from "../parts/ShopStreet";
-import { cue, drop, linear, mix, ramp } from "../parts/timing";
+import { cue, drop, linear, mix, ramp } from "../../../components/timing";
 
 // A loja de quem assiste, no plano médio: o meio da calçada e a largura do toldo.
 const SHOP = { x: 900, ground: 880, width: 760 };
@@ -442,8 +442,8 @@ export const ShopClosesScene: React.FC<SceneProps> = ({ scene, shots }) => (
       hold={NIGHT_WIPE.frames}
     >
       <ClosingShot
-        wakeAt={cue(scene, "Dá")}
-        walkAt={cue(scene, "imaginar")}
+        wakeAt={cue(scene, "É")}
+        walkAt={cue(scene, "como")}
         yawnAt={cue(scene, "loja")}
         closesAt={cue(scene, "baixa")}
       />

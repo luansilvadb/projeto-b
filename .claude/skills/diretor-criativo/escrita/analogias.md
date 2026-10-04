@@ -43,9 +43,9 @@ Como tornar escala e abstração compreensíveis e desenháveis?
 
 ## DEPENDÊNCIAS
 - checagem: fornece os valores verificados e a regra de refazer toda conta.
-- narracao: fornece as regras de frase e de números em que a analogia é redigida.
 
 ## LIMITES
+- Aqui se decidem a comparação e a conta; a frase que as diz é escrita depois, pelas regras de `narracao`.
 - Não usar unidades de comparação que o público não dimensiona (países pouco conhecidos, piscinas olímpicas em excesso, valores monetários datados).
 - Não manter analogia bonita com proporção errada.
 

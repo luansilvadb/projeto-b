@@ -20,7 +20,7 @@ Que texto entra na tela, e preso a quê?
 | Onomatopeia | o som da ação desenhado: letras grossas em arco ou inclinadas, de cor quente com contorno, saindo de quem faz o som | uma palavra; só som (riso, mordida, ronco, batida), nunca informação; sai com a ação |
 | Texto do mundo | placa, tela, rótulo, cartaz dentro da cena | faz parte do desenho; pode carregar a piada |
 | Cartela de capítulo | o título do capítulo, vindo do roteiro; quando o roteiro anuncia um mapa ("pergunta 1 de 3", "solução 2"), a cartela traz o número, a pergunta e a marca de progresso | desenhada com elementos do tema; fica o tempo de ser lida |
-| Selo | ressalva de escopo, fonte de um dado, data | pequeno, no canto; fica enquanto vale |
+| Selo | ressalva de escopo, fonte de um dado, data | pequeno, no canto; fica enquanto vale. Todo plano que afirma um fato vindo de um estudo leva o selo da fonte, com autor e ano, como a nota visual pede |
 
 **O que nunca entra:**
 

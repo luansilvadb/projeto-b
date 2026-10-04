@@ -15,15 +15,13 @@ import {
   TANK_CENTER,
   Tank,
 } from "../parts/Laboratory";
+import { mix, ramp, settle } from "../../../components/timing";
 import {
   PULSES_ASLEEP,
   PULSES_AWAKE,
-  mix,
   pulseCycles,
   pulseShape,
-  ramp,
-  settle,
-} from "../parts/timing";
+} from "../parts/pulse";
 import {
   FLOATING_Y,
   JELLYFISH_WIDTH,

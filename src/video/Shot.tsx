@@ -1,3 +1,4 @@
+import { createContext, useContext, useMemo } from "react";
 import {
   AbsoluteFill,
   Easing,
@@ -5,7 +6,15 @@ import {
   Sequence,
   useCurrentFrame,
 } from "remotion";
+import { Build } from "../components/Camera";
+import { StageContext, type Stage } from "../components/Cast";
 import type { FrameRange } from "../narration/timeline";
+import {
+  enterProgress,
+  JOIN_FRAMES,
+  leaveProgress,
+  SCENERY_EXIT_FRAMES,
+} from "./stage";
 
 export type Wipe = {
   /** Quantos quadros a varredura leva para cobrir o plano anterior. */
@@ -13,6 +22,26 @@ export type Wipe = {
   /** De que lado do quadro a varredura entra. */
   readonly from: "left" | "right" | "top" | "bottom";
 };
+
+/** O que o vídeo decidiu para um plano: se ele divide o palco com a cena anterior ou com a seguinte. */
+export type ShotPlan = {
+  readonly joinsPrevious: boolean;
+  readonly joinsNext: boolean;
+  /** O plano está no mesmo cenário do anterior, ou do seguinte: o cenário fica, e só muda o que está nele. */
+  readonly sameSetAsPrevious: boolean;
+  readonly sameSetAsNext: boolean;
+  /** O nome do plano no palco, e o do plano anterior. */
+  readonly key: string;
+  readonly previousKey: string | null;
+};
+
+/**
+ * O plano de palco do vídeo, por trecho. Quem monta o vídeo preenche; cada
+ * `Shot` acha o seu pelo `range` que recebeu.
+ */
+export const ShotPlans = createContext<ReadonlyMap<FrameRange, ShotPlan>>(
+  new Map(),
+);
 
 type ShotProps = {
   /** O trecho da cena que o plano ocupa, vindo de `shots` em SceneProps. */
@@ -33,18 +62,95 @@ type ShotProps = {
 export const Shot: React.FC<ShotProps> = ({
   range,
   name,
-  hold = 0,
+  hold,
   wipe,
   children,
-}) => (
-  <Sequence
-    from={range.from}
-    durationInFrames={range.to - range.from + hold}
-    name={name}
-  >
-    {wipe ? <Wiping wipe={wipe}>{children}</Wiping> : children}
-  </Sequence>
-);
+}) => {
+  const plan = useContext(ShotPlans).get(range);
+  const length = range.to - range.from;
+  const joinsNext = hold === undefined && (plan?.joinsNext ?? false);
+
+  return (
+    <Sequence
+      from={range.from}
+      durationInFrames={length + (hold ?? (joinsNext ? JOIN_FRAMES : 0))}
+      name={name}
+    >
+      <OnStage
+        entering={plan?.joinsPrevious ?? false}
+        leaveAt={joinsNext ? length : null}
+        inherits={plan?.sameSetAsPrevious ?? false}
+        bequeaths={joinsNext && (plan?.sameSetAsNext ?? false)}
+        shot={plan?.key ?? null}
+        previous={plan?.previousKey ?? null}
+      >
+        {wipe ? <Wiping wipe={wipe}>{children}</Wiping> : children}
+      </OnStage>
+    </Sequence>
+  );
+};
+
+type OnStageProps = {
+  /** O plano abre uma cena que divide o palco com a anterior. */
+  readonly entering: boolean;
+  /** O quadro do plano em que a cena seguinte chega ao palco; sem valor, o plano termina em corte. */
+  readonly leaveAt: number | null;
+  /** O plano herda o cenário do anterior: não o constrói de novo, só assume a câmera e a luz. */
+  readonly inherits: boolean;
+  /** O plano deixa o cenário para o seguinte: não o desmonta. */
+  readonly bequeaths: boolean;
+  /** O nome deste plano no palco, e o do anterior. */
+  readonly shot: string | null;
+  readonly previous: string | null;
+  readonly children: React.ReactNode;
+};
+
+/** Diz ao plano, quadro a quadro, quanto do que chega já entrou e quanto do que sai já saiu. */
+const OnStage: React.FC<OnStageProps> = ({
+  entering,
+  leaveAt,
+  inherits,
+  bequeaths,
+  shot,
+  previous,
+  children,
+}) => {
+  const frame = useCurrentFrame();
+  const stage = useMemo<Stage>(
+    () => ({
+      enter: (delay, frames) =>
+        entering ? enterProgress(frame, delay, frames) : 1,
+      leave: (delay) =>
+        leaveAt === null ? 0 : leaveProgress(frame, leaveAt, delay),
+      handedOver: leaveAt !== null && frame >= leaveAt,
+      cast: true,
+    }),
+    [frame, entering, leaveAt],
+  );
+  // O cenário inteiro entra junto com a cena e sai mais devagar que um
+  // elemento. Quando é o mesmo do plano vizinho, não entra nem sai: fica.
+  const entered = stage.enter();
+  const lit = inherits ? 1 : entered;
+  const risen =
+    leaveAt === null || bequeaths
+      ? lit
+      : lit * (1 - leaveProgress(frame, leaveAt, 0, SCENERY_EXIT_FRAMES));
+
+  return (
+    <StageContext.Provider value={stage}>
+      <Build
+        lit={lit}
+        risen={risen}
+        tracked
+        takeover={inherits ? entered : 1}
+        shot={shot}
+        heir={inherits ? previous : null}
+      >
+        {children}
+      </Build>
+    </StageContext.Provider>
+  );
+};
 
 const Wiping: React.FC<{ wipe: Wipe; children: React.ReactNode }> = ({
   wipe,

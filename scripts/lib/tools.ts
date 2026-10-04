@@ -3,7 +3,8 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 
-const PYTHON_ENV = {
+/** O ambiente em que toda ferramenta Python do projeto roda. */
+export const PYTHON_ENV = {
   PYTHONUTF8: "1",
   // As bibliotecas dos modelos enchem o terminal de barras de progresso e avisos de depreciação.
   TQDM_DISABLE: "1",

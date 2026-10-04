@@ -8,7 +8,7 @@ Como organizar o vídeo em blocos, do gancho ao fechamento?
 
 ## RESPOSTA
 
-**Bloco.** Unidade mínima da estrutura: uma ideia, uma função, um assunto visual dominante (um personagem, um lugar ou uma metáfora). Se um bloco precisa de dois assuntos dominantes, são dois blocos. Assunto dominante não é imagem única: na tela, cada oração do bloco ganha o seu plano, e essa divisão é feita depois, pelo workflow `diretor-de-arte`.
+**Bloco.** Unidade mínima da estrutura: uma ideia, uma função, um assunto visual dominante (um personagem, um lugar ou uma metáfora). Se um bloco precisa de dois assuntos dominantes, são dois blocos. Assunto dominante não é imagem única: na tela, cada oração do bloco ganha o seu plano, e essa divisão é feita depois, pela skill `diretor-de-arte`.
 
 **Esqueleto do estilo:**
 

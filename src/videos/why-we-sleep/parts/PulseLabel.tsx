@@ -1,10 +1,11 @@
+import { Tag } from "./Tag";
 import { useCurrentFrame, useVideoConfig } from "remotion";
 import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
 import { POP_SECONDS, Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { ink } from "../palette";
-import { ramp } from "./timing";
+import { ramp } from "../../../components/timing";
 
 type FramePoint = readonly [number, number];
 
@@ -70,9 +71,9 @@ export const PulseLabel: React.FC<PulseLabelProps> = ({
             </Label>
           </Pop>
           <Pop at={tagEnter}>
-            <Label size="note" color={ink.dark} tag={ink.tag}>
+            <Tag size="note" on="night">
               pulsos por minuto
-            </Label>
+            </Tag>
           </Pop>
         </div>
       </Place>

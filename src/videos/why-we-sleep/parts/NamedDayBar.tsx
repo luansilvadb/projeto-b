@@ -4,7 +4,7 @@ import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
 import { motion } from "../../../design/tokens";
 import { DayBar } from "./DayBar";
-import { ramp } from "./timing";
+import { ramp } from "../../../components/timing";
 
 type NamedDayBarProps = {
   readonly name: string;

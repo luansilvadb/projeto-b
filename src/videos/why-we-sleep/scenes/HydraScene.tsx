@@ -9,7 +9,8 @@ import type { SceneProps } from "../../../video/NarratedVideo";
 import { LivingJellyfish } from "../parts/LivingJellyfish";
 import { Moon, ORIGIN, OriginLine } from "../parts/OriginLine";
 import { Stage } from "../parts/Stage";
-import { cue, PULSES_ASLEEP } from "../parts/timing";
+import { cue } from "../../../components/timing";
+import { PULSES_ASLEEP } from "../parts/pulse";
 
 export const MARKER_Y = ORIGIN.y - 110;
 export const MARKER_LABEL_Y = ORIGIN.y + 90;

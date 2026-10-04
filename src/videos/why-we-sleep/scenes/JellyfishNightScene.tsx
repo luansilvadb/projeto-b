@@ -1,138 +1,170 @@
-import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { cameraBetween } from "../../../components/Camera";
+import { useCurrentFrame, useVideoConfig } from "remotion";
+import { Cassiopea } from "../../../art/Cassiopea";
+import { Fish } from "../../../art/Fish";
+import { wave } from "../../../components/Idle";
+import { Place } from "../../../components/Place";
+import { SvgLayer } from "../../../components/SvgLayer";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot } from "../../../video/Shot";
+import { fish as fishColors, ink, jellyfish } from "../palette";
+import {
+  BENCH_Y,
+  LAB,
+  LabBench,
+  LabWall,
+  TANK_CENTER,
+  Tank,
+} from "../parts/Laboratory";
 import { FISH_WATCHING, LAGOON } from "../parts/lagoonCameras";
 import { LagoonShot } from "../parts/LagoonShot";
-import { PulseLabel } from "../parts/PulseLabel";
+import { cue, mix, ramp, settle } from "../../../components/timing";
 import {
-  ALREADY_SHOWN,
   PULSES_ASLEEP,
   PULSES_AWAKE,
-  cue,
-  mix,
-  ramp,
-  settle,
-  steady,
-} from "../parts/timing";
-import { AWAKE_LABEL } from "./JellyfishPulseScene";
-
-// Onde o peixe para quando o focinho encosta na ponta do braço.
-const FISH_TOUCHING = { x: 1131, y: 636 };
+  pulseCycles,
+  pulseShape,
+} from "../parts/pulse";
+import {
+  FLOATING_Y,
+  JELLYFISH_WIDTH,
+  Lab,
+  PullShot,
+  RESTING,
+  floating,
+} from "./FloorTestScene";
 
 const NIGHTFALL_SECONDS = 0.35;
-const RECEDE_SECONDS = 0.9;
 const SLOW_DOWN_SECONDS = 1.2;
-const CAMERA_SECONDS = 0.6;
-const APPROACH_SECONDS = 0.5;
-// Quanto tempo ela leva para notar o toque, e quanto demora a recolher.
-const NOTICE_SECONDS = 0.8;
-const RECOIL_SECONDS = 0.6;
+// A mão precisa chegar à plataforma antes de puxá-la.
+const REACH_SECONDS = 1.3;
+// O tranco: os braços abrem de uma vez; nadar até o fundo leva mais.
+const STARTLE_SECONDS = 0.4;
+const OPEN_SECONDS = 0.3;
+const SWIM_SECONDS = 0.9;
+// O chão do tanque, para onde ela nada depois.
+const FLOOR_Y = BENCH_Y - 24 - JELLYFISH_WIDTH * RESTING;
+/** O peixe do tanque, a testemunha do susto. */
+const TANK_FISH = { x: TANK_CENTER + 250, y: 500, width: 90 };
+const BUBBLES = [0, 0.3, 0.6] as const;
 
-type NightfallShotProps = {
-  /** Quadro do plano em que a noite começa a descer. */
-  readonly nightAt: number;
-  /** Quadro do plano em que ela desacelera: a câmera recua e os braços caem. */
+type SlowShotProps = {
+  /** Quadro do plano em que ela desacelera. */
   readonly slowAt: number;
-  /** Quadro do plano em que o contador entra. */
-  readonly countAt: number;
 };
 
-/** A mesma lagoa escurece de cima para baixo; ela desacelera e o contador troca. */
-const NightfallShot: React.FC<NightfallShotProps> = ({
-  nightAt,
-  slowAt,
-  countAt,
-}) => {
+/** A lagoa escurece e os anéis do pulso saem mais espaçados. */
+const SlowShot: React.FC<SlowShotProps> = ({ slowAt }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const nightfall = ramp(frame, nightAt, NIGHTFALL_SECONDS * fps);
   const slowing = ramp(frame, slowAt, SLOW_DOWN_SECONDS * fps);
-
-  return (
-    <>
-      <LagoonShot
-        time="night"
-        nightfall={nightfall}
-        camera={cameraBetween(
-          LAGOON.bell,
-          LAGOON.medium,
-          ramp(frame, slowAt, RECEDE_SECONDS * fps),
-        )}
-        rhythm={[
-          { from: 0, perMinute: PULSES_AWAKE },
-          { from: slowAt, perMinute: PULSES_ASLEEP },
-        ]}
-        droop={0.7 * slowing}
-        rings
-        fish={{
-          ...FISH_WATCHING,
-          mood: slowing > 0.6 ? "yawning" : "curious",
-          look: [-0.3, 0.6],
-        }}
-      />
-      {/* O contador de dia fica até a noite passar por cima dele. */}
-      {nightfall < 1 ? (
-        <AbsoluteFill style={{ clipPath: `inset(${nightfall * 100}% 0 0 0)` }}>
-          <PulseLabel {...AWAKE_LABEL} enter={ALREADY_SHOWN} />
-        </AbsoluteFill>
-      ) : null}
-      <PulseLabel
-        value={PULSES_ASLEEP}
-        at={[360, 240]}
-        target={[600, 520]}
-        enter={countAt}
-      />
-    </>
-  );
-};
-
-/** O peixe encosta o focinho no braço dela; só depois de um instante ela recolhe. */
-const TouchShot: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const arrived = CAMERA_SECONDS * fps;
-  const approach = settle(frame, arrived - 3, APPROACH_SECONDS * fps);
-  const touched = arrived - 3 + APPROACH_SECONDS * fps;
-  const recoil = ramp(
-    frame,
-    touched + NOTICE_SECONDS * fps,
-    RECOIL_SECONDS * fps,
-  );
 
   return (
     <LagoonShot
       time="night"
-      camera={cameraBetween(
-        LAGOON.medium,
-        LAGOON.touch,
-        ramp(frame, 0, arrived),
-      )}
-      rhythm={steady(PULSES_ASLEEP)}
-      droop={0.7 - 0.2 * recoil}
-      sway={-0.6 * recoil}
+      nightfall={ramp(frame, 0, NIGHTFALL_SECONDS * fps)}
+      camera={LAGOON.medium}
+      rhythm={[
+        { from: 0, perMinute: PULSES_AWAKE },
+        { from: slowAt, perMinute: PULSES_ASLEEP },
+      ]}
+      droop={0.7 * slowing}
+      rings
       fish={{
-        x: mix(FISH_WATCHING.x, FISH_TOUCHING.x, approach),
-        y: mix(FISH_WATCHING.y, FISH_TOUCHING.y, approach),
-        width: FISH_WATCHING.width,
-        look: [-1, 0.1],
-        swimming: approach > 0 && approach < 1,
+        ...FISH_WATCHING,
+        mood: slowing > 0.6 ? "yawning" : "curious",
+        look: [-0.3, 0.6],
       }}
     />
   );
 };
 
-export const JellyfishNightScene: React.FC<SceneProps> = ({ scene, shots }) => (
-  <>
-    <Shot range={shots[0]} name="a lagoa escurece">
-      <NightfallShot
-        nightAt={cue(scene, "Quando")}
-        slowAt={cue(scene, "desacelera")}
-        countAt={cue(scene, "Trinta")}
-      />
-    </Shot>
-    <Shot range={shots[1]} name="o peixe encosta">
-      <TouchShot />
-    </Shot>
-  </>
-);
+/** Sem apoio, ela boia parada; então dá um tranco, se vira e desce nadando. O peixe se assusta. */
+const StartleShot: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const seconds = frame / fps;
+  const wakeAt = STARTLE_SECONDS * fps;
+  const open = settle(frame, wakeAt, OPEN_SECONDS * fps);
+  const swim = ramp(frame, wakeAt + OPEN_SECONDS * fps, SWIM_SECONDS * fps);
+  const adrift = floating(seconds);
+  const startled = frame >= wakeAt + 3;
+
+  return (
+    <Lab camera={LAB.close}>
+      <LabWall />
+      <LabBench />
+      <Tank>
+        <Place
+          x={TANK_CENTER}
+          y={mix(FLOATING_Y + adrift.y, FLOOR_Y, swim)}
+          style={{ rotate: `${(-10 + adrift.tilt) * (1 - open)}deg` }}
+        >
+          <Cassiopea
+            width={JELLYFISH_WIDTH}
+            colors={jellyfish.day}
+            droop={1 - open}
+            pulse={pulseShape(
+              pulseCycles(frame, fps, [
+                { from: 0, perMinute: PULSES_ASLEEP },
+                { from: wakeAt, perMinute: PULSES_AWAKE },
+              ]),
+            )}
+          />
+        </Place>
+        <Place
+          x={TANK_FISH.x + (startled ? 30 : 0)}
+          y={TANK_FISH.y + 6 * wave(seconds, 2.6)}
+        >
+          <Fish
+            width={TANK_FISH.width}
+            colors={fishColors.day}
+            mood={startled ? "scared" : "curious"}
+            look={[-0.9, 0.4]}
+            tail={(startled ? 10 : 4) * wave(seconds, startled ? 0.4 : 1.1)}
+          />
+        </Place>
+        {startled ? (
+          <SvgLayer>
+            {BUBBLES.map((delay) => {
+              const rise = ((seconds - wakeAt / fps) * 0.9 + delay) % 1;
+              return (
+                <circle
+                  key={delay}
+                  cx={TANK_FISH.x - 50 + 16 * Math.sin(rise * 9 + delay * 7)}
+                  cy={TANK_FISH.y - 10 - 150 * rise}
+                  r={5 + 7 * rise}
+                  fill="none"
+                  stroke={ink.ring}
+                  strokeWidth={3}
+                  opacity={1 - rise}
+                />
+              );
+            })}
+          </SvgLayer>
+        ) : null}
+      </Tank>
+    </Lab>
+  );
+};
+
+export const JellyfishNightScene: React.FC<SceneProps> = ({ scene, shots }) => {
+  const { fps } = useVideoConfig();
+  return (
+    <>
+      <Shot range={shots[0]} name="de noite ela pulsa mais devagar">
+        <SlowShot slowAt={cue(scene, "devagar")} />
+      </Shot>
+      <Shot range={shots[1]} name="tiram o apoio de baixo dela">
+        <PullShot
+          pulledAt={Math.max(
+            REACH_SECONDS * fps,
+            cue(scene, "dela") - shots[1].from,
+          )}
+        />
+      </Shot>
+      <Shot range={shots[2]} name="o tranco">
+        <StartleShot />
+      </Shot>
+    </>
+  );
+};

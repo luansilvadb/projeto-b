@@ -36,7 +36,8 @@ export const palette = direction.palette;
 export const typography = {
   ...direction.font,
   // Mínimos legíveis num quadro de 1920 px de largura.
-  size: { display: 150, headline: 110, label: 78, note: 56 },
+  // "seal" é o selo da fonte no canto: pequeno, mas ainda legível numa tela de celular.
+  size: { display: 150, headline: 110, label: 78, note: 56, seal: 32 },
 } as const;
 
 export const shape = {

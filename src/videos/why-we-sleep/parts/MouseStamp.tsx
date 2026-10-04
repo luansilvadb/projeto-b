@@ -1,7 +1,7 @@
 import { Mouse } from "../../../art/Animals";
 import { Appear } from "../../../components/Appear";
 import { Place } from "../../../components/Place";
-import { ALREADY_SHOWN } from "./timing";
+import { ALREADY_SHOWN } from "../../../components/timing";
 import { palette } from "../../../design/tokens";
 
 type MouseStampProps = {

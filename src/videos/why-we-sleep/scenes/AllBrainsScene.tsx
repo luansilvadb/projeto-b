@@ -4,7 +4,7 @@ import { Place } from "../../../components/Place";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Answers } from "../parts/Answers";
 import { Stage } from "../parts/Stage";
-import { cue } from "../parts/timing";
+import { cue } from "../../../components/timing";
 
 export const AllBrainsScene: React.FC<SceneProps> = ({ scene }) => (
   <Stage scene={scene}>

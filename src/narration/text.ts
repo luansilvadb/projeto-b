@@ -19,6 +19,15 @@ export const splitSentences = (text: string): string[] =>
     .map((sentence) => sentence.trim())
     .filter((sentence) => sentence !== "");
 
+/**
+ * As unidades de fala da narração: cada uma é gerada sozinha pelo modelo de
+ * voz e separada da seguinte por uma pausa. Além do fim de cada frase, o
+ * dois-pontos também corta: quem fala para ali, com a voz em suspenso, antes
+ * de dizer o que anunciou (uma citação, uma explicação, um item).
+ */
+export const splitUtterances = (text: string): string[] =>
+  splitSentences(text).flatMap((sentence) => sentence.split(/(?<=:)\s+/));
+
 const quoteAll = (matches: readonly string[]): string =>
   [...new Set(matches)].map((match) => `"${match}"`).join(", ");
 
@@ -53,7 +62,8 @@ export const findNarrationProblems = (narration: string): string[] => {
     (found) => `abreviações de unidade (${found}): escreva por extenso`,
   );
 
-  const sentences = splitSentences(narration);
+  // O limite é o da geração, que acontece por unidade de fala.
+  const sentences = splitUtterances(narration);
   for (const sentence of sentences) {
     if (sentence.length > MAX_SENTENCE_CHARS) {
       problems.push(

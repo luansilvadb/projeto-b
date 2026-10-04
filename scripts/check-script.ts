@@ -4,9 +4,17 @@
 // o tamanho do vídeo e o ritmo da imagem antes de gastar minutos gerando a
 // narração.
 
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
+import { directionProblems } from "../src/narration/direction";
 import { PACING } from "../src/narration/manifest";
+import {
+  PROFILE_CRITERIA,
+  narrationProfile,
+  profileProblems,
+} from "../src/narration/profile";
 import { shotShares } from "../src/narration/shots";
-import { splitSentences } from "../src/narration/text";
+import { splitUtterances } from "../src/narration/text";
 import { exitWithError, readScript, slugFromArgs } from "./lib/videos";
 
 // Ritmo medido na narração do vídeo de demonstração com a voz de voice/reference.wav.
@@ -23,6 +31,27 @@ const formatDuration = (seconds: number) => {
   return `${Math.floor(total / 60)} min ${total % 60} s`;
 };
 
+/**
+ * Confere o registro da direção contra o roteiro. Sem script.md o comando só
+ * avisa: o roteiro pode ser validado antes de a estrutura ter sido gravada.
+ */
+const checkDirection = (slug: string, sceneIds: readonly string[]) => {
+  const file = path.resolve("src/videos", slug, "script.md");
+  if (!existsSync(file)) {
+    console.log(
+      `\nSem registro da direção (${file}): a crítica do texto não tem os blocos contra os quais conferir.`,
+    );
+    return;
+  }
+  const problems = directionProblems(readFileSync(file, "utf8"), sceneIds);
+  if (problems.length > 0) {
+    throw new Error(
+      `O registro da direção (${file}) não cobre o roteiro:\n- ${problems.join("\n- ")}`,
+    );
+  }
+  console.log("\nRegistro da direção: toda cena está em um bloco.");
+};
+
 const main = () => {
   const slug = slugFromArgs("pnpm check-script <vídeo>");
   const script = readScript(slug);
@@ -32,7 +61,7 @@ const main = () => {
   let shotCount = 0;
   const longShots: string[] = [];
   for (const scene of script.scenes) {
-    const sentences = splitSentences(scene.narration).length;
+    const sentences = splitUtterances(scene.narration).length;
     const pausesMs =
       PACING.leadMs + PACING.sentenceGapMs * (sentences - 1) + PACING.tailMs;
     const seconds =
@@ -63,11 +92,34 @@ const main = () => {
   console.log(
     `Cada plano fica na tela cerca de ${(totalSeconds / shotCount).toFixed(1)} s, em média.`,
   );
+  // O perfil do texto: é o que separa uma explicação para quem assiste de uma lista de fatos.
+  const profile = narrationProfile(
+    script.scenes.map((scene) => scene.narration),
+  );
+  console.log("\nPerfil da narração, contra os vídeos de referência:");
+  for (const criterion of PROFILE_CRITERIA) {
+    const value = criterion.value(profile);
+    const inRange = value >= criterion.range[0] && value <= criterion.range[1];
+    console.log(
+      `  ${criterion.label.padEnd(38)} ${criterion.format(value).padStart(5)}   referência: ${criterion.format(criterion.range[0])} a ${criterion.format(criterion.range[1])}   ${inRange ? "dentro" : "FORA"}`,
+    );
+  }
+  const off = profileProblems(profile).length;
+  if (off > 0) {
+    console.log(
+      `${off} medida(s) do texto fora da faixa: reveja o roteiro com a skill diretor-criativo antes de gerar a voz.`,
+    );
+  }
   if (longShots.length > 0) {
     console.log(
       `\n${longShots.length} plano(s) com mais de ${LONG_SHOT_SECONDS} s. Divida cada um, ou confirme que a imagem muda dentro dele:\n- ${longShots.join("\n- ")}`,
     );
   }
+  // Por último: o relatório do roteiro sai inteiro mesmo quando o registro diverge.
+  checkDirection(
+    slug,
+    script.scenes.map((scene) => scene.id),
+  );
 };
 
 try {

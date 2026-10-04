@@ -1,6 +1,6 @@
 import { Appear } from "../../../components/Appear";
 import { Place } from "../../../components/Place";
-import { ALREADY_SHOWN } from "./timing";
+import { ALREADY_SHOWN } from "../../../components/timing";
 import { BoxIcon, DropIcon, ShelfIcon } from "./Icons";
 
 type AnswersProps = {

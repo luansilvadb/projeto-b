@@ -16,7 +16,7 @@ Como definir a voz do projeto a partir dos mecanismos do estilo?
 4. **Otimismo sóbrio**: temas assustadores são encarados sem pânico e sem consolo falso.
 5. **Humildade de escala**: o humano é pequeno diante do tema, e isso é tratado com espanto, não com desprezo.
 6. **Leveza pontual**: humor seco alivia a densidade sem virar o assunto.
-7. **Segunda pessoa**: o espectador é colocado dentro da situação ("você", "seu corpo", "imagine que"). No canal, "você" e variações são cerca de 1 em cada 100 palavras, e quase 2 nos vídeos recentes.
+7. **Segunda pessoa**: o espectador é colocado dentro da situação ("você", "seu corpo", "imagine que"). No canal, "você" e variações são cerca de 1 em cada 100 palavras, e quase 2 nos vídeos recentes. A taxa do vídeo inteiro engana: "você" só no gancho e no fecho deixa o miolo frio. Quem assiste entra em todo bloco, como "você", como "nós" ou com o corpo dele de medida.
 8. **Autor visível**: quem escreve aparece como "nós", admite sua posição, seu interesse pessoal no tema e a dificuldade de fazer o vídeo quando isso ajuda o espectador a calibrar a confiança. Opinião é dita como opinião.
 
 **Variáveis por projeto.** Decididas com o usuário e registradas na ficha de voz:
@@ -37,7 +37,7 @@ Como definir a voz do projeto a partir dos mecanismos do estilo?
 3. Escreva um segundo parágrafo com uma variável deslocada, para dar contraste real à escolha.
 4. Leve as duas amostras ao usuário; a aprovada vira a referência de voz do projeto.
 
-**Ficha de voz.** Posição em cada variável, o parágrafo de referência e de três a cinco regras de "soa assim / não soa assim" extraídas dele.
+**Ficha de voz.** Posição em cada variável, o parágrafo de referência, de três a cinco regras de "soa assim / não soa assim" extraídas dele e, para cada bloco do arco, por onde quem assiste entra.
 
 ## DEPENDÊNCIAS
 - angulo: fornece a tese e a promessa que determinam o peso emocional adequado.

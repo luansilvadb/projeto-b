@@ -24,21 +24,22 @@ Para narrar com a sua voz, grave de 5 a 10 segundos em ambiente silencioso e sal
 
 ## Como um vídeo é feito
 
-Cada etapa tem uma skill do Claude Code em `.claude/skills/` com o passo a passo.
+Cada etapa pertence a uma skill do Claude Code em `.claude/skills/`, que guarda o passo a passo em `etapas/<etapa>.md`.
 
-| Etapa          | Skill       | Comando                         | Resultado                                          |
-| -------------- | ----------- | ------------------------------- | -------------------------------------------------- |
-| 1. Pesquisa    | `research`  |                                 | `research.md`, com fatos e fontes                  |
-| 2. Roteiro     | `script`    | `pnpm check-script <vídeo>`     | `script.json`, com os planos, e a **1ª aprovação** |
-| 3. Narração    | `narration` | `pnpm narrate <vídeo>`          | áudio e tempo de cada palavra                      |
-| 4. Animatic    | `animatic`  | `pnpm stills <vídeo>`           | planos desenhados e a **2ª aprovação**             |
-| 5. Animação    | `animation` | `pnpm critique <vídeo>`         | planos animados, medidos contra a referência       |
-| 6. Trilha      | `music`     | `pnpm music <vídeo> [semente]`  | trilha instrumental original                       |
-| 7. Corte final | `final-cut` | `pnpm render <vídeo>`           | `out/<vídeo>.final.mp4` e a **3ª aprovação**       |
+| Etapa          | Skill              | Procedimento             | Comando                         | Resultado                                          |
+| -------------- | ------------------ | ------------------------ | ------------------------------- | -------------------------------------------------- |
+| 1. Pesquisa    | `diretor-criativo` | `etapas/pesquisa.md`     |                                 | `research.md`, com fatos e fontes                  |
+| 2. Roteiro     | `diretor-criativo` | `etapas/roteiro.md`      | `pnpm check-script <vídeo>`     | `script.json`, com os planos, e a **1ª aprovação** |
+| 3. Narração    | `producao`         | `etapas/narracao.md`     | `pnpm narrate <vídeo>`          | áudio e tempo de cada palavra                      |
+| 4. Animatic    | `diretor-de-arte`  | `etapas/animatic.md`     | `pnpm stills <vídeo>`           | planos desenhados e a **2ª aprovação**             |
+| 5. Animação    | `diretor-de-arte`  | `etapas/animacao.md`     | `pnpm critique <vídeo>`         | planos animados, medidos contra a referência       |
+| 6. Trilha      | `producao`         | `etapas/trilha.md`       | `pnpm music <vídeo> [semente]`  | trilha instrumental original                       |
+| 7. Corte final | `producao`         | `etapas/corte-final.md`  | `pnpm render <vídeo>`           | `out/<vídeo>.final.mp4` e a **3ª aprovação**       |
+| 8. Publicação  | `producao`         | `etapas/publicacao.md`   |                                 | `description.md`, com título e fontes              |
 
 `<vídeo>` é o nome da pasta em `src/videos/`. O vídeo `demo` percorre o caminho inteiro e serve de modelo.
 
-As skills dizem como rodar cada etapa neste repositório. O conhecimento do estilo fica em três skills de conhecimento, também em `.claude/skills/`, que as skills das etapas acionam: `diretor-criativo` (ângulo, estrutura e texto do roteiro), `diretor-de-arte` (elenco, paletas, a divisão de cada cena em planos, desenho e composição) e `animador` (sincronia com a fala, entradas, pausa viva, ação, câmera, transições e efeitos).
+São três skills, uma por dono de entrega: `diretor-criativo` (o texto: pesquisa, ângulo, estrutura e roteiro), `diretor-de-arte` (a imagem e o movimento: elenco, paletas, a divisão de cada cena em planos, desenho, composição e animação) e `producao` (o som e o arquivo final: narração, trilha, efeitos sonoros, corte final e a descrição de publicação). Em cada uma, `SKILL.md` leva do pedido à etapa; os arquivos de `etapas/` dizem como rodar a etapa neste repositório; as unidades, nas outras pastas, guardam o conhecimento do estilo. Os planos do roteiro são a única etapa que cruza duas skills: o `diretor-criativo` aciona o `diretor-de-arte` (`etapas/decupagem.md`) antes da 1ª aprovação. As skills dirigem na conversa; os especialistas que levantam, executam e julgam são subagentes em `.claude/agents/`, acionados por elas e sem o contexto de quem fez o trabalho: `pesquisador`, `checador` e `editor` (do `diretor-criativo`; o `checador` volta no corte final, acionado pela `producao`), `ilustrador`, `motion-designer`, `critico-de-quadro` e `critico-de-movimento` (do `diretor-de-arte`). A skill `remotion-best-practices` vem do Remotion e é atualizada com ele.
 
 Outros comandos: `pnpm dev` abre o Remotion Studio, `pnpm lint` checa tipos e estilo, `pnpm test` roda os testes do código e das ferramentas Python, `pnpm critique <vídeo>` mede o render (movimento, área com desenho e cor) contra a faixa de 12 vídeos de referência, `pnpm eval:voice` compara a configuração da voz com variações dela em 16 frases fixas (naturalidade, entonação, altura, cortes e erros de pronúncia), `pnpm sfx "<busca>"` lista efeitos sonoros CC0 do Freesound e `pnpm sfx <id>` baixa o escolhido, `pnpm identity` renderiza as direções de arte candidatas lado a lado em `out/identity/comparison.png`.
 
@@ -52,7 +53,7 @@ src/audio/           mixagem da trilha e efeitos sonoros
 src/critique/        medidas do render e as faixas dos vídeos de referência
 src/narration/       regras do roteiro e tempos da narração
 src/video/           montagem de um vídeo narrado
-src/videos/<vídeo>/  pesquisa, ficha visual, roteiro e cenas de cada vídeo
+src/videos/<vídeo>/  pesquisa, roteiro, registros de decisão, aprovações e cenas de cada vídeo
 scripts/             os comandos pnpm
 tools/               scripts Python que chamam os modelos de voz e de trilha
 public/fonts/        fontes das direções de arte (OFL)
@@ -63,8 +64,10 @@ Ficam fora do git: `public/videos/` (narração e trilha geradas), `vendor/` (fe
 
 ## Convenções
 
-- Nomes de arquivos, código, chaves do roteiro e skills em inglês. Comentários, documentação e o conteúdo dos vídeos em português do Brasil.
+- Nomes de arquivos, código e chaves do roteiro em inglês. Comentários, documentação, o conteúdo dos vídeos e as skills (com as suas etapas e unidades) em português do Brasil.
 - O nome da pasta de um vídeo é também o id da composição e o argumento de todos os comandos.
+- O que o usuário decidiu fica na pasta do vídeo, no git: `script.md` (as decisões do texto, sem narração), `art.md` (a ficha visual) e `score.md` (a partitura da animação). `out/` guarda só o que pode ser gerado de novo.
+- Cada aprovação é uma linha de `src/videos/<vídeo>/approvals.md`, escrita só depois do "sim" do usuário na conversa: `| <1ª: roteiro, 2ª: animatic, aceite da animação ou 3ª: corte final> | <aaaa-mm-dd> | <o que cobriu, e as ressalvas aceitas> |`. Linha nunca é apagada: se o que foi aprovado mudar, entra uma linha `reaberta: <qual>` com o motivo, e a aprovação seguinte é uma linha nova. Vale a última linha de cada aprovação. As numeradas são três; o aceite da animação fica entre a 2ª e a 3ª.
 - Nenhuma cena escreve cor solta. As cores de um vídeo ficam em `src/videos/<vídeo>/palette.ts`, com os modos e o elenco da ficha visual dele (`art.md`). Tamanhos de texto, formas e curvas de movimento vêm de `src/design/tokens.ts`.
 - A identidade visual do canal ainda está em escolha entre três direções candidatas em `src/design/directions/`; `tokens.ts` expõe a ativa. Elas valem para o vídeo `demo` e para as cenas que ainda não foram redesenhadas; o que fazer com elas agora que as cores são por vídeo está em aberto.
 - A duração de cada cena vem da narração. Cenas não têm durações fixas.

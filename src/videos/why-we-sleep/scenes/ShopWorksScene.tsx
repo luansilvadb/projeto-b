@@ -6,7 +6,7 @@ import { ChapterCard } from "../parts/ChapterCard";
 import { MouseStamp } from "../parts/MouseStamp";
 import { ShelfStock, ShopInterior } from "../parts/ShopInterior";
 import { Stage } from "../parts/Stage";
-import { cue, ramp } from "../parts/timing";
+import { cue, ramp } from "../../../components/timing";
 import { CLOSED_SHOP } from "./NotOptionalScene";
 
 export const ShopWorksScene: React.FC<SceneProps> = ({ scene }) => {

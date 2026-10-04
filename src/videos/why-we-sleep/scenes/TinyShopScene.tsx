@@ -8,7 +8,8 @@ import { palette, shape } from "../../../design/tokens";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { LivingJellyfish } from "../parts/LivingJellyfish";
 import { Stage } from "../parts/Stage";
-import { cue, PULSES_ASLEEP, ramp } from "../parts/timing";
+import { cue, ramp } from "../../../components/timing";
+import { PULSES_ASLEEP } from "../parts/pulse";
 
 const JELLYFISH = { x: 480, y: 520, size: 520 };
 const SHOP = { x: 1260, groundY: 900, large: 640, tiny: 220 };

@@ -1,7 +1,7 @@
 import { random, useCurrentFrame, useVideoConfig } from "remotion";
 import { POP_SECONDS, popOpacity, popScale } from "../../../components/Pop";
 import { puzzle } from "../palette";
-import { ALREADY_SHOWN } from "./timing";
+import { ALREADY_SHOWN } from "../../../components/timing";
 
 /** O tabuleiro: quantas peças tem e o lado de cada uma. */
 export const PUZZLE = { columns: 4, rows: 3, cell: 190 };

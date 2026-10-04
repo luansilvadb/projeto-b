@@ -36,6 +36,37 @@ describe("assembleScene", () => {
       PACING.leadMs + 1000 + PACING.sentenceGapMs + 2000 + PACING.tailMs,
     );
   });
+
+  it("soma ao fim da cena o silêncio que o roteiro pede", () => {
+    const plain = assembleScene("sun", [take("Um.", 1000)]);
+    const held = assembleScene("sun", [take("Um.", 1000)], 4000);
+
+    expect(held.durationMs).toBe(plain.durationMs + 4000);
+    expect(held.holdMs).toBe(4000);
+    expect(plain.holdMs).toBeUndefined();
+  });
+});
+
+describe("frases coladas", () => {
+  it("encurta a pausa depois de uma frase colada na seguinte", () => {
+    const scene = assembleScene("sun", [
+      { ...take("Um,", 1000), tight: true },
+      take("dois.", 2000),
+    ]);
+
+    expect(scene.sentences[1].startMs).toBe(
+      PACING.leadMs + 1000 + PACING.tightGapMs,
+    );
+  });
+
+  it("cola o fim de uma cena no começo da seguinte", () => {
+    const first = assembleScene("sun", [{ ...take("Um.", 1000), tight: true }]);
+    const second = assembleScene("moon", [take("Dois.", 2000)], 0, true);
+
+    expect(first.durationMs).toBe(PACING.leadMs + 1000 + PACING.tightGapMs);
+    expect(second.sentences[0].startMs).toBe(0);
+    expect(second.durationMs).toBe(2000 + PACING.tailMs);
+  });
 });
 
 describe("assertManifestMatchesScript", () => {

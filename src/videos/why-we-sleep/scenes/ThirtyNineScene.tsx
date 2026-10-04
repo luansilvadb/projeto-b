@@ -12,7 +12,8 @@ import { LivingJellyfish } from "../parts/LivingJellyfish";
 import { PulseCounter } from "../parts/PulseCounter";
 import { restingY } from "../parts/Sea";
 import { Stage } from "../parts/Stage";
-import { PULSES_ASLEEP, cue } from "../parts/timing";
+import { cue } from "../../../components/timing";
+import { PULSES_ASLEEP } from "../parts/pulse";
 
 // O enquadramento com que o vídeo abria antes de o gancho ser redesenhado.
 // Esta cena ainda não foi refeita e continua nele.

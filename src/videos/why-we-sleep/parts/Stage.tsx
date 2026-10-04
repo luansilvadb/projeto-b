@@ -1,6 +1,6 @@
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { Backdrop } from "../../../components/Backdrop";
-import { Camera, Layer } from "../../../components/Camera";
+import { Camera, Layer, Wall } from "../../../components/Camera";
 import { Drifters } from "../../../components/Drifters";
 import { Grain } from "../../../components/Grain";
 import { motion, palette } from "../../../design/tokens";
@@ -60,7 +60,9 @@ export const Stage: React.FC<StageProps> = ({
         {/* O chão do mar se aproxima junto com quem está pousado nele. */}
         {underwater ? (
           <Layer depth={1}>
-            <Sea night={sea} />
+            <Wall>
+              <Sea night={sea} />
+            </Wall>
           </Layer>
         ) : null}
         {grave ? null : (

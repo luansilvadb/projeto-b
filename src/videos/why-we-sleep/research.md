@@ -13,6 +13,18 @@ Grau de consenso de cada fato, entre parênteses: estabelecido, majoritário com
 - Dormir menos de 7 horas por noite de forma regular está associado a ganho de peso e obesidade, diabetes, hipertensão, doença cardíaca e AVC, depressão e maior risco de morte, além de pior função imune, mais erros e mais acidentes. São associações, não prova de causa. (estabelecido como associação) [1]
 - A função do sono continua sem resposta única: revisões da área a descrevem como "um dos maiores mistérios da neurobiologia" e dizem que as funções do sono "ainda estão envoltas em mistério". (estabelecido) [2] [3]
 
+### O que o sono custa
+
+- Dormir parece contrariar a sobrevivência: impede de procurar e consumir comida, é incompatível com a reprodução e deixa o animal vulnerável ao ataque de inimigos. (estabelecido como descrição do problema) [19]
+- Allan Rechtschaffen, pioneiro da pesquisa do sono e autor dos experimentos com ratos [9]: "Se o sono não serve a uma função absolutamente vital, então é o maior erro que o processo evolutivo já cometeu." (citação) [19]
+- Rechtschaffen dedicou 44 anos a estudar a função do sono. Entrou na Universidade de Chicago em 1957 e dirigiu o Laboratório de Pesquisa do Sono de lá por mais de 40 anos. A fonte diz que ele "gostava de dizer" a frase acima, sem data. Os ratos foram privados de sono pelo método do disco sobre a água, criado por ele com Bernard Bergmann. (estabelecido; relido em 04/10/2026) [19]
+- A revisão de Cirelli e Tononi testa a hipótese de que o sono não seria essencial, que prevê três coisas: animais que não dormem, animais que não precisam compensar o sono perdido e falta de sono sem consequência séria. Nenhuma das três se confirma. O sono de recuperação aparece como mais tempo de sono, sono mais profundo ou sono menos interrompido. (estabelecido; relido em 04/10/2026) [20]
+- O sono é definido como uma condição reversível de resposta reduzida ao ambiente, em geral com imobilidade, e regulada por homeostase: quem é privado dele compensa depois. (estabelecido) [20]
+- Não há evidência clara de nenhuma espécie que não durma; os casos apontados como exceção (rã-touro, peixes de recife, golfinhos) são controversos. (majoritário com ressalvas) [20]
+- O sono provavelmente surgiu há mais de meio bilhão de anos. (majoritário com ressalvas: inferido do sono em águas-vivas e hidras, não de fósseis) [21]
+
+Termos de comparação para o roteiro: adulto humano, 7 a 8 horas por noite [1]. Elefanta: 2 h ÷ 8 h = um quarto [4]. Fragata em voo: 0,69 h = 41 minutos por dia [5]. Sinapses: cerca de 80% encolhem, ou oito em cada dez [15].
+
 ### Todo animal estudado dorme
 
 - Entre mamíferos, o sono diário varia de cerca de 4 a 20 horas conforme a espécie. (estabelecido; ver o elefante abaixo, medido depois dessa revisão) [3]
@@ -76,3 +88,6 @@ Grau de consenso de cada fato, entre parênteses: estabelecido, majoritário com
 16. Xie et al., "Sleep Drives Metabolite Clearance from the Adult Brain", Science, 2013. https://pmc.ncbi.nlm.nih.gov/articles/PMC3880190/ (consultada em 02/10/2026)
 17. Miao et al., "Brain clearance is reduced during sleep and anesthesia", Nature Neuroscience, 2024. https://www.nature.com/articles/s41593-024-01638-y (lido no comunicado do UK Dementia Research Institute em https://ukdri.ac.uk/news-and-events/scientists-find-sleep-may-not-clear-brain-toxins-as-previously-thought em 02/10/2026; a página do artigo exige login)
 18. Alzforum, "Does Sleep Really Speed Clearance from the Brain?", 2024. https://www.alzforum.org/news/research-news/does-sleep-really-speed-clearance-brain (consultada em 02/10/2026)
+19. Matt Wood, University of Chicago News, "Allan Rechtschaffen, sleep research pioneer, 1927-2021", 2021. https://news.uchicago.edu/story/allan-rechtschaffen-sleep-research-pioneer-1927-2021 (consultada em 03/10/2026; a citação é atribuída a um texto de 1971, que não foi aberto)
+20. Cirelli e Tononi, "Is Sleep Essential?", PLOS Biology, 2008. https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0060216 (consultada em 03/10/2026)
+21. Stephanie Pappas, Scientific American, "Which Creature Was the First to Take a Nap?", 2023. https://www.scientificamerican.com/article/which-was-the-first-creature-to-take-a-nap (consultada em 03/10/2026; jornalismo científico, usado só para a ordem de grandeza da idade do sono)

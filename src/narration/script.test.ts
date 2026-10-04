@@ -56,6 +56,16 @@ describe("parseScript", () => {
     expect(parse).toThrowError(/"music" precisa de um "caption"/);
   });
 
+  it("aceita um silêncio depois da fala e recusa o que não é um tempo válido", () => {
+    const withHold = (holdMs: unknown) => () =>
+      parseScript({ title: "x", scenes: [{ ...validScene, holdMs }] });
+
+    expect(withHold(4000)).not.toThrow();
+    expect(withHold(0)).toThrowError(/"holdMs" precisa ser um inteiro/);
+    expect(withHold(60000)).toThrowError(/"holdMs" precisa ser um inteiro/);
+    expect(withHold("4s")).toThrowError(/"holdMs" precisa ser um inteiro/);
+  });
+
   it("recusa roteiro sem cenas ou que não é objeto", () => {
     expect(() => parseScript({ title: "x", scenes: [] })).toThrowError(
       /ao menos uma cena/,

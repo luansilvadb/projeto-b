@@ -1,15 +1,11 @@
-"""Gera a narração de uma lista de frases com o OmniVoice.
+"""Gera frases com o OmniVoice: carrega o modelo, prepara a amostra de voz e sintetiza uma tomada.
 
-Uso: python tts.py <job.json>
-
-O job é montado por scripts/narrate.ts. Cada frase gerada vira uma linha JSON
-no stdout; mensagens de progresso vão para o stderr.
+Quem chama é o voice_worker.py (a narração e o estúdio de voz) e o evaluate.py
+(a avaliação de parâmetros).
 """
 
-import json
 import random
 import sys
-from pathlib import Path
 
 import numpy as np
 import soundfile as sf
@@ -51,50 +47,34 @@ def load_voice(model: OmniVoice, job: dict) -> tuple[VoiceClonePrompt, float]:
     return prompt, reference_hz
 
 
-def synthesize(
-    model: OmniVoice, prompt: VoiceClonePrompt, text: str, seed: int, speed: float
-) -> tuple[np.ndarray, bool]:
-    """Gera a frase uma vez. O segundo valor diz se ela saiu inteira, isto é, se terminou em silêncio."""
-    set_seed(seed)
-    # A duração que o modelo estima para a frase é justa; `speed` abaixo de 1 dá a folga para a fala caber.
-    audio = model.generate(text=text, language=LANGUAGE, voice_clone_prompt=prompt, speed=speed, **RAW_OUTPUT)[0]
-    # O modelo entrega um pouco de silêncio nas duas pontas. Sem ele, as
-    # pausas entre frases ficam só por conta da montagem.
-    return silence.trim(audio)
-
-
-def main() -> None:
-    job = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-
+def load_model(job: dict) -> OmniVoice:
     on_gpu = torch.cuda.is_available()
     print(f"Carregando o OmniVoice em {'cuda' if on_gpu else 'cpu'}...", file=sys.stderr)
     # A revisão fixa impede que uma atualização dos pesos mude a voz sem ninguém decidir.
     weights = snapshot_download(job["repository"], revision=job["revision"])
-    model = OmniVoice.from_pretrained(
+    return OmniVoice.from_pretrained(
         weights,
         device_map="cuda:0" if on_gpu else "cpu",
-        dtype=torch.float16 if on_gpu else torch.float32,
+        # A CPU não calcula em meia precisão.
+        dtype=getattr(torch, job["precision"]) if on_gpu else torch.float32,
     )
-    prompt, reference_hz = load_voice(model, job)
-
-    for index, item in enumerate(job["items"], start=1):
-        print(f"  voz {index}/{len(job['items'])}: {item['text'][:60]}", file=sys.stderr)
-        # A altura muda de uma geração para outra: cada frase é gerada algumas
-        # vezes, com sementes próprias de cada tentativa, e fica a mais próxima da amostra.
-        first_seed = (item["attempt"] - 1) * job["takesPerAttempt"] + 1
-        takes = [
-            synthesize(model, prompt, item["text"], seed, job["speed"])
-            for seed in range(first_seed, first_seed + job["takesPerAttempt"])
-        ]
-        # Uma geração cortada no fim só entra na escolha se todas saíram assim.
-        complete = [samples for samples, ends_in_silence in takes if ends_in_silence]
-        candidates = complete or [samples for samples, _ in takes]
-        samples = pitch.closest_take(candidates, model.sampling_rate, reference_hz)
-        sf.write(item["output"], samples, model.sampling_rate, subtype="PCM_16")
-        duration_ms = round(len(samples) * 1000 / model.sampling_rate)
-        result = {"output": item["output"], "durationMs": duration_ms, "cutOff": not complete}
-        print(json.dumps(result), flush=True)
 
 
-if __name__ == "__main__":
-    main()
+def synthesize(
+    model: OmniVoice, prompt: VoiceClonePrompt, text: str, seed: int, job: dict
+) -> tuple[np.ndarray, bool]:
+    """Gera a frase uma vez. O segundo valor diz se ela saiu inteira, isto é, se terminou em silêncio."""
+    set_seed(seed)
+    audio = model.generate(
+        text=text,
+        language=LANGUAGE,
+        voice_clone_prompt=prompt,
+        # A duração que o modelo estima para a frase é justa; `speed` abaixo de 1 dá a folga para a fala caber.
+        speed=job["speed"],
+        num_step=job["numStep"],
+        class_temperature=job["classTemperature"],
+        **RAW_OUTPUT,
+    )[0]
+    # O modelo entrega um pouco de silêncio nas duas pontas. Sem ele, as
+    # pausas entre frases ficam só por conta da montagem.
+    return silence.trim(audio)

@@ -10,3 +10,6 @@ import { Config } from "@remotion/cli/config";
 Config.setRspack(true);
 Config.setVideoImageFormat("jpeg");
 Config.setOverwriteOutput(true);
+Config.setVideoBitrate('8M');
+Config.setX264Preset('veryfast');
+Config.setCodec('h264');

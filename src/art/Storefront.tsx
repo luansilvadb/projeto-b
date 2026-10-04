@@ -42,11 +42,19 @@ type StorefrontProps = {
   readonly sign?: StorefrontSign;
   /** Quanto a lâmpada está acesa, de 0 a 1; só faz diferença quando as cores têm brilho de lâmpada. */
   readonly lamp?: number;
+  /** A porta de enrolar desce só sobre a vitrine: metade da loja fecha, a porta fica. */
+  readonly half?: boolean;
+  /** A porta aberta: um vão escuro com o balcão do caixa, onde alguém pode ficar. */
+  readonly doorOpen?: boolean;
 };
 
 // A loja cabe nesta caixa, com a calçada no meio da base.
 const VIEW = { width: 520, height: 510 };
 const OPENING = { x: -206, y: -306, width: 412, height: 270 };
+/** A vitrine, dentro da abertura: a metade que fecha quando só metade da loja fecha. */
+export const WINDOW = { x: -206, y: -306, width: 252, height: 214 };
+/** A porta, dentro da abertura: onde o funcionário fica quando ela está aberta. */
+export const DOOR = { x: 74, y: -306, width: 132, height: 270 };
 const STRIPES = 8;
 const SLAT = 18;
 
@@ -112,10 +120,13 @@ export const Storefront: React.FC<StorefrontProps> = ({
   shutter = 0,
   sign = "moon",
   lamp = 1,
+  half = false,
+  doorOpen = false,
 }) => {
   const id = useId();
   const scale = width / VIEW.width;
   const shutterHeight = OPENING.height * shutter;
+  const shutterWidth = half ? WINDOW.width : OPENING.width;
 
   return (
     <svg
@@ -206,27 +217,51 @@ export const Storefront: React.FC<StorefrontProps> = ({
         opacity={0.3}
       />
 
-      <rect
-        x={74}
-        y={-306}
-        width={132}
-        height={270}
-        rx={10}
-        fill={colors.door}
-      />
-      <path
-        d="M152,-306 L196,-306 Q206,-306 206,-296 L206,-36 L152,-36 Z"
-        fill={colors.doorShade}
-      />
-      <rect x={92} y={-288} width={96} height={92} rx={8} fill={colors.glass} />
-      <circle cx={96} cy={-160} r={9} fill={colors.knob} />
+      {doorOpen ? (
+        // A porta aberta: o vão escuro da loja, com o balcão do caixa ao fundo.
+        <>
+          <rect {...DOOR} rx={10} fill={colors.frame} />
+          <rect
+            x={DOOR.x + 14}
+            y={-150}
+            width={DOOR.width - 28}
+            height={16}
+            rx={6}
+            fill={colors.base}
+          />
+          <rect
+            x={DOOR.x + 14}
+            y={-134}
+            width={DOOR.width - 28}
+            height={98}
+            fill={colors.wallShade}
+          />
+        </>
+      ) : (
+        <>
+          <rect {...DOOR} rx={10} fill={colors.door} />
+          <path
+            d="M152,-306 L196,-306 Q206,-306 206,-296 L206,-36 L152,-36 Z"
+            fill={colors.doorShade}
+          />
+          <rect
+            x={92}
+            y={-288}
+            width={96}
+            height={92}
+            rx={8}
+            fill={colors.glass}
+          />
+          <circle cx={96} cy={-160} r={9} fill={colors.knob} />
+        </>
+      )}
 
       {shutter > 0 ? (
         <g clipPath={`url(#${id}-opening)`}>
           <rect
             x={OPENING.x}
             y={OPENING.y}
-            width={OPENING.width}
+            width={shutterWidth}
             height={shutterHeight}
             fill={colors.shutter}
           />
@@ -236,7 +271,7 @@ export const Storefront: React.FC<StorefrontProps> = ({
               <line
                 key={slat}
                 x1={OPENING.x}
-                x2={OPENING.x + OPENING.width}
+                x2={OPENING.x + shutterWidth}
                 y1={OPENING.y + (slat + 1) * SLAT}
                 y2={OPENING.y + (slat + 1) * SLAT}
                 stroke={colors.shutterLine}
@@ -247,7 +282,7 @@ export const Storefront: React.FC<StorefrontProps> = ({
           <rect
             x={OPENING.x}
             y={OPENING.y + shutterHeight - 14}
-            width={OPENING.width}
+            width={shutterWidth}
             height={14}
             fill={colors.shutterLine}
           />

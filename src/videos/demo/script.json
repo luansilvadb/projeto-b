@@ -6,13 +6,13 @@
       "narration": "A luz que toca o seu rosto agora saiu do Sol há mais de oito minutos.",
       "shots": [
         {
-          "staging": "O Sol grande à esquerda, com o brilho pulsando sobre um céu estrelado, e a câmera se aproximando devagar. O tempo \"8 min 19 s\" surge à direita quando a narração diz \"oito\".",
+          "staging": "O Sol grande à esquerda, com o brilho pulsando sobre um céu estrelado, e a câmera se aproximando devagar. O tempo \"≈ 8 min 19 s\" surge à direita quando a narração diz \"oito\".",
           "scale": "medium",
           "palette": "espaço",
           "entry": "cut"
         }
       ],
-      "sources": [1, 2]
+      "sources": [1, 2, 4]
     },
     {
       "id": "distance",

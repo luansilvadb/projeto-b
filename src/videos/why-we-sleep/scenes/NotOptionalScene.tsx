@@ -3,7 +3,7 @@ import { Shop } from "../../../art/Shop";
 import { Place } from "../../../components/Place";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Stage } from "../parts/Stage";
-import { cue, ramp } from "../parts/timing";
+import { cue, ramp } from "../../../components/timing";
 
 export const CLOSED_SHOP = { x: 960, y: 580, width: 820 };
 

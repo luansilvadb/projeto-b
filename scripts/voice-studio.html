@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Estúdio de voz</title>
+    <style>
+      :root {
+        --bg: #14162b;
+        --card: #1f2240;
+        --line: #33375f;
+        --text: #eef0ff;
+        --dim: #a3a8d0;
+        --accent: #ff7361;
+        --good: #6fe0a8;
+        --warn: #ffd36a;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          16px/1.45 system-ui,
+          sans-serif;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 24px;
+        align-items: center;
+        padding: 12px 24px;
+        background: #0e1022;
+        border-bottom: 1px solid var(--line);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 18px;
+      }
+      header span,
+      header label {
+        color: var(--dim);
+        font-size: 14px;
+      }
+      main {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 16px 24px 120px;
+      }
+      h2 {
+        margin: 28px 0 8px;
+        font-size: 14px;
+        letter-spacing: 0.04em;
+        color: var(--dim);
+        text-transform: uppercase;
+      }
+      .card {
+        margin-bottom: 12px;
+        padding: 14px 16px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+      }
+      .card.alert {
+        border-color: var(--warn);
+      }
+      textarea {
+        width: 100%;
+        min-height: 3.2em;
+        padding: 8px 10px;
+        resize: vertical;
+        background: #14162b;
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font: inherit;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 12px;
+        align-items: center;
+        margin-top: 8px;
+      }
+      button {
+        padding: 6px 12px;
+        background: #2c3060;
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font: inherit;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      button:hover:not(:disabled) {
+        background: #3a3f7a;
+      }
+      button:disabled {
+        opacity: 0.45;
+        cursor: default;
+      }
+      button.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #1b0b08;
+        font-weight: 600;
+      }
+      .take {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 10px;
+        align-items: center;
+        padding: 6px 0;
+        border-top: 1px dashed var(--line);
+        font-size: 14px;
+      }
+      .take.used {
+        color: var(--good);
+      }
+      .badge {
+        padding: 1px 8px;
+        border-radius: 999px;
+        font-size: 12px;
+        background: #33375f;
+        color: var(--dim);
+      }
+      .badge.warn {
+        background: #4d3f16;
+        color: var(--warn);
+      }
+      .badge.good {
+        background: #1c4a38;
+        color: var(--good);
+      }
+      .heard {
+        flex-basis: 100%;
+        color: var(--warn);
+        font-size: 13px;
+      }
+      .error {
+        margin-top: 8px;
+        color: var(--accent);
+        font-size: 14px;
+        white-space: pre-wrap;
+      }
+      .card.playing {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px var(--accent);
+      }
+      .text {
+        flex: 1;
+        font-size: 17px;
+      }
+      select {
+        background: #2c3060;
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font: inherit;
+        font-size: 14px;
+      }
+      .dim {
+        color: var(--dim);
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 id="title">Estúdio de voz</h1>
+      <span id="model"></span>
+      <span id="missing"></span>
+      <button id="play-all" class="primary">▶ ouvir tudo</button>
+      <button id="stop" disabled>■ parar (Esc)</button>
+      <button id="mark" disabled>✗ soou errado (M)</button>
+      <button id="redo" disabled>regerar marcadas</button>
+      <label>
+        mostrar
+        <select id="filter">
+          <option value="all">todas as frases</option>
+          <option value="redone">só as regeradas agora</option>
+          <option value="alerts">só as com aviso</option>
+        </select>
+      </label>
+      <span id="global-error" class="error"></span>
+    </header>
+    <main id="scenes"></main>
+
+    <script>
+      let state = null;
+      // Texto digitado e ainda não salvo, pela chave da frase.
+      const drafts = new Map();
+      // Erro da última ação de cada frase, pela chave.
+      const errors = new Map();
+      const busy = new Set();
+      // Os textos que a última regeração decidiu de novo.
+      let redone = new Set();
+      // Cartões com as ferramentas manuais abertas.
+      const open = new Set();
+      let player = null;
+      // A frase que está tocando no modo "ouvir tudo".
+      let playing = null;
+
+      const $ = (id) => document.getElementById(id);
+      const el = (tag, props = {}, ...children) => {
+        const node = Object.assign(document.createElement(tag), props);
+        node.append(...children.filter((child) => child !== null));
+        return node;
+      };
+
+      const flat = () =>
+        state.scenes.flatMap((scene, sceneIndex) =>
+          scene.sentences.map((sentence, index) => ({
+            ...sentence,
+            scene: scene.id,
+            sceneIndex,
+            index,
+          })),
+        );
+
+      const hasAlert = (sentence) =>
+        !sentence.current ||
+        sentence.current.errors > 0 ||
+        sentence.current.cutOff ||
+        sentence.needsRewrite;
+
+      const visible = (sentence) => {
+        const filter = $("filter").value;
+        if (filter === "redone") return redone.has(sentence.text);
+        if (filter === "alerts") return hasAlert(sentence);
+        return true;
+      };
+
+      const setPlaying = (sentence) => {
+        playing = sentence;
+        $("mark").disabled = !sentence;
+        for (const card of document.querySelectorAll(".card")) {
+          card.classList.toggle("playing", card.id === sentence?.key);
+        }
+        if (sentence) {
+          $(sentence.key)?.scrollIntoView({
+            block: "center",
+            behavior: "smooth",
+          });
+        }
+      };
+
+      const stop = () => {
+        if (player) {
+          player.cancelled = true;
+          player.audio.pause();
+          player = null;
+        }
+        $("stop").disabled = true;
+        setPlaying(null);
+      };
+
+      const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      /** Toca uma fila de áudios, com a pausa pedida depois de cada um. */
+      const play = async (queue) => {
+        stop();
+        const session = { cancelled: false, audio: new Audio() };
+        player = session;
+        $("stop").disabled = false;
+        for (const { file, gapMs, sentence } of queue) {
+          if (session.cancelled) return;
+          setPlaying(sentence ?? null);
+          session.audio = new Audio(`/media/${file}?t=${Date.now()}`);
+          await new Promise((resolve) => {
+            session.audio.onended = resolve;
+            session.audio.onerror = resolve;
+            session.audio.play().catch(resolve);
+          });
+          if (session.cancelled) return;
+          await wait(gapMs);
+        }
+        if (player === session) stop();
+      };
+
+      /** A pausa depois de uma frase, como o vídeo vai montar. */
+      const gapAfter = (sentence, next) => {
+        const { pacing } = state;
+        if (sentence.tight) return pacing.tightGapMs;
+        return next && next.sceneIndex !== sentence.sceneIndex
+          ? pacing.tailMs + pacing.leadMs
+          : pacing.sentenceGapMs;
+      };
+
+      /** Toca, em sequência, as frases à vista que têm áudio, a partir de uma delas. */
+      const playAll = (fromKey) => {
+        const all = flat();
+        const shown = all.filter(
+          (sentence) => visible(sentence) && sentence.current,
+        );
+        const start = Math.max(
+          0,
+          shown.findIndex((sentence) => sentence.key === fromKey),
+        );
+        play(
+          shown.slice(start).map((sentence) => ({
+            sentence,
+            file: sentence.current.file,
+            gapMs: gapAfter(sentence, all[all.indexOf(sentence) + 1]),
+          })),
+        );
+      };
+
+      /** A frase anterior, esta (na tomada pedida) e a seguinte, com as pausas do vídeo. */
+      const playInContext = (position, file) => {
+        const all = flat();
+        play(
+          [position - 1, position, position + 1]
+            .filter((at) => at >= 0 && at < all.length)
+            .map((at) => ({
+              file: at === position ? file : all[at].current?.file,
+              gapMs: gapAfter(all[at], all[at + 1]),
+            }))
+            .filter((item) => item.file),
+        );
+      };
+
+      const post = async (action, body, key) => {
+        busy.add(key);
+        errors.delete(key);
+        render();
+        try {
+          const response = await fetch(`/api/${action}`, {
+            method: "POST",
+            body: JSON.stringify(body),
+          });
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.error);
+          state = result;
+          return true;
+        } catch (error) {
+          errors.set(key, error.message);
+          return false;
+        } finally {
+          busy.delete(key);
+          render();
+        }
+      };
+
+      /** Marca como errada a frase que está tocando, sem interromper a escuta. */
+      const markPlaying = () => {
+        if (playing) post("reject", { text: playing.text }, playing.key);
+      };
+
+      const redo = async () => {
+        const before = new Set(
+          flat()
+            .filter((sentence) => !sentence.current)
+            .map((sentence) => sentence.text),
+        );
+        stop();
+        if (await post("redo", {}, "redo")) {
+          redone = before;
+          $("filter").value = "redone";
+          render();
+        }
+      };
+
+      const badge = (text, kind = "") =>
+        el("span", { className: `badge ${kind}`, textContent: text });
+
+      const takeRow = (sentence, position, take) => {
+        const used = sentence.current?.seed === take.seed;
+        const rejected = sentence.rejected.includes(take.seed);
+        return el(
+          "div",
+          { className: `take${used ? " used" : ""}` },
+          el("button", {
+            textContent: "▶",
+            title: "ouvir só esta tomada",
+            onclick: () => play([{ file: take.file, gapMs: 0 }]),
+          }),
+          el("button", {
+            textContent: "▶ em contexto",
+            title: "ouvir com a frase anterior e a seguinte",
+            onclick: () => playInContext(position, take.file),
+          }),
+          el("span", { textContent: `tomada ${take.seed}` }),
+          el("span", {
+            className: "dim",
+            textContent: `${(take.durationMs / 1000).toFixed(1)} s`,
+          }),
+          take.ending === null || take.ending === undefined
+            ? null
+            : el("span", {
+                className: "dim",
+                title:
+                  "altura do fim da frase em relação à mediana, em semitons",
+                textContent: `fim ${take.ending > 0 ? "+" : ""}${take.ending.toFixed(1)} st`,
+              }),
+          take.cutOff ? badge("fim cortado", "warn") : null,
+          take.errors > 0
+            ? badge(`${take.errors} palavra(s) diferente(s)`, "warn")
+            : null,
+          rejected ? badge("rejeitada", "warn") : null,
+          used
+            ? badge("em uso", "good")
+            : el("button", {
+                textContent: "usar esta",
+                disabled: busy.has(sentence.key),
+                onclick: () =>
+                  post(
+                    "choose",
+                    { text: sentence.text, seed: take.seed },
+                    sentence.key,
+                  ),
+              }),
+          take.errors > 0
+            ? el("div", {
+                className: "heard",
+                textContent: `o conferidor ouviu: ${take.heard}`,
+              })
+            : null,
+        );
+      };
+
+      /** As ferramentas do caso difícil: editar o texto, gerar e escolher à mão, colar. */
+      const manualTools = (sentence, position) => {
+        const draft = drafts.get(sentence.key) ?? sentence.text;
+        const working = busy.has(sentence.key);
+        const save = el("button", {
+          textContent: "salvar texto",
+          disabled: working || draft === sentence.text,
+          onclick: async () => {
+            const saved = await post(
+              "text",
+              { scene: sentence.scene, index: sentence.index, text: draft },
+              sentence.key,
+            );
+            if (saved) drafts.delete(sentence.key);
+            render();
+          },
+        });
+        const count = el("span", {
+          className: "dim",
+          textContent: `${draft.length} / ${state.maxSentenceChars}`,
+        });
+        const textarea = el("textarea", {
+          value: draft,
+          oninput: (event) => {
+            drafts.set(sentence.key, event.target.value);
+            save.disabled = working || event.target.value === sentence.text;
+            count.textContent = `${event.target.value.length} / ${state.maxSentenceChars}`;
+          },
+        });
+        return [
+          textarea,
+          el(
+            "div",
+            { className: "row" },
+            save,
+            count,
+            el("button", {
+              textContent: working
+                ? "trabalhando…"
+                : `gerar ${state.takesPerRound} tomadas`,
+              disabled: working || !state.modelReady || draft !== sentence.text,
+              title:
+                draft !== sentence.text ? "salve o texto antes de gerar" : "",
+              onclick: () =>
+                post("generate", { text: sentence.text }, sentence.key),
+            }),
+            el(
+              "label",
+              { className: "dim" },
+              el("input", {
+                type: "checkbox",
+                checked: sentence.tight,
+                disabled: working,
+                onchange: (event) =>
+                  post(
+                    "tight",
+                    { text: sentence.text, tight: event.target.checked },
+                    sentence.key,
+                  ),
+              }),
+              " colar na próxima",
+            ),
+          ),
+          ...sentence.takes.map((take) => takeRow(sentence, position, take)),
+        ];
+      };
+
+      const sentenceCard = (sentence, position) => {
+        const current = sentence.current;
+        const isOpen = open.has(sentence.key) || drafts.has(sentence.key);
+        const classes = [
+          "card",
+          hasAlert(sentence) ? "alert" : "",
+          playing?.key === sentence.key ? "playing" : "",
+        ].join(" ");
+
+        return el(
+          "div",
+          { className: classes, id: sentence.key },
+          el(
+            "div",
+            { className: "row" },
+            el("button", {
+              textContent: "▶",
+              title: "ouvir daqui em diante",
+              disabled: !current,
+              onclick: () => playAll(sentence.key),
+            }),
+            el("span", { className: "text", textContent: sentence.text }),
+          ),
+          el(
+            "div",
+            { className: "row" },
+            !current
+              ? badge(
+                  sentence.rejected.length > 0
+                    ? "marcada: aguardando regerar"
+                    : "sem áudio",
+                  "warn",
+                )
+              : null,
+            current?.cutOff ? badge("fim cortado", "warn") : null,
+            current && current.errors > 0
+              ? badge(`${current.errors} palavra(s) diferente(s)`, "warn")
+              : null,
+            sentence.needsRewrite
+              ? badge(
+                  `${sentence.rejected.length} tomadas rejeitadas: pede reescrita`,
+                  "warn",
+                )
+              : null,
+            sentence.chosen !== null ? badge("escolhida à mão") : null,
+            sentence.tight ? badge("colada na próxima") : null,
+            redone.has(sentence.text) && current
+              ? badge("regerada", "good")
+              : null,
+            current
+              ? el("button", {
+                  textContent: "✗ soou errado",
+                  disabled: busy.has(sentence.key),
+                  onclick: () =>
+                    post("reject", { text: sentence.text }, sentence.key),
+                })
+              : null,
+            current
+              ? el("button", {
+                  textContent: "▶ em contexto",
+                  onclick: () => playInContext(position, current.file),
+                })
+              : null,
+            el("button", {
+              textContent: isOpen ? "fechar" : "editar à mão",
+              onclick: () => {
+                if (isOpen) open.delete(sentence.key);
+                else open.add(sentence.key);
+                render();
+              },
+            }),
+          ),
+          current && current.errors > 0
+            ? el("div", {
+                className: "heard",
+                textContent: `o conferidor ouviu: ${current.heard}`,
+              })
+            : null,
+          ...(isOpen ? manualTools(sentence, position) : []),
+          errors.has(sentence.key)
+            ? el("div", {
+                className: "error",
+                textContent: errors.get(sentence.key),
+              })
+            : null,
+        );
+      };
+
+      const render = () => {
+        if (!state) return;
+        const scroll = window.scrollY;
+        const focused = document.activeElement?.closest?.(".card")?.id;
+        const caret = document.activeElement?.selectionStart;
+
+        $("title").textContent = `Estúdio de voz · ${state.slug}`;
+        $("model").textContent = state.modelReady
+          ? "modelo pronto"
+          : "carregando o modelo…";
+        $("missing").textContent =
+          state.missing > 0
+            ? `${state.missing} frase(s) marcadas ou sem áudio`
+            : "todas as frases têm áudio";
+        const redoing = busy.has("redo");
+        $("redo").disabled =
+          redoing || !state.modelReady || state.missing === 0;
+        $("redo").textContent = redoing
+          ? `regerando ${state.missing}…`
+          : `regerar marcadas (${state.missing})`;
+        $("global-error").textContent = errors.get("redo") ?? "";
+
+        const all = flat();
+        $("scenes").replaceChildren(
+          ...state.scenes.flatMap((scene) => {
+            const cards = all
+              .map((sentence, position) => ({ sentence, position }))
+              .filter(({ sentence }) => sentence.scene === scene.id)
+              .filter(({ sentence }) => visible(sentence))
+              .map(({ sentence, position }) =>
+                sentenceCard(sentence, position),
+              );
+            return cards.length > 0
+              ? [el("h2", { textContent: scene.id }), ...cards]
+              : [];
+          }),
+        );
+
+        window.scrollTo(0, scroll);
+        const again = focused ? $(focused)?.querySelector("textarea") : null;
+        if (again) {
+          again.focus();
+          again.setSelectionRange(caret, caret);
+        }
+      };
+
+      const refresh = async () => {
+        state = await (await fetch("/api/state")).json();
+        render();
+        // Enquanto o modelo carrega, a página pergunta de novo.
+        if (!state.modelReady) setTimeout(refresh, 2000);
+      };
+
+      $("filter").onchange = render;
+      $("stop").onclick = stop;
+      $("mark").onclick = markPlaying;
+      $("redo").onclick = redo;
+      $("play-all").onclick = () => playAll(playing?.key);
+      document.addEventListener("keydown", (event) => {
+        // Dentro de um campo de texto, as teclas são do texto.
+        if (event.target.closest("textarea, input, select")) return;
+        if (event.key === "m" || event.key === "M") markPlaying();
+        if (event.key === "Escape") stop();
+      });
+      refresh();
+    </script>
+  </body>
+</html>

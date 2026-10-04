@@ -21,7 +21,7 @@ Como arrumar o quadro para o olho achar o assunto?
 
 O erro comum é tudo em tamanho médio para pequeno, centralizado, com sobra em volta.
 
-**Ocupação.** Na referência, de 40% a 68% do quadro tem desenho. Quadro quase vazio só como pausa intencional, por um plano.
+**Ocupação.** Na referência, pouco mais da metade do quadro tem desenho; a faixa é a que o `pnpm critique` confere. Quadro quase vazio só como pausa intencional, por um plano.
 
 **Posição:**
 

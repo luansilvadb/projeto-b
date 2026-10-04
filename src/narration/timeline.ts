@@ -24,6 +24,8 @@ export type SceneTimeline = {
   /** Quadro do vídeo em que a cena começa. */
   readonly from: number;
   readonly durationInFrames: number;
+  /** Quadros de silêncio no fim da cena que o roteiro pediu: o tempo de uma vinheta. */
+  readonly holdFrames: number;
   readonly sentences: readonly SentenceTimeline[];
   readonly words: readonly WordCue[];
 };
@@ -59,6 +61,7 @@ export const buildTimeline = (
       id: scene.id,
       from,
       durationInFrames: absoluteFrame(scene.durationMs) - from,
+      holdFrames: toFrame(scene.holdMs ?? 0),
       sentences: scene.sentences.map((sentence) => ({
         file: sentence.file,
         from: absoluteFrame(sentence.startMs) - from,

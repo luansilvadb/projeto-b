@@ -6,7 +6,9 @@ O job é montado por scripts/narrate.ts. Cada áudio transcrito vira uma linha
 JSON no stdout.
 """
 
+import importlib.util
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -14,6 +16,17 @@ from faster_whisper import WhisperModel
 
 MODEL = "large-v3-turbo"
 LANGUAGE = "pt"
+
+
+def expose_cuda_libraries() -> None:
+    """Deixa o Whisper achar o cuBLAS e o cuDNN que vêm dentro do PyTorch.
+
+    O faster-whisper não traz essas bibliotecas e, sem elas, não carrega na GPU.
+    O PyTorch do modelo de voz já as instala, então basta apontar para a pasta.
+    """
+    torch_libraries = Path(importlib.util.find_spec("torch").origin).parent / "lib"
+    os.add_dll_directory(str(torch_libraries))
+    os.environ["PATH"] = f"{torch_libraries}{os.pathsep}{os.environ['PATH']}"
 
 
 def numeral_tokens(model: WhisperModel) -> list[int]:
@@ -33,34 +46,43 @@ def numeral_tokens(model: WhisperModel) -> list[int]:
     ]
 
 
+def load() -> tuple[WhisperModel, list[int]]:
+    """Carrega o Whisper na GPU e devolve, com ele, os tokens que ele não deve escrever."""
+    # Na CPU, em int8, cada frase levava cerca de 6,6 s; na GPU leva 0,4 s, com as mesmas palavras.
+    expose_cuda_libraries()
+    print(f"Carregando o Whisper {MODEL} na GPU...", file=sys.stderr)
+    model = WhisperModel(MODEL, device="cuda", compute_type="float16")
+    return model, [-1, *numeral_tokens(model)]
+
+
+def transcribe(model: WhisperModel, suppress: list[int], audio: str) -> list[dict]:
+    """As palavras de um áudio, com o tempo de cada uma em milissegundos."""
+    segments, _ = model.transcribe(
+        audio,
+        language=LANGUAGE,
+        word_timestamps=True,
+        condition_on_previous_text=False,
+        suppress_tokens=suppress,
+    )
+    return [
+        {
+            "text": word.word.strip(),
+            "startMs": round(word.start * 1000),
+            "endMs": round(word.end * 1000),
+        }
+        for segment in segments
+        for word in segment.words
+    ]
+
+
 def main() -> None:
     job = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
 
-    # CPU de propósito: a GPU fica inteira para o modelo de voz, e o modelo
-    # turbo em int8 já transcreve mais rápido que o tempo real.
-    print(f"Carregando o Whisper {MODEL} na CPU...", file=sys.stderr)
-    model = WhisperModel(MODEL, device="cpu", compute_type="int8")
-    suppress = [-1, *numeral_tokens(model)]
-
+    # O narrate.ts só chama este script depois que o tts.py terminou e liberou a placa.
+    model, suppress = load()
     for index, audio in enumerate(job["audios"], start=1):
         print(f"  conferência {index}/{len(job['audios'])}", file=sys.stderr)
-        segments, _ = model.transcribe(
-            audio,
-            language=LANGUAGE,
-            word_timestamps=True,
-            condition_on_previous_text=False,
-            suppress_tokens=suppress,
-        )
-        words = [
-            {
-                "text": word.word.strip(),
-                "startMs": round(word.start * 1000),
-                "endMs": round(word.end * 1000),
-            }
-            for segment in segments
-            for word in segment.words
-        ]
-        print(json.dumps({"audio": audio, "words": words}), flush=True)
+        print(json.dumps({"audio": audio, "words": transcribe(model, suppress, audio)}), flush=True)
 
 
 if __name__ == "__main__":

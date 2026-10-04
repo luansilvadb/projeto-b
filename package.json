@@ -10,6 +10,8 @@
     "test": "vitest run && uv run --project tools/narration pytest tools/narration -q",
     "check-script": "tsx scripts/check-script.ts",
     "narrate": "tsx scripts/narrate.ts",
+    "voice": "tsx scripts/voice-studio.ts",
+    "eval:voice": "tsx scripts/eval-voice.ts",
     "music": "tsx scripts/music.ts",
     "sfx": "tsx scripts/sfx.ts",
     "stills": "tsx scripts/stills.ts",

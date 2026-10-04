@@ -1,5 +1,10 @@
 import { useId } from "react";
-import { Storefront, type StorefrontSign } from "../../../art/Storefront";
+import { interpolateColors } from "remotion";
+import {
+  Storefront,
+  type StorefrontColors,
+  type StorefrontSign,
+} from "../../../art/Storefront";
 import { Layer } from "../../../components/Camera";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
@@ -45,18 +50,60 @@ export type ShopState = {
 type ShopRowProps = {
   readonly shops: readonly ShopState[];
   readonly orb?: readonly [number, number];
+  /** Entre o dia (1) e a noite (0); sem valor, é noite. */
+  readonly daylight?: number;
 };
 
-/** A fila de lojas na rua de noite, no plano do assunto. Vai dentro de uma Camera. */
+/** As cores de uma loja a meio caminho entre o dia e a noite. */
+const shopAt = (daylight: number, lit: boolean): StorefrontColors => {
+  const night = lit ? shop.lit : shop.night;
+  const day = shop.day;
+  const mixed = (a: string, b: string) =>
+    interpolateColors(daylight, [0, 1], [a, b]);
+  return {
+    wall: mixed(night.wall, day.wall),
+    wallShade: mixed(night.wallShade, day.wallShade),
+    base: mixed(night.base, day.base),
+    sign: mixed(night.sign, day.sign),
+    signIcon: mixed(night.signIcon, day.signIcon),
+    awning: [
+      mixed(night.awning[0], day.awning[0]),
+      mixed(night.awning[1], day.awning[1]),
+    ],
+    awningRail: mixed(night.awningRail, day.awningRail),
+    glass: mixed(night.glass, day.glass),
+    glassShine: mixed(night.glassShine, day.glassShine),
+    frame: mixed(night.frame, day.frame),
+    goods: [
+      mixed(night.goods[0], day.goods[0]),
+      mixed(night.goods[1], day.goods[1]),
+    ],
+    door: mixed(night.door, day.door),
+    doorShade: mixed(night.doorShade, day.doorShade),
+    knob: mixed(night.knob, day.knob),
+    shutter: mixed(night.shutter, day.shutter),
+    shutterLine: mixed(night.shutterLine, day.shutterLine),
+    lamp: mixed(night.lamp, day.lamp),
+    lampGlow: daylight < 0.5 ? night.lampGlow : null,
+  };
+};
+
+/** A fila de lojas na rua, no plano do assunto. Vai dentro de uma Camera. */
 export const ShopRow: React.FC<ShopRowProps> = ({
   shops,
   orb = [1500, 170],
+  daylight = 0,
 }) => {
   const id = useId();
 
   return (
     <>
-      <ShopStreet time="night" ground={ROW_GROUND} orb={orb} />
+      <ShopStreet
+        time="night"
+        ground={ROW_GROUND}
+        orb={orb}
+        daylight={daylight}
+      />
       <Layer depth={1}>
         <SvgLayer>
           <defs>
@@ -73,11 +120,12 @@ export const ShopRow: React.FC<ShopRowProps> = ({
                 y={ROW_GROUND + 6}
                 width={ROW_WIDTH}
               />
-              {/* A luz da vitrine acesa se derrama na calçada. */}
-              {shops[index]?.lit ? (
+              {/* A luz da vitrine acesa se derrama na calçada, só de noite. */}
+              {shops[index]?.lit && daylight < 0.5 ? (
                 <path
                   d={`M${x - 135},${ROW_GROUND} L${x + 135},${ROW_GROUND} L${x + 290},1080 L${x - 290},1080 Z`}
                   fill={`url(#${id})`}
+                  opacity={(1 - daylight * 2) * (shops[index]?.lamp ?? 1)}
                 />
               ) : null}
             </g>
@@ -89,7 +137,13 @@ export const ShopRow: React.FC<ShopRowProps> = ({
             <Place key={x} x={x} y={ROW_GROUND} anchor="bottom">
               <Storefront
                 width={ROW_WIDTH}
-                colors={state.lit ? shop.lit : shop.night}
+                colors={
+                  daylight > 0
+                    ? shopAt(daylight, state.lit ?? false)
+                    : state.lit
+                      ? shop.lit
+                      : shop.night
+                }
                 shutter={state.shutter}
                 lamp={state.lamp}
                 sign={sign}

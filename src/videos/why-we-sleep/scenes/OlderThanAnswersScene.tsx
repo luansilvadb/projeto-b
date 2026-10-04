@@ -9,7 +9,8 @@ import { Answers } from "../parts/Answers";
 import { LivingJellyfish } from "../parts/LivingJellyfish";
 import { Moon, ORIGIN, OriginLine } from "../parts/OriginLine";
 import { Stage } from "../parts/Stage";
-import { cue, PULSES_ASLEEP } from "../parts/timing";
+import { cue } from "../../../components/timing";
+import { PULSES_ASLEEP } from "../parts/pulse";
 import { MARKER_LABEL_Y, MARKER_Y } from "./HydraScene";
 
 const TOP_Y = 330;
@@ -18,7 +19,7 @@ const GAP = { from: 900, to: 1220, x: 1060 };
 
 export const OlderThanAnswersScene: React.FC<SceneProps> = ({ scene }) => {
   const frame = useCurrentFrame();
-  const notEnough = cue(scene, "sozinho");
+  const notEnough = cue(scene, "explica");
   const older = cue(scene, "antigo");
 
   return (

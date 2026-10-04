@@ -4,6 +4,7 @@ import {
   findNarrationProblems,
   normalizeWord,
   splitSentences,
+  splitUtterances,
   tokenize,
 } from "./text";
 
@@ -38,6 +39,18 @@ describe("splitSentences", () => {
       "Primeira.",
       "segunda sem ponto",
     ]);
+  });
+});
+
+describe("splitUtterances", () => {
+  it("corta também no dois-pontos, que fica com a parte que anuncia", () => {
+    expect(
+      splitUtterances("Ele resumiu assim: dormir é vital. E mais nada."),
+    ).toEqual(["Ele resumiu assim:", "dormir é vital.", "E mais nada."]);
+  });
+
+  it("deixa inteira a frase sem dois-pontos", () => {
+    expect(splitUtterances("Um, dois e três.")).toEqual(["Um, dois e três."]);
   });
 });
 

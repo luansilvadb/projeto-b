@@ -45,7 +45,7 @@ export const SunScene: React.FC<SceneProps> = ({ scene }) => {
       </Camera>
       <Place x={1400} y={540}>
         <Appear at={timeAppears}>
-          <Label size="display">8 min 19 s</Label>
+          <Label size="display">≈ 8 min 19 s</Label>
         </Appear>
       </Place>
       <Grain />

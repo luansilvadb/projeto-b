@@ -1,10 +1,10 @@
 """Altura da voz: medida e ampliação da entonação, pelo Praat.
 
 O clone do OmniVoice acerta o timbre, mas sai mais monótono que a amostra e
-com a altura mudando de uma geração para outra. O tts.py corrige as duas coisas
-sem mexer no áudio gerado: entrega ao modelo a amostra com a entonação ampliada
-e, entre várias gerações da mesma frase, fica com a de altura mais próxima da
-amostra.
+com a altura e a entonação mudando de uma geração para outra. As duas coisas
+são tratadas sem mexer no áudio gerado: o modelo recebe a amostra com a
+entonação ampliada, e cada geração é medida (a altura e a curva do fim da
+frase) para a escolha da tomada, que é feita em src/narration/takes.ts.
 """
 
 import numpy as np
@@ -16,6 +16,8 @@ ANY_VOICE_HZ = (50.0, 500.0)
 PITCH_STEP_SECONDS = 0.01
 # Com menos de 0,3 s de voz, a mediana não é confiável.
 MIN_VOICED_FRAMES = 30
+# O fim da frase: os últimos 0,25 s com voz, mais ou menos a última sílaba tônica e o que vem depois dela.
+ENDING_FRAMES = 25
 
 
 def pitch_bounds(reference_hz: float) -> tuple[float, float]:
@@ -27,8 +29,8 @@ def to_sound(samples: np.ndarray, sample_rate: int) -> parselmouth.Sound:
     return parselmouth.Sound(samples.astype(np.float64), sampling_frequency=sample_rate)
 
 
-def median_pitch(samples: np.ndarray, sample_rate: int, bounds: tuple[float, float] = ANY_VOICE_HZ) -> float | None:
-    """Mediana da altura, em Hz, nos trechos com voz; None quando há voz de menos para medir."""
+def voiced_pitch(samples: np.ndarray, sample_rate: int, bounds: tuple[float, float]) -> np.ndarray | None:
+    """Altura, em Hz, de cada instante com voz; None quando há voz de menos para medir."""
     floor, ceiling = bounds
     # O Praat precisa de alguns períodos da voz para analisar; menos que isso não é fala.
     if len(samples) < sample_rate * 4 / floor:
@@ -38,7 +40,19 @@ def median_pitch(samples: np.ndarray, sample_rate: int, bounds: tuple[float, flo
     )
     frequencies = pitch.selected_array["frequency"]
     voiced = frequencies[frequencies > 0]
-    return float(np.median(voiced)) if len(voiced) >= MIN_VOICED_FRAMES else None
+    return voiced if len(voiced) >= MIN_VOICED_FRAMES else None
+
+
+def median_pitch(samples: np.ndarray, sample_rate: int, bounds: tuple[float, float] = ANY_VOICE_HZ) -> float | None:
+    """Mediana da altura, em Hz, nos trechos com voz; None quando há voz de menos para medir."""
+    voiced = voiced_pitch(samples, sample_rate, bounds)
+    return float(np.median(voiced)) if voiced is not None else None
+
+
+def intonation_spread(samples: np.ndarray, sample_rate: int, bounds: tuple[float, float] = ANY_VOICE_HZ) -> float | None:
+    """Quanto a altura varia em torno da própria mediana: desvio padrão, em semitons. None sem voz para medir."""
+    voiced = voiced_pitch(samples, sample_rate, bounds)
+    return float((12 * np.log2(voiced / np.median(voiced))).std()) if voiced is not None else None
 
 
 def widen_intonation(samples: np.ndarray, sample_rate: int, median_hz: float, factor: float) -> np.ndarray:
@@ -52,12 +66,18 @@ def widen_intonation(samples: np.ndarray, sample_rate: int, median_hz: float, fa
     return call(manipulation, "Get resynthesis (overlap-add)").values[0].astype(np.float32)
 
 
-def closest_take(takes: list[np.ndarray], sample_rate: int, reference_hz: float) -> np.ndarray:
-    """A geração de altura mais próxima da amostra. Sem voz mensurável, uma geração conta como a mais distante."""
-    bounds = pitch_bounds(reference_hz)
+def semitones_between(reference_hz: float, hz: float) -> float:
+    return float(12 * np.log2(hz / reference_hz))
 
-    def distance(take: np.ndarray) -> float:
-        hz = median_pitch(take, sample_rate, bounds)
-        return abs(np.log2(hz / reference_hz)) if hz else np.inf
 
-    return min(takes, key=distance)
+def ending_shape(samples: np.ndarray, sample_rate: int, bounds: tuple[float, float] = ANY_VOICE_HZ) -> float | None:
+    """Para onde a voz vai no fim da frase: a altura do último trecho com voz, em semitons acima (ou abaixo) da mediana da frase.
+
+    Uma afirmação que fecha fica bem abaixo de zero; uma frase que fica em
+    suspenso, perto de zero ou acima. None quando há voz de menos para medir.
+    """
+    voiced = voiced_pitch(samples, sample_rate, bounds)
+    if voiced is None:
+        return None
+    ending = voiced[-ENDING_FRAMES:]
+    return semitones_between(float(np.median(voiced)), float(np.median(ending)))

@@ -28,6 +28,7 @@ Como dividir a cena em planos, um por oração?
 4. **Alternância.** A mesma escala não se repete em mais de três planos seguidos. O bloco abre situando (aberto) ou intrigando (detalhe), e tem ao menos um close.
 5. **Série.** Itens parecidos usam o mesmo molde de composição, trocando o assunto e o matiz do fundo. O molde igual deixa a diferença saltar.
 6. **Plano que evolui.** Um processo contínuo fica num plano só, de até uns 15 segundos, desde que o estado da imagem mude a cada oração. Anote cada mudança na encenação.
+   **Percurso.** O plano pode passar disso quando é a câmera que avança por um cenário contínuo, seguindo um personagem-guia: num trecho de referência, 27 segundos e sete orações sem corte, com uma estação nova a cada 3 ou 4 segundos. Registre o percurso como um plano por estação, todos com a entrada `câmera` e no mesmo cenário, e desenhe o cenário inteiro antes de enquadrar qualquer estação.
 7. **Entrada.** Como a imagem anterior vira esta:
 
    | Entrada | O que acontece | Quando usar |

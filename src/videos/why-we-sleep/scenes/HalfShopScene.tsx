@@ -1,57 +1,147 @@
-import { useCurrentFrame, useVideoConfig } from "remotion";
-import { BrainTop } from "../../../art/Brain";
-import { Shop } from "../../../art/Shop";
-import { Appear } from "../../../components/Appear";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
+import { BrainHalves } from "../../../art/BrainHalves";
+import { Person } from "../../../art/Person";
+import { DOOR, Storefront } from "../../../art/Storefront";
+import {
+  Camera,
+  Layer,
+  cameraBetween,
+  framing,
+} from "../../../components/Camera";
+import { Grain } from "../../../components/Grain";
+import { breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { palette } from "../../../design/tokens";
+import { Pop } from "../../../components/Pop";
+import { SlowPush } from "../../../components/SlowPush";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { Stage } from "../parts/Stage";
-import { cue, ramp } from "../parts/timing";
+import { Shot } from "../../../video/Shot";
+import { brainHalves, person, shop } from "../palette";
+import { InsideBackdrop } from "../parts/InsideBackdrop";
+import { ShopStreet, StreetShadow } from "../parts/ShopStreet";
+import { SvgLayer } from "../../../components/SvgLayer";
+import { cue, ramp } from "../../../components/timing";
+import { BRAIN } from "./HalfBrainScene";
 
-const SHOP = { x: 1260, y: 580, width: 760 };
-// Centro da metade aberta da vitrine, onde o funcionário fica.
-const CLERK = { x: SHOP.x + 142, y: SHOP.y + 150 };
+type SwapShotProps = {
+  /** Quadro do plano em que os lados trocam. */
+  readonly swapAt: number;
+};
 
-/** O funcionário que ficou no caixa: braços cruzados e sobrancelhas baixas. */
-const Clerk: React.FC = () => (
-  <svg width={140} height={250} viewBox="0 0 100 180">
-    <circle cx={50} cy={34} r={26} fill={palette.ink} />
-    <rect x={18} y={66} width={64} height={110} rx={18} fill={palette.ink} />
-    <path
-      d="M 22 108 L 78 92 M 22 92 L 78 108"
-      stroke={palette.mist}
-      strokeWidth={9}
-      strokeLinecap="round"
-    />
-    <path
-      d="M 34 26 L 46 32 M 66 26 L 54 32"
-      stroke={palette.paper}
-      strokeWidth={4}
-      strokeLinecap="round"
-    />
-  </svg>
-);
-
-export const HalfShopScene: React.FC<SceneProps> = ({ scene }) => {
+/** Depois, eles trocam: o lado aceso apaga e o apagado acende. */
+const SwapShot: React.FC<SwapShotProps> = ({ swapAt }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const swap = ramp(frame, cue(scene, "trocam"), 0.6 * fps);
+  const seconds = frame / fps;
+  const swap = ramp(frame, swapAt, 0.5 * fps);
 
   return (
-    <Stage scene={scene}>
-      <Place x={400} y={540}>
-        <BrainTop width={380} left={swap} right={1 - swap} />
+    <SlowPush
+      focus={[BRAIN.x, BRAIN.y]}
+      by={0.04}
+      backdrop={<InsideBackdrop />}
+    >
+      <Place x={BRAIN.x} y={BRAIN.y + 6 * wave(seconds, 3.4)}>
+        <BrainHalves
+          width={BRAIN.width}
+          colors={brainHalves}
+          left={swap}
+          right={1 - swap}
+        />
       </Place>
-      <Place x={SHOP.x} y={SHOP.y}>
-        <Appear at={cue(scene, "metade")}>
-          <Shop width={SHOP.width} shutter={[1, 0]} />
-        </Appear>
-      </Place>
-      <Place x={CLERK.x} y={CLERK.y}>
-        <Appear at={cue(scene, "funcionário")}>
-          <Clerk />
-        </Appear>
-      </Place>
-    </Stage>
+      <Grain />
+    </SlowPush>
   );
 };
+
+// A loja do golfinho no plano médio, e o funcionário na porta aberta.
+const SHOP = { x: 900, ground: 880, width: 760 };
+const SHOP_SCALE = SHOP.width / 520;
+const CLERK = {
+  x: SHOP.x + (DOOR.x + DOOR.width / 2) * SHOP_SCALE,
+  y: SHOP.ground - 36 * SHOP_SCALE,
+  height: 300,
+};
+const SHUTTER_SECONDS = 1;
+
+type ClerkShotProps = {
+  /** Quadro do plano em que a porta desce sobre a vitrine, e em que o funcionário aparece. */
+  readonly closeAt: number;
+  readonly clerkAt: number;
+};
+
+/** Fechar metade da loja e deixar um funcionário mal-humorado no caixa. */
+const ClerkShot: React.FC<ClerkShotProps> = ({ closeAt, clerkAt }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const seconds = frame / fps;
+  const shutter = ramp(frame, closeAt, SHUTTER_SECONDS * fps);
+
+  return (
+    <AbsoluteFill>
+      <Camera
+        {...cameraBetween(
+          framing([SHOP.x, 600], 1, [SHOP.x, 600]),
+          // Quando o funcionário aparece, a câmera vai até ele.
+          framing([CLERK.x - 60, 640], 1.5),
+          ramp(frame, clerkAt, 1.2 * fps),
+        )}
+      >
+        <ShopStreet time="night" ground={SHOP.ground} orb={[1620, 180]} />
+        <Layer depth={1}>
+          <SvgLayer>
+            <StreetShadow
+              time="night"
+              x={SHOP.x}
+              y={SHOP.ground + 8}
+              width={SHOP.width}
+            />
+          </SvgLayer>
+          <Place x={SHOP.x} y={SHOP.ground} anchor="bottom">
+            <Storefront
+              width={SHOP.width}
+              colors={shop.lit}
+              sign="fin"
+              shutter={shutter}
+              half
+              doorOpen
+            />
+          </Place>
+          <Place
+            x={CLERK.x}
+            y={CLERK.y}
+            anchor="bottom"
+            style={{
+              scale: `1 ${breath(seconds, "clerk", { amplitude: 0.015, period: 3 })}`,
+            }}
+          >
+            <Pop at={clerkAt} from={0.8} origin="bottom">
+              <Person
+                height={CLERK.height}
+                colors={person}
+                plainFace
+                grumpy
+                frontArm={{ hand: [60, -290], bend: 70 }}
+                backArm={{ hand: [-60, -300], bend: 70 }}
+              />
+            </Pop>
+          </Place>
+        </Layer>
+      </Camera>
+      <Grain />
+    </AbsoluteFill>
+  );
+};
+
+export const HalfShopScene: React.FC<SceneProps> = ({ scene, shots }) => (
+  <>
+    <Shot range={shots[0]} name="eles trocam">
+      <SwapShot swapAt={cue(scene, "trocam")} />
+    </Shot>
+    <Shot range={shots[1]} name="metade da loja e um funcionário">
+      <ClerkShot
+        closeAt={cue(scene, "meia") - shots[1].from}
+        clerkAt={cue(scene, "funcionário") - shots[1].from}
+      />
+    </Shot>
+  </>
+);

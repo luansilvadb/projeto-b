@@ -21,17 +21,13 @@ import { crowd, ink, jellyfish, person, puzzle } from "../palette";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import { LagoonShot } from "../parts/LagoonShot";
 import { FIRST_CLUE, PUZZLE, Puzzle, piecePath } from "../parts/Puzzle";
+import { cue, linear, mix, ramp, settle } from "../../../components/timing";
 import {
   PULSES_ASLEEP,
   PULSES_AWAKE,
-  cue,
-  linear,
-  mix,
   pulseShape,
-  ramp,
-  settle,
   steady,
-} from "../parts/timing";
+} from "../parts/pulse";
 
 // Um pouco mais perto da areia que o plano do título, para o corte não ser um pulo.
 const CARD = framing([960, 700], 1.15, [960, 640]);
@@ -251,13 +247,16 @@ const mixHand = (
 export const HonestWarningScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="cartela: uma péssima ideia">
-      <CardShot cardAt={cue(scene, "aviso")} shadowAt={cue(scene, "ninguém")} />
+      <CardShot
+        cardAt={cue(scene, "péssima")}
+        shadowAt={cue(scene, "ninguém")}
+      />
     </Shot>
     <Shot range={shots[1]} name="o quebra-cabeça das pistas">
       <PuzzleShot
         personAt={cue(scene, "Mas") - shots[1].from}
-        piecesAt={cue(scene, "pistas") - shots[1].from}
-        dropAt={cue(scene, "primeira") - shots[1].from}
+        piecesAt={cue(scene, "água") - shots[1].from}
+        dropAt={cue(scene, "pista") - shots[1].from}
       />
     </Shot>
   </>
