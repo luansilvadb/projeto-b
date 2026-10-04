@@ -16,7 +16,8 @@ Etapas seguintes: `script`, `narration`, `animatic`, `animation`, `music`, `fina
 3. Pesquise na web. Prefira fontes primárias e instituições (agências espaciais, institutos de medidas, artigos revisados por pares, livros-texto, órgãos de saúde). Matéria de imprensa e enciclopédia servem para achar a fonte primária, não para substituí-la.
 4. Abra a página antes de citar. Um resultado de busca resumido não é a fonte: confirme que a frase ou o número está lá. Se a página não abrir, diga isso na entrada da fonte.
 5. Para cada número derivado, escreva a conta. Quem revisa precisa conseguir refazê-la.
-6. Registre o que é incerto ou disputado, e o que é uma simplificação aceitável. O roteiro decide como falar disso; a pesquisa não esconde.
+6. Para cada fato surpreendente, pesquise também o que o faz surpreender (o mecanismo ou a regra geral que levaria um leigo a esperar o contrário) e um termo de comparação para cada número (o valor humano, o caso comum). O roteiro precisa dos dois para explicar em vez de listar; os detalhes estão em `diretor-criativo/pesquisa/levantamento`.
+7. Registre o que é incerto ou disputado, e o que é uma simplificação aceitável. O roteiro decide como falar disso; a pesquisa não esconde.
 
 ## Formato de research.md
 

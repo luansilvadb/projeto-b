@@ -1,13 +1,13 @@
 ---
 name: animation
-description: Anima as cenas já aprovadas de um vídeo: movimento sincronizado com a narração, transições entre planos, câmera, pausa viva, efeitos e efeitos sonoros, conferindo o resultado em tiras de quadros e nas medidas de movimento. Use sempre que o animatic estiver aprovado e for hora de dar vida às cenas, ou quando o usuário pedir para animar, melhorar o movimento, ajustar o tempo de uma entrada, adicionar efeito sonoro ou dar mais acabamento a uma cena.
+description: "Anima as cenas já aprovadas de um vídeo: movimento sincronizado com a narração, transições entre planos, câmera, pausa viva, efeitos e efeitos sonoros, conferindo o resultado em tiras de quadros e nas medidas de movimento. Use sempre que o animatic estiver aprovado e for hora de dar vida às cenas, ou quando o usuário pedir para animar, melhorar o movimento, ajustar o tempo de uma entrada, adicionar efeito sonoro ou dar mais acabamento a uma cena."
 ---
 
 # Animação das cenas
 
 Quinta etapa, depois do animatic aprovado. Aqui cada plano ganha movimento e acabamento. A composição já foi aprovada: mude posição, tamanho ou conteúdo só se a animação pedir, e avise o usuário quando mudar.
 
-O conhecimento de como animar está no workflow `animador` (`.claude/commands/animador/`): leia `animador.md` e injete as unidades na ordem que ele indica (`sincronia`, `entradas`, `pausa-viva`, `acao`, `movimento`, `transicoes`, `efeitos`, `critica`). Esta skill diz onde esse conhecimento vira código neste projeto.
+O conhecimento de como animar está na skill `animador`: acione-a e leia as unidades na ordem que ele indica (`sincronia`, `entradas`, `pausa-viva`, `acao`, `movimento`, `transicoes`, `efeitos`, `critica`). Esta skill diz onde esse conhecimento vira código neste projeto.
 
 Leia a skill `remotion-best-practices` (regras de `remotion-markup`) antes de escrever. O essencial: todo movimento sai de `useCurrentFrame()` com `interpolate()` e `Easing`; transições e animações de CSS não renderizam; prefira as propriedades `scale`, `translate` e `rotate` a `transform`.
 

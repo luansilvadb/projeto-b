@@ -58,8 +58,11 @@ O número em algarismos, o símbolo e a sigla vão para a tela, descritos na enc
 
 Além das regras do validador:
 
-- Uma ideia por frase, frases curtas, português do Brasil falado. Fale com o espectador ("você").
-- Abra com uma pergunta ou um fato que crie curiosidade nos primeiros segundos.
+- Antes de qualquer frase, o desenho: a tensão do vídeo ("era de esperar X, e no entanto Y"), o molde, o bloco de fundamento que dá ao espectador a expectativa, os poucos elementos e o veredito de cada bloco, conforme `diretor-criativo/escrita/explicacao`. O usuário aprova a estrutura e uma amostra de um minuto antes do roteiro inteiro. Reescrever frases de um roteiro com o desenho errado não o conserta.
+- Frases médias e encadeadas, em português do Brasil falado: a mediana fica perto de 15 palavras, e a frase de até 6 palavras (no máximo uma em sete) vira ou fecha uma ideia, nunca carrega um fato solto. Texto picotado em frases curtas soa como lista e, como o modelo de voz gera uma frase por vez com pausa entre elas, sai monótono e mal-humorado. As regras de frase estão em `diretor-criativo/escrita/narracao` e o perfil medido em `diretor-criativo/escrita/explicacao`.
+- A temperatura da voz (contemplativa ou enérgica) é decisão do usuário na ficha de voz do `diretor-criativo`; a narração segue a ficha.
+- O gancho segue `diretor-criativo/estrutura/gancho`: uma afirmação que quem assiste reconhece, o que há de estranho nela e a promessa do caminho. A pergunta, quando existe, fecha o gancho.
+- A pontuação decide como a frase é falada; a tabela está na skill `narration`. Uma citação se escreve com dois-pontos entre quem falou e o que foi dito.
 - A vírgula é uma pausa: o modelo de voz para em cada uma. Só ponha vírgula onde quem fala pararia. "E mesmo assim emagreciam", não "e, mesmo assim, emagreciam", que sai com duas pausas.
 - A grafia decide a pronúncia. Se o usuário ouvir uma palavra dita errado, escreva em `narration` como ela deve soar e deixe a grafia correta em `script.md`. O modelo lê "mal-humorado" ligando o "l" à vogal ("malumorado"); "mau-humorado" sai certo. O Whisper não acusa esse tipo de erro, só o ouvido.
 - Só afirme o que está em `research.md`. Se faltar um fato, volte à skill `research` em vez de completar de memória.
@@ -67,11 +70,11 @@ Além das regras do validador:
 
 ## Cenas
 
-Uma cena é um trecho da narração, de uma a três frases, que o áudio trata como um bloco: uma frase nunca se divide entre duas cenas. A cena não é a unidade da imagem. Quem troca a imagem é o plano.
+Uma cena é um trecho da narração, de uma a três frases, que o áudio trata como um bloco: uma frase nunca se divide entre duas cenas. Uma cena pode pedir silêncio depois da fala com `holdMs` (até 8000): a imagem segue sem narração, só com a trilha. É assim que se faz a vinheta do título depois do gancho. A cena não é a unidade da imagem. Quem troca a imagem é o plano.
 
 ## Planos
 
-Um plano é uma composição: o que fica na tela enquanto um trecho da cena é falado. Os planos vêm do workflow `diretor-de-arte` (`.claude/commands/diretor-de-arte/diretor-de-arte.md`). Com o texto escrito e antes da aprovação, rode as duas primeiras etapas dele:
+Um plano é uma composição: o que fica na tela enquanto um trecho da cena é falado. Os planos vêm da skill `diretor-de-arte`. Com o texto escrito e antes da aprovação, rode as duas primeiras etapas dele:
 
 1. **Conceito visual**: elenco e paletas, decididos com o usuário e gravados na ficha visual do vídeo, `src/videos/<vídeo>/art.md`.
 2. **Decupagem**: a encenação de cada oração e a divisão de cada cena em planos.
@@ -87,7 +90,7 @@ Cada plano de `shots` leva o que a decupagem registra:
 | `palette` | a paleta do plano | um nome da ficha visual |
 | `entry` | a entrada: como a imagem anterior vira esta | `cut` (corte), `camera` (câmera), `transform` (transformação), `wipe` (varredura) |
 
-A imagem troca a cada oração, não a cada cena. Na referência do canal isso dá uma composição nova a cada 4 ou 5 segundos, cerca de 12 palavras.
+A imagem troca a cada oração, não a cada cena.
 
 Mexer nos planos nunca regera áudio. Mexer numa frase, sim: se a encenação pedir outra frase, a hora de mudar é agora.
 
@@ -97,7 +100,7 @@ Mexer nos planos nunca regera áudio. Mexer numa frase, sim: se a encenação pe
 pnpm check-script <vídeo>
 ```
 
-Confere todas as regras, lista os problemas de uma vez e estima a duração de cada cena, de cada plano e do vídeo. O alvo do canal é de 6 a 10 minutos. Ele também aponta os planos com mais de 8 segundos: divida cada um, ou confirme que a encenação descreve uma imagem que muda dentro dele. Corrija até passar antes de mostrar ao usuário.
+Confere todas as regras, lista os problemas de uma vez e estima a duração de cada cena, de cada plano e do vídeo. No fim imprime o **perfil da narração** contra os vídeos de referência (tamanho de frase, frases curtas e longas, "você" ou "nós" e conectivos a cada 100 palavras). Medida FORA quer dizer que o texto relata em vez de explicar: volte à unidade `diretor-criativo/escrita/explicacao`, que manda rever o assunto e a cadeia de causas, e não trocar palavras. Não gere a voz com o perfil fora da faixa sem o usuário saber. O alvo do canal é de 6 a 10 minutos. Ele também aponta os planos com mais de 8 segundos: divida cada um, ou confirme que a encenação descreve uma imagem que muda dentro dele. Corrija até passar antes de mostrar ao usuário.
 
 ## Primeira aprovação
 

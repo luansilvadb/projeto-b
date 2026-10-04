@@ -1,0 +1,98 @@
+---
+name: critica
+description: Define os critérios, as medidas e o procedimento para julgar a decupagem e os quadros e decidir o que refazer.
+---
+
+## PERGUNTA
+Com que critérios e medidas julgar os quadros?
+
+## RESPOSTA
+
+**Quando aplicar.** Em três momentos: sobre a decupagem, antes de a narração ser gravada (passadas 1 e 2); sobre cada folha de modelo (passada 5); sobre os quadros compostos de todos os planos (todas as passadas e as medidas).
+
+**Postura.** A crítica olha como um espectador que nunca viu o roteiro. Julga a imagem renderizada, aberta e vista, nunca o código nem a intenção.
+
+**Passadas, nesta ordem.** Um problema de nível superior invalida o polimento dos níveis abaixo.
+
+1. **Encenação**
+   - Sem som e sem etiqueta, o plano diz o que a oração afirma?
+   - O plano é acontecimento, metáfora ou personificação, ou é um esquema com rótulos?
+   - Os diagramas passam de 37% dos planos? Na referência vão de 3% a 37%.
+   - Há uma figura com olhos na parcela de planos que o tema pede?
+2. **Decupagem**
+   - Cada oração tem a sua imagem? Algum plano passa de 8 segundos sem mudar?
+   - As escalas se alternam? O bloco situa, age e detalha?
+   - As entradas foram escolhidas, ou é tudo corte?
+3. **Composição**
+   - Há um ponto focal, e só um?
+   - O assunto tem o tamanho que a escala pede?
+   - Em cinza e pequeno, o assunto ainda salta do fundo?
+4. **Cor**
+   - O plano está no modo certo? Tem de quatro a cinco cores?
+   - O fundo troca de matiz entre ideias vizinhas?
+   - O escuro tem cor? O maior contraste está no ponto focal?
+5. **Desenho**
+   - A silhueta se lê numa cor só?
+   - Cada parte tem base, sombra e, onde cabe, brilho?
+   - O assunto tem formas na faixa do orçamento?
+   - O personagem bate com a folha de modelo? A expressão serve ao momento?
+6. **Cenário e profundidade**
+   - O fundo liso tem degradê e um apoio? O cenário tem três camadas ou mais?
+   - Há sombra de contato no mundo e halo por dentro? A luz vem de um lado só?
+7. **Texto**
+   - Um texto novo por vez, cada um preso ao que nomeia?
+   - Alguma frase da narração foi parar na tela?
+8. **Fidelidade**
+   - A imagem afirma algo que a base de fatos não sustenta?
+   - Cada número na tela bate com a fonte?
+
+**Medidas.** Tiradas do vídeo renderizado e comparadas com a faixa dos 12 vídeos de referência:
+
+| Medida | Faixa | Mediana | Vale |
+|---|---|---|---|
+| Área do quadro com desenho | 40% a 68% | 57% | desde os quadros parados |
+| Cores por quadro | 2,6 a 5,7 | 4,4 | desde os quadros parados |
+| Trocas da cor dominante por minuto | 7 a 19 | 11 | desde os quadros parados |
+| Peso da família de cor mais comum | 15% a 47% | 26% | desde os quadros parados |
+| Tempo com a tela quase parada | 3% a 29% | 10% | depois de animar |
+| Tempo com mais de 10% do quadro em movimento | 29% a 51% | 43% | depois de animar |
+| Tempo até 40% do quadro ser outro | 1,5 a 4,0 s | 2,0 s | depois de animar |
+
+Se o projeto tem um comando que tira essas medidas, as faixas dele valem sobre as desta tabela.
+
+As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família mais comum) só fazem sentido sobre um trecho com mais de um lugar. Um trecho que se passa num lugar só reprova nelas sem ter defeito: o gancho de um vídeo, inteiro numa lagoa, ficou em 67% de uma família e caiu a 36% quando entraram o laboratório e a rua. Meça o trecho de teste inteiro, nunca uma cena isolada.
+
+**Medida não é qualidade.** As medidas acusam o vídeo vazio, parado ou de uma cor só. Um vídeo cheio, colorido e mal encenado passa em todas. Por isso as passadas são obrigatórias, e a encenação vem primeiro.
+
+**Lado a lado.** Quando houver quadros da referência à mão, ponha o quadro ao lado de um do mesmo tipo (personagem, dado, cenário) e nomeie três diferenças. A comparação serve para ver o que falta, não para copiar.
+
+**Classificação dos problemas:**
+
+- **Bloqueante**: o plano é um slide; a imagem afirma um fato falso; o personagem está fora do modelo; uma medida que já vale está fora da faixa. Refazer é obrigatório.
+- **Relevante**: composição, cor, profundidade ou excesso de texto enfraquecem a leitura. Refazer, salvo custo desproporcional.
+- **Polimento**: ajuste fino de forma, posição ou tom. Aplicar se não mexer em nada aprovado.
+
+**Procedimento:**
+
+1. Renderize um quadro de cada plano e monte todos numa folha, em ordem.
+2. Abra a folha e faça as oito passadas. Registre cada problema com plano, critério violado e classificação.
+3. Tire as medidas que já valem na etapa.
+4. Refaça os bloqueantes e os relevantes que não alteram decisões aprovadas.
+5. Leve ao usuário, como decisão, toda mudança em elenco, paleta, analogia ou plano aprovados.
+6. Renderize de novo e repita. Se uma rodada não resolver nenhum problema, pare e relate o que ficou em aberto.
+
+**Entrega ao usuário.** A folha de quadros, a tabela de medidas, os problemas que ficaram em aberto e o que só ele pode julgar: gosto, identidade do canal e o que só aparece em movimento.
+
+## DEPENDÊNCIAS
+- encenacao, planos, dado: fornecem os critérios das passadas 1 e 2.
+- composicao, cor, forma, personagem, cenario, texto: fornecem os critérios das passadas 3 a 7.
+- elenco: fornece as folhas de modelo e a parcela de planos com figura que o tema pede.
+
+## LIMITES
+- Não julgar por gosto: todo problema aponta um critério violado.
+- Não refazer fatos nem narração aqui: a fidelidade só confere a imagem contra a base de fatos.
+- Não julgar movimento; as três últimas medidas só valem com o vídeo animado.
+- Não alterar decisões aprovadas sem confirmação.
+
+## EXEMPLO
+> Plano 4, cena "three-signs" — critério: encenação (três etiquetas em fila ao lado de uma silhueta; sem as etiquetas, o plano não diz nada). Classificação: bloqueante. Ação: encenar cada sinal como acontecimento (a lagoa escurece e ela para; algo a cutuca e ela demora a reagir; no dia seguinte ela pulsa devagar), um por oração; não altera a narração aprovada.

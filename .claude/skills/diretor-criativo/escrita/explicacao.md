@@ -1,0 +1,107 @@
+---
+name: explicacao
+description: Define como fazer o texto explicar algo a quem assiste, em vez de relatar fatos sobre terceiros, com os padrões e as medidas dos vídeos de referência em português.
+---
+
+## PERGUNTA
+Como fazer o texto explicar para quem assiste, em vez de relatar fatos?
+
+## RESPOSTA
+
+**O defeito que esta unidade evita.** Um roteiro pode ter fatos certos, frases bem medidas e voz boa e ainda soar como enchimento: "fala, fala e não fala nada". Acontece quando o texto entrega fatos surpreendentes a quem ainda não tem motivo para se surpreender: um bicho, um estudo, um número, um atrás do outro. Foi o defeito do primeiro vídeo do canal, e reescrever frase por frase não o conserta: ele está no desenho do roteiro.
+
+**Base.** Nove vídeos do Kurzgesagt em português, indicados pelo usuário como referência de texto e lidos pela legenda manual: "Mude a sua vida – Um passinho de cada vez" (hábitos), "O que você está fazendo com a sua vida?" (semanas), "Por que a carne é a melhor pior coisa do mundo?" (carne), "Por que baleias azuis não têm câncer? – Paradoxo de Peto" (Peto), "Leite – Bebida Saudável ou Veneno?" (leite), "Um antídoto para a insatisfação" (gratidão), "E se uma bomba nuclear fosse detonada na Fossa das Marianas?" (bomba), "Quem é o responsável pelas mudanças climáticas?" (clima) e "É muito tarde para parar as mudanças climáticas?" (clima 2). Estudo, com o texto e a imagem de cada vídeo, em `referencias/narracao-kurzgesagt.md`, na pasta desta skill.
+
+**Cinco moldes.** O tema decide qual:
+
+| Molde | Exemplo | Quem assiste entra como | O que carrega o vídeo |
+|---|---|---|---|
+| A vida de quem assiste | hábitos, semanas, gratidão | "você", 1 palavra em 20 | uma metáfora ou uma conta que cresce |
+| Um fato do mundo que fazemos | carne | "nós" ("usamos", "matamos") | um paradoxo com os dois lados verdadeiros |
+| Um mistério da ciência | Peto | o corpo dele como medida ("não são menores que as suas") | expectativa, quebra e respostas |
+| Uma controvérsia | leite, clima, clima 2 | dono da pergunta ("quem será que tem razão?") | alegações pesadas uma a uma, cada uma com veredito |
+| Um experimento mental | bomba | cúmplice ("vamos puxar o gatilho") | a expectativa exagerada, o passo a passo no presente e o anticlímax |
+
+Um tema como sono, vacina ou buraco negro é do terceiro molde, e pode pegar emprestado o "nós" do segundo.
+
+**Os treze padrões, comuns aos nove:**
+
+1. **Uma tensão que importa a quem assiste, posta no gancho.** Em 15 a 110 s: o assunto que toca a todos, o que há de estranho nele e a promessa do caminho ("Para entender o porquê, primeiro precisamos analisar a natureza do próprio câncer"; "o que podemos fazer a esse respeito sem precisar renunciar ao churrasco?"). A tensão volta no fim. Fato que não a empurra fica fora.
+2. **Construir antes de revelar.** É o padrão que o nosso primeiro roteiro mais violou. O vídeo do leite passa 2 min 30 s contando o que é o leite e por que o bebemos antes de pesar a primeira alegação. O vídeo de Peto gasta 1 min 15 s explicando o que é uma célula e como o câncer surge, sem nenhum bicho; só então diz o que seria de esperar ("menos células e vida curta significam menor probabilidade de erros"), e só então quebra ("Ou pelo menos, é o que deveria significar"). O espectador se espanta porque a expectativa já era dele. Fato surpreendente dito a quem não tem a expectativa é só um fato.
+3. **Cada frase decorre da anterior, e cada bloco responde ao "e daí?" do bloco de antes.** "Seu cérebro odeia gastar energia, então criou uma manobra." Muitos animais, então muita terra, então muita água, e quase nada volta como comida. Fatos soltos ligados por "e" e "mas" são relatório.
+4. **Número entra traduzido, e nunca solto.** Como razão contra o humano ("3000 vezes mais células que os humanos"), como comparação ("o mesmo que todos os navios, aviões, caminhões e carros combinados"; "em apenas 2,3 dias, o norte-americano comum emite tanto carbono quanto o nigeriano comum emite em um ano"), como consequência ("não chegam até nós") ou como a conta do vídeo (as 5.200 semanas). O vídeo do clima tem mais números por palavra do que o nosso primeiro roteiro e funciona, porque cada bloco tem uma pergunta anunciada ("Pergunta 1 de 3"), uma medida só (fatia das emissões de hoje; depois, da história; depois, por pessoa), os mesmos poucos atores (China, EUA, União Europeia) e um "portanto" no fim. O que nenhum dos nove faz é pôr medidas de tipos diferentes (pulsos por minuto, horas, dias, porcentagens) em blocos vizinhos, sobre atores que mudam a cada bloco.
+5. **As coisas agem.** As células cancerígenas "são egoístas", "enganam o corpo", cortam o sangue "das ex-amigas"; "a criança impulsiva" odeia trabalho duro; a carne é "um buraco negro para os recursos". O que age pode ser desenhado e lembrado; o que só é citado, não.
+6. **O narrador tem voz.** A frase curta é o soco dele, e sempre vira ou fecha uma ideia ("Até deixarem de funcionar." "Quem não o fez, morreu." "Sim, é sério." "E funcionou! Por um tempo."). Ele tem opinião e humor ("Infelizmente, não somos deuses tão bondosos"), diz a objeção antes do espectador ("Então é melhor comprar carne orgânica, certo?"; "E é só isso. Parece quase um insulto."; "Mas, claramente, o perigo real é que a explosão provoque terremotos e vulcões, certo?"), solta humor seco de passagem ("restos de peixes muito azarados"), admite o que é difícil ou não se sabe ("Ainda não sabemos", três vezes num vídeo) e nunca julga quem assiste.
+7. **Poucos elementos, repetidos e aprofundados.** Camundongo, humano, elefante e baleia, sempre os mesmos, medidos uns contra os outros; uma protagonista; uma metáfora. Elemento novo a cada bloco, mencionado uma vez, é lista.
+8. **Termo técnico vem depois da explicação.** "Essas reações químicas complexas são chamadas de vias metabólicas." O mistério também só ganha nome depois de sentido ("Este é o paradoxo de Peto").
+9. **A pergunta é placa de trânsito.** O vídeo de Peto não faz nenhuma; o do leite faz seis, e todas abrem um bloco com a dúvida que o espectador teria ali ("Ok, mas se o leite tem sido uma parte valiosa da nossa dieta há milhares de anos, por que é tão controverso?"; "Muito bem. Então, o leite é saudável?"). Pergunta de efeito, que o texto não responde em seguida, não existe em nenhum dos nove.
+10. **Cada bloco fecha com um veredito em linguagem simples.** "Câncer matando câncer." "Portanto, não há nada de especial com que se preocupar." "E aqui os efeitos são muito reais." Antes de virar de capítulo, o texto pode resumir o que ficou ("Então, em poucas palavras, a gratidão redireciona sua atenção às coisas boas que você tem"). O espectador sai de cada bloco sabendo o que ficou decidido. No vídeo do clima, o bloco seguinte abre derrubando esse veredito ("Portanto... Mas isso ainda não é a história toda"), e é isso que puxa o espectador de um bloco para o outro.
+11. **O que acontece é contado acontecendo.** "A bolha cresce rapidamente... E então, quase tão rápido quanto emerge, ela para." "Com a mutação certa, uma célula perderá sua capacidade de autodestruição; outra mutação, e ela desenvolverá a capacidade de se esconder." O espectador assiste ao processo, no presente e passo a passo. "Pesquisadores mediram que..." é relato; quem mediu vai para a fonte no canto da tela.
+12. **O mapa é dito antes do caminho, e o narrador recapitula no meio.** "Para os cientistas, há duas respostas para o paradoxo." "Quatro fatores: dois explicam por que as emissões ainda estão aumentando e dois explicam como podemos impedir isso." "Pergunta 1 de 3." O espectador sabe quantas partes faltam e por que cada uma existe. Na virada do vídeo, uma frase junta o que ficou: "OK, até agora vimos que... O que é o oposto do que deveria estar acontecendo."
+13. **O fim devolve algo a quem assiste.** O que fazer, por que isso importa ("abrir caminho para novas terapias") ou uma frase para levar ("aproveite seu churrasco, mas também o respeite").
+
+**Estrutura do molde "mistério da ciência"** (a de Peto, que serve aos temas do canal):
+
+1. Gancho: o assunto que importa, o fato estranho, por que ele não faz sentido, a promessa.
+2. Vinheta sem fala (cerca de 10 s).
+3. O mecanismo, explicado com calma e sem a evidência: o que o espectador precisa saber para ter a expectativa.
+4. A expectativa dita em voz alta, a quebra, e o nome do mistério.
+5. O mapa das respostas ("há duas respostas"), cada uma com cartão de capítulo.
+6. Cada resposta como cadeia de mecanismo, fechada por uma frase curta que a resume, e com a ressalva do que ainda não se sabe.
+7. Por que isso importa para nós, e a frase final.
+
+Nos outros moldes muda o miolo: as alegações são pesadas uma a uma, cada uma com o que se disse, o que os estudos melhores mostram, a ressalva e o veredito (controvérsia); a metáfora ou a conta cresce bloco a bloco (vida de quem assiste); ou um lado do paradoxo é construído em degraus, o outro volta, e o vídeo termina no que fazer (fato do mundo).
+
+**Medidas do texto**, tiradas por `pnpm check-script` (faixa dos nove vídeos):
+
+| Medida | Faixa | Hábitos, semanas, carne, Peto, leite, gratidão, bomba, clima, clima 2 |
+|---|---|---|
+| Palavras por frase (mediana) | 13 a 18 | 16, 14,5, 15, 13,5, 14, 14, 16, 15,5 e 16 |
+| Frases de até 6 palavras | até 15% | 7%, 8%, 11%, 15%, 7%, 14%, 14%, 6% e 11% |
+| Frases de 25 palavras ou mais | 6% a 23% | 12%, 11%, 16%, 9%, 12%, 10%, 20%, 22% e 12% |
+| "você", "nós" e verbos como "usamos" a cada 100 palavras | 1 a 8 | 6,0, 6,3, 3,7, 1,3, 1,8, 4,4, 2,0, 1,8 e 3,4 |
+| Conectivos a cada 100 palavras | 2,6 a 7 | 4,9, 5,2, 4,0, 4,0, 3,6, 4,3, 3,6, 2,7 e 2,7 |
+
+**Medida é alarme, não qualidade.** O vídeo de Peto quase não diz "você" e prende do mesmo jeito; um texto ruim passa em todas escrevendo "você" à toa. Quem decide é a leitura pelas perguntas abaixo.
+
+**Perguntas para cada bloco:**
+
+- Que expectativa o espectador tem quando este fato chega? Em que frase anterior ele a ganhou? Se em nenhuma, falta o bloco que a constrói.
+- Este bloco empurrou a tensão do vídeo? Para que lado?
+- Esta frase decorre da anterior? Tire-a: a seguinte ainda faz sentido? Se faz, ela é enfeite ou fato solto.
+- Este número está traduzido (razão, comparação, consequência)? Se não, ele pode virar "pouco", "quase nada", "o dobro"?
+- Os números deste bloco são todos da mesma medida e respondem a uma pergunta que o espectador já ouviu?
+- Este elemento (bicho, personagem, objeto) já apareceu? Se é novo, ele é medido contra um que o espectador já conhece?
+- Cada frase curta vira ou fecha uma ideia, ou é um fato picotado?
+- Cada pergunta é a que o espectador faria aqui, e é respondida logo em seguida?
+- Qual é o veredito deste bloco, em uma frase simples? Ele está dito?
+- O espectador sabe, neste ponto, quantas partes o vídeo tem e em qual está?
+- O bloco mostra a coisa acontecendo, ou conta que alguém a mediu?
+- Há neste bloco uma frase que só este narrador diria?
+
+**Procedimento:**
+
+1. Escolha o molde.
+2. Escreva a tensão em uma frase, no formato "era de esperar X, e no entanto Y". É o assunto do vídeo; o tema pesquisado é a explicação.
+3. Liste o que o espectador precisa saber para esperar X. Isso é o bloco de mecanismo, e vem antes de qualquer evidência.
+4. Escolha os poucos elementos do vídeo (até quatro bichos, coisas ou personagens) e a ordem em que são medidos uns contra os outros.
+5. Para cada bloco, escreva em tópicos antes do texto: a cadeia ("A, então B, por isso C"), o "e daí?" que ele responde, a tradução de cada número e o veredito que o fecha.
+6. Só então escreva as frases, conforme `narracao`.
+7. Rode `pnpm check-script` e leia o perfil. Medida fora da faixa manda voltar ao passo 2 ou 5, não trocar palavras.
+8. Leia o bloco pelas perguntas acima.
+
+## DEPENDÊNCIAS
+- angulo: fornece a tese; aqui ela é reformulada como expectativa e quebra.
+- analogias: fornece a construção da metáfora; aqui ela pode virar o dispositivo do vídeo inteiro.
+- narracao: fornece as regras de frase.
+
+## LIMITES
+- Não copiar frases, exemplos ou metáforas dos vídeos de referência: o que se usa são os padrões.
+- Não inventar experiência do espectador que a base de fatos contradiz.
+- O mecanismo, a expectativa e a comparação que traduz um número são afirmações: precisam estar na base de fatos, ou sair de uma conta feita com números que estão nela. Se a base não sustenta o bloco de mecanismo, a pesquisa volta antes do roteiro.
+- Cortar bichos e fatos da pesquisa para ficar com poucos elementos é uma decisão do usuário.
+- Opinião e humor são do narrador sobre o assunto, nunca sobre quem assiste.
+
+## EXEMPLO
+> Relato: "Duas elefantas selvagens foram acompanhadas por mais de um mês. Elas dormiam, em média, duas horas por dia. É o menor tempo já medido em um mamífero."
+> Explicação (exemplo de forma; cada afirmação precisa estar na base de fatos antes de entrar num roteiro): "Um bicho dormindo não come, não foge e não vigia os filhotes. Então era de esperar que, em milhões de anos, algum deles tivesse aprendido a viver sem isso. Quem chegou mais perto foi a elefanta: ela precisa comer tanto que quase não sobra tempo, e mesmo assim fecha os olhos duas horas por dia, um quarto do que nós dormimos. Nem ela conseguiu zerar."

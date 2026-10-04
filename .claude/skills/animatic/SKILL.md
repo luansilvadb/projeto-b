@@ -10,7 +10,7 @@ Quarta etapa, depois de `narration`. O animatic é o vídeo inteiro com cada pla
 Antes de escrever qualquer cena:
 
 - leia a skill `remotion-best-practices` e, dentro dela, as regras de marcação (`remotion-markup`), que descrevem as APIs atuais do Remotion;
-- injete o workflow `diretor-de-arte` (`.claude/commands/diretor-de-arte/diretor-de-arte.md`) nas etapas 3 a 5: desenho, quadro e revisão. É ele que diz como construir cada desenho, compor cada quadro e julgar o resultado.
+- acione a skill `diretor-de-arte` nas etapas 3 a 5: desenho, quadro e revisão. É ele que diz como construir cada desenho, compor cada quadro e julgar o resultado.
 
 ## Estrutura de um vídeo
 
@@ -19,7 +19,7 @@ Use `src/videos/demo/` como modelo. O nome da pasta (o "slug") é também o id d
 ```
 src/videos/<vídeo>/
   research.md       pesquisa (skill research)
-  art.md            ficha visual: elenco, paletas e a forma das analogias (workflow diretor-de-arte)
+  art.md            ficha visual: elenco, paletas e a forma das analogias (skill diretor-de-arte)
   script.json       roteiro aprovado, com os planos de cada cena (skill script)
   index.tsx         liga cada "id" de cena ao componente e exporta a composição
   scenes/           um arquivo por cena
@@ -40,10 +40,10 @@ A direção de arte mora na ficha visual do vídeo e no código, e é o que dá 
 - **Elenco e paletas**: os de `art.md`. O nome em `palette` de cada plano é uma paleta de lá. Todo personagem bate com a folha de modelo aprovada.
 - **Cores**: as do vídeo ficam em `src/videos/<vídeo>/palette.ts`, com os modos e o elenco da ficha visual; `src/videos/why-we-sleep/palette.ts` é o modelo. Não escreva cor solta numa cena nem num desenho: os desenhos de `src/art/` recebem as cores por parâmetro.
 - **Texto, formas e ritmo**: de `src/design/tokens.ts`. Não escreva tamanho de fonte solto numa cena. Se faltar um valor, acrescente-o aos tokens.
-- **Primitivos** em `src/components/`: `Camera`, `Layer` e `framing` (um cenário só, enquadrado de perto ou de longe em cada plano; `Layer light` para halos), `Place` (posiciona pelo centro ou, com `anchor="bottom"`, pelos pés), `Label` (texto solto ou, com `tag`, etiqueta), `Appear` (entrada padrão), `SvgLayer` (SVG em pixels do quadro), `Grain`, `Drifters`, `Glow`, `StarField`, `Backdrop`.
+- **Primitivos** em `src/components/`: câmera e camadas, posicionamento, etiqueta, entrada padrão, fundos e partículas. Liste a pasta antes de criar um.
 - **Planos**: cada cena recebe `shots`, o trecho de cada plano do roteiro, e põe cada um dentro de um `<Shot>` (`src/video/Shot.tsx`). Dentro do plano, `useCurrentFrame()` conta a partir do começo dele.
 - **Etiquetas**: o texto que nomeia ou qualifica algo na cena vai em etiqueta (`<Label tag={...}>`), presa ao que nomeia; números de destaque ficam presos ao que medem. Quanto texto cabe e onde ele fica vem da unidade `texto` do `diretor-de-arte`.
-- **Desenhos** em `src/art/`: `Cassiopea`, `Fish`, `Person`, `Storefront`, `Stopwatch`, `Silhouette`, e `taperPath` para tudo que é tubo que afina. Um desenho novo que pode servir a outro vídeo nasce ali, construído conforme as unidades `forma`, `personagem` e `cenario`. O que só serve a um vídeo fica em `parts/`, na pasta dele. Todo desenho é julgado pela imagem renderizada, nunca pelo código: renderize, abra, corrija.
+- **Desenhos** em `src/art/`: liste a pasta antes de desenhar. Um desenho novo que pode servir a outro vídeo nasce ali, construído conforme as unidades `forma`, `personagem` e `cenario`. O que só serve a um vídeo fica em `parts/`, na pasta dele. Todo desenho é julgado pela imagem renderizada, nunca pelo código: renderize, abra, corrija.
 
 Desfoque grande pesa no render (veja o comentário de `Glow`). Prefira degradê; use desfoque só na moldura de primeiro plano e na distância, em camadas que não mudam de quadro para quadro.
 

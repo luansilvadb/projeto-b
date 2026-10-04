@@ -38,7 +38,7 @@ Cada etapa tem uma skill do Claude Code em `.claude/skills/` com o passo a passo
 
 `<vídeo>` é o nome da pasta em `src/videos/`. O vídeo `demo` percorre o caminho inteiro e serve de modelo.
 
-As skills dizem como rodar cada etapa neste repositório. O conhecimento do estilo fica em três workflows em `.claude/commands/`, que as skills chamam: `diretor-criativo` (ângulo, estrutura e texto do roteiro), `diretor-de-arte` (elenco, paletas, a divisão de cada cena em planos, desenho e composição) e `animador` (sincronia com a fala, entradas, pausa viva, ação, câmera, transições e efeitos).
+As skills dizem como rodar cada etapa neste repositório. O conhecimento do estilo fica em três skills de conhecimento, também em `.claude/skills/`, que as skills das etapas acionam: `diretor-criativo` (ângulo, estrutura e texto do roteiro), `diretor-de-arte` (elenco, paletas, a divisão de cada cena em planos, desenho e composição) e `animador` (sincronia com a fala, entradas, pausa viva, ação, câmera, transições e efeitos).
 
 Outros comandos: `pnpm dev` abre o Remotion Studio, `pnpm lint` checa tipos e estilo, `pnpm test` roda os testes do código e das ferramentas Python, `pnpm critique <vídeo>` mede o render (movimento, área com desenho e cor) contra a faixa de 12 vídeos de referência, `pnpm eval:voice` compara a configuração da voz com variações dela em 16 frases fixas (naturalidade, entonação, altura, cortes e erros de pronúncia), `pnpm sfx "<busca>"` lista efeitos sonoros CC0 do Freesound e `pnpm sfx <id>` baixa o escolhido, `pnpm identity` renderiza as direções de arte candidatas lado a lado em `out/identity/comparison.png`.
 

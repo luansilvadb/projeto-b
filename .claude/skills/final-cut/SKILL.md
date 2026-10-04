@@ -1,6 +1,6 @@
 ---
 name: final-cut
-description: Fecha um vídeo para publicação: confere as pendências, renderiza, ajusta o volume ao padrão do YouTube, passa as verificações finais e leva o arquivo à terceira aprovação do usuário. Use sempre que o usuário pedir o corte final, o render final, exportar, finalizar ou publicar um vídeo, ou perguntar se um vídeo está pronto para ir ao ar.
+description: "Fecha um vídeo para publicação: confere as pendências, renderiza, ajusta o volume ao padrão do YouTube, passa as verificações finais e leva o arquivo à terceira aprovação do usuário. Use sempre que o usuário pedir o corte final, o render final, exportar, finalizar ou publicar um vídeo, ou perguntar se um vídeo está pronto para ir ao ar."
 ---
 
 # Corte final
