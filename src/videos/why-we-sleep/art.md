@@ -1,4 +1,4 @@
-# Ficha visual — Até quem não tem cérebro dorme
+# Ficha visual — Algum animal conseguiu parar de dormir?
 
 Registro das decisões de direção de arte aprovadas para este vídeo (workflow `diretor-de-arte`). O que está aqui é o plano acordado: mudar exige confirmação.
 
@@ -29,6 +29,16 @@ Situação: o roteiro foi reescrito (quarta versão, aprovada em 2026-10-03). Em
 - Correções pedidas pela checagem e pela crítica: o laboratório de Rechtschaffen sem camas nem aparelhos (`biggest-mistake`); os jatos sem "a noite toda" (`jellyfish-sleeps`); a faixa de "4 h" a "20 h" com a etiqueta "em geral" (`elephant-caveat`); o calendário de dezembro de 1963 (`awake-record`); o selo "Rasch e Born, 2013" em `stockroom-night`; "medalhões" no lugar de "peças" em `brainless-question`, porque eles só viram peças depois, em `many-reasons`.
 - Simplificações da imagem, aprovadas em 2026-10-04: o despertador como ícone do terceiro jeito e sobre o rato em `rats-question` (o método real é o disco sobre a água, mostrado na cena seguinte); a árvore da vida de olhos fechados é a dos animais, não a de todos os seres vivos.
 - Em aberto: `bad-idea` mostra seis quadros em volta do pedestal, um a mais que o limite de cinco itens de `ouvinte`; tirar um é decisão do usuário.
+
+**Oitava versão, em 2026-10-04 (42 cenas, 119 planos).** O roteiro foi reescrito do zero a partir do Conceito, e os planos de todas as cenas foram refeitos na decupagem e aprovados com o texto na 1ª aprovação. Elenco, paletas, a loja e o pedestal vazio continuam valendo (decisão do usuário).
+
+- As cenas são todas novas: os 38 componentes de `scenes/` das versões anteriores saem, e os desenhos de `src/art/` e de `parts/` são reaproveitados.
+- Saiu a limpeza do cérebro, com tudo o que era dela: o medalhão da vassoura, a lojista varrendo, as células de olhos do canal, a corrente com os grãos, a gota de corante e o quebra-cabeça dos medalhões. Fica um medalhão só, o da caixa de estoque. Saíram também os seis quadros de `bad-idea`, a porta com a etiqueta "volto já", a faixa de "4 h" a "20 h" dos mamíferos e a régua de dias do recorde.
+- **Fila dos cinco ícones**, refeita: dois olhos no capim (dormir é perigoso), régua de horas (dormir menos), contorno tracejado de um cérebro (viver sem cérebro), despertador (ficar acordado à força) e porta de loja baixada (o que o sono faz). O primeiro era a etiqueta de preço. Volta em `debt-returns`, `maybe-brain`, `forced-awake`, `so-far` e `but-what`.
+- **A conta de sono**, forma visual da analogia central (a dívida): a conta carimbada "cobrado", guardada num bolso que fica marcado no canto da tela (`debt-returns`) e de onde ela sai duas vezes, na água-viva (`jellyfish-debt`) e em Gardner (`gardner-sleeps`), onde mostra onze noites riscadas contra "14 h" e a seta "mais fundo". Volta no fim da linha do tempo, em `what-it-is`. A loja passa a ser a comparação do bloco da memória.
+- Propostas de imagem novas, aprovadas com a decupagem: a tromba que fica imóvel ao lado do cronômetro "5 min" (`elephants`); a faixa "segunda, terça, quarta" das 46 horas (`elephant-awake`); a elefanta e a pessoa com o cérebro aceso e a placa "culpado?" (`maybe-brain`); a pessoa sacudida pelo ombro na cama (`jellyfish-platform`); a etiqueta "comparação" no segundo rato (`rats-disc`); a prancheta de exame com a linha "causa da morte" em branco (`unknown-cause`); o contador que passa do "260 h" do cartaz (`gardner-hours`); a estante de estudos que cresce até "mais de 100 anos de pesquisa" (`memory-result`).
+- Simplificações da imagem, aprovadas em 2026-10-04: a lagoa rasa como cenário da Cassiopea (a fonte diz "fundo do mar", em águas rasas); a elefanta dormindo em pé (o estudo a viu dormir em pé e deitada, deitada só a cada três ou quatro dias); William Dement de prancheta, observando, sem gesto clínico; a conta de Gardner com só a primeira noite de recuperação; as listas de sílabas sob a mesma etiqueta "de 1 a 8 h depois", que resume os quatro intervalos do experimento.
+- O conceito de thumbnail escolhido usa o pedestal vazio, com a elefanta e a água-viva dormindo dos lados.
 ## Elenco
 
 O elenco é só deste vídeo: a água-viva, o peixe e uma pessoa que faz o papel de "você". O canal não tem elenco fixo por enquanto (decidido em 2026-10-02); isso volta a ser discutido depois que o primeiro vídeo provar o fluxo.

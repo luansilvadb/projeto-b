@@ -1,9 +1,9 @@
 {
-  "title": "Até quem não tem cérebro dorme",
+  "title": "Algum animal conseguiu parar de dormir?",
   "scenes": [
     {
       "id": "third-of-life",
-      "narration": "Você vai passar um terço da vida dormindo, e até hoje ninguém sabe dizer por quê.",
+      "narration": "Você vai passar um terço da vida dormindo. Durante essas horas, um animal fica sem comer, sem se reproduzir e quase sem perceber quem chega perto.",
       "shots": [
         {
           "staging": "A pessoa grande no centro, de pé. A barra de uma vida inteira passa atrás dela, na altura do peito, e um terço dela escurece.",
@@ -12,39 +12,8 @@
           "entry": "cut"
         },
         {
-          "cue": "até",
-          "staging": "A gaveta com a etiqueta \"motivo\" no centro, grande e vazia. A pesquisadora de jaleco, que a abriu confiante, olha para a câmera.",
-          "scale": "medium",
-          "palette": "laboratorio",
-          "entry": "cut"
-        }
-      ],
-      "sources": [
-        1,
-        2,
-        3
-      ]
-    },
-    {
-      "id": "eight-hours",
-      "narration": "A recomendação para um adulto é dormir pelo menos sete horas por noite. Quem dorme oito passa um terço do dia dormindo, todos os dias, a vida inteira. Durante esse tempo, um animal não procura comida, não se reproduz e não percebe quem se aproxima.",
-      "shots": [
-        {
-          "staging": "A pessoa deitada na cama, no centro, de olhos fechados, com \"ZZZ\" subindo dela. Acima, a régua de 24 horas, e a barra dela enche até \"7 h\", com uma seta \"ou mais\". Selo da fonte no canto: \"Watson et al., 2015\".",
-          "scale": "medium",
-          "palette": "ideia",
-          "entry": "camera"
-        },
-        {
-          "cue": "oito",
-          "staging": "A barra avança até \"8 h\" e a régua vira um relógio de 24 horas com um terço pintado de escuro; atrás dele, um calendário folheia sem parar.",
-          "scale": "close",
-          "palette": "ideia",
-          "entry": "transform"
-        },
-        {
           "cue": "Durante",
-          "staging": "Um bicho pequeno dorme enroscado sob uma árvore, de noite. Três ícones acendem sobre ele, um por oração, e são riscados: comida, par, vigia.",
+          "staging": "Um bicho pequeno dorme enroscado sob uma árvore, de noite. Três ícones acendem sobre ele, um por item da fala, e são riscados: comida, par, vigia.",
           "scale": "medium",
           "palette": "savana-noite",
           "entry": "cut"
@@ -52,21 +21,22 @@
       ],
       "sources": [
         1,
-        19
+        19,
+        20
       ]
     },
     {
       "id": "biggest-mistake",
-      "narration": "Álan Réctchafen passou quarenta e quatro anos estudando esse problema, à frente do laboratório do sono da Universidade de Chicago. Ele resumia a questão numa frase só: se o sono não serve a uma função absolutamente vital, então é o maior erro que a evolução já cometeu.",
+      "narration": "Álan Réctchafen estudou o sono por quarenta e quatro anos, na Universidade de Chicago, e resumia o problema assim: se o sono não serve a uma função absolutamente vital, então é o maior erro que a evolução já cometeu.",
       "shots": [
         {
-          "staging": "Um pesquisador de jaleco, da cintura para cima, grande; atrás dele, um calendário de parede vai trocando de década. Selo no canto: \"Allan Rechtschaffen\".",
+          "staging": "Um pesquisador de jaleco, da cintura para cima, grande; atrás dele, um calendário de parede vai trocando de década. Etiqueta: \"Allan Rechtschaffen\".",
           "scale": "medium",
           "palette": "ideia",
           "entry": "cut"
         },
         {
-          "cue": "laboratório",
+          "cue": "Universidade",
           "staging": "A porta de um laboratório com a placa \"Laboratório do Sono · Chicago\"; ele entra.",
           "scale": "wide",
           "palette": "laboratorio",
@@ -92,51 +62,28 @@
       ]
     },
     {
-      "id": "rats-promise",
-      "narration": "A equipe de Réctchafen testou isso com dez ratos. Esse experimento volta mais adiante.",
+      "id": "time-to-fix",
+      "narration": "E a evolução teve tempo de corrigir, porque o sono existe, provavelmente, há mais de quinhentos milhões de anos. Bastava um animal aprender a viver acordado.",
       "shots": [
         {
-          "staging": "Ele larga o giz e abre uma porta ao lado do quadro: dez ratos em fila olham para ele. Selo no canto: \"Everson et al., 1989\".",
+          "staging": "Uma tesoura percorre a árvore da vida e corta um galho que pesa, com \"SNIP\": um chifre grande demais.",
           "scale": "medium",
-          "palette": "laboratorio",
-          "entry": "camera"
+          "palette": "ideia",
+          "entry": "cut"
         },
         {
-          "cue": "Esse",
-          "staging": "A porta se fecha devagar sobre os ratos, com uma etiqueta pendurada na maçaneta: \"volto já\".",
-          "scale": "close",
-          "palette": "laboratorio",
-          "entry": "camera"
-        }
-      ],
-      "sources": [
-        9,
-        19
-      ]
-    },
-    {
-      "id": "should-have",
-      "narration": "E a frase dele faz sentido, porque o sono provavelmente existe há mais de quinhentos milhões de anos. Se fosse um erro, a evolução teve todo esse tempo pra corrigir, e bastava um animal, em algum lugar, aprender a viver sem dormir.",
-      "shots": [
-        {
+          "cue": "porque",
           "staging": "Uma linha do tempo sobe do fundo do mar, em índigo, com a etiqueta \"mais de 500 milhões de anos\". Selo da fonte no canto: \"Pappas, 2023\".",
           "scale": "wide",
           "palette": "abissal",
           "entry": "cut"
         },
         {
-          "cue": "Se",
-          "staging": "Uma tesoura percorre a árvore da vida e corta galhos que pesam, com \"SNIP\" em cada corte: um chifre grande demais, uma cauda a mais.",
-          "scale": "medium",
-          "palette": "ideia",
-          "entry": "cut"
-        },
-        {
-          "cue": "bastava",
+          "cue": "Bastava",
           "staging": "O globo gira sob uma lupa que procura. Ao lado, um pedestal roxo com a placa \"acordado 24 h\" espera por um dono, sob um foco de luz.",
           "scale": "wide",
           "palette": "ideia",
-          "entry": "transform"
+          "entry": "cut"
         }
       ],
       "sources": [
@@ -145,21 +92,14 @@
       ]
     },
     {
-      "id": "bad-idea",
-      "narration": "Os pesquisadores procuraram esse animal. Até hoje, nenhum foi encontrado.",
+      "id": "the-question",
+      "narration": "Nesse tempo todo, algum animal conseguiu parar de dormir?",
       "shots": [
         {
-          "staging": "A lupa passa por seis quadros que entram um a um em volta do pedestal, cada um com alguém dormindo: elefanta, rato, mosca, peixe, pássaro, pessoa. Selo da fonte no canto: \"Cirelli e Tononi, 2008\".",
-          "scale": "wide",
+          "staging": "A lupa percorre o globo e para sobre o pedestal \"acordado 24 h\", de perto. Ele continua vazio, com uma interrogação sobre o contorno tracejado. No silêncio depois da fala, entra a vinheta.",
+          "scale": "close",
           "palette": "ideia",
           "entry": "camera"
-        },
-        {
-          "cue": "Até",
-          "staging": "A lupa para sobre o pedestal. Ele continua vazio. A noite cai sobre ele e, no silêncio depois da fala, entra a vinheta.",
-          "scale": "close",
-          "palette": "savana-noite",
-          "entry": "wipe"
         }
       ],
       "sources": [
@@ -169,17 +109,17 @@
     },
     {
       "id": "five-parts",
-      "narration": "Este vídeo tem cinco partes. Primeiro, o que o sono custa. Depois, três jeitos de tentar escapar dele. E por fim, o que o sono faz de tão importante.",
+      "narration": "A resposta vem em cinco partes. Primeiro, por que dormir é perigoso. Depois, três jeitos de tentar escapar do sono. E por fim, o que já se sabe sobre o que o sono faz.",
       "shots": [
         {
-          "staging": "Cinco ícones apagados em fila, sobre fundo liso: uma etiqueta de preço, uma régua de horas, o contorno tracejado de um cérebro, um despertador e a porta de uma loja baixada.",
+          "staging": "Cinco ícones apagados em fila, sobre fundo liso: dois olhos no capim, uma régua de horas, o contorno tracejado de um cérebro, um despertador e a porta de uma loja baixada.",
           "scale": "wide",
           "palette": "ideia",
           "entry": "cut"
         },
         {
           "cue": "Primeiro",
-          "staging": "A etiqueta de preço acende, pendurada na lua.",
+          "staging": "Os dois olhos no capim acendem.",
           "scale": "medium",
           "palette": "ideia",
           "entry": "camera"
@@ -202,23 +142,24 @@
     },
     {
       "id": "night-falls",
-      "narration": "Imagine que você é um bicho pequeno na savana, no fim do dia: você se deita, fecha os olhos, e pelas próximas horas não sabe de mais nada.",
+      "narration": "Imagine que você é um bicho pequeno na savana, no fim do dia. Você se deita, fecha os olhos e passa as próximas horas quase sem perceber o que acontece em volta.",
       "shots": [
         {
-          "staging": "A savana ao entardecer, vista de longe; uma etiqueta de preço balança pendurada na lua que nasce.",
+          "staging": "A savana ao entardecer, vista de longe; um bicho pequeno caminha sozinho para debaixo de uma árvore.",
           "scale": "wide",
           "palette": "savana-dia",
           "entry": "cut"
         },
         {
-          "cue": "fim",
-          "staging": "A savana anoitece. Um bicho pequeno se enrosca sob uma árvore e fecha os olhos.",
+          "cue": "Você",
+          "occurrence": 2,
+          "staging": "A savana anoitece. O bicho se enrosca sob a árvore e fecha os olhos.",
           "scale": "medium",
           "palette": "savana-noite",
           "entry": "wipe"
         },
         {
-          "cue": "pelas",
+          "cue": "passa",
           "staging": "De perto: ele ressona, com \"zzz\". Atrás dele o capim se mexe.",
           "scale": "close",
           "palette": "savana-noite",
@@ -235,7 +176,7 @@
       "narration": "Se um predador chegar perto, você demora a perceber.",
       "shots": [
         {
-          "staging": "Dois olhos acendem no capim atrás do bicho dormindo. A sombra avança devagar.",
+          "staging": "Dois olhos acendem no capim atrás do bicho dormindo, os mesmos do ícone. A sombra avança devagar.",
           "scale": "close",
           "palette": "savana-noite",
           "entry": "camera"
@@ -247,8 +188,8 @@
       ]
     },
     {
-      "id": "sleep-debt",
-      "narration": "A saída óbvia seria pular uma noite, e ficar acordado, de vigia. Só que o corpo cobra depois, como quem cobra uma dívida. O animal que perdeu sono dorme mais, ou mais fundo, ou acorda menos vezes, para compensar o que faltou.",
+      "id": "skip-a-night",
+      "narration": "A saída óbvia seria pular uma noite e ficar acordado, de vigia. Só que o corpo cobra o sono que faltou, como quem cobra uma dívida.",
       "shots": [
         {
           "staging": "O mesmo bicho, de olhos arregalados a noite inteira, vigia o capim; a lua atravessa o céu.",
@@ -262,53 +203,24 @@
           "scale": "medium",
           "palette": "savana-dia",
           "entry": "wipe"
-        },
+        }
+      ],
+      "sources": [
+        20
+      ]
+    },
+    {
+      "id": "sleep-debt",
+      "narration": "O animal que perdeu sono dorme mais tempo depois, ou dorme mais fundo, ou acorda menos vezes. Você conhece o começo dessa cobrança. É o sono que pesa na manhã seguinte a uma noite em claro.",
+      "shots": [
         {
-          "cue": "dorme",
-          "staging": "Ele desaba dormindo em pleno dia, com \"PLOFT\" na queda, e a conta ganha o carimbo \"cobrado\".",
+          "staging": "O bicho desaba dormindo em pleno dia, com \"PLOFT\" na queda, e a conta ganha o carimbo \"cobrado\". Selo da fonte no canto: \"Cirelli e Tononi, 2008\".",
           "scale": "close",
           "palette": "savana-dia",
           "entry": "camera"
-        }
-      ],
-      "sources": [
-        20
-      ]
-    },
-    {
-      "id": "debt-test",
-      "narration": "Os pesquisadores usam essa cobrança como teste. Se o bicho compensa o sono que perdeu, é porque estava dormindo de verdade, e não só parado.",
-      "shots": [
-        {
-          "staging": "A pesquisadora segura uma prancheta com três linhas; duas ainda estão cobertas, e a terceira, \"cobra depois\", ganha um visto. Ao lado, o bicho dorme com o carimbo \"cobrado\" ainda sobre a conta.",
-          "scale": "medium",
-          "palette": "laboratorio",
-          "entry": "cut"
         },
         {
-          "cue": "Se",
-          "staging": "Tela dividida: de um lado o bicho só parado, de olho aberto; do outro, dormindo, com a conta paga.",
-          "scale": "medium",
-          "palette": "ideia",
-          "entry": "transform"
-        }
-      ],
-      "sources": [
-        20
-      ]
-    },
-    {
-      "id": "debt-paid",
-      "narration": "Essa regra volta no segundo jeito de escapar. E você conhece essa cobrança: é a manhã depois de uma noite em claro.",
-      "shots": [
-        {
-          "staging": "A conta com o carimbo \"cobrado\" é dobrada e guardada num bolso, que fica marcado na tela.",
-          "scale": "close",
-          "palette": "ideia",
-          "entry": "camera"
-        },
-        {
-          "cue": "você",
+          "cue": "Você",
           "staging": "A pessoa na mesa do café, de olheiras, deixa a cabeça cair ao lado da xícara. A mesma conta aparece ao lado dela, carimbada.",
           "scale": "medium",
           "palette": "ideia",
@@ -320,58 +232,102 @@
       ]
     },
     {
-      "id": "almost-escaped",
-      "narration": "O sono custa horas sem defesa, e o corpo cobra o sono que faltar. O primeiro jeito de escapar é dormir menos. E tem bicho que dorme muito menos do que você.",
+      "id": "debt-test",
+      "narration": "Os pesquisadores usam essa cobrança como um dos testes do sono. Compensar depois o sono perdido é um dos sinais de que o bicho estava dormindo de verdade.",
       "shots": [
         {
-          "staging": "O bicho pequeno da savana dormindo, com o capim se mexendo atrás dele; ao lado, a conta com o carimbo \"cobrado\".",
-          "scale": "medium",
-          "palette": "savana-noite",
-          "entry": "cut"
-        },
-        {
-          "cue": "primeiro",
-          "staging": "No alto, a fila dos cinco ícones: a etiqueta de preço ganha um visto e a régua, \"1\", acende e cresce.",
-          "scale": "medium",
+          "staging": "De perto, a conta carimbada vira uma ficha de teste, com um quadrado para marcar.",
+          "scale": "close",
           "palette": "ideia",
           "entry": "cut"
         },
         {
-          "cue": "tem",
-          "staging": "A régua vira a régua de 24 horas, sobre a pessoa dormindo no centro, grande, com a barra dela em \"8 h\". Uma mão empurra a ponta da barra para a esquerda.",
+          "cue": "Compensar",
+          "staging": "Tela dividida: de um lado, o bicho só parado, de olho aberto, sem conta nenhuma; do outro, o bicho dormindo, com a conta \"cobrado\", que ganha um visto. Selo da fonte no canto: \"Cirelli e Tononi, 2008\".",
           "scale": "medium",
           "palette": "ideia",
-          "entry": "transform"
+          "entry": "camera"
         }
       ],
       "sources": [
-        1,
-        4,
+        20
+      ]
+    },
+    {
+      "id": "debt-returns",
+      "narration": "Essa cobrança volta duas vezes neste vídeo. Dormir é perigoso, e deixar de dormir tem cobrança. Falta ver quem tentou escapar.",
+      "shots": [
+        {
+          "staging": "A conta com o carimbo \"cobrado\" é dobrada e guardada num bolso, que fica marcado no canto da tela.",
+          "scale": "close",
+          "palette": "ideia",
+          "entry": "camera"
+        },
+        {
+          "cue": "Dormir",
+          "staging": "A fila dos cinco ícones: os olhos no capim ganham um visto, e a régua, \"1\", acende e cresce.",
+          "scale": "medium",
+          "palette": "ideia",
+          "entry": "cut"
+        }
+      ],
+      "sources": [
         19,
         20
       ]
     },
     {
-      "id": "elephants",
-      "narration": "Num estudo publicado em dois mil e dezessete, pesquisadores acompanharam duas elefantas selvagens na África, as matriarcas de suas manadas. Em trinta e cinco dias, elas dormiram, em média, duas horas por dia, o menor tempo já medido num mamífero.",
+      "id": "sleep-less",
+      "narration": "O primeiro jeito de escapar é dormir menos. Você dorme umas oito horas por noite, e tem bicho que dorme bem menos.",
       "shots": [
         {
-          "staging": "A savana de dia: duas elefantas caminham à frente de suas manadas. No canto, um calendário de 35 dias começa a se preencher. Selo da fonte no canto: \"Gravett et al., 2017\".",
+          "staging": "A régua do ícone vira a régua de 24 horas, sobre fundo liso.",
+          "scale": "medium",
+          "palette": "ideia",
+          "entry": "transform"
+        },
+        {
+          "cue": "Você",
+          "staging": "A pessoa dormindo no centro, grande, com a barra dela na régua em \"8 h\"; por baixo dela, um lugar vago para outra barra, mais curta.",
+          "scale": "medium",
+          "palette": "ideia",
+          "entry": "camera"
+        }
+      ],
+      "sources": [
+        1,
+        4
+      ]
+    },
+    {
+      "id": "elephants",
+      "narration": "Em dois mil e dezessete saiu um estudo com duas elefantas selvagens, na África, cada uma a matriarca da sua manada. Os pesquisadores mediram o sono delas pela tromba, por trinta e cinco dias. Tromba parada por cinco minutos ou mais foi contada como sono.",
+      "shots": [
+        {
+          "staging": "A savana de dia: duas elefantas caminham, cada uma à frente da sua manada. Selo da fonte no canto: \"Gravett et al., 2017\".",
           "scale": "wide",
           "palette": "savana-dia",
           "entry": "cut"
         },
         {
-          "cue": "matriarcas",
+          "cue": "matriarca",
           "staging": "As duas de perto, lado a lado, de presas pequenas e orelhas grandes.",
           "scale": "close",
           "palette": "savana-dia",
           "entry": "camera"
         },
         {
-          "cue": "dormiram",
-          "staging": "De noite, uma delas dorme em pé. A barra dela entra debaixo da nossa na régua e para em \"2 h\".",
+          "cue": "mediram",
+          "staging": "Um calendário de 35 dias se preenche no canto, enquanto o sol e a lua passam sobre as duas.",
           "scale": "medium",
+          "palette": "savana-dia",
+          "entry": "camera"
+        },
+        {
+          "cue": "Tromba",
+          "occurrence": 2,
+          "staging": "De perto, a tromba de uma delas, que não parava de se mexer, fica imóvel, e um cronômetro ao lado corre até \"5 min\". Selo da fonte no canto: \"Gravett et al., 2017\".",
+          "scale": "close",
           "palette": "savana-noite",
           "entry": "wipe"
         }
@@ -381,18 +337,18 @@
       ]
     },
     {
-      "id": "elephant-quarter",
-      "narration": "Ponha isso ao lado das suas oito horas. Duas cabem quatro vezes em oito, ou seja, a elefanta dorme um quarto do que você dorme.",
+      "id": "two-hours",
+      "narration": "Elas dormiram, em média, duas horas por dia, um dos menores tempos já medidos num mamífero. A elefanta dorme um quarto do que você dorme.",
       "shots": [
         {
-          "staging": "As duas barras alinhadas na régua: a da pessoa, \"8 h\", e a da elefanta, \"2 h\".",
+          "staging": "De noite, uma delas dorme em pé. A barra dela entra na régua de 24 horas e para em \"2 h\". Selo da fonte no canto: \"Gravett et al., 2017\".",
           "scale": "medium",
           "palette": "savana-noite",
-          "entry": "camera"
+          "entry": "wipe"
         },
         {
-          "cue": "cabem",
-          "staging": "A barra da elefanta se copia quatro vezes e enche a da pessoa, uma por vez. Etiqueta: \"um quarto\".",
+          "cue": "elefanta",
+          "staging": "De perto, as duas barras alinhadas na régua: a da pessoa, \"8 h\", e a da elefanta, \"2 h\", que se copia quatro vezes e enche a da pessoa. Etiqueta: \"um quarto\".",
           "scale": "close",
           "palette": "savana-noite",
           "entry": "camera"
@@ -404,37 +360,21 @@
       ]
     },
     {
-      "id": "elephant-caveat",
-      "narration": "É pouco bicho para ter certeza do número, porque foram só duas elefantas. Mas duas horas ficam abaixo de qualquer outro mamífero já medido. Os mamíferos dormem, em geral, de quatro a vinte horas por dia.",
-      "shots": [
-        {
-          "staging": "As duas elefantas lado a lado, pequenas, com a etiqueta \"só duas\". Selo da fonte no canto: \"Gravett et al., 2017\".",
-          "scale": "medium",
-          "palette": "savana-noite",
-          "entry": "camera"
-        },
-        {
-          "cue": "abaixo",
-          "staging": "Na régua de 24 horas, uma faixa larga se pinta de \"4 h\" a \"20 h\", com silhuetas de mamíferos dormindo sobre ela; a faixa leva a etiqueta \"em geral\", e a barra da elefanta, \"2 h\", fica à esquerda dela. Selo: \"Joiner, 2016\".",
-          "scale": "wide",
-          "palette": "ideia",
-          "entry": "cut"
-        }
-      ],
-      "sources": [
-        3,
-        4
-      ]
-    },
-    {
       "id": "elephant-awake",
-      "narration": "E elas chegaram a passar quarenta e seis horas seguidas acordadas, quase dois dias inteiros.",
+      "narration": "Houve vezes em que elas passaram quarenta e seis horas seguidas acordadas. Para você, seria acordar numa segunda de manhã e só dormir na madrugada de quarta.",
       "shots": [
         {
           "staging": "O sol e a lua passam duas vezes sobre a elefanta, que caminha de olhos abertos. Etiqueta: \"46 h acordada\". Selo da fonte no canto: \"Gravett et al., 2017\".",
           "scale": "wide",
           "palette": "savana-dia",
           "entry": "wipe"
+        },
+        {
+          "cue": "Para",
+          "staging": "A pessoa atravessa uma faixa de três dias, \"segunda\", \"terça\" e \"quarta\", de olhos cada vez mais caídos, e só se deita no começo da quarta.",
+          "scale": "medium",
+          "palette": "ideia",
+          "entry": "cut"
         }
       ],
       "sources": [
@@ -442,18 +382,25 @@
       ]
     },
     {
-      "id": "none-zeroed",
-      "narration": "Só que elas sempre voltavam a dormir. Entre os mamíferos, a elefanta é quem chegou mais perto de escapar, e parou em duas horas. Nem ela conseguiu parar de dormir.",
+      "id": "elephant-verdict",
+      "narration": "São só duas elefantas, pouco para ter certeza do número. Mesmo assim, as duas sempre voltaram a dormir. Poucos mamíferos chegaram tão perto de escapar, e ela parou em duas horas. Nem a elefanta conseguiu parar de dormir.",
       "shots": [
         {
-          "staging": "A elefanta para, a tromba cai, o olho fecha: ela dorme em pé.",
+          "staging": "As duas elefantas lado a lado, pequenas, com a etiqueta \"só duas\". Selo da fonte no canto: \"Gravett et al., 2017\".",
           "scale": "medium",
           "palette": "savana-noite",
-          "entry": "wipe"
+          "entry": "cut"
         },
         {
-          "cue": "chegou",
-          "staging": "A régua: a barra dela em \"2 h\", e a marca do zero, vazia, logo à esquerda.",
+          "cue": "Mesmo",
+          "staging": "Uma delas para, a tromba cai, o olho fecha: ela dorme em pé.",
+          "scale": "medium",
+          "palette": "savana-noite",
+          "entry": "camera"
+        },
+        {
+          "cue": "Poucos",
+          "staging": "A régua, de perto: a barra dela em \"2 h\", e a marca do zero, vazia, logo à esquerda.",
           "scale": "close",
           "palette": "ideia",
           "entry": "cut"
@@ -467,41 +414,50 @@
         }
       ],
       "sources": [
+        3,
         4
       ]
     },
     {
       "id": "maybe-brain",
-      "narration": "Dormir menos, o primeiro jeito, não bastou. O segundo é não ter cérebro, porque todo bicho até aqui tem um, e talvez o sono seja coisa dele. Parece razoável, e dá para testar.",
+      "narration": "Dormir menos, o primeiro jeito, tem limite. O segundo jeito é viver sem cérebro. A elefanta tem um, você tem um, e pode ser que o sono seja uma necessidade dele. Parece razoável, e foi testado.",
       "shots": [
         {
-          "staging": "Em fila dos cinco ícones, a régua \"1\" ganha um X, e o contorno sem cérebro, \"2\", acende.",
+          "staging": "Na fila dos cinco ícones, a régua \"1\" ganha um X, e o contorno sem cérebro, \"2\", acende.",
           "scale": "medium",
           "palette": "ideia",
           "entry": "cut"
         },
         {
           "cue": "segundo",
-          "staging": "O contorno cresce até encher o quadro. Ao lado dele entra um cérebro de olhos arregalados, sob um foco de luz, e a placa \"culpado?\" desce sobre ele.",
+          "staging": "O contorno cresce até encher o quadro.",
           "scale": "close",
           "palette": "ideia",
           "entry": "transform"
         },
         {
+          "cue": "elefanta",
+          "staging": "A elefanta e a pessoa lado a lado, cada uma com o cérebro aceso dentro da cabeça; a placa \"culpado?\" desce entre os dois.",
+          "scale": "medium",
+          "palette": "ideia",
+          "entry": "cut"
+        },
+        {
           "cue": "Parece",
-          "staging": "A pesquisadora aponta para o contorno vazio e sai de quadro com uma rede de pesca.",
+          "staging": "A pesquisadora, com uma rede de pesca no ombro, aponta para o contorno vazio.",
           "scale": "medium",
           "palette": "laboratorio",
           "entry": "cut"
         }
       ],
       "sources": [
+        7,
         20
       ]
     },
     {
-      "id": "jellyfish-pulse",
-      "narration": "Em dois mil e dezessete, pesquisadores do Cáltec escolheram um bicho assim. É a Cassiopéia, uma água-viva que passa a vida pousada de cabeça para baixo no fundo do mar, pulsando. No lugar do cérebro, ela tem só uma rede de neurônios espalhada pelo corpo.",
+      "id": "jellyfish",
+      "narration": "Em dois mil e dezessete, pesquisadores do Cáltec escolheram uma água-viva, a Cassiopéia. Ela passa praticamente a vida inteira pousada de cabeça para baixo no fundo do mar, pulsando. No lugar do cérebro, ela tem só uma rede de neurônios espalhada pelo corpo.",
       "shots": [
         {
           "staging": "A lagoa rasa. A água-viva entra nadando de cabeça para cima, vira e pousa no fundo de areia. O peixe entra pela direita e para ao vê-la. Selo da fonte no canto: \"Nath et al., 2017\".",
@@ -530,27 +486,27 @@
     },
     {
       "id": "jellyfish-night",
-      "narration": "De noite, ela pulsa mais devagar, mas isso não prova nada, porque ela podia estar só parada. Para saber se era sono de verdade, os pesquisadores fizeram dois testes.",
+      "narration": "De noite, ela pulsa mais devagar. Só que isso prova pouco, porque ela podia estar só parada. Para saber se era sono, os pesquisadores fizeram dois testes.",
       "shots": [
         {
-          "staging": "A lagoa escurece e os anéis do pulso saem mais espaçados. O peixe boceja.",
+          "staging": "A lagoa escurece e os anéis do pulso saem mais espaçados. O peixe boceja. Selo da fonte no canto: \"Nath et al., 2017\".",
           "scale": "medium",
           "palette": "lagoa-noite",
           "entry": "wipe"
         },
         {
-          "cue": "isso",
-          "staging": "A prancheta volta e as duas linhas cobertas se abrem: \"parada\" ganha um visto; \"lenta para reagir\" e \"cobra depois\" seguem em branco.",
+          "cue": "Só",
+          "staging": "A água-viva de perto, quieta no fundo, com uma interrogação presa a ela: dormindo, ou só parada?",
           "scale": "close",
-          "palette": "laboratorio",
-          "entry": "cut"
+          "palette": "lagoa-noite",
+          "entry": "camera"
         },
         {
           "cue": "Para",
-          "staging": "No laboratório, a água-viva num tanque de vidro, sobre uma plataforma; a pesquisadora ao lado.",
+          "staging": "No laboratório, a água-viva num tanque de vidro, sobre uma plataforma; a pesquisadora ao lado, com uma prancheta de duas linhas em branco: \"lenta para reagir\" e \"cobra depois\".",
           "scale": "wide",
           "palette": "laboratorio",
-          "entry": "camera"
+          "entry": "cut"
         }
       ],
       "sources": [
@@ -559,7 +515,7 @@
     },
     {
       "id": "jellyfish-platform",
-      "narration": "No primeiro, tiraram de repente a plataforma de baixo dela. De noite, ela ficava boiando por até cinco segundos antes de acordar e se virar.",
+      "narration": "No primeiro, tiraram de repente a plataforma em que ela estava pousada. De noite, ela ficava boiando por até cinco segundos antes de acordar e se virar. É a demora de quem dorme, parecida com a sua quando alguém te chama de madrugada.",
       "shots": [
         {
           "staging": "No tanque, a plataforma some de baixo dela.",
@@ -568,37 +524,45 @@
           "entry": "camera"
         },
         {
-          "cue": "boiando",
-          "staging": "Ela fica boiando, parada, enquanto um cronômetro corre até \"5 s\"; então dá um tranco, se vira e desce nadando. Na prancheta, \"lenta para reagir\" ganha um visto.",
+          "cue": "noite",
+          "staging": "De perto, ela fica boiando, parada, enquanto um cronômetro corre até \"5 s\"; então dá um tranco, se vira e desce nadando. Selo da fonte no canto: \"Nath et al., 2017\".",
           "scale": "close",
           "palette": "laboratorio",
           "entry": "camera"
+        },
+        {
+          "cue": "demora",
+          "staging": "A pessoa, \"você\", na cama: uma mão a sacode pelo ombro e ela demora a abrir um olho. No canto, a prancheta, e \"lenta para reagir\" ganha um visto.",
+          "scale": "medium",
+          "palette": "ideia",
+          "entry": "cut"
         }
       ],
       "sources": [
-        7
+        7,
+        20
       ]
     },
     {
-      "id": "jellyfish-sleeps",
-      "narration": "O segundo teste usa a regra da cobrança, a de que quem perde sono de verdade compensa depois. À noite, os pesquisadores soltaram jatos de água no tanque, para ela não descansar. No dia seguinte, na hora em que devia estar ativa, ela cochilava.",
+      "id": "jellyfish-debt",
+      "narration": "O segundo teste é a cobrança, aquela regra de que quem perde sono de verdade compensa depois. À noite, os pesquisadores soltaram jatos de água no tanque, para manter a água-viva acordada. No dia seguinte, na hora em que devia estar ativa, ela cochilava.",
       "shots": [
         {
-          "staging": "A conta carimbada sai do bolso marcado e se abre ao lado do tanque.",
+          "staging": "A conta carimbada sai do bolso marcado no canto e se abre ao lado do tanque.",
           "scale": "close",
           "palette": "ideia",
           "entry": "cut"
         },
         {
-          "cue": "soltaram",
-          "staging": "No laboratório de noite, em índigo, o tanque aceso: jatos de água a cutucam, com \"PSSST\" em cada um.",
+          "cue": "noite",
+          "staging": "No laboratório de noite, em índigo, o tanque aceso: jatos de água a cutucam, com \"PSSST\" em cada um. Selo da fonte no canto: \"Nath et al., 2017\".",
           "scale": "medium",
           "palette": "laboratorio",
           "entry": "cut"
         },
         {
           "cue": "seguinte",
-          "staging": "De dia, no mesmo tanque, com sol na janela do laboratório, ela pulsa bem devagar e cochila. Na prancheta, \"cobra depois\" ganha o último visto.",
+          "staging": "De dia, no mesmo tanque, com sol na janela do laboratório, ela pulsa bem devagar e cochila. Na prancheta, \"cobra depois\" ganha o segundo visto. Selo da fonte no canto: \"Nath et al., 2017\".",
           "scale": "medium",
           "palette": "laboratorio",
           "entry": "wipe"
@@ -610,17 +574,17 @@
     },
     {
       "id": "older-than-brain",
-      "narration": "Ela compensou o sono que perdeu, e era esse o teste que faltava. Um bicho sem cérebro dorme, o que quer dizer que o sono provavelmente é mais antigo que o próprio cérebro. Nem quem não tem cérebro conseguiu parar de dormir.",
+      "narration": "A água-viva passou nos dois testes, sem ter cérebro. Para os pesquisadores, é sinal de que o sono surgiu, provavelmente, antes de existir cérebro. Nem quem vive sem cérebro conseguiu parar de dormir.",
       "shots": [
         {
-          "staging": "A água-viva cochilando, com a conta \"cobrado\" presa a ela e a prancheta de três vistos ao lado.",
-          "scale": "medium",
-          "palette": "lagoa-dia",
+          "staging": "A água-viva cochilando no tanque, de perto, com a conta \"cobrado\" presa a ele e a prancheta de dois vistos ao lado.",
+          "scale": "close",
+          "palette": "laboratorio",
           "entry": "camera"
         },
         {
-          "cue": "provavelmente",
-          "staging": "A linha do tempo do gancho, em índigo: a água-viva grande no começo dela, e o sono aparece antes do primeiro cérebro. Selo da fonte no canto: \"Pappas, 2023\".",
+          "cue": "Para",
+          "staging": "A linha do tempo do gancho, em índigo: a água-viva grande no começo dela, e o sono aparece antes do primeiro cérebro. Selos: \"Nath et al., 2017\" e \"Pappas, 2023\".",
           "scale": "wide",
           "palette": "abissal",
           "entry": "cut"
@@ -628,7 +592,7 @@
         {
           "cue": "Nem",
           "staging": "O pedestal \"acordado 24 h\", vazio. A elefanta e a água-viva dormem uma de cada lado dele.",
-          "scale": "wide",
+          "scale": "medium",
           "palette": "ideia",
           "entry": "cut"
         }
@@ -640,11 +604,11 @@
       ]
     },
     {
-      "id": "rats-question",
-      "narration": "O segundo jeito também falhou. O terceiro é ficar acordado à força, por muitos dias seguidos. Foi o que a equipe de Álan Réctchafen, o pesquisador da frase do maior erro, fez com dez ratos.",
+      "id": "forced-awake",
+      "narration": "O segundo jeito também falhou. Resta o terceiro, que é ficar acordado à força. Foi isso que aconteceu com dez ratos, no laboratório de Álan Réctchafen, o pesquisador de Chicago que falava no maior erro da evolução.",
       "shots": [
         {
-          "staging": "Em fila dos cinco ícones, o contorno \"2\" ganha um X, e o despertador, \"3\", acende.",
+          "staging": "Na fila dos cinco ícones, o contorno \"2\" ganha um X, e o despertador, \"3\", acende.",
           "scale": "medium",
           "palette": "ideia",
           "entry": "cut"
@@ -657,8 +621,15 @@
           "entry": "transform"
         },
         {
-          "cue": "Álan",
-          "staging": "A porta com a etiqueta \"volto já\" se abre de novo. Rechtschaffen, de jaleco, está lá dentro com os dez ratos. Selo no canto: \"Everson et al., 1989\".",
+          "cue": "Foi",
+          "staging": "Dez ratos em fila, de perto, olham para cima. Selo da fonte no canto: \"Everson et al., 1989\".",
+          "scale": "close",
+          "palette": "laboratorio",
+          "entry": "cut"
+        },
+        {
+          "cue": "laboratório",
+          "staging": "O quadro abre: Rechtschaffen, de jaleco, diante do quadro-negro do gancho, com a árvore e o carimbo \"erro?\"; os dez ratos aos pés do quadro. Etiqueta: \"Allan Rechtschaffen\".",
           "scale": "wide",
           "palette": "laboratorio",
           "entry": "camera"
@@ -670,8 +641,8 @@
       ]
     },
     {
-      "id": "rats-awake",
-      "narration": "No laboratório dele, em Chicago, os ratos ficavam aos pares, sobre um disco acima da água. Toda vez que o rato do teste começava a adormecer, o disco girava, e ele tinha de andar. O outro rato do disco passava pelo mesmo incômodo, mas podia dormir enquanto o primeiro estava acordado.",
+      "id": "rats-disc",
+      "narration": "Os ratos ficavam aos pares, sobre um disco acima de uma bandeja de água. Toda vez que o rato do teste começava a adormecer, o disco girava, e os dois tinham de andar para ficar fora da água. O outro rato servia de comparação, porque podia dormir enquanto o primeiro estava acordado.",
       "shots": [
         {
           "staging": "Um disco sobre uma bandeja rasa de água, com dois ratos em cima; na parede, a placa \"Laboratório do Sono · Chicago\". Selo da fonte no canto: \"Everson et al., 1989\".",
@@ -681,14 +652,14 @@
         },
         {
           "cue": "Toda",
-          "staging": "De perto: um dos ratos fecha os olhos; o disco gira e ele tem de andar.",
+          "staging": "De perto: um dos ratos fecha os olhos; o disco gira, a borda leva os dois na direção da água, e eles andam para ficar em cima.",
           "scale": "close",
           "palette": "laboratorio",
           "entry": "camera"
         },
         {
           "cue": "outro",
-          "staging": "O outro rato, no mesmo disco, cochila enquanto o primeiro está de olhos abertos; quando o disco gira, os dois andam.",
+          "staging": "O outro rato ganha a etiqueta \"comparação\": no mesmo disco, ele cochila enquanto o primeiro está de olhos abertos.",
           "scale": "medium",
           "palette": "laboratorio",
           "entry": "camera"
@@ -700,8 +671,8 @@
       ]
     },
     {
-      "id": "rats-control",
-      "narration": "Os ratos que podiam dormir continuaram saudáveis. Os dez que não podiam morreram, ou chegaram à beira da morte, entre onze e trinta e dois dias depois.",
+      "id": "rats-result",
+      "narration": "Os ratos que podiam dormir continuaram saudáveis. Os dez impedidos de dormir morreram, ou chegaram à beira da morte. O primeiro, em onze dias, e o último, em pouco mais de um mês.",
       "shots": [
         {
           "staging": "Os ratos de comparação, de perto, inteiros e bem. Selo da fonte no canto: \"Everson et al., 1989\".",
@@ -711,7 +682,14 @@
         },
         {
           "cue": "dez",
-          "staging": "Um calendário se preenche sobre os dez ratos impedidos de dormir; entre o dia 11 e o dia 32 os ratos viram silhuetas, um a um.",
+          "staging": "Os dez ratos impedidos de dormir, em fila, sob um calendário que começa a se preencher. Selo da fonte no canto: \"Everson et al., 1989\".",
+          "scale": "medium",
+          "palette": "laboratorio",
+          "entry": "camera"
+        },
+        {
+          "cue": "primeiro",
+          "staging": "No calendário, o dia 11 e o dia 32 ganham marca; entre um e outro, os ratos viram silhuetas, um a um.",
           "scale": "medium",
           "palette": "laboratorio",
           "entry": "camera"
@@ -723,17 +701,17 @@
     },
     {
       "id": "unknown-cause",
-      "narration": "E quando a equipe de Réctchafen procurou no corpo dos ratos a causa da morte, não achou nenhuma. Até hoje se discute quanto disso foi a falta de sono e quanto foi o estresse do próprio experimento.",
+      "narration": "Só que, quando a equipe procurou no corpo deles a causa da morte, ficou sem resposta. Até hoje se discute quanto disso foi a falta de sono e quanto foi o estresse de ser acordado à força.",
       "shots": [
         {
-          "staging": "Uma prancheta de exame com todos os itens em branco e uma interrogação no fim. Rechtschaffen coça a cabeça. Selo da fonte no canto: \"Everson et al., 1989\".",
+          "staging": "Uma prancheta de exame com vários itens preenchidos e a linha \"causa da morte\" em branco, com uma interrogação. Rechtschaffen coça a cabeça. Selo da fonte no canto: \"Everson et al., 1989\".",
           "scale": "close",
           "palette": "laboratorio",
           "entry": "camera"
         },
         {
           "cue": "discute",
-          "staging": "Uma balança com um rato em cada prato: num, a etiqueta \"sem sono\"; no outro, \"estresse\". Ela oscila e não se decide.",
+          "staging": "Uma balança com um rato em cada prato: num, a etiqueta \"sem sono\"; no outro, \"estresse\". Ela oscila e não se decide. Selo da fonte no canto: \"Cirelli e Tononi, 2008\".",
           "scale": "medium",
           "palette": "laboratorio",
           "entry": "cut"
@@ -746,24 +724,24 @@
     },
     {
       "id": "awake-record",
-      "narration": "Com gente, ninguém levou isso até o fim. Em dezembro de mil novecentos e sessenta e três, Rêndi Gárdner tinha dezessete anos. Ele decidiu, com dois amigos, bater o recorde de tempo sem dormir, e no cara ou coroa a cobaia ficou sendo ele.",
+      "narration": "Com gente, um dos casos mais bem documentados de tempo sem dormir é o de Rêndi Gárdner. Em dezembro de mil novecentos e sessenta e três, ele tinha dezessete anos e decidiu, com dois amigos, bater o recorde de tempo sem dormir. No cara ou coroa, a cobaia ficou sendo ele.",
       "shots": [
         {
-          "staging": "Uma pessoa no lugar do rato sobre o disco, com um grande X por cima.",
+          "staging": "O disco dos ratos, vazio, encolhe para o canto; no lugar dele entra um rapaz de pé, com a etiqueta \"Randy Gardner\". Selo da fonte no canto: \"NPR, 2024\".",
           "scale": "medium",
           "palette": "ideia",
           "entry": "cut"
         },
         {
-          "cue": "Rêndi",
-          "staging": "Três rapazes num quarto, com um calendário de dezembro de 1963 na parede; o do meio leva a etiqueta \"Randy Gardner, 17 anos\". Selo da fonte no canto: \"NPR, 2024\".",
+          "cue": "dezembro",
+          "staging": "Três rapazes num quarto, com um calendário de dezembro de 1963 na parede; o do meio leva a etiqueta \"17 anos\".",
           "scale": "medium",
           "palette": "ideia",
           "entry": "cut"
         },
         {
           "cue": "bater",
-          "staging": "Um cartaz pregado na parede, \"recorde: 260 h\", e os três olhando para ele.",
+          "staging": "De perto, um cartaz pregado na parede, \"recorde: 260 h\", e os três olhando para ele.",
           "scale": "close",
           "palette": "ideia",
           "entry": "camera"
@@ -771,7 +749,7 @@
         {
           "cue": "cara",
           "staging": "Uma moeda gira no ar e cai. Os dois amigos apontam para Gardner, que arregala os olhos.",
-          "scale": "close",
+          "scale": "medium",
           "palette": "ideia",
           "entry": "camera"
         }
@@ -782,27 +760,20 @@
     },
     {
       "id": "gardner-hours",
-      "narration": "Ele ficou duzentas e sessenta e quatro horas acordado, o que dá onze dias. São onze daquelas manhãs depois de uma noite em claro, uma atrás da outra. Um pesquisador do sono, Uíliam Dement, acompanhou de perto, e poucos casos foram tão bem documentados.",
+      "narration": "Gárdner ficou duzentas e sessenta e quatro horas acordado, quatro a mais que o recorde. São onze dias, ou onze daquelas manhãs seguintes a uma noite em claro, uma atrás da outra.",
       "shots": [
         {
-          "staging": "Um contador de horas sobe até \"264 h\" ao lado dele, e o calendário risca onze dias.",
+          "staging": "De perto, um contador de horas sobe ao lado dele, passa do \"260 h\" do cartaz e para em \"264 h\"; o calendário vira de dezembro de 1963 para janeiro de 1964. Selo da fonte no canto: \"NPR, 2024\".",
           "scale": "close",
           "palette": "ideia",
           "entry": "camera"
         },
         {
-          "cue": "manhãs",
+          "cue": "onze",
           "staging": "A mesa do café da noite em claro, repetida onze vezes em fila; em cada uma ele está mais caído sobre a xícara.",
           "scale": "wide",
           "palette": "ideia",
           "entry": "transform"
-        },
-        {
-          "cue": "pesquisador",
-          "staging": "Ao lado do rapaz, um pesquisador de jaleco com a prancheta, e uma pilha de folhas de anotação que cresce. Etiqueta: \"William Dement\".",
-          "scale": "medium",
-          "palette": "ideia",
-          "entry": "camera"
         }
       ],
       "sources": [
@@ -810,26 +781,40 @@
       ]
     },
     {
-      "id": "record-closed",
-      "narration": "Gárdner teve náusea, a memória começou a falhar, e ele ficou irritado. Quando enfim se deitou, dormiu catorze horas seguidas, bem mais que as suas oito. É a mesma cobrança que apareceu no bicho da savana e na água-viva.",
+      "id": "gardner-sleeps",
+      "narration": "Acompanhado por um pesquisador do sono, Gárdner teve náusea, a memória começou a falhar, e ele ficou irritado. Quando enfim se deitou, dormiu catorze horas seguidas, bem mais que as suas oito. É a cobrança de novo, aquela regra de que quem perde sono compensa depois, agora em gente. Só que a conta ficou longe de ser paga hora por hora, catorze horas por onze noites. O sono perdido também se recupera como sono mais fundo.",
       "shots": [
         {
-          "staging": "Três balões acendem sobre o rapaz, um por item da fala: enjoo, um branco, raiva. Selo da fonte no canto: \"NPR, 2024\".",
-          "scale": "close",
+          "staging": "Ao lado do rapaz, um pesquisador de jaleco observa, com a prancheta, e leva a etiqueta \"William Dement\". Três balões acendem sobre o rapaz, um por item da fala: enjoo, um branco, raiva. Selo da fonte no canto: \"NPR, 2024\".",
+          "scale": "medium",
           "palette": "ideia",
           "entry": "camera"
         },
         {
           "cue": "Quando",
-          "staging": "Ele desaba na cama, com \"ZZZ\", e o relógio dá a volta: \"14 h\". Na régua, a barra dele passa bem da barra \"8 h\" da pessoa.",
+          "staging": "Ele desaba na cama, com \"ZZZ\", e o relógio dá a volta: \"14 h\". Na régua, a barra dele passa bem da barra \"8 h\" da pessoa. Selo da fonte no canto: \"NPR, 2024\".",
           "scale": "medium",
           "palette": "ideia",
           "entry": "camera"
         },
         {
-          "cue": "mesma",
-          "staging": "A conta carimbada \"cobrado\" aparece ao lado da cama dele; atrás, pequenos, o bicho da savana e a água-viva dormem com a mesma conta.",
+          "cue": "cobrança",
+          "staging": "A conta sai do bolso marcado no canto e se abre ao lado da cama dele, com o carimbo \"cobrado\".",
           "scale": "medium",
+          "palette": "ideia",
+          "entry": "camera"
+        },
+        {
+          "cue": "Só",
+          "staging": "De perto, a conta: de um lado, onze noites riscadas; do outro, só \"14 h\".",
+          "scale": "close",
+          "palette": "ideia",
+          "entry": "camera"
+        },
+        {
+          "cue": "perdido",
+          "staging": "Na conta, sob as \"14 h\", acende uma seta para baixo com a etiqueta \"mais fundo\". Selo da fonte no canto: \"Cirelli e Tononi, 2008\".",
+          "scale": "close",
           "palette": "ideia",
           "entry": "camera"
         }
@@ -841,71 +826,42 @@
       ]
     },
     {
-      "id": "record-broken",
-      "narration": "O recorde de Gárdner durou duas semanas. Outros foram mais longe, até quase dezenove dias. Depois disso, o livro dos recordes parou de acompanhar esse tipo de tentativa, por considerar perigoso demais.",
-      "shots": [
-        {
-          "staging": "O calendário de 1964 risca mais catorze dias, e o troféu sai da mão do rapaz, que dorme. Selo da fonte no canto: \"Guinness World Records, 2023\".",
-          "scale": "medium",
-          "palette": "ideia",
-          "entry": "cut"
-        },
-        {
-          "cue": "Outros",
-          "staging": "A régua de dias: a barra de Gardner, \"11 dias\", e por cima dela uma barra maior, \"quase 19 dias\", com a etiqueta \"1986\".",
-          "scale": "wide",
-          "palette": "ideia",
-          "entry": "camera"
-        },
-        {
-          "cue": "parou",
-          "staging": "O livro dos recordes no centro, grande, se fecha sozinho, lacrado com uma fita de \"perigoso\".",
-          "scale": "medium",
-          "palette": "ideia",
-          "entry": "cut"
-        }
-      ],
-      "sources": [
-        22
-      ]
-    },
-    {
       "id": "so-far",
-      "narration": "Então os três jeitos de escapar falharam. Dormindo menos, a elefanta parou em duas horas. Sem cérebro, a água-viva dorme do mesmo jeito. Dos bichos mantidos acordados à força, os ratos não aguentaram, e ninguém achou a causa. E com gente, ninguém levou o teste até o fim.",
+      "narration": "Os três jeitos de escapar falharam. Dormindo menos, a elefanta parou em duas horas. Sem cérebro, a água-viva dorme mesmo assim. E mantidos acordados à força, os ratos morreram ou quase, e Gárdner foi cobrado com catorze horas de sono. Para a pergunta do começo, a resposta é que nenhum animal estudado até hoje conseguiu parar de dormir.",
       "shots": [
         {
-          "staging": "No alto, a fila dos cinco ícones: o despertador \"3\" ganha um X. Embaixo entram três molduras vazias, com as pílulas \"1\", \"2\" e \"3\".",
+          "staging": "No alto, a fila dos cinco ícones: o despertador \"3\" ganha um X.",
           "scale": "wide",
           "palette": "ideia",
           "entry": "cut"
         },
         {
           "cue": "Dormindo",
-          "staging": "A moldura \"1\" se enche: a elefanta e a barra \"2 h\".",
+          "staging": "Entra a moldura \"1\", cheia: a elefanta e a barra \"2 h\".",
           "scale": "medium",
           "palette": "ideia",
           "entry": "camera"
         },
         {
           "cue": "Sem",
-          "staging": "A moldura \"2\" se enche: a água-viva dormindo no fundo.",
+          "staging": "Entra a moldura \"2\", de perto: a água-viva dormindo no fundo.",
+          "scale": "close",
+          "palette": "ideia",
+          "entry": "camera"
+        },
+        {
+          "cue": "mantidos",
+          "staging": "Entra a moldura \"3\": os discos dos ratos, em silhueta, e o rapaz na cama com o relógio em \"14 h\".",
           "scale": "medium",
           "palette": "ideia",
           "entry": "camera"
         },
         {
-          "cue": "Dos",
-          "staging": "A moldura \"3\" se enche: os discos dos ratos, em silhueta. Abaixo das três, o pedestal \"acordado 24 h\", vazio.",
+          "cue": "pergunta",
+          "staging": "Abaixo das três molduras, o pedestal \"acordado 24 h\", vazio; a lupa do gancho pousa ao lado dele. Selo da fonte no canto: \"Cirelli e Tononi, 2008\".",
           "scale": "wide",
           "palette": "ideia",
           "entry": "camera"
-        },
-        {
-          "cue": "gente",
-          "staging": "De perto, ao lado das molduras: o rapaz dormindo, com o calendário riscado até o dia onze.",
-          "scale": "close",
-          "palette": "ideia",
-          "entry": "cut"
         }
       ],
       "sources": [
@@ -918,10 +874,10 @@
     },
     {
       "id": "but-what",
-      "narration": "Falta a última parte, o que o sono faz. Se ninguém consegue parar, tudo indica que ele faz alguma coisa que o corpo não consegue dispensar. A ciência tem mais de uma resposta parcial, e aqui vão duas.",
+      "narration": "Falta a última parte, o que o sono faz. Se nenhum animal consegue parar, tudo indica que ele faz alguma coisa de que o corpo precisa. A resposta completa ainda está em aberto, mas uma parte dela é estudada há mais de um século, e é a memória.",
       "shots": [
         {
-          "staging": "Em fila dos cinco ícones, os três do meio estão riscados, e a porta da loja, o último, acende.",
+          "staging": "Na fila dos cinco ícones, os três do meio estão riscados, e a porta da loja, o último, acende.",
           "scale": "medium",
           "palette": "ideia",
           "entry": "cut"
@@ -934,36 +890,31 @@
           "entry": "transform"
         },
         {
-          "cue": "ciência",
-          "staging": "Uma interrogação na porta. O olho da pessoa espia pela fresta. Selo da fonte no canto: \"Frank e Heller, 2019\".",
+          "cue": "resposta",
+          "staging": "De perto, uma interrogação na porta; sobre ela acende um medalhão com uma caixa de estoque. Selo da fonte no canto: \"Rasch e Born, 2013\".",
           "scale": "close",
           "palette": "loja-fechada",
           "entry": "camera"
         }
       ],
       "sources": [
-        2
+        2,
+        14,
+        20
       ]
     },
     {
       "id": "memory-test",
-      "narration": "A primeira, e a mais sólida das duas, é a da memória. Em mil novecentos e vinte e quatro, uma dupla de pesquisadores pediu a duas pessoas que decorassem listas de sílabas sem sentido. Elas fizeram isso todos os dias, por quase dois meses.",
+      "narration": "Um experimento clássico é de mil novecentos e vinte e quatro. Duas pessoas decoravam listas de sílabas inventadas, todos os dias, por quase dois meses.",
       "shots": [
         {
-          "staging": "Um medalhão com uma caixa de estoque acende sobre a porta. Selo da fonte no canto: \"Rasch e Born, 2013\".",
-          "scale": "close",
-          "palette": "loja-fechada",
-          "entry": "camera"
-        },
-        {
-          "cue": "vinte",
           "staging": "Um calendário de 1924 na parede. Dois pesquisadores de jaleco entregam uma lista a cada uma de duas pessoas sentadas a uma mesa. Selo da fonte no canto: \"Jenkins e Dallenbach, 1924, em Rasch e Born, 2013\".",
           "scale": "medium",
           "palette": "laboratorio",
           "entry": "cut"
         },
         {
-          "cue": "sílabas",
+          "cue": "listas",
           "staging": "De perto: a lista de sílabas soltas na mão de uma delas; atrás, o calendário folheia quase dois meses.",
           "scale": "close",
           "palette": "laboratorio",
@@ -976,18 +927,25 @@
     },
     {
       "id": "memory-result",
-      "narration": "Às vezes elas dormiam logo depois de decorar, e às vezes passavam as mesmas horas acordadas. Quando dormiam, esqueciam menos.",
+      "narration": "Às vezes elas dormiam logo depois de decorar, e às vezes passavam as mesmas horas acordadas. Quando dormiam, esqueciam menos. Eram só duas pessoas, mas o resultado se repetiu em um século de pesquisa.",
       "shots": [
         {
-          "staging": "Tela dividida, que acende um lado por oração: primeiro uma das pessoas dormindo, com a lista na mesa de cabeceira; depois a mesma pessoa acordada, com o relógio marcando as mesmas horas.",
+          "staging": "Tela dividida, que acende um lado por oração: primeiro uma das pessoas dormindo, com a lista na mesa de cabeceira; depois a mesma pessoa acordada, com o relógio marcando as mesmas horas. Selo da fonte no canto: \"Jenkins e Dallenbach, 1924, em Rasch e Born, 2013\".",
           "scale": "medium",
           "palette": "ideia",
           "entry": "cut"
         },
         {
           "cue": "Quando",
-          "staging": "As duas listas lado a lado, na hora do teste: a de quem dormiu com mais sílabas ainda acesas, a de quem ficou acordado com mais sílabas apagadas.",
+          "staging": "As duas listas lado a lado, na hora do teste, sob a mesma etiqueta, \"de 1 a 8 h depois\": a de quem dormiu com mais sílabas ainda acesas, a de quem ficou acordado com mais sílabas apagadas. As duas pessoas, pequenas, levam a etiqueta \"só duas\".",
           "scale": "close",
+          "palette": "ideia",
+          "entry": "camera"
+        },
+        {
+          "cue": "resultado",
+          "staging": "Atrás das duas pessoas, uma estante de estudos cresce até a etiqueta \"mais de 100 anos de pesquisa\". Selo da fonte no canto: \"Rasch e Born, 2013\".",
+          "scale": "wide",
           "palette": "ideia",
           "entry": "camera"
         }
@@ -998,7 +956,7 @@
     },
     {
       "id": "stockroom",
-      "narration": "Para entender por quê, dá para imaginar o seu cérebro como uma loja que passa o dia aberta, recebendo mercadoria. Enquanto ela está aberta, quase não dá tempo de guardar nada, porque sempre chega mais um cliente. E as caixas vão ficando empilhadas na entrada.",
+      "narration": "Dá para imaginar o seu cérebro como uma loja que passa o dia aberta, recebendo mercadoria. Enquanto ela está aberta, sobra pouco tempo para guardar as caixas, porque sempre chega mais um cliente.",
       "shots": [
         {
           "staging": "A lista acesa sobe até a cabeça de quem dormiu, de perfil, e o cérebro aparece dentro dela.",
@@ -1015,15 +973,8 @@
         },
         {
           "cue": "Enquanto",
-          "staging": "Dentro da loja, de dia: a lojista atende um freguês atrás do outro, e a fila na porta não acaba.",
+          "staging": "Dentro da loja, de dia: a lojista atende um freguês atrás do outro, e as caixas do dia se empilham na entrada, cada uma com a etiqueta de uma lembrança: um rosto, um caminho.",
           "scale": "medium",
-          "palette": "loja-aberta",
-          "entry": "camera"
-        },
-        {
-          "cue": "caixas",
-          "staging": "As caixas do dia empilhadas na entrada da loja, atrapalhando a passagem, cada uma com a etiqueta de uma lembrança: um rosto, um caminho.",
-          "scale": "close",
           "palette": "loja-aberta",
           "entry": "camera"
         }
@@ -1034,7 +985,7 @@
     },
     {
       "id": "stockroom-night",
-      "narration": "É depois de baixar a porta que dá para levar tudo, com calma, para o depósito dos fundos. Ao que tudo indica, o cérebro faz isso durante o sono com o que você viveu no dia. Ele repassa as memórias recentes e as leva de um lugar provisório para um de longo prazo.",
+      "narration": "É depois de baixar a porta que dá para levar tudo para o depósito dos fundos. Ao que tudo indica, o cérebro faz isso durante o sono. Ele repassa as memórias recentes e leva cada uma de um lugar provisório para um de longo prazo.",
       "shots": [
         {
           "staging": "A porta de enrolar baixa. A lojista carrega as caixas da entrada para o depósito dos fundos.",
@@ -1063,7 +1014,7 @@
     },
     {
       "id": "stockroom-solid",
-      "narration": "A loja é só uma comparação, e como o cérebro faz isso ainda se estuda. O que se sabe há mais de cem anos é que dormir ajuda a guardar o que você aprendeu.",
+      "narration": "A loja é só uma comparação, e como o cérebro faz isso ainda se estuda. O que já se sabe é que dormir ajuda a guardar o que você aprendeu.",
       "shots": [
         {
           "staging": "A loja de porta baixada, de longe, com uma lupa sobre ela: o que acontece lá dentro ainda está sendo olhado.",
@@ -1073,7 +1024,7 @@
         },
         {
           "cue": "sabe",
-          "staging": "A pessoa, da cintura para cima, acorda e reconhece o rosto da etiqueta. Ao lado, o medalhão do estoque ganha um selo: \"mais de 100 anos de pesquisa\".",
+          "staging": "A pessoa, da cintura para cima, acorda e reconhece o rosto da etiqueta de uma das caixas. Selo da fonte no canto: \"Rasch e Born, 2013\".",
           "scale": "medium",
           "palette": "ideia",
           "entry": "cut"
@@ -1084,190 +1035,8 @@
       ]
     },
     {
-      "id": "cleaning",
-      "narration": "A segunda resposta é a faxina. Um estudo de dois mil e trêze, com camundongos, mediu o espaço entre as células do cérebro. Durante o sono, esse espaço ficava sessenta por cento maior.",
-      "shots": [
-        {
-          "staging": "Um medalhão com uma vassoura acende ao lado do da caixa. A lojista pega balde e vassoura.",
-          "scale": "medium",
-          "palette": "loja-fechada",
-          "entry": "cut"
-        },
-        {
-          "cue": "estudo",
-          "staging": "Um camundongo dorme enrolado no centro, grande, com \"zzz\". Selos: \"Xie et al., 2013\" e \"em camundongos\".",
-          "scale": "medium",
-          "palette": "laboratorio",
-          "entry": "cut"
-        },
-        {
-          "cue": "Durante",
-          "staging": "Por dentro da cabeça dele: as células, de olhos, se afastam umas das outras. Etiqueta: \"60% maior\".",
-          "scale": "medium",
-          "palette": "por-dentro",
-          "entry": "transform"
-        }
-      ],
-      "sources": [
-        16
-      ]
-    },
-    {
-      "id": "cleaning-flow",
-      "narration": "É por esse espaço que o cérebro se livra do que as células descartam. Com o animal dormindo, uma proteína que elas descartam saía do cérebro duas vezes mais rápido do que com ele acordado. Seria a loja varrendo o chão depois de fechar.",
-      "shots": [
-        {
-          "staging": "Entre as células afastadas, um fluido corre e carrega os grãos que elas soltam. Selo da fonte no canto: \"Xie et al., 2013\".",
-          "scale": "medium",
-          "palette": "por-dentro",
-          "entry": "camera"
-        },
-        {
-          "cue": "proteína",
-          "staging": "De perto: um dos grãos ganha a etiqueta \"beta-amiloide\" e segue na corrente.",
-          "scale": "close",
-          "palette": "por-dentro",
-          "entry": "camera"
-        },
-        {
-          "cue": "duas",
-          "staging": "Duas correntes lado a lado, \"acordado\" e \"dormindo\", com as células de olhos abertos numa e fechados na outra; a segunda leva os grãos no dobro da velocidade.",
-          "scale": "medium",
-          "palette": "por-dentro",
-          "entry": "camera"
-        },
-        {
-          "cue": "Seria",
-          "staging": "A lojista varre o chão da loja de porta baixada; os mesmos grãos vão para a pá.",
-          "scale": "medium",
-          "palette": "loja-fechada",
-          "entry": "transform"
-        }
-      ],
-      "sources": [
-        16
-      ]
-    },
-    {
-      "id": "cleaning-dispute",
-      "narration": "Só que, em dois mil e vinte e quatro, outro grupo fez a medida de outro jeito, também em camundongos, com um corante no lugar da proteína. E encontrou o contrário. Durante o sono, o corante saía uns trinta por cento mais devagar.",
-      "shots": [
-        {
-          "staging": "Outro camundongo dorme no centro, com um calendário de 2024 na parede. Selos: \"Miao et al., 2024\" e \"em camundongos\".",
-          "scale": "medium",
-          "palette": "laboratorio",
-          "entry": "cut"
-        },
-        {
-          "cue": "corante",
-          "staging": "Por dentro da cabeça dele: no lugar do grão \"beta-amiloide\", uma gota de corante verde entra no canal entre as células.",
-          "scale": "close",
-          "palette": "por-dentro",
-          "entry": "transform"
-        },
-        {
-          "cue": "contrário",
-          "staging": "As duas versões lado a lado, \"2013\" e \"2024\", com uma interrogação entre elas: na de 2013 os grãos correm mais rápido no sono; na de 2024, o corante anda mais devagar. Etiqueta, na palavra \"trinta\": \"30% mais lenta\".",
-          "scale": "medium",
-          "palette": "por-dentro",
-          "entry": "cut"
-        }
-      ],
-      "sources": [
-        17,
-        18
-      ]
-    },
-    {
-      "id": "cleaning-open",
-      "narration": "Outros pesquisadores responderam que um corante pequeno não se comporta como uma proteína. Por enquanto, ninguém sabe dizer se a loja varre mesmo o chão de noite.",
-      "shots": [
-        {
-          "staging": "Dois pesquisadores puxam a mesma vassoura, cada um para um lado: um segura um frasco de corante, o outro, um grão de proteína bem maior que a gota.",
-          "scale": "close",
-          "palette": "ideia",
-          "entry": "cut"
-        },
-        {
-          "cue": "enquanto",
-          "staging": "A lojista parada no meio da loja, de vassoura na mão, olha para o chão sem saber se varre. Selo da fonte no canto: \"Alzforum, 2024\".",
-          "scale": "medium",
-          "palette": "loja-fechada",
-          "entry": "cut"
-        }
-      ],
-      "sources": [
-        17,
-        18
-      ]
-    },
-    {
-      "id": "brainless-question",
-      "narration": "Só que as duas respostas falam do cérebro. E a água-viva não tem cérebro, tem só neurônios espalhados pelo corpo, e dorme mesmo assim. Do jeito que estão, as duas respostas não servem para ela.",
-      "shots": [
-        {
-          "staging": "Os dois medalhões, o da caixa e o da vassoura, pousam sobre o contorno de um cérebro e cabem nele.",
-          "scale": "medium",
-          "palette": "ideia",
-          "entry": "camera"
-        },
-        {
-          "cue": "tem",
-          "staging": "A água-viva dorme no fundo da lagoa, de noite. Por dentro do sino, o contorno tracejado do cérebro que não está lá e, em volta, a rede de neurônios piscando devagar.",
-          "scale": "medium",
-          "palette": "lagoa-noite",
-          "entry": "cut"
-        },
-        {
-          "cue": "jeito",
-          "staging": "Os dois medalhões descem até ela e não acham onde pousar no contorno vazio; o peixe olha de um para o outro. Selo da fonte no canto: \"Nath et al., 2017\".",
-          "scale": "close",
-          "palette": "lagoa-noite",
-          "entry": "camera"
-        }
-      ],
-      "sources": [
-        2,
-        7,
-        14,
-        16
-      ]
-    },
-    {
-      "id": "many-reasons",
-      "narration": "A resposta da memória é a mais sólida das duas, e a da faxina está em disputa. E pode ser que cada uma seja só uma parte do que o sono faz.",
-      "shots": [
-        {
-          "staging": "O medalhão da caixa, aceso e firme, de volta sobre o fundo liso.",
-          "scale": "close",
-          "palette": "ideia",
-          "entry": "cut"
-        },
-        {
-          "cue": "faxina",
-          "staging": "Ao lado dele, o medalhão da vassoura, com uma interrogação presa a ele.",
-          "scale": "medium",
-          "palette": "ideia",
-          "entry": "camera"
-        },
-        {
-          "cue": "cada",
-          "staging": "Os dois medalhões viram peças de um mesmo quebra-cabeça redondo, com peças faltando; no centro, a lua da placa da loja. Selo da fonte no canto: \"Frank e Heller, 2019\".",
-          "scale": "wide",
-          "palette": "ideia",
-          "entry": "camera"
-        }
-      ],
-      "sources": [
-        2,
-        14,
-        16,
-        17
-      ]
-    },
-    {
       "id": "nobody-escaped",
-      "narration": "A procura pelo animal que não dorme termina sem ele. O sono existe provavelmente há mais de quinhentos milhões de anos. Em todo esse tempo, não se conhece nenhum animal que tenha conseguido parar de dormir. Entre os mamíferos, a elefanta foi a que chegou mais perto, e dorme duas horas por dia.",
+      "narration": "A procura pelo animal que parou de dormir termina sem ele. O sono existe, provavelmente, há mais de quinhentos milhões de anos, e nenhum animal estudado até hoje conseguiu parar de dormir.",
       "shots": [
         {
           "staging": "O globo sob a lupa, como no gancho, e ao lado o pedestal \"acordado 24 h\", ainda vazio.",
@@ -1276,36 +1045,21 @@
           "entry": "cut"
         },
         {
-          "cue": "existe",
-          "staging": "A linha do tempo de meio bilhão de anos, inteira, em índigo. Selo da fonte no canto: \"Pappas, 2023\".",
+          "cue": "sono",
+          "staging": "A linha do tempo de meio bilhão de anos, inteira, em índigo, com o pedestal vazio no fim dela. Selos: \"Pappas, 2023\" e \"Cirelli e Tononi, 2008\".",
           "scale": "wide",
           "palette": "abissal",
-          "entry": "cut"
-        },
-        {
-          "cue": "todo",
-          "staging": "No fim da linha do tempo, o pedestal \"acordado 24 h\", vazio.",
-          "scale": "medium",
-          "palette": "abissal",
-          "entry": "camera"
-        },
-        {
-          "cue": "elefanta",
-          "staging": "A elefanta dormindo em pé na savana, de noite, com a barra \"2 h\".",
-          "scale": "wide",
-          "palette": "savana-noite",
           "entry": "cut"
         }
       ],
       "sources": [
-        4,
         20,
         21
       ]
     },
     {
       "id": "one-of-them",
-      "narration": "Nós somos um desses animais. Toda noite, cada um de nós larga o que está fazendo, se deita e passa horas sem saber de nada, como o bicho pequeno da savana.",
+      "narration": "Nós somos um desses animais. Toda noite, cada um de nós larga o que está fazendo, se deita e faz o que a elefanta e a água-viva fazem.",
       "shots": [
         {
           "staging": "A pessoa do primeiro plano no centro, grande; a elefanta de um lado e a água-viva do outro, na mesma linha.",
@@ -1315,27 +1069,20 @@
         },
         {
           "cue": "deita",
-          "staging": "Ela se deita e dorme, com \"ZZZ\", e a rua passa pela janela sem ela.",
-          "scale": "medium",
+          "staging": "Em quadro aberto, ela se deita e dorme, com \"ZZZ\"; ao lado, a elefanta dorme em pé e a água-viva pulsa devagar.",
+          "scale": "wide",
           "palette": "ideia",
           "entry": "camera"
-        },
-        {
-          "cue": "como",
-          "staging": "O bicho pequeno da savana, enroscado sob a árvore, dormindo.",
-          "scale": "medium",
-          "palette": "savana-noite",
-          "entry": "cut"
         }
       ],
       "sources": [
-        19,
-        20
+        4,
+        7
       ]
     },
     {
       "id": "still-unknown",
-      "narration": "E ainda não sabemos dizer tudo o que o sono faz. As duas respostas que vimos falam do cérebro, que a água-viva não tem.",
+      "narration": "Ainda falta saber tudo o que o sono faz, porque a resposta da memória fala do cérebro, e a água-viva dorme sem ter um.",
       "shots": [
         {
           "staging": "A loja por fora, de porta baixada e luz acesa lá dentro, ainda com a interrogação.",
@@ -1344,23 +1091,21 @@
           "entry": "cut"
         },
         {
-          "cue": "duas",
-          "staging": "Os dois medalhões, o da caixa e o da vassoura, lado a lado, sobre o contorno de um cérebro; abaixo deles, a água-viva pulsa devagar, com o contorno tracejado do cérebro que não está lá.",
-          "scale": "medium",
-          "palette": "loja-fechada",
-          "entry": "camera"
+          "cue": "resposta",
+          "staging": "De perto: o medalhão da caixa pousa sobre o contorno de um cérebro e cabe nele; abaixo, a água-viva pulsa devagar, com o contorno tracejado do cérebro que não está lá. Selo da fonte no canto: \"Nath et al., 2017\".",
+          "scale": "close",
+          "palette": "lagoa-noite",
+          "entry": "cut"
         }
       ],
       "sources": [
-        2,
         7,
-        14,
-        16
+        14
       ]
     },
     {
       "id": "what-it-is",
-      "narration": "Mas agora sabemos o que é esse terço da vida que passamos dormindo. É uma coisa que os animais fazem provavelmente desde antes de existir cérebro, e que o corpo cobra quando falta. E nós somos os que podem perguntar por quê, e continuar procurando.",
+      "narration": "Mas agora sabemos o que é esse terço da vida que passamos dormindo. É uma coisa que os animais fazem, provavelmente, desde antes de existir cérebro, e que o corpo cobra quando falta.",
       "shots": [
         {
           "staging": "A barra de uma vida inteira, do primeiro plano do vídeo; o terço escuro se acende em índigo.",
@@ -1370,23 +1115,9 @@
         },
         {
           "cue": "animais",
-          "staging": "A linha do tempo de meio bilhão de anos, com bichos dormindo ao longo dela.",
+          "staging": "A linha do tempo de meio bilhão de anos, com bichos dormindo ao longo dela; no fim da linha entra a conta com o carimbo \"cobrado\", a mesma do bicho da savana.",
           "scale": "wide",
           "palette": "abissal",
-          "entry": "camera"
-        },
-        {
-          "cue": "corpo",
-          "staging": "De perto, no fim da linha do tempo: a conta com o carimbo \"cobrado\", a mesma do bicho da savana.",
-          "scale": "close",
-          "palette": "abissal",
-          "entry": "camera"
-        },
-        {
-          "cue": "perguntar",
-          "staging": "A pesquisadora e a gaveta \"motivo\" do gancho, ainda aberta; ela continua procurando dentro.",
-          "scale": "medium",
-          "palette": "laboratorio",
           "entry": "cut"
         }
       ],
@@ -1398,23 +1129,30 @@
     },
     {
       "id": "tonight",
-      "narration": "Réctchafen dizia que, se o sono não fosse vital, seria o maior erro da evolução. Pelo que se viu até aqui, tudo indica que não é um erro. Hoje à noite, nós vamos dormir mais uma parte desse terço da vida. Que seja um bom sono.",
+      "narration": "Álan Réctchafen, o pesquisador do começo, dizia que o sono, se não servisse a uma função vital, seria o maior erro que a evolução cometeu. Um erro desses algum animal teria abandonado, e tudo indica que o sono está longe de ser um erro. Hoje à noite, nós vamos dormir mais uma parte desse terço da vida. Que seja um bom sono.",
       "shots": [
         {
-          "staging": "O quadro-negro do gancho: a árvore da vida com todos os ramos de olhos fechados e o carimbo \"erro?\". Selo no canto: \"Allan Rechtschaffen\".",
+          "staging": "O quadro-negro do gancho: a árvore da vida com todos os ramos de olhos fechados e o carimbo \"erro?\". Etiqueta: \"Allan Rechtschaffen\".",
           "scale": "wide",
           "palette": "ideia",
           "entry": "cut"
         },
         {
-          "cue": "Pelo",
-          "staging": "De perto, o carimbo \"erro?\" perde a cor no quadro; a interrogação continua, pequena, ao lado da árvore.",
+          "cue": "seria",
+          "staging": "De perto, o carimbo \"erro?\" sobre a árvore de olhos fechados.",
+          "scale": "close",
+          "palette": "ideia",
+          "entry": "camera"
+        },
+        {
+          "cue": "Um",
+          "staging": "O carimbo \"erro?\" perde a cor no quadro; a interrogação continua, pequena, ao lado da árvore.",
           "scale": "close",
           "palette": "ideia",
           "entry": "transform"
         },
         {
-          "cue": "noite",
+          "cue": "Hoje",
           "staging": "A pessoa dormindo, no centro, com a janela e a noite lá fora. A imagem fica no silêncio depois da fala.",
           "scale": "medium",
           "palette": "ideia",
