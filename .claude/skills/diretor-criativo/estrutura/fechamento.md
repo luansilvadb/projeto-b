@@ -1,8 +1,3 @@
----
-name: fechamento
-description: "Fechamento: a sensação com que quem assiste sai do vídeo, e os cinco movimentos que a constroem, da chegada da história à última frase que responde à abertura."
----
-
 ## PERGUNTA
 Como encerrar o vídeo de modo que quem assiste saia maior do que entrou, e querendo ver outro?
 
@@ -69,7 +64,6 @@ Quando a base de fatos não autoriza esperança, a virada é a clareza: nomear o
 - O pedido de curtida e inscrição mora em `chamada`, depois da última frase.
 - Um dado novo, no máximo: a medida que põe quem assiste ao lado do assunto.
 - O fechamento é texto corrido: a retomada dos blocos é feita pelos movimentos, e não por uma lista do que foi dito.
-- As frases das referências ficam com elas; o que se usa são os movimentos.
 
 ## EXEMPLO
 > Exemplo de forma, sem frases prontas. Tema: os átomos do corpo vieram de estrelas. Sensação: ser feito de algo imenso e antigo. A abertura disse "emprestado".

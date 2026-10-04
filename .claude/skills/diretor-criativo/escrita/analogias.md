@@ -1,8 +1,3 @@
----
-name: analogias
-description: Define como construir analogias e comparações de escala que sejam precisas, compreensíveis e desenháveis.
----
-
 ## PERGUNTA
 Como tornar escala e abstração compreensíveis e desenháveis?
 

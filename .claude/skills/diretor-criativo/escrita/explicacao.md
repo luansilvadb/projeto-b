@@ -1,8 +1,3 @@
----
-name: explicacao
-description: Define como fazer o texto explicar algo a quem assiste, em vez de relatar fatos sobre terceiros, com os padrões e as medidas dos vídeos de referência em português.
----
-
 ## PERGUNTA
 Como fazer o texto explicar para quem assiste, em vez de relatar fatos?
 
@@ -66,7 +61,6 @@ Como fazer o texto explicar para quem assiste, em vez de relatar fatos?
 - analogias: fornece a construção da metáfora; aqui ela pode virar o dispositivo do vídeo inteiro.
 
 ## LIMITES
-- Não copiar frases, exemplos ou metáforas dos vídeos de referência: o que se usa são os padrões.
 - Não inventar experiência do espectador que a base de fatos contradiz.
 - O mecanismo, a expectativa e a comparação que traduz um número são afirmações: precisam estar na base de fatos, ou sair de uma conta feita com números que estão nela. Se a base não sustenta o bloco de mecanismo, a pesquisa volta antes do roteiro.
 - Cortar bichos e fatos da pesquisa para ficar com poucos elementos é uma decisão do usuário.
@@ -74,4 +68,4 @@ Como fazer o texto explicar para quem assiste, em vez de relatar fatos?
 
 ## EXEMPLO
 > Relato: "Duas elefantas selvagens foram acompanhadas por mais de um mês. Elas dormiam, em média, duas horas por dia. É o menor tempo já medido em um mamífero."
-> Explicação (exemplo de forma; cada afirmação precisa estar na base de fatos antes de entrar num roteiro): "Um bicho dormindo não come, não foge e não vigia os filhotes. Então era de esperar que, em milhões de anos, algum deles tivesse aprendido a viver sem isso. Quem chegou mais perto foi a elefanta: ela precisa comer tanto que quase não sobra tempo, e mesmo assim fecha os olhos duas horas por dia, um quarto do que nós dormimos. Nem ela conseguiu zerar."
+> Explicação: "Um bicho dormindo não come, não foge e não vigia os filhotes. Então era de esperar que, em milhões de anos, algum deles tivesse aprendido a viver sem isso. Quem chegou mais perto foi a elefanta: ela precisa comer tanto que quase não sobra tempo, e mesmo assim fecha os olhos duas horas por dia, um quarto do que nós dormimos. Nem ela conseguiu zerar."

@@ -1,8 +1,3 @@
----
-name: roteiro
-description: "Procedimento da etapa de roteiro neste repositório: o formato de src/videos/<vídeo>/script.json, as regras do validador, os planos de cada cena e a primeira aprovação."
----
-
 # Roteiro de um vídeo
 
 Segunda etapa, depois de `pesquisa`. O roteiro é o arquivo `src/videos/<vídeo>/script.json`, a fonte de tudo que vem depois: a narração é gerada a partir dele, cada cena ganha um componente, a duração do vídeo sai da fala e cada plano diz o que aparece na tela. Termina na **primeira aprovação do usuário**, que cobre o texto e os planos juntos.
@@ -60,17 +55,12 @@ O número em algarismos, o símbolo e a sigla vão para a tela, descritos na enc
 
 Além das regras do validador:
 
-- Todo texto é escrito para o ouvinte de `conceito/ouvinte`: o mapa das partes dito até o começo do fundamento, a posição em cada virada de capítulo e cada retomada redita por inteiro.
-- Antes de qualquer frase, o desenho: a tensão do vídeo ("era de esperar X, e no entanto Y"), o molde (`estrutura/moldes`), o bloco de fundamento que dá ao espectador a expectativa, os poucos elementos e o veredito de cada bloco, conforme `escrita/explicacao`. O usuário aprova a estrutura e uma amostra de um minuto antes do roteiro inteiro. Reescrever frases de um roteiro com o desenho errado não o conserta.
-- Depois do desenho e antes das frases, a ficha do fio de `escrita/fio`: o refrão, as ideias novas com o orçamento de cada uma, os vereditos com os fatos que os ganham, os personagens e as promessas. Ela vai ao usuário junto com a estrutura. Roteiro com o desenho certo e sem fio passa no validador e soa como texto de IA.
-- Frases médias e encadeadas, pelas regras de `escrita/narracao`. Aqui elas pesam em dobro: o modelo de voz gera uma frase por vez, com pausa entre elas, e texto picotado em frases curtas sai monótono e mal-humorado. As faixas medidas são as que o validador imprime.
-- A temperatura da voz (contemplativa ou enérgica) é decisão do usuário na ficha de voz (`conceito/voz`); a narração segue a ficha.
-- O gancho segue `estrutura/gancho`: uma afirmação que quem assiste reconhece, o que há de estranho nela e a promessa do caminho. A pergunta, quando existe, fecha o gancho.
+- Antes de qualquer frase vêm o desenho (`escrita/explicacao`) e a ficha do fio (`escrita/fio`), na ordem de injeção do `SKILL.md`. O usuário aprova a estrutura, a ficha do fio e uma amostra de um minuto antes do roteiro inteiro.
+- As frases médias e encadeadas de `escrita/narracao` pesam em dobro aqui: o modelo de voz gera uma frase por vez, com pausa entre elas, e texto picotado em frases curtas sai monótono e mal-humorado.
 - A pontuação decide como a frase é falada; a tabela está na etapa `narracao` da skill `producao`. Uma citação se escreve com dois-pontos entre quem falou e o que foi dito.
 - A vírgula é uma pausa: o modelo de voz para em cada uma. Só ponha vírgula onde quem fala pararia. "E mesmo assim emagreciam", não "e, mesmo assim, emagreciam", que sai com duas pausas.
 - A grafia decide a pronúncia. Se o usuário ouvir uma palavra dita errado, escreva em `narration` como ela deve soar e deixe a grafia correta em `script.md`, na seção de grafias de pronúncia. O modelo lê "mal-humorado" ligando o "l" à vogal ("malumorado"); "mau-humorado" sai certo. O Whisper não acusa esse tipo de erro, só o ouvido.
 - Só afirme o que está em `research.md`. Se faltar um fato, volte à etapa `pesquisa` em vez de completar de memória.
-- Quando a ciência é incerta ou a frase é uma simplificação, diga isso na narração em vez de afirmar com certeza falsa.
 
 ## Cenas
 

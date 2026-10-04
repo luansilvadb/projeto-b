@@ -1,8 +1,3 @@
----
-name: voz
-description: Define os mecanismos de voz do estilo e como fixar a voz específica de cada projeto.
----
-
 ## PERGUNTA
 Como definir a voz do projeto a partir dos mecanismos do estilo?
 
@@ -43,7 +38,6 @@ Como definir a voz do projeto a partir dos mecanismos do estilo?
 - angulo: fornece a tese e a promessa que determinam o peso emocional adequado.
 
 ## LIMITES
-- Não imitar bordões, fechamentos típicos ou frases reconhecíveis de canais existentes; o alvo são os mecanismos, não o pastiche.
 - A técnica de frase pertence a `narracao`; o uso de humor, a `humor`.
 
 ## EXEMPLO

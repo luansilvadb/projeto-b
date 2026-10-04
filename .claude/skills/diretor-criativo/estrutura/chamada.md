@@ -1,8 +1,3 @@
----
-name: chamada
-description: "Chamada final: o pedido de curtida e inscrição depois do fechamento, com ponte na sensação que o vídeo deixou, um pedido, o motivo e o agradecimento."
----
-
 ## PERGUNTA
 Como pedir a curtida e a inscrição sem desfazer o fechamento?
 

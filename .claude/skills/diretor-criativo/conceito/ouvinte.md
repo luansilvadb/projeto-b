@@ -1,8 +1,3 @@
----
-name: ouvinte
-description: "Ouvinte com TDAH: para quem todo texto do vídeo é escrito, e o que isso exige do gancho, dos blocos, das retomadas, das listas e do fim: entrada direta, mapa, posição, redizer, ganho por bloco e um pedido só."
----
-
 ## PERGUNTA
 Para quem o texto do vídeo é escrito, e o que isso exige de cada trecho?
 
@@ -48,8 +43,7 @@ Para quem o texto do vídeo é escrito, e o que isso exige de cada trecho?
 - Curto não é a regra: a demora de `fio` e a frase média de `narracao` ficam. O que se corta é o que obriga a guardar, a esperar ou a adivinhar.
 - O texto nunca fala do TDAH de quem assiste, a não ser que o tema do vídeo seja esse.
 - A pergunta do gancho continua aberta até o vídeo respondê-la: entrada direta é dizer logo o assunto, e não a tese.
-- As frases e os exemplos da base ficam com ela; o que se usa são os cinco fatos.
 
 ## EXEMPLO
 > Pede para guardar: "Guarde esse nome. [...] E é aqui que aquela molécula volta à cena."
-> Rediz (exemplo de forma; cada afirmação precisa estar na base de fatos antes de entrar num roteiro): "Essa molécula tem nome, adenosina, e ela volta daqui a pouco. [...] Lembra da adenosina, a molécula que se acumula enquanto você fica acordado? É ela que o café bloqueia."
+> Rediz: "Essa molécula tem nome, adenosina, e ela volta daqui a pouco. [...] Lembra da adenosina, a molécula que se acumula enquanto você fica acordado? É ela que o café bloqueia."

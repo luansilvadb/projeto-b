@@ -1,8 +1,3 @@
----
-name: fio
-description: "Fio: o que faz o texto soar contado por alguém, e não montado frase a frase. Demora, veredito ganho, refrão, promessa plantada e cobrada, personagem com detalhe, caso corrente, conta em voz alta e saída concedida."
----
-
 ## PERGUNTA
 Como contar o vídeo de modo que cada trecho segure o seguinte, em vez de entregar uma fila de fatos bem-acabados?
 
@@ -78,11 +73,10 @@ O **fio** é o que o espectador segura do primeiro ao último minuto. Quatro mec
 
 ## LIMITES
 - O narrador do canal conta em off e não diz "eu" (decisão do usuário em 2026-10-04). As retomadas viram "lembra de...", "essa distinção volta", "vamos voltar a...".
-- Os mecanismos são o que se usa; frases, exemplos e refrões das referências ficam com elas.
 - Detalhe de personagem só entra se estiver na base de fatos. Detalhe inventado para dar cor é fabricação.
 - O caso corrente inventado não sustenta afirmação: o que ele ilustra precisa estar na base de fatos.
 - Nome próprio entra na fala de quem volta no vídeo ou é citado; quem aparece uma vez fica no selo da tela. Nome estrangeiro vai escrito como se pronuncia.
 
 ## EXEMPLO
 > Fila: "Com gente, ninguém nunca levou isso até o fim. Quem chegou mais longe foi um rapaz de dezessete anos. Ele ficou onze dias acordado. Então nem pense nisso."
-> Fio (exemplo de forma; cada afirmação precisa estar na base de fatos antes de entrar num roteiro): "Em mil novecentos e sessenta e quatro, Rêndi Gárdner tinha dezessete anos e ficou acordado sob a observação de um pesquisador do sono, Uíliam Dement. Gárdner passou duzentas e sessenta e quatro horas sem dormir, o que dá onze dias. Teve náusea, a memória falhou, e ele ficou irritado. Quando se deitou, dormiu catorze horas seguidas. Em mil novecentos e noventa e seis, o livro dos recordes parou de registrar esse tipo de tentativa, por achar perigoso demais. Onze dias é o mais longe que alguém foi sob observação."
+> Fio: "Em mil novecentos e sessenta e quatro, Rêndi Gárdner tinha dezessete anos e ficou acordado sob a observação de um pesquisador do sono, Uíliam Dement. Gárdner passou duzentas e sessenta e quatro horas sem dormir, o que dá onze dias. Teve náusea, a memória falhou, e ele ficou irritado. Quando se deitou, dormiu catorze horas seguidas. Em mil novecentos e noventa e seis, o livro dos recordes parou de registrar esse tipo de tentativa, por achar perigoso demais. Onze dias é o mais longe que alguém foi sob observação."

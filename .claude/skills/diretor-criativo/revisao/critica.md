@@ -1,8 +1,3 @@
----
-name: critica
-description: Define os critérios e o procedimento para julgar o rascunho completo e decidir o que reescrever.
----
-
 ## PERGUNTA
 Com que critérios julgar o rascunho e decidir o que reescrever?
 

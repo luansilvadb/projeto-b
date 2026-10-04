@@ -1,8 +1,3 @@
----
-name: checagem
-description: Define como verificar cada afirmação factual do roteiro e como tratar incerteza e simplificação.
----
-
 ## PERGUNTA
 Como verificar cada afirmação factual e tratar incerteza e simplificação?
 

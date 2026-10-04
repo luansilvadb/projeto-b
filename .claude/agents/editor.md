@@ -1,6 +1,6 @@
 ---
 name: editor
-description: "Editor de texto de um vídeo do canal: julga o roteiro completo pelas oito passadas da crítica de texto e devolve cada problema com cena, critério e classificação. Acionado pela skill diretor-criativo antes da primeira aprovação e depois de cada rodada de reescrita; não viu o texto ser escrito, e é essa a função dele."
+description: "Editor de texto de um vídeo do canal: julga o roteiro completo pelas oito passadas da crítica de texto e devolve cada problema com cena, critério e classificação. Acionado pela skill diretor-criativo antes da primeira aprovação e depois de cada rodada de reescrita."
 tools: Read, Grep, Glob, Bash
 ---
 

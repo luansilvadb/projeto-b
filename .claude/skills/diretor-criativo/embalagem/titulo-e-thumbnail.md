@@ -1,8 +1,3 @@
----
-name: titulo-e-thumbnail
-description: Define como derivar título e conceito de thumbnail da promessa do vídeo, sem prometer além do roteiro.
----
-
 ## PERGUNTA
 Como derivar título e conceito de thumbnail da promessa do vídeo?
 

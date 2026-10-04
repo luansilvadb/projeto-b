@@ -1,8 +1,3 @@
----
-name: gancho
-description: Define como escrever a abertura que cria a pergunta e faz a promessa do vídeo.
----
-
 ## PERGUNTA
 Como abrir o vídeo para criar a pergunta que segura o espectador nos primeiros 30 segundos?
 

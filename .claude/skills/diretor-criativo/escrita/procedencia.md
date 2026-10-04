@@ -1,8 +1,3 @@
----
-name: procedencia
-description: "Procedência: como dizer e mostrar de onde vem cada fato (âncora na fala, selo da fonte na tela) para o vídeo não parecer inventado."
----
-
 ## PERGUNTA
 Como mostrar de onde vem cada fato, na fala e na tela, para o vídeo não parecer inventado?
 
@@ -52,7 +47,6 @@ Como mostrar de onde vem cada fato, na fala e na tela, para o vídeo não parece
 - A aparência e a posição do selo pertencem à skill `diretor-de-arte`.
 
 ## EXEMPLO
-> Exemplo de forma; cada afirmação precisa estar na base de fatos antes de entrar num roteiro.
 > Sem procedência: "Só que existe uma água-viva que passa a vida pousada de cabeça para baixo. De noite ela pulsa mais devagar."
 > Com procedência: "Parece invenção, mas foi testado. Em dois mil e dezessete, um grupo de pesquisadores quis saber se uma água-viva dorme. De noite, tiraram o apoio de baixo dela, e ela ficou boiando uns segundos antes de reagir."
 > VISUAL: a água-viva no tanque, a plataforma sumindo de baixo dela. Selo no canto: "Nath et al., 2017".

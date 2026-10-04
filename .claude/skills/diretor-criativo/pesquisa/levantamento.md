@@ -1,8 +1,3 @@
----
-name: levantamento
-description: Define como pesquisar o tema, selecionar fontes e montar a base de fatos do roteiro.
----
-
 ## PERGUNTA
 Como pesquisar o tema e selecionar fontes confiáveis?
 

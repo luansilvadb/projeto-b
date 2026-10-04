@@ -1,8 +1,3 @@
----
-name: formato
-description: "Registro da direção criativa: o que `script.md` guarda, como cada bloco se liga às cenas de `script.json` e onde ficam a lista de fontes, as simplificações e as contas."
----
-
 ## PERGUNTA
 Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas do roteiro?
 

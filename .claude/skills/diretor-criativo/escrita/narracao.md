@@ -1,8 +1,3 @@
----
-name: narracao
-description: Define as regras de frase, ritmo e vocabulário de um texto escrito para ser ouvido uma única vez.
----
-
 ## PERGUNTA
 Como escrever um texto feito para ser ouvido?
 

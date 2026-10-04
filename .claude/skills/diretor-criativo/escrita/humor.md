@@ -1,8 +1,3 @@
----
-name: humor
-description: Define quando e como usar humor seco e alívio cômico sem comprometer a credibilidade do roteiro.
----
-
 ## PERGUNTA
 Quando e como usar humor seco e alívio cômico sem minar a credibilidade?
 

@@ -1,8 +1,3 @@
----
-name: moldes
-description: "Moldes de vídeo: qual dos cinco o tema pede, como quem assiste entra em cada um e a estrutura que cada um dá ao vídeo."
----
-
 ## PERGUNTA
 Que molde o tema pede, e que estrutura ele dá ao vídeo?
 
@@ -39,4 +34,3 @@ Pronto quando: o molde está escolhido e registrado em `script.md`, com o modo c
 
 ## LIMITES
 - O molde decide como quem assiste entra e o que carrega o vídeo; a distribuição em blocos, com função e orçamento, é de `arco`.
-- Não copiar frases, exemplos ou metáforas dos vídeos de referência: o que se usa é o molde.

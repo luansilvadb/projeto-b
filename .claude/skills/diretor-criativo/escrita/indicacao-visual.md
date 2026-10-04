@@ -1,8 +1,3 @@
----
-name: indicacao-visual
-description: Define o conteúdo e os limites da nota visual que acompanha cada bloco de narração.
----
-
 ## PERGUNTA
 O que a nota visual de cada bloco deve dizer, e o que não deve?
 

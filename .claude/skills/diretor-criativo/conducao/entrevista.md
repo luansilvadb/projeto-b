@@ -1,8 +1,3 @@
----
-name: entrevista
-description: Define como o agente leva decisões criativas ao usuário e o que resolve sozinho.
----
-
 ## PERGUNTA
 Como levar as decisões criativas ao usuário, uma por vez e com recomendação?
 

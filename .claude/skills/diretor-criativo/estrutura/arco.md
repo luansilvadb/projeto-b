@@ -1,8 +1,3 @@
----
-name: arco
-description: Define como organizar o vídeo em blocos encadeados, com função, duração e progressão de cada um.
----
-
 ## PERGUNTA
 Como organizar o vídeo em blocos, do gancho ao fechamento?
 

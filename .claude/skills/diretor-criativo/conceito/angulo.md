@@ -1,8 +1,3 @@
----
-name: angulo
-description: Define como transformar um tema pesquisado em ângulo, tese e promessa que justifiquem o vídeo.
----
-
 ## PERGUNTA
 Qual é o ângulo, a tese e a promessa que justificam o vídeo?
 
