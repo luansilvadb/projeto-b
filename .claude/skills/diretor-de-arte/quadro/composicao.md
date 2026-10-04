@@ -25,7 +25,7 @@ O erro comum é tudo em tamanho médio para pequeno, centralizado, com sobra em 
 
 **Posição:**
 
-- Assunto sozinho fica no centro, grande. O terço vale quando há dois no quadro (quem age e quem reage) ou um olhar que pede espaço.
+- Assunto sozinho fica no centro, grande. O terço vale quando há dois no quadro (quem age e quem reage) ou um olhar que pede espaço. Em 72 quadros de quatro vídeos da referência, 35 tinham um assunto só, e 30 desses o traziam no centro.
 - Sobra espaço do lado para onde o personagem olha ou anda.
 - O que se relaciona fica junto; o que não se relaciona, separado por um vazio claro.
 - No mundo, toda figura tem chão ou sombra de contato. Por dentro, as coisas flutuam, presas ao fundo por um halo de luz própria.
