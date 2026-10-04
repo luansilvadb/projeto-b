@@ -60,6 +60,7 @@ O número em algarismos, o símbolo e a sigla vão para a tela, descritos na enc
 
 Além das regras do validador:
 
+- Todo texto é escrito para o ouvinte de `conceito/ouvinte`: o mapa das partes dito até o começo do fundamento, a posição em cada virada de capítulo e cada retomada redita por inteiro.
 - Antes de qualquer frase, o desenho: a tensão do vídeo ("era de esperar X, e no entanto Y"), o molde (`estrutura/moldes`), o bloco de fundamento que dá ao espectador a expectativa, os poucos elementos e o veredito de cada bloco, conforme `escrita/explicacao`. O usuário aprova a estrutura e uma amostra de um minuto antes do roteiro inteiro. Reescrever frases de um roteiro com o desenho errado não o conserta.
 - Depois do desenho e antes das frases, a ficha do fio de `escrita/fio`: o refrão, as ideias novas com o orçamento de cada uma, os vereditos com os fatos que os ganham, os personagens e as promessas. Ela vai ao usuário junto com a estrutura. Roteiro com o desenho certo e sem fio passa no validador e soa como texto de IA.
 - Frases médias e encadeadas, pelas regras de `escrita/narracao`. Aqui elas pesam em dobro: o modelo de voz gera uma frase por vez, com pausa entre elas, e texto picotado em frases curtas sai monótono e mal-humorado. As faixas medidas são as que o validador imprime.

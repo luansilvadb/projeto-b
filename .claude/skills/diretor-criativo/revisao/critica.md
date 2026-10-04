@@ -12,14 +12,19 @@ Com que critérios julgar o rascunho e decidir o que reescrever?
 
 **Passadas, nesta ordem.** Um problema de nível superior invalida o polimento dos níveis abaixo.
 
-0. **Para quem**: antes de todas, a passada de `explicacao`
+0. **Para quem**: antes de todas, a passada de `ouvinte` e de `explicacao`
+   - Cite a frase do mapa: quantas partes ela anuncia, e o que promete para o fim? Cite a frase de posição de cada virada de capítulo. Vídeo sem mapa é bloqueante; virada sem posição, relevante.
+   - Liste cada retomada (termo, personagem, promessa, número) com as palavras desde a primeira aparição. A que volta depois de 150 ou mais sem redizer o que retoma é relevante; a que pede para guardar, também.
+   - Cite a primeira e a última frase de cada bloco. A primeira é o assunto, ou só o anuncia? A última diz o que quem assiste agora sabe?
+   - Liste as enumerações com mais de cinco itens, os processos de quatro passos ou mais sem a contagem dita antes e as durações ou quantidades vagas de que o argumento depende.
+   - Liste as frases inteiras só de detalhe ou só de piada, e as figuras que não são a analogia anunciada.
+   - O vídeo pede a quem assiste algum gesto além do da chamada?
    - Qual é a tensão do vídeo, em uma frase ("era de esperar X, e no entanto Y")? Ela está no gancho e volta no fim?
    - Para cada fato surpreendente: em que frase anterior o espectador ganhou a expectativa que ele quebra? Se em nenhuma, falta o bloco de fundamento, e o problema é bloqueante.
    - Cada frase decorre da anterior, ou os fatos estão só enfileirados?
    - Os números de cada bloco são da mesma medida, sobre os mesmos poucos elementos, e vêm traduzidos?
    - O bloco mostra a coisa acontecendo, ou conta que alguém a mediu?
    - Cada bloco fecha com um veredito dito em frase simples?
-   - O espectador sabe quantas partes o vídeo tem e em qual está?
    - Quem assiste está dentro de cada bloco, como "você", como "nós" ou com o corpo dele de medida? Conte os blocos em que ele não aparece: mais de um seguido é texto frio.
    - Há em cada bloco uma frase que só este narrador diria (opinião, humor seco, objeção dita antes do espectador, admissão do que não se sabe)? Marque-a. Bloco sem nenhuma é relatório.
    - Cada fato surpreendente passa no teste de `procedencia`: selo da fonte pedido na nota visual e âncora na fala?
@@ -41,9 +46,13 @@ Com que critérios julgar o rascunho e decidir o que reescrever?
      | quem fez sem nome, ano nem lugar | o personagem de `fio`, com o que a base de fatos tem |
      | adjetivo que diz o que sentir ("perturbador", "absurdo") | os dois fatos lado a lado |
      | palavra de texto traduzido ("certamente", "de fato", "possui") | a palavra da fala |
+     | expressão figurada de enfeite ("um feito e tanto") | a coisa dita pelo nome |
 2. **Tese e promessa**
    - Alguém que só ouviu o vídeo conseguiria dizer a tese em uma frase?
    - A pergunta aberta no gancho foi respondida por inteiro?
+   - Com que sensação quem assiste sai do vídeo? Diga-a em uma linha, lendo só o fechamento. Se a resposta é um fato ou um conselho, o problema é bloqueante.
+   - Conte as palavras do fechamento e a parcela do vídeo que ele ocupa. Liste os cinco movimentos de `fechamento`, cada um com a frase que o cumpre, e cite o trecho do gancho a que a última frase responde. Fechamento abaixo da parcela de `arco`, sem resposta ao gancho ou com dois movimentos faltando é bloqueante; um movimento faltando, relevante.
+   - A última frase aponta para a frente? A chamada vem depois dela, em cena própria, com a ponte na sensação do fechamento?
 3. **Estrutura**
    - Cada bloco responde a uma pergunta e abre a próxima?
    - Há bloco que pode ser removido sem que se note a falta?
@@ -81,12 +90,14 @@ Com que critérios julgar o rascunho e decidir o que reescrever?
 5. Repita até não restar bloqueante nem relevante. Se uma rodada não resolver nenhum problema, pare e relate o que ficou em aberto.
 
 ## DEPENDÊNCIAS
+- ouvinte: fornece as regras que a passada 0 confere primeiro.
 - checagem: fornece o rascunho já verificado e reverifica os trechos reescritos.
 - formato: fornece o registro das decisões aprovadas e os blocos, com as cenas de cada um, que as passadas percorrem.
 - angulo, voz, arco, analogias: fornecem as decisões aprovadas e os critérios contra os quais o rascunho é julgado.
 - fio: fornece a ficha do fio e os mecanismos que a passada 1 confere.
 - narracao: fornece o teste do registro.
 - procedencia: fornece o teste do selo e da âncora.
+- fechamento, chamada: fornecem os movimentos do fecho e as partes da chamada que a passada 2 confere.
 
 ## LIMITES
 - Não reverificar fatos aqui; a crítica julga forma e efeito.

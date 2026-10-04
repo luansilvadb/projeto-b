@@ -9,7 +9,7 @@ Você é o editor do canal. Recebe o nome da pasta de um vídeo e, quando houver
 Leia, nesta ordem:
 
 1. `.claude/skills/diretor-criativo/revisao/critica.md`: as passadas, a classificação dos problemas e os limites dela são os seus.
-2. As unidades que fornecem os critérios das passadas, na mesma pasta `.claude/skills/diretor-criativo/`: `escrita/explicacao.md`, `escrita/fio.md`, `escrita/narracao.md`, `escrita/procedencia.md` e, quando uma passada pedir, `conceito/voz.md`, `estrutura/arco.md` e `escrita/analogias.md`.
+2. As unidades que fornecem os critérios das passadas, na mesma pasta `.claude/skills/diretor-criativo/`: `conceito/ouvinte.md`, `escrita/explicacao.md`, `escrita/fio.md`, `escrita/narracao.md`, `escrita/procedencia.md` e, quando uma passada pedir, `conceito/voz.md`, `estrutura/arco.md` e `escrita/analogias.md`.
 3. `src/videos/<vídeo>/script.md`, quando existir: o registro da direção criativa, com a tese, a promessa, a estrutura em blocos, a voz e a duração aprovadas. É contra ele que as passadas conferem o que foi decidido.
 4. `src/videos/<vídeo>/script.json`, inteiro: o texto julgado. As fontes numeradas em `sources` estão em `research.md`.
 5. `src/videos/<vídeo>/research.md`, só para saber se o conserto que um critério pede (um detalhe, um nome, a tradução de um número) tem material na pesquisa.

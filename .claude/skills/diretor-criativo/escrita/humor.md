@@ -37,7 +37,7 @@ Quando e como usar humor seco e alívio cômico sem minar a credibilidade?
 
 **Regras:**
 
-- **Curto**: uma frase, no máximo duas. Piada explicada é piada cortada.
+- **Curto**: uma oração, na frase que carrega o fato, conforme `ouvinte`. Piada explicada é piada cortada.
 - **Removível**: tirando a piada, o raciocínio continua inteiro.
 - **Factual por baixo**: o exagero cômico não pode ser confundido com afirmação; em caso de dúvida, o bloco passa por `checagem`.
 - **Dose da ficha de voz**: a frequência segue a variável "dose de humor" do projeto.
@@ -46,6 +46,7 @@ Quando e como usar humor seco e alívio cômico sem minar a credibilidade?
 **Teste.** Leia o bloco sem a piada. Se ficou melhor ou igual, ela sai.
 
 ## DEPENDÊNCIAS
+- ouvinte: fornece a regra do desvio dentro da frase.
 - voz: fornece a dose de humor e o peso emocional definidos para o projeto.
 
 ## LIMITES
@@ -53,4 +54,4 @@ Quando e como usar humor seco e alívio cômico sem minar a credibilidade?
 - Sem humor em temas em que a ficha de voz marcou peso grave e humor raro, exceto como respiro pontual aprovado.
 
 ## EXEMPLO
-> "A essa altura, a temperatura passa de dez milhões de graus. O que, convenhamos, estraga o passeio."
+> "A essa altura a temperatura passa de dez milhões de graus, o que estraga um pouco o passeio."

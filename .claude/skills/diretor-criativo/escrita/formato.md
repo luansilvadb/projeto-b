@@ -26,6 +26,8 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 - Duração-alvo: <minutos>
 - Molde: <o de `moldes`> / Forma de arco: <a de `arco`>
 - Tensão: era de esperar <X>, e no entanto <Y>
+- Mapa: <as partes de `ouvinte`, na ordem, e o que o mapa promete para o fim>
+- Fechamento: <a sensação e a moral de `fechamento`, e o trecho do gancho a que a última frase responde>
 - Analogia central: <a analogia e os blocos em que volta>
 - Elementos: <os poucos que o vídeo usa; o que saiu da pesquisa>
 

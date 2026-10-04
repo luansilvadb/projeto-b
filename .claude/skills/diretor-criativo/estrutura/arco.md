@@ -18,7 +18,7 @@ Como organizar o vídeo em blocos, do gancho ao fechamento?
 | Fundamento | dar o mínimo necessário para acompanhar | 15–20% |
 | Escalada | aprofundar em degraus, cada um maior ou mais estranho que o anterior | 40–50% |
 | Virada | o ponto em que o tema muda de sentido ou revela sua consequência | 10–15% |
-| Fechamento | devolver o tema ao espectador | 10% |
+| Fechamento | devolver o tema ao espectador | 10–15% |
 
 **Formas de arco.** O esqueleto se realiza em uma destas formas recorrentes no estilo; escolha uma antes de distribuir os blocos:
 
@@ -31,7 +31,7 @@ Como organizar o vídeo em blocos, do gancho ao fechamento?
 | Mecanismo e consequência | como funciona, o que isso causa, o que se pode fazer | saúde, comportamento, temas sociais |
 | Construção do ideal | monta-se algo passo a passo, cada escolha com seu custo | "o melhor possível", comparações com o real |
 
-**Capítulos.** Agrupe os blocos em três a cinco capítulos com título exibido na tela. O título tem atitude e abre curiosidade ("O espaço odeia você"), não descreve o conteúdo ("Riscos da viagem"). Cada capítulo fecha uma pergunta grande e termina puxando o seguinte.
+**Capítulos.** Agrupe os blocos em três a cinco capítulos com título exibido na tela. O título tem atitude e abre curiosidade ("O espaço odeia você"), não descreve o conteúdo ("Riscos da viagem"). Cada capítulo fecha uma pergunta grande e termina puxando o seguinte. Os capítulos são as partes do mapa de `ouvinte`.
 
 **Procedimento:**
 
@@ -55,6 +55,7 @@ Como organizar o vídeo em blocos, do gancho ao fechamento?
 - **Tudo serve à tese**: bloco que não aproxima o espectador da tese sai, por melhor que seja.
 
 ## DEPENDÊNCIAS
+- ouvinte: fornece o mapa e a posição, que os capítulos sustentam.
 - angulo: fornece tese, promessa e recorte.
 - levantamento: fornece os fatos distribuídos entre os blocos.
 

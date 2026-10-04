@@ -16,7 +16,7 @@ Como levar as decisões criativas ao usuário, uma por vez e com recomendação?
 2. ângulo, tese e promessa;
 3. voz do projeto;
 4. estrutura em blocos;
-5. gancho e fechamento escolhidos entre as alternativas;
+5. gancho, fechamento e chamada final escolhidos entre as alternativas;
 6. analogia central do vídeo;
 7. simplificações que sacrificam precisão;
 8. reescritas que mudam algo já aprovado;

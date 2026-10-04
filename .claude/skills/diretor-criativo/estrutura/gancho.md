@@ -42,9 +42,10 @@ A pergunta fecha o gancho; raramente o abre. No canal, só 15% dos vídeos come�
 - **Cumprimento**: o vídeo responde exatamente à pergunta aberta?
 - **Imagem**: a primeira frase já sugere algo que se possa mostrar?
 
-**Passagem para o corpo.** A última frase do gancho entrega o espectador ao primeiro bloco de fundamento, normalmente recuando ("para entender isso, precisamos começar por...").
+**Passagem para o corpo.** A última frase do gancho entrega o espectador ao primeiro bloco de fundamento, normalmente recuando ("para entender isso, precisamos começar por..."). Ela, ou a primeira frase do fundamento, diz o mapa de `ouvinte`.
 
 ## DEPENDÊNCIAS
+- ouvinte: fornece a entrada direta e o mapa.
 - angulo: fornece a promessa que o gancho anuncia.
 - arco: fornece a posição do gancho e o primeiro bloco que ele precisa alcançar.
 

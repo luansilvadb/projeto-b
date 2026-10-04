@@ -5,13 +5,13 @@ description: "Texto de um vídeo do canal, da pesquisa ao roteiro aprovado: fato
 
 ## FUNÇÃO
 
-Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio explicativo animado no estilo Kurzgesagt, narração em off sobre um tema complexo, com precisão factual, analogias de escala e indicações visuais por bloco. Termina na **primeira aprovação do usuário**.
+Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio explicativo animado no estilo Kurzgesagt, narração em off sobre um tema complexo, com precisão factual, analogias de escala e indicações visuais por bloco, contado para quem assiste com TDAH. Termina na **primeira aprovação do usuário**.
 
 ## ESCOPO
 
 - Pesquisa do tema, seleção de fontes e checagem factual.
 - Definição de ângulo, tese, promessa e voz do projeto.
-- Estrutura em blocos, gancho e fechamento.
+- Estrutura em blocos, gancho, fechamento e chamada final.
 - Escrita da narração, das analogias, do humor e das notas visuais.
 - Revisão crítica e reescrita.
 - Título e conceito de thumbnail.
@@ -65,7 +65,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `etapas` | O procedimento de cada etapa neste repositório. |
 | `conducao` | Como o agente interage com o usuário ao longo do trabalho. |
 | `pesquisa` | De onde vêm os fatos e como são verificados. |
-| `conceito` | O que o vídeo afirma e com que voz. |
+| `conceito` | O que o vídeo afirma, com que voz e para quem. |
 | `estrutura` | Como o vídeo é organizado, aberto e encerrado. |
 | `escrita` | Como o texto, as analogias, o humor, as notas visuais e o documento final são produzidos. |
 | `revisao` | Como o rascunho é julgado e reescrito. |
@@ -79,12 +79,14 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `conducao/entrevista` | Como levar as decisões criativas ao usuário, uma por vez e com recomendação? |
 | `pesquisa/levantamento` | Como pesquisar o tema e selecionar fontes confiáveis? |
 | `pesquisa/checagem` | Como verificar cada afirmação factual e tratar incerteza e simplificação? |
+| `conceito/ouvinte` | Para quem o texto do vídeo é escrito, e o que isso exige de cada trecho? |
 | `conceito/angulo` | Qual é o ângulo, a tese e a promessa que justificam o vídeo? |
 | `conceito/voz` | Como definir a voz do projeto a partir dos mecanismos do estilo? |
 | `estrutura/moldes` | Que molde o tema pede, e que estrutura ele dá ao vídeo? |
 | `estrutura/arco` | Como organizar o vídeo em blocos, do gancho ao fechamento? |
 | `estrutura/gancho` | Como abrir o vídeo para criar a pergunta que segura o espectador nos primeiros 30 segundos? |
-| `estrutura/fechamento` | Como encerrar com a virada reflexiva que dá sentido ao tema, sem moralismo nem falso otimismo? |
+| `estrutura/fechamento` | Como encerrar o vídeo de modo que quem assiste saia maior do que entrou, e querendo ver outro? |
+| `estrutura/chamada` | Como pedir a curtida e a inscrição sem desfazer o fechamento? |
 | `escrita/explicacao` | Como fazer o texto explicar para quem assiste, em vez de relatar fatos? |
 | `escrita/fio` | Como contar o vídeo de modo que cada trecho segure o seguinte, em vez de entregar uma fila de fatos bem-acabados? |
 | `escrita/narracao` | Como escrever um texto feito para ser ouvido? |
@@ -96,7 +98,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `revisao/critica` | Com que critérios julgar o rascunho e decidir o que reescrever? |
 | `embalagem/titulo-e-thumbnail` | Como derivar título e conceito de thumbnail da promessa do vídeo? |
 
-Os números das unidades vêm de estudos dos vídeos de referência; a origem e as ressalvas estão em `referencias/base-empirica.md`, lida ao questionar ou atualizar uma medida.
+Os números das unidades vêm de estudos dos vídeos de referência; a origem e as ressalvas estão em `referencias/base-empirica.md`, lida ao questionar ou atualizar uma medida. A base de `ouvinte` está em `referencias/i-have-adhd.md`.
 
 ## ORDEM DE INJEÇÃO
 
@@ -105,11 +107,11 @@ Injete este arquivo primeiro, depois o procedimento da etapa, depois `entrevista
 | Etapa | Passo | Unidades |
 |---|---|---|
 | 1. Pesquisa | Pesquisa | `levantamento`, `checagem` |
-| 2. Roteiro | Conceito | `angulo`, `voz`, `titulo-e-thumbnail` (primeira versão), `formato` |
-| | Estrutura | `moldes`, `arco`, `gancho`, `fechamento` |
-| | Escrita | `analogias`, `explicacao`, `fio`, `humor`, `narracao`, `procedencia`, `indicacao-visual` |
+| 2. Roteiro | Conceito | `ouvinte`, `angulo`, `voz`, `titulo-e-thumbnail` (primeira versão), `formato` |
+| | Estrutura | `ouvinte`, `moldes`, `arco`, `gancho`, `fechamento`, `chamada` |
+| | Escrita | `ouvinte`, `analogias`, `explicacao`, `fio`, `humor`, `narracao`, `procedencia`, `indicacao-visual` |
 | | Decupagem | skill `diretor-de-arte`, passos Conceito visual e Decupagem |
-| | Revisão | `checagem`, `procedencia`, `fio`, `narracao`, `critica` |
+| | Revisão | `ouvinte`, `checagem`, `procedencia`, `fio`, `narracao`, `critica` |
 | | Embalagem | `titulo-e-thumbnail` (versão final) |
 
 Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), injete apenas as unidades do passo e as suas dependências declaradas.
