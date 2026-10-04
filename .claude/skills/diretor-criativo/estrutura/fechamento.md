@@ -10,7 +10,7 @@ Como encerrar o vídeo de modo que quem assiste saia maior do que entrou, e quer
 
 **Intenção.** O assunto do vídeo é o veículo; o fechamento é onde ele entrega o que carregava. Quem assiste sai com uma **sensação** sobre si e sobre nós (esperança, possibilidade, maravilhamento, pertencer a algo antigo ou grande), e é ela que o faz querer outro vídeo. O fechamento que resume ou aconselha entrega informação, que ele já tinha.
 
-**Base.** Os fechamentos de dois vídeos indicados pelo usuário em 2026-10-04, estudados em `referencias/fechamento-kurzgesagt.md`.
+**Base.** Os fechamentos de dois vídeos do Kurzgesagt em português, indicados pelo usuário em 2026-10-04: "O dia em que os dinossauros morreram – Minuto a minuto" e "Como Terraformar Vênus (Rapidamente)?".
 
 **Moral.** A ideia sobre a vida de quem assiste que o vídeo provou com a história de outro. Ela é o que a sensação diz em palavras, e ninguém a enuncia como conselho: quem assiste a conclui.
 

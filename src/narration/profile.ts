@@ -4,7 +4,7 @@ import { splitSentences, tokenize } from "./text";
  * O perfil do texto narrado: as medidas que separam uma explicação dirigida a
  * quem assiste de uma lista de fatos em terceira pessoa. As faixas vêm de nove
  * vídeos do Kurzgesagt em português que o usuário indicou como referência de
- * texto (.claude/skills/diretor-criativo/referencias/narracao-kurzgesagt.md).
+ * texto.
  */
 export type NarrationProfile = {
   readonly words: number;
@@ -153,7 +153,10 @@ export const PROFILE_CRITERIA: readonly ProfileCriterion[] = [
     label: "Frases de 25 palavras ou mais",
     value: (profile) => profile.longShare,
     format: percent,
-    range: [0.06, 0.23],
+    // Sem piso: a crítica divide a frase longa de duas ideias e o ouvinte pede
+    // um passo por frase, então poucas frases longas não é defeito (decisão do
+    // usuário em 2026-10-04). O texto picado é acusado pela mediana e pelas curtas.
+    range: [0, 0.23],
   },
   {
     label: '"você" e "nós" a cada 100 palavras',

@@ -18,7 +18,7 @@ Como escrever um texto feito para ser ouvido?
 - Frase média é o padrão. A curta entra só onde a ideia vira, e o bloco pode terminar numa frase média, no meio do raciocínio que o próximo continua.
 - Presente do indicativo como tempo padrão.
 
-**Registro.** O narrador conta em off: é alguém que apurou a história e a conta com calma, e não um apresentador conversando com a câmera. Português do Brasil escrito direto em português, falado e sem gíria (decisões do usuário em 2026-10-04; o tom é o do vídeo da JBS, estudado em `referencias/narracao-jbs.md`). O teste de cada frase: um bom narrador de documentário brasileiro diria isso, com essas palavras?
+**Registro.** O narrador conta em off: é alguém que apurou a história e a conta com calma, e não um apresentador conversando com a câmera. Português do Brasil escrito direto em português, falado e sem gíria (decisões do usuário em 2026-10-04; o tom é o do vídeo da JBS, base de `fio`). O teste de cada frase: um bom narrador de documentário brasileiro diria isso, com essas palavras?
 
 - Frase declarativa, com o sujeito dito pelo nome e repetido quando volta. O que amarra uma frase à outra é a ordem dos fatos e o sujeito em comum; conectivo entra onde há causa ou virada de verdade.
 - Palavra que a fala usa: "dá" e não "resulta em", "tem" e não "possui", "todo mundo" e não "a totalidade". "Pra", "pro" e "tá" entram onde a forma inteira soaria dura.
@@ -28,7 +28,7 @@ Como escrever um texto feito para ser ouvido?
 - "Você" aparece onde quem assiste entra na história, conforme `voz`; "a gente" e a fala do espectador ("aí você pensa:") ficam para os trechos que argumentam com ele, conforme `fio`.
 - Gíria e interjeição ("tipo", "putz", "pô") ficam fora, pela regra de `humor`.
 
-**Perfil de frase.** O texto não é feito de frases curtas: é feito de frases médias, com uma muito curta a cada nove ou dez. As faixas são as que o `pnpm check-script` confere; as medianas medidas na referência estão em `referencias/base-empirica.md`. Frase de uma ou duas palavras ("Ah. Ah, não.") marca a reviravolta; por isso é rara. Frase longa é permitida quando é uma enumeração em que cada item cabe numa respiração.
+**Perfil de frase.** O texto não é feito de frases curtas: é feito de frases médias, com uma muito curta a cada nove ou dez. As faixas são as que o `pnpm check-script` confere. Frase de uma ou duas palavras ("Ah. Ah, não.") marca a reviravolta; por isso é rara. Frase longa é permitida quando é uma enumeração em que cada item cabe numa respiração.
 
 **Vocabulário:**
 

@@ -18,13 +18,16 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 2. **"E se"**: "E se a Lua desaparecesse?"
 3. **Afirmação contraintuitiva**: "Você nunca tocou em nada"
 4. **Superlativo verificável**: "A coisa mais mortal do universo"
-5. **Tema + tensão**: "Sistema imunológico: a guerra dentro de você"
+5. **Tema + tensão**: "Sistema imunológico: a guerra dentro de você" (quando a guerra é a analogia central)
 
 **Critérios do título:**
 
 - compreensível para quem nunca ouviu falar do tema;
 - cerca de 45 caracteres e 8 palavras ou menos (medianas do canal: 43 caracteres e 8 palavras; 37 e 7 nos vídeos recentes);
 - abre a lacuna sem entregar a resposta;
+- literal, conforme `ouvinte`: diz a coisa pelo nome, e a única figura é a analogia central do vídeo;
+- duração e quantidade em unidade contável;
+- hesitação só onde a base de fatos registra incerteza;
 - todo superlativo ou afirmação passa por `checagem`;
 - o vídeo cumpre exatamente o que o título anuncia.
 
@@ -50,6 +53,7 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 4. Leve os pares ao usuário com recomendação.
 
 ## DEPENDÊNCIAS
+- ouvinte: fornece as regras de forma literal, medida contável e hesitação com lastro.
 - angulo: fornece a promessa e a tese que título e thumbnail condensam.
 - gancho: fornece a lacuna e a imagem de abertura com que devem ser coerentes.
 - analogias: fornece a analogia central, fonte preferencial da imagem.

@@ -8,9 +8,9 @@ Para quem o texto do vídeo é escrito, e o que isso exige de cada trecho?
 
 ## RESPOSTA
 
-**Ouvinte.** Todo texto do vídeo (gancho, narração, fechamento, chamada e texto de tela) é escrito para quem assiste com TDAH (decisão do usuário em 2026-10-04).
+**Ouvinte.** Todo texto do vídeo (título, gancho, narração, fechamento, chamada e texto de tela) é escrito para quem assiste com TDAH (decisão do usuário em 2026-10-04).
 
-**Base.** A skill `i-have-adhd`, guardada em `referencias/i-have-adhd.md`. Ela molda respostas de um assistente a quem executa tarefas; aqui está a tradução dela para quem ouve uma história. O que nela é comando, caminho de arquivo ou prazo de trabalho fica sem par na narração.
+**Base.** A skill `i-have-adhd` (licença MIT), que molda as respostas de um assistente a quem executa tarefas; aqui está a tradução dela para quem ouve uma história. O que nela é comando, caminho de arquivo ou prazo de trabalho fica sem par na narração.
 
 **Cinco fatos sobre o ouvinte**, e as regras que saem de cada um:
 

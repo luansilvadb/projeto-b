@@ -41,6 +41,7 @@ Com que critérios e medidas julgar os quadros?
    - Há sombra de contato no mundo e halo por dentro? A luz vem de um lado só?
 7. **Texto**
    - Um texto novo por vez, cada um preso ao que nomeia?
+   - Conte os textos à vista em cada plano. Mais de cinco é relevante.
    - Alguma frase da narração foi parar na tela?
    - Todo plano que afirma um fato vindo de um estudo tem o selo da fonte no canto?
 8. **Fidelidade**

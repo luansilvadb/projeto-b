@@ -8,7 +8,7 @@ Como pedir a curtida e a inscrição sem desfazer o fechamento?
 
 ## RESPOSTA
 
-**Função.** A chamada converte a vontade de ver mais, que o fechamento deixou, num gesto: curtir e se inscrever (decisão do usuário em 2026-10-04: todo vídeo do canal termina com ela). A base é a chamada dos dois vídeos estudados em `referencias/fechamento-kurzgesagt.md`.
+**Função.** A chamada converte a vontade de ver mais, que o fechamento deixou, num gesto: curtir e se inscrever (decisão do usuário em 2026-10-04: todo vídeo do canal termina com ela). A base é a chamada dos dois vídeos de `fechamento`.
 
 **Lugar.** Uma cena própria, a última do roteiro, depois da última frase do fechamento e de um silêncio (`holdMs`, cerca de um segundo). Na estrutura de `script.md` ela é o último bloco, "(chamada)".
 

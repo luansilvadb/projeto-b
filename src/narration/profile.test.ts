@@ -60,4 +60,12 @@ describe("profileProblems", () => {
     expect(labels).toContain('"você" e "nós" a cada 100 palavras');
     expect(labels).toContain("Palavras por frase (mediana)");
   });
+
+  it("não acusa o texto por ter poucas frases longas", () => {
+    const profile = narrationProfile(LISTED);
+    expect(profile.longShare).toBe(0);
+    expect(
+      profileProblems(profile).map((criterion) => criterion.label),
+    ).not.toContain("Frases de 25 palavras ou mais");
+  });
 });

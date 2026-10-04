@@ -10,7 +10,7 @@ Como contar o vídeo de modo que cada trecho segure o seguinte, em vez de entreg
 
 **O defeito que esta unidade evita.** Um roteiro pode cumprir `explicacao`, passar em todas as medidas do `pnpm check-script` e ainda soar como texto de IA. Foi o que aconteceu com a quinta versão do `why-we-sleep`: cada achado recebia uma frase polida e um fecho de efeito, e o texto seguia para o próximo, com uma frase de efeito a cada 60 palavras. O ouvinte reconhece a fila.
 
-**Base.** Dois vídeos indicados pelo usuário em 2026-10-04, com estudo em `referencias/`, na pasta desta skill: "A história não contada da JBS", do Spotniks (`narracao-jbs.md`), e "O que as BETS fazem com o seu CÉREBRO", do Ciência Todo Dia (`narracao-bets.md`). O primeiro é um narrador em off que conta, e dá o tom do canal. O segundo é um apresentador que conversa, e dá os mecanismos de argumento.
+**Base.** Dois vídeos indicados pelo usuário em 2026-10-04: "A história não contada da JBS", do Spotniks, e "O que as BETS fazem com o seu CÉREBRO", do Ciência Todo Dia. O primeiro é um narrador em off que conta, e dá o tom do canal. O segundo é um apresentador que conversa, e dá os mecanismos de argumento.
 
 O **fio** é o que o espectador segura do primeiro ao último minuto. Quatro mecanismos estão nos dois vídeos e valem para todo roteiro; os outros dependem do que o trecho faz.
 

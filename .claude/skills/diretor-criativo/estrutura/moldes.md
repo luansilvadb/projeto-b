@@ -8,7 +8,7 @@ Que molde o tema pede, e que estrutura ele dá ao vídeo?
 
 ## RESPOSTA
 
-**Cinco moldes.** O tema decide qual. Os exemplos são os vídeos estudados em `referencias/narracao-kurzgesagt.md`, na pasta desta skill, pelo apelido de cada um:
+**Cinco moldes.** O tema decide qual. Os exemplos são nove vídeos do Kurzgesagt em português, pelo assunto de cada um:
 
 | Molde | Exemplo | Quem assiste entra como | O que carrega o vídeo |
 |---|---|---|---|

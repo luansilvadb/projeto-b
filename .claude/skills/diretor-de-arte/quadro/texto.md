@@ -29,7 +29,7 @@ Que texto entra na tela, e preso a quê?
 - duas etiquetas entrando no mesmo instante;
 - texto como único conteúdo do plano, fora a cartela.
 
-**Quantidade.** Um texto novo por vez. Numa lista, as etiquetas entram uma a uma, cada qual na sua palavra, e se acumulam no quadro: cinco numa lista de sintomas, oito num esquema de conjunto. Se um plano só se entende lendo, ele volta para `encenacao`.
+**Quantidade.** Um texto novo por vez. Numa lista, as etiquetas entram uma a uma, cada qual na sua palavra, e se acumulam no quadro, até cinco à vista, conforme `ouvinte`; o esquema que pede mais é agrupado, e cortar item é decisão do usuário. Se um plano só se entende lendo, ele volta para `encenacao`.
 
 **Posição:**
 
@@ -62,6 +62,7 @@ Que texto entra na tela, e preso a quê?
 - planos: fornece a encenação de cada plano, onde o texto de tela é anotado.
 - dado: fornece os números e a forma como são mostrados.
 - composicao: fornece o ponto focal e os vazios do quadro.
+- ouvinte (skill `diretor-criativo`, `conceito/ouvinte`): fornece o limite de cinco itens à vista.
 
 ## LIMITES
 - A entrada e a saída do texto em movimento não são decididas aqui.

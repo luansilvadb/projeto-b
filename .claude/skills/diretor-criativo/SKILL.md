@@ -70,7 +70,6 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `escrita` | Como o texto, as analogias, o humor, as notas visuais e o documento final são produzidos. |
 | `revisao` | Como o rascunho é julgado e reescrito. |
 | `embalagem` | Como a promessa do vídeo vira título e thumbnail. |
-| `referencias` | Os estudos dos vídeos de referência, de onde saíram as medidas. |
 
 ## ÍNDICE DE UNIDADES
 
@@ -98,7 +97,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `revisao/critica` | Com que critérios julgar o rascunho e decidir o que reescrever? |
 | `embalagem/titulo-e-thumbnail` | Como derivar título e conceito de thumbnail da promessa do vídeo? |
 
-Os números das unidades vêm de estudos dos vídeos de referência; a origem e as ressalvas estão em `referencias/base-empirica.md`, lida ao questionar ou atualizar uma medida. A base de `ouvinte` está em `referencias/i-have-adhd.md`.
+Os números que as unidades dão como medidos "no canal" vêm das legendas em inglês do Kurzgesagt (245 vídeos, medidos em 2026-10-02): valem como ordem de grandeza para o português, e nenhum é prova de desempenho.
 
 ## ORDEM DE INJEÇÃO
 
@@ -112,7 +111,7 @@ Injete este arquivo primeiro, depois o procedimento da etapa, depois `entrevista
 | | Escrita | `ouvinte`, `analogias`, `explicacao`, `fio`, `humor`, `narracao`, `procedencia`, `indicacao-visual` |
 | | Decupagem | skill `diretor-de-arte`, passos Conceito visual e Decupagem |
 | | Revisão | `ouvinte`, `checagem`, `procedencia`, `fio`, `narracao`, `critica` |
-| | Embalagem | `titulo-e-thumbnail` (versão final) |
+| | Embalagem | `ouvinte`, `titulo-e-thumbnail` (versão final) |
 
 Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), injete apenas as unidades do passo e as suas dependências declaradas.
 
