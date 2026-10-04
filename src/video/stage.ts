@@ -1,4 +1,6 @@
 import { Easing, interpolate } from "remotion";
+import type { FrameRange } from "../narration/timeline";
+import type { ShotPlan } from "./Shot";
 
 /**
  * Duas cenas vizinhas podem dividir o palco: em vez de um quadro trocar pelo
@@ -92,3 +94,52 @@ export const leaveProgress = (
 
 /** Quantos quadros leva a saída de um cenário inteiro: mais devagar que a de um elemento, mas no mesmo prazo. */
 export const SCENERY_EXIT_FRAMES = LEAD_FRAMES + TAIL_FRAMES;
+
+// Um plano do vídeo: o número da cena e o do plano dentro dela.
+type Spot = readonly [scene: number, shot: number];
+
+/**
+ * O plano de palco de cada trecho do vídeo: com quem ele divide o palco e de
+ * quem herda o cenário. `ranges` traz os trechos dos planos de cada cena, na
+ * ordem de `sceneIds`; `joined` e `sets` são os de NarratedVideo.
+ */
+export const planShots = (
+  sceneIds: readonly string[],
+  ranges: readonly (readonly FrameRange[])[],
+  joined: Readonly<Record<string, readonly number[]>> = {},
+  sets: Readonly<Record<string, readonly (string | null)[]>> = {},
+): Map<FrameRange, ShotPlan> => {
+  // O primeiro plano do vídeo não tem com quem dividir o palco.
+  const joins = ([scene, shot]: Spot) =>
+    (scene > 0 || shot > 0) &&
+    (joined[sceneIds[scene]]?.includes(shot) ?? false);
+  const setOf = ([scene, shot]: Spot) => sets[sceneIds[scene]]?.[shot] ?? null;
+  const keyOf = ([scene, shot]: Spot) =>
+    sceneIds[scene] === undefined ? null : `${sceneIds[scene]}#${shot}`;
+
+  const plans = new Map<FrameRange, ShotPlan>();
+  ranges.forEach((shots, scene) => {
+    shots.forEach((range, shot) => {
+      const here: Spot = [scene, shot];
+      const before: Spot =
+        shot === 0
+          ? [scene - 1, (ranges[scene - 1]?.length ?? 1) - 1]
+          : [scene, shot - 1];
+      const after: Spot =
+        shot === shots.length - 1 ? [scene + 1, 0] : [scene, shot + 1];
+      const set = setOf(here);
+      const joinsPrevious = joins(here);
+      const joinsNext = joins(after);
+      plans.set(range, {
+        key: keyOf(here),
+        previousKey: keyOf(before),
+        joinsPrevious,
+        joinsNext,
+        sameSetAsPrevious:
+          joinsPrevious && set !== null && set === setOf(before),
+        sameSetAsNext: joinsNext && set !== null && set === setOf(after),
+      });
+    });
+  });
+  return plans;
+};

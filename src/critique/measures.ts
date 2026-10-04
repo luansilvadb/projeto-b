@@ -72,6 +72,27 @@ export const changedShare = (
   return changed / before.length;
 };
 
+/** Desvio padrão da luminância de um bloco do quadro. */
+const blockDeviation = (
+  gray: Float32Array,
+  width: number,
+  row: number,
+  column: number,
+): number => {
+  let sum = 0;
+  let squares = 0;
+  for (let y = row * BLOCK; y < (row + 1) * BLOCK; y++) {
+    for (let x = column * BLOCK; x < (column + 1) * BLOCK; x++) {
+      const value = gray[y * width + x];
+      sum += value;
+      squares += value * value;
+    }
+  }
+  const count = BLOCK * BLOCK;
+  const variance = squares / count - (sum / count) ** 2;
+  return Math.sqrt(Math.max(variance, 0));
+};
+
 /**
  * Fração do quadro com desenho: blocos em que a luminância varia. Fundo de
  * uma cor só ou em degradê suave não conta.
@@ -86,18 +107,7 @@ export const drawnShare = (
   let drawn = 0;
   for (let row = 0; row < rows; row++) {
     for (let column = 0; column < columns; column++) {
-      let sum = 0;
-      let squares = 0;
-      for (let y = row * BLOCK; y < (row + 1) * BLOCK; y++) {
-        for (let x = column * BLOCK; x < (column + 1) * BLOCK; x++) {
-          const value = gray[y * width + x];
-          sum += value;
-          squares += value * value;
-        }
-      }
-      const count = BLOCK * BLOCK;
-      const variance = squares / count - (sum / count) ** 2;
-      if (Math.sqrt(Math.max(variance, 0)) > DRAWN_DEVIATION) {
+      if (blockDeviation(gray, width, row, column) > DRAWN_DEVIATION) {
         drawn++;
       }
     }
@@ -112,6 +122,28 @@ export type ColorProfile = {
   readonly dominantHue: number;
   /** Pixels de cor viva em cada família de cor. */
   readonly vividHues: readonly number[];
+};
+
+/** Matiz, de 0 a 1 a partir do vermelho, de uma cor cujo maior canal é `value` e que tem `delta` entre o maior e o menor. */
+const hueOf = (
+  red: number,
+  green: number,
+  blue: number,
+  value: number,
+  delta: number,
+): number => {
+  // Canais iguais não têm matiz: fica o do vermelho, e a saturação nula tira o pixel da conta das cores.
+  if (delta <= 1e-6) {
+    return 0;
+  }
+  if (value === red) {
+    const hue = (((green - blue) / delta) % 6) / 6;
+    return hue < 0 ? hue + 1 : hue;
+  }
+  if (value === green) {
+    return ((blue - red) / delta + 2) / 6;
+  }
+  return ((red - green) / delta + 4) / 6;
 };
 
 /**
@@ -134,19 +166,7 @@ export const colorProfile = (rgb: Uint8Array): ColorProfile => {
     const delta = value - Math.min(red, green, blue);
     const saturation = value > 0 ? delta / value : 0;
 
-    let hue = 0;
-    if (delta > 1e-6) {
-      if (value === red) {
-        hue = (((green - blue) / delta) % 6) / 6;
-      } else if (value === green) {
-        hue = ((blue - red) / delta + 2) / 6;
-      } else {
-        hue = ((red - green) / delta + 4) / 6;
-      }
-      if (hue < 0) {
-        hue += 1;
-      }
-    }
+    const hue = hueOf(red, green, blue, value, delta);
     const family = Math.min(Math.floor(hue * HUES), HUES - 1);
     const band = value < 0.35 ? 0 : value < 0.7 ? 1 : 2;
 

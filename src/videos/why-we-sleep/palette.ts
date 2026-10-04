@@ -503,15 +503,6 @@ export const coin = {
   shine: "#FFE783",
 } as const;
 
-/** Letreiro luminoso da cartela de capítulo. */
-export const neon = {
-  board: "#0C0247",
-  tube: "#FF452D",
-  tubeCore: "#FFCFC3",
-  text: "#FFDD78",
-  glow: "#FF9A29",
-} as const;
-
 /** A savana das elefantas: céu quente e chão ocre de dia; índigo com lua e chão roxo de noite. Proposta para o capítulo 2. */
 export const savanna = {
   day: {

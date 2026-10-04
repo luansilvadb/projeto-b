@@ -20,8 +20,8 @@ import {
   type SceneTimeline,
 } from "../narration/timeline";
 
-import { ShotPlans, type ShotPlan } from "./Shot";
-import { JOIN_FRAMES } from "./stage";
+import { ShotPlans } from "./Shot";
+import { JOIN_FRAMES, planShots } from "./stage";
 
 export type SceneProps = {
   /** Tempos da cena: duração e o quadro em que cada palavra é falada. */
@@ -136,40 +136,12 @@ export const NarratedVideo: React.FC<Props> = ({
       }
       return shotRanges(scene, inScript.shots);
     });
-    const plans = new Map<FrameRange, ShotPlan>();
-    const joins = (order: number, shot: number) =>
-      (order > 0 || shot > 0) &&
-      (joined?.[timeline.scenes[order]?.id]?.includes(shot) ?? false);
-    const setOf = (order: number, shot: number) =>
-      sets?.[timeline.scenes[order]?.id]?.[shot] ?? null;
-    ranges.forEach((shots, order) => {
-      shots.forEach((range, shot) => {
-        const set = setOf(order, shot);
-        const [before, after] = [
-          shot === 0
-            ? ([order - 1, (ranges[order - 1]?.length ?? 1) - 1] as const)
-            : ([order, shot - 1] as const),
-          shot === shots.length - 1
-            ? ([order + 1, 0] as const)
-            : ([order, shot + 1] as const),
-        ];
-        const joinsPrevious = joins(order, shot);
-        const joinsNext = joins(after[0], after[1]);
-        const keyOf = (at: readonly [number, number]) =>
-          timeline.scenes[at[0]]
-            ? `${timeline.scenes[at[0]].id}#${at[1]}`
-            : null;
-        plans.set(range, {
-          key: `${timeline.scenes[order].id}#${shot}`,
-          previousKey: keyOf(before),
-          joinsPrevious,
-          joinsNext,
-          sameSetAsPrevious:
-            joinsPrevious && set !== null && set === setOf(...before),
-          sameSetAsNext: joinsNext && set !== null && set === setOf(...after),
-        });
-      });
-    });
+    const plans = planShots(
+      timeline.scenes.map(({ id }) => id),
+      ranges,
+      joined,
+      sets,
+    );
     return { plans, ranges };
   }, [timeline, script, joined, sets]);
   if (!narration || !timeline || !staged) {

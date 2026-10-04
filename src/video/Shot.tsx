@@ -30,9 +30,19 @@ export type ShotPlan = {
   /** O plano está no mesmo cenário do anterior, ou do seguinte: o cenário fica, e só muda o que está nele. */
   readonly sameSetAsPrevious: boolean;
   readonly sameSetAsNext: boolean;
-  /** O nome do plano no palco, e o do plano anterior. */
-  readonly key: string;
+  /** O nome do plano no palco, e o do plano anterior. Fora de um vídeo montado, nenhum. */
+  readonly key: string | null;
   readonly previousKey: string | null;
+};
+
+// O plano desenhado fora de um vídeo montado (uma folha de modelo, um teste): entra e sai por corte.
+const OFFSTAGE: ShotPlan = {
+  joinsPrevious: false,
+  joinsNext: false,
+  sameSetAsPrevious: false,
+  sameSetAsNext: false,
+  key: null,
+  previousKey: null,
 };
 
 /**
@@ -66,9 +76,9 @@ export const Shot: React.FC<ShotProps> = ({
   wipe,
   children,
 }) => {
-  const plan = useContext(ShotPlans).get(range);
+  const plan = useContext(ShotPlans).get(range) ?? OFFSTAGE;
   const length = range.to - range.from;
-  const joinsNext = hold === undefined && (plan?.joinsNext ?? false);
+  const joinsNext = hold === undefined && plan.joinsNext;
 
   return (
     <Sequence
@@ -77,12 +87,12 @@ export const Shot: React.FC<ShotProps> = ({
       name={name}
     >
       <OnStage
-        entering={plan?.joinsPrevious ?? false}
+        entering={plan.joinsPrevious}
         leaveAt={joinsNext ? length : null}
-        inherits={plan?.sameSetAsPrevious ?? false}
-        bequeaths={joinsNext && (plan?.sameSetAsNext ?? false)}
-        shot={plan?.key ?? null}
-        previous={plan?.previousKey ?? null}
+        inherits={plan.sameSetAsPrevious}
+        bequeaths={joinsNext && plan.sameSetAsNext}
+        shot={plan.key}
+        previous={plan.previousKey}
       >
         {wipe ? <Wiping wipe={wipe}>{children}</Wiping> : children}
       </OnStage>
