@@ -1,5 +1,11 @@
 allowBuilds:
   esbuild: true
+# O @remotion/eslint-config-flat fixa o typescript-eslint 8.21.0, que traz fast-glob ->
+# micromatch -> braces (GHSA-vfj7-8cjw-p6xm, sem versão corrigida). Da 8.50 em diante o
+# typescript-eslint usa tinyglobby e o braces sai da árvore. Remova quando o Remotion
+# passar a fixar uma versão >= 8.50.
+overrides:
+  typescript-eslint: 8.71.0
 minimumReleaseAgeExclude:
   - '@remotion/bundler@4.0.532'
   - '@remotion/canvas@4.0.532'
