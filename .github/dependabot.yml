@@ -13,6 +13,15 @@ updates:
       # `pnpm run upgrade`, que também acerta a lista de exceções do pnpm-workspace.yaml.
       - dependency-name: remotion
       - dependency-name: "@remotion/*"
+      # O typescript-eslint ainda não aceita o TypeScript 7, e o ESLint 10 e o @types/node 26
+      # (o projeto roda no Node 24) pedem migração feita à mão. Só os saltos de versão
+      # principal ficam de fora.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+      - dependency-name: eslint
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: uv
     directory: /tools/narration
