@@ -81,6 +81,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `pesquisa/checagem` | Como verificar cada afirmação factual e tratar incerteza e simplificação? |
 | `conceito/angulo` | Qual é o ângulo, a tese e a promessa que justificam o vídeo? |
 | `conceito/voz` | Como definir a voz do projeto a partir dos mecanismos do estilo? |
+| `estrutura/moldes` | Que molde o tema pede, e que estrutura ele dá ao vídeo? |
 | `estrutura/arco` | Como organizar o vídeo em blocos, do gancho ao fechamento? |
 | `estrutura/gancho` | Como abrir o vídeo para criar a pergunta que segura o espectador nos primeiros 30 segundos? |
 | `estrutura/fechamento` | Como encerrar com a virada reflexiva que dá sentido ao tema, sem moralismo nem falso otimismo? |
@@ -105,7 +106,7 @@ Injete este arquivo primeiro, depois o procedimento da etapa, depois `entrevista
 |---|---|---|
 | 1. Pesquisa | Pesquisa | `levantamento`, `checagem` |
 | 2. Roteiro | Conceito | `angulo`, `voz`, `titulo-e-thumbnail` (primeira versão), `formato` |
-| | Estrutura | `arco`, `gancho`, `fechamento` |
+| | Estrutura | `moldes`, `arco`, `gancho`, `fechamento` |
 | | Escrita | `analogias`, `explicacao`, `fio`, `humor`, `narracao`, `procedencia`, `indicacao-visual` |
 | | Decupagem | skill `diretor-de-arte`, passos Conceito visual e Decupagem |
 | | Revisão | `checagem`, `procedencia`, `fio`, `narracao`, `critica` |

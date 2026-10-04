@@ -71,7 +71,8 @@ O **fio** é o que o espectador segura do primeiro ao último minuto. Quatro mec
 
 ## DEPENDÊNCIAS
 - arco: fornece os blocos, a cadeia de perguntas e o orçamento de palavras.
-- explicacao: fornece a tensão, o molde e os poucos elementos; o fio é construído sobre eles.
+- explicacao: fornece a tensão e os poucos elementos; o fio é construído sobre eles.
+- moldes: fornece o molde.
 - checagem: confere o detalhe de cada personagem, as contas do caso corrente e o que cada concessão afirma.
 
 ## LIMITES

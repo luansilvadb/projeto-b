@@ -69,6 +69,6 @@ Entregue ao usuário:
 - o que foi verificado e o que só ele pode verificar;
 - o que falta para publicar: a descrição com as fontes, montada na etapa `publicacao`.
 
-Lembre-o de três pontos na hora de publicar. A narração é uma voz sintética clonada, e o YouTube tem regras de divulgação de conteúdo sintético que mudam com frequência: ele deve conferir a regra vigente antes de marcar o vídeo. Os pesos do OmniVoice, que gera a narração, são de uso não comercial (CC-BY-NC): monetizar um vídeo narrado com ele foge da licença, e trocar de modelo depois não muda os vídeos já publicados. E conteúdo repetitivo, com cara de produção em massa, não monetiza: o que protege o canal são as três aprovações, a voz e a identidade visual próprias.
+Lembre-o de três pontos na hora de publicar. A narração é uma voz sintética clonada, e o YouTube tem regras de divulgação de conteúdo sintético que mudam com frequência: ele deve conferir a regra vigente antes de marcar o vídeo. A licença não comercial da voz, que ele decidiu na etapa `narracao`, continua valendo na hora de monetizar. E conteúdo repetitivo, com cara de produção em massa, não monetiza: o que protege o canal são as três aprovações, a voz e a identidade visual próprias.
 
 Peça a aprovação explicitamente. Com ela, registre a 3ª aprovação em `approvals.md` (formato nas convenções do `README.md`), com o arquivo, a duração e o volume medidos; o vídeo está fechado e segue para `publicacao`.

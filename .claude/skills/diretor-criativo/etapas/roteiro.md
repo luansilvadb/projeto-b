@@ -60,7 +60,7 @@ O número em algarismos, o símbolo e a sigla vão para a tela, descritos na enc
 
 Além das regras do validador:
 
-- Antes de qualquer frase, o desenho: a tensão do vídeo ("era de esperar X, e no entanto Y"), o molde, o bloco de fundamento que dá ao espectador a expectativa, os poucos elementos e o veredito de cada bloco, conforme `escrita/explicacao`. O usuário aprova a estrutura e uma amostra de um minuto antes do roteiro inteiro. Reescrever frases de um roteiro com o desenho errado não o conserta.
+- Antes de qualquer frase, o desenho: a tensão do vídeo ("era de esperar X, e no entanto Y"), o molde (`estrutura/moldes`), o bloco de fundamento que dá ao espectador a expectativa, os poucos elementos e o veredito de cada bloco, conforme `escrita/explicacao`. O usuário aprova a estrutura e uma amostra de um minuto antes do roteiro inteiro. Reescrever frases de um roteiro com o desenho errado não o conserta.
 - Depois do desenho e antes das frases, a ficha do fio de `escrita/fio`: o refrão, as ideias novas com o orçamento de cada uma, os vereditos com os fatos que os ganham, os personagens e as promessas. Ela vai ao usuário junto com a estrutura. Roteiro com o desenho certo e sem fio passa no validador e soa como texto de IA.
 - Frases médias e encadeadas, pelas regras de `escrita/narracao`. Aqui elas pesam em dobro: o modelo de voz gera uma frase por vez, com pausa entre elas, e texto picotado em frases curtas sai monótono e mal-humorado. As faixas medidas são as que o validador imprime.
 - A temperatura da voz (contemplativa ou enérgica) é decisão do usuário na ficha de voz (`conceito/voz`); a narração segue a ficha.
@@ -77,18 +77,7 @@ Uma cena é um trecho da narração, de uma a três frases, que o áudio trata c
 
 ## Planos
 
-Um plano é uma composição: o que fica na tela enquanto um trecho da cena é falado. Os planos vêm da skill `diretor-de-arte`: com o texto escrito e antes da aprovação, acione-a na etapa de decupagem (`etapas/decupagem.md`, na pasta dela), que decide elenco e paletas com o usuário, grava a ficha visual em `art.md` e devolve os planos de cada cena.
-
-Cada plano de `shots` leva o que a decupagem registra:
-
-| Campo | O que é | Valores |
-|---|---|---|
-| `cue` | a deixa: palavra da narração da cena em que o plano começa | o primeiro plano da cena não leva; os outros, sempre |
-| `occurrence` | qual ocorrência da palavra, quando ela se repete na cena | opcional; começa em 1 |
-| `staging` | a encenação: quem faz o quê, e onde, mais o texto de tela | texto |
-| `scale` | a escala | `wide` (aberto), `medium` (médio), `close`, `detail` (detalhe) |
-| `palette` | a paleta do plano | um nome da ficha visual |
-| `entry` | a entrada: como a imagem anterior vira esta | `cut` (corte), `camera` (câmera), `transform` (transformação), `wipe` (varredura) |
+Um plano é uma composição: o que fica na tela enquanto um trecho da cena é falado. Os planos vêm da skill `diretor-de-arte`: com o texto escrito e antes da aprovação, acione-a na etapa de decupagem (`etapas/decupagem.md`, na pasta dela), que decide elenco e paletas com o usuário, grava a ficha visual em `art.md` e devolve os planos de cada cena. Os campos de `shots` e os valores que o validador aceita estão lá, no passo 2.
 
 A imagem troca a cada oração, não a cada cena.
 
@@ -100,7 +89,7 @@ Mexer nos planos nunca regera áudio. Mexer numa frase, sim: se a encenação pe
 pnpm check-script <vídeo>
 ```
 
-Confere todas as regras, lista os problemas de uma vez e estima a duração de cada cena, de cada plano e do vídeo. No fim imprime o **perfil da narração** contra os vídeos de referência (tamanho de frase, frases curtas e longas, "você" ou "nós" e conectivos a cada 100 palavras). Medida FORA quer dizer que o texto relata em vez de explicar: volte à unidade `escrita/explicacao`, que manda rever o assunto e a cadeia de causas, e não trocar palavras. Não gere a voz com o perfil fora da faixa sem o usuário saber. O alvo do canal é de 6 a 10 minutos. Ele também aponta os planos com mais de 8 segundos: divida cada um, ou confirme que a encenação descreve uma imagem que muda dentro dele. Por fim confere `script.md` contra o roteiro e falha se alguma cena estiver fora da tabela de estrutura, em dois blocos ou fora de ordem; sem `script.md`, só avisa. Corrija até passar antes de mostrar ao usuário.
+Confere todas as regras, lista os problemas de uma vez e estima a duração de cada cena, de cada plano e do vídeo. No fim imprime o **perfil da narração** contra os vídeos de referência (tamanho de frase, frases curtas e longas, "você" ou "nós" e conectivos a cada 100 palavras). Medida FORA quer dizer que o texto relata em vez de explicar: volte à unidade `escrita/explicacao`, que manda rever o assunto e a cadeia de causas, e não trocar palavras. Não gere a voz com o perfil fora da faixa sem o usuário saber. O alvo do canal é de 6 a 10 minutos. Ele também aponta os planos longos, tratados na decupagem conforme a unidade `planos` da skill `diretor-de-arte`. Por fim confere `script.md` contra o roteiro e falha se alguma cena estiver fora da tabela de estrutura, em dois blocos ou fora de ordem; sem `script.md`, só avisa. Corrija até passar antes de mostrar ao usuário.
 
 ## Checagem e crítica independentes
 
@@ -109,7 +98,7 @@ Com o validador passando, o roteiro vai a dois subagentes que não viram o texto
 - `checador`: classifica cada afirmação da fala e da tela contra `research.md` (unidade `pesquisa/checagem`).
 - `editor`: faz as oito passadas de `revisao/critica` e devolve os problemas por cena. Ele confere contra `script.md`: antes de acioná-lo, a coluna Cenas da estrutura está preenchida. Passe a ele só a decisão aprovada que ainda não estiver lá.
 
-Eles julgam; quem decide e reescreve é você. Corrija todo bloqueante e todo relevante que não mexa em decisão aprovada, leve ao usuário os que mexem, rode o validador e acione de novo os dois, o `checador` só com as cenas alteradas. Repita até não restar afirmação *não verificada* nem problema bloqueante. Se uma rodada não resolver nenhum problema, pare e relate o que ficou em aberto.
+Eles julgam; quem decide e reescreve é você, pelos passos 2 a 5 do procedimento de `revisao/critica`. A cada rodada, rode o validador e acione de novo os dois, o `checador` só com as cenas alteradas; além do que a crítica exige, não pode restar afirmação *não verificada*.
 
 ## Primeira aprovação
 

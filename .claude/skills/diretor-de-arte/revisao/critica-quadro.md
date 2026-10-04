@@ -20,7 +20,7 @@ Com que critérios e medidas julgar os quadros?
    - Os diagramas passam de 37% dos planos? Na referência vão de 3% a 37%.
    - Há uma figura com olhos na parcela de planos que o tema pede?
 2. **Decupagem**
-   - Cada oração tem a sua imagem? Algum plano passa de 8 segundos sem mudar?
+   - Cada oração tem a sua imagem? Algum plano passa do limite de duração de `planos` sem mudar?
    - As escalas se alternam? O bloco situa, age e detalha?
    - As entradas foram escolhidas, ou é tudo corte?
 3. **Composição**

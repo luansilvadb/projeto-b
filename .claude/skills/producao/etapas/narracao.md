@@ -5,7 +5,11 @@ description: "Procedimento da etapa de narração neste repositório: o comando,
 
 # Narração de um vídeo
 
-Terceira etapa, depois do roteiro aprovado (skill `diretor-criativo`): a 1ª aprovação está em `src/videos/<vídeo>/approvals.md`; se não estiver, pergunte ao usuário antes de gerar. Um comando faz tudo:
+Terceira etapa, depois do roteiro aprovado (skill `diretor-criativo`): a 1ª aprovação está em `src/videos/<vídeo>/approvals.md`; se não estiver, pergunte ao usuário antes de gerar.
+
+Antes da primeira geração de um vídeo, diga ao usuário que os pesos do OmniVoice são de uso não comercial (CC-BY-NC): monetizar um vídeo narrado com ele foge da licença, e trocar de modelo depois não muda os vídeos já publicados. Se o vídeo é para monetizar, seguir com esta voz é decisão dele, tomada antes de gerar.
+
+Um comando faz tudo:
 
 ```bash
 pnpm narrate <vídeo>

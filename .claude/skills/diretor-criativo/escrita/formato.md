@@ -24,7 +24,7 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 - Promessa: <uma pergunta>
 - Idioma: <idioma>
 - Duração-alvo: <minutos>
-- Molde: <o de `explicacao`> / Forma de arco: <a de `arco`>
+- Molde: <o de `moldes`> / Forma de arco: <a de `arco`>
 - Tensão: era de esperar <X>, e no entanto <Y>
 - Analogia central: <a analogia e os blocos em que volta>
 - Elementos: <os poucos que o vídeo usa; o que saiu da pesquisa>

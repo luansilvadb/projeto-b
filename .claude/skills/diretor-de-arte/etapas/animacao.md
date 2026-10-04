@@ -7,7 +7,7 @@ description: "Procedimento da etapa de animação neste repositório: onde cada 
 
 Quinta etapa, depois do animatic aprovado: a 2ª aprovação está em `src/videos/<vídeo>/approvals.md`, sem reabertura; se não estiver, pergunte ao usuário. Aqui cada plano ganha movimento e acabamento. A composição já foi aprovada: mude posição, tamanho ou conteúdo só se a animação pedir, e avise o usuário quando mudar.
 
-O conhecimento de como animar está nas unidades de movimento desta skill: leia-as nesta ordem (`sincronia`, `entradas`, `pausa-viva`, `acao`, `movimento`, `transicoes`, `efeitos`, `critica-movimento`). Este arquivo diz onde esse conhecimento vira código neste projeto.
+O conhecimento de como animar está nas unidades de movimento desta skill, lidas passo a passo pela ordem de injeção de `SKILL.md`: as da Partitura no passo 1, as do Movimento no passo 2 e `critica-movimento` no passo 3; as do passo seguinte, só ao chegar nele. Este arquivo diz onde esse conhecimento vira código neste projeto.
 
 Leia a skill `remotion-best-practices` (regras de `remotion-markup`) antes de escrever. O essencial: todo movimento sai de `useCurrentFrame()` com `interpolate()` e `Easing`; transições e animações de CSS não renderizam; prefira as propriedades `scale`, `translate` e `rotate` a `transform`.
 
@@ -61,7 +61,7 @@ Movimento não aparece num quadro só: renderize o vídeo e leia **tiras de quad
 
 `pnpm critique` mede o movimento contra os vídeos de referência: tela quase parada, tempo com mais de 10% do quadro em movimento e renovação da imagem. Com uma medida fora, ache onde pelo mapa segundo a segundo (quase parado em que trecho?) e corrija o plano, não o vídeo inteiro. A tela quase parada se resolve com pausa viva de amplitude suficiente para ser vista em 320 px de largura: respiração de 2% da altura, bobina de 9 px, luz que tremula 25%, moldura que balança; o movimento grande se resolve com câmera motivada (recuo quando entra mais um item, aproximação para reação, deslize para seguir quem anda).
 
-Com o trecho renderizado e as suas próprias tiras lidas, acione o subagente `critico-de-movimento`, que não animou nada e faz as sete passadas de `critica-movimento`. Passe o nome da pasta do vídeo, o caminho do MP4, os planos a julgar e a partitura. Ele julga; quem decide e refaz é você. Corrija todo bloqueante e todo relevante que não mexa em decisão aprovada, leve ao usuário os que mexem, renderize e acione de novo só com os planos alterados. Se uma rodada não resolver nenhum problema, pare e relate o que ficou em aberto.
+Com o trecho renderizado e as suas próprias tiras lidas, acione o subagente `critico-de-movimento`, que não animou nada e faz as sete passadas de `critica-movimento`. Passe o nome da pasta do vídeo, o caminho do MP4, os planos a julgar e a partitura. Ele julga; quem decide e refaz é você, pelos passos 4 a 6 do procedimento de `critica-movimento`, acionando-o de novo só com os planos alterados.
 
 Depois peça ao usuário para assistir, porque ritmo e suavidade só se julgam em movimento, e entregue junto as tiras das transições e as medidas. O "sim" dele é o **aceite da animação**: registre-o em `src/videos/<vídeo>/approvals.md` (formato nas convenções do `README.md`), com cada medida fora da faixa que ele aceitou.
 

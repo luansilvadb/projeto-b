@@ -10,11 +10,11 @@ Quarta etapa, depois da narração (skill `producao`). Antes de começar, confir
 Antes de escrever qualquer cena:
 
 - leia a skill `remotion-best-practices` e, dentro dela, as regras de marcação (`remotion-markup`), que descrevem as APIs atuais do Remotion;
-- leia as unidades dos passos Desenho, Quadro e Revisão desta etapa, listadas em `SKILL.md`. São elas que dizem como construir cada desenho, compor cada quadro e julgar o resultado.
+- leia as unidades do passo em curso (Desenho, depois Quadro, depois Revisão), pela ordem de injeção de `SKILL.md`; as do passo seguinte, só ao chegar nele. São elas que dizem como construir cada desenho, compor cada quadro e julgar o resultado.
 
 ## Estrutura de um vídeo
 
-Use `src/videos/demo/` como modelo. O nome da pasta (o "slug") é também o id da composição e o argumento dos comandos.
+Use `src/videos/why-we-sleep/` como modelo: o `demo` é anterior à ficha visual e às cores por vídeo, e não tem `art.md`, `script.md` nem `palette.ts`. O nome da pasta (o "slug") é também o id da composição e o argumento dos comandos.
 
 ```
 src/videos/<vídeo>/
@@ -31,7 +31,7 @@ src/videos/<vídeo>/
 ```
 
 1. Crie um componente por cena em `scenes/`. Ele recebe `scene` (os tempos da cena) e ocupa o quadro inteiro.
-2. Em `index.tsx`, mapeie cada `id` do roteiro para o componente e exporte o componente do vídeo e o `calculateMetadata`, como o demo faz.
+2. Em `index.tsx`, mapeie cada `id` do roteiro para o componente e exporte o componente do vídeo e o `calculateMetadata`, como o modelo faz.
 3. Registre a composição em `src/Root.tsx`, com o `id` igual ao nome da pasta.
 
 A duração de cada cena vem da narração: não escreva durações fixas. Use `scene.durationInFrames` e, para sincronizar algo com a fala, `cueFrame(scene, "palavra")`. Se a palavra não existir na narração da cena, o render falha de propósito: é sinal de que roteiro e cena divergiram.
@@ -69,7 +69,7 @@ pnpm critique <vídeo> animatic   # medidas do render contra os vídeos de refer
 
 Enquanto desenha, abra cada imagem gerada e corrija o que vir: nenhum quadro vai adiante sem ter sido aberto. Para ver um momento específico, passe os quadros: `pnpm stills <vídeo> 30 120`.
 
-Com os quadros de todos os planos renderizados, acione o subagente `critico-de-quadro`, que não desenhou nada e faz as oito passadas da unidade `critica-quadro`, começando pela encenação: sem som e sem etiqueta, o plano diz o que a oração afirma? Passe o nome da pasta do vídeo, o caminho dos quadros e a tabela do `pnpm critique`. Ele julga; quem decide e redesenha é você. Corrija todo bloqueante e todo relevante que não mexa em decisão aprovada, leve ao usuário os que mexem, renderize e acione de novo só com os planos alterados. Se uma rodada não resolver nenhum problema, pare e relate o que ficou em aberto.
+Com os quadros de todos os planos renderizados, acione o subagente `critico-de-quadro`, que não desenhou nada e faz as oito passadas da unidade `critica-quadro`, começando pela encenação: sem som e sem etiqueta, o plano diz o que a oração afirma? Passe o nome da pasta do vídeo, o caminho dos quadros e a tabela do `pnpm critique`. Ele julga; quem decide e redesenha é você, pelos passos 4 a 6 do procedimento de `critica-quadro`, acionando-o de novo só com os planos alterados.
 
 O `pnpm critique` compara o render com a faixa de 12 vídeos de referência. Com `animatic`, só reprovam as medidas que já valem com os quadros parados: área com desenho, cores por quadro, trocas da cor dominante e peso da cor mais comum. Medida fora da faixa é problema bloqueante. Medida dentro da faixa não aprova nada: ela não enxerga desenho ruim nem encenação fraca.
 

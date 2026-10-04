@@ -12,18 +12,6 @@ Como fazer o texto explicar para quem assiste, em vez de relatar fatos?
 
 **Base.** Nove vídeos do Kurzgesagt em português, indicados pelo usuário como referência de texto e lidos pela legenda manual: "Mude a sua vida – Um passinho de cada vez" (hábitos), "O que você está fazendo com a sua vida?" (semanas), "Por que a carne é a melhor pior coisa do mundo?" (carne), "Por que baleias azuis não têm câncer? – Paradoxo de Peto" (Peto), "Leite – Bebida Saudável ou Veneno?" (leite), "Um antídoto para a insatisfação" (gratidão), "E se uma bomba nuclear fosse detonada na Fossa das Marianas?" (bomba), "Quem é o responsável pelas mudanças climáticas?" (clima) e "É muito tarde para parar as mudanças climáticas?" (clima 2). Estudo, com o texto e a imagem de cada vídeo, em `referencias/narracao-kurzgesagt.md`, na pasta desta skill.
 
-**Cinco moldes.** O tema decide qual:
-
-| Molde | Exemplo | Quem assiste entra como | O que carrega o vídeo |
-|---|---|---|---|
-| A vida de quem assiste | hábitos, semanas, gratidão | "você", 1 palavra em 20 | uma metáfora ou uma conta que cresce |
-| Um fato do mundo que fazemos | carne | "nós" ("usamos", "matamos") | um paradoxo com os dois lados verdadeiros |
-| Um mistério da ciência | Peto | o corpo dele como medida ("não são menores que as suas") | expectativa, quebra e respostas |
-| Uma controvérsia | leite, clima, clima 2 | dono da pergunta ("quem será que tem razão?") | alegações pesadas uma a uma, cada uma com veredito |
-| Um experimento mental | bomba | cúmplice ("vamos puxar o gatilho") | a expectativa exagerada, o passo a passo no presente e o anticlímax |
-
-Um tema como sono, vacina ou buraco negro é do terceiro molde, e pode pegar emprestado o "nós" do segundo.
-
 **Os treze padrões, comuns aos nove:**
 
 1. **Uma tensão que importa a quem assiste, posta no gancho.** Em 15 a 110 s: o assunto que toca a todos, o que há de estranho nele e a promessa do caminho ("Para entender o porquê, primeiro precisamos analisar a natureza do próprio câncer"; "o que podemos fazer a esse respeito sem precisar renunciar ao churrasco?"). A tensão volta no fim. Fato que não a empurra fica fora.
@@ -39,18 +27,6 @@ Um tema como sono, vacina ou buraco negro é do terceiro molde, e pode pegar emp
 11. **O que acontece é contado acontecendo.** "A bolha cresce rapidamente... E então, quase tão rápido quanto emerge, ela para." "Com a mutação certa, uma célula perderá sua capacidade de autodestruição; outra mutação, e ela desenvolverá a capacidade de se esconder." O espectador assiste ao processo, no presente e passo a passo. "Pesquisadores mediram que..." é relato; quem mediu vai para a fonte no canto da tela, a não ser que seja personagem do vídeo, conforme `fio`.
 12. **O mapa é dito antes do caminho, e o narrador recapitula no meio.** "Para os cientistas, há duas respostas para o paradoxo." "Quatro fatores: dois explicam por que as emissões ainda estão aumentando e dois explicam como podemos impedir isso." "Pergunta 1 de 3." O espectador sabe quantas partes faltam e por que cada uma existe. Na virada do vídeo, uma frase junta o que ficou: "OK, até agora vimos que... O que é o oposto do que deveria estar acontecendo."
 13. **O fim devolve algo a quem assiste.** O que fazer, por que isso importa ("abrir caminho para novas terapias") ou uma frase para levar ("aproveite seu churrasco, mas também o respeite").
-
-**Estrutura do molde "mistério da ciência"** (a de Peto, que serve aos temas do canal):
-
-1. Gancho: o assunto que importa, o fato estranho, por que ele não faz sentido, a promessa.
-2. Vinheta sem fala (cerca de 10 s).
-3. O mecanismo, explicado com calma e sem a evidência: o que o espectador precisa saber para ter a expectativa.
-4. A expectativa dita em voz alta, a quebra, e o nome do mistério.
-5. O mapa das respostas ("há duas respostas"), cada uma com cartão de capítulo.
-6. Cada resposta como cadeia de mecanismo, fechada por uma frase curta que a resume, e com a ressalva do que ainda não se sabe.
-7. Por que isso importa para nós, e a frase final.
-
-Nos outros moldes muda o miolo: as alegações são pesadas uma a uma, cada uma com o que se disse, o que os estudos melhores mostram, a ressalva e o veredito (controvérsia); a metáfora ou a conta cresce bloco a bloco (vida de quem assiste); ou um lado do paradoxo é construído em degraus, o outro volta, e o vídeo termina no que fazer (fato do mundo).
 
 **Medidas do texto.** O `pnpm check-script` tira cinco medidas e as compara com a faixa dos nove vídeos: palavras por frase, frases de até 6 palavras, frases de 25 ou mais, "você" e "nós" a cada 100 palavras, e conectivos a cada 100 palavras. As faixas estão num lugar só, `PROFILE_CRITERIA` em `src/narration/profile.ts`; o valor de cada vídeo, no estudo em `referencias/narracao-kurzgesagt.md`.
 
@@ -73,7 +49,7 @@ Nos outros moldes muda o miolo: as alegações são pesadas uma a uma, cada uma 
 
 **Procedimento:**
 
-1. Escolha o molde.
+1. Escolha o molde, conforme `moldes`.
 2. Escreva a tensão em uma frase, no formato "era de esperar X, e no entanto Y". É o assunto do vídeo; o tema pesquisado é a explicação.
 3. Liste o que o espectador precisa saber para esperar X. Isso é o bloco de mecanismo, e vem antes de qualquer evidência.
 4. Escolha os poucos elementos do vídeo (até quatro bichos, coisas ou personagens) e a ordem em que são medidos uns contra os outros.
@@ -84,6 +60,7 @@ Nos outros moldes muda o miolo: as alegações são pesadas uma a uma, cada uma 
 9. Leia o bloco pelas perguntas acima.
 
 ## DEPENDÊNCIAS
+- moldes: fornece o molde do vídeo e a estrutura dele.
 - angulo: fornece a tese; aqui ela é reformulada como expectativa e quebra.
 - analogias: fornece a construção da metáfora; aqui ela pode virar o dispositivo do vídeo inteiro.
 
