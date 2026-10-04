@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    # Um PR por semana com tudo, em vez de um por pacote.
+    groups:
+      npm:
+        patterns: ["*"]
+    ignore:
+      # As versões do Remotion são fixas e iguais em todos os pacotes; quem as atualiza é o
+      # `pnpm run upgrade`, que também acerta a lista de exceções do pnpm-workspace.yaml.
+      - dependency-name: remotion
+      - dependency-name: "@remotion/*"
+
+  - package-ecosystem: uv
+    directory: /tools/narration
+    schedule:
+      interval: weekly
+    groups:
+      python:
+        patterns: ["*"]
+        # O torch e o torchaudio ficam em PR à parte: mudam a voz gerada e pedem teste na GPU.
+        exclude-patterns: ["torch", "torchaudio"]
