@@ -1,8 +1,3 @@
----
-name: entrevista-movimento
-description: Define quais decisões de movimento vão ao usuário, como são mostradas e o que o agente resolve sozinho.
----
-
 ## PERGUNTA
 Que decisões de movimento vão ao usuário, e quais o agente resolve sozinho?
 
@@ -23,25 +18,12 @@ Que decisões de movimento vão ao usuário, e quais o agente resolve sozinho?
 
 **Mostrar, não descrever.** Movimento só se julga em movimento. Uma decisão chega como vídeo renderizado do plano, ou dos planos vizinhos quando é uma transição. Alternativas vão lado a lado, no mesmo trecho. Para a leitura de um instante, uma tira de quadros consecutivos; para a decisão, o vídeo.
 
-**Procedimento para cada decisão:**
-
-1. Resolva antes o que ela depende: a partitura do plano antes da atuação, a atuação antes da câmera.
-2. Faça uma pergunta por vez e espere a resposta.
-3. Ofereça de duas a quatro alternativas renderizadas, cada uma já no nível em que será usada.
-4. Declare a alternativa recomendada e o motivo em uma ou duas frases.
-5. Aponte a fraqueza da própria recomendação quando ela existir.
-6. Registre a decisão na partitura do plano; ela passa a integrar o plano acordado.
+**Nesta unidade**, o procedimento da CONDUÇÃO do `SKILL.md` ganha: a ordem das dependências é a partitura do plano antes da atuação, a atuação antes da câmera; toda alternativa chega renderizada; o registro é na partitura do plano.
 
 **Partitura.** O registro de cada plano: o que acontece, em que palavra, por quanto tempo, com que entrada e com que ênfase. É o que a crítica confere e o que o usuário aprova.
 
-**Insistência.** Resposta vaga não encerra a decisão: mostre alternativas mais contrastantes. Se a escolha contradiz algo aprovado ou um limite medido, diga isso antes de seguir.
-
-**Plano acordado.** É a soma das decisões registradas. Qualquer mudança fora dele, ainda que pareça melhoria, exige confirmação explícita.
-
 ## LIMITES
 - Não perguntar o que as unidades e o quadro aprovado já respondem.
-- Não agrupar várias decisões numa pergunta só.
-- Não apresentar alternativa que o agente não defenderia.
 - Não pedir aprovação de vídeo que o próprio agente ainda não viu em quadros consecutivos.
 
 ## EXEMPLO

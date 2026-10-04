@@ -1,8 +1,3 @@
----
-name: transicoes
-description: "Define como executar cada tipo de entrada entre planos: corte, câmera, transformação e varredura, com os tempos e os erros de cada um."
----
-
 ## PERGUNTA
 Como executar cada tipo de entrada entre planos?
 

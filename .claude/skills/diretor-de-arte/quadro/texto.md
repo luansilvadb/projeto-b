@@ -1,8 +1,3 @@
----
-name: texto
-description: Define os tipos de texto de tela do estilo, onde cada um fica, quanto texto cabe num plano e o que nunca entra.
----
-
 ## PERGUNTA
 Que texto entra na tela, e preso a quê?
 

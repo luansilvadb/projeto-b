@@ -1,8 +1,3 @@
----
-name: animatic
-description: "Procedimento da etapa de animatic neste repositório: a pasta e a composição de um vídeo, onde moram cores, primitivos e desenhos, os comandos de conferência e a segunda aprovação."
----
-
 # Animatic de um vídeo
 
 Quarta etapa, depois da narração (skill `producao`). Antes de começar, confira em `src/videos/<vídeo>/approvals.md` que a 1ª aprovação está registrada e não foi reaberta; se não estiver, pergunte ao usuário. O animatic é o vídeo inteiro com cada plano já desenhado e composto (o que aparece, onde, com que texto) tocando sobre a narração, mas ainda sem acabamento de movimento. Ele existe para o usuário julgar ritmo, clareza e imagem antes de se gastar tempo animando. Termina na **segunda aprovação do usuário**.
@@ -71,7 +66,7 @@ Enquanto desenha, abra cada imagem gerada e corrija o que vir: nenhum quadro vai
 
 Com os quadros de todos os planos renderizados, acione o subagente `critico-de-quadro`, que não desenhou nada e faz as oito passadas da unidade `critica-quadro`, começando pela encenação: sem som e sem etiqueta, o plano diz o que a oração afirma? Passe o nome da pasta do vídeo, o caminho dos quadros e a tabela do `pnpm critique`. Ele julga; quem decide e redesenha é você, pelos passos 4 a 6 do procedimento de `critica-quadro`, acionando-o de novo só com os planos alterados.
 
-O `pnpm critique` compara o render com a faixa de 12 vídeos de referência. Com `animatic`, só reprovam as medidas que já valem com os quadros parados: área com desenho, cores por quadro, trocas da cor dominante e peso da cor mais comum. Medida fora da faixa é problema bloqueante. Medida dentro da faixa não aprova nada: ela não enxerga desenho ruim nem encenação fraca.
+Com `animatic`, o `pnpm critique` só reprova as medidas que já valem com os quadros parados (seção Medidas de `critica-quadro`).
 
 O `pnpm stills` monta o vídeo sem áudio (um defeito do Remotion impede renderizar quadros avulsos com áudio); isso não afeta as imagens.
 

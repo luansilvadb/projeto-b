@@ -1,8 +1,3 @@
----
-name: entradas
-description: Define como um elemento entra na tela, muda de estado e sai, com as curvas, as durações e o escalonamento do estilo.
----
-
 ## PERGUNTA
 Como um elemento entra, muda de estado e sai?
 

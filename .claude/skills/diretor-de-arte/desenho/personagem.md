@@ -1,8 +1,3 @@
----
-name: personagem
-description: "Define como construir, dar expressão e posar figuras com rosto: pessoas, bichos e processos personificados."
----
-
 ## PERGUNTA
 Como desenhar e posar uma figura com rosto?
 
@@ -82,7 +77,6 @@ A folha aprovada é a referência de constância: todo plano é conferido contra
 
 ## LIMITES
 - Atuação em movimento (antecipação, tempo das ações, piscadas) não é decidida aqui.
-- Nenhum personagem de outro canal é copiado em forma, cor ou proporção.
 - Rosto só entra onde o elenco decidiu.
 
 ## EXEMPLO

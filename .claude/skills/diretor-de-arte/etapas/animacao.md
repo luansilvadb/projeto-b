@@ -1,8 +1,3 @@
----
-name: animacao
-description: "Procedimento da etapa de animação neste repositório: onde cada regra de movimento vira código (primitivos, curvas, câmera, transições), os efeitos sonoros e a conferência em tiras de quadros e medidas."
----
-
 # Animação das cenas
 
 Quinta etapa, depois do animatic aprovado: a 2ª aprovação está em `src/videos/<vídeo>/approvals.md`, sem reabertura; se não estiver, pergunte ao usuário. Aqui cada plano ganha movimento e acabamento. A composição já foi aprovada: mude posição, tamanho ou conteúdo só se a animação pedir, e avise o usuário quando mudar.
@@ -57,9 +52,7 @@ pnpm render <vídeo>              # ou uma composição de prévia com as cenas 
 pnpm critique <vídeo>            # ou pnpm critique out/<arquivo>.mp4
 ```
 
-Movimento não aparece num quadro só: renderize o vídeo e leia **tiras de quadros consecutivos** (5 a 10 por segundo, com o tempo em cada um) cobrindo cada transição e cada ação; `ffmpeg -ss <s> -t <dur> -i out/<vídeo>.mp4 -vf "fps=5,scale=320:180,tile=6x5" -frames:v 1 tira.png` serve. Procure: ponte que pula de lugar na transição, elemento que some no corte, texto que entra durante o movimento da câmera, ação que termina antes de começar (curva errada), quadro igual ao anterior.
-
-`pnpm critique` mede o movimento contra os vídeos de referência: tela quase parada, tempo com mais de 10% do quadro em movimento e renovação da imagem. Com uma medida fora, ache onde pelo mapa segundo a segundo (quase parado em que trecho?) e corrija o plano, não o vídeo inteiro. A tela quase parada se resolve com pausa viva de amplitude suficiente para ser vista em 320 px de largura: respiração de 2% da altura, bobina de 9 px, luz que tremula 25%, moldura que balança; o movimento grande se resolve com câmera motivada (recuo quando entra mais um item, aproximação para reação, deslize para seguir quem anda).
+Renderize o vídeo e leia as tiras de quadros consecutivos que `critica-movimento` pede; `ffmpeg -ss <s> -t <dur> -i out/<vídeo>.mp4 -vf "fps=5,scale=320:180,tile=6x5" -frames:v 1 tira.png` monta uma. Com uma medida do `pnpm critique` fora da faixa, o mapa segundo a segundo e o conserto de cada medida estão na seção Medidas da mesma unidade.
 
 Com o trecho renderizado e as suas próprias tiras lidas, acione o subagente `critico-de-movimento`, que não animou nada e faz as sete passadas de `critica-movimento`. Passe o nome da pasta do vídeo, o caminho do MP4, os planos a julgar e a partitura. Ele julga; quem decide e refaz é você, pelos passos 4 a 6 do procedimento de `critica-movimento`, acionando-o de novo só com os planos alterados.
 

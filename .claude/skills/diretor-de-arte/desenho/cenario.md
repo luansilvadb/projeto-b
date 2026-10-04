@@ -1,8 +1,3 @@
----
-name: cenario
-description: Define os tipos de fundo do estilo, quando usar cada um e como construir profundidade e luz em camadas.
----
-
 ## PERGUNTA
 Como construir o fundo e a profundidade?
 
@@ -64,7 +59,6 @@ Como construir o fundo e a profundidade?
 ## LIMITES
 - Tamanho e posição do assunto pertencem a `composicao`.
 - O movimento de câmera entre as camadas não é decidido aqui; as camadas só precisam estar separadas para permiti-lo.
-- Nenhum cenário da referência é reproduzido.
 
 ## EXEMPLO
 > Lagoa rasa, de dia, para a abertura.

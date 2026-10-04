@@ -7,7 +7,7 @@ Como levar as decisões criativas ao usuário, uma por vez e com recomendação?
 
 **Decisões que sempre vão ao usuário:**
 
-1. tema delimitado, idioma e duração-alvo (padrões: pt-BR, 10–14 minutos);
+1. tema delimitado, idioma e duração-alvo (padrões: pt-BR e o alvo do canal, em `etapas/roteiro.md`);
 2. ângulo, tese e promessa;
 3. voz do projeto;
 4. estrutura em blocos;

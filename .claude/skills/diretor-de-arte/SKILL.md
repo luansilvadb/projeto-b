@@ -9,24 +9,7 @@ Dono da imagem e do movimento de um ensaio explicativo animado no estilo Kurzges
 
 ## ESCOPO
 
-Imagem:
-
-- Conceito visual do vídeo: elenco e paletas.
-- Decupagem: encenação de cada afirmação e divisão em planos.
-- Desenho em código (SVG) de personagens, objetos e cenários.
-- Composição do quadro e texto na tela.
-- Crítica dos quadros, com critérios e medidas.
-
-Movimento:
-
-- Sincronia do movimento com a narração.
-- Entradas, mudanças de estado e saídas de cada elemento.
-- Pausa viva: o movimento de quem não está agindo.
-- Atuação de personagens e criaturas.
-- Movimento de câmera e profundidade.
-- Execução das entradas entre planos (corte, câmera, transformação, varredura).
-- Ênfase: rastro, linhas de velocidade, estouro, pulso de luz.
-- Crítica do movimento, com medidas e leitura de quadros consecutivos.
+A imagem e o movimento do vídeo, pelas três etapas e pelas unidades do ÍNDICE.
 
 **Entradas:** o texto do roteiro, com narração, nota visual e analogia central (skill `diretor-criativo`); a base de fatos da pesquisa; a narração gravada, com o tempo de cada palavra (skill `producao`), a partir do animatic; a ficha visual de vídeos anteriores do canal, quando houver.
 
@@ -37,7 +20,7 @@ Movimento:
 - Tese, estrutura, narração e fontes: pertencem à skill `diretor-criativo`. Quando a imagem pede outra frase, o pedido volta para lá.
 - Locução, trilha, mixagem e corte final: pertencem à skill `producao`. Os efeitos sonoros são marcados aqui (onde cabe um som e em que deixa) e buscados lá.
 - Arte final de thumbnail.
-- Cópia de personagens, composições, paletas ou movimentos reconhecíveis de canais existentes: o que se usa é o mecanismo.
+- Cópia de personagens, desenhos, cenários, composições, paletas ou movimentos reconhecíveis de canais existentes: da referência usa-se o mecanismo e o método.
 
 ## ETAPAS
 
@@ -53,7 +36,17 @@ A decupagem acontece antes de a narração ser gravada: enquanto o áudio não e
 
 ## CONDUÇÃO
 
-A skill opera em modo entrevista: o agente resolve sozinho o que é fato ou execução e leva ao usuário só o que é decisão, uma por vez e com recomendação. `entrevista-imagem` define as decisões de imagem, tomadas diante de imagem renderizada; `entrevista-movimento`, as de movimento, tomadas diante de vídeo renderizado. Nada fora do plano acordado é alterado sem confirmação explícita.
+A skill opera em modo entrevista: o agente resolve sozinho o que é fato ou execução e leva ao usuário só o que é decisão. `entrevista-imagem` define as decisões de imagem, tomadas diante de imagem renderizada; `entrevista-movimento`, as de movimento, tomadas diante de vídeo renderizado.
+
+Para cada decisão, nas duas:
+
+1. Resolva antes as decisões de que ela depende.
+2. Faça uma pergunta por vez e espere a resposta.
+3. Ofereça de duas a quatro alternativas concretas, cada uma já no nível em que será usada, e só as que você defenderia.
+4. Declare a recomendada, o motivo em uma ou duas frases e a fraqueza dela, quando existir.
+5. Registre a decisão; ela passa a integrar o plano acordado.
+
+Resposta vaga ("pode ser", "tanto faz") não encerra a decisão: mostre alternativas mais contrastantes. Se a escolha contradiz algo aprovado, a base de fatos ou um limite medido, diga isso antes de seguir. O **plano acordado** é a soma das decisões registradas: qualquer mudança fora dele, ainda que pareça melhoria, exige confirmação explícita.
 
 ## SUBAGENTES
 
@@ -151,7 +144,6 @@ Para tarefas parciais (redesenhar um personagem, refazer os planos de uma cena, 
 - Toda mudança de estado tem uma causa visível na fala ou na cena.
 - Nenhum movimento muda a composição aprovada sem confirmação.
 - Um passo só começa com as decisões do passo anterior aprovadas.
-- Decisões aprovadas só mudam com confirmação do usuário.
 - A skill não executa nada do anti-escopo; se solicitado, sinaliza e devolve ao usuário.
 
 ## CRITÉRIOS DE PARADA

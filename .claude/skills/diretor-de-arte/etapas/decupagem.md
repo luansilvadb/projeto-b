@@ -1,8 +1,3 @@
----
-name: decupagem
-description: "Procedimento da decupagem neste repositório: a ficha visual em art.md, os planos gravados em script.json, a conferência antes de existir imagem e a entrega para a primeira aprovação."
----
-
 # Decupagem de um vídeo
 
 Acontece dentro da etapa de roteiro, acionada pela skill `diretor-criativo` com o texto escrito e ainda não aprovado. O que sai daqui é a ficha visual, `src/videos/<vídeo>/art.md`, e os planos de cada cena, o campo `shots` de `src/videos/<vídeo>/script.json`. Os dois são aprovados junto com o texto, na **primeira aprovação**, que é pedida lá.

@@ -1,8 +1,3 @@
----
-name: critica-quadro
-description: Define os critérios, as medidas e o procedimento para julgar a decupagem e os quadros e decidir o que refazer.
----
-
 ## PERGUNTA
 Com que critérios e medidas julgar os quadros?
 

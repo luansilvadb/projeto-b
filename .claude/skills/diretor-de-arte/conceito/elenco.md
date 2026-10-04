@@ -1,8 +1,3 @@
----
-name: elenco
-description: Define quem aparece no vídeo, que papel cada figura cumpre e o que ganha ou não ganha rosto.
----
-
 ## PERGUNTA
 Quem conduz o vídeo na tela, e o que ganha rosto?
 
@@ -58,7 +53,6 @@ Quem conduz o vídeo na tela, e o que ganha rosto?
 
 ## LIMITES
 - A construção do desenho pertence a `personagem` e a `forma`.
-- Nenhum personagem existente de outro canal serve de molde.
 
 ## EXEMPLO
 > Vídeo sobre por que dormimos.

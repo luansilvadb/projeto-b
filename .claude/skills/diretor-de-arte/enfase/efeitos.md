@@ -1,8 +1,3 @@
----
-name: efeitos
-description: Define os recursos que fazem um movimento ser sentido (rastro, linhas, estouro, luz, borrão) e quando cada um cabe.
----
-
 ## PERGUNTA
 Que recursos fazem um movimento ser sentido, e quando usá-los?
 

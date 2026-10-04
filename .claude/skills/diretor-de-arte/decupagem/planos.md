@@ -1,8 +1,3 @@
----
-name: planos
-description: Define como dividir a narração de um bloco em planos, com deixa, escala, paleta e entrada de cada um.
----
-
 ## PERGUNTA
 Como dividir a cena em planos, um por oração?
 

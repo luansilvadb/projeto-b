@@ -1,8 +1,3 @@
----
-name: pausa-viva
-description: "Define o movimento de quem não está agindo: ciclos de respiração, balanço, piscar e deriva que impedem qualquer quadro de congelar."
----
-
 ## PERGUNTA
 O que se move quando nada acontece?
 

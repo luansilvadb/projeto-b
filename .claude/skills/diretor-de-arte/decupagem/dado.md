@@ -1,8 +1,3 @@
----
-name: dado
-description: Define como mostrar número, escala, comparação e gráfico dentro de uma cena, e quando um gráfico puro se justifica.
----
-
 ## PERGUNTA
 Como mostrar número, escala e comparação sem virar slide?
 

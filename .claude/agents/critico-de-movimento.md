@@ -1,6 +1,6 @@
 ---
 name: critico-de-movimento
-description: "Crítico de movimento de um vídeo do canal: monta tiras de quadros consecutivos do vídeo renderizado, faz as sete passadas da crítica de movimento e devolve cada problema com plano, instante, critério e classificação. Acionado pela skill diretor-de-arte na animação, depois do render e antes de o trecho ir ao usuário; não animou os planos, e é essa a função dele."
+description: "Crítico de movimento de um vídeo do canal: monta tiras de quadros consecutivos do vídeo renderizado, faz as sete passadas da crítica de movimento e devolve cada problema com plano, instante, critério e classificação. Acionado pela skill diretor-de-arte na animação, depois do render e antes de o trecho ir ao usuário."
 tools: Read, Grep, Glob, Bash
 ---
 

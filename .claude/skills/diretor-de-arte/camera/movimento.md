@@ -1,8 +1,3 @@
----
-name: movimento
-description: Define quando a câmera se move dentro de um plano, como ela reage ao que acontece e como o parallax dá profundidade.
----
-
 ## PERGUNTA
 Quando e como a câmera se move dentro de um plano?
 

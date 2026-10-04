@@ -1,8 +1,3 @@
----
-name: cor
-description: Define as paletas do vídeo, o significado de cada uma e as regras de cor dentro de um quadro e de um plano para o outro.
----
-
 ## PERGUNTA
 Que paletas o vídeo usa, e quando troca de uma para outra?
 
@@ -56,7 +51,6 @@ Cada vídeo define de dois a quatro modos. O espectador os aprende no primeiro m
 
 ## LIMITES
 - Sombra, brilho e borda de luz como forma pertencem a `forma`; luz de cenário, a `cenario`.
-- Nenhuma paleta é copiada de outro canal: o que se usa é o mecanismo (modos, troca por ideia, contraste no foco).
 
 ## EXEMPLO
 > Vídeo sobre por que dormimos, três modos:

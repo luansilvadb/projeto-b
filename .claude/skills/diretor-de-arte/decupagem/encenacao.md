@@ -1,8 +1,3 @@
----
-name: encenacao
-description: Define como transformar cada afirmação da narração em um acontecimento visível, em vez de um esquema com etiquetas.
----
-
 ## PERGUNTA
 Como transformar uma afirmação em algo que acontece na tela?
 
@@ -74,7 +69,6 @@ Texto solto na tela não é degrau nenhum.
 ## LIMITES
 - Dividir em planos, escolher escala e transição pertence a `planos`.
 - Número, escala e gráfico pertencem a `dado`.
-- Nenhuma composição de outro canal é reproduzida; o que se usa é o mecanismo.
 - A narração não é alterada aqui: o pedido volta ao `diretor-criativo`.
 
 ## EXEMPLO

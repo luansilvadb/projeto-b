@@ -1,6 +1,6 @@
 ---
 name: critico-de-quadro
-description: "Crítico de imagem de um vídeo do canal: abre os quadros renderizados de cada plano, faz as oito passadas da crítica de quadros e devolve cada problema com plano, critério e classificação. Acionado pela skill diretor-de-arte no animatic, depois de os quadros serem renderizados e antes da segunda aprovação; não desenhou os quadros, e é essa a função dele."
+description: "Crítico de imagem de um vídeo do canal: abre os quadros renderizados de cada plano, faz as oito passadas da crítica de quadros e devolve cada problema com plano, critério e classificação. Acionado pela skill diretor-de-arte no animatic, depois de os quadros serem renderizados e antes da segunda aprovação."
 tools: Read, Grep, Glob, Bash
 ---
 

@@ -1,8 +1,3 @@
----
-name: entrevista-imagem
-description: Define quais decisões visuais vão ao usuário, como elas são mostradas e o que o agente resolve sozinho.
----
-
 ## PERGUNTA
 Que decisões visuais vão ao usuário, e quais o agente resolve sozinho?
 
@@ -24,25 +19,12 @@ Que decisões visuais vão ao usuário, e quais o agente resolve sozinho?
 
 **Mostrar, não descrever.** Decisão sobre imagem é tomada diante de imagem. As alternativas chegam renderizadas, lado a lado, no tamanho em que serão usadas. Descrição em palavras só vale para o que ainda não dá para desenhar sem a própria decisão (por exemplo, quem é o protagonista); mesmo aí, a alternativa recomendada vai com um esboço renderizado.
 
-**Procedimento para cada decisão:**
-
-1. Resolva antes as decisões de que ela depende: elenco antes de decupagem, paleta antes de desenho.
-2. Faça uma pergunta por vez e espere a resposta.
-3. Ofereça de duas a quatro alternativas concretas, cada uma já no nível em que será usada (o desenho, a paleta aplicada, a lista de planos; nunca "algo mais colorido").
-4. Declare a alternativa recomendada e o motivo em uma ou duas frases.
-5. Aponte a fraqueza da própria recomendação quando ela existir.
-6. Registre a decisão na ficha visual do vídeo; ela passa a integrar o plano acordado.
+**Nesta unidade**, o procedimento da CONDUÇÃO do `SKILL.md` ganha: a ordem das dependências é elenco antes de decupagem, paleta antes de desenho; o nível de cada alternativa é o desenho, a paleta aplicada, a lista de planos (nunca "algo mais colorido"); o registro é na ficha visual do vídeo.
 
 **Ficha visual.** O registro das decisões visuais aprovadas do vídeo: elenco (com a ficha de cada personagem), paletas e a forma visual das analogias. É o que garante que o plano 40 use o mesmo desenho e as mesmas cores do plano 1.
 
-**Insistência.** Resposta vaga ("pode ser", "tanto faz") não encerra a decisão: mostre alternativas mais contrastantes. Se a escolha do usuário contradiz algo já aprovado ou a base de fatos, diga isso antes de seguir.
-
-**Plano acordado.** É a soma das decisões registradas. Qualquer mudança fora dele, ainda que pareça melhoria, exige confirmação explícita.
-
 ## LIMITES
 - Não perguntar o que a pesquisa ou o render respondem.
-- Não agrupar várias decisões numa pergunta só.
-- Não apresentar alternativa que o agente não defenderia.
 - Não pedir aprovação de imagem que o próprio agente ainda não abriu e criticou.
 
 ## EXEMPLO

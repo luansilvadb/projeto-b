@@ -1,8 +1,3 @@
----
-name: acao
-description: "Define como uma figura ou criatura executa uma ação legível: os três tempos, a mudança de pose e expressão, a reação e a deformação."
----
-
 ## PERGUNTA
 Como uma figura ou criatura atua uma ação?
 

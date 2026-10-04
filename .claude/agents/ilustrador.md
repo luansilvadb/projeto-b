@@ -16,7 +16,7 @@ Leia, nesta ordem:
 
 ## O que fazer
 
-Desenhe ou componha só o que foi pedido, só nos arquivos da lista. O que está aprovado (elenco, paleta, encenação, escala e entrada de cada plano) é dado: você executa.
+Desenhe ou componha só o que foi pedido, só nos arquivos da lista. O que está aprovado (elenco, paleta, encenação, escala e entrada de cada plano) é dado: você executa. Da referência usa-se o método; nenhum desenho de outro canal é copiado.
 
 Todo desenho é julgado pela imagem: renderize o quadro (`pnpm stills <vídeo> <quadros>`), abra com Read, corrija e repita. Rode `pnpm lint` antes de entregar. Entradas simples pela deixa bastam; movimento é de outra etapa.
 

@@ -1,8 +1,3 @@
----
-name: critica-movimento
-description: "Define como julgar o movimento de um vídeo: as passadas, a leitura de tiras de quadros consecutivos, as medidas e o procedimento de refazer."
----
-
 ## PERGUNTA
 Como julgar o movimento, com medidas e quadros consecutivos?
 

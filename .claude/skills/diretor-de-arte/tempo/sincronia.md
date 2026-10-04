@@ -1,8 +1,3 @@
----
-name: sincronia
-description: "Define como amarrar cada movimento à narração: a palavra que o dispara, a antecipação, a ordem e o ritmo das coisas dentro de um plano."
----
-
 ## PERGUNTA
 Quando cada coisa acontece em relação à narração?
 

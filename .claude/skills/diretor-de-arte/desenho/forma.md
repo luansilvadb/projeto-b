@@ -1,8 +1,3 @@
----
-name: forma
-description: Define a linguagem de forma do estilo e o método para construir qualquer desenho em SVG, da silhueta ao detalhe.
----
-
 ## PERGUNTA
 Como construir qualquer coisa em formas chapadas, em SVG?
 
@@ -75,7 +70,6 @@ Abaixo da faixa, o desenho parece ícone. Acima, o detalhe compete com a leitura
 
 ## LIMITES
 - Rosto, expressão e pose pertencem a `personagem`; fundo e profundidade, a `cenario`.
-- Nenhum desenho da referência é copiado; o que se usa é o método.
 
 ## EXEMPLO
 > Elefante de perfil.

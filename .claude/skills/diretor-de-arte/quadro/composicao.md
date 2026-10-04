@@ -1,8 +1,3 @@
----
-name: composicao
-description: Define como dimensionar e posicionar o assunto no quadro, separá-lo do fundo e variar o enquadramento de um plano para o outro.
----
-
 ## PERGUNTA
 Como arrumar o quadro para o olho achar o assunto?
 
