@@ -28,6 +28,11 @@ const decimal = (value: number) => value.toFixed(1);
  * 2026-10-02). Cada faixa vai do menor ao maior valor entre os 12, arredondada
  * para fora. Ao trocar os vídeos de referência ou o cálculo de uma medida,
  * meça todos de novo com `pnpm critique <arquivo>` e atualize as faixas.
+ *
+ * Medianas dos 12, que as faixas não mostram: área com desenho 57%; cores por
+ * quadro 4,4; trocas da cor dominante 11 por minuto; família de cor mais comum
+ * 26%; tela quase parada 10%; mais de 10% do quadro em movimento 43%; até 40%
+ * do quadro ser outro 2,0 s.
  */
 export const CRITERIA: readonly Criterion[] = [
   {

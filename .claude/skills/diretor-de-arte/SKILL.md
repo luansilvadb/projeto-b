@@ -83,7 +83,6 @@ Os arquivos de `etapas/` guardam o que é deste repositório: pastas, componente
 | `camera` | Como o quadro se move e como um plano vira outro. |
 | `enfase` | Os recursos que fazem um movimento ser sentido. |
 | `revisao` | Como os quadros e o movimento são julgados e refeitos. |
-| `referencias` | O estudo dos vídeos de referência, de onde saíram as medidas. |
 
 ## ÍNDICE DE UNIDADES
 
@@ -118,7 +117,13 @@ Movimento:
 | `enfase/efeitos` | Que recursos fazem um movimento ser sentido, e quando usá-los? |
 | `revisao/critica-movimento` | Como julgar o movimento, com medidas e quadros consecutivos? |
 
-Os números das unidades vêm de um estudo dos vídeos de referência; a origem e as ressalvas estão em `referencias/base-empirica-imagem.md`, lida ao questionar ou atualizar uma medida.
+**Base das medidas.** Os números das unidades vêm de um estudo do Kurzgesagt feito em 2026-10-02: 12 vídeos de março de 2025 a setembro de 2026 (123 minutos, sem patrocínio), medidos quadro a quadro, com 332 planos lidos em três quadros cada. As faixas e as medianas estão em `CRITERIA`, em `src/critique/reference.ts`. Ao questionar ou atualizar uma medida, pese:
+
+- É um canal só: as faixas dizem onde esse estilo vive, não o que é certo em geral.
+- A leitura dos planos foi de um leitor só, em três quadros por plano: conta composições por baixo.
+- A referência roda a 60 quadros por segundo: os tempos de movimento valem em segundos, não em quadros.
+- Evidência de um vídeo só (gordura corporal, 9 minutos, lido em 2026-10-04), adotada por decisão do usuário onde contrariava as unidades: o cenário-âncora (`encenacao`), os estados do personagem e os olhos em tudo que age por dentro (`elenco`), o tema grave saturado e a cor que cresce em área (`cor`), as figuras que flutuam com halo (`composicao`), a onomatopeia e as etiquetas que se acumulam (`texto`, `dado`). O assunto sozinho no centro (`composicao`) foi conferido depois em 72 quadros de quatro dos 12 vídeos.
+- Evidência de um trecho só (formigas, 27 segundos): o percurso (`encenacao`, `planos`).
 
 ## ORDEM DE INJEÇÃO
 
