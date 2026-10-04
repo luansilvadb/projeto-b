@@ -1,8 +1,3 @@
----
-name: palavras-guia
-description: "Palavra-guia: como ancorar um comportamento numa palavra que o modelo já conhece e instruir pelo positivo em vez da proibição."
----
-
 ## PERGUNTA
 Como ancorar um comportamento em poucas palavras, sem proibir?
 

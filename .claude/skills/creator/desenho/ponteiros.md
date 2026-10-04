@@ -1,8 +1,3 @@
----
-name: ponteiros
-description: "Ponteiro de contexto: como redigir a referência sempre carregada que leva o agente a um material fora do contexto."
----
-
 ## PERGUNTA
 Como redigir a referência que leva o agente a um material fora do contexto?
 

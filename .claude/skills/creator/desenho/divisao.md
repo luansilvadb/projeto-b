@@ -1,8 +1,3 @@
----
-name: divisao
-description: "Divisão de um documento em dois por sequência: quando o corte se paga."
----
-
 ## PERGUNTA
 Quando vale dividir um documento em dois?
 

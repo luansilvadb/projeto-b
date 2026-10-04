@@ -1,8 +1,3 @@
----
-name: hierarquia
-description: "Hierarquia de informação: em que degrau cada trecho fica, do passo no arquivo à referência divulgada, e o que fica ao lado dele."
----
-
 ## PERGUNTA
 Em que degrau cada trecho deve ficar, e o que deve ficar ao lado dele?
 

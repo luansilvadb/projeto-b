@@ -1,8 +1,3 @@
----
-name: poda
-description: "Poda: o que cortar de um documento já escrito, pelos testes de duplicação, cache do ambiente, relevância e no-op."
----
-
 ## PERGUNTA
 O que cortar de um documento já escrito, e com que teste?
 
@@ -17,6 +12,8 @@ Passe o documento por quatro testes, frase a frase; a poda termina quando toda f
 **Relevância.** A linha ainda pesa sobre o que o documento faz? Ela perde relevância por nunca ter pesado sobre a tarefa (mera exposição, ou um ramo que deveria estar divulgado) ou por envelhecer quando o comportamento ou o mundo que descreve muda. Documentos curtos são mais fáceis de manter relevantes. Sem disciplina de poda, o destino padrão é o **sedimento**: camadas velhas que se assentam porque acrescentar parece seguro e remover parece arriscado, até ser preciso perfurá-las para achar o que ainda está vivo.
 
 **No-op.** A instrução que o modelo já cumpre por padrão paga carga para dizer nada. O teste (ela muda o comportamento em relação ao padrão?) é relativo ao modelo, e não ao leitor: duas pessoas que discordam sobre um no-op discordam sobre o padrão, e resolvem rodando o documento, não debatendo. Quando a frase falha, apague a frase inteira em vez de aparar palavras. O mesmo teste avalia palavras-guia: a palavra fraca demais para vencer o padrão (*seja minucioso*, quando o agente já é mais ou menos minucioso) é um no-op, e o conserto é uma palavra mais forte (*implacável*), e não outra técnica.
+
+**Inventário.** A prova de que a poda cortou redação e deixou o comportamento: antes de editar, liste cada regra, número e exemplo que muda o que o agente faz; depois, confira um a um onde cada item mora. O item ausente só passa quando o ambiente o guarda.
 
 ## DEPENDÊNCIAS
 - hierarquia: a escada e o ramo divulgado, para onde vai a linha que não pesa sobre todos os ramos.

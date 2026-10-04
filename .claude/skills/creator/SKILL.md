@@ -32,15 +32,15 @@ A unidade deve:
 - ser concreta, aplicável e estar no escopo;
 - não duplicar outra unidade;
 - declarar dependências e limites relevantes;
-- ter a `description` redigida como ponteiro (`ponteiros`);
+- ter a sua linha do índice redigida como ponteiro (`ponteiros`);
 - encerrar cada passo num critério de conclusão (`criterios`);
 - passar, frase a frase, nos quatro testes de `poda`.
 
-Se falhar, corrija ou recrie a unidade antes de continuar; se não for possível validá-la, sinalize-a e pare.
+Se falhar, corrija ou recrie a unidade antes de continuar.
 
 ## PARADA
 
-Pare quando não houver lacunas relevantes nem ajustes pendentes, quando uma iteração não gerar unidade nova nem resolver ajuste pendente, ou quando uma unidade não puder ser validada.
+Pare quando não houver lacunas relevantes nem ajustes pendentes, quando uma iteração não gerar unidade nova nem resolver ajuste pendente, ou quando uma unidade não puder ser validada: sinalize-a.
 
 ## ESTRUTURA
 
@@ -54,18 +54,13 @@ skills/<workflow-name>/
 
 ## SKILL.md
 
-O workflow criado ou atualizado deve declarar função, escopo, anti-escopo, organização das categorias, ordem de injeção, índice das categorias (propósito) e unidades (nome + pergunta), limites e critérios de parada. O conhecimento mora nas unidades; `SKILL.md` aponta para ele. O frontmatter leva `name` e uma `description` redigida como ponteiro (`ponteiros`): o que o workflow sabe e quando acioná-lo. Só `SKILL.md` é registrado como skill; as unidades são arquivos de apoio, lidos quando a etapa pede.
+O workflow criado ou atualizado deve declarar função, escopo, anti-escopo, organização das categorias, ordem de injeção, índice das categorias (propósito) e unidades (nome + pergunta), limites e critérios de parada. O conhecimento mora nas unidades; `SKILL.md` aponta para ele. Só `SKILL.md` é registrado como skill e leva frontmatter: `name` e uma `description` redigida como ponteiro (`ponteiros`), o que o workflow sabe e quando acioná-lo. As unidades são arquivos de apoio sem frontmatter, lidos quando a etapa pede; o ponteiro de cada uma é a sua linha do índice.
 
 Categorias são apenas organizacionais e não entram na ordem de injeção. Injete `SKILL.md` primeiro e, depois, apenas as unidades relevantes e suas dependências, respeitando a ordem de dependência.
 
 ## TEMPLATE DA UNIDADE
 
 ```markdown
----
-name: <slug>
-description: <descrever a responsabilidade da unidade>
----
-
 ## PERGUNTA
 <uma única pergunta central>
 
@@ -90,7 +85,7 @@ description: <descrever a responsabilidade da unidade>
 - dependências e injeção claras, sem ciclo;
 - `SKILL.md` com tudo o que a seção `SKILL.md` exige;
 - toda unidade do índice existe e todo arquivo de unidade está no índice;
-- toda `description` com dois-pontos está entre aspas: sem elas o YAML falha e a descrição some;
+- a `description` de `SKILL.md` com dois-pontos está entre aspas: sem elas o YAML falha e a descrição some;
 - nenhuma unidade inválida, arquivo vazio, duplicado ou fora do escopo.
 
 ## ORGANIZAÇÃO
@@ -101,8 +96,6 @@ description: <descrever a responsabilidade da unidade>
 | `escrita` | Como cada frase é redigida e o que é cortado. |
 
 ## ÍNDICE DE UNIDADES
-
-Cada unidade é o arquivo `<categoria>/<unidade>.md` desta pasta.
 
 | Unidade | Pergunta |
 |---|---|
