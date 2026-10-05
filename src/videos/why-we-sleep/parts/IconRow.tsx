@@ -2,6 +2,7 @@ import "../../../design/fonts";
 import { useCurrentFrame, useVideoConfig } from "remotion";
 import { Brain } from "../../../art/Brain";
 import { taperPath } from "../../../art/shapes";
+import { wave } from "../../../components/Idle";
 import { POP_SECONDS, popOpacity, popScale } from "../../../components/Pop";
 import { typography } from "../../../design/tokens";
 import {
@@ -80,6 +81,19 @@ export const iconSpot = (
 
 type Paint = (lit: string, role?: "shape" | "detail") => string;
 
+/**
+ * O movimento de dentro de um ícone. Sem valores, o ícone é o desenho parado
+ * de sempre: é o que as cenas que não animam a fila recebem.
+ */
+export type IconMotion = {
+  /** O capim dos olhos balança: o instante, em segundos, e quanto (0 parado, 1 o balanço inteiro). */
+  readonly sway?: { readonly seconds: number; readonly amount: number };
+  /** Quanto os olhos no capim estão fechados, de 0 a 1: a piscada. */
+  readonly eyelid?: number;
+  /** Quanto a barra da régua já encolheu, de 0 (inteira) a 1 (curta, como no desenho parado). */
+  readonly bar?: number;
+};
+
 // O disco de cada ícone aceso: escuro para o que acontece de noite, claro para o que é medida.
 const DISC: Record<IconKey, string> = {
   eyes: savanna.night.sky[0],
@@ -109,49 +123,54 @@ const FRONT_BLADES = [
 ] as const;
 
 /** Dois olhos no capim: os mesmos que acendem atrás do bicho em `last-to-know`. */
-const eyesIcon = (paint: Paint) => (
-  <>
-    {BACK_BLADES.map(([x, height, lean]) => (
-      <path
-        key={x}
-        d={taperPath(
-          [x, 110],
-          [x - lean / 2, 110 - height * 0.5],
-          [x + lean, 110 - height],
-          26,
-          5,
-        )}
-        fill={paint(savanna.night.ground[0])}
-      />
-    ))}
-    {[-30, 30].map((x) => (
-      <ellipse
-        key={x}
-        cx={x}
-        cy={-6}
-        rx={19}
-        ry={12}
-        fill={paint(ink.moon, "detail")}
-      />
-    ))}
-    {FRONT_BLADES.map(([x, height, lean]) => (
-      <path
-        key={x}
-        d={taperPath(
-          [x, 110],
-          [x - lean / 2, 110 - height * 0.5],
-          [x + lean, 110 - height],
-          30,
-          6,
-        )}
-        fill={paint(lagoon.night.sand[0], "detail")}
-      />
-    ))}
-  </>
-);
+const eyesIcon = (paint: Paint, { sway, eyelid = 0 }: IconMotion) => {
+  // Cada folha tem a própria fase; as da frente balançam um pouco mais que as de trás.
+  const bend = (index: number, reach: number) =>
+    sway ? reach * sway.amount * wave(sway.seconds, 3.2, index / 5) : 0;
+  return (
+    <>
+      {BACK_BLADES.map(([x, height, lean], index) => (
+        <path
+          key={x}
+          d={taperPath(
+            [x, 110],
+            [x - lean / 2, 110 - height * 0.5],
+            [x + lean + bend(index, 7), 110 - height],
+            26,
+            5,
+          )}
+          fill={paint(savanna.night.ground[0])}
+        />
+      ))}
+      {[-30, 30].map((x) => (
+        <ellipse
+          key={x}
+          cx={x}
+          cy={-6}
+          rx={19}
+          ry={12 * (1 - 0.9 * eyelid)}
+          fill={paint(ink.moon, "detail")}
+        />
+      ))}
+      {FRONT_BLADES.map(([x, height, lean], index) => (
+        <path
+          key={x}
+          d={taperPath(
+            [x, 110],
+            [x - lean / 2, 110 - height * 0.5],
+            [x + lean + bend(index + 2, 10), 110 - height],
+            30,
+            6,
+          )}
+          fill={paint(lagoon.night.sand[0], "detail")}
+        />
+      ))}
+    </>
+  );
+};
 
 /** A régua de horas, com a barra do sono encolhida sobre a sombra da barra inteira. */
-const rulerIcon = (paint: Paint) => (
+const rulerIcon = (paint: Paint, { bar = 1 }: IconMotion) => (
   <>
     <rect
       x={-66}
@@ -165,7 +184,7 @@ const rulerIcon = (paint: Paint) => (
     <rect
       x={-66}
       y={-34}
-      width={54}
+      width={132 - 78 * bar}
       height={34}
       rx={17}
       fill={paint(ink.tag)}
@@ -287,6 +306,8 @@ type MapIconProps = {
   readonly mark?: number;
   /** A interrogação sobre a porta da loja: o que o sono faz ainda é pergunta. */
   readonly question?: boolean;
+  /** O movimento de dentro do ícone; sem valor, o desenho parado. */
+  readonly motion?: IconMotion;
 };
 
 /**
@@ -300,6 +321,7 @@ export const MapIcon: React.FC<MapIconProps> = ({
   hue,
   mark = 1,
   question = false,
+  motion = {},
 }) => {
   const lit = state === "on" || state === "check";
   const dim = idea[hue];
@@ -326,8 +348,8 @@ export const MapIcon: React.FC<MapIconProps> = ({
         opacity={lit ? 1 : 0.24}
       />
       <g clipPath={`url(#${clip})`} opacity={lit ? 1 : 0.5}>
-        {icon === "eyes" ? eyesIcon(paint) : null}
-        {icon === "ruler" ? rulerIcon(paint) : null}
+        {icon === "eyes" ? eyesIcon(paint, motion) : null}
+        {icon === "ruler" ? rulerIcon(paint, motion) : null}
         {icon === "brain" ? brainIcon(paint) : null}
         {icon === "alarm" ? alarmIcon(paint, lit) : null}
         {icon === "shop" ? shopIcon(paint) : null}
@@ -403,7 +425,34 @@ type IconRowProps = RowPlacement & {
   readonly questionAt?: number;
   /** Ícones que a fila não desenha: a cena os desenha por conta própria, com `MapIcon`, para fazê-los crescer. */
   readonly omit?: readonly IconKey[];
+  /**
+   * Quanto de cada ícone está na fila, de 0 (ainda não entrou, ou já saiu) a
+   * 1: a escala dele e da pílula dele, em volta do próprio ponto. É por aqui
+   * que a fila entra em cascata e sai encolhendo. Sem valor, o ícone está lá.
+   */
+  readonly present?: Partial<Record<IconKey, number>>;
+  /**
+   * O ícone a meio caminho entre dois estados: o estado de que ele vem e
+   * quanto do estado atual já tomou o lugar, de 0 a 1. A cor passa de um ao
+   * outro em vez de trocar num quadro só. Sem valor, o estado é o atual.
+   */
+  readonly turning?: Partial<
+    Record<IconKey, { readonly from: IconState; readonly progress: number }>
+  >;
+  /** A inclinação de cada ícone, em graus: o contorno que treme, o despertador que chacoalha. */
+  readonly tilt?: Partial<Record<IconKey, number>>;
+  /** O movimento de dentro de cada ícone. */
+  readonly motion?: Partial<Record<IconKey, IconMotion>>;
+  /**
+   * Quanto cada ícone sobe (negativo) ou desce, em pixels da fila: a flutuação
+   * de quem está parado. A pílula do número vai junto. Sem valor, fica no lugar.
+   */
+  readonly lift?: Partial<Record<IconKey, number>>;
 };
+
+// A pílula do número é mais apagada sob o ícone apagado ou riscado.
+const pillOpacity = (state: IconState) =>
+  state === "off" || state === "cross" ? 0.5 : 1;
 
 /**
  * A fila inteira, posta num ponto do quadro e numa escala: grande no centro,
@@ -421,6 +470,11 @@ export const IconRow: React.FC<IconRowProps> = ({
   question = false,
   questionAt,
   omit = [],
+  present = {},
+  turning = {},
+  tilt = {},
+  motion = {},
+  lift = {},
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -454,34 +508,73 @@ export const IconRow: React.FC<IconRowProps> = ({
         const number = NUMBERS[icon];
         const offset = (ICONS.indexOf(icon) - 2) * ICON_PITCH;
         const size = grow[icon] ?? 1;
+        const here = present[icon] ?? 1;
+        const raised = lift[icon] ?? 0;
+        const turn = turning[icon];
+        const arrived = turn ? Math.min(1, Math.max(0, turn.progress)) : 1;
+        const drawn = (
+          <MapIcon
+            icon={icon}
+            state={state}
+            size={ICON_SIZE}
+            hue={hue}
+            mark={icon === "shop" && question ? asked : mark}
+            question={question}
+            motion={motion[icon]}
+          />
+        );
         return (
           <div key={icon}>
             <div
               style={{
                 position: "absolute",
                 left: offset,
-                top: 0,
+                top: raised,
                 translate: "-50% -50%",
-                scale: `${size * (changed ? popScale(frame, at, frames, 0.9, 1.08) : 1)}`,
+                scale: `${here * size * (changed ? popScale(frame, at, frames, 0.9, 1.08) : 1)}`,
+                rotate: `${tilt[icon] ?? 0}deg`,
               }}
             >
-              <MapIcon
-                icon={icon}
-                state={state}
-                size={ICON_SIZE}
-                hue={hue}
-                mark={icon === "shop" && question ? asked : mark}
-                question={question}
-              />
+              {turn && arrived < 1 ? (
+                <>
+                  {/* O estado de que ele vem fica por baixo e só some no fim: o ícone nunca fica vazado. */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      top: 0,
+                      opacity: 1 - arrived ** 3,
+                    }}
+                  >
+                    <MapIcon
+                      icon={icon}
+                      state={turn.from}
+                      size={ICON_SIZE}
+                      hue={hue}
+                      // A barra da régua só se mexe no estado novo: no antigo ela é a do desenho parado.
+                      motion={{ ...motion[icon], bar: undefined }}
+                    />
+                  </div>
+                  <div style={{ position: "relative", opacity: arrived }}>
+                    {drawn}
+                  </div>
+                </>
+              ) : (
+                drawn
+              )}
             </div>
             {number ? (
               <div
                 style={{
                   position: "absolute",
                   left: offset,
-                  top: PILL_DROP + (ICON_SIZE * (size - 1)) / 2,
+                  top: raised + PILL_DROP + (ICON_SIZE * (size - 1)) / 2,
                   translate: "-50% -50%",
-                  opacity: state === "off" || state === "cross" ? 0.5 : 1,
+                  scale: `${here}`,
+                  opacity: turn
+                    ? pillOpacity(turn.from) +
+                      (pillOpacity(state) - pillOpacity(turn.from)) * arrived
+                    : pillOpacity(state),
                 }}
               >
                 <Tag on={hue} size="note">

@@ -5,6 +5,7 @@ import {
   interpolate,
   Sequence,
   useCurrentFrame,
+  useVideoConfig,
 } from "remotion";
 import { Build } from "../components/Camera";
 import { StageContext, type Stage } from "../components/Cast";
@@ -53,6 +54,21 @@ export const ShotPlans = createContext<ReadonlyMap<FrameRange, ShotPlan>>(
   new Map(),
 );
 
+/**
+ * Quantos quadros o plano dura no roteiro. Num plano que divide o palco com o
+ * seguinte, o `Sequence` dele dura mais (os quadros da passagem), e
+ * `useVideoConfig().durationInFrames` devolve esse valor esticado: o que
+ * termina "no fim do plano" pularia na troca.
+ */
+const ShotLength = createContext<number | null>(null);
+
+/** A duração do plano em quadros, sem os quadros da passagem para o plano seguinte. */
+export const useShotLength = (): number => {
+  const length = useContext(ShotLength);
+  const { durationInFrames } = useVideoConfig();
+  return length ?? durationInFrames;
+};
+
 type ShotProps = {
   /** O trecho da cena que o plano ocupa, vindo de `shots` em SceneProps. */
   readonly range: FrameRange;
@@ -94,7 +110,9 @@ export const Shot: React.FC<ShotProps> = ({
         shot={plan.key}
         previous={plan.previousKey}
       >
-        {wipe ? <Wiping wipe={wipe}>{children}</Wiping> : children}
+        <ShotLength.Provider value={length}>
+          {wipe ? <Wiping wipe={wipe}>{children}</Wiping> : children}
+        </ShotLength.Provider>
       </OnStage>
     </Sequence>
   );

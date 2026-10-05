@@ -41,6 +41,22 @@ type Arm = {
   readonly bend?: number;
 };
 
+/** A passada de quem anda: em que ponto do ciclo a figura está, e com quanta amplitude. */
+export type Stride = {
+  /**
+   * A fase da passada, em passos: a cada inteiro um pé toca o chão, com os
+   * dois pés afastados e o corpo no ponto mais baixo; no meio do caminho
+   * (0,5, 1,5...) um pé passa pelo outro no ar e o corpo está no alto. Dois
+   * passos fecham o ciclo. Quem anda faz a fase crescer com a distância.
+   */
+  readonly step: number;
+  /**
+   * Quanto da passada vale, de 0 (parada: o desenho de sempre) a 1. Serve para
+   * partir e chegar aos poucos; por padrão, 1.
+   */
+  readonly gait?: number;
+};
+
 type PersonProps = {
   /** Altura da figura, dos pés ao alto do cabelo, em pixels do quadro. */
   readonly height: number;
@@ -66,6 +82,13 @@ type PersonProps = {
   readonly grumpy?: boolean;
   /** Óculos redondos: a cor da armação. */
   readonly glasses?: string;
+  /**
+   * A passada: as pernas alternam, o corpo sobe e desce a cada passo e os
+   * braços balançam ao contrário das pernas. A figura anda para a direita de
+   * quem olha; quem anda para a esquerda espelha o desenho. Sem valor, ela
+   * está parada, como sempre foi desenhada.
+   */
+  readonly stride?: Stride;
 };
 
 // A figura cabe nesta caixa, com os pés no meio da base.
@@ -78,6 +101,82 @@ const RELAXED: { front: Required<Arm>; back: Required<Arm> } = {
   back: { hand: [100, -214], bend: 73 },
 };
 const EYE = { gap: 42, radius: 27, y: -462 };
+// A passada, nas unidades do desenho: quanto cada pé avança e recua, quanto
+// sobe no ar, quanto o corpo sobe ao passar sobre o pé de apoio, quanto as
+// mãos balançam e quantos graus a ponta do pé no ar desce.
+const GAIT = { reach: 34, lift: 40, bob: 14, swing: 30, toe: 16 };
+const HIP_Y = -196;
+// Os dois pés em repouso: onde a perna termina e a caixa do sapato.
+const LEGS = {
+  back: { hip: 44, knee: [60, -112], ankle: [70, -34], shoe: [36, 80] },
+  front: { hip: -40, knee: [-42, -110], ankle: [-42, -34], shoe: [-88, 78] },
+} as const;
+
+type Step = {
+  /** Quanto o pé está à frente (positivo) ou atrás do lugar de repouso, e quanto está no ar. */
+  readonly forward: number;
+  readonly lifted: number;
+};
+
+const STANDING: Step = { forward: 0, lifted: 0 };
+
+/** Onde está cada pé, quanto o corpo subiu e quanto as mãos balançaram, num ponto da passada. */
+const walking = (stride: Stride | undefined) => {
+  const gait = stride?.gait ?? 1;
+  if (stride === undefined || gait <= 0) {
+    return { front: STANDING, back: STANDING, bob: 0, swing: 0 };
+  }
+  const angle = Math.PI * stride.step;
+  const along = Math.cos(angle) * gait;
+  const up = Math.sin(angle) * gait;
+  return {
+    // O pé que está no ar é o que vai para a frente; o de apoio recua no chão.
+    front: { forward: GAIT.reach * along, lifted: Math.max(0, -up) },
+    back: { forward: -GAIT.reach * along, lifted: Math.max(0, up) },
+    bob: GAIT.bob * Math.abs(up),
+    // A mão de cada lado vai para trás quando o pé desse lado vai para a frente.
+    swing: GAIT.swing * along,
+  };
+};
+
+/** A perna de um lado, do quadril (que sobe com o corpo) ao tornozelo, e o sapato dela. */
+const leg = (
+  side: (typeof LEGS)[keyof typeof LEGS],
+  step: Step,
+  bob: number,
+  fill: string,
+  shoeFill: string,
+) => {
+  const rise = GAIT.lift * step.lifted;
+  const ankle: Point = [side.ankle[0] + step.forward, side.ankle[1] - rise];
+  // O joelho acompanha o pé e dobra para a frente quando o pé sai do chão.
+  const knee: Point = [
+    side.knee[0] + step.forward * 0.55 + 16 * step.lifted,
+    side.knee[1] - bob * 0.5 - rise * 0.55,
+  ];
+  const moved = step.forward !== 0 || rise !== 0;
+  return (
+    <>
+      <path
+        d={taperPath([side.hip, HIP_Y - bob], knee, ankle, 60, 46)}
+        fill={fill}
+      />
+      <rect
+        x={side.shoe[0]}
+        y={-38}
+        width={side.shoe[1]}
+        height={38}
+        rx={19}
+        fill={shoeFill}
+        transform={
+          moved
+            ? `translate(${step.forward} ${-rise}) rotate(${GAIT.toe * step.lifted} ${side.ankle[0]} -34)`
+            : undefined
+        }
+      />
+    </>
+  );
+};
 
 type Face = {
   /** Quanto a pálpebra cobre o olho, de 0 a 1. */
@@ -330,12 +429,24 @@ export const Person: React.FC<PersonProps> = ({
   blink = 0,
   grumpy = false,
   glasses,
+  stride,
 }) => {
   const id = useId();
+  const gait = walking(stride);
   const face = blinking(FACES[expression], blink);
   const scale = height / VIEW.height;
-  const front = { ...RELAXED.front, ...frontArm };
-  const back = { ...RELAXED.back, ...backArm };
+  const posedFront = { ...RELAXED.front, ...frontArm };
+  const posedBack = { ...RELAXED.back, ...backArm };
+  // Andando, as mãos balançam em arco: vão e vêm, e sobem um pouco nas pontas.
+  const swung = (arm: Required<Arm>, by: number): Required<Arm> =>
+    by === 0
+      ? arm
+      : {
+          ...arm,
+          hand: [arm.hand[0] + by, arm.hand[1] - Math.abs(by) * 0.3],
+        };
+  const front = swung(posedFront, -gait.swing);
+  const back = swung(posedBack, gait.swing);
   const frontShoulder: Point = [
     FRONT_SHOULDER[0],
     FRONT_SHOULDER[1] + face.slump,
@@ -363,26 +474,17 @@ export const Person: React.FC<PersonProps> = ({
       </defs>
 
       {/* O peso fica numa perna; a outra abre um pouco. */}
-      <path
-        d={taperPath([44, -196], [60, -112], [70, -34], 60, 46)}
-        fill={colors.pantsShade}
-      />
-      <rect
-        x={36}
-        y={-38}
-        width={80}
-        height={38}
-        rx={19}
-        fill={colors.shoeShade}
-      />
-      <path
-        d={taperPath([-40, -196], [-42, -110], [-42, -34], 60, 46)}
-        fill={colors.pants}
-      />
-      <rect x={-88} y={-38} width={78} height={38} rx={19} fill={colors.shoe} />
+      {leg(LEGS.back, gait.back, gait.bob, colors.pantsShade, colors.shoeShade)}
+      {leg(LEGS.front, gait.front, gait.bob, colors.pants, colors.shoe)}
 
       {/* O tronco inclina um pouco sobre o quadril, para a figura não ficar dura. */}
-      <g transform="rotate(2.5 0 -180)">
+      <g
+        transform={
+          gait.bob === 0
+            ? "rotate(2.5 0 -180)"
+            : `translate(0 ${-gait.bob}) rotate(2.5 0 -180)`
+        }
+      >
         <path
           d={taperPath(backShoulder, backElbow, back.hand, 46, 36)}
           fill={colors.topShade}

@@ -1,6 +1,8 @@
 import { useId } from "react";
+import { useCurrentFrame, useVideoConfig } from "remotion";
 import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
+import { popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { pedestal } from "../palette";
 
@@ -11,7 +13,12 @@ type VacantSignProps = {
   readonly scale?: number;
   /** O foco de luz que desce sobre o lugar vazio, de 0 a 1. */
   readonly light?: number;
+  /** Quadro do plano em que a placa "acordado 24 h" estoura; sem valor, ela já está lá. */
+  readonly plaqueAt?: number;
 };
+
+// O contorno tracejado dá uma volta devagar: é a pausa viva do lugar vazio, igual em toda volta dele.
+const DASH = { length: 30, gap: 24, secondsPerStep: 2.4 };
 
 const BASE = { width: 500, height: 44 };
 const BODY = { bottom: 420, top: 340, height: 160 };
@@ -33,8 +40,19 @@ export const VacantSign: React.FC<VacantSignProps> = ({
   y,
   scale = 1,
   light = 1,
+  plaqueAt,
 }) => {
   const id = useId();
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const drift =
+    ((frame / fps / DASH.secondsPerStep) % 1) * (DASH.length + DASH.gap);
+  const plaque =
+    plaqueAt === undefined
+      ? 1
+      : frame < plaqueAt
+        ? 0
+        : popScale(frame, plaqueAt, 0.3 * fps, 0.7, 1.08);
   const bodyTop = y - BASE.height - BODY.height;
   const slotY = y - PEDESTAL_HEIGHT - SLOT.ry - 24;
 
@@ -100,7 +118,8 @@ export const VacantSign: React.FC<VacantSignProps> = ({
           fill="none"
           stroke={pedestal.shade}
           strokeWidth={10}
-          strokeDasharray="30 24"
+          strokeDasharray={`${DASH.length} ${DASH.gap}`}
+          strokeDashoffset={-drift}
           strokeLinecap="round"
         />
       </SvgLayer>
@@ -109,6 +128,7 @@ export const VacantSign: React.FC<VacantSignProps> = ({
           style={{
             border: `6px solid ${pedestal.plaqueEdge}`,
             borderRadius: 22,
+            scale: `${plaque}`,
           }}
         >
           <Label size="note" color={pedestal.text} tag={pedestal.plaque}>

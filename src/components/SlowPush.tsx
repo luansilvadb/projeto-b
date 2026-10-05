@@ -1,4 +1,5 @@
-import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, useCurrentFrame } from "remotion";
+import { useShotLength } from "../video/Shot";
 import { Build, Camera, Layer, cameraBetween, framing } from "./Camera";
 import { FlatStage, Troupe } from "./Cast";
 
@@ -30,7 +31,9 @@ export const SlowPush: React.FC<SlowPushProps> = ({
   children,
 }) => {
   const frame = useCurrentFrame();
-  const { durationInFrames } = useVideoConfig();
+  // A duração do roteiro, e não a do `Sequence`: no palco contínuo esta vem
+  // esticada pelos quadros da passagem, e a aproximação pularia na troca.
+  const durationInFrames = useShotLength();
   const camera = cameraBetween(
     framing(focus, from, focus),
     framing(focus, from + by, focus),

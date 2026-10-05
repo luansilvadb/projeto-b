@@ -8,9 +8,9 @@ import { taperPath } from "../../../art/shapes";
 import { Drifters } from "../../../components/Drifters";
 import { breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { Pop } from "../../../components/Pop";
+import { Pop, popScale, POP_SECONDS } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { ALREADY_SHOWN } from "../../../components/timing";
+import { ALREADY_SHOWN, mix, ramp } from "../../../components/timing";
 import { shape } from "../../../design/tokens";
 import {
   antelope,
@@ -79,10 +79,45 @@ type TimelineProps = {
   readonly pedestal?: boolean;
   /** O que fica no fim da linha no lugar do pedestal, centrado em `TIMELINE_END`: a conta de sono, por exemplo. */
   readonly children?: React.ReactNode;
+  /**
+   * Se a linha desenha o fundo do mar por baixo dela. Sem ele, quem a usa põe
+   * o `SeaFloor` como fundo do plano, e a linha fica solta por cima, como
+   * elenco do palco.
+   */
+  readonly floor?: boolean;
+  /**
+   * A linha em movimento, e não posta: os marcos surgem aos poucos quando a
+   * linha passa por eles, a haste e o ponto de cada marca crescem com ela, e
+   * o colchete dos anos se abre da marca do sono até hoje antes de a etiqueta
+   * estourar. Sem isto, cada um aparece pronto no quadro dele.
+   */
+  readonly eased?: boolean;
+  /** O tamanho da ponta da seta, de 0 a 1: em 0 a linha ainda não começou e nada dela aparece. Por padrão, inteira. */
+  readonly arrow?: number;
+  /**
+   * A pausa viva da linha, para o plano em que ela é o assunto e nada mais
+   * acontece: o ícone de cada marca flutua, um brilho corre pela linha da
+   * marca do sono até hoje, a ponta da seta pulsa e a etiqueta dos anos
+   * balança de leve. Sem isto, a linha fica parada depois de desenhada.
+   */
+  readonly alive?: boolean;
 };
 
+type SeaFloorProps = {
+  /** A luz que entra pela água tremula: cada feixe clareia e escurece no próprio tempo. Por padrão, parada. */
+  readonly shimmer?: boolean;
+};
+
+// Quanto dura o colchete dos anos se abrindo, e quanto a etiqueta espera por ele, em segundos.
+const BRACKET_SECONDS = 0.4;
+const TAG_AFTER_BRACKET_SECONDS = 0.4;
+// Em quantos pixels de linha um marco de cem milhões de anos termina de surgir.
+const MARK_FADE = 60;
+// O brilho que corre pela linha viva: quantos segundos leva da marca do sono até hoje, e o raio dele.
+const GLINT = { seconds: 2.2, radius: 13 };
+
 /** O fundo do mar em índigo: a água, a luz que entra, a areia violeta e o capim nos cantos. */
-const SeaFloor: React.FC = () => {
+export const SeaFloor: React.FC<SeaFloorProps> = ({ shimmer = false }) => {
   const id = useId();
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -116,14 +151,22 @@ const SeaFloor: React.FC = () => {
           [120, 300, 520],
           [520, 190, 1000],
           [900, 150, 1420],
-        ].map(([top, width, bottom]) => (
-          <path
-            key={top}
-            d={`M${top},-20 L${top + width},-20 L${bottom + width * 1.7},${TIMELINE_FLOOR} L${bottom},${TIMELINE_FLOOR} Z`}
-            fill={light}
-            opacity={0.05}
-          />
-        ))}
+        ].map(([top, width, bottom]) => {
+          // Com a luz tremulando, cada feixe também varre o fundo devagar, no próprio tempo.
+          const sweep = shimmer ? 90 * wave(seconds, 4.3, top / 500) : 0;
+          return (
+            <path
+              key={top}
+              d={`M${top},-20 L${top + width},-20 L${bottom + width * 1.7 + sweep},${TIMELINE_FLOOR} L${bottom + sweep},${TIMELINE_FLOOR} Z`}
+              fill={light}
+              opacity={
+                shimmer
+                  ? 0.065 * (1 + 0.6 * wave(seconds, 2.7, top / 700))
+                  : 0.05
+              }
+            />
+          );
+        })}
         <g fill={reef}>
           <path
             d={`M-40,${TIMELINE_FLOOR} C20,520 190,430 300,560 C360,470 520,500 560,700 C640,640 760,720 800,${TIMELINE_FLOOR} Z`}
@@ -149,13 +192,20 @@ const SeaFloor: React.FC = () => {
         ].map(([x, y, size]) => (
           <path
             key={x}
-            transform={`translate(${x + 8 * wave(seconds, 6, x / 300)} ${y}) scale(${size})`}
+            // Com a luz tremulando o cardume também nada: avança devagar e ondula, cada peixe na sua fase.
+            transform={`translate(${x + 8 * wave(seconds, 6, x / 300) + (shimmer ? 30 * seconds : 0)} ${y + (shimmer ? 7 * wave(seconds, 1.9, x / 170) : 0)}) scale(${size})`}
             d="M-46,0 C-26,-24 14,-24 34,-4 L58,-22 L52,0 L58,22 L34,4 C14,24 -26,24 -46,0 Z"
             fill={reef}
           />
         ))}
       </SvgLayer>
-      <Drifters seed="plankton" count={70} color={ink.glow} opacity={0.4} />
+      <Drifters
+        seed="plankton"
+        count={70}
+        color={ink.glow}
+        opacity={0.4}
+        speed={shimmer ? 4 : 1}
+      />
       <SvgLayer>
         <defs>
           <linearGradient id={id} x1={0} y1={0} x2={0} y2={1}>
@@ -238,13 +288,32 @@ type PinProps = {
   readonly x: number;
   readonly at: number;
   readonly label: string;
+  /** Quanto o ícone flutua, em pixels e em graus: a pausa viva da marca. Por padrão, parado. */
+  readonly float?: readonly [number, number];
   readonly children: React.ReactNode;
 };
 
 /** Uma marca na linha: o ponto, a haste, o ícone e a etiqueta em cima. */
-const Pin: React.FC<PinProps> = ({ x, at, label, children }) => (
+const Pin: React.FC<PinProps> = ({
+  x,
+  at,
+  label,
+  float = [0, 0],
+  children,
+}) => (
   <>
-    <Place x={x} y={TIMELINE.y - PIN.icon}>
+    <Place
+      x={x}
+      y={TIMELINE.y - PIN.icon}
+      style={
+        float[0] === 0 && float[1] === 0
+          ? undefined
+          : {
+              translate: `-50% calc(-50% + ${float[0]}px)`,
+              rotate: `${float[1]}deg`,
+            }
+      }
+    >
       <Pop at={at}>{children}</Pop>
     </Place>
     <Place x={x} y={TIMELINE.y - PIN.tag}>
@@ -284,12 +353,21 @@ export const Timeline: React.FC<TimelineProps> = ({
   sleepersAt,
   pedestal = false,
   children,
+  floor = true,
+  eased = false,
+  arrow: ownArrow = 1,
+  alive = false,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const seconds = frame / fps;
   const { y, from, to } = TIMELINE;
   const head = from + (to - from) * drawn;
+  // Viva, a ponta da seta pulsa depois de chegar a hoje.
+  const arrow =
+    alive && drawn >= 1 ? ownArrow * (1 + 0.1 * wave(seconds, 1.7)) : ownArrow;
+  // O brilho sai da marca do sono, corre até a ponta e recomeça; nasce e some nas pontas do caminho.
+  const glint = (seconds / GLINT.seconds) % 1;
   const jelly = sleepAt === undefined ? JELLYFISH.alone : JELLYFISH;
   const spots = withJellyfish ? SLEEPERS : SLEEPERS_WITHOUT_JELLYFISH;
   const enter = (index: number) => sleepersAt?.[index] ?? ALREADY_SHOWN;
@@ -342,7 +420,7 @@ export const Timeline: React.FC<TimelineProps> = ({
 
   return (
     <AbsoluteFill>
-      <SeaFloor />
+      {floor ? <SeaFloor /> : null}
       {pedestal ? (
         <VacantSign
           x={TIMELINE_END.x}
@@ -371,7 +449,13 @@ export const Timeline: React.FC<TimelineProps> = ({
                 height={44}
                 rx={5}
                 fill={ink.glow}
-                opacity={x <= head ? 0.55 : 0}
+                opacity={
+                  eased
+                    ? 0.55 * Math.min(1, Math.max(0, (head - x) / MARK_FADE))
+                    : x <= head
+                      ? 0.55
+                      : 0
+                }
               />
             );
           })}
@@ -383,15 +467,26 @@ export const Timeline: React.FC<TimelineProps> = ({
             stroke={ink.glow}
             strokeWidth={14}
             strokeLinecap="round"
+            opacity={arrow > 0 ? 1 : 0}
           />
           <path
-            d={`M${head - 34},${y - 30} L${head + 8},${y} L${head - 34},${y + 30}`}
+            d={`M${head - 34 * arrow},${y - 30 * arrow} L${head + 8},${y} L${head - 34 * arrow},${y + 30 * arrow}`}
             fill="none"
             stroke={ink.glow}
             strokeWidth={14}
             strokeLinecap="round"
             strokeLinejoin="round"
+            opacity={arrow > 0 ? 1 : 0}
           />
+          {alive && sleepAt !== undefined && head > SLEEP_X + 40 ? (
+            <circle
+              cx={mix(SLEEP_X, head, glint)}
+              cy={y}
+              r={GLINT.radius * (0.6 + 0.4 * Math.sin(Math.PI * glint))}
+              fill={ink.moon}
+              opacity={Math.sin(Math.PI * glint)}
+            />
+          ) : null}
           {/* O colchete que prende a etiqueta dos anos à linha: da marca do sono até hoje. */}
           {yearsAt === undefined ? null : (
             <path
@@ -402,6 +497,14 @@ export const Timeline: React.FC<TimelineProps> = ({
               strokeLinecap="round"
               strokeLinejoin="round"
               opacity={frame >= yearsAt ? 1 : 0}
+              // Em movimento, o traço corre da marca do sono até hoje.
+              pathLength={eased ? 1 : undefined}
+              strokeDasharray={eased ? 1 : undefined}
+              strokeDashoffset={
+                eased
+                  ? 1 - ramp(frame, yearsAt, BRACKET_SECONDS * fps)
+                  : undefined
+              }
             />
           )}
           {[
@@ -415,6 +518,12 @@ export const Timeline: React.FC<TimelineProps> = ({
                   frame >= (index === 0 ? (sleepAt ?? 0) : (brainAt ?? 0))
                     ? 1
                     : 0
+                }
+                // Em movimento, a marca cresce do ponto dela na linha, com a sobra do ícone.
+                transform={
+                  eased
+                    ? `translate(${x} ${y}) scale(${popScale(frame, index === 0 ? (sleepAt ?? 0) : (brainAt ?? 0), POP_SECONDS * fps, 0.2)}) translate(${-x} ${-y})`
+                    : undefined
                 }
               >
                 <rect
@@ -442,7 +551,16 @@ export const Timeline: React.FC<TimelineProps> = ({
         ) : null}
         {sleepers}
         {sleepAt === undefined ? null : (
-          <Pin x={SLEEP_X} at={sleepAt} label="sono">
+          <Pin
+            x={SLEEP_X}
+            at={sleepAt}
+            label="sono"
+            float={
+              alive
+                ? [10 * wave(seconds, 2.6), 7 * wave(seconds, 3.4, 0.2)]
+                : undefined
+            }
+          >
             <Moon />
           </Pin>
         )}
@@ -457,8 +575,18 @@ export const Timeline: React.FC<TimelineProps> = ({
           </Pin>
         )}
         {yearsAt === undefined ? null : (
-          <Place x={(SLEEP_X + to) / 2} y={y + 150}>
-            <Pop at={yearsAt}>
+          <Place
+            x={(SLEEP_X + to) / 2}
+            y={y + 150}
+            style={
+              alive
+                ? {
+                    translate: `-50% calc(-50% + ${4 * wave(seconds, 3.7, 0.6)}px)`,
+                  }
+                : undefined
+            }
+          >
+            <Pop at={yearsAt + (eased ? TAG_AFTER_BRACKET_SECONDS * fps : 0)}>
               <Tag size="label" on="night">
                 mais de 500 milhões de anos
               </Tag>

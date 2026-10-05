@@ -63,12 +63,14 @@ type StampProps = {
   readonly y: number;
   /** Quanto o carimbo já bateu, de 0 a 1: vem grande e assenta. */
   readonly pressed: number;
+  /** O tamanho do carimbo, quando é a cena quem conduz a batida; sem valor, vem de `pressed`. */
+  readonly size?: number;
 };
 
 /** O carimbo "cobrado": moldura e letra coral, torto, como todo carimbo. */
-const Stamp: React.FC<StampProps> = ({ x, y, pressed }) => (
+const Stamp: React.FC<StampProps> = ({ x, y, pressed, size }) => (
   <g
-    transform={`translate(${x} ${y}) rotate(-13) scale(${1.7 - 0.7 * pressed})`}
+    transform={`translate(${x} ${y}) rotate(-13) scale(${size ?? 1.7 - 0.7 * pressed})`}
     opacity={Math.min(1, pressed * 3)}
   >
     <rect
@@ -109,6 +111,44 @@ type SleepBillProps = {
   readonly vacant?: boolean;
   /** A cor do contorno do lugar vazio. */
   readonly vacantColor?: string;
+  /**
+   * O tamanho do carimbo, em fração do final, quando a cena conduz a batida:
+   * ele vem grande, bate menor que o tamanho e volta. Sem valor, o tamanho
+   * vem de `stamp`.
+   */
+  readonly stampSize?: number;
+  /**
+   * A montagem da ficha, de 0 a 1, com forma: a prancheta cresce de trás do
+   * papel, o prendedor desce e morde, o quadrado estoura, um depois do outro.
+   * Sem valor, as peças da ficha só acompanham `form` pela opacidade.
+   */
+  readonly formIn?: number;
+  /** Quanto o tracejado do lugar vazio já andou, em pixels do desenho: o contorno que gira devagar. */
+  readonly vacantDash?: number;
+};
+
+/**
+ * A entrada com sobra de uma peça, num trecho de um caminho de 0 a 1: cresce
+ * de `small` até passar um pouco do tamanho e assenta. Antes do trecho, 0.
+ */
+const piecePop = (
+  t: number,
+  from: number,
+  to: number,
+  small = 0.5,
+  over = 1.08,
+): number => {
+  const u = (t - from) / (to - from);
+  if (u <= 0) {
+    return 0;
+  }
+  if (u >= 1) {
+    return 1;
+  }
+  const rise = 1 - (1 - Math.min(1, u / 0.7)) ** 2;
+  return u < 0.7
+    ? small + (over - small) * rise
+    : over + (1 - over) * ((u - 0.7) / 0.3);
 };
 
 /**
@@ -124,9 +164,18 @@ export const SleepBill: React.FC<SleepBillProps> = ({
   checked = 0,
   vacant = false,
   vacantColor = ink.dark,
+  stampSize,
+  formIn,
+  vacantDash = 0,
 }) => {
   const height = billHeight(lines, form);
   const rowY = HEADER + LINE * lines + 18;
+  // Com a montagem conduzida pela cena, cada peça da ficha tem o próprio tamanho; sem ela, todas valem 1.
+  const built = formIn !== undefined;
+  const board = built ? piecePop(formIn, 0, 0.5, 0.82, 1.04) : 1;
+  const clip = built ? piecePop(formIn, 0.3, 0.75) : 1;
+  const box = built ? piecePop(formIn, 0.55, 1) : 1;
+  const formOpacity = built ? 1 : form;
 
   if (vacant) {
     return (
@@ -146,6 +195,7 @@ export const SleepBill: React.FC<SleepBillProps> = ({
           stroke={vacantColor}
           strokeWidth={10}
           strokeDasharray="34 26"
+          strokeDashoffset={-vacantDash}
           strokeLinecap="round"
           opacity={0.6}
         />
@@ -160,7 +210,7 @@ export const SleepBill: React.FC<SleepBillProps> = ({
       viewBox={`0 0 ${BILL_WIDTH} ${height}`}
       overflow="visible"
     >
-      {form > 0 ? (
+      {form > 0 && board > 0 ? (
         // A prancheta por trás do papel: é ela que faz da conta uma ficha.
         <rect
           x={-34}
@@ -169,7 +219,8 @@ export const SleepBill: React.FC<SleepBillProps> = ({
           height={height + 92}
           rx={34}
           fill={chalkboard.frame}
-          opacity={form}
+          opacity={formOpacity}
+          transform={`translate(${BILL_WIDTH / 2} ${height / 2 + 6}) scale(${board}) translate(${-BILL_WIDTH / 2} ${-height / 2 - 6})`}
         />
       ) : null}
       {/* A sombra do papel, deslocada para o lado oposto à luz. */}
@@ -219,42 +270,55 @@ export const SleepBill: React.FC<SleepBillProps> = ({
         );
       })}
       {form > 0 ? (
-        <g opacity={form}>
-          <rect
-            x={36}
-            y={rowY}
-            width={68}
-            height={68}
-            rx={14}
-            fill={ink.ring}
-            stroke={ink.dark}
-            strokeWidth={8}
-          />
-          <rect
-            x={130}
-            y={rowY + 26}
-            width={BILL_WIDTH - 176}
-            height={16}
-            rx={8}
-            fill={ink.dark}
-            opacity={0.7}
-          />
-          <rect
-            x={BILL_WIDTH / 2 - 86}
-            y={-58}
-            width={172}
-            height={64}
-            rx={20}
-            fill={lab.clip}
-          />
-          <rect
-            x={BILL_WIDTH / 2 - 40}
-            y={-40}
-            width={80}
-            height={18}
-            rx={9}
-            fill={lab.platformShade}
-          />
+        <g opacity={formOpacity}>
+          {box > 0 ? (
+            <>
+              <rect
+                x={36}
+                y={rowY}
+                width={68}
+                height={68}
+                rx={14}
+                fill={ink.ring}
+                stroke={ink.dark}
+                strokeWidth={8}
+                transform={`translate(70 ${rowY + 34}) scale(${box}) translate(-70 ${-rowY - 34})`}
+              />
+              {/* A linha ao lado do quadrado se escreve a partir dele. */}
+              <rect
+                x={130}
+                y={rowY + 26}
+                width={(BILL_WIDTH - 176) * Math.min(1, box)}
+                height={16}
+                rx={8}
+                fill={ink.dark}
+                opacity={0.7}
+              />
+            </>
+          ) : null}
+          {clip > 0 ? (
+            // O prendedor vem de cima e morde a borda do papel.
+            <g
+              transform={`translate(${BILL_WIDTH / 2} ${-26 - 70 * (1 - Math.min(1, clip))}) scale(${clip}) translate(${-BILL_WIDTH / 2} 26)`}
+            >
+              <rect
+                x={BILL_WIDTH / 2 - 86}
+                y={-58}
+                width={172}
+                height={64}
+                rx={20}
+                fill={lab.clip}
+              />
+              <rect
+                x={BILL_WIDTH / 2 - 40}
+                y={-40}
+                width={80}
+                height={18}
+                rx={9}
+                fill={lab.platformShade}
+              />
+            </g>
+          ) : null}
         </g>
       ) : null}
       {stamp > 0 ? (
@@ -262,6 +326,7 @@ export const SleepBill: React.FC<SleepBillProps> = ({
           x={BILL_WIDTH / 2 + 14}
           y={HEADER + (LINE * lines) / 2}
           pressed={stamp}
+          size={stampSize}
         />
       ) : null}
       {checked > 0 ? (
@@ -591,6 +656,23 @@ type BillToPocketProps = {
   readonly progress: number;
   readonly lines?: number;
   readonly stamp?: number;
+  /**
+   * A ficha de teste e o visto dela, de 0 a 1, enquanto a conta ainda está
+   * aberta: servem ao plano que recebe a ficha do anterior e a desfaz à vista
+   * antes de dobrar. Sem valores, a conta é só a conta.
+   */
+  readonly form?: number;
+  readonly checked?: number;
+  /** A inclinação do bolso, em graus: o balanço dele parado. Sem valor, o bolso fica reto. */
+  readonly pocketTilt?: number;
+  /** A inclinação da conta aberta, em graus, em volta do alto do papel: o balanço dela antes de dobrar. */
+  readonly tilt?: number;
+  /**
+   * A dobra à vista: a metade de cima do papel cai sobre a de baixo, e depois
+   * a metade esquerda sobre a direita, mostrando o verso; o maço parte de onde
+   * a dobra o deixou. Sem isto, o papel é achatado até o tamanho do maço.
+   */
+  readonly creased?: boolean;
 };
 
 const FOLD_END = 0.4;
@@ -598,6 +680,133 @@ const FOLD_END = 0.4;
 const ARRIVAL = 0.8;
 const between = (from: number, to: number, t: number) => from + (to - from) * t;
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
+// Uma aba que cai: sai devagar da folha aberta e chega depressa, como papel solto.
+const flap = (t: number) => Math.cos(Math.PI * clamp01(t) ** 1.6);
+// A folga em volta do papel que o recorte de cada metade deixa passar: a sombra e o picote.
+const SPILL = 30;
+
+type CreasedBillProps = {
+  /** O canto de cima, à esquerda, do papel aberto, e o tamanho dele, em pixels do quadro. */
+  readonly left: number;
+  readonly top: number;
+  readonly width: number;
+  readonly height: number;
+  /** A dobra, de 0 a 1: até 0,5 a metade de cima cai sobre a de baixo; daí a 1, a esquerda sobre a direita. */
+  readonly folding: number;
+  readonly children: React.ReactNode;
+};
+
+/**
+ * A conta dobrando em dois tempos, com o papel visto de frente: cada aba gira
+ * em volta do vinco (encolhe até virar um fio, e reaparece do outro lado
+ * mostrando o verso). No fim sobra o maço, no quarto de baixo à direita.
+ */
+const CreasedBill: React.FC<CreasedBillProps> = ({
+  left,
+  top,
+  width,
+  height,
+  folding,
+  children,
+}) => {
+  const half = height / 2;
+  const first = flap(folding * 2);
+  const second = flap(folding * 2 - 1);
+  const back = {
+    position: "absolute",
+    backgroundColor: ink.ring,
+    boxShadow: `inset 0 0 0 ${Math.max(3, width * 0.012)}px ${lab.platformShade}`,
+  } as const;
+
+  return (
+    <div style={{ position: "absolute", left, top, width, height }}>
+      {folding < 0.5 ? (
+        <>
+          {/* A metade de baixo fica; a de cima gira em volta do vinco do meio. */}
+          <div
+            style={{
+              position: "absolute",
+              left: -SPILL,
+              top: half,
+              width: width + 2 * SPILL,
+              height: half + SPILL,
+              overflow: "hidden",
+            }}
+          >
+            <div style={{ position: "absolute", left: SPILL, top: -half }}>
+              {children}
+            </div>
+          </div>
+          {first > 0 ? (
+            <div
+              style={{
+                position: "absolute",
+                left: -SPILL,
+                top: -SPILL,
+                width: width + 2 * SPILL,
+                height: half + SPILL,
+                overflow: "hidden",
+                transformOrigin: "50% 100%",
+                scale: `1 ${first}`,
+              }}
+            >
+              <div style={{ position: "absolute", left: SPILL, top: SPILL }}>
+                {children}
+              </div>
+            </div>
+          ) : (
+            <div
+              style={{
+                ...back,
+                left: 0,
+                top: half,
+                width,
+                height: half * -first,
+                borderRadius: `0 0 ${width * 0.05}px ${width * 0.05}px`,
+              }}
+            />
+          )}
+        </>
+      ) : (
+        <>
+          {/* Dobrado ao meio, o papel mostra o verso; agora a metade esquerda gira sobre a direita. */}
+          <div
+            style={{
+              ...back,
+              left: width / 2,
+              top: half,
+              width: width / 2,
+              height: half,
+            }}
+          />
+          {second > 0 ? (
+            <div
+              style={{
+                ...back,
+                left: (width / 2) * (1 - second),
+                top: half,
+                width: (width / 2) * second,
+                height: half,
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                position: "absolute",
+                left: width / 2,
+                top: half,
+                transformOrigin: "0 0",
+                scale: `${(width / 2 / FOLDED.width) * -second} ${half / FOLDED.height}`,
+              }}
+            >
+              <FoldedBill />
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
 
 /**
  * A conta a caminho do bolso (ou saindo dele): dobra, viaja e entra. Desenha
@@ -611,18 +820,40 @@ export const BillToPocket: React.FC<BillToPocketProps> = ({
   progress,
   lines = BILL_LINES,
   stamp = 1,
+  form = 0,
+  checked = 0,
+  pocketTilt = 0,
+  tilt = 0,
+  creased = false,
 }) => {
   const folding = clamp01(progress / FOLD_END);
   const travel = clamp01((progress - FOLD_END) / (1 - FOLD_END));
   const flying = clamp01(travel / ARRIVAL);
   const entering = clamp01((travel - ARRIVAL) / (1 - ARRIVAL));
-  const height = billHeight(lines) * scale;
+  const height = billHeight(lines, form) * scale;
   // O maço chega do tamanho da ponta de papel que o bolso mostra, logo acima da boca dele.
   const packet = between(scale, (pocket.scale * 116) / FOLDED.width, flying);
   const mouth = [
     pocket.x - 4 * pocket.scale,
     pocket.y - 174 * pocket.scale,
   ] as const;
+  const width = BILL_WIDTH * scale;
+  // Com a dobra à vista, o maço nasce no quarto de baixo, à direita, do tamanho
+  // do quarto de folha, e só no caminho toma a proporção do maço desenhado.
+  const quarter = {
+    x: from[0] + width / 4,
+    y: from[1] + (height * 3) / 4,
+    scale: [width / 2 / FOLDED.width, height / 2 / FOLDED.height],
+  } as const;
+  const open = (
+    <SleepBill
+      scale={scale}
+      lines={lines}
+      stamp={stamp}
+      form={form}
+      checked={checked}
+    />
+  );
 
   return (
     <>
@@ -632,11 +863,47 @@ export const BillToPocket: React.FC<BillToPocketProps> = ({
           left: pocket.x,
           top: pocket.y,
           translate: "-50% -50%",
+          rotate: pocketTilt === 0 ? undefined : `${pocketTilt}deg`,
         }}
       >
         <BillPocket scale={pocket.scale} filled={entering} />
       </div>
-      {folding < 1 ? (
+      {creased && folding <= 0 ? (
+        <div
+          style={{
+            position: "absolute",
+            left: from[0],
+            top: from[1],
+            translate: "-50% 0",
+            transformOrigin: "50% 0",
+            rotate: `${tilt}deg`,
+          }}
+        >
+          {open}
+        </div>
+      ) : creased && folding < 1 ? (
+        <CreasedBill
+          left={from[0] - width / 2}
+          top={from[1]}
+          width={width}
+          height={height}
+          folding={folding}
+        >
+          {open}
+        </CreasedBill>
+      ) : creased && flying < 1 ? (
+        <div
+          style={{
+            position: "absolute",
+            left: between(quarter.x, mouth[0], flying),
+            top: between(quarter.y, mouth[1], flying),
+            translate: "-50% -50%",
+            scale: `${between(quarter.scale[0], packet, clamp01(flying * 2))} ${between(quarter.scale[1], packet, clamp01(flying * 2))}`,
+          }}
+        >
+          <FoldedBill />
+        </div>
+      ) : creased ? null : folding < 1 ? (
         <div
           style={{
             position: "absolute",
@@ -647,7 +914,7 @@ export const BillToPocket: React.FC<BillToPocketProps> = ({
             scale: `${between(1, FOLDED.width / BILL_WIDTH, clamp01(folding * 2 - 1))} ${between(1, (FOLDED.height * scale) / height, clamp01(folding * 2))}`,
           }}
         >
-          <SleepBill scale={scale} lines={lines} stamp={stamp} />
+          {open}
         </div>
       ) : flying < 1 ? (
         <div

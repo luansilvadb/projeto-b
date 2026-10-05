@@ -33,6 +33,19 @@ type AntelopeProps = {
   readonly stride?: number;
   /** A cabeça virada para olhar em volta, em graus: negativo ergue o focinho, positivo baixa. */
   readonly turn?: number;
+  /**
+   * O andar: a fase do ciclo de passos, em voltas (uma volta são duas
+   * passadas). Com ele, cada casco sai do chão ao ir para a frente e as pernas
+   * alternam em diagonal; sem valor, as pernas seguem `stride`.
+   */
+  readonly gait?: number;
+  /** O tamanho da passada de `gait`, de 0 (parado) a 1: é por ele que o bicho freia sem as pernas saltarem. */
+  readonly pace?: number;
+  /**
+   * A cabeça virada para trás, por cima do ombro, de 0 a 1. No meio do
+   * caminho ela é vista de frente, estreita: é a virada, e não uma troca.
+   */
+  readonly lookBack?: number;
 };
 
 // A figura cabe nesta caixa, de perfil, olhando para a esquerda; a origem é o chão sob a barriga.
@@ -74,6 +87,16 @@ const HIND: Leg = {
 };
 // As pernas do outro lado do corpo aparecem um pouco à frente das de cá.
 const FAR_SIDE = -24;
+// O andar: quanto o casco vai à frente e atrás, quanto sobe ao avançar, e a
+// fase de cada perna. Andam em diagonal: a da frente de um lado com a de trás
+// do outro, e as de trás um pouco atrasadas, para o passo não parecer máquina.
+const GAIT = {
+  reach: 56,
+  lift: 26,
+  phase: { nearFront: 0, farHind: 0.06, nearHind: 0.5, farFront: 0.56 },
+} as const;
+// A cabeça vista de frente, no meio da virada, tem esta fração da largura de perfil.
+const HEAD_ON = 0.3;
 
 const mix = (from: number, to: number, t: number) => from + (to - from) * t;
 const between = (a: Point, b: Point, t: number): Point => [
@@ -100,6 +123,9 @@ export const Antelope: React.FC<AntelopeProps> = ({
   rest = 0,
   stride = 0,
   turn = 0,
+  gait,
+  pace = 1,
+  lookBack = 0,
 }) => {
   const id = useId();
   const scale = width / VIEW.width;
@@ -114,6 +140,22 @@ export const Antelope: React.FC<AntelopeProps> = ({
   const neckTurn = -(28 * droop * (1 - rest) + 94 * lying);
   const headTurn = 16 * droop * (1 - rest) + 80 * lying + turn;
   const step = 28 * stride * (1 - rest);
+  /** Onde o casco de uma perna está no ciclo do andar: para a frente ou para trás, e fora do chão quando avança. */
+  const footfall = (phase: number): { swing: number; lift: number } => {
+    if (gait === undefined) {
+      return { swing: 0, lift: 0 };
+    }
+    const angle = (gait + phase) * Math.PI * 2;
+    const size = pace * (1 - rest);
+    return {
+      swing: GAIT.reach * size * Math.cos(angle),
+      lift: GAIT.lift * size * Math.max(0, Math.sin(angle)),
+    };
+  };
+  // A cabeça gira em volta do pescoço: de perfil, de frente (estreita) e de perfil para o outro lado.
+  const profile = Math.cos(Math.PI * clamp01(lookBack));
+  const headWidth =
+    Math.abs(profile) < HEAD_ON ? (profile < 0 ? -HEAD_ON : HEAD_ON) : profile;
   /** Um ponto do pescoço, medido a partir do ombro e girado em volta dele. */
   const fromShoulder = (point: Point, degrees: number): Point => {
     const angle = (degrees * Math.PI) / 180;
@@ -129,18 +171,25 @@ export const Antelope: React.FC<AntelopeProps> = ({
     phase: number,
     swing: number,
     far: boolean,
+    lift = 0,
   ) => {
     const offset = far ? FAR_SIDE : 0;
-    const shift = (point: Point, by: number): Point => [
+    const shift = (point: Point, by: number, up = 0): Point => [
       point[0] + offset + by,
-      point[1],
+      point[1] - up,
     ];
     const top = shift(between(standing.top, folded.top, phase), 0);
+    // O casco que sai do chão leva a articulação junto, para a frente e para cima: a perna dobra.
     const joint = shift(
       between(standing.joint, folded.joint, phase),
-      swing * 0.45,
+      swing * 0.45 - lift * 0.5,
+      lift * 0.45,
     );
-    const hoof = shift(between(standing.hoof, folded.hoof, phase), swing);
+    const hoof = shift(
+      between(standing.hoof, folded.hoof, phase),
+      swing,
+      lift,
+    );
     const fill = far ? colors.shade : colors.body;
     const upper: Point = [(top[0] + joint[0]) / 2, (top[1] + joint[1]) / 2];
     const lower: Point = [(joint[0] + hoof[0]) / 2, (joint[1] + hoof[1]) / 2];
@@ -206,8 +255,20 @@ export const Antelope: React.FC<AntelopeProps> = ({
         </clipPath>
       </defs>
 
-      {leg(HIND, hind, -step, true)}
-      {leg(FRONT, front, step, true)}
+      {leg(
+        HIND,
+        hind,
+        -step + footfall(GAIT.phase.farHind).swing,
+        true,
+        footfall(GAIT.phase.farHind).lift,
+      )}
+      {leg(
+        FRONT,
+        front,
+        step + footfall(GAIT.phase.farFront).swing,
+        true,
+        footfall(GAIT.phase.farFront).lift,
+      )}
 
       <g transform={`translate(0 ${drop}) rotate(${tilt} 0 -190)`}>
         {/* O rabo: curto e escuro, pendurado na anca. */}
@@ -273,7 +334,7 @@ export const Antelope: React.FC<AntelopeProps> = ({
           fill={colors.belly}
         />
         <g
-          transform={`translate(${neckEnd[0]} ${neckEnd[1]}) rotate(${neckTurn + headTurn})`}
+          transform={`translate(${neckEnd[0]} ${neckEnd[1]}) rotate(${neckTurn + headTurn}) scale(${headWidth} 1)`}
         >
           {horn(16)}
           {horn(0)}
@@ -342,8 +403,20 @@ export const Antelope: React.FC<AntelopeProps> = ({
         </g>
       </g>
 
-      {leg(HIND, hind, step, false)}
-      {leg(FRONT, front, -step, false)}
+      {leg(
+        HIND,
+        hind,
+        step + footfall(GAIT.phase.nearHind).swing,
+        false,
+        footfall(GAIT.phase.nearHind).lift,
+      )}
+      {leg(
+        FRONT,
+        front,
+        -step + footfall(GAIT.phase.nearFront).swing,
+        false,
+        footfall(GAIT.phase.nearFront).lift,
+      )}
     </svg>
   );
 };

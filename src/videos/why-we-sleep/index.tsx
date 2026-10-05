@@ -133,12 +133,58 @@ const SOURCES: Readonly<Record<string, string>> = {
   "what-it-is": "Nath et al., 2017 · Pappas, 2023",
 };
 
-// Cada cena com fonte ganha o selo no canto, do começo ao fim.
+// Os planos que dividem o palco com o anterior: os elementos saem e entram,
+// e o que os dois têm em comum nunca sai da tela. O plano 0 é a entrada da
+// cena. É o padrão do vídeo inteiro (decisão do usuário, na partitura de
+// score.md). Ficam de fora a abertura, a entrada depois da vinheta e os
+// planos que já fazem a própria transformação por dentro. Por ora só o
+// trecho do piloto (o gancho e o capítulo 1) está ligado: os outros capítulos
+// entram quando forem animados.
+const JOINED = {
+  "third-of-life": [1],
+  "biggest-mistake": [0, 1, 2, 3],
+  "time-to-fix": [0, 1, 2],
+  "the-question": [0],
+  "five-parts": [1, 2, 3],
+  "night-falls": [0, 1, 2],
+  "last-to-know": [0],
+  // A vigília entra por corte: o bicho já está em pé e acordado. Dividir o
+  // palco com o plano do predador o faria levantar logo depois de "você
+  // demora a perceber" (decisão do usuário no piloto).
+  "skip-a-night": [1],
+  "sleep-debt": [0, 1],
+  "debt-test": [0, 1],
+  "debt-returns": [0, 1],
+};
+
+// O cenário de cada plano. Planos seguidos com o mesmo nome dividem o palco
+// sem desmontar o cenário: ele fica, e a câmera e a luz continuam de onde
+// estavam. Os planos de fundo liso, e os que não estão aqui, não têm cenário.
+const SETS = {
+  "five-parts": ["icons", "icons", "icons", "icons"],
+  "night-falls": ["savanna", "savanna", "savanna"],
+  "last-to-know": ["savanna"],
+  "skip-a-night": ["savanna", "savanna"],
+  "sleep-debt": ["savanna", null],
+};
+
+// Cada cena com fonte ganha o selo no canto, do começo ao fim. Quando a cena
+// anterior do roteiro tem a mesma fonte, o selo fica: não entra de novo.
 const sourcedScenes = Object.fromEntries(
-  Object.entries(scenes).map(([id, Scene]) => [
-    id,
-    SOURCES[id] ? withSource(Scene, SOURCES[id]) : Scene,
-  ]),
+  whyWeSleepScript.scenes.map(({ id }, index) => {
+    const before = whyWeSleepScript.scenes[index - 1]?.id;
+    const source = SOURCES[id];
+    return [
+      id,
+      source
+        ? withSource(
+            scenes[id],
+            source,
+            before !== undefined && SOURCES[before] === source,
+          )
+        : scenes[id],
+    ];
+  }),
 );
 
 export const whyWeSleepMetadata = narratedVideoMetadata(
@@ -147,5 +193,11 @@ export const whyWeSleepMetadata = narratedVideoMetadata(
 );
 
 export const WhyWeSleep: React.FC<NarratedVideoProps> = (props) => (
-  <NarratedVideo {...props} script={whyWeSleepScript} scenes={sourcedScenes} />
+  <NarratedVideo
+    {...props}
+    script={whyWeSleepScript}
+    scenes={sourcedScenes}
+    joined={JOINED}
+    sets={SETS}
+  />
 );

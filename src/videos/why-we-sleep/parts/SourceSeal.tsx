@@ -12,6 +12,8 @@ import { sourceSeal } from "../palette";
 type SourceSealProps = {
   /** Autor e ano, como na lista de fontes: "Nath et al., 2017". */
   readonly children: string;
+  /** A cena anterior já mostrava este mesmo selo: ele continua lá, sem entrar de novo. */
+  readonly steady?: boolean;
 };
 
 /**
@@ -19,7 +21,10 @@ type SourceSealProps = {
  * o que aquele estudo mediu. É o que diz a quem assiste que o fato não foi
  * inventado.
  */
-export const SourceSeal: React.FC<SourceSealProps> = ({ children }) => {
+export const SourceSeal: React.FC<SourceSealProps> = ({
+  children,
+  steady = false,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   return (
@@ -28,10 +33,12 @@ export const SourceSeal: React.FC<SourceSealProps> = ({ children }) => {
         alignItems: "flex-end",
         justifyContent: "flex-end",
         padding: `${shape.safeArea.y * 0.5}px ${shape.safeArea.x * 0.5}px`,
-        opacity: interpolate(frame, [0.2 * fps, 0.6 * fps], [0, 1], {
-          extrapolateLeft: "clamp",
-          extrapolateRight: "clamp",
-        }),
+        opacity: steady
+          ? 1
+          : interpolate(frame, [0.2 * fps, 0.6 * fps], [0, 1], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            }),
         pointerEvents: "none",
       }}
     >
@@ -51,11 +58,12 @@ export const SourceSeal: React.FC<SourceSealProps> = ({ children }) => {
 export const withSource = (
   Scene: React.FC<SceneProps>,
   source: string,
+  steady = false,
 ): React.FC<SceneProps> => {
   const Sourced: React.FC<SceneProps> = (props) => (
     <>
       <Scene {...props} />
-      <SourceSeal>{source}</SourceSeal>
+      <SourceSeal steady={steady}>{source}</SourceSeal>
     </>
   );
   return Sourced;

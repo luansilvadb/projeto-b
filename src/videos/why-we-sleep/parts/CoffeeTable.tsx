@@ -37,6 +37,19 @@ type CoffeeTableProps = {
   readonly seconds?: number;
   /** A piscada de quem ainda está acordado, de 0 a 1. */
   readonly blink?: number;
+  /** A respiração: a altura do tronco num instante, em volta de 1. Sem valor, ele não respira. */
+  readonly breath?: number;
+  /** Quanto a xícara treme, em graus: a batida da cabeça no tampo. */
+  readonly mugShake?: number;
+  /** O vapor nasce e some aos poucos em cada ciclo, em vez de recomeçar de uma vez. */
+  readonly softSteam?: boolean;
+  /**
+   * Se o rosto já é o de quem dorme. Sem valor, ele troca sozinho quando a
+   * cabeça passa de meio caminho; com valor, é a cena quem escolhe o quadro da
+   * troca, para escondê-la (a pálpebra já fechada por `blink`, a cabeça
+   * batendo no tampo).
+   */
+  readonly asleep?: boolean;
 };
 
 /** Um ponto do quadro (mesa) visto pelo corpo tombado: onde a mão precisa estar, no desenho da pessoa, para pousar ali. */
@@ -64,10 +77,14 @@ export const CoffeeTable: React.FC<CoffeeTableProps> = ({
   hue,
   seconds = 0,
   blink = 0,
+  breath = 1,
+  mugShake = 0,
+  softSteam = false,
+  asleep: dozing,
 }) => {
   const u = height / UNIT;
   const fall = FALL * slump;
-  const asleep = slump > 0.6;
+  const asleep = dozing ?? slump > 0.6;
   const tilt = asleep ? HEAD_TILT.asleep : HEAD_TILT.sleepy;
   // Tudo o que é desenhado em SVG usa as unidades da figura, com a origem no chão.
   const box = { x: -620, y: -700, width: 1240, height: 760 };
@@ -133,6 +150,7 @@ export const CoffeeTable: React.FC<CoffeeTableProps> = ({
             // O tronco dobra no quadril e a cabeça cai para o lado da xícara.
             transformOrigin: `0px ${HIP[1] * u}px`,
             rotate: `${-fall}deg`,
+            scale: `1 ${breath}`,
           }}
         >
           <div style={{ position: "absolute", translate: "-50% -100%" }}>
@@ -233,7 +251,7 @@ export const CoffeeTable: React.FC<CoffeeTableProps> = ({
           rx={6}
           fill={lab.platformShade}
         />
-        <g transform={`translate(${MUG.x} ${MUG.y})`}>
+        <g transform={`translate(${MUG.x} ${MUG.y}) rotate(${mugShake})`}>
           <path
             d="M34,-58 C70,-58 70,-18 34,-18"
             fill="none"
@@ -256,7 +274,9 @@ export const CoffeeTable: React.FC<CoffeeTableProps> = ({
             strokeWidth={8}
             strokeLinecap="round"
             transform={`translate(${4 * wave(seconds, 1.3)} ${-10 * steam})`}
-            opacity={0.9 - 0.5 * steam}
+            opacity={
+              softSteam ? 0.9 * Math.sin(Math.PI * steam) : 0.9 - 0.5 * steam
+            }
           />
         </g>
       </svg>

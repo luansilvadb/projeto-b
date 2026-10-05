@@ -1,6 +1,6 @@
-import { useCurrentFrame, useVideoConfig } from "remotion";
-import { Person } from "../../../art/Person";
-import { blink, breath } from "../../../components/Idle";
+import { interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import { Person, type Stride } from "../../../art/Person";
+import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import {
   Pop,
@@ -9,7 +9,7 @@ import {
   POP_SECONDS,
 } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { ALREADY_SHOWN, ramp } from "../../../components/timing";
+import { ALREADY_SHOWN, mix, ramp } from "../../../components/timing";
 import { typography } from "../../../design/tokens";
 import { chalkboard, ink, sleepResearcher, type TagTone } from "../palette";
 import { LifeTree } from "./LifeTree";
@@ -137,7 +137,18 @@ type StampProps = {
    * contorno de giz apagado). É o fecho do vídeo: "erro?" deixa de valer.
    */
   readonly faded?: number;
+  /**
+   * Quadro em que o carimbo aparece no ar, antes de bater em `at`: ele surge
+   * grande, recua (o aviso) e desce de uma vez. Sem valor, só cai em `at`.
+   */
+  readonly raisedAt?: number;
 };
+
+// O carimbo no ar: o tamanho com que paira, até onde recua, e quanto afunda ao bater.
+const RAISED = { hover: 1.4, back: 1.75, sunk: 0.93 };
+// Em quadros: quanto dura o recuo antes da batida, a descida e o assentar.
+const STRIKE = { windup: 9, fall: 3, settle: 6 };
+const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
 /** O carimbo "erro?": coral e enorme quando vale; um contorno de giz apagado quando não vale mais. */
 export const Stamp: React.FC<StampProps> = ({
@@ -146,10 +157,38 @@ export const Stamp: React.FC<StampProps> = ({
   size = typography.size.display,
   at = ALREADY_SHOWN,
   faded = 0,
+  raisedAt,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const frames = POP_SECONDS * fps;
+  // Com aviso: surge no ar, recua devagar e bate em três quadros; passa do ponto e volta.
+  const struck =
+    raisedAt === undefined
+      ? popScale(frame, at, frames, 1.8, 0.96)
+      : frame < at - STRIKE.windup
+        ? RAISED.hover * popScale(frame, raisedAt, frames * 0.7, 0.6, 1.08)
+        : interpolate(
+            frame,
+            [
+              at - STRIKE.windup,
+              at,
+              at + STRIKE.fall,
+              at + STRIKE.fall + STRIKE.settle,
+            ],
+            [RAISED.hover, RAISED.back, RAISED.sunk, 1],
+            clamp,
+          );
+  // No recuo ele também gira um pouco para trás, e volta ao bater.
+  const cocked =
+    raisedAt === undefined
+      ? 0
+      : interpolate(
+          frame,
+          [at - STRIKE.windup, at, at + STRIKE.fall],
+          [0, -5, 0],
+          clamp,
+        );
   const border = Math.max(8, size * 0.07);
   const face: React.CSSProperties = {
     fontFamily: typography.family,
@@ -166,9 +205,10 @@ export const Stamp: React.FC<StampProps> = ({
       <div
         style={{
           position: "relative",
-          opacity: popOpacity(frame, at, frames),
+          opacity: popOpacity(frame, raisedAt ?? at, frames),
           // O carimbo cai de cima: chega grande e assenta.
-          scale: popScale(frame, at, frames, 1.8, 0.96),
+          scale: struck,
+          rotate: `${cocked}deg`,
         }}
       >
         {/* O contorno apagado fica por baixo e aparece quando a cor sai. */}
@@ -202,6 +242,24 @@ export const Stamp: React.FC<StampProps> = ({
   );
 };
 
+/** Onde a árvore de giz fica num quadro-negro: o pé do tronco e a largura do desenho. */
+export const chalkTree = (
+  box: Box,
+): { readonly x: number; readonly y: number; readonly width: number } => ({
+  x: box.x + box.width / 2,
+  y: box.y + box.height - (24 * box.width) / BOARD_WIDE.width,
+  width: Math.min(box.width * 0.8, (box.height - 60) / 0.72),
+});
+
+/** Onde o carimbo "erro?" bate num quadro-negro: o centro dele e a altura da letra. */
+export const chalkStamp = (
+  box: Box,
+): { readonly x: number; readonly y: number; readonly size: number } => ({
+  x: box.x + box.width / 2 + chalkTree(box).width * 0.28,
+  y: box.y + box.height * 0.76,
+  size: (typography.size.display * 1.25 * box.width) / BOARD_WIDE.width,
+});
+
 type ChalkboardProps = {
   /** Onde o quadro fica. Por padrão, `BOARD_WIDE`. */
   readonly box?: Box;
@@ -217,6 +275,12 @@ type ChalkboardProps = {
   readonly stampAt?: number;
   /** Quanto o carimbo perdeu a cor, de 0 a 1; por padrão, o que `stamp` diz. */
   readonly faded?: number;
+  /** Quadro em que o carimbo aparece no ar, antes de bater em `stampAt`; sem valor, só cai. */
+  readonly stampRaisedAt?: number;
+  /** O tronco, os bichos e os olhos da árvore, como em `LifeTree`; sem valor, a árvore de sempre. */
+  readonly trunk?: number;
+  readonly buds?: number;
+  readonly closed?: number;
   readonly children?: React.ReactNode;
 };
 
@@ -231,32 +295,42 @@ export const Chalkboard: React.FC<ChalkboardProps> = ({
   stamp = "none",
   stampAt = ALREADY_SHOWN,
   faded: ownFaded,
+  stampRaisedAt,
+  trunk,
+  buds,
+  closed,
   children,
 }) => {
   const faded = ownFaded ?? (stamp === "faded" ? 1 : 0);
   const scale = box.width / BOARD_WIDE.width;
-  const treeWidth = Math.min(box.width * 0.8, (box.height - 60) / 0.72);
-  const centerX = box.x + box.width / 2;
+  const tree = chalkTree(box);
+  const treeWidth = tree.width;
+  const centerX = tree.x;
+  const stampSpot = chalkStamp(box);
 
   return (
     <Board {...box}>
-      <Place x={centerX} y={box.y + box.height - 24 * scale} anchor="bottom">
+      <Place x={tree.x} y={tree.y} anchor="bottom">
         <LifeTree
           width={treeWidth}
           color={chalkboard.chalk}
           bud={chalkboard.chalk}
           eye={chalkboard.face}
           grown={grown}
+          trunk={trunk}
+          buds={buds}
+          closed={closed}
         />
       </Place>
       {stamp === "none" ? null : (
         <>
           <Stamp
-            x={centerX + treeWidth * 0.28}
-            y={box.y + box.height * 0.76}
-            size={typography.size.display * 1.25 * scale}
+            x={stampSpot.x}
+            y={stampSpot.y}
+            size={stampSpot.size}
             at={stampAt}
             faded={faded}
+            raisedAt={stampRaisedAt}
           />
           {/* A pergunta continua, pequena, ao lado da árvore. */}
           <Place
@@ -292,15 +366,42 @@ type QuoteProps = {
   readonly box: Box;
   /** Quadro em que as aspas abrem; as linhas e o fecho vêm em seguida. */
   readonly at?: number;
+  /** Quadro em que cada linha de giz começa a se escrever; sem valor, em sequência depois das aspas. */
+  readonly linesAt?: readonly number[];
+  /** Quadro em que as aspas se fecham; sem valor, depois da última linha. */
+  readonly closeAt?: number;
+  /**
+   * Quadro em que a frase é apagada: as linhas passam a giz esmaecido uma a
+   * uma, de cima para baixo, e as aspas com elas. Sem valor, a frase fica.
+   */
+  readonly erasedAt?: number;
 };
+
+// Quanto sobra do giz depois de apagado, quantos quadros leva cada linha e quantos separam uma da seguinte.
+const ERASED = { left: 0.16, frames: 7, every: 2 };
 
 // As linhas de giz entre as aspas: a frase dele, sem as palavras (a narração a diz).
 const QUOTE_LINES = [0.82, 0.92, 0.58] as const;
 
 /** As aspas a giz e as linhas da frase: o que está no quadro é uma citação. Vai por cima de um `Board`. */
-export const Quote: React.FC<QuoteProps> = ({ box, at = 0 }) => {
+export const Quote: React.FC<QuoteProps> = ({
+  box,
+  at = 0,
+  linesAt,
+  closeAt,
+  erasedAt,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  // O que sobra do giz de cada coisa escrita, na ordem em que o apagador passa: as aspas que abrem, as linhas, as que fecham.
+  const chalk = (order: number) =>
+    erasedAt === undefined
+      ? 1
+      : mix(
+          1,
+          ERASED.left,
+          ramp(frame, erasedAt + order * ERASED.every, ERASED.frames),
+        );
   const mark: React.CSSProperties = {
     fontFamily: typography.family,
     fontWeight: 900,
@@ -322,23 +423,29 @@ export const Quote: React.FC<QuoteProps> = ({ box, at = 0 }) => {
               box.width *
               0.6 *
               length *
-              ramp(frame, at + (0.3 + index * 0.3) * fps, 0.4 * fps)
+              ramp(
+                frame,
+                linesAt?.[index] ?? at + (0.3 + index * 0.3) * fps,
+                (linesAt ? 0.5 : 0.4) * fps,
+              )
             }
             height={22}
             rx={11}
             fill={chalkboard.chalk}
-            opacity={0.85}
+            opacity={0.85 * chalk(index + 1)}
           />
         ))}
       </SvgLayer>
       <Place x={box.x + box.width * 0.16} y={box.y + box.height * 0.24}>
         <Pop at={at}>
-          <div style={mark}>“</div>
+          <div style={{ ...mark, opacity: chalk(0) }}>“</div>
         </Pop>
       </Place>
       <Place x={box.x + box.width * 0.84} y={box.y + box.height * 0.82}>
-        <Pop at={at + 1.3 * fps}>
-          <div style={mark}>”</div>
+        <Pop at={closeAt ?? at + 1.3 * fps}>
+          <div style={{ ...mark, opacity: chalk(QUOTE_LINES.length + 1) }}>
+            ”
+          </div>
         </Pop>
       </Place>
     </>
@@ -359,7 +466,32 @@ type ResearcherProps = {
   /** Onde a etiqueta fica, a partir dos pés dele, e o fundo sobre o qual ela fica. */
   readonly nameOffset?: readonly [number, number];
   readonly on?: TagTone;
+  /**
+   * Quanto o braço já subiu até onde ele aponta, de 0 (solto, com a mão na
+   * cintura) a 1: é o gesto de `pointing` feito aos poucos, e com o braço
+   * oscilando de leve depois de erguido. Sem valor, vale `pointing`.
+   */
+  readonly reach?: number;
+  /** Inclinação do corpo, em graus, e quanto ele sobe do chão, em pixels: o balanço de quem anda. */
+  readonly tilt?: number;
+  readonly rise?: number;
+  /** Quanto a pálpebra fecha além da piscada dele, de 0 a 1: esconde a troca de expressão. */
+  readonly lid?: number;
+  /** A passada de quem anda, como em `Person`: as pernas alternam, o corpo sobe e desce e os braços balançam. */
+  readonly stride?: Stride;
+  /**
+   * Há quantos quadros ele já está no palco quando o plano começa: a
+   * respiração e as piscadas continuam de onde estavam no plano anterior, em
+   * vez de recomeçar. Por padrão, zero.
+   */
+  readonly since?: number;
 };
+
+// O braço de trás solto e apontando, nas unidades do desenho da pessoa.
+const ARM = {
+  loose: { hand: [100, -214], bend: 73 },
+  pointing: { hand: [190, -400], bend: 20 },
+} as const;
 
 /**
  * Allan Rechtschaffen: a construção da pessoa, de jaleco, cabelo grisalho e
@@ -375,10 +507,30 @@ export const Researcher: React.FC<ResearcherProps> = ({
   nameAt,
   nameOffset = [0, -height - 70],
   on = "peach",
+  reach,
+  tilt = 0,
+  rise = 0,
+  lid = 0,
+  stride,
+  since = 0,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const seconds = frame / fps;
+  const seconds = (frame + since) / fps;
+  const turned = reach === undefined ? pointing : reach > 0.5;
+  const backArm =
+    reach === undefined
+      ? pointing
+        ? { hand: ARM.pointing.hand, bend: ARM.pointing.bend }
+        : undefined
+      : {
+          hand: [
+            mix(ARM.loose.hand[0], ARM.pointing.hand[0], reach),
+            mix(ARM.loose.hand[1], ARM.pointing.hand[1], reach) +
+              7 * reach * wave(seconds, 2.6),
+          ] as const,
+          bend: mix(ARM.loose.bend, ARM.pointing.bend, reach),
+        };
 
   return (
     <>
@@ -388,15 +540,21 @@ export const Researcher: React.FC<ResearcherProps> = ({
         anchor="bottom"
         style={{
           scale: `${flip ? -1 : 1} ${breath(seconds, "rechtschaffen")}`,
+          // O `translate` do Place é o que apoia os pés no ponto: a subida do passo vai junto dele.
+          ...(rise === 0
+            ? null
+            : { translate: `-50% calc(-100% - ${rise}px)` }),
+          ...(tilt === 0 ? null : { rotate: `${tilt}deg` }),
         }}
       >
         <Person
           height={height}
           colors={sleepResearcher}
           glasses={ink.dark}
-          expression={pointing ? "curious" : "neutral"}
-          blink={blink(seconds, "rechtschaffen")}
-          backArm={pointing ? { hand: [190, -400], bend: 20 } : undefined}
+          expression={turned ? "curious" : "neutral"}
+          blink={Math.max(lid, blink(seconds, "rechtschaffen"))}
+          backArm={backArm}
+          stride={stride}
         />
       </Place>
       {nameAt === undefined ? null : (
