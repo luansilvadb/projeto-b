@@ -679,3 +679,25 @@ export const sourceSeal = {
   fill: "#1B1447CC",
   text: "#FFFFFF",
 } as const;
+
+/** Randy Gardner: blusa framboesa e cabelo castanho, para não se confundir com "você", de azul, nem com o freguês da loja, de laranja. */
+export const gardner: PersonColors = {
+  ...person,
+  hair: "#5A3620",
+  hairLight: "#7E5332",
+  top: "#D8345F",
+  topShade: "#AD2348",
+  topLight: "#F36D8E",
+  pants: "#3B2A66",
+  pantsShade: "#28194A",
+  shoe: "#FFF4EC",
+  shoeShade: "#D9DCEA",
+};
+
+/** A elefanta na savana de noite: repintada mais clara, como a ficha visual pede, para não se apagar no céu azul-escuro. */
+export const elephantNight: ElephantColors = {
+  ...elephant,
+  body: "#98A2D6",
+  shade: "#6F7AB8",
+  light: "#BFC6EA",
+};

@@ -87,7 +87,13 @@ type Pose = {
   readonly rimY: number;
 };
 
-/** A curva de um braço na pose pedida: mole, ele pende para fora; dormindo, pende mais. */
+/**
+ * A curva de um braço na pose pedida: mole, ele pende para fora; dormindo, cai
+ * a meio caminho da borda do sino. A queda é larga de propósito: no quadro parado
+ * e no tamanho em que ela aparece nas cenas, é o único sinal de que dorme. Não
+ * chega à borda, porque aí os braços somem atrás dos babados e a silhueta
+ * pequena deixa de ser a de um bicho.
+ */
 const armCurve = (
   baseX: number,
   tipX: number,
@@ -96,13 +102,13 @@ const armCurve = (
 ) => {
   const base: Point = [baseX, rimY - 6];
   const end: Point = [
-    tipX * (1 + 0.12 * droop) + sway * 22 * (rise / 260),
-    rimY - rise * (1 - 0.45 * droop),
+    tipX * (1 + 0.3 * droop) + sway * 22 * (rise / 260),
+    rimY - rise * (1 - 0.6 * droop),
   ];
   // O braço sobe quase reto e só então abre: é o que o faz parecer mole, e não um galho.
   const control: Point = [
     base[0] + (end[0] - base[0]) * 0.2 + sway * 10,
-    rimY - rise * (1.05 - 0.3 * droop),
+    rimY - rise * (1.05 - 0.46 * droop),
   ];
   return { base, end, control };
 };
