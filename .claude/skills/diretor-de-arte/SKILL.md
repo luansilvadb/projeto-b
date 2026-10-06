@@ -112,7 +112,7 @@ Movimento:
 
 ## ORDEM DE INJEÇÃO
 
-Injete este arquivo primeiro, depois o procedimento da etapa, depois a unidade de condução e as unidades do passo em curso com as suas dependências, na ordem da tabela:
+Injete o procedimento da etapa, depois a unidade de condução e as unidades do passo em curso com as suas dependências, na ordem da tabela:
 
 | Etapa | Passo | Unidades | Entrega |
 |---|---|---|---|

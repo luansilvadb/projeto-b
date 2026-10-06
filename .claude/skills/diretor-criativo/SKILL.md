@@ -89,7 +89,7 @@ Os números que as unidades dão como medidos "no canal" vêm das legendas em in
 
 ## ORDEM DE INJEÇÃO
 
-Injete este arquivo primeiro, depois o procedimento da etapa, depois `entrevista` e as unidades do passo em curso com as suas dependências, na ordem da tabela:
+Injete o procedimento da etapa, depois `entrevista` e as unidades do passo em curso com as suas dependências, na ordem da tabela:
 
 | Etapa | Passo | Unidades |
 |---|---|---|

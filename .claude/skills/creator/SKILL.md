@@ -38,9 +38,9 @@ Pare quando não houver lacunas relevantes nem ajustes pendentes, quando uma ite
 
 ## SKILL.md
 
-O workflow criado ou atualizado deve declarar função, escopo, anti-escopo, organização das categorias, ordem de injeção, índice das categorias (propósito) e unidades (nome + pergunta), limites e critérios de parada. O conhecimento mora nas unidades; `SKILL.md` aponta para ele. Só `SKILL.md` é registrado como skill e leva frontmatter: `name` e uma `description` redigida como ponteiro (`ponteiros`), o que o workflow sabe e quando acioná-lo. As unidades são arquivos de apoio sem frontmatter, lidos quando a etapa pede.
+O workflow criado ou atualizado deve declarar função, escopo, anti-escopo, organização das categorias, ordem de injeção, índice das categorias (propósito) e unidades (nome + pergunta), limites e critérios de parada. O conhecimento mora nas unidades; `SKILL.md` aponta para ele. Só `SKILL.md` é registrado como skill e leva frontmatter: `name` e uma `description` redigida como ponteiro (`ponteiros`). As unidades são arquivos de apoio sem frontmatter, lidos quando a etapa pede.
 
-Categorias são apenas organizacionais e não entram na ordem de injeção. Injete `SKILL.md` primeiro e, depois, apenas as unidades relevantes e suas dependências, respeitando a ordem de dependência.
+Categorias são apenas organizacionais e não entram na ordem de injeção. Injete apenas as unidades relevantes e suas dependências, respeitando a ordem de dependência.
 
 ## TEMPLATE DA UNIDADE
 

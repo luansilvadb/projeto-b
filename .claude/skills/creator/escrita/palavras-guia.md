@@ -11,6 +11,7 @@ Ela ancora duas vezes:
 - **No ponteiro, a invocação.** Quando a mesma palavra vive nos seus prompts, nos seus documentos e no seu código, o agente liga essa linguagem compartilhada ao material e o alcança com mais confiabilidade.
 
 Cace oportunidades de refatorar com palavras-guia: uma tríade soletrada em três lugares, um ponteiro que gasta uma frase para apontar uma ideia. Cada uma é um trecho pedindo para virar um token só.
+
 **Negação** é o modo de falha ao lado desta alavanca: conduzir por proibição arrasta o comportamento proibido para o contexto e o deixa *mais* disponível. *Não pense num elefante*, e só resta o elefante. Instrua pelo **positivo**: declare o comportamento-alvo ("escreva comentários de uma linha") e o proibido nem é dito. Uma proibição só merece lugar como trava dura que você não consegue formular no positivo; mesmo assim, acompanhe-a do alvo positivo, para a atenção pousar no que fazer.
 
 ## DEPENDÊNCIAS
