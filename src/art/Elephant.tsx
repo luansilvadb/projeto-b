@@ -220,11 +220,14 @@ export const Elephant: React.FC<ElephantProps> = ({
     const limb = (
       x: number,
       shift: number,
-      lift: number,
+      raised: number,
       bow: number,
       thigh: number,
       far: boolean,
     ) => {
+      // O elefante quase não tira a pata do chão: com a subida inteira do
+      // animatic, a pata do lado de lá, agora à vista sob a barriga, parecia flutuar.
+      const lift = raised * 0.3;
       const foot: Point = [x + shift, -lift];
       return (
         <g key={`${x}-${far}`} fill={far ? finish.deep : finish.body}>
