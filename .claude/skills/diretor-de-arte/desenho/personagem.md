@@ -8,7 +8,7 @@ Como desenhar e posar uma figura com rosto?
 **Proporção.** O corpo é simples e a cabeça manda:
 
 - **Pessoa**: cabeça grande, de um quarto a um terço da altura. Tronco numa forma só. Braços e pernas em tubo de curva contínua, sem cotovelo ou joelho marcados. Mão em luva, de uma forma ou com três ou quatro dedos. Pé numa forma só.
-- **Mascote ou criatura**: o corpo é uma forma única (gota, feijão), e a cabeça é metade dela ou ela inteira. Pernas e braços em traço fino.
+- **Mascote ou criatura**: o corpo é uma forma única (gota, feijão), e a cabeça é metade dela ou ela inteira. Pernas e braços em traço de ponta redonda, no peso que `forma` define, com o joelho dobrado e o pé desenhado; a perna de trás num matiz mais escuro.
 - **Personificação**: o corpo é a forma simplificada do próprio objeto, com olhos grandes na parte de cima e da frente; bracinhos em tubo só quando ela precisa operar algo.
 - **Bicho real**: silhueta fiel nos três traços que o identificam; o resto simplifica.
 

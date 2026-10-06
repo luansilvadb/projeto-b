@@ -17,6 +17,7 @@ O que se move quando nada acontece?
 | Água-viva, planta, alga | pulsa ou balança na corrente; cada braço com a própria fase | 5% a 10% | 2 a 6 s |
 | Cenário | partículas derivam; água ondula; luz pisca de leve; estrelas cintilam | 1 a 3 pixels | contínuo |
 | Luz | halo respira; chama ou lâmpada tremula | 10% a 20% da opacidade | 1 a 4 s |
+| Superfície viva | as faixas e manchas correm por dentro da silhueta, que fica parada; as bolhas da borda nascem, crescem e estouram, cada uma na sua fase | o espalhamento anda de 1% a 2% do diâmetro por segundo | contínuo |
 | Câmera | aproxima-se ou desliza, devagar | 3% a 6% por plano | o plano inteiro |
 
 **Fase.** Vizinhos nunca se movem juntos: cada ciclo começa num ponto diferente, sorteado por semente fixa. Três bichos respirando em uníssono viram um mecanismo.

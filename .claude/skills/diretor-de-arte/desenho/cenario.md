@@ -9,11 +9,13 @@ Como construir o fundo e a profundidade?
 
 | Tipo | Serve para | Construção |
 |---|---|---|
-| Liso | explicar: dado, esquema, personagem isolado, piada rápida | degradê e um apoio |
+| Liso | explicar: dado, esquema, personagem isolado, piada rápida | degradê, trama e a marca do assunto |
 | Cenário | situar: abertura de bloco, lugar citado na fala, vida do protagonista | três a cinco camadas |
 | Padrão | dizer "muitos": células, leitos, multidão | o mesmo elemento repetido enchendo o quadro |
 
-**Fundo liso nunca é uma cor só.** É um degradê de duas ou três paradas com pelo menos um apoio: vinheta nos cantos, manchas grandes e suaves do mesmo matiz, um chão sugerido por uma faixa mais escura, partículas discretas ou raios saindo do centro para dar ênfase.
+**Fundo liso nunca é uma cor só.** Leva três coisas juntas: um degradê de duas ou três paradas, mais claro atrás do assunto; uma trama no quadro inteiro, um tom acima ou abaixo do fundo (grade em perspectiva, manchas grandes do mesmo matiz, pontilhado); e a marca do assunto sobre ele (a sombra projetada, ou o halo que clareia a trama em volta). A vinheta nos cantos e os raios saindo do centro entram como ênfase.
+
+**O lugar toma a cor do assunto.** No plano de espetáculo (`planos`), o cenário inteiro é pintado na família de cor de quem emite a luz: nuvens e manchas em três ou quatro tons dessa família, do quase preto ao saturado, com as mais escuras em primeiro plano cobrindo parte do assunto.
 
 **Cenário em camadas**, do fundo para a frente:
 
@@ -48,7 +50,7 @@ Como construir o fundo e a profundidade?
 1. Leia nos planos qual tipo de fundo cada um pede: situar pede cenário, explicar pede liso, "muitos" pede padrão.
 2. Para o cenário, defina a fonte de luz e monte as camadas na ordem.
 3. Confira a profundidade: cada camada se separa da vizinha por dois sinais ou mais.
-4. Para o fundo liso, escolha o degradê do modo e um apoio.
+4. Para o fundo liso, escolha o degradê do modo e a trama, e marque o assunto sobre ele.
 5. Renderize o fundo sozinho e depois com o assunto. O assunto continua sendo a coisa de maior contraste?
 6. Se menos de 40% do quadro tem desenho, aumente o assunto antes de enfeitar o fundo.
 

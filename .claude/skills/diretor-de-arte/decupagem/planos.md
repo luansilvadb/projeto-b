@@ -20,10 +20,11 @@ Como dividir a cena em planos, um por oração?
    | close | o rosto, a mão, o objeto | emoção e detalhe | 14% |
    | detalhe | um olho, uma textura enchendo o quadro | impacto, estranhamento | 2% |
 
-4. **Alternância.** A mesma escala não se repete em mais de três planos seguidos. O bloco abre situando (aberto) ou intrigando (detalhe), e tem ao menos um close.
+4. **Alternância.** A mesma escala não se repete em mais de três planos seguidos. O bloco abre situando (aberto) ou intrigando (detalhe), e tem ao menos um close e um plano de espetáculo.
 5. **Série.** Itens parecidos usam o mesmo molde de composição, trocando o assunto e o matiz do fundo. O molde igual deixa a diferença saltar.
 6. **Plano que evolui.** Um processo contínuo fica num plano só, de até uns 15 segundos, desde que o estado da imagem mude a cada oração. Anote cada mudança na encenação.
    **Percurso.** O plano pode passar disso quando é a câmera que avança por um cenário contínuo, seguindo um personagem-guia: num trecho de referência, 27 segundos e sete orações sem corte, com uma estação nova a cada 3 ou 4 segundos. Registre o percurso como um plano por estação, todos com a entrada `câmera` e no mesmo cenário, e desenhe o cenário inteiro antes de enquadrar qualquer estação.
+   **Espetáculo.** Cada bloco tem um plano que existe para ser olhado: a câmera vai ao lugar de verdade (a superfície, o interior, a paisagem) e fica de 6 a 10 segundos, com movimento lento e contínuo e sem texto novo. Ele cai na frase mais curta ou na pausa do bloco, logo depois da explicação que o prepara, e fica fora da conta do ritmo. O bloco alterna assim dois registros: o palco em que se compara e mede (`dado`) e o lugar em que se contempla.
 7. **Entrada.** Como a imagem anterior vira esta:
 
    | Entrada | O que acontece | Quando usar |
@@ -51,7 +52,7 @@ Como dividir a cena em planos, um por oração?
 3. Atribua escala e confira a alternância.
 4. Atribua a paleta: o modo vem do lugar; o matiz do fundo troca a cada ideia.
 5. Atribua a entrada.
-6. Estime a duração de cada plano pelas palavras que ele cobre (cerca de 2,5 por segundo). Mais de 8 segundos: divida, ou descreva a mudança interna. Menos de 2: junte ao vizinho, salvo plano de reação ou de impacto.
+6. Estime a duração de cada plano pelas palavras que ele cobre (cerca de 2,5 por segundo). Mais de 8 segundos: divida, ou descreva a mudança interna, salvo o plano de espetáculo. Menos de 2: junte ao vizinho, salvo plano de reação ou de impacto.
 7. Leia só a coluna da encenação, de cima a baixo, sem a narração. Ela conta a história?
 8. Leve os planos ao usuário junto com o texto do bloco.
 

@@ -107,6 +107,7 @@ Movimento:
 - A referência roda a 60 quadros por segundo: os tempos de movimento valem em segundos, não em quadros.
 - Evidência de um vídeo só (gordura corporal, 9 minutos, lido em 2026-10-04), adotada por decisão do usuário onde contrariava as unidades: o cenário-âncora (`encenacao`), os estados do personagem e os olhos em tudo que age por dentro (`elenco`), o tema grave saturado e a cor que cresce em área (`cor`), as figuras que flutuam com halo (`composicao`), a onomatopeia e as etiquetas que se acumulam (`texto`, `dado`). O assunto sozinho no centro (`composicao`) foi conferido depois em 72 quadros de quatro dos 12 vídeos.
 - Evidência de um trecho só (formigas, 27 segundos): o percurso (`encenacao`, `planos`).
+- Evidência de um vídeo só (comparação de estrelas, 11 minutos, lido em 2026-10-06 em folhas de contato, recortes e tiras, sem medida do `pnpm critique`), adotada por decisão do usuário: o rosto de passagem (`elenco`), o plano de espetáculo (`planos`), a luz como material, a superfície viva e o acabamento, este lido em seis recortes em tamanho real ao lado de três nossos (`forma`, `pausa-viva`), a trama do fundo liso e o lugar na cor do assunto (`cenario`), o palco-régua (`dado`), a etiqueta em sublinhado e o teto de tamanho (`texto`). É um vídeo de espaço: o fundo escuro com assunto luminoso vem do tema, e os modos claros de `cor` continuam valendo.
 
 ## ORDEM DE INJEÇÃO
 
