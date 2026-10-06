@@ -18,6 +18,3 @@ Passe o documento por quatro testes, frase a frase; a poda termina quando toda f
 ## DEPENDÊNCIAS
 - hierarquia: a escada e o ramo divulgado, para onde vai a linha que não pesa sobre todos os ramos.
 - palavras-guia: a palavra-guia, que o teste de no-op também avalia.
-
-## LIMITES
-- A poda corta redação, nunca comportamento: a regra que muda o que o agente faz permanece, ainda que reescrita.

@@ -7,20 +7,14 @@ description: "Cria, melhora e refatora workflows de agente (uma skill com SKILL.
 
 Transforma um domínio, projeto ou codebase em um workflow acionável e suas unidades de conhecimento. Não use para executar tarefas do domínio ou substituir um workflow especializado.
 
-## PRINCÍPIO
-
-`DOMÍNIO → PERGUNTAS → LACUNAS → UNIDADES → ESTRUTURA → VALIDAÇÃO`
-
-Cada unidade responde a uma pergunta cognitiva central. Crie categorias e unidades por necessidade, cada uma com propósito claro.
-
 ## FLUXO
 
 1. Defina objetivo, escopo, anti-escopo, entradas, saídas, regras, exceções e restrições.
 2. Gere as perguntas que o agente deve responder para realizar o objetivo.
-3. Compare com as unidades existentes; marque lacunas, redundâncias e conteúdo fora do escopo. Atualize, consolide ou remova unidades; redundâncias, conteúdos fora do escopo e falhas na validação final ainda sem solução são ajustes pendentes.
+3. Compare com as unidades existentes; marque lacunas, redundâncias e conteúdo fora do escopo. Atualize, consolide ou remova unidades; redundância e conteúdo fora do escopo ainda sem solução são ajustes pendentes.
 4. Para cada lacuna, defina ou reutilize a categoria adequada e crie uma unidade.
-5. Valide cada unidade. Repita os passos 2 a 5 enquanto houver lacunas ou ajustes pendentes.
-6. Gere ou atualize `SKILL.md`, o índice de categorias e unidades e a ordem de injeção; valide a árvore completa. Se falhar, corrija a causa e retome os passos 2 a 6; se não for possível, sinalize e pare.
+5. Valide cada unidade e repita os passos 2 a 5 até a PARADA.
+6. Gere ou atualize `SKILL.md` e valide a árvore completa; se falhar, corrija a causa e retome do passo 2.
 
 ## VALIDAÇÃO DE UNIDADE
 
@@ -32,9 +26,7 @@ A unidade deve:
 - declarar dependências e limites relevantes;
 - ter a sua linha do índice redigida como ponteiro (`ponteiros`);
 - encerrar cada passo num critério de conclusão (`criterios`);
-- passar, frase a frase, nos quatro testes de `poda`.
-
-Se falhar, corrija ou recrie a unidade antes de continuar.
+- passar nos testes de `poda`.
 
 ## PARADA
 
@@ -46,7 +38,7 @@ Pare quando não houver lacunas relevantes nem ajustes pendentes, quando uma ite
 
 ## SKILL.md
 
-O workflow criado ou atualizado deve declarar função, escopo, anti-escopo, organização das categorias, ordem de injeção, índice das categorias (propósito) e unidades (nome + pergunta), limites e critérios de parada. O conhecimento mora nas unidades; `SKILL.md` aponta para ele. Só `SKILL.md` é registrado como skill e leva frontmatter: `name` e uma `description` redigida como ponteiro (`ponteiros`), o que o workflow sabe e quando acioná-lo. As unidades são arquivos de apoio sem frontmatter, lidos quando a etapa pede; o ponteiro de cada uma é a sua linha do índice.
+O workflow criado ou atualizado deve declarar função, escopo, anti-escopo, organização das categorias, ordem de injeção, índice das categorias (propósito) e unidades (nome + pergunta), limites e critérios de parada. O conhecimento mora nas unidades; `SKILL.md` aponta para ele. Só `SKILL.md` é registrado como skill e leva frontmatter: `name` e uma `description` redigida como ponteiro (`ponteiros`), o que o workflow sabe e quando acioná-lo. As unidades são arquivos de apoio sem frontmatter, lidos quando a etapa pede.
 
 Categorias são apenas organizacionais e não entram na ordem de injeção. Injete `SKILL.md` primeiro e, depois, apenas as unidades relevantes e suas dependências, respeitando a ordem de dependência.
 
@@ -77,7 +69,7 @@ Categorias são apenas organizacionais e não entram na ordem de injeção. Inje
 - `SKILL.md` com tudo o que a seção `SKILL.md` exige;
 - toda unidade do índice existe e todo arquivo de unidade está no índice;
 - a `description` de `SKILL.md` com dois-pontos está entre aspas: sem elas o YAML falha e a descrição some;
-- nenhuma unidade inválida nem arquivo vazio.
+- nenhum arquivo vazio.
 
 ## ORGANIZAÇÃO
 

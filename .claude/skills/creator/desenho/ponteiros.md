@@ -9,7 +9,7 @@ A **redação** do ponteiro, e não o seu alvo, decide quando o agente alcança 
 
 O ponteiro cumpre dois trabalhos: dizer o que o material é e listar os **ramos** que devem levar o agente até ele. Um ramo é um caso distinto que o documento trata, de modo que execuções diferentes tomam caminhos diferentes por ele.
 
-Cada palavra de um ponteiro sempre carregado custa a cada turno, por isso ele merece poda mais dura que o corpo:
+O ponteiro paga carga de contexto, por isso merece poda mais dura que o corpo:
 
 - **Palavra-guia na frente.** É no ponteiro que ela faz o trabalho de disparo.
 - **Um gatilho por ramo.** Sinônimos que renomeiam um ramo são um ramo escrito duas vezes: funda-os e mantenha só os ramos de fato distintos.
