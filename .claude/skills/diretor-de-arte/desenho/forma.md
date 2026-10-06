@@ -12,7 +12,7 @@ Como construir qualquer coisa em formas chapadas, em SVG?
 
 **Construção.** Vem antes de cor, sombra e detalhe, e nenhum acabamento a conserta: num piloto, três rodadas de acabamento sobre uma silhueta fraca deram um desenho carregado e ainda fraco. A silhueta é renderizada numa cor só, na pose que a cena pede, e julgada sozinha:
 
-- **A pose conta a cena** sem cor nem rosto: quem dorme pende, quem espera apoia o peso num lado. Uma figura só parada, de olho fechado, não dorme.
+- **A pose conta a cena** sem cor nem rosto: quem dorme pende, quem espera apoia o peso num lado. Uma figura só parada, de olho fechado, não dorme. O corpo e o rosto dizem a mesma coisa, e o corpo se inclina inteiro, dos pés à cabeça: o tronco dobrado sobre pernas a prumo, com o rosto descansado, lê como coluna quebrada. Uma inclinação mora num lugar só, no desenho ou na cena; nos dois, elas se somam.
 - **Junção em curva.** Onde duas partes se encontram (tromba e testa, perna e barriga, pescoço e ombro), o contorno de uma vira o da outra, sem quina e sem uma forma encostada na outra.
 - **Membro nasce de uma massa**: a perna de trás sai de uma coxa, a da frente de um ombro, a tromba toma a metade de baixo da face. Membro que sai de um ponto é palito espetado.
 - **O que se repete não é cópia.** As quatro pernas, os dois braços, as folhas: cada um com largura, ângulo ou curva própria; os do lado de lá aparecem de verdade, deslocados mais de meia largura, ou somem.

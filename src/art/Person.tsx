@@ -144,8 +144,9 @@ const BUILT = {
     },
   },
   reach: 1.7,
+  // O ponto do chão, sob o corpo, em volta do qual os pés de quem anda vão e vêm.
+  center: 14,
   swing: 1.4,
-  lean: 9,
   // Quantos graus o calcanhar do pé de trás sobe no fim da passada.
   heel: 16,
 } as const;
@@ -229,11 +230,19 @@ const builtLeg = (
   toe: number,
   width: number,
   hipShift: number,
+  walked: number,
 ) => {
   const rise = GAIT.lift * step.lifted;
-  const ankle: Point = [side.ankle[0] + step.forward, side.ankle[1] - rise];
+  // Andando, os dois pés vão e vêm em volta do mesmo ponto, sob o corpo: em
+  // volta dos lugares de quem está parada, um extremo da passada juntava os
+  // dois pés num só e o outro os abria demais.
+  const rest = side.ankle[0] + (BUILT.center - side.ankle[0]) * walked;
+  const ankle: Point = [rest + step.forward, side.ankle[1] - rise];
   const knee: Point = [
-    side.knee[0] + step.forward * 0.55 + 16 * step.lifted,
+    side.knee[0] +
+      (BUILT.center - side.ankle[0]) * walked * 0.55 +
+      step.forward * 0.55 +
+      16 * step.lifted,
     side.knee[1] - bob * 0.5 - rise * 0.55,
   ];
   const [x, y] = [ankle[0], ankle[1] + 36];
@@ -576,9 +585,11 @@ export const Person: React.FC<PersonProps> = ({
   const torso = finish
     ? `M-78,${shoulderY + 40} C-82,${shoulderY + 16} -52,${shoulderY + 10} 0,${shoulderY + 10} C52,${shoulderY + 10} 82,${shoulderY + 16} 78,${shoulderY + 40} C84,-300 94,-252 96,-216 C98,-190 82,-176 0,-176 C-82,-176 -98,-190 -96,-216 C-94,-252 -84,-300 -78,${shoulderY + 40} Z`
     : `M-82,${shoulderY + 28} Q-84,${shoulderY + 2} -56,${shoulderY} L56,${shoulderY} Q84,${shoulderY + 2} 82,${shoulderY + 28} L98,-190 Q100,-164 74,-164 L-74,-164 Q-100,-164 -98,-190 Z`;
-  // Quem anda inclina o corpo para onde vai; parada, a figura pende um pouco sobre o quadril.
+  // Parada ou andando, a figura pende um pouco sobre o quadril.
   const walked = stride === undefined ? 0 : (stride.gait ?? 1);
-  const lean = 2.5 + (finish ? BUILT.lean * walked + ownLean : 0);
+  // Andar não inclina o tronco por conta própria: dobrado sobre pernas a prumo, com o rosto descansado, ele lê
+  // como coluna quebrada. Quem inclina o corpo de quem anda é a cena, a figura inteira, quando há cansaço para contar.
+  const lean = 2.5 + (finish ? ownLean : 0);
   // Quando o tronco pende para um lado, o quadril vai para o outro: dos pés à cabeça, a figura faz um C.
   const hipShift = finish ? -ownLean * 2.4 : 0;
   // Quem dorme em pé afunda a cabeça nos ombros, até o queixo cobrir o pescoço.
@@ -613,6 +624,7 @@ export const Person: React.FC<PersonProps> = ({
             1,
             74,
             hipShift,
+            walked,
           )}
           {builtLeg(
             BUILT.legs.front,
@@ -623,6 +635,7 @@ export const Person: React.FC<PersonProps> = ({
             walked > 0 ? 1 : -1,
             84,
             hipShift,
+            walked,
           )}
           {/* O quadril: a massa de onde as duas pernas nascem, sob a barra do tronco. */}
           <path
