@@ -262,7 +262,7 @@ export const Elephant: React.FC<ElephantProps> = ({
         {/* A sombra da barriga, uma forma só: as pernas da frente passam por cima dela. */}
         <path
           clipPath={`url(#${id}-body)`}
-          d="M-176,-136 C-130,-100 -100,-112 -60,-92 C-10,-66 40,-98 90,-86 C140,-74 196,-116 250,-150 L260,-20 L-180,-20 Z"
+          d="M-184,-144 C-130,-106 -90,-114 -40,-98 C10,-82 60,-106 110,-96 C160,-86 212,-126 262,-164 L266,-20 L-186,-20 Z"
           fill={finish.shadow}
         />
         {walking
@@ -285,7 +285,7 @@ export const Elephant: React.FC<ElephantProps> = ({
               )}
               fill={finish.shadow}
             />
-            {/* A ponta rosada é uma mancha recortada no tubo, e não um disco maior que ele. */}
+            {/* A ponta rosada é uma mancha recortada no tubo; a tampa redonda, abaixo, tem a largura dele. */}
             <circle
               cx={trunkTip[0]}
               cy={trunkTip[1] + 6}
@@ -293,6 +293,12 @@ export const Elephant: React.FC<ElephantProps> = ({
               fill={finish.earInside}
             />
           </g>
+          <circle
+            cx={trunkTip[0]}
+            cy={trunkTip[1]}
+            r={14}
+            fill={finish.earInside}
+          />
           <path
             d={taperPath([-164, -214], [-200, -198], [-230, -186], 20, 9)}
             fill={finish.tusk}
@@ -303,7 +309,7 @@ export const Elephant: React.FC<ElephantProps> = ({
           {/* O queixo na sombra. */}
           <path
             clipPath={`url(#${id}-head)`}
-            d="M-200,-258 C-186,-220 -150,-204 -112,-206 C-80,-208 -52,-222 -30,-250 L-10,-180 L-200,-180 Z"
+            d="M-212,-252 C-190,-216 -150,-198 -100,-202 C-60,-206 -30,-224 -6,-262 L0,-170 L-212,-170 Z"
             fill={finish.shadow}
           />
 
@@ -320,24 +326,24 @@ export const Elephant: React.FC<ElephantProps> = ({
               <circle
                 cx={EYE.x}
                 cy={EYE.y}
-                r={EYE.radius + 2}
+                r={EYE.radius + 5}
                 fill={finish.eye}
               />
               <circle
                 cx={EYE.x + look[0] * 4}
                 cy={EYE.y + look[1] * 4}
-                r={8}
+                r={10}
                 fill={finish.pupil}
               />
               <circle
                 cx={EYE.x + look[0] * 4 - 3}
                 cy={EYE.y + look[1] * 4 - 3}
-                r={3}
+                r={3.5}
                 fill={finish.eye}
               />
               {lid > 0 ? (
                 <path
-                  d={`M${EYE.x - 18},${EYE.y - 18} L${EYE.x + 18},${EYE.y - 18} L${EYE.x + 18},${EYE.y - 17 + 34 * lid} Q${EYE.x},${EYE.y - 12 + 34 * lid} ${EYE.x - 18},${EYE.y - 17 + 34 * lid} Z`}
+                  d={`M${EYE.x - 20},${EYE.y - 20} L${EYE.x + 20},${EYE.y - 20} L${EYE.x + 20},${EYE.y - 19 + 40 * lid} Q${EYE.x},${EYE.y - 14 + 40 * lid} ${EYE.x - 20},${EYE.y - 19 + 40 * lid} Z`}
                   fill={finish.body}
                 />
               ) : null}
@@ -354,11 +360,11 @@ export const Elephant: React.FC<ElephantProps> = ({
               strokeLinejoin="round"
             />
             <path
-              d="M-30,-312 C0,-336 54,-326 64,-284 C70,-248 48,-218 18,-220 C-8,-222 -30,-248 -30,-312 Z"
+              d="M-34,-316 C-6,-346 58,-338 76,-292 C88,-258 76,-212 44,-196 C14,-184 -12,-206 -22,-242 C-28,-268 -34,-292 -34,-316 Z"
               fill={finish.earInside}
             />
             <path
-              d="M-4,-296 C14,-270 14,-248 4,-232"
+              d="M0,-300 C22,-272 24,-244 12,-222"
               fill="none"
               stroke={finish.shadow}
               strokeWidth={9}
@@ -531,12 +537,12 @@ export const Elephant: React.FC<ElephantProps> = ({
 
 // As formas que o acabamento desenha duas vezes, uma na cor do luar e outra por cima.
 const HEAD =
-  "M-20,-330 C-60,-380 -180,-380 -196,-290 C-204,-240 -170,-196 -116,-192 C-70,-190 -30,-216 -22,-262 Z";
+  "M-8,-316 C-26,-392 -150,-412 -198,-332 C-216,-298 -208,-256 -190,-230 C-170,-200 -130,-184 -92,-190 C-50,-196 -14,-226 -6,-270 Z";
 const EAR =
-  "M-50,-330 C-10,-364 70,-350 84,-290 C94,-240 60,-196 14,-198 C-24,-200 -54,-240 -50,-330 Z";
-// O corpo do acabamento: a corcova no ombro, a garupa que cai e a barriga pendendo no meio.
+  "M-56,-336 C-20,-378 72,-368 98,-300 C114,-254 96,-194 50,-174 C10,-158 -30,-188 -44,-236 C-52,-268 -58,-300 -56,-336 Z";
+// O corpo do acabamento: a corcova no ombro, a sela do dorso, a garupa que cai e a barriga pendendo no meio.
 const FINISHED_BODY =
-  "M-150,-250 C-130,-340 -40,-384 60,-366 C110,-358 150,-362 190,-340 C240,-312 258,-250 252,-190 C248,-140 228,-104 182,-88 C100,-58 -40,-52 -130,-90 C-176,-112 -172,-190 -150,-250 Z";
+  "M-150,-262 C-140,-330 -90,-378 -30,-378 C18,-378 44,-340 96,-338 C140,-336 190,-338 222,-300 C252,-264 262,-214 252,-170 C244,-128 216,-98 170,-86 C100,-66 0,-58 -90,-82 C-150,-98 -176,-150 -170,-200 C-168,-224 -158,-244 -150,-262 Z";
 // Corpo em curva única: corcova do dorso, barriga baixa.
 const BODY =
   "M-150,-240 C-120,-330 -20,-372 100,-360 C190,-352 236,-300 240,-220 C244,-150 220,-100 170,-80 C80,-50 -60,-50 -140,-90 C-180,-110 -176,-180 -150,-240 Z";
