@@ -30,13 +30,12 @@ Com que critérios e medidas julgar os quadros?
    - A silhueta se lê numa cor só?
    - Cada parte tem base, sombra e, onde cabe, brilho?
    - O assunto tem formas na faixa do orçamento?
-   - Acabamento, julgado num recorte em tamanho real (um quarto do quadro, sem reduzir) do assunto de cada cenário e de cada personagem: os sete itens de `forma` estão lá? Dois ou mais ausentes é relevante; a folha de quadros reduzidos não mostra nenhum deles.
+   - Registro e contenção, julgados num recorte em tamanho real (um quarto do quadro, sem reduzir) de cada personagem e do assunto de cada cenário: o desenho está no registro certo de `forma`? Aponte cada forma que, tirada, não faria falta. Registro trocado é bloqueante; três ou mais formas sobrando é relevante. A folha de quadros reduzidos não mostra nada disso.
    - O personagem bate com a folha de modelo? A expressão serve ao momento?
 6. **Cenário, profundidade e luz**
-   - O fundo liso tem degradê, trama e a marca do assunto? O cenário tem três camadas ou mais?
+   - O fundo liso tem degradê, e trama só onde `cenario` a pede? O cenário tem três camadas ou mais?
    - Há sombra de contato no mundo e halo por dentro? A luz vem de um lado só?
-   - Aponte a fonte de luz do plano. O assunto mostra essa luz (centro claro, crescente, halo, ou a cor do vizinho no lado dele)? Assunto chapado, sem luz à vista, é relevante.
-   - A área grande do assunto tem superfície viva, ou é uma cor lisa?
+   - No que emite luz e por dentro: há centro claro, aros e halo, e a área grande tem superfície viva?
    - O bloco tem o seu plano de espetáculo? Nele, sem narração e sem etiqueta, o quadro serviria de papel de parede? Se não, é relevante.
 7. **Texto**
    - Um texto novo por vez, cada um preso ao que nomeia?
@@ -57,7 +56,7 @@ As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família ma
 
 **Medida não é qualidade.** As medidas acusam o vídeo vazio, parado ou de uma cor só. Um vídeo cheio, colorido e mal encenado passa em todas. Por isso as passadas são obrigatórias, e a encenação vem primeiro.
 
-**Lado a lado.** Ponha o quadro ao lado de um da referência do mesmo tipo (personagem, dado, cenário) e nomeie três diferenças; os recortes em tamanho real ficam em `out/referencias/hfz4uDuicaQ/recortes/`, e o vídeo, na pasta acima, para tirar outros. A comparação serve para ver o que falta, não para copiar.
+**Lado a lado.** Ponha o quadro ao lado de um da referência do mesmo tipo (personagem, dado, cenário) e nomeie três diferenças; os recortes em tamanho real ficam em `out/referencias/0NY2gAftzJE/recortes/` (personagem e mundo) e `out/referencias/hfz4uDuicaQ/recortes/` (o que emite luz), com o vídeo na pasta acima, para tirar outros. A comparação serve para ver o que falta, não para copiar.
 
 **Classificação dos problemas:**
 

@@ -9,11 +9,11 @@ Como construir o fundo e a profundidade?
 
 | Tipo | Serve para | Construção |
 |---|---|---|
-| Liso | explicar: dado, esquema, personagem isolado, piada rápida | degradê, trama e a marca do assunto |
+| Liso | explicar: dado, esquema, personagem isolado, piada rápida | degradê; trama só no palco de dado e por dentro |
 | Cenário | situar: abertura de bloco, lugar citado na fala, vida do protagonista | três a cinco camadas |
 | Padrão | dizer "muitos": células, leitos, multidão | o mesmo elemento repetido enchendo o quadro |
 
-**Fundo liso nunca é uma cor só.** Leva três coisas juntas: um degradê de duas ou três paradas, mais claro atrás do assunto; uma trama no quadro inteiro, um tom acima ou abaixo do fundo (grade em perspectiva, manchas grandes do mesmo matiz, pontilhado); e a marca do assunto sobre ele (a sombra projetada, ou o halo que clareia a trama em volta). A vinheta nos cantos e os raios saindo do centro entram como ênfase.
+**Fundo liso nunca é uma cor só**, e quase nunca é mais que um degradê. O plano de personagem leva um degradê de duas paradas e a sombra de contato, e nada mais: o fundo vazio é o que deixa a figura falar. A trama (grade em perspectiva, manchas do mesmo matiz) entra só no palco em que se compara e mede (`dado`) e no mundo por dentro; a vinheta e os raios saindo do centro, só como ênfase de um plano.
 
 **O lugar toma a cor do assunto.** No plano de espetáculo (`planos`), o cenário inteiro é pintado na família de cor de quem emite a luz: nuvens e manchas em três ou quatro tons dessa família, do quase preto ao saturado, com as mais escuras em primeiro plano cobrindo parte do assunto.
 
@@ -50,7 +50,7 @@ Como construir o fundo e a profundidade?
 1. Leia nos planos qual tipo de fundo cada um pede: situar pede cenário, explicar pede liso, "muitos" pede padrão.
 2. Para o cenário, defina a fonte de luz e monte as camadas na ordem.
 3. Confira a profundidade: cada camada se separa da vizinha por dois sinais ou mais.
-4. Para o fundo liso, escolha o degradê do modo e a trama, e marque o assunto sobre ele.
+4. Para o fundo liso, escolha o degradê do modo; acrescente a trama só no palco de dado e por dentro.
 5. Renderize o fundo sozinho e depois com o assunto. O assunto continua sendo a coisa de maior contraste?
 6. Se menos de 40% do quadro tem desenho, aumente o assunto antes de enfeitar o fundo.
 
