@@ -1,5 +1,6 @@
 import { useId } from "react";
 import { taperPath, type Point } from "./shapes";
+import { mix } from "../components/timing";
 
 export type ElephantColors = {
   readonly body: string;
@@ -32,11 +33,40 @@ type ElephantProps = {
   readonly droop?: number;
   /** O colar de sensor do estudo, com a luz nesta opacidade; sem o valor, não há colar. */
   readonly collar?: number;
+  /**
+   * O andar: a fase do ciclo de passos, em voltas (uma volta são as quatro
+   * patas). Com ele, cada pata sai do chão ao ir para a frente e as quatro
+   * pisam uma depois da outra, a de trás e a da frente do mesmo lado em
+   * seguida, como anda um elefante; sem valor, as pernas seguem `stride`.
+   * Quem anda faz a fase crescer com a distância: `STRIDE_LENGTH` por volta.
+   */
+  readonly gait?: number;
+  /** O tamanho da passada de `gait`, de 0 (parada) a 1: é por ele que ela freia sem as patas saltarem. */
+  readonly pace?: number;
+  /** A tromba estendida para a frente, de 0 a 1: o cumprimento de quem encosta a tromba na de outra. */
+  readonly reach?: number;
 };
 
 // A figura cabe nesta caixa, de perfil, olhando para a esquerda; a origem é o chão sob a barriga.
 const VIEW = { width: 520, height: 400 };
 const EYE = { x: -126, y: -268, radius: 13 };
+// O andar: quanto cada pata vai à frente e atrás do lugar de repouso, quanto
+// sobe ao avançar, e a fase de cada uma. O elefante anda em sequência lateral:
+// a de trás de um lado, a da frente do mesmo lado, e depois as do outro.
+const GAIT = {
+  reach: 46,
+  lift: 24,
+  phase: { nearHind: 0, nearFore: 0.25, farHind: 0.5, farFore: 0.75 },
+} as const;
+/**
+ * Quanto o corpo avança em uma volta de `gait` com `pace` 1, nas unidades do
+ * desenho (a largura inteira são 520): a pata de apoio recua no chão de uma
+ * ponta à outra do alcance em meia volta.
+ */
+export const STRIDE_LENGTH = 4 * GAIT.reach;
+// A tromba estendida para a frente: onde ficam a ponta e o meio da curva.
+const REACHING = { tip: [-316, -196], control: [-262, -268] } as const;
+
 
 /**
  * A elefanta, de perfil: dorso em corcova, testa alta, orelha grande, tromba
@@ -53,23 +83,51 @@ export const Elephant: React.FC<ElephantProps> = ({
   stride = 0,
   droop = 0,
   collar,
+  gait,
+  pace = 1,
+  reach = 0,
 }) => {
   const id = useId();
   const scale = width / VIEW.width;
   // A cabeça pende para a frente quando dorme; o pescoço é o giro.
   const headTilt = 12 * droop;
-  const trunkTip: Point = [-262 + 60 * trunk, -40 - 150 * trunk];
-  const trunkControl: Point = [-246 - 20 * trunk, -150 - 60 * trunk];
+  const trunkTip: Point = [
+    mix(-262 + 60 * trunk, REACHING.tip[0], reach),
+    mix(-40 - 150 * trunk, REACHING.tip[1], reach),
+  ];
+  const trunkControl: Point = [
+    mix(-246 - 20 * trunk, REACHING.control[0], reach),
+    mix(-150 - 60 * trunk, REACHING.control[1], reach),
+  ];
   const step = 24 * stride;
   const nearShade = { fill: colors.shade };
 
-  const leg = (x: number, shift: number, back: boolean) => (
+  /**
+   * Onde uma pata está no ciclo do andar. Na primeira metade da volta ela está
+   * no ar, indo para a frente; na segunda, apoiada, recua a velocidade
+   * constante: é o chão passando sob o corpo, e por isso ela não patina.
+   */
+  const footfall = (phase: number): { shift: number; lift: number } => {
+    if (gait === undefined) {
+      return { shift: 0, lift: 0 };
+    }
+    const turn = (((gait + phase) % 1) + 1) % 1;
+    return turn < 0.5
+      ? {
+          shift: GAIT.reach * pace * Math.cos(turn * Math.PI * 2),
+          lift: GAIT.lift * pace * Math.sin(turn * Math.PI * 2),
+        }
+      : { shift: GAIT.reach * pace * (4 * turn - 3), lift: 0 };
+  };
+
+  const leg = (x: number, shift: number, back: boolean, lift = 0) => (
     <g key={`${x}-${back}`}>
       <path
         d={taperPath(
           [x, -150],
-          [x + shift * 0.4, -80],
-          [x + shift, -18],
+          // A pata que sai do chão dobra o joelho para a frente.
+          [x + shift * 0.4 - lift * 0.7, -80 - lift * 0.4],
+          [x + shift, -18 - lift],
           64,
           52,
         )}
@@ -77,7 +135,7 @@ export const Elephant: React.FC<ElephantProps> = ({
       />
       <rect
         x={x + shift - 30}
-        y={-22}
+        y={-22 - lift}
         width={60}
         height={22}
         rx={11}
@@ -87,7 +145,7 @@ export const Elephant: React.FC<ElephantProps> = ({
         <ellipse
           key={toe}
           cx={x + shift + toe}
-          cy={-6}
+          cy={-6 - lift}
           rx={7}
           ry={5}
           fill={colors.nail}
@@ -96,6 +154,11 @@ export const Elephant: React.FC<ElephantProps> = ({
       ))}
     </g>
   );
+  const walking = gait !== undefined;
+  const farHind = footfall(GAIT.phase.farHind);
+  const farFore = footfall(GAIT.phase.farFore);
+  const nearHind = footfall(GAIT.phase.nearHind);
+  const nearFore = footfall(GAIT.phase.nearFore);
 
   return (
     <svg
@@ -111,8 +174,12 @@ export const Elephant: React.FC<ElephantProps> = ({
       </defs>
 
       {/* Pernas de trás, mais escuras, e o rabo. */}
-      {leg(130, -step, true)}
-      {leg(-70, step, true)}
+      {walking
+        ? leg(130, farHind.shift, true, farHind.lift)
+        : leg(130, -step, true)}
+      {walking
+        ? leg(-70, farFore.shift, true, farFore.lift)
+        : leg(-70, step, true)}
       <path
         d={taperPath([214, -250], [250, -200], [258, -120], 16, 6)}
         fill={colors.shade}
@@ -133,8 +200,12 @@ export const Elephant: React.FC<ElephantProps> = ({
       </g>
 
       {/* Pernas da frente. */}
-      {leg(150, step, false)}
-      {leg(-50, -step, false)}
+      {walking
+        ? leg(150, nearHind.shift, false, nearHind.lift)
+        : leg(150, step, false)}
+      {walking
+        ? leg(-50, nearFore.shift, false, nearFore.lift)
+        : leg(-50, -step, false)}
 
       {collar === undefined ? null : (
         // O colar do estudo passa pelo pescoço, atrás da orelha, com a luz do sensor embaixo.

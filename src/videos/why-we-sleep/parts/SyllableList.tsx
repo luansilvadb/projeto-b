@@ -1,4 +1,5 @@
 import "../../../design/fonts";
+import { useId } from "react";
 import { interpolateColors, random } from "remotion";
 import type { PersonColors } from "../../../art/Person";
 import { typography } from "../../../design/tokens";
@@ -103,6 +104,13 @@ type SyllableSheetProps = {
   /** Onde o canto da folha fica, quando ela vai dentro de outro SVG (na mão de alguém). */
   readonly x?: number;
   readonly y?: number;
+  /**
+   * Quanto de cada sílaba já está escrita, de 0 (só a tarja, com o traço da
+   * folha pequena) a 1, na ordem de `SYLLABLES`, ou um número só para todas: a
+   * letra se escreve da esquerda para a direita e o traço some à frente dela.
+   * Sem valor, vale `plain`: nada escrito, ou tudo.
+   */
+  readonly written?: readonly number[] | number;
 };
 
 /**
@@ -116,71 +124,111 @@ export const SyllableSheet: React.FC<SyllableSheetProps> = ({
   plain = false,
   x,
   y,
-}) => (
-  <svg
-    x={x}
-    y={y}
-    width={width}
-    height={(width * SHEET.height) / SHEET.width}
-    viewBox={`0 0 ${SHEET.width} ${SHEET.height}`}
-    overflow="visible"
-  >
-    {/* A folha de baixo, deslocada: dá espessura ao papel sem usar sombra transparente. */}
-    <rect
-      x={12}
-      y={14}
-      width={SHEET.width}
-      height={SHEET.height}
-      rx={26}
-      fill={lab.platformShade}
-    />
-    <rect width={SHEET.width} height={SHEET.height} rx={26} fill={lab.paper} />
-    <rect x={30} y={44} width={190} height={22} rx={11} fill={lab.paperLine} />
-    {SYLLABLES.map((syllable, index) => {
-      const on = lit?.[index] ?? 1;
-      const cx = CHIP.xs[index % 2] + CHIP.width / 2;
-      const top = CHIP.y + Math.floor(index / 2) * CHIP.pitch;
-      return (
-        <g key={syllable}>
-          <rect
-            x={cx - CHIP.width / 2}
-            y={top}
-            width={CHIP.width}
-            height={CHIP.height}
-            rx={18}
-            fill={interpolateColors(
-              on,
-              [0, 1],
-              [lab.platformShade, goods.crate],
-            )}
-          />
-          {plain ? (
+  written,
+}) => {
+  const id = useId();
+  return (
+    <svg
+      x={x}
+      y={y}
+      width={width}
+      height={(width * SHEET.height) / SHEET.width}
+      viewBox={`0 0 ${SHEET.width} ${SHEET.height}`}
+      overflow="visible"
+    >
+      {/* A folha de baixo, deslocada: dá espessura ao papel sem usar sombra transparente. */}
+      <rect
+        x={12}
+        y={14}
+        width={SHEET.width}
+        height={SHEET.height}
+        rx={26}
+        fill={lab.platformShade}
+      />
+      <rect
+        width={SHEET.width}
+        height={SHEET.height}
+        rx={26}
+        fill={lab.paper}
+      />
+      <rect
+        x={30}
+        y={44}
+        width={190}
+        height={22}
+        rx={11}
+        fill={lab.paperLine}
+      />
+      {SYLLABLES.map((syllable, index) => {
+        const on = lit?.[index] ?? 1;
+        const cx = CHIP.xs[index % 2] + CHIP.width / 2;
+        const top = CHIP.y + Math.floor(index / 2) * CHIP.pitch;
+        const done =
+          written === undefined
+            ? plain
+              ? 0
+              : 1
+            : typeof written === "number"
+              ? written
+              : (written[index] ?? 0);
+        const tone = interpolateColors(on, [0, 1], [lab.platform, ink.dark]);
+        return (
+          <g key={syllable}>
             <rect
-              x={cx - 44}
-              y={top + CHIP.height / 2 - 9}
-              width={88}
-              height={18}
-              rx={9}
-              fill={interpolateColors(on, [0, 1], [lab.platform, ink.dark])}
+              x={cx - CHIP.width / 2}
+              y={top}
+              width={CHIP.width}
+              height={CHIP.height}
+              rx={18}
+              fill={interpolateColors(
+                on,
+                [0, 1],
+                [lab.platformShade, goods.crate],
+              )}
             />
-          ) : (
-            <text
-              x={cx}
-              y={top + CHIP.height / 2 + 17}
-              textAnchor="middle"
-              fontFamily={typography.family}
-              fontWeight={typography.weight}
-              fontSize={50}
-              fill={interpolateColors(on, [0, 1], [lab.platform, ink.dark])}
-            >
-              {syllable}
-            </text>
-          )}
-        </g>
-      );
-    })}
-  </svg>
-);
+            {done < 1 ? (
+              // O traço da folha pequena: some da esquerda para a direita, à frente da letra que se escreve.
+              <rect
+                x={cx - 44 + 88 * done}
+                y={top + CHIP.height / 2 - 9}
+                width={88 * (1 - done)}
+                height={18}
+                rx={9}
+                fill={tone}
+              />
+            ) : null}
+            {done > 0 ? (
+              <>
+                {done < 1 ? (
+                  <clipPath id={`${id}-${index}`}>
+                    <rect
+                      x={cx - CHIP.width / 2}
+                      y={top}
+                      width={CHIP.width * done}
+                      height={CHIP.height}
+                    />
+                  </clipPath>
+                ) : null}
+                <text
+                  x={cx}
+                  y={top + CHIP.height / 2 + 17}
+                  textAnchor="middle"
+                  fontFamily={typography.family}
+                  fontWeight={typography.weight}
+                  fontSize={50}
+                  fill={tone}
+                  clipPath={done < 1 ? `url(#${id}-${index})` : undefined}
+                >
+                  {syllable}
+                </text>
+              </>
+            ) : null}
+          </g>
+        );
+      })}
+    </svg>
+  );
+};
 
 type TestBadgeProps = {
   /** Como a pessoa passou as horas antes do teste: dormindo (a lua) ou acordada (o sol). */
@@ -418,9 +466,6 @@ type StudyShelfProps = {
   /** Quantas já cresceram, de 0 a `rows`; a fração é a prateleira que está subindo. */
   readonly grown: number;
 };
-
-/** A altura da estante com `rows` prateleiras, da base ao alto. */
-export const shelfHeight = (rows: number): number => rows * ROW_HEIGHT + BOARD;
 
 /**
  * A estante de estudos: cada prateleira que sobe é mais uma leva de pesquisa

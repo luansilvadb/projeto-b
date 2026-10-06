@@ -4,13 +4,11 @@ import { Earth } from "../../../art/Earth";
 import { wave } from "../../../components/Idle";
 import { StageContext, Stay, useStage } from "../../../components/Cast";
 import { Place } from "../../../components/Place";
-import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { ALREADY_SHOWN, linear, mix, settle } from "../../../components/timing";
-import { typography } from "../../../design/tokens";
-import { idea, ink, pedestal } from "../palette";
+import { ALREADY_SHOWN, linear } from "../../../components/timing";
+import { idea, ink } from "../palette";
 import { IdeaShadow } from "./IdeaBackdrop";
-import { PEDESTAL_HEIGHT, VacantSign } from "./VacantSign";
+import { VacantSign } from "./VacantSign";
 
 /** O globo e o pedestal no plano aberto da procura. */
 export const SEARCH_GLOBE = { x: 620, y: 520, radius: 340 };
@@ -205,58 +203,5 @@ export const Search: React.FC<SearchProps> = ({
     search
   ) : (
     <Stay only="leaving">{search}</Stay>
-  );
-};
-
-type SearchCloseProps = {
-  /** Quanto a lupa já chegou ao lugar vazio, de 0 (fora do quadro, de onde vinha do globo) a 1. Por padrão, chega no começo do plano. */
-  readonly arrived?: number;
-  /** Quadro em que a interrogação aparece sobre o contorno tracejado. */
-  readonly questionAt?: number;
-};
-
-/**
- * A procura de perto: a lupa para sobre o pedestal "acordado 24 h", que
- * continua vazio, e uma interrogação fica sobre o contorno tracejado. Não tem
- * fundo: vai por cima de um `IdeaBackdrop`.
- */
-export const SearchClose: React.FC<SearchCloseProps> = ({
-  arrived: ownArrived,
-  questionAt = 0,
-}) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const arrived = ownArrived ?? settle(frame, 0, 0.8 * fps);
-  // O centro do contorno tracejado, já na escala do close.
-  const slot = [
-    CLOSE_SIGN.x,
-    CLOSE_SIGN.y - (PEDESTAL_HEIGHT + 174) * CLOSE_SIGN.scale,
-  ] as const;
-
-  return (
-    <>
-      <VacantSign {...CLOSE_SIGN} />
-      <Place x={slot[0]} y={slot[1]}>
-        <Pop at={questionAt}>
-          <div
-            style={{
-              fontFamily: typography.family,
-              fontWeight: 900,
-              fontSize: typography.size.display * 2,
-              lineHeight: 1,
-              color: pedestal.shade,
-            }}
-          >
-            ?
-          </div>
-        </Pop>
-      </Place>
-      {/* A lupa vem da esquerda, de onde estava o globo, e para com o lugar vazio dentro da lente. */}
-      <Magnifier
-        x={mix(slot[0] - 1100, slot[0], arrived)}
-        y={mix(slot[1] - 200, slot[1], arrived)}
-        size={310}
-      />
-    </>
   );
 };

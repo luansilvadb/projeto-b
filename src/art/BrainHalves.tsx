@@ -1,4 +1,5 @@
 import { useId } from "react";
+import { clamp01 } from "../components/timing";
 
 export type BrainHalvesColors = {
   /** O hemisfério acordado: a cor acesa e o miolo quase branco do brilho. */
@@ -35,7 +36,7 @@ const FOLDS = [
 ];
 
 /** Mistura, em cor, do apagado ao aceso: aproximação por opacidade entre as duas camadas. */
-const activityOf = (value: number) => Math.max(0, Math.min(1, value));
+const activityOf = (value: number) => clamp01(value);
 
 /**
  * O cérebro do golfinho visto de cima, em dois hemisférios: um acende enquanto

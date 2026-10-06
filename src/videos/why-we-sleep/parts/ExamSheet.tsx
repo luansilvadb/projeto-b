@@ -29,7 +29,19 @@ type ExamSheetProps = {
   readonly scale?: number;
   /** Quanto a interrogação da linha em branco já entrou, de 0 a 1. */
   readonly question?: number;
+  /**
+   * Quantos itens já ganharam o visto, de 0 a 4: a parte fracionária é o
+   * visto em curso, que se desenha da ponta curta para a longa. Por padrão, todos.
+   */
+  readonly checked?: number;
+  /** A caixa da resposta em branco chama a atenção: quanto ela cresce além do tamanho, em fração. Por padrão, parada. */
+  readonly blank?: number;
+  /** Quanto o tracejado da caixa já andou, em pixels do desenho: ele corre devagar em volta dela. Por padrão, parado. */
+  readonly dash?: number;
 };
+
+// O comprimento do risco do visto, nas unidades do desenho: é por ele que o visto se desenha.
+const TICK_LENGTH = 100;
 
 /**
  * A prancheta do exame: quatro itens preenchidos, cada um com o visto e os
@@ -39,6 +51,9 @@ type ExamSheetProps = {
 export const ExamSheet: React.FC<ExamSheetProps> = ({
   scale = 1,
   question = 1,
+  checked = ROWS.length,
+  blank = 0,
+  dash = 0,
 }) => {
   const { width, height } = EXAM;
   const left = -width / 2;
@@ -102,14 +117,20 @@ export const ExamSheet: React.FC<ExamSheetProps> = ({
               stroke={lab.clip}
               strokeWidth={8}
             />
-            <path
-              d={`M${x + 8},${y - 2} L${x + 26},${y + 20} L${x + 66},${y - 38}`}
-              fill="none"
-              stroke={signs.seal[1]}
-              strokeWidth={14}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            {checked > row ? (
+              <path
+                d={`M${x + 8},${y - 2} L${x + 26},${y + 20} L${x + 66},${y - 38}`}
+                fill="none"
+                stroke={signs.seal[1]}
+                strokeWidth={14}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeDasharray={`${TICK_LENGTH} ${TICK_LENGTH}`}
+                strokeDashoffset={
+                  TICK_LENGTH * (1 - Math.min(1, checked - row))
+                }
+              />
+            ) : null}
             <rect
               x={textX}
               y={y - 22}
@@ -160,7 +181,13 @@ export const ExamSheet: React.FC<ExamSheetProps> = ({
         stroke={chalkboard.stamp}
         strokeWidth={8}
         strokeDasharray="26 18"
+        strokeDashoffset={-dash}
         strokeLinecap="round"
+        style={{
+          transformBox: "fill-box",
+          transformOrigin: "center",
+          scale: `${1 + blank}`,
+        }}
       />
       <text
         x={0}

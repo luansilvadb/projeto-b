@@ -15,7 +15,13 @@ import { SvgLayer } from "../../../components/SvgLayer";
 import { fish as fishColors, ink, jellyfish, lagoon } from "../palette";
 import { JELLYFISH_SPOT, Lagoon } from "./Lagoon";
 import { PulseRings } from "./PulseRings";
-import { type PulseRhythm, pulseCycles, pulseRate, pulseShape } from "./pulse";
+import {
+  type PulseRhythm,
+  pulseCycles,
+  pulseFrame,
+  pulseRate,
+  pulseShape,
+} from "./pulse";
 
 export type FishSpot = {
   /** Centro do corpo e comprimento do peixe, no plano do assunto. */
@@ -32,6 +38,8 @@ export type FishSpot = {
   readonly swimming?: boolean;
   /** Quanto o olho está fechado além do que o humor manda, de 0 a 1. */
   readonly lid?: number;
+  /** O bocejo chegando, de 0 a 1: a boca abre e a pálpebra desce aos poucos. */
+  readonly yawn?: number;
 };
 
 type Time = "day" | "night";
@@ -61,6 +69,33 @@ type LagoonShotProps = {
   readonly fish?: FishSpot;
   /** O que mais houver no plano do assunto, desenhado por cima da água-viva. */
   readonly children?: React.ReactNode;
+  /**
+   * O quadro do vídeo em que o plano começa. Com ele, o pulso, os anéis, o
+   * peixe e a lagoa contam no relógio do vídeo, e os quadros de `rhythm`, de
+   * `ringsFrom` e de `ringsUntil` também são os do vídeo: nada salta quando um
+   * plano da lagoa continua o anterior. Sem valor, o relógio é o do plano.
+   */
+  readonly clock?: number;
+  /** Pulsos a somar à contagem; ver `settledPhase`. */
+  readonly phase?: number;
+  /** Os anéis só saem dos pulsos dados entre estes dois quadros do relógio. Sem valores, de todos. */
+  readonly ringsFrom?: number;
+  readonly ringsUntil?: number;
+  /**
+   * A chegada conduzida pela cena, no lugar de `landed`: onde ela está em
+   * relação ao lugar de pouso, quanto já virou (0 de cabeça para cima, 1
+   * pousada), quanto se inclina na direção em que nada, em graus, e quanto da
+   * sombra dela já há na areia.
+   */
+  readonly arrival?: {
+    readonly x: number;
+    readonly y: number;
+    readonly turned: number;
+    readonly lean: number;
+    readonly shadow: number;
+  };
+  /** Sem a água-viva: para a cena que a desenha por cima, a caminho de outro plano. A sombra dela fica. */
+  readonly absent?: boolean;
 };
 
 const SWAY_SECONDS = 5;
@@ -110,28 +145,43 @@ const LagoonView: React.FC<LagoonShotProps> = ({
   rings = false,
   fish,
   children,
+  clock = 0,
+  phase = 0,
+  ringsFrom = -Infinity,
+  ringsUntil = Infinity,
+  arrival,
+  absent = false,
 }) => {
-  const frame = useCurrentFrame();
+  const frame = clock + useCurrentFrame();
   const { fps } = useVideoConfig();
   const seconds = frame / fps;
   const { x, y, width } = JELLYFISH_SPOT;
-  const cycles = pulseCycles(frame, fps, rhythm);
+  const cycles = phase + pulseCycles(frame, fps, rhythm);
   // Ela avança de lado primeiro e só desce no fim, já virada.
   const away = 1 - landed;
-  const turned = interpolate(landed, TURNING, [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.inOut(Easing.cubic),
-  });
+  const turned =
+    arrival?.turned ??
+    interpolate(landed, TURNING, [0, 1], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: Easing.inOut(Easing.cubic),
+    });
+  const offset = arrival ?? {
+    x: SWIM_IN.x * away,
+    y: SWIM_IN.y * away ** 2,
+    lean: 0,
+    shadow: landed ** 3,
+  };
 
   return (
     <Camera {...camera}>
       <Lagoon
         colors={lagoon[time]}
         night={time === "night"}
+        clock={clock}
         shadows={[
           // A sombra só cresce quando ela chega perto da areia.
-          { x, y: y + width * RESTING, width: width * 1.12 * landed ** 3 },
+          { x, y: y + width * RESTING, width: width * 1.12 * offset.shadow },
         ]}
       >
         {rings ? (
@@ -143,23 +193,32 @@ const LagoonView: React.FC<LagoonShotProps> = ({
               cycles={cycles}
               perMinute={pulseRate(frame, rhythm)}
               color={ink.ring}
+              // A idade de um anel é o tempo desde o pulso que o soltou: não muda quando o ritmo muda.
+              ageOf={(ring) => {
+                const born = pulseFrame(ring - phase, fps, rhythm);
+                return born < ringsFrom || born > ringsUntil
+                  ? -1
+                  : (frame - born) / fps;
+              }}
             />
           </SvgLayer>
         ) : null}
-        <Place
-          x={x + SWIM_IN.x * away}
-          y={y + SWIM_IN.y * away ** 2}
-          style={{ rotate: `${180 * (1 - turned)}deg` }}
-        >
-          <Cassiopea
-            width={width}
-            colors={jellyfish[time]}
-            pulse={pulseShape(cycles)}
-            droop={droop}
-            sway={sway + 0.5 * wave(seconds, SWAY_SECONDS)}
-            nerves={nerves}
-          />
-        </Place>
+        {absent ? null : (
+          <Place
+            x={x + offset.x}
+            y={y + offset.y}
+            style={{ rotate: `${180 * (1 - turned) + offset.lean}deg` }}
+          >
+            <Cassiopea
+              width={width}
+              colors={jellyfish[time]}
+              pulse={pulseShape(cycles)}
+              droop={droop}
+              sway={sway + 0.5 * wave(seconds, SWAY_SECONDS)}
+              nerves={nerves}
+            />
+          </Place>
+        )}
         {fish ? <LagoonFish time={time} seconds={seconds} {...fish} /> : null}
         {children}
       </Lagoon>
@@ -182,6 +241,7 @@ const LagoonFish: React.FC<LagoonFishProps> = ({
   tilt = 0,
   swimming = false,
   lid = 0,
+  yawn = 0,
 }) => {
   const asleep = mood === "asleep";
   const tail = swimming
@@ -202,6 +262,7 @@ const LagoonFish: React.FC<LagoonFishProps> = ({
         look={look}
         tail={tail}
         blink={Math.max(lid, asleep ? 0 : blink(seconds, "lagoon-fish"))}
+        yawn={yawn}
       />
     </Place>
   );

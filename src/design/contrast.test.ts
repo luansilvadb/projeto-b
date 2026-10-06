@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { contrastRatio } from "./contrast";
-import { directions } from "./directions";
+import { abissal } from "./directions/abissal";
 
 describe("contrastRatio", () => {
   it("vai de 1, entre cores iguais, a 21, entre preto e branco", () => {
@@ -23,8 +23,8 @@ describe("contrastRatio", () => {
 const LOOSE_TEXT_MINIMUM = 7;
 const TAG_TEXT_MINIMUM = 4.5;
 
-describe.each(Object.entries(directions))("direção %s", (_name, direction) => {
-  const { palette } = direction;
+describe("direção abissal", () => {
+  const { palette } = abissal;
 
   it("dá leitura ao texto solto nas duas pontas do fundo", () => {
     for (const background of [palette.ink, palette.dusk]) {

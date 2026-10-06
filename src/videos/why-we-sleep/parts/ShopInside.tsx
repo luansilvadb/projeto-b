@@ -1,10 +1,11 @@
 import { AbsoluteFill, random } from "remotion";
 import { Person, type Expression } from "../../../art/Person";
-import { breath, wave } from "../../../components/Idle";
+import { breath } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Wall } from "../../../components/Camera";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { apron, goods, person, shopInside } from "../palette";
+import { clamp01 } from "../../../components/timing";
 
 /** O chão da loja, onde tudo pousa. */
 export const FLOOR_Y = 900;
@@ -25,6 +26,8 @@ type ShopInsideProps = {
   readonly time: Time;
   /** O que há dentro da loja: caixas, mercadoria, a lojista. */
   readonly children?: React.ReactNode;
+  /** De porta baixada, quanto a lâmpada ilumina, em volta de 1: ela tremula. Por padrão, 1. */
+  readonly lamp?: number;
 };
 
 /**
@@ -32,7 +35,11 @@ type ShopInsideProps = {
  * meio e o depósito dos fundos à direita. De dia a porta está erguida e a
  * parede é clara; de porta baixada, só a lâmpada ilumina.
  */
-export const ShopInside: React.FC<ShopInsideProps> = ({ time, children }) => {
+export const ShopInside: React.FC<ShopInsideProps> = ({
+  time,
+  children,
+  lamp = 1,
+}) => {
   const colors = shopInside[time];
   const open = time === "day";
 
@@ -47,10 +54,22 @@ export const ShopInside: React.FC<ShopInsideProps> = ({ time, children }) => {
             background: `linear-gradient(${colors.wall[0]}, ${colors.wall[1]})`,
           }}
         />
+        {/* Abaixo do quadro, a parede continua na cor da base: quando o piso desce com o palco, não sobra um vão. */}
+        <AbsoluteFill
+          style={{
+            left: -BLEED,
+            width: 1920 + 2 * BLEED,
+            // Uns pixels por cima do fim da parede, que é da mesma cor: sem emenda entre as duas.
+            top: 1070,
+            height: BLEED,
+            background: colors.wall[1],
+          }}
+        />
         {colors.lamp ? (
           <AbsoluteFill
             style={{
               background: `radial-gradient(ellipse 60% 70% at 50% 0%, ${colors.lamp}66, transparent)`,
+              opacity: lamp,
             }}
           />
         ) : null}
@@ -159,6 +178,34 @@ const MEMORIES: Record<Memory, React.ReactNode> = {
   ),
 };
 
+type MemoryTagProps = {
+  /** O meio da etiqueta, nas unidades de quem a contém. */
+  readonly x: number;
+  readonly y: number;
+  readonly scale?: number;
+  readonly memory: Memory;
+};
+
+/** A lembrança fora da caixa: a etiqueta dela, solta. Vai dentro de um SVG. */
+export const MemoryTag: React.FC<MemoryTagProps> = ({
+  x,
+  y,
+  scale = 1,
+  memory,
+}) => (
+  <g
+    transform={`translate(${x} ${y}) scale(${scale})`}
+    fill={goods.crateShade}
+    stroke={goods.crateShade}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth={0}
+  >
+    <rect x={-34} y={-30} width={68} height={60} rx={8} fill={goods.tape} />
+    <g transform="scale(0.95)">{MEMORIES[memory]}</g>
+  </g>
+);
+
 type CrateProps = {
   /** O meio da base da caixa, em pixels do quadro. */
   readonly x: number;
@@ -166,11 +213,42 @@ type CrateProps = {
   readonly scale?: number;
   /** A etiqueta da caixa mostra a lembrança que ela guarda. */
   readonly memory?: Memory;
+  /** A altura da caixa, em fração, a partir da base: ela achata ao bater no chão. Por padrão, 1. */
+  readonly squash?: number;
+  /** A inclinação, em graus, em volta do meio da base: a caixa que balança. */
+  readonly tilt?: number;
+  /** Quanto as abas de cima estão abertas, de 0 a 1. Sem valor, a caixa está fechada. */
+  readonly open?: number;
 };
 
 /** Uma caixa de mercadoria: o que chegou durante o dia. Vai dentro de um SvgLayer. */
-export const Crate: React.FC<CrateProps> = ({ x, y, scale = 1, memory }) => (
-  <g transform={`translate(${x} ${y}) scale(${scale})`}>
+export const Crate: React.FC<CrateProps> = ({
+  x,
+  y,
+  scale = 1,
+  memory,
+  squash = 1,
+  tilt = 0,
+  open,
+}) => (
+  <g
+    transform={`translate(${x} ${y}) rotate(${tilt}) scale(${scale} ${scale * squash})`}
+  >
+    {open === undefined || open <= 0 ? null : (
+      // As duas abas giram para fora, cada uma presa na sua quina de cima.
+      <>
+        <path
+          d="M0,-6 L-52,-6 L-52,6 L0,6 Z"
+          fill={goods.crateShade}
+          transform={`translate(${-CRATE.width / 2 + 4} ${-CRATE.height + 6}) rotate(${180 - 138 * open})`}
+        />
+        <path
+          d="M0,-6 L52,-6 L52,6 L0,6 Z"
+          fill={goods.crateShade}
+          transform={`translate(${CRATE.width / 2 - 4} ${-CRATE.height + 6}) rotate(${-180 + 138 * open})`}
+        />
+      </>
+    )}
     <rect
       x={-CRATE.width / 2}
       y={-CRATE.height}
@@ -212,45 +290,6 @@ export const Crate: React.FC<CrateProps> = ({ x, y, scale = 1, memory }) => (
   </g>
 );
 
-type BroomProps = {
-  /** A ponta de cima do cabo e a inclinação, em graus. */
-  readonly x: number;
-  readonly y: number;
-  readonly tilt?: number;
-  readonly length?: number;
-};
-
-/** A vassoura da faxina: o cabo e a piaçava. Vai dentro de um SvgLayer. */
-export const Broom: React.FC<BroomProps> = ({
-  x,
-  y,
-  tilt = 0,
-  length = 420,
-}) => (
-  <g transform={`translate(${x} ${y}) rotate(${tilt})`}>
-    <rect
-      x={-9}
-      y={0}
-      width={18}
-      height={length}
-      rx={9}
-      fill={goods.broomStick}
-    />
-    <path
-      d={`M-26,${length - 10} L26,${length - 10} L62,${length + 110} L-62,${length + 110} Z`}
-      fill={goods.broom}
-    />
-    <rect
-      x={-30}
-      y={length - 24}
-      width={60}
-      height={28}
-      rx={8}
-      fill={goods.broomStick}
-    />
-  </g>
-);
-
 type KeeperProps = {
   readonly x: number;
   readonly height?: number;
@@ -264,6 +303,15 @@ type KeeperProps = {
   readonly held?: React.ReactNode;
   /** Inclinação do corpo, em graus, a partir dos pés. */
   readonly lean?: number;
+  /** A piscada, de 0 a 1: esconde a troca de rosto. */
+  readonly blink?: number;
+  /** A passada de quem anda (ver `Person`). */
+  readonly stride?: React.ComponentProps<typeof Person>["stride"];
+  /**
+   * Para que lado ela está virada, de -1 (esquerda) a 1 (direita), passando
+   * por 0 quando se vira: vale no lugar de `flip`.
+   */
+  readonly facing?: number;
 };
 
 /** A lojista: a pessoa de avental coral, em pé no chão da loja. */
@@ -277,14 +325,17 @@ export const Keeper: React.FC<KeeperProps> = ({
   backArm,
   held,
   lean = 0,
+  blink,
+  stride,
+  facing = flip ? -1 : 1,
 }) => (
   <Place
     x={x}
     y={FLOOR_Y + 10}
     anchor="bottom"
     style={{
-      scale: `${flip ? -1 : 1} ${breath(seconds, "keeper")}`,
-      rotate: `${flip ? -lean : lean}deg`,
+      scale: `${facing} ${breath(seconds, "keeper")}`,
+      rotate: `${facing < 0 ? -lean : lean}deg`,
     }}
   >
     <Person
@@ -296,79 +347,11 @@ export const Keeper: React.FC<KeeperProps> = ({
       backArm={backArm}
       held={held}
       heldInFront
+      blink={blink}
+      stride={stride}
     />
   </Place>
 );
-
-const SWEEP_SECONDS = 1.2;
-// Do alto do cabo até onde a mão o segura, e a altura da piaçava, nas unidades do desenho da pessoa.
-const GRIP = 110;
-const BRISTLES = 110;
-const DUST = [0, 0.33, 0.66] as const;
-
-type SweeperProps = {
-  readonly x: number;
-  readonly height?: number;
-  readonly seconds: number;
-  /** Virada para a esquerda. */
-  readonly flip?: boolean;
-};
-
-/**
- * A lojista varrendo. A vassoura é desenhada a partir da mão: o cabo passa por
- * ela e a piaçava encosta no chão, de modo que a mão nunca solta o cabo, por
- * mais que a varrida mude de lugar ou de tamanho.
- */
-export const Sweeper: React.FC<SweeperProps> = ({
-  x,
-  height,
-  seconds,
-  flip,
-}) => {
-  const sweep = wave(seconds, SWEEP_SECONDS);
-  // A mão vai e vem, e o cabo inclina junto: a piaçava anda mais que a mão.
-  const hand: [number, number] = [-150 - 36 * sweep, -285];
-  const tilt = 18 + 14 * sweep;
-  const radians = (tilt * Math.PI) / 180;
-  const reach = -hand[1] / Math.cos(radians);
-  const headX = hand[0] - reach * Math.sin(radians);
-  // A poeira sobe quando a vassoura anda, e assenta quando ela para.
-  const speed = Math.abs(Math.cos((seconds / SWEEP_SECONDS) * Math.PI * 2));
-
-  return (
-    <Keeper
-      x={x}
-      height={height}
-      seconds={seconds}
-      flip={flip}
-      lean={-2 - 3 * sweep}
-      frontArm={{ hand, bend: 24 }}
-      held={
-        <>
-          <Broom
-            x={hand[0] + GRIP * Math.sin(radians)}
-            y={hand[1] - GRIP * Math.cos(radians)}
-            tilt={tilt}
-            length={reach + GRIP - BRISTLES}
-          />
-          {DUST.map((phase) => {
-            const rise = (seconds / SWEEP_SECONDS + phase) % 1;
-            return (
-              <circle
-                key={phase}
-                cx={headX - 50 - 70 * rise}
-                cy={-16 - 50 * rise}
-                r={8 + 10 * rise}
-                fill={goods.tape}
-                opacity={0.5 * speed * (1 - rise)}
-              />
-            );
-          })}
-        </>
-      }
-    />
-  );
-};
 
 const PER_SHELF = 7;
 const BIG_FROM = 44;
@@ -430,7 +413,7 @@ export const ShelfGoods: React.FC<ShelfGoodsProps> = ({
       const order = random(`trim-${index}`);
       const gone = item.big
         ? 0
-        : Math.max(0, Math.min(1, (trimmed - order * 0.7) / 0.3));
+        : clamp01((trimmed - order * 0.7) / 0.3);
       return gone >= 1 ? null : (
         <circle
           key={index}

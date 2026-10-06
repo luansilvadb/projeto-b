@@ -274,7 +274,8 @@
       "sources": [
         19,
         20
-      ]
+      ],
+      "holdMs": 1000
     },
     {
       "id": "sleep-less",
@@ -416,7 +417,8 @@
       "sources": [
         3,
         4
-      ]
+      ],
+      "holdMs": 1000
     },
     {
       "id": "maybe-brain",
@@ -601,7 +603,8 @@
         7,
         8,
         21
-      ]
+      ],
+      "holdMs": 1000
     },
     {
       "id": "forced-awake",
@@ -823,7 +826,8 @@
         1,
         11,
         20
-      ]
+      ],
+      "holdMs": 1000
     },
     {
       "id": "so-far",
@@ -1032,7 +1036,8 @@
       ],
       "sources": [
         14
-      ]
+      ],
+      "holdMs": 1000
     },
     {
       "id": "nobody-escaped",
@@ -1200,8 +1205,77 @@
     }
   ],
   "music": {
-    "caption": "slow contemplative ambient electronic, soft warm synth pads, gentle felt piano, sparse mallet plucks, deep calm sub bass, nocturnal and curious mood, quiet wonder, science documentary underscore",
-    "bpm": 72,
-    "keyScale": "A minor"
+    "caption": "curious sparse opening, a clear bright piano motif with crisp plucked synth notes, building anticipation toward a question, thoughtful and intriguing, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
+    "bpm": 96,
+    "keyScale": "A minor",
+    "parts": [
+      {
+        "from": "the-question",
+        "at": "hold",
+        "caption": "confident main theme, starts immediately at full energy, bright synth arpeggio with clear piano chords and shimmering strings, uplifting cinematic title moment, sense of wonder, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
+        "keyScale": "C major"
+      },
+      {
+        "from": "five-parts",
+        "caption": "light curious mood with gentle forward motion, crisp plucked synth arpeggio, clear piano, light bright percussion with shakers, dusk atmosphere, intelligent and inviting, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
+        "keyScale": "C major"
+      },
+      {
+        "from": "debt-returns",
+        "at": "hold",
+        "caption": "wide expansive mood, slow steady walking rhythm, clear bass, broad bright string chords, french horn melody, acoustic guitar, open landscape, calm and majestic, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
+        "bpm": 84,
+        "keyScale": "C major"
+      },
+      {
+        "from": "elephant-verdict",
+        "at": "hold",
+        "caption": "underwater mysterious mood, slow gentle rhythm, shimmering glassy synth textures, clear harp plucks, sparkling bells, floating and curious, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
+        "bpm": 72
+      },
+      {
+        "from": "older-than-brain",
+        "at": "hold",
+        "caption": "laboratory tension, steady crisp ticking staccato strings, clear low piano notes, strings slowly tightening, serious investigative mood, suspense without horror, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
+        "bpm": 104
+      },
+      {
+        "from": "gardner-sleeps",
+        "at": "hold",
+        "caption": "breathing space, very sparse, a few clear isolated piano notes with a light airy string note, calm and still, no percussion, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
+        "bpm": 72
+      },
+      {
+        "from": "but-what",
+        "caption": "hopeful revelation, clear bright piano melody with bowed strings swelling gently, crisp plucked synth, tender and luminous, a turning point, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
+        "bpm": 88,
+        "keyScale": "C major"
+      },
+      {
+        "from": "stockroom-solid",
+        "at": "hold",
+        "caption": "calm reflective ending, slow clear piano melody over airy strings, gentle resolution, peaceful night mood, contemplative, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
+        "bpm": 76,
+        "keyScale": "C major"
+      },
+      {
+        "from": "subscribe",
+        "caption": "main theme reprise, bright synth arpeggio with clear piano chords and shimmering strings, uplifting closing, confident, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
+        "keyScale": "C major"
+      }
+    ],
+    "silences": [
+      {
+        "from": "last-to-know"
+      },
+      {
+        "from": "rats-result",
+        "cue": "morreram"
+      },
+      {
+        "from": "so-far",
+        "cue": "Para"
+      }
+    ]
   }
 }

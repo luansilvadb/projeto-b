@@ -27,14 +27,7 @@ import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import {
-  ALREADY_SHOWN,
-  cue,
-  linear,
-  mix,
-  ramp,
-  settle,
-} from "../../../components/timing";
+import { ALREADY_SHOWN, cue, drop, linear, mix, ramp, settle, clamp } from "../../../components/timing";
 import { typography } from "../../../design/tokens";
 import { HEIGHT, WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
@@ -53,8 +46,8 @@ import {
 import { IdeaBackdrop } from "../parts/IdeaBackdrop";
 import { LifeTree } from "../parts/LifeTree";
 import { Tag } from "../parts/Tag";
+import { NEVER, Preluded } from "./MaybeBrainScene";
 
-const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
 const CALENDAR = { x: 1380, y: 400, width: 440, height: 500 };
 const HEADER = 120;
@@ -281,11 +274,13 @@ type ShotPushProps = {
 };
 
 /**
- * A aproximação lenta de `SlowPush`, contada pela duração do plano no
- * roteiro: quando o plano seguinte chega, a câmera está exatamente em `by`,
- * e é daí que ele recebe o que os dois têm em comum. `SlowPush` conta também
- * os quadros em que o plano fica por baixo do seguinte, e o ponto de entrega
- * passaria a depender da duração da fala.
+ * A aproximação lenta de `SlowPush`, com a aproximação de cada quadro dada
+ * por `slowPushAt`: quando o plano seguinte chega, a câmera está exatamente em
+ * `by`, e é daí que ele recebe o que os dois têm em comum. `SlowPush` hoje
+ * também conta pela duração do plano no roteiro, mas interpola a aproximação
+ * em progressão geométrica; aqui ela é linear, e os planos que desfazem a
+ * aproximação no meio do caminho (o texto que não cresce com a câmera) usam a
+ * mesma `slowPushAt`. Por isso este não foi trocado por aquele.
  */
 export const ShotPush: React.FC<ShotPushProps> = ({
   focus,
@@ -422,6 +417,8 @@ const CORRIDOR_NEARER = framing([1000, 600], 1.035, [1000, 600]);
 const PULL_BACK_FRAMES = 24;
 // A placa só estoura com o corredor quase no lugar.
 const SIGN_AFTER_FRAMES = 16;
+// E sai pelo caminho da entrada, em 0,2 s, terminando logo antes de a câmera partir para o plano das aspas.
+const SIGN_LEAVES = { before: 7, frames: 6 };
 const REACH_FRAMES = 10;
 const OPEN_SECONDS = 0.6;
 // Em que fração da caminhada a passada cresce ao partir e some ao chegar.
@@ -633,6 +630,8 @@ const LabDoorShot: React.FC<LabDoorShotProps> = ({
             <Pop at={Math.max(signAt, SIGN_AFTER_FRAMES)}>
               <div
                 style={{
+                  // A placa sai, encolhendo, antes de a câmera ir até ele: no caminho ela cruzava o rosto dele.
+                  scale: `${1 - drop(frame, hall.length - APPROACH.lead - SIGN_LEAVES.before, SIGN_LEAVES.frames)}`,
                   fontFamily: typography.family,
                   fontWeight: 700,
                   fontSize: typography.size.note,
@@ -1037,6 +1036,15 @@ const VerdictShot: React.FC<VerdictShotProps> = ({
   );
 };
 
+/**
+ * O plano que abre a cena, antes de qualquer deixa: o último plano de
+ * `third-of-life` o desenha com `Prelude`, e o pesquisador e o calendário já
+ * crescem enquanto a savana desce.
+ */
+export const BiggestMistakeOpening: React.FC = () => (
+  <IntroShot nameAt={NEVER} decadesAt={NEVER} yearsAt={NEVER + 1} />
+);
+
 export const BiggestMistakeScene: React.FC<SceneProps> = ({ scene, shots }) => {
   const lengths = shots.map((shot) => shot.to - shot.from);
   // Onde ele está no quadro quando o plano do rosto passa o palco ao corredor.
@@ -1054,11 +1062,13 @@ export const BiggestMistakeScene: React.FC<SceneProps> = ({ scene, shots }) => {
   return (
     <>
       <Shot range={shots[0]} name="o pesquisador e os 44 anos">
-        <IntroShot
-          nameAt={cue(scene, "Réctchafen")}
-          decadesAt={cue(scene, "quarenta")}
-          yearsAt={cue(scene, "quatro")}
-        />
+        <Preluded>
+          <IntroShot
+            nameAt={cue(scene, "Réctchafen")}
+            decadesAt={cue(scene, "quarenta")}
+            yearsAt={cue(scene, "quatro")}
+          />
+        </Preluded>
       </Shot>
       <Shot range={shots[1]} name="o laboratório do sono, em Chicago">
         <LabDoorShot

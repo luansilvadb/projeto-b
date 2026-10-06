@@ -1,12 +1,15 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
+import type { Expression } from "../../../art/Person";
+import { Cast, FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
+import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { Pop } from "../../../components/Pop";
+import { popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp } from "../../../components/timing";
+import { cue, drop, linear, mix, ramp, clamp01 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { Shot } from "../../../video/Shot";
-import { idea, personInPajamas } from "../palette";
+import { Shot, useShotLength } from "../../../video/Shot";
+import { chalkboard, idea, ink, lagoon, personInPajamas } from "../palette";
 import { Bed } from "../parts/Bed";
 import {
   Dement,
@@ -15,17 +18,26 @@ import {
   SleepClock,
   Symptoms,
   gardner,
+  type Flush,
 } from "../parts/Gardner";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import {
+  BILL_LINES,
   BillPocket,
   BillToPocket,
   DETAIL,
   DETAIL_NIGHTS,
   POCKET_CORNER,
+  SleepBill,
   SleepBillDetail,
+  billHeight,
 } from "../parts/SleepBill";
 import { OUR_HOURS, RULER, rulerX, SleepBar } from "../parts/SleepRuler";
+import { glance, grown, swapUnderLid } from "./AwakeRecordScene";
+import { Sooner, flash, shake } from "./MaybeBrainScene";
+import { RECAP_LEAD, RecapPrelude } from "./SoFarScene";
+import { billSway } from "./SkipANightScene";
+import { Drift, driftZoom, undrifted } from "./SleepDebtScene";
 
 const ROOM_HUE = "lilac";
 // O chão fica acima do selo da fonte, que neste plano é comprido.
@@ -40,29 +52,293 @@ const BALLOONS = [
   [620, 190],
   [900, 370],
 ] as const;
+// O ponto para o qual o plano deriva: entre a cabeça dele e os balões.
+const WATCHED_FOCUS = [700, 480] as const;
+const WATCHED_DRIFT = 0.04;
 
-type WatchedShotProps = {
-  /** Quadro do plano em que o nome do pesquisador entra. */
-  readonly nameAt: number;
-  /** Quadro em que cada balão acende, na ordem da fala. */
-  readonly at: readonly [number, number, number];
+type Arm = { readonly hand: readonly [number, number]; readonly bend: number };
+type Pose = { readonly front: Arm; readonly back: Arm };
+
+// As poses dele, nas unidades do desenho da pessoa: solto e sonolento; a mão na barriga, de quem enjoa; a mão na
+// cabeça, de quem procura uma lembrança; e os braços duros, de punhos fechados, de quem se irrita.
+const POSES: readonly Pose[] = [
+  {
+    front: { hand: [-136, -214], bend: 26 },
+    back: { hand: [100, -214], bend: 73 },
+  },
+  {
+    front: { hand: [-18, -246], bend: -44 },
+    back: { hand: [92, -250], bend: 64 },
+  },
+  {
+    front: { hand: [-132, -220], bend: 22 },
+    back: { hand: [132, -478], bend: 62 },
+  },
+  {
+    front: { hand: [-156, -238], bend: 4 },
+    back: { hand: [158, -236], bend: 8 },
+  },
+];
+const armBetween = (from: Arm, to: Arm, t: number): Arm => ({
+  hand: [mix(from.hand[0], to.hand[0], t), mix(from.hand[1], to.hand[1], t)],
+  bend: mix(from.bend, to.bend, t),
+});
+// Cada pose chega pouco depois de o balão dela estourar (a reação vem depois da causa), neste tempo, em quadros.
+const POSE = { after: 3, frames: 9 };
+// O verde de quem enjoa e o vermelho de quem se irrita, no rosto dele: os tons dos balões.
+const QUEASY = { color: lagoon.day.grass[0], amount: 0.42 };
+const ANGRY = { color: chalkboard.stamp, amount: 0.32 };
+
+type SubjectProps = {
+  readonly x: number;
+  readonly y: number;
+  readonly height: number;
+  /** Quanto de cada pose de sintoma ele já tomou, de 0 a 1, na ordem da fala. */
+  readonly poses?: readonly [number, number, number];
+  readonly expression?: Expression;
+  readonly gaze?: readonly [number, number];
+  readonly blink?: number;
+  readonly lean?: number;
+  readonly breath?: number;
+  readonly tired?: number;
+  /** A boca de quem se irrita. */
+  readonly frown?: boolean;
 };
 
-/** Ao lado do rapaz, Dement observa, de prancheta; três balões acendem sobre ele: enjoo, um branco, raiva. */
-const WatchedShot: React.FC<WatchedShotProps> = ({ nameAt, at }) => (
-  <AbsoluteFill>
-    <IdeaBackdrop hue={ROOM_HUE} spot={[0.34, 0.45]} />
-    <RoomFloor hue={ROOM_HUE} y={FLOOR} />
-    <SvgLayer>
-      <IdeaShadow hue={ROOM_HUE} x={AWAKE.x} y={FLOOR + 6} width={300} />
-      <IdeaShadow hue={ROOM_HUE} x={OBSERVER.x} y={FLOOR + 6} width={320} />
-    </SvgLayer>
-    <Gardner {...AWAKE} expression="sleepy" tired={1} />
-    <Dement {...OBSERVER} flip nameAt={nameAt} on={ROOM_HUE} />
-    <Symptoms spots={BALLOONS} at={at} head={HEAD} />
-    <Grain />
-  </AbsoluteFill>
-);
+/** Gardner depois de onze dias: de pé, de olheiras, numa das poses dos sintomas. */
+const Subject: React.FC<SubjectProps> = ({
+  x,
+  y,
+  height,
+  poses = [0, 0, 0],
+  expression = "sleepy",
+  gaze,
+  blink: lids = 0,
+  lean = 0,
+  breath: body = 1,
+  tired = 1,
+  frown,
+}) => {
+  const arm = (side: "front" | "back") =>
+    poses.reduce(
+      (from, weight, index) => armBetween(from, POSES[index + 1][side], weight),
+      POSES[0][side],
+    );
+  // O enjoo sai do rosto quando a pose seguinte chega; a raiva fica.
+  const flush: Flush =
+    poses[2] > 0
+      ? { ...ANGRY, amount: ANGRY.amount * poses[2] }
+      : { ...QUEASY, amount: QUEASY.amount * (poses[0] - poses[1]) };
+
+  return (
+    <Gardner
+      x={x}
+      y={y}
+      height={height}
+      expression={expression}
+      gaze={gaze}
+      blink={lids}
+      lean={lean}
+      breath={body}
+      tired={tired}
+      frontArm={arm("front")}
+      backArm={arm("back")}
+      flush={flush}
+      frown={frown}
+    />
+  );
+};
+
+/** O balanço de quem mal fica em pé, em graus. */
+const tiredSway = (seconds: number): number => 2.2 * wave(seconds, 2.9, 0.15);
+const tiredBreath = (seconds: number): number =>
+  breath(seconds, "gardner", { amplitude: 0.025, period: 4.1 });
+/** A piscada lenta de quem está com sono. */
+const tiredBlink = (seconds: number): number =>
+  blink(seconds, "gardner-awake", { every: [1.8, 3.4], seconds: 0.3 });
+
+/** Quantos quadros antes do plano dele Gardner já entra no palco, no fim do plano das mesas. */
+export const SUBJECT_BEFORE_FRAMES = 14;
+
+type WaitingSubjectProps = {
+  /** O quadro em que ele começa a crescer, no tempo de quem o desenha, e o quadro do vídeo. */
+  readonly at: number;
+  readonly clock: number;
+};
+
+/**
+ * Gardner de pé, oscilando, como o plano de Dement o encontra: o plano das
+ * mesas o desenha nos últimos quadros dele, para a primeira palavra do plano
+ * seguinte já o achar no lugar.
+ */
+export const WaitingSubject: React.FC<WaitingSubjectProps> = ({
+  at,
+  clock,
+}) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const seconds = (clock + frame) / fps;
+  return (
+    <Drift focus={WATCHED_FOCUS} zoom={1 - WATCHED_DRIFT}>
+      <AbsoluteFill
+        style={{
+          transformOrigin: `${AWAKE.x}px ${AWAKE.y}px`,
+          scale: `${grown(frame, at)}`,
+        }}
+      >
+        <SvgLayer>
+          <IdeaShadow hue={ROOM_HUE} x={AWAKE.x} y={FLOOR + 6} width={300} />
+        </SvgLayer>
+        <Subject
+          {...AWAKE}
+          gaze={[0, 0.55]}
+          blink={tiredBlink(seconds)}
+          lean={tiredSway(seconds)}
+          breath={tiredBreath(seconds)}
+        />
+      </AbsoluteFill>
+    </Drift>
+  );
+};
+
+// Dement vem de fora do quadro, andando: cinco passos, e freia ao chegar.
+const ENTRANCE = { from: 2300, frames: 34, steps: 5, brake: 7 };
+// A cada sintoma ele anota: a mão vai e vem sobre a prancheta, pouco depois do balão.
+const NOTE = { after: 14, frames: 18, turns: 2.5 };
+// O chão do quarto sobe de baixo do quadro e desce na saída.
+const FLOOR_RISE = { by: 210, frames: 14 };
+
+type WatchedShotProps = {
+  /** Quadros do plano em que Dement começa a entrar e em que o nome dele estoura. */
+  readonly walkAt: number;
+  readonly nameAt: number;
+  /** Quadro em que cada balão estoura, na ordem da fala. */
+  readonly at: readonly [number, number, number];
+  readonly clock: number;
+};
+
+/** Ao lado do rapaz, Dement observa, de prancheta; três balões estouram sobre ele, e a cada um ele muda de pose: enjoo, um branco, raiva. */
+const WatchedShot: React.FC<WatchedShotProps> = ({
+  walkAt,
+  nameAt,
+  at,
+  clock,
+}) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const stage = useStage();
+  const seconds = (clock + frame) / fps;
+  const arriveAt = walkAt + ENTRANCE.frames;
+  const walked =
+    1 -
+    (1 - clamp01((frame - walkAt) / ENTRANCE.frames)) ** 1.5;
+  const observerX = mix(ENTRANCE.from, OBSERVER.x, walked);
+  const gait = clamp01((arriveAt - frame) / ENTRANCE.brake);
+  const standing = ramp(frame, arriveAt - 2, 8);
+  const poses = at.map((popped) =>
+    ramp(frame, popped + POSE.after, POSE.frames),
+  ) as [number, number, number];
+  // O rosto troca sob a pálpebra, quando cada pose começa.
+  const swaps = at.map((popped) => swapUnderLid(frame, popped + POSE.after, 6));
+  const expression: Expression = swaps[2].done
+    ? "puzzled"
+    : swaps[1].done
+      ? "curious"
+      : "sleepy";
+  // Enjoado, ele aperta os olhos.
+  const squeezed = 0.5 * (poses[0] - poses[1]);
+  const eyes = glance(frame, [
+    [0, 0, 0.55],
+    [arriveAt - 12, 1, 0.3],
+    [arriveAt + 14, 0, 0.55],
+    [at[0] + POSE.after, 0, 1],
+    [at[1] + POSE.after + 1, 0.3, -1],
+    [at[2] + POSE.after + 1, 1, 0.15],
+  ]);
+  const lean =
+    tiredSway(seconds) * (1 - 0.7 * poses[2]) +
+    3 * (poses[0] - poses[1]) -
+    1.5 * (poses[1] - poses[2]) +
+    3.5 * poses[2] +
+    // Irritado, ele bate o pé.
+    shake(frame, at[2] + POSE.after + 4, 12, 2.2, 2);
+  const body =
+    tiredBreath(seconds) *
+    (1 - 0.035 * (poses[0] - poses[1])) *
+    (1 + 0.03 * poses[2]);
+  const note = at.reduce(
+    (sum, popped) =>
+      sum + shake(frame, popped + NOTE.after, NOTE.frames, 1, NOTE.turns),
+    0,
+  );
+  const sunk =
+    FLOOR_RISE.by * (1 - ramp(frame, 0, FLOOR_RISE.frames) + stage.leave(6));
+
+  return (
+    <AbsoluteFill>
+      <FlatStage backdrop={<IdeaBackdrop hue={ROOM_HUE} spot={[0.34, 0.45]} />}>
+        <Drift focus={WATCHED_FOCUS} by={WATCHED_DRIFT}>
+          {/* O chão não cresce de um ponto, como o elenco: sobe e desce. */}
+          <Stay>
+            <RoomFloor hue={ROOM_HUE} y={FLOOR + sunk} />
+          </Stay>
+          {/* Ele já estava de pé quando o plano chegou, e é quem o plano seguinte leva até a cama: não entra nem sai. */}
+          {stage.handedOver ? null : (
+            <Stay>
+              <SvgLayer>
+                <IdeaShadow
+                  hue={ROOM_HUE}
+                  x={AWAKE.x}
+                  y={FLOOR + 6}
+                  width={300}
+                />
+              </SvgLayer>
+              <Subject
+                {...AWAKE}
+                poses={poses}
+                expression={expression}
+                gaze={eyes}
+                frown={swaps[2].done}
+                blink={Math.max(
+                  tiredBlink(seconds),
+                  squeezed,
+                  ...swaps.map((swap) => swap.lid),
+                )}
+                lean={lean}
+                breath={body}
+              />
+            </Stay>
+          )}
+          {/* Dement vem de fora do quadro, andando: não entra crescendo; sai com o plano. */}
+          <Stay only="entering">
+            <SvgLayer>
+              <IdeaShadow
+                hue={ROOM_HUE}
+                x={observerX}
+                y={FLOOR + 6}
+                width={320}
+              />
+            </SvgLayer>
+            <Dement
+              {...OBSERVER}
+              x={observerX}
+              flip
+              stride={{ step: ENTRANCE.steps * walked, gait }}
+              blink={blink(seconds, "dement")}
+              breath={mix(1, breath(seconds, "dement"), standing)}
+              note={note}
+              nameAt={nameAt}
+              nameX={OBSERVER.x}
+              on={ROOM_HUE}
+            />
+            <Symptoms spots={BALLOONS} at={at} head={HEAD} seconds={seconds} />
+          </Stay>
+        </Drift>
+        <Grain />
+      </FlatStage>
+    </AbsoluteFill>
+  );
+};
 
 const BED_HUE = "mint";
 /** As horas que ele dormiu de uma vez. */
@@ -77,13 +353,22 @@ const CLOCK = { x: 1270, y: 360, radius: 140 };
 const BARS = { ours: 640, his: 735, ruler: 800 };
 // De quem é cada barra: quem dorme, pequeno, na cama (o chão dela fica um pouco abaixo do meio da barra).
 const WHO = { x: 0, y: 30, scale: 0.13 };
+// A cama desenha quem dorme com 800 de altura, um nada à esquerda do meio dela.
+const SLEEPER = { height: 800, x: -5 };
+const BAR_HEIGHT = 54;
+// O ponto para o qual os planos da cama derivam.
+const CRASH_FOCUS = [900, 560] as const;
+const CRASH_DRIFT = 0.05;
 
-/** O bolso da conta volta ao canto, cheio: a conta sai dele no plano seguinte. */
-const Pocket: React.FC = () => (
-  <Place x={POCKET_CORNER.x} y={POCKET_CORNER.y}>
-    <BillPocket scale={POCKET_CORNER.scale} />
-  </Place>
-);
+/** A respiração de quem dorme na cama: o cobertor sobe e desce. */
+const asleepBreath = (seconds: number): number =>
+  1 + 0.05 * wave(seconds, 4.4, 0.2);
+/** Onde quem vai se deitar fica de pé, diante de uma cama. */
+const beside = (bed: { x: number; y: number; scale: number }) => ({
+  x: bed.x + SLEEPER.x * bed.scale,
+  y: bed.y,
+  height: SLEEPER.height * bed.scale,
+});
 
 type BareRulerProps = {
   readonly y: number;
@@ -113,194 +398,592 @@ const BareRuler: React.FC<BareRulerProps> = ({ y, color }) => (
   </SvgLayer>
 );
 
+// Ele vai do lugar em que estava até a frente da cama, que se monta em volta: em quadros.
+const TO_BED = { frames: 14, calm: 10 };
+// Deitar: balança para a frente (aviso), tomba de costas no colchão, e o cobertor sobe. Em quadros.
+const LIE = { notBefore: 19, warn: 4, fall: 11, cover: 9, sway: 6 };
+// O relógio dá a volta e passa dela em 1,2 s, a velocidade constante; a barra dele cresce junto.
+const AROUND_SECONDS = 1.2;
+// A barra "8 h" pisca duas vezes.
+const BLINK = { frames: 8, gap: 9 };
+// A cama abre o plano: entra sem esperar a marcação do elenco.
+const BED_SOONER = 4;
+
 type CrashShotProps = {
-  /** Quadro do plano em que o relógio fecha as catorze horas. */
+  /** Quadros do plano em que ele se deita, em que o relógio começa a correr e em que a barra "8 h" pisca. */
+  readonly lieAt: number;
   readonly hoursAt: number;
+  readonly oursAt: number;
+  readonly clock: number;
 };
 
 /** Ele desaba na cama, o relógio dá a volta até "14 h" e, na régua, a barra dele passa bem da barra "8 h" da pessoa. */
-const CrashShot: React.FC<CrashShotProps> = ({ hoursAt }) => {
+const CrashShot: React.FC<CrashShotProps> = ({
+  lieAt,
+  hoursAt,
+  oursAt,
+  clock,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const slept = linear(frame, 0.4 * fps, hoursAt - 0.4 * fps);
+  const stage = useStage();
+  const length = useShotLength();
+  const seconds = (clock + frame) / fps;
   const tone = idea[BED_HUE].contact;
+  const zoom = driftZoom(frame, length, CRASH_DRIFT);
+  // Ele chega como o plano anterior o deixou, irritado, e vai para a frente da cama enquanto se acalma.
+  const walking = ramp(frame, 0, TO_BED.frames);
+  const calm = ramp(frame, 0, TO_BED.calm);
+  const before = undrifted([AWAKE.x, AWAKE.y], CRASH_FOCUS, zoom);
+  const spot = beside(BED_HIGH);
+  const swap = swapUnderLid(frame, 2, 6);
+  // Daqui em diante quem o desenha é a cama, de pé diante dela, no mesmo ponto e na mesma pose.
+  const standAt = TO_BED.frames + 2;
+  const fallAt = lieAt + LIE.warn;
+  const landAt = fallAt + LIE.fall;
+  const lying = frame >= landAt;
+  // O corpo afunda no colchão com a queda e volta.
+  const landed = (frame - landAt) / (0.3 * fps);
+  const sink =
+    landed <= 0 || landed >= 1
+      ? 0
+      : 0.07 * (1 - landed) * Math.sin(Math.PI * landed);
+  const around = AROUND_SECONDS * fps;
+  const slept = linear(frame, hoursAt, around);
+  const blinked =
+    flash(frame, oursAt, BLINK.frames) +
+    flash(frame, oursAt + BLINK.gap, BLINK.frames);
 
   return (
     <AbsoluteFill>
-      <IdeaBackdrop hue={BED_HUE} spot={[0.36, 0.36]} />
-      <Bed
-        {...BED_HIGH}
-        colors={gardner}
-        blanket="blue"
-        hue={BED_HUE}
-        snoreAt={0.4 * fps}
-      />
-      <SleepClock {...CLOCK} hours={SLEPT_HOURS * slept} />
-      {/* As oito horas da pessoa já estão na régua quando o plano começa: é contra elas que a barra dele cresce. */}
-      <SleepBar
-        y={BARS.ours}
-        hours={OUR_HOURS}
-        label="8 h"
-        on={BED_HUE}
-        who={
-          <Bed {...WHO} colors={personInPajamas} hue={BED_HUE} shadow={false} />
-        }
-      />
-      {/* O número dele fica preso à ponta da barra, e não ao relógio: um texto a menos solto no quadro. */}
-      <SleepBar
-        y={BARS.his}
-        hours={SLEPT_HOURS}
-        filled={slept}
-        label="14 h"
-        labelAt={hoursAt}
-        on={BED_HUE}
-        who={
-          <Bed
-            {...WHO}
-            colors={gardner}
-            blanket="blue"
-            hue={BED_HUE}
-            shadow={false}
+      <FlatStage backdrop={<IdeaBackdrop hue={BED_HUE} spot={[0.36, 0.36]} />}>
+        <Drift focus={CRASH_FOCUS} by={CRASH_DRIFT}>
+          {/* A cama continua no plano seguinte, que passa a desenhá-la: entra com este e não sai. */}
+          {stage.handedOver ? null : (
+            <Stay only="leaving">
+              <Sooner by={BED_SOONER}>
+                <Cast origin={[BED_HIGH.x, BED_HIGH.y - 80]}>
+                  <Bed
+                    {...BED_HIGH}
+                    colors={gardner}
+                    blanket="blue"
+                    hue={BED_HUE}
+                    occupied={frame >= standAt}
+                    standing={1 - drop(frame, fallAt, LIE.fall)}
+                    lean={LIE.sway * ramp(frame, lieAt - 2, LIE.warn + 2)}
+                    // O rosto de quem dorme entra com o olho já fechado, no meio da queda.
+                    state={frame >= fallAt + LIE.fall / 2 ? "asleep" : "sleepy"}
+                    blink={Math.max(
+                      tiredBlink(seconds),
+                      ramp(frame, lieAt, LIE.warn),
+                    )}
+                    cover={ramp(frame, landAt - 2, LIE.cover)}
+                    breath={lying ? asleepBreath(seconds) - sink : 1}
+                    snoreAt={landAt + 4}
+                  />
+                </Cast>
+              </Sooner>
+            </Stay>
+          )}
+          <SleepClock {...CLOCK} hours={SLEPT_HOURS * slept} />
+          {/* As oito horas da pessoa já estão na régua quando o plano começa: é contra elas que a barra dele cresce. */}
+          <SleepBar
+            y={BARS.ours}
+            hours={OUR_HOURS}
+            label="8 h"
+            on={BED_HUE}
+            who={
+              <Bed
+                {...WHO}
+                colors={personInPajamas}
+                hue={BED_HUE}
+                shadow={false}
+              />
+            }
           />
-        }
-      />
-      <BareRuler y={BARS.ruler} color={tone} />
-      <Pocket />
-      <Grain />
+          {/* O número dele fica preso à ponta da barra, e não ao relógio: um texto a menos solto no quadro. */}
+          <SleepBar
+            y={BARS.his}
+            hours={SLEPT_HOURS}
+            filled={slept}
+            label="14 h"
+            labelAt={hoursAt + around}
+            on={BED_HUE}
+            who={
+              <Bed
+                {...WHO}
+                colors={gardner}
+                blanket="blue"
+                hue={BED_HUE}
+                shadow={false}
+              />
+            }
+          />
+          <BareRuler y={BARS.ruler} color={tone} />
+          {/* O pisca da barra "8 h": um clarão por cima dela. */}
+          {blinked > 0 ? (
+            <Stay>
+              <SvgLayer>
+                <rect
+                  x={rulerX(0) - 8 * blinked}
+                  y={BARS.ours - BAR_HEIGHT / 2 - 8 * blinked}
+                  width={rulerX(OUR_HOURS) - rulerX(0) + 16 * blinked}
+                  height={BAR_HEIGHT + 16 * blinked}
+                  rx={BAR_HEIGHT / 2 + 8 * blinked}
+                  fill={ink.ring}
+                  opacity={0.7 * blinked}
+                />
+              </SvgLayer>
+            </Stay>
+          ) : null}
+          {/* Por cima das barras e da régua, que entram enquanto ele passa por elas. */}
+          {frame < standAt ? (
+            <Stay>
+              <Subject
+                x={mix(before[0], spot.x, walking)}
+                y={mix(before[1], spot.y, walking)}
+                height={mix(AWAKE.height / zoom, spot.height, walking)}
+                poses={[0, 0, 1 - calm]}
+                expression={swap.done ? "sleepy" : "puzzled"}
+                gaze={swap.done ? undefined : [1, 0.15]}
+                frown={!swap.done}
+                blink={Math.max(tiredBlink(seconds), swap.lid)}
+                lean={(tiredSway(seconds) * 0.3 + 3.5) * (1 - calm)}
+                breath={mix(tiredBreath(seconds) * 1.03, 1, calm)}
+                // As olheiras somem com a distância: a cama o desenha sem elas.
+                tired={1 - ramp(frame, 0, TO_BED.frames - 2)}
+              />
+            </Stay>
+          ) : null}
+        </Drift>
+        {/* O bolso da conta volta ao canto, cheio: a conta sai dele no plano seguinte, que passa a desenhá-lo. Fora da deriva, para estar no canto exato. */}
+        {stage.handedOver ? null : (
+          <Stay only="leaving">
+            <Place
+              x={POCKET_CORNER.x}
+              y={POCKET_CORNER.y}
+              style={{ rotate: `${2 * billSway(seconds)}deg` }}
+            >
+              <BillPocket scale={POCKET_CORNER.scale} />
+            </Place>
+          </Stay>
+        )}
+        <Grain />
+      </FlatStage>
     </AbsoluteFill>
   );
 };
 
 // A conta se abre à esquerda da cama, sob a linha do bolso.
 const BILL = { x: 440, y: 190, scale: 1.3 };
-const OUT_SECONDS = 1.5;
+// A cama desce e cresce; a conta sai do bolso logo depois, e leva 0,9 s para chegar e se abrir.
+const LOWER_FRAMES = 18;
+const OUT = { at: 8, seconds: 0.9 };
+// Em "agora" a conta inclina na direção dele: o pé do papel vai para o lado da cama.
+const TOWARD = { degrees: -5, frames: 12 };
+// O ponto para o qual a cama deriva, e quanto.
+const BILL_FOCUS = [1240, 700] as const;
+const BILL_DRIFT = 0.04;
+
+/** A inclinação da conta aberta ao lado da cama, em graus: o balanço do papel e a inclinação para ele. */
+const billTilt = (seconds: number, settled: number, toward: number): number =>
+  billSway(seconds + 0.9) * settled + TOWARD.degrees * toward;
+
+type BillShotProps = {
+  /** Quadros do plano em que o carimbo pisca e em que a conta inclina para ele. */
+  readonly stampAt: number;
+  readonly towardAt: number;
+  readonly clock: number;
+};
 
 /** A conta carimbada sai do bolso marcado no canto e se abre ao lado da cama dele. */
-const BillShot: React.FC = () => {
+const BillShot: React.FC<BillShotProps> = ({ stampAt, towardAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const stage = useStage();
+  const length = useShotLength();
+  const seconds = (clock + frame) / fps;
+  const zoom = driftZoom(frame, length, BILL_DRIFT);
   // A cama vem de onde o plano anterior a deixou.
-  const lowered = ramp(frame, 0, 0.5 * fps);
-  const out = ramp(frame, 0.4 * fps, OUT_SECONDS * fps);
+  const lowered = ramp(frame, 0, LOWER_FRAMES);
+  const high = undrifted([BED_HIGH.x, BED_HIGH.y], BILL_FOCUS, zoom);
+  const outFrames = OUT.seconds * fps;
+  const out = ramp(frame, OUT.at, outFrames);
 
   return (
     <AbsoluteFill>
-      <IdeaBackdrop hue={BED_HUE} spot={[0.62, 0.6]} />
-      <Bed
-        x={mix(BED_HIGH.x, BED_LOW.x, lowered)}
-        y={mix(BED_HIGH.y, BED_LOW.y, lowered)}
-        scale={mix(BED_HIGH.scale, BED_LOW.scale, lowered)}
-        colors={gardner}
-        blanket="blue"
-        hue={BED_HUE}
-        snoreAt={-fps}
-      />
-      {/* O caminho de `debt-returns`, ao contrário: o maço sai do bolso, viaja e se desdobra. */}
-      <BillToPocket
-        from={[BILL.x, BILL.y]}
-        scale={BILL.scale}
-        progress={1 - out}
-      />
-      <Grain />
+      <FlatStage backdrop={<IdeaBackdrop hue={BED_HUE} spot={[0.62, 0.6]} />}>
+        {/* A cama, a conta e o bolso são do plano seguinte também: ele os recebe daqui e os transforma. */}
+        {stage.handedOver ? null : (
+          <Stay>
+            <Drift focus={BILL_FOCUS} by={BILL_DRIFT}>
+              <Bed
+                x={mix(high[0], BED_LOW.x, lowered)}
+                y={mix(high[1], BED_LOW.y, lowered)}
+                scale={mix(BED_HIGH.scale / zoom, BED_LOW.scale, lowered)}
+                colors={gardner}
+                blanket="blue"
+                hue={BED_HUE}
+                breath={asleepBreath(seconds)}
+                snoreAt={-fps}
+              />
+            </Drift>
+            {/* O caminho de `debt-returns`, ao contrário: o maço sai do bolso, viaja e se desdobra. Aberta, a conta balança. */}
+            <BillToPocket
+              from={[BILL.x, BILL.y]}
+              scale={BILL.scale}
+              progress={1 - out}
+              creased
+              tilt={billTilt(
+                seconds,
+                ramp(frame, OUT.at + outFrames, 12),
+                ramp(frame, towardAt, TOWARD.frames),
+              )}
+              pocketTilt={2 * billSway(seconds)}
+              stamp={
+                1 -
+                0.25 * (flash(frame, stampAt, 8) + flash(frame, stampAt + 9, 8))
+              }
+            />
+          </Stay>
+        )}
+        <Grain />
+      </FlatStage>
     </AbsoluteFill>
   );
 };
 
 // A conta de perto enche o quadro.
 const CLOSE_BILL = 1.4;
+const CLOSE_CENTER = [960, 520] as const;
+// A aproximação lenta dos dois planos da conta de perto é uma só: começa no primeiro e termina no segundo.
+const CLOSE_DRIFT = { from: 0.965, between: 0.985 };
+// A conta vem para o meio, cresce e vira: de frente, o papel "sono devido"; do outro lado, as onze noites.
+// A cama e o bolso encolhem nos lugares deles enquanto isso.
+const TURN = { frames: 18, clear: 8 };
+// De perto, o papel balança menos que ao lado da cama, em fração do balanço da conta.
+const PAPER_SWAY = 0.8;
+// As noites são riscadas uma a uma, com este intervalo em quadros.
+const STRIKE_EVERY = 3;
+// As luas piscam juntas, duas vezes.
+const MOONS = { frames: 10, gap: 11 };
 // Nos últimos instantes do último plano o bolso aparece no canto dele, vazio, pronto para receber a conta:
-// ela não sai da tela (decisão do usuário), só encolhe um pouco e vai para o lado, para os dois caberem.
-const POCKET_SECONDS = 0.7;
-const ASIDE = { x: -120, scale: 0.84 };
-
-type DetailShotProps = {
-  /** Quadros do plano em que as noites começam a ser riscadas e em que a última é riscada. */
-  readonly strikeFrom?: number;
-  readonly strikeTo?: number;
-  /** Quadro do plano em que o "14 h" entra; sem valor, já está lá. */
-  readonly hoursAt?: number;
-  /** Quadro do plano em que a seta "mais fundo" acende; sem valor, não há seta. */
-  readonly deeperAt?: number;
-  /** No fim do plano o bolso do canto aparece ao lado da conta: é a última vez que ela aparece neste bloco. */
-  readonly pocket?: boolean;
+// ela encolhe um pouco e vai para o lado, para os dois caberem.
+const ASIDE = { x: -120, scale: 0.84, before: 25, frames: 12, pocketAfter: 4 };
+// A saída: a conta vai para o bolso, que estava ali para isso, encolhendo e dobrando no caminho; ele a
+// engole, dá um pulo pequeno e encolhe no lugar. Antes, ela ficava inteira até a troca e sumia sem forma
+// sob o fundo da cena seguinte. Em quadros antes da troca: quando ela parte e quanto leva; o tamanho
+// com que chega, em fração do de perto, e quanto dobra e inclina; e o bolso, que termina de sair logo
+// depois de a cena seguinte chegar.
+const STOW = {
+  before: 12,
+  frames: 9,
+  size: 0.09,
+  width: 0.6,
+  tilt: 14,
+  bump: 0.12,
+  pocketBefore: 1,
+  pocketFrames: 4,
 };
 
-/** De perto, a conta: de um lado, onze noites riscadas; do outro, só "14 h"; e, depois, a seta "mais fundo". */
-const DetailShot: React.FC<DetailShotProps> = ({
-  strikeFrom,
-  strikeTo,
+type DetailProps = {
+  /** O meio da conta no quadro, a altura dela em fração da final, e a largura (a meia-volta passa pelo zero). */
+  readonly x: number;
+  readonly y: number;
+  readonly size: number;
+  readonly width?: number;
+  readonly tilt?: number;
+  readonly nights: number;
+  readonly hours: number;
+  readonly hoursSize: number;
+  readonly pulse?: number;
+  readonly arrow?: number;
+  readonly tagSize?: number;
+};
+
+/** A conta de perto, posta pelo meio dela: é o mesmo desenho nos dois planos por que ela passa. */
+const Detail: React.FC<DetailProps> = ({
+  x,
+  y,
+  size,
+  width = 1,
+  tilt = 0,
+  arrow = 0,
+  tagSize = 0,
+  ...bill
+}) => (
+  <div
+    style={{
+      position: "absolute",
+      left: x,
+      top: y,
+      translate: "-50% -50%",
+      rotate: `${tilt}deg`,
+      scale: `${width} 1`,
+    }}
+  >
+    <SleepBillDetail
+      scale={CLOSE_BILL * size}
+      on={BED_HUE}
+      arrow={arrow}
+      tagSize={tagSize}
+      {...bill}
+    />
+  </div>
+);
+
+type TurnShotProps = {
+  /** Quadros do plano em que as noites começam a ser riscadas, em que "14 h" estoura e em que as luas piscam. */
+  readonly strikeAt: number;
+  readonly hoursAt: number;
+  readonly moonsAt: number;
+  readonly clock: number;
+};
+
+/** De perto, a conta: vira e mostra, de um lado, as onze noites, riscadas uma a uma; do outro, só "14 h". */
+const TurnShot: React.FC<TurnShotProps> = ({
+  strikeAt,
   hoursAt,
-  deeperAt,
-  pocket = false,
+  moonsAt,
+  clock,
 }) => {
   const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
-  const pocketAt = durationInFrames - POCKET_SECONDS * fps;
-  const aside = pocket ? ramp(frame, pocketAt, 0.4 * fps) : 0;
+  const { fps } = useVideoConfig();
+  const stage = useStage();
+  const length = useShotLength();
+  const seconds = (clock + frame) / fps;
+  const turned = ramp(frame, 0, TURN.frames);
+  const cleared = ramp(frame, 0, TURN.clear);
+  const drift = mix(CLOSE_DRIFT.from, CLOSE_DRIFT.between, frame / length);
+  // A conta aberta do plano anterior: a altura dela, e o meio do papel.
+  const openHeight = billHeight(BILL_LINES) * BILL.scale;
+  const closeHeight = DETAIL.height * CLOSE_BILL * drift;
+  // A altura cresce em proporção, para a velocidade aparente ser a mesma do começo ao fim.
+  const height = openHeight * (closeHeight / openHeight) ** turned;
+  const x = mix(BILL.x, CLOSE_CENTER[0], turned);
+  const y = mix(BILL.y + openHeight / 2, CLOSE_CENTER[1], turned);
+  // De frente até o perfil, e do perfil até o outro lado.
+  const facing = Math.cos(Math.PI * turned);
+  // A inclinação que ela tinha ao lado da cama se desfaz no caminho.
+  const tilt = billTilt(seconds, 1, 1) * (1 - ramp(frame, 0, TURN.frames / 2));
+  const strikes = DETAIL_NIGHTS * STRIKE_EVERY;
 
   return (
     <AbsoluteFill>
-      <IdeaBackdrop hue={BED_HUE} spot={[0.5, 0.5]} />
-      <div
-        style={{
-          position: "absolute",
-          left: 960 - (DETAIL.width * CLOSE_BILL) / 2,
-          top: 520 - (DETAIL.height * CLOSE_BILL) / 2,
-          translate: `${mix(0, ASIDE.x, aside)}px 0`,
-          scale: `${mix(1, ASIDE.scale, aside)}`,
-        }}
-      >
-        <SleepBillDetail
-          scale={CLOSE_BILL}
-          on={BED_HUE}
-          nights={
-            strikeFrom === undefined || strikeTo === undefined
-              ? DETAIL_NIGHTS
-              : DETAIL_NIGHTS * linear(frame, strikeFrom, strikeTo - strikeFrom)
-          }
-          hours={hoursAt === undefined ? 1 : ramp(frame, hoursAt, 0.2 * fps)}
-          deeper={deeperAt === undefined ? 0 : ramp(frame, deeperAt, 0.3 * fps)}
-        />
-      </div>
-      {pocket ? (
-        <Place x={POCKET_CORNER.x} y={POCKET_CORNER.y}>
-          <Pop at={pocketAt}>
-            <BillPocket scale={POCKET_CORNER.scale} filled={0} />
-          </Pop>
-        </Place>
-      ) : null}
-      <Grain />
+      <FlatStage backdrop={<IdeaBackdrop hue={BED_HUE} spot={[0.5, 0.5]} />}>
+        <Stay>
+          {/* A cama e o bolso vazio do plano anterior encolhem nos lugares deles. */}
+          {cleared < 1 ? (
+            <>
+              <AbsoluteFill
+                style={{
+                  transformOrigin: `${BED_LOW.x}px ${BED_LOW.y - 120}px`,
+                  scale: `${1 - cleared}`,
+                }}
+              >
+                <Bed
+                  {...BED_LOW}
+                  colors={gardner}
+                  blanket="blue"
+                  hue={BED_HUE}
+                  breath={asleepBreath(seconds)}
+                  snoreAt={-fps}
+                />
+              </AbsoluteFill>
+              <div
+                style={{
+                  position: "absolute",
+                  left: POCKET_CORNER.x,
+                  top: POCKET_CORNER.y,
+                  translate: "-50% -50%",
+                  rotate: `${2 * billSway(seconds)}deg`,
+                  scale: `${1 - cleared}`,
+                }}
+              >
+                <BillPocket scale={POCKET_CORNER.scale} filled={0} />
+              </div>
+            </>
+          ) : null}
+          {facing > 0 ? (
+            <div
+              style={{
+                position: "absolute",
+                left: x,
+                top: y - height / 2,
+                translate: "-50% 0",
+                transformOrigin: "50% 0",
+                rotate: `${tilt}deg`,
+                scale: `${facing} 1`,
+              }}
+            >
+              <SleepBill scale={(BILL.scale * height) / openHeight} stamp={1} />
+            </div>
+          ) : stage.handedOver ? null : (
+            <Detail
+              x={x}
+              y={y}
+              size={height / (DETAIL.height * CLOSE_BILL)}
+              width={-facing}
+              tilt={
+                PAPER_SWAY *
+                billSway(seconds + 0.9) *
+                ramp(frame, TURN.frames, 12)
+              }
+              nights={DETAIL_NIGHTS * linear(frame, strikeAt, strikes)}
+              hours={linear(frame, hoursAt, 3)}
+              hoursSize={popScale(frame, hoursAt, 0.3 * fps, 0.6, 1.1)}
+              pulse={
+                flash(frame, moonsAt, MOONS.frames) +
+                flash(frame, moonsAt + MOONS.gap, MOONS.frames)
+              }
+            />
+          )}
+        </Stay>
+        <Grain />
+      </FlatStage>
     </AbsoluteFill>
   );
 };
 
-export const GardnerSleepsScene: React.FC<SceneProps> = ({ scene, shots }) => (
-  <>
-    <Shot range={shots[0]} name="Dement observa; enjoo, um branco, raiva">
-      <WatchedShot
-        nameAt={cue(scene, "pesquisador")}
-        at={[
-          cue(scene, "náusea"),
-          cue(scene, "memória"),
-          cue(scene, "irritado"),
-        ]}
-      />
-    </Shot>
-    <Shot range={shots[1]} name="ele desaba na cama: 14 h contra 8 h">
-      <CrashShot hoursAt={cue(scene, "catorze") - shots[1].from} />
-    </Shot>
-    <Shot range={shots[2]} name="a conta sai do bolso, ao lado da cama">
-      <BillShot />
-    </Shot>
-    <Shot range={shots[3]} name="de perto: onze noites riscadas, 14 h">
-      <DetailShot
-        strikeFrom={cue(scene, "longe") - shots[3].from}
-        strikeTo={cue(scene, "hora", 2) - shots[3].from}
-        hoursAt={cue(scene, "catorze", 2) - shots[3].from}
-      />
-    </Shot>
-    <Shot range={shots[4]} name="a seta: mais fundo">
-      <DetailShot deeperAt={cue(scene, "mais", 2) - shots[4].from} pocket />
-    </Shot>
-  </>
-);
+type DeeperShotProps = {
+  /** Quadros do plano em que a seta desce e em que "mais fundo" estoura. */
+  readonly arrowAt: number;
+  readonly tagAt: number;
+  readonly clock: number;
+};
+
+/** A seta desce de "14 h" com "mais fundo"; no fim, a conta vai um pouco para o lado, o bolso aparece ao lado dela, e ela entra nele. */
+const DeeperShot: React.FC<DeeperShotProps> = ({ arrowAt, tagAt, clock }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const length = useShotLength();
+  const stage = useStage();
+  const seconds = (clock + frame) / fps;
+  const drift = mix(CLOSE_DRIFT.between, 1, Math.min(1, frame / length));
+  const asideAt = length - ASIDE.before;
+  const aside = ramp(frame, asideAt, ASIDE.frames);
+  const pocketAt = asideAt + ASIDE.pocketAfter;
+  // A conta vai para o bolso, com peso; chegando, some dentro dele, que mostra a ponta dela.
+  const stowAt = length - STOW.before;
+  const stowed = ramp(frame, stowAt, STOW.frames);
+  const kept = ramp(frame, stowAt + STOW.frames - 3, 3);
+  const size = drift * mix(1, ASIDE.scale, aside);
+  // O bolso encolhe no lugar dele, e termina logo depois de a cena seguinte chegar.
+  const gone = drop(frame, length - STOW.pocketBefore, STOW.pocketFrames);
+
+  return (
+    <AbsoluteFill>
+      <FlatStage backdrop={<IdeaBackdrop hue={BED_HUE} spot={[0.5, 0.5]} />}>
+        {/* A fila e as molduras de `so-far` entram aqui, por baixo da conta que vai para o bolso: a troca
+            de cena não deixa a tela só com o fundo. Quando a cena delas chega, é ela quem as desenha. */}
+        {frame >= length - RECAP_LEAD - 3 && !stage.handedOver ? (
+          <RecapPrelude until={length - frame} clock={clock + length} />
+        ) : null}
+        <Stay>
+          {stowed < 1 ? (
+            <Detail
+              x={mix(
+                CLOSE_CENTER[0] + ASIDE.x * aside,
+                POCKET_CORNER.x,
+                stowed,
+              )}
+              y={mix(CLOSE_CENTER[1], POCKET_CORNER.y, stowed)}
+              // A escala cai em proporção, para a velocidade aparente ser a mesma do começo ao fim.
+              size={size * (STOW.size / size) ** stowed}
+              width={mix(1, STOW.width, stowed)}
+              tilt={
+                PAPER_SWAY * billSway(seconds + 0.9) * (1 - stowed) +
+                STOW.tilt * stowed
+              }
+              nights={DETAIL_NIGHTS}
+              hours={1}
+              hoursSize={1}
+              arrow={ramp(frame, arrowAt, 0.5 * fps)}
+              tagSize={
+                frame < tagAt ? 0 : popScale(frame, tagAt, 0.3 * fps, 0.6, 1.08)
+              }
+            />
+          ) : null}
+          {frame >= pocketAt ? (
+            <div
+              style={{
+                position: "absolute",
+                left: POCKET_CORNER.x,
+                top: POCKET_CORNER.y,
+                translate: "-50% -50%",
+                rotate: `${2 * billSway(seconds)}deg`,
+                // Ao receber a conta, ele dá um pulo pequeno.
+                scale: `${grown(frame, pocketAt, 10) * (1 + STOW.bump * flash(frame, stowAt + STOW.frames - 3, 6)) * (1 - gone)}`,
+              }}
+            >
+              <BillPocket scale={POCKET_CORNER.scale} filled={kept} />
+            </div>
+          ) : null}
+        </Stay>
+        <Grain />
+      </FlatStage>
+    </AbsoluteFill>
+  );
+};
+
+export const GardnerSleepsScene: React.FC<SceneProps> = ({ scene, shots }) => {
+  const { fps } = useVideoConfig();
+  const walkAt = cue(scene, "por");
+  const crash = shots[1].from;
+  const crashLength = shots[1].to - crash;
+  const hoursAt = cue(scene, "catorze") - crash;
+  const turn = shots[3].from;
+  const deeper = shots[4].from;
+  const arrowAt = cue(scene, "sono", 4) - deeper;
+  return (
+    <>
+      <Shot range={shots[0]} name="Dement observa; enjoo, um branco, raiva">
+        <WatchedShot
+          walkAt={walkAt}
+          // O nome dele estoura com ele já parado.
+          nameAt={Math.max(cue(scene, "sono"), walkAt + ENTRANCE.frames + 1)}
+          at={[
+            cue(scene, "náusea"),
+            cue(scene, "memória"),
+            cue(scene, "irritado"),
+          ]}
+          clock={scene.from}
+        />
+      </Shot>
+      <Shot range={shots[1]} name="ele desaba na cama: 14 h contra 8 h">
+        <CrashShot
+          lieAt={Math.max(cue(scene, "deitou") - crash, LIE.notBefore)}
+          hoursAt={hoursAt}
+          // O pisca termina antes de o elenco começar a sair.
+          oursAt={Math.min(
+            cue(scene, "oito") - crash,
+            crashLength - 0.5 * fps - BLINK.gap - BLINK.frames,
+          )}
+          clock={scene.from + crash}
+        />
+      </Shot>
+      <Shot range={shots[2]} name="a conta sai do bolso, ao lado da cama">
+        <BillShot
+          stampAt={cue(scene, "compensa") - shots[2].from}
+          towardAt={cue(scene, "agora") - shots[2].from}
+          clock={scene.from + shots[2].from}
+        />
+      </Shot>
+      <Shot range={shots[3]} name="de perto: onze noites riscadas, 14 h">
+        <TurnShot
+          strikeAt={cue(scene, "hora") - turn}
+          hoursAt={cue(scene, "catorze", 2) - turn}
+          moonsAt={cue(scene, "onze") - turn}
+          clock={scene.from + turn}
+        />
+      </Shot>
+      <Shot range={shots[4]} name="a seta: mais fundo">
+        <DeeperShot
+          arrowAt={arrowAt}
+          tagAt={Math.max(cue(scene, "mais", 2) - deeper, arrowAt + 10)}
+          clock={scene.from + deeper}
+        />
+      </Shot>
+    </>
+  );
+};

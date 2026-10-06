@@ -1,16 +1,13 @@
-import { Actor } from "../../../components/Actors";
 import { useCarriedNumber } from "../../../components/Camera";
 import { Antelope } from "../../../art/Antelope";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { antelope, antelopeNight, ink, savanna } from "../palette";
+import { antelope, antelopeNight, ink } from "../palette";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "./Savanna";
 
 /** Onde o antílope fica no plano aberto da savana, e o tamanho dele. */
 export const PREY = { x: 1040, y: SAVANNA_GROUND_Y + 40, width: 420 };
-/** O ponto do capim, atrás dele, de onde o predador espia. */
-export const LURK = { x: 1560, y: SAVANNA_GROUND_Y - 30 };
 
 type PreyProps = {
   /** 1 é dia, 0 é noite: escolhe a pintura do bicho. */
@@ -92,47 +89,6 @@ export const Prey: React.FC<PreyProps> = ({
     </>
   );
 };
-
-type LurkerProps = {
-  /** Quanto os olhos estão acesos, de 0 a 1. */
-  readonly lit: number;
-  /** Quanto ele saiu do capim, de 0 a 1. */
-  readonly out?: number;
-  readonly seconds: number;
-};
-
-/** O predador: uma sombra sem rosto atrás do capim, e dois olhos que acendem. */
-export const Lurker: React.FC<LurkerProps> = ({ lit, out = 0, seconds }) => (
-  <Actor id="predator" at={[LURK.x, LURK.y]}>
-    <SvgLayer>
-      {/* Só a cabeça e os ombros, agachados: o resto fica atrás do capim. */}
-      <g
-        transform={`translate(${LURK.x - 110 - 120 * out} ${LURK.y + 40}) scale(0.75)`}
-        fill={savanna.night.contact}
-        opacity={0.6 + 0.4 * out}
-      >
-        <path d="M-90,60 C-96,-70 -70,-170 0,-190 C70,-170 150,-110 330,-90 C420,-80 470,-20 470,60 Z" />
-        <path d="M-70,-150 L-84,-232 L-22,-186 Z M70,-150 L84,-232 L22,-186 Z" />
-        {[-60, 20, 110, 200, 290].map((x) => (
-          <path
-            key={x}
-            d={`M${x},70 C${x + 6},-10 ${x + 20},-70 ${x + 38},-120 C${x + 34},-50 ${x + 36},10 ${x + 44},70 Z`}
-          />
-        ))}
-      </g>
-      {[-22, 22].map((offset) => (
-        <ellipse
-          key={offset}
-          cx={LURK.x - 110 - 120 * out + offset}
-          cy={LURK.y - 72}
-          rx={11}
-          ry={7 * lit * (1 - 0.9 * blink(seconds, "lurker"))}
-          fill={ink.moon}
-        />
-      ))}
-    </SvgLayer>
-  </Actor>
-);
 
 /** O que o bicho deixa de fazer enquanto dorme: comer, achar um par, vigiar. */
 export type Loss = "food" | "mate" | "watch";

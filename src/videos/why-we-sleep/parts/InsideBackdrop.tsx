@@ -12,10 +12,13 @@ import { inside } from "../palette";
  * O fundo de "por dentro": índigo profundo com faíscas que respiram, para o
  * mecanismo (o cérebro, metade acesa) brilhar sobre ele.
  */
-export const InsideBackdrop: React.FC = () => {
+export const InsideBackdrop: React.FC<{
+  /** O instante, em segundos, para as faíscas não saltarem quando outro plano redesenha este fundo. Sem valor, o relógio do plano. */
+  readonly seconds?: number;
+}> = ({ seconds: given }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const seconds = frame / fps;
+  const seconds = given ?? frame / fps;
 
   return (
     <AbsoluteFill

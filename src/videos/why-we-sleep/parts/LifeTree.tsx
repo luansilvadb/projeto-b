@@ -1,3 +1,5 @@
+import { clamp01 } from "../../../components/timing";
+
 type LifeTreeProps = {
   readonly width: number;
   /** Cor dos galhos, e a dos bichos na ponta de cada um. */
@@ -37,6 +39,11 @@ type LifeTreeProps = {
    * vista é a borda do quadro. Sem valor, cai um pouco e some no ar.
    */
   readonly dropTo?: number;
+  /**
+   * O instante, em segundos, para os bichos ressonarem: cada um cresce e
+   * encolhe um nada, na própria fase. Sem valor, ficam parados.
+   */
+  readonly doze?: number;
 };
 
 const VIEW = { width: 1000, height: 720 };
@@ -76,17 +83,27 @@ type BudProps = {
   readonly sprouted?: number;
   /** Quanto os olhos já fecharam, de 0 (dois pontos abertos) a 1 (o traço de quem dorme). */
   readonly shut?: number;
+  /** A respiração de quem dorme: o tamanho do bicho, em fração, em volta de 1. */
+  readonly swell?: number;
 };
 
-const unit = (value: number) => Math.min(1, Math.max(0, value));
+const unit = (value: number) => clamp01(value);
 
 /** O bicho na ponta do ramo: uma bolinha de olho fechado. */
-const Bud: React.FC<BudProps> = ({ at, fill, eye, sprouted = 1, shut = 1 }) => {
+const Bud: React.FC<BudProps> = ({
+  at,
+  fill,
+  eye,
+  sprouted = 1,
+  shut = 1,
+  swell = 1,
+}) => {
   // Brota passando do tamanho e volta, como toda entrada do vídeo.
   const size =
-    sprouted < 0.7
+    swell *
+    (sprouted < 0.7
       ? (sprouted / 0.7) * 1.12
-      : 1.12 - ((sprouted - 0.7) / 0.3) * 0.12;
+      : 1.12 - ((sprouted - 0.7) / 0.3) * 0.12);
   // A pálpebra desce: os pontos achatam até sumir e o traço abre no lugar deles.
   const open = unit(1 - shut * 2);
   const arc = unit(shut * 2 - 1);
@@ -137,6 +154,7 @@ export const LifeTree: React.FC<LifeTreeProps> = ({
   closed,
   costly = 1,
   dropTo,
+  doze,
 }) => (
   <svg
     width={width}
@@ -173,6 +191,11 @@ export const LifeTree: React.FC<LifeTreeProps> = ({
               fill={bud}
               eye={eye}
               shut={closed === undefined ? 1 : unit(closed - index)}
+              swell={
+                doze === undefined
+                  ? 1
+                  : 1 + 0.06 * Math.sin(doze * 1.4 + index * 1.7)
+              }
             />
           ))
         : null

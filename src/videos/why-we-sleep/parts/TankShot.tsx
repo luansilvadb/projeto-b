@@ -11,7 +11,7 @@ import { taperPath, type Point } from "../../../art/shapes";
 import { Leftovers } from "../../../components/Actors";
 import { Camera, Layer, type CameraState } from "../../../components/Camera";
 import { Grain } from "../../../components/Grain";
-import { breath, wave } from "../../../components/Idle";
+import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
 import {
@@ -23,7 +23,7 @@ import {
   savanna,
   sky,
 } from "../palette";
-import { HOLDING_CLIPBOARD, HeldClipboard } from "./Clipboard";
+import { HeldClipboard, holdingClipboard } from "./Clipboard";
 import {
   BENCH_Y,
   LabBench,
@@ -65,8 +65,16 @@ const WINDOW = { x: 1612, y: 36, width: 280, height: 470 };
 type Hour = "day" | "night";
 
 /** A janela do laboratório: é ela que diz se é dia ou noite lá fora. Vai sobre a parede. */
-const LabWindow: React.FC<{ hour: Hour }> = ({ hour }) => {
+const LabWindow: React.FC<{ hour: Hour; clock: number }> = ({
+  hour,
+  clock,
+}) => {
   const id = useId();
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  // A pausa viva da janela: o halo do sol e o da lua respiram, e as estrelas cintilam.
+  const seconds = (clock + frame) / fps;
+  const halo = 0.5 + 0.5 * wave(seconds, 3.2);
   const { x, y, width, height } = WINDOW;
   const tones =
     hour === "day" ? [sky.day.top, sky.day.bottom] : savanna.night.sky;
@@ -100,14 +108,21 @@ const LabWindow: React.FC<{ hour: Hour }> = ({ hour }) => {
           <circle
             cx={x + 150}
             cy={y + 130}
-            r={92}
+            r={92 + 8 * halo}
             fill={sky.day.cloud}
-            opacity={0.45}
+            opacity={0.45 - 0.1 * halo}
           />
           <circle cx={x + 150} cy={y + 130} r={62} fill={sky.day.sun} />
         </>
       ) : (
         <>
+          <circle
+            cx={x + 150}
+            cy={y + 130}
+            r={84 + 10 * halo}
+            fill={ink.moon}
+            opacity={0.1 + 0.08 * halo}
+          />
           <path
             transform={`translate(${x + 86} ${y + 70}) scale(1.25)`}
             d="M 62 10 A 42 42 0 1 0 90 62 A 34 34 0 1 1 62 10 Z"
@@ -118,8 +133,15 @@ const LabWindow: React.FC<{ hour: Hour }> = ({ hour }) => {
             [200, 300, 5],
             [120, 380, 6],
             [226, 60, 5],
-          ].map(([sx, sy, r]) => (
-            <circle key={sx} cx={x + sx} cy={y + sy} r={r} fill={ink.ring} />
+          ].map(([sx, sy, r], star) => (
+            <circle
+              key={sx}
+              cx={x + sx}
+              cy={y + sy}
+              r={r}
+              fill={ink.ring}
+              opacity={0.65 + 0.35 * wave(seconds, 1.9 + star * 0.4, star / 4)}
+            />
           ))}
         </>
       )}
@@ -143,30 +165,65 @@ const LabWindow: React.FC<{ hour: Hour }> = ({ hour }) => {
   );
 };
 
-type LabResearcherProps = {
+/** O que a pesquisadora faz com a prancheta num plano. Sem valores, ela a segura erguida, com as duas linhas escritas. */
+export type Board = {
+  /** Quanto ela já ergueu a prancheta, de 0 (baixa, atrás da bancada) a 1. */
+  readonly raised?: number;
+  /** Quanto de cada linha já se escreveu, de 0 a 1. */
+  readonly written?: readonly [number, number];
+  /**
+   * Quanto ela já saiu de cena, de 0 a 1: encolhe nos próprios pés, como todo
+   * elenco do palco, e de mãos vazias, porque a prancheta ficou com a cena.
+   */
+  readonly gone?: number;
+};
+
+type LabResearcherProps = Board & {
   /** O visto de cada linha da prancheta, de 0 a 1. */
   readonly checked?: readonly [number, number];
+  readonly clock?: number;
 };
 
 /** A pesquisadora atrás da bancada, com a prancheta dos dois testes virada para quem assiste. */
-export const LabResearcher: React.FC<LabResearcherProps> = ({ checked }) => {
+export const LabResearcher: React.FC<LabResearcherProps> = ({
+  checked,
+  raised = 1,
+  written,
+  gone = 0,
+  clock = 0,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const seconds = (clock + frame) / fps;
+  if (gone >= 1) {
+    return null;
+  }
 
   return (
     <Place
       x={RESEARCHER.x}
       y={RESEARCHER.y}
       anchor="bottom"
-      style={{ scale: `1 ${breath(frame / fps, "researcher")}` }}
+      style={{
+        scale: `${1 - gone} ${(1 - gone) * breath(seconds, "researcher")}`,
+      }}
     >
       <Person
         height={RESEARCHER.height}
         colors={researcher}
         bun
         plainFace
-        {...HOLDING_CLIPBOARD}
-        held={<HeldClipboard checked={checked} />}
+        blink={blink(seconds, "researcher")}
+        {...holdingClipboard(raised)}
+        held={
+          gone > 0 ? undefined : (
+            <HeldClipboard
+              checked={checked}
+              raised={raised}
+              written={written}
+            />
+          )
+        }
         heldInFront
       />
     </Place>
@@ -182,6 +239,13 @@ type TankJellyfishProps = {
   readonly droop?: number;
   /** Ritmo do pulso ao longo do plano. */
   readonly rhythm: readonly PulseRhythm[];
+  /**
+   * Quadros a somar ao relógio do plano, e pulsos a somar à contagem (ver
+   * `settledPhase`): com o quadro do vídeo em que o plano começa, o ritmo é
+   * contado no relógio do vídeo e o sino não salta na troca de plano.
+   */
+  readonly clock?: number;
+  readonly phase?: number;
 };
 
 /** A água-viva dentro do tanque: sempre nas cores de dia, que é como o laboratório a vê. */
@@ -191,8 +255,10 @@ export const TankJellyfish: React.FC<TankJellyfishProps> = ({
   tilt = 0,
   droop = 0,
   rhythm,
+  clock = 0,
+  phase = 0,
 }) => {
-  const frame = useCurrentFrame();
+  const frame = clock + useCurrentFrame();
   const { fps } = useVideoConfig();
 
   return (
@@ -201,7 +267,7 @@ export const TankJellyfish: React.FC<TankJellyfishProps> = ({
         width={JELLYFISH_WIDTH}
         colors={jellyfish.day}
         droop={droop}
-        pulse={pulseShape(pulseCycles(frame, fps, rhythm))}
+        pulse={pulseShape(phase + pulseCycles(frame, fps, rhythm))}
         sway={0.3 * wave(frame / fps, 5)}
       />
     </Place>
@@ -332,6 +398,15 @@ type TankShotProps = {
   readonly platform?: number;
   /** O que está dentro da água, em pixels do cenário. */
   readonly children?: React.ReactNode;
+  /** O que a pesquisadora faz com a prancheta; vale quando ela está no plano. */
+  readonly board?: Board;
+  /**
+   * O quadro do vídeo em que o plano começa: a janela, as bolhas e a
+   * respiração dela passam a contar no relógio do vídeo e não saltam na troca.
+   */
+  readonly clock?: number;
+  /** Quanto a luz está apagada, de 0 a 1, quando há `lightsOff`. Por padrão, toda. */
+  readonly dark?: number;
 };
 
 /**
@@ -346,15 +421,22 @@ export const TankShot: React.FC<TankShotProps> = ({
   researcher: checked,
   platform,
   children,
+  board,
+  clock = 0,
+  dark = 1,
 }) => (
   <AbsoluteFill>
     <Camera {...camera}>
       <Layer depth={1}>
         <LabWall />
-        <LabWindow hour={hour} />
-        {checked ? <LabResearcher checked={checked} /> : null}
+        <LabWindow hour={hour} clock={clock} />
+        {checked ? (
+          <LabResearcher checked={checked} clock={clock} {...board} />
+        ) : null}
         <LabBench />
-        <Tank platform={platform}>{children}</Tank>
+        <Tank platform={platform} clock={clock}>
+          {children}
+        </Tank>
         <Leftovers />
       </Layer>
     </Camera>
@@ -363,7 +445,7 @@ export const TankShot: React.FC<TankShotProps> = ({
         style={{
           // O tanque fica aceso; em volta, o laboratório mergulha no índigo da noite.
           background: `radial-gradient(ellipse 40% 52% at ${lightsOff[0] * 100}% ${lightsOff[1] * 100}%, ${lab.glass} 55%, ${lagoon.night.water[1]})`,
-          opacity: 0.88,
+          opacity: 0.88 * dark,
           mixBlendMode: "multiply",
         }}
       />

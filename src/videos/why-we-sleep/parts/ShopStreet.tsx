@@ -9,6 +9,7 @@ import { Layer } from "../../../components/Camera";
 import { wave } from "../../../components/Idle";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { street } from "../palette";
+import { clamp01 } from "../../../components/timing";
 
 type ShopStreetProps = {
   readonly time: keyof typeof street;
@@ -18,7 +19,21 @@ type ShopStreetProps = {
   readonly orb?: readonly [number, number];
   /** Entre o dia (1) e a noite (0), quando a rua passa de um ao outro; sem valor, vale `time`. */
   readonly daylight?: number;
+  /** O quadro do vídeo em que o plano começa: o relógio das estrelas e do halo, que não salta na troca de plano. */
+  readonly clock?: number;
+  /**
+   * Quanto da rua já se montou, de 0 a 1: os prédios crescem da calçada, do
+   * meio para as pontas, as estrelas acendem e o astro estoura. Por padrão,
+   * a rua está pronta.
+   */
+  readonly built?: number;
+  /** Quanto o halo do astro respira, a partir de 0 (o de sempre): cresce e clareia devagar. */
+  readonly halo?: number;
 };
+
+/** Uma entrada com sobra, de 0 a 1 passando por 1,06: para o que cresce do chão. */
+const popped = (t: number): number =>
+  t < 0.7 ? (t / 0.7) * 1.06 : 1.06 - ((t - 0.7) / 0.3) * 0.06;
 
 type StreetColors = {
   readonly sky: readonly [string, string];
@@ -81,10 +96,15 @@ export const ShopStreet: React.FC<ShopStreetProps> = ({
   ground,
   orb = [1560, 190],
   daylight,
+  clock = 0,
+  built = 1,
+  halo = 0,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const seconds = frame / fps;
+  const seconds = (clock + frame) / fps;
+  // O astro é o último a chegar, com sobra.
+  const orbSize = built >= 1 ? 1 : popped(clamp01((built - 0.6) / 0.4));
   const colors = daylight === undefined ? street[time] : streetAt(daylight);
   const night = daylight === undefined ? time === "night" : daylight < 0.5;
 
@@ -108,7 +128,13 @@ export const ShopStreet: React.FC<ShopStreetProps> = ({
                     key={index}
                     cx={-REACH + pick("x") * (1920 + 2 * REACH)}
                     cy={pick("y") * ground * 0.7}
-                    r={1.5 + pick("size") * 2.5}
+                    // Cada estrela acende na sua vez, crescendo do próprio ponto.
+                    r={
+                      (1.5 + pick("size") * 2.5) *
+                      (built >= 1
+                        ? 1
+                        : popped(clamp01((built - pick("order") * 0.7) / 0.3)))
+                    }
                     fill={colors.star}
                     opacity={
                       0.3 +
@@ -119,59 +145,73 @@ export const ShopStreet: React.FC<ShopStreetProps> = ({
                 );
               })
             : null}
-          <circle
-            cx={orb[0]}
-            cy={orb[1]}
-            r={150}
-            fill={colors.orb}
-            opacity={0.12 + 0.02 * wave(seconds, 3)}
-          />
-          <circle
-            cx={orb[0]}
-            cy={orb[1]}
-            r={64}
-            fill={colors.orb}
-            opacity={night ? 1 : 0.8}
-          />
-          {night ? (
-            // A sombra que faz da lua uma crescente tem a cor do céu naquela altura.
+          <g
+            transform={`translate(${orb[0]} ${orb[1]}) scale(${orbSize}) translate(${-orb[0]} ${-orb[1]})`}
+          >
             <circle
-              cx={orb[0] + 26}
-              cy={orb[1] - 18}
-              r={56}
-              fill={colors.sky[0]}
+              cx={orb[0]}
+              cy={orb[1]}
+              // O halo respira: cresce e clareia devagar.
+              r={150 + 8 * halo * wave(seconds, 3)}
+              fill={colors.orb}
+              opacity={0.12 + (0.02 + 0.01 * halo) * wave(seconds, 3)}
             />
-          ) : null}
+            <circle
+              cx={orb[0]}
+              cy={orb[1]}
+              r={64}
+              fill={colors.orb}
+              opacity={night ? 1 : 0.8}
+            />
+            {night ? (
+              // A sombra que faz da lua uma crescente tem a cor do céu naquela altura.
+              <circle
+                cx={orb[0] + 26}
+                cy={orb[1] - 18}
+                r={56}
+                fill={colors.sky[0]}
+              />
+            ) : null}
+          </g>
         </SvgLayer>
       </Layer>
 
       <Layer depth={0.5}>
         <SvgLayer>
-          {FAR_BUILDINGS.map(([x, width, height]) => (
-            <g key={x}>
-              <rect
-                x={x}
-                y={ground - height}
-                width={width}
-                height={height}
-                rx={14}
-                fill={colors.far}
-              />
-              {Array.from({ length: Math.floor(height / 110) }, (_, row) =>
-                [0.28, 0.68].map((column) => (
-                  <rect
-                    key={`${row}-${column}`}
-                    x={x + width * column - 22}
-                    y={ground - height + 44 + row * 110}
-                    width={44}
-                    height={58}
-                    rx={8}
-                    fill={colors.farWindow}
-                  />
-                )),
-              )}
-            </g>
-          ))}
+          {FAR_BUILDINGS.map(([x, width, height]) => {
+            // Do meio da rua para as pontas: cada prédio cresce da calçada, com sobra.
+            const away = clamp01(Math.abs(x + width / 2 - 960) / 1300);
+            const grown =
+              built >= 1 ? 1 : popped(clamp01((built - away * 0.55) / 0.45));
+            return (
+              <g
+                key={x}
+                transform={`translate(0 ${ground}) scale(1 ${grown}) translate(0 ${-ground})`}
+              >
+                <rect
+                  x={x}
+                  y={ground - height}
+                  width={width}
+                  height={height}
+                  rx={14}
+                  fill={colors.far}
+                />
+                {Array.from({ length: Math.floor(height / 110) }, (_, row) =>
+                  [0.28, 0.68].map((column) => (
+                    <rect
+                      key={`${row}-${column}`}
+                      x={x + width * column - 22}
+                      y={ground - height + 44 + row * 110}
+                      width={44}
+                      height={58}
+                      rx={8}
+                      fill={colors.farWindow}
+                    />
+                  )),
+                )}
+              </g>
+            );
+          })}
         </SvgLayer>
       </Layer>
 

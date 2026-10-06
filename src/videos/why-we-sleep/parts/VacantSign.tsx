@@ -15,6 +15,12 @@ type VacantSignProps = {
   readonly light?: number;
   /** Quadro do plano em que a placa "acordado 24 h" estoura; sem valor, ela já está lá. */
   readonly plaqueAt?: number;
+  /**
+   * Há quantos quadros o pedestal já está no palco quando o plano começa: o
+   * tracejado continua a volta de onde estava no plano anterior, em vez de
+   * recomeçar. Por padrão, zero.
+   */
+  readonly clock?: number;
 };
 
 // O contorno tracejado dá uma volta devagar: é a pausa viva do lugar vazio, igual em toda volta dele.
@@ -26,8 +32,6 @@ const TOP = { width: 400, height: 44 };
 const SLOT = { rx: 130, ry: 150 };
 /** Altura do pedestal, do chão ao tampo: quem o posiciona usa para pôr coisas em cima. */
 export const PEDESTAL_HEIGHT = BASE.height + BODY.height + TOP.height;
-/** Altura total, do chão ao alto do lugar vazio. */
-export const VACANT_HEIGHT = PEDESTAL_HEIGHT + SLOT.ry * 2 + 24;
 
 /**
  * O lugar do bicho que não dorme, o cenário-âncora do vídeo: um pedestal com
@@ -41,12 +45,14 @@ export const VacantSign: React.FC<VacantSignProps> = ({
   scale = 1,
   light = 1,
   plaqueAt,
+  clock = 0,
 }) => {
   const id = useId();
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const drift =
-    ((frame / fps / DASH.secondsPerStep) % 1) * (DASH.length + DASH.gap);
+    (((clock + frame) / fps / DASH.secondsPerStep) % 1) *
+    (DASH.length + DASH.gap);
   const plaque =
     plaqueAt === undefined
       ? 1
@@ -57,7 +63,16 @@ export const VacantSign: React.FC<VacantSignProps> = ({
   const slotY = y - PEDESTAL_HEIGHT - SLOT.ry - 24;
 
   return (
-    <div style={{ scale: `${scale}`, transformOrigin: `${x}px ${y}px` }}>
+    <div
+      style={{
+        scale: `${scale}`,
+        transformOrigin: `${x}px ${y}px`,
+        // O pedestal vira uma camada própria do navegador. Sem isto, enquanto o fundo do plano ainda
+        // toma a cor dele (a opacidade do palco), o retângulo que envolve o desenho do pedestal saía
+        // com o fundo novo já inteiro: um defeito de composição que só aparece com a placa por cima.
+        willChange: "transform",
+      }}
+    >
       <SvgLayer>
         <defs>
           <radialGradient id={id}>

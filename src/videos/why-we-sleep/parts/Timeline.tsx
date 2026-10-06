@@ -10,7 +10,7 @@ import { breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop, popScale, POP_SECONDS } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { ALREADY_SHOWN, mix, ramp } from "../../../components/timing";
+import { ALREADY_SHOWN, mix, ramp, clamp01 } from "../../../components/timing";
 import { shape } from "../../../design/tokens";
 import {
   antelope,
@@ -101,6 +101,17 @@ type TimelineProps = {
    * balança de leve. Sem isto, a linha fica parada depois de desenhada.
    */
   readonly alive?: boolean;
+  /**
+   * Em quantos segundos o colchete dos anos se abre, com `eased`; a etiqueta
+   * espera por ele. Por padrão, 0,4 s.
+   */
+  readonly bracketSeconds?: number;
+  /**
+   * Os bichos da linha respiram, cada um na própria fase: o flanco do
+   * antílope e o cobertor da cama sobem e descem (a elefanta e a água-viva já
+   * se mexem). Por padrão, parados.
+   */
+  readonly breathing?: boolean;
 };
 
 type SeaFloorProps = {
@@ -357,6 +368,8 @@ export const Timeline: React.FC<TimelineProps> = ({
   eased = false,
   arrow: ownArrow = 1,
   alive = false,
+  bracketSeconds = BRACKET_SECONDS,
+  breathing = false,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -374,7 +387,18 @@ export const Timeline: React.FC<TimelineProps> = ({
   const sleepers = sleepersAt ? (
     <>
       {/* O antílope leva a pintura de dia, como a elefanta: a da noite, lilás, sumia no índigo do fundo. */}
-      <Place x={spots[0]} y={y - 4} anchor="bottom">
+      <Place
+        x={spots[0]}
+        y={y - 4}
+        anchor="bottom"
+        style={
+          breathing
+            ? {
+                scale: `1 ${breath(seconds, "line-antelope", { amplitude: 0.03, period: 3.9 })}`,
+              }
+            : undefined
+        }
+      >
         <Pop at={enter(0)} origin="bottom">
           <Antelope
             width={SLEEPER_WIDTH.antelope}
@@ -404,17 +428,21 @@ export const Timeline: React.FC<TimelineProps> = ({
           />
         </Pop>
       </Place>
-      {/* A pessoa dorme na cama, como em todo plano em que dorme. */}
-      <Pop at={enter(2)}>
-        <Bed
-          x={spots[2]}
-          y={y - 4}
-          scale={BED_SCALE}
-          colors={personInPajamas}
-          hue="lilac"
-          shadow={false}
-        />
-      </Pop>
+      {/* A pessoa dorme na cama, como em todo plano em que dorme. A cama é posta pelo pé, como os bichos:
+          solta no quadro, ela crescia em volta do meio dele, e não do lugar dela na linha. */}
+      <Place x={spots[2]} y={y - 4} anchor="bottom">
+        <Pop at={enter(2)} origin="bottom">
+          <Bed
+            x={0}
+            y={0}
+            scale={BED_SCALE}
+            colors={personInPajamas}
+            hue="lilac"
+            shadow={false}
+            breath={breathing ? 1 + 0.045 * wave(seconds, 4.4, 0.6) : undefined}
+          />
+        </Pop>
+      </Place>
     </>
   ) : null;
 
@@ -451,7 +479,7 @@ export const Timeline: React.FC<TimelineProps> = ({
                 fill={ink.glow}
                 opacity={
                   eased
-                    ? 0.55 * Math.min(1, Math.max(0, (head - x) / MARK_FADE))
+                    ? 0.55 * clamp01((head - x) / MARK_FADE)
                     : x <= head
                       ? 0.55
                       : 0
@@ -502,7 +530,7 @@ export const Timeline: React.FC<TimelineProps> = ({
               strokeDasharray={eased ? 1 : undefined}
               strokeDashoffset={
                 eased
-                  ? 1 - ramp(frame, yearsAt, BRACKET_SECONDS * fps)
+                  ? 1 - ramp(frame, yearsAt, bracketSeconds * fps)
                   : undefined
               }
             />
@@ -586,7 +614,14 @@ export const Timeline: React.FC<TimelineProps> = ({
                 : undefined
             }
           >
-            <Pop at={yearsAt + (eased ? TAG_AFTER_BRACKET_SECONDS * fps : 0)}>
+            <Pop
+              at={
+                yearsAt +
+                (eased
+                  ? Math.max(TAG_AFTER_BRACKET_SECONDS, bracketSeconds) * fps
+                  : 0)
+              }
+            >
               <Tag size="label" on="night">
                 mais de 500 milhões de anos
               </Tag>

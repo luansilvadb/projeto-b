@@ -1,6 +1,7 @@
 import { Easing, interpolate } from "remotion";
 import type { FrameRange } from "../narration/timeline";
 import type { ShotPlan } from "./Shot";
+import { clamp, clamp01 } from "../components/timing";
 
 /**
  * Duas cenas vizinhas podem dividir o palco: em vez de um quadro trocar pelo
@@ -48,7 +49,7 @@ const STAGE_WIDTH = 1920;
  */
 export const markFor = (role: Role, x = 0, step = 0): Mark => {
   const across =
-    role === "actor" ? Math.min(1, Math.max(0, x / STAGE_WIDTH)) : 0;
+    role === "actor" ? clamp01(x / STAGE_WIDTH) : 0;
   return {
     enterAt:
       BEATS[role].enterAt +
@@ -61,7 +62,6 @@ export const markFor = (role: Role, x = 0, step = 0): Mark => {
   };
 };
 
-const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
 /** De 0 a 1, quanto do que chega já entrou, `frame` quadros depois de a cena começar. */
 export const enterProgress = (

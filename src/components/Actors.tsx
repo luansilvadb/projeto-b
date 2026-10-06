@@ -1,5 +1,6 @@
 import { AbsoluteFill } from "remotion";
 import { useBoard, useBuild } from "./Camera";
+import { mix, clamp01 } from "./timing";
 
 /** Quem está no palco, do jeito que o plano o deixou: onde está e o desenho dele. */
 export type Standing = {
@@ -15,8 +16,7 @@ const LEAVING = [0, 0.4] as const;
 const ARRIVING = [0.35, 0.8] as const;
 
 const within = ([from, to]: readonly [number, number], t: number) =>
-  Math.min(1, Math.max(0, (t - from) / (to - from)));
-const mix = (from: number, to: number, t: number) => from + (to - from) * t;
+  clamp01((t - from) / (to - from));
 
 /**
  * Um personagem com identidade no palco. Quando o plano herda o cenário do
@@ -86,28 +86,4 @@ export const Leftovers: React.FC = () => {
         ))}
     </>
   );
-};
-
-type ActorProps = {
-  readonly id: string;
-  /** O ponto do desenho que conta como o lugar dele: o que anda e de onde ele cresce. */
-  readonly at: readonly [number, number];
-  readonly children: React.ReactNode;
-};
-
-/** Um personagem desenhado no quadro inteiro (um SVG), com identidade no palco. */
-export const Actor: React.FC<ActorProps> = ({ id, at, children }) => {
-  const draw = (x: number, y: number, scale = 1) => (
-    <AbsoluteFill
-      style={{
-        translate: `${x - at[0]}px ${y - at[1]}px`,
-        transformOrigin: `${at[0]}px ${at[1]}px`,
-        scale: `${scale}`,
-      }}
-    >
-      {children}
-    </AbsoluteFill>
-  );
-  const pose = useActor(id, at[0], at[1], draw);
-  return draw(pose.x, pose.y, pose.scale);
 };

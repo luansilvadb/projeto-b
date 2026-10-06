@@ -1,7 +1,3 @@
-import { abissal } from "./abissal";
-import { brasa } from "./brasa";
-import { cobalto } from "./cobalto";
-
 /** Três tons da mesma cor: é o que dá volume a uma forma chapada. */
 export type Ramp = {
   readonly light: string;
@@ -10,7 +6,7 @@ export type Ramp = {
 };
 
 /**
- * Uma direção de arte candidata: tudo o que muda de uma identidade para outra.
+ * Uma direção de arte: tudo o que mudaria de uma identidade para outra.
  * O que é igual em todas (tamanhos de texto, traços, margem) fica em tokens.ts.
  */
 export type Direction = {
@@ -47,6 +43,3 @@ export type Direction = {
   };
 };
 
-export const directions = { abissal, brasa, cobalto };
-
-export type DirectionName = keyof typeof directions;

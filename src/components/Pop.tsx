@@ -1,5 +1,9 @@
-import { interpolate, useCurrentFrame, useVideoConfig } from "remotion";
-import { motion } from "../design/tokens";
+import {
+  Easing,
+  interpolate,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 
 /** Quanto dura uma entrada com sobra, em segundos. */
 export const POP_SECONDS = 0.3;
@@ -23,7 +27,10 @@ export const popScale = (
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-      easing: motion.smooth,
+      // Uma curva que desacelera sem pressa. A de chegada rápida dos tokens
+      // (`motion.smooth`) cumpre quase todo o caminho no primeiro quadro: o
+      // elemento aparecia já no tamanho, e a entrada lia como só opacidade.
+      easing: Easing.out(Easing.quad),
     },
   );
 

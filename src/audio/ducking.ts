@@ -6,8 +6,14 @@ import type { FrameRange } from "../narration/timeline";
  * saem com um volume diferente.
  */
 export const MUSIC_MIX = {
+  /**
+   * O nível da trilha no vídeo inteiro, com fala ou nas pausas entre as
+   * frases. Ela não sobe a cada pausa: subir e descer o tempo todo soa como
+   * um som que abre e abafa, e não como música baixa.
+   */
   underSpeechDb: 18,
-  betweenSpeechDb: 8,
+  /** Nos silêncios que o roteiro pediu ("holdMs"), a música é o assunto. */
+  featuredDb: 3,
   rampSeconds: 0.6,
   fadeOutSeconds: 1.5,
 } as const;

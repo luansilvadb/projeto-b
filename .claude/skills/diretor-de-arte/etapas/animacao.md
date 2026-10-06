@@ -20,7 +20,7 @@ Os primitivos valem para todo vídeo e moram em `src/`. O que a tabela cita em `
 
 | O que a unidade pede | Onde está |
 |---|---|
-| Entrada com sobra (`entradas`) | `Pop` e `popScale`/`popOpacity` (`src/components/Pop.tsx`); texto por máscara em `TextReveal` |
+| Entrada com sobra (`entradas`) | `Pop` e `popScale`/`popOpacity` (`src/components/Pop.tsx`) |
 | Curvas (`entradas`, `acao`) | `ramp` (peso: câmera, porta, maré), `settle` (chega e assenta), `linear` (sombra, moeda no ar), `drop` (queda) e `mix`, em `src/components/timing.ts` |
 | Pausa viva (`pausa-viva`) | `wave`, `phaseOf`, `breath`, `blink` em `src/components/Idle.tsx`; `Drifters` para partículas; `Person blink`, `Fish tail/blink`, `Cassiopea pulse/sway` |
 | Câmera (`movimento`) | `framing`, `cameraBetween`, `Camera` e `Layer` (`src/components/Camera.tsx`); `SlowPush` para a aproximação lenta de um plano sem motivo; enquadramentos de um cenário num arquivo só (exemplo: `parts/lagoonCameras.ts`, `LAB` em `parts/Laboratory.tsx`) |

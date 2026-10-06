@@ -14,13 +14,20 @@ import { popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { cue, linear, mix, ramp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { Shot } from "../../../video/Shot";
+import { Shot, useShotLength } from "../../../video/Shot";
 import { antelope, idea, ink, stopwatch } from "../palette";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import { Glove } from "../parts/Laboratory";
 import { billHeight, BILL_LINES, SleepBill } from "../parts/SleepBill";
 import { billSway } from "./SkipANightScene";
-import { Drift, DRIFT, Grow, TABLE_BILL, undrifted } from "./SleepDebtScene";
+import {
+  Drift,
+  driftZoom,
+  Grow,
+  placedAt,
+  TABLE_BILL,
+  undrifted,
+} from "./SleepDebtScene";
 
 type BillSpot = {
   readonly x: number;
@@ -34,13 +41,32 @@ const FORM: BillSpot = {
   y: 540 - (billHeight(BILL_LINES, 1) * 1.38) / 2 + 16,
   scale: 1.38,
 };
-// O plano deriva para o meio da ficha. A conta chega de fora dele (do lado da
-// mesa do café): o lugar de partida é desfeito da deriva do primeiro quadro,
-// para ela começar exatamente onde o plano anterior a deixou.
+// A câmera do plano (decisão do usuário): recua quando a prancheta cresce. A
+// escala aprovada não muda: o plano abre este tanto mais perto da conta e a
+// câmera recua, com peso, até o quadro composto enquanto a ficha se monta.
+// Depois continua a deriva lenta dos planos de fundo liso, que termina nele.
+const PULL_BACK = { closer: 0.1, seconds: 0.9, drift: 0.02 };
 const FORM_FOCUS = [960, 540] as const;
+/** A aproximação do plano da ficha num quadro dele: perto, o recuo na deixa, e a deriva até 1. */
+const formZoom = (
+  frame: number,
+  length: number,
+  formAt: number,
+  fps: number,
+): number =>
+  (1 + PULL_BACK.closer * (1 - ramp(frame, formAt, PULL_BACK.seconds * fps))) *
+  driftZoom(frame, length, PULL_BACK.drift);
+// A conta chega de fora do plano (do lado da mesa do café): o lugar de partida
+// é desfeito da aproximação do primeiro quadro, para ela começar exatamente
+// onde o plano anterior a deixou.
+const FORM_OPENING = (1 + PULL_BACK.closer) * (1 - PULL_BACK.drift);
 const FROM_TABLE: BillSpot = (() => {
-  const [x, y] = undrifted([TABLE_BILL.x, TABLE_BILL.y], FORM_FOCUS, 1 - DRIFT);
-  return { x, y, scale: TABLE_BILL.scale / (1 - DRIFT) };
+  const [x, y] = undrifted(
+    [TABLE_BILL.x, TABLE_BILL.y],
+    FORM_FOCUS,
+    FORM_OPENING,
+  );
+  return { x, y, scale: TABLE_BILL.scale / FORM_OPENING };
 })();
 // A mão da pesquisadora, de jaleco e luva, entra pelo canto de baixo à esquerda com a caneta
 // sobre o quadrado: uma ficha sozinha não tinha quem a operasse. O canto da direita é do selo.
@@ -72,6 +98,7 @@ const FormShot: React.FC<FormShotProps> = ({ formAt, handAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const stage = useStage();
+  const length = useShotLength();
   const seconds = frame / fps;
   // A conta vem de onde estava ao lado da mesa do café: é a mesma, e não sai da tela.
   const bill = billBetween(
@@ -93,15 +120,15 @@ const FormShot: React.FC<FormShotProps> = ({ formAt, handAt, clock }) => {
   return (
     <AbsoluteFill>
       <FlatStage backdrop={<IdeaBackdrop hue="mint" spot={[0.5, 0.5]} />}>
-        <Drift focus={FORM_FOCUS}>
+        <Drift focus={FORM_FOCUS} zoom={formZoom(frame, length, formAt, fps)}>
           {/* A ficha continua no plano seguinte: quando ele chega, é ele quem a desenha. */}
           {stage.handedOver ? null : (
             <Stay>
               <Place
-                x={bill.x}
-                y={bill.y}
+                x={0}
+                y={0}
                 style={{
-                  translate: "-50% 0",
+                  translate: placedAt(bill.x, bill.y),
                   transformOrigin: "50% 0",
                   // O papel, pendurado pelo alto, balança de leve enquanto ninguém mexe nele.
                   rotate: `${billSway((clock + frame) / fps)}deg`,
@@ -160,9 +187,19 @@ const SLEEPER = { x: 1330 };
 /** Onde a ficha fica na metade de quem dorme: `debt-returns` a recebe daqui. */
 export const SIDE_BILL: BillSpot = { x: 1690, y: 130, scale: 0.8 };
 const VACANT = { x: 740 };
-// Quanto cada metade fica apagada antes de a fala chegar a ela, e em quanto tempo acende.
+// Quanto cada metade fica apagada antes de a fala chegar a ela, e em quanto
+// tempo acende: é mudança de cenário (meia tela), e leva 1 s, desacelerando.
+// Em 0,4 s, com a curva de peso, quase tudo mudava em quatro quadros.
 const DIMMED = 0.42;
-const LIGHT_SECONDS = 0.4;
+const LIGHT_SECONDS = 1;
+
+/** Quanto uma metade já acendeu, de 0 a 1: começa logo e desacelera ao chegar. */
+const lighting = (frame: number, at: number, frames: number): number =>
+  interpolate(frame, [at, at + frames], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.out(Easing.quad),
+  });
 // Cada metade deriva para o bicho dela.
 const STILL_FOCUS = [480, 720] as const;
 const SLEEPER_FOCUS = [1440, 720] as const;
@@ -198,8 +235,8 @@ const SplitShot: React.FC<SplitShotProps> = ({ checkAt, stillAt, clock }) => {
   // Quem dorme acende assim que a tela assenta, na primeira fala; o outro lado, só na dele.
   // O plano anterior era todo aceso: a metade de quem dorme escurece junto com o recuo, sem salto.
   const sleeperDim = ramp(frame, 0, 0.3 * fps);
-  const sleeperLit = ramp(frame, travel - 2, lightFrames);
-  const stillLit = ramp(frame, stillAt, lightFrames);
+  const sleeperLit = lighting(frame, travel - 2, lightFrames);
+  const stillLit = lighting(frame, stillAt, lightFrames);
   // Ao acender, quem só está parado reage: a orelha dá uma sacudida, e o lugar vazio da conta pulsa uma vez.
   const noticed = interpolate(
     frame,
@@ -333,10 +370,10 @@ const SplitShot: React.FC<SplitShotProps> = ({ checkAt, stillAt, clock }) => {
         {stage.handedOver ? null : (
           <Stay>
             <Place
-              x={bill.x}
-              y={bill.y}
+              x={0}
+              y={0}
               style={{
-                translate: "-50% 0",
+                translate: placedAt(bill.x, bill.y),
                 transformOrigin: "50% 0",
                 rotate: `${billSway((clock + frame) / fps)}deg`,
               }}

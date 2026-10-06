@@ -1,20 +1,27 @@
 import {
   AbsoluteFill,
+  Easing,
   interpolate,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
 import { Person } from "../../../art/Person";
 import { taperPath } from "../../../art/shapes";
-import { Camera, cameraBetween, framing } from "../../../components/Camera";
+import {
+  Build,
+  Camera,
+  cameraBetween,
+  framing,
+  Layer,
+} from "../../../components/Camera";
+import { FlatStage, Troupe } from "../../../components/Cast";
 import { Drifters } from "../../../components/Drifters";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, phaseOf, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
-import { SlowPush } from "../../../components/SlowPush";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, ramp } from "../../../components/timing";
+import { cue, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { ink, person, savanna } from "../palette";
@@ -22,6 +29,8 @@ import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import { LifeBar, STANDING } from "../parts/LifeBar";
 import { LossBadge, PREY, Prey, type Loss } from "../parts/Prey";
 import { Savanna } from "../parts/Savanna";
+import { BiggestMistakeOpening } from "./BiggestMistakeScene";
+import { Prelude } from "./MaybeBrainScene";
 
 type BarShotProps = {
   /** Quadro do plano em que o terço escurece e ganha nome. */
@@ -31,12 +40,18 @@ type BarShotProps = {
 // A etiqueta espera o terço escurecer um pouco, e a pessoa só reage depois de ver a etiqueta.
 const TAG_DELAY_SECONDS = 0.3;
 const REACTION_DELAY_FRAMES = 3;
-const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
+// A aproximação lenta do plano, como a de `SlowPush`: 4% do começo ao fim, em volta do meio do quadro.
+const PUSH = { focus: [960, 560], by: 0.04 } as const;
+// A câmera do plano (decisão do usuário): aproxima no espanto. A escala
+// aprovada não muda: o plano abre este tanto mais aberto, em volta do rosto
+// dela, e a câmera chega ao quadro composto, com peso, quando ela se assusta.
+const STARTLE_PUSH = { wider: 0.08, face: [960, 400], seconds: 0.6 } as const;
 
 /** A pessoa em pé, e a vida dela numa barra que passa atrás, na altura do peito; um terço escurece. */
 const BarShot: React.FC<BarShotProps> = ({ thirdAt }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const length = useShotLength();
   const seconds = frame / fps;
   const tagAt = thirdAt + TAG_DELAY_SECONDS * fps;
   // O susto, em três tempos: ela encolhe e fecha os olhos, dá um pulinho já de
@@ -49,48 +64,85 @@ const BarShot: React.FC<BarShotProps> = ({ thirdAt }) => {
     startleAt + 7,
     startleAt + 12,
   ];
+  const drift = cameraBetween(
+    framing(PUSH.focus, 1, PUSH.focus),
+    framing(PUSH.focus, 1 + PUSH.by, PUSH.focus),
+    frame / length,
+  );
+  // A câmera parte junto com o encolher dela e chega depois do pulo.
+  const wide =
+    1 -
+    STARTLE_PUSH.wider *
+      (1 - ramp(frame, startleAt - 4, STARTLE_PUSH.seconds * fps));
+  const camera = {
+    x: wide * drift.x + (wide - 1) * (STARTLE_PUSH.face[0] - 960),
+    y: wide * drift.y + (wide - 1) * (STARTLE_PUSH.face[1] - 540),
+    zoom: wide * drift.zoom,
+  };
 
   return (
-    <SlowPush
-      focus={[960, 560]}
-      backdrop={<IdeaBackdrop hue="peach" spot={[0.5, 0.5]} />}
-    >
-      <LifeBar
-        drawn={ramp(frame, 0, 0.7 * fps)}
-        asleep={ramp(frame, thirdAt, 0.7 * fps)}
-        thirdAt={tagAt}
-      />
-      <SvgLayer>
-        <IdeaShadow hue="peach" x={STANDING.x} y={STANDING.y + 6} width={380} />
-      </SvgLayer>
-      <Place
-        x={STANDING.x}
-        y={STANDING.y}
-        anchor="bottom"
-        style={{
-          scale: `1 ${breath(seconds, "you") * interpolate(frame, beats, [1, 0.95, 1.05, 0.985, 1], clamp)}`,
-          // O `translate` do Place é o que apoia os pés no ponto: o pulo vai junto dele.
-          translate: `-50% calc(-100% + ${interpolate(frame, beats, [0, 0, -26, 4, 0], clamp)}px)`,
-        }}
-      >
-        {/* Ela já está de pé quando o vídeo abre: quem entra é a barra, atrás dela. */}
-        <Person
-          height={STANDING.height}
-          colors={person}
-          expression={frame >= startleAt ? "surprised" : "curious"}
-          blink={Math.max(
-            blink(seconds, "you"),
-            interpolate(
-              frame,
-              [startleAt - 3, startleAt, startleAt + 2],
-              [0, 1, 0],
-              clamp,
-            ),
-          )}
-        />
-      </Place>
-      <Grain />
-    </SlowPush>
+    <AbsoluteFill>
+      <FlatStage backdrop={<IdeaBackdrop hue="peach" spot={[0.5, 0.5]} />}>
+        <Build>
+          <Camera {...camera}>
+            <Layer depth={1}>
+              <Troupe>
+                <LifeBar
+                  drawn={ramp(frame, 0, 0.7 * fps)}
+                  // O terço escurece em 0,7 s, e a borda dele desacelera ao chegar. Com a curva de
+                  // peso, quase todo o caminho era andado nos quadros do meio, e parecia escurecer de uma vez.
+                  asleep={interpolate(
+                    frame,
+                    [thirdAt, thirdAt + 0.7 * fps],
+                    [0, 1],
+                    {
+                      ...clamp,
+                      easing: Easing.out(Easing.quad),
+                    },
+                  )}
+                  thirdAt={tagAt}
+                />
+                <SvgLayer>
+                  <IdeaShadow
+                    hue="peach"
+                    x={STANDING.x}
+                    y={STANDING.y + 6}
+                    width={380}
+                  />
+                </SvgLayer>
+                <Place
+                  x={STANDING.x}
+                  y={STANDING.y}
+                  anchor="bottom"
+                  style={{
+                    scale: `1 ${breath(seconds, "you") * interpolate(frame, beats, [1, 0.95, 1.05, 0.985, 1], clamp)}`,
+                    // O `translate` do Place é o que apoia os pés no ponto: o pulo vai junto dele.
+                    translate: `-50% calc(-100% + ${interpolate(frame, beats, [0, 0, -26, 4, 0], clamp)}px)`,
+                  }}
+                >
+                  {/* Ela já está de pé quando o vídeo abre: quem entra é a barra, atrás dela. */}
+                  <Person
+                    height={STANDING.height}
+                    colors={person}
+                    expression={frame >= startleAt ? "surprised" : "curious"}
+                    blink={Math.max(
+                      blink(seconds, "you"),
+                      interpolate(
+                        frame,
+                        [startleAt - 3, startleAt, startleAt + 2],
+                        [0, 1, 0],
+                        clamp,
+                      ),
+                    )}
+                  />
+                </Place>
+                <Grain />
+              </Troupe>
+            </Layer>
+          </Camera>
+        </Build>
+      </FlatStage>
+    </AbsoluteFill>
   );
 };
 
@@ -229,6 +281,11 @@ export const ThirdOfLifeScene: React.FC<SceneProps> = ({ scene, shots }) => (
           cue(scene, "perceber") - shots[1].from,
         ]}
       />
+      {/* O pesquisador e o calendário de `biggest-mistake` entram aqui, por cima da savana que desce: a troca
+          de cena não deixa a tela só com o céu. */}
+      <Prelude>
+        <BiggestMistakeOpening />
+      </Prelude>
     </Shot>
   </>
 );

@@ -10,6 +10,7 @@ import {
   signs,
   sound,
 } from "../palette";
+import { mix } from "../../../components/timing";
 
 /**
  * Quem dorme, dorme assim: na cama, de lado, com a cabeça no travesseiro e o
@@ -57,6 +58,31 @@ const HEAD: Point = [-196, -290];
 const SHOULDER: Point = [-21, -390];
 // O "ZZZ" sobe da cabeça, para o lado da cabeceira.
 const SNORE: Point = [-265, -680];
+// Os braços de quem está deitada: ao longo do corpo. A mão na cintura, deitada, vira uma alça sobre o
+// cobertor, e o braço de cima fica mais para dentro, ou a mão dele aparece como um caroço na borda.
+const LYING_ARMS = {
+  front: { hand: [-112, -200], bend: 6 },
+  back: { hand: [78, -170], bend: 2 },
+} as const;
+// Os de quem está em pé: os do desenho parado da pessoa.
+const STANDING_ARMS = {
+  front: { hand: [-136, -214], bend: 26 },
+  back: { hand: [100, -214], bend: 73 },
+} as const;
+// O cobertor dobrado no pé da cama: a fração do comprimento e da altura que sobra dele.
+const FOLDED = { length: 0.2, height: 0.5 };
+
+const armBetween = (
+  lying: (typeof LYING_ARMS)["front" | "back"],
+  up: (typeof STANDING_ARMS)["front" | "back"],
+  t: number,
+) => ({
+  hand: [
+    mix(lying.hand[0], up.hand[0], t),
+    mix(lying.hand[1], up.hand[1], t),
+  ] as const,
+  bend: mix(lying.bend, up.bend, t),
+});
 
 /** De ponta a ponta, da cabeceira ao pé, e da ponta da cabeceira ao chão, com `scale` 1. */
 export const BED_SIZE = { width: 1150, height: 440 };
@@ -101,6 +127,27 @@ type BedProps = {
   readonly nudge?: number;
   /** Sem a sombra no chão, quando o plano já desenha a dele. */
   readonly shadow?: boolean;
+  /**
+   * A respiração de quem dorme: a altura do corpo e do cobertor, em fração,
+   * em volta de 1. O colchão e a cama ficam. Sem valor, parada.
+   */
+  readonly breath?: number;
+  /** Quanto o cobertor já a cobre: 0 é dobrado no pé da cama, 1 é do peito aos pés, como sempre. */
+  readonly cover?: number;
+  /**
+   * Quem ainda não se deitou: 1 é em pé na frente da cama, com os pés no chão
+   * dela e o corpo no meio; 0 é deitada, como sempre. No caminho ela tomba de
+   * costas para o travesseiro.
+   */
+  readonly standing?: number;
+  /** Em pé, quanto o corpo pende para a frente, em graus. */
+  readonly lean?: number;
+  /** A pálpebra além da expressão, de 0 a 1: esconde a troca de rosto. */
+  readonly blink?: number;
+  /** A cama vazia, à espera de quem vai se deitar: sem ninguém nela. Por padrão, ocupada. */
+  readonly occupied?: boolean;
+  /** Quanto o "ZZZ" se desloca do lugar dele, em pixels do quadro: é por onde ele flutua. Por padrão, parado. */
+  readonly snoreDrift?: readonly [number, number];
 };
 
 const EXPRESSION = {
@@ -137,10 +184,39 @@ export const Bed: React.FC<BedProps> = ({
   snoreSize = 150,
   nudge = 0,
   shadow = true,
+  breath = 1,
+  cover: covered = 1,
+  standing = 0,
+  lean = 0,
+  blink = 0,
+  occupied = true,
+  snoreDrift = [0, 0],
 }) => {
   const mattress = BED.right - BED.left;
   const cover = BLANKETS[blanket];
   const side = headTo === "left" ? 1 : -1;
+  const sleeper = !occupied ? null : (
+    <div
+      style={{
+        position: "absolute",
+        left: SLEEPER.x - ORIGIN.x + 5 * nudge,
+        // Em pé, o meio do corpo fica a meia altura acima do chão.
+        top: mix(SLEEPER.y - ORIGIN.y, -SLEEPER.height / 2, standing),
+        translate: "-50% -50%",
+        rotate: `${mix(-90, lean, standing) + 0.8 * nudge}deg`,
+        scale: standing > 0 ? undefined : `${breath} 1`,
+      }}
+    >
+      <Person
+        height={SLEEPER.height}
+        colors={colors}
+        expression={EXPRESSION[state]}
+        blink={blink}
+        frontArm={armBetween(LYING_ARMS.front, STANDING_ARMS.front, standing)}
+        backArm={armBetween(LYING_ARMS.back, STANDING_ARMS.back, standing)}
+      />
+    </div>
+  );
 
   return (
     <div style={{ position: "absolute", left: x, top: y, width: 0, height: 0 }}>
@@ -227,43 +303,35 @@ export const Bed: React.FC<BedProps> = ({
             />
           </g>
         </svg>
-        <div
-          style={{
-            position: "absolute",
-            left: SLEEPER.x - ORIGIN.x + 5 * nudge,
-            top: SLEEPER.y - ORIGIN.y,
-            translate: "-50% -50%",
-            rotate: `${-90 + 0.8 * nudge}deg`,
-          }}
-        >
-          <Person
-            height={SLEEPER.height}
-            colors={colors}
-            expression={EXPRESSION[state]}
-            // Os braços ao longo do corpo: a mão na cintura, deitada, vira uma alça sobre o cobertor.
-            // O de cima fica mais para dentro, ou a mão dele aparece como um caroço na borda do cobertor.
-            frontArm={{ hand: [-112, -200], bend: 6 }}
-            backArm={{ hand: [78, -170], bend: 2 }}
-          />
-        </div>
+        {/* Deitada, ela fica entre o colchão e o cobertor; ainda de pé, na frente da cama inteira. */}
+        {standing > 0.5 ? null : sleeper}
         <svg {...LAYER}>
           <g transform={TO_ORIGIN}>
-            {/* O cobertor, do peito aos pés, com o volume dos pés no fim. */}
-            <path
-              d={`M944,${BED.top - 150} C962,${BED.top - 224} 1040,${BED.top - 240} 1120,${BED.top - 228} C1180,${BED.top - 220} 1228,${BED.top - 224} 1258,${BED.top - 252} C1288,${BED.top - 276} 1330,${BED.top - 264} 1346,${BED.top - 224} C1378,${BED.top - 140} 1428,${BED.top - 60} ${BED.right + 4},${BED.top + 16} L${BED.right + 4},${BED.top + 70} Q${BED.right + 4},${BED.top + 96} ${BED.right - 24},${BED.top + 96} L984,${BED.top + 96} Q944,${BED.top + 96} 944,${BED.top + 56} Z`}
-              fill={cover.top}
-            />
-            <path
-              d={`M944,${BED.top + 44} L${BED.right + 4},${BED.top + 44} L${BED.right + 4},${BED.top + 70} Q${BED.right + 4},${BED.top + 96} ${BED.right - 24},${BED.top + 96} L984,${BED.top + 96} Q944,${BED.top + 96} 944,${BED.top + 56} Z`}
-              fill={cover.edge}
-            />
-            {/* A dobra do cobertor, no peito. */}
-            <path
-              d={`M944,${BED.top - 150} C962,${BED.top - 224} 1020,${BED.top - 238} 1060,${BED.top - 236} C1010,${BED.top - 200} 1000,${BED.top - 120} 1002,${BED.top + 44} L944,${BED.top + 44} Z`}
-              fill={cover.fold}
-            />
+            {/* O cobertor sobe e desce com a respiração, a partir da beira do colchão; dobrado, recolhe-se para o pé da cama e baixa. */}
+            <g
+              style={{
+                transformOrigin: `${BED.right}px ${BED.top + 96}px`,
+                scale: `${mix(FOLDED.length, 1, covered)} ${mix(FOLDED.height, 1, covered) * breath}`,
+              }}
+            >
+              {/* O cobertor, do peito aos pés, com o volume dos pés no fim. */}
+              <path
+                d={`M944,${BED.top - 150} C962,${BED.top - 224} 1040,${BED.top - 240} 1120,${BED.top - 228} C1180,${BED.top - 220} 1228,${BED.top - 224} 1258,${BED.top - 252} C1288,${BED.top - 276} 1330,${BED.top - 264} 1346,${BED.top - 224} C1378,${BED.top - 140} 1428,${BED.top - 60} ${BED.right + 4},${BED.top + 16} L${BED.right + 4},${BED.top + 70} Q${BED.right + 4},${BED.top + 96} ${BED.right - 24},${BED.top + 96} L984,${BED.top + 96} Q944,${BED.top + 96} 944,${BED.top + 56} Z`}
+                fill={cover.top}
+              />
+              <path
+                d={`M944,${BED.top + 44} L${BED.right + 4},${BED.top + 44} L${BED.right + 4},${BED.top + 70} Q${BED.right + 4},${BED.top + 96} ${BED.right - 24},${BED.top + 96} L984,${BED.top + 96} Q944,${BED.top + 96} 944,${BED.top + 56} Z`}
+                fill={cover.edge}
+              />
+              {/* A dobra do cobertor, no peito. */}
+              <path
+                d={`M944,${BED.top - 150} C962,${BED.top - 224} 1020,${BED.top - 238} 1060,${BED.top - 236} C1010,${BED.top - 200} 1000,${BED.top - 120} 1002,${BED.top + 44} L944,${BED.top + 44} Z`}
+                fill={cover.fold}
+              />
+            </g>
           </g>
         </svg>
+        {standing > 0.5 ? sleeper : null}
       </div>
       {snoreAt === undefined ? null : (
         <div
@@ -271,7 +339,7 @@ export const Bed: React.FC<BedProps> = ({
             position: "absolute",
             left: side * SNORE[0] * scale,
             top: SNORE[1] * scale,
-            translate: "-50% -50%",
+            translate: `calc(-50% + ${snoreDrift[0]}px) calc(-50% + ${snoreDrift[1]}px)`,
           }}
         >
           <Onomatopoeia

@@ -40,6 +40,36 @@ export type MusicSpec = {
   readonly caption: string;
   readonly bpm?: number;
   readonly keyScale?: string;
+  /**
+   * As trocas de faixa, na ordem do vídeo. Um vídeo mais longo que uma faixa
+   * (oito minutos) pede ao menos uma; a faixa nova entra enquanto a anterior
+   * sai, por baixo da fala. Uma trilha que acompanha o vídeo troca de faixa
+   * nas viradas dele, cada uma com a descrição do trecho.
+   */
+  readonly parts?: readonly MusicPartSpec[];
+  /** Os trechos sem música, para o silêncio pesar. */
+  readonly silences?: readonly MusicSilenceSpec[];
+};
+
+export type MusicPartSpec = {
+  /** O "id" da cena em que a faixa nova começa a entrar. */
+  readonly from: string;
+  /**
+   * "hold": a faixa entra no silêncio do fim da cena ("holdMs"), e não na
+   * primeira palavra dela. Ali ela é ouvida em primeiro plano.
+   */
+  readonly at?: "hold";
+  /** Outro clima para este trecho; sem eles, vale a descrição da trilha. */
+  readonly caption?: string;
+  readonly bpm?: number;
+  readonly keyScale?: string;
+};
+
+/** Um trecho sem música: da palavra de deixa (ou do começo da cena) ao fim da cena. */
+export type MusicSilenceSpec = {
+  readonly from: string;
+  readonly cue?: string;
+  readonly occurrence?: number;
 };
 
 export type Script = {
@@ -211,7 +241,27 @@ const findSceneProblems = (scene: unknown, label: string): string[] => {
   return problems;
 };
 
-const findMusicProblems = (music: unknown): string[] => {
+const findMusicStyleProblems = (
+  music: Record<string, unknown>,
+  label: string,
+): string[] => {
+  const problems: string[] = [];
+  if (
+    music.bpm !== undefined &&
+    !(typeof music.bpm === "number" && music.bpm > 0)
+  ) {
+    problems.push(`"${label}.bpm" precisa ser um número positivo`);
+  }
+  if (music.keyScale !== undefined && !isFilledString(music.keyScale)) {
+    problems.push(`"${label}.keyScale" precisa ser um texto, como "D minor"`);
+  }
+  return problems;
+};
+
+const findMusicProblems = (
+  music: unknown,
+  scenes: readonly unknown[],
+): string[] => {
   if (music === undefined) {
     return [];
   }
@@ -219,15 +269,87 @@ const findMusicProblems = (music: unknown): string[] => {
     return ['"music" precisa de um "caption"'];
   }
 
-  const problems: string[] = [];
-  if (
-    music.bpm !== undefined &&
-    !(typeof music.bpm === "number" && music.bpm > 0)
-  ) {
-    problems.push('"music.bpm" precisa ser um número positivo');
+  const sceneIds = scenes.map((scene) =>
+    isRecord(scene) ? scene.id : undefined,
+  );
+  const problems = findMusicStyleProblems(music, "music");
+
+  if (music.parts !== undefined) {
+    if (!Array.isArray(music.parts) || music.parts.length === 0) {
+      problems.push('"music.parts" precisa ter ao menos uma troca de faixa');
+    } else {
+      // Cada troca vem depois da anterior, e nenhuma no começo da primeira
+      // cena: ali a trilha já começa, e não há faixa anterior de onde trocar.
+      // O silêncio de uma cena vem depois do começo dela.
+      let last = 0;
+      music.parts.forEach((part: unknown, index) => {
+        const label = `music.parts[${index}]`;
+        if (!isRecord(part) || !isFilledString(part.from)) {
+          problems.push(
+            `"${label}" precisa de um "from" com o "id" de uma cena`,
+          );
+          return;
+        }
+        if (part.at !== undefined && part.at !== "hold") {
+          problems.push(`"${label}.at" só pode ser "hold"`);
+        }
+        const scene = sceneIds.indexOf(part.from);
+        const hold = part.at === "hold";
+        const position = scene * 2 + (hold ? 1 : 0);
+        if (scene < 0) {
+          problems.push(`"${label}.from": não há cena "${part.from}"`);
+        } else if (position <= last) {
+          problems.push(
+            `"${label}.from": a cena "${part.from}" precisa vir depois ${index === 0 ? "da primeira cena" : "da troca anterior"}`,
+          );
+        } else {
+          last = position;
+          const inScript = scenes[scene];
+          if (hold && !(isRecord(inScript) && inScript.holdMs)) {
+            problems.push(
+              `"${label}": a cena "${part.from}" não tem "holdMs", o silêncio em que a faixa entraria`,
+            );
+          }
+        }
+        if (part.caption !== undefined && !isFilledString(part.caption)) {
+          problems.push(`"${label}.caption" precisa ser um texto`);
+        }
+        problems.push(...findMusicStyleProblems(part, label));
+      });
+    }
   }
-  if (music.keyScale !== undefined && !isFilledString(music.keyScale)) {
-    problems.push('"music.keyScale" precisa ser um texto, como "D minor"');
+
+  if (music.silences !== undefined) {
+    if (!Array.isArray(music.silences)) {
+      problems.push('"music.silences" precisa ser uma lista');
+    } else {
+      music.silences.forEach((silence: unknown, index) => {
+        const label = `music.silences[${index}]`;
+        if (!isRecord(silence) || !isFilledString(silence.from)) {
+          problems.push(
+            `"${label}" precisa de um "from" com o "id" de uma cena`,
+          );
+          return;
+        }
+        if (!sceneIds.includes(silence.from)) {
+          problems.push(`"${label}.from": não há cena "${silence.from}"`);
+        }
+        if (silence.cue !== undefined && !isFilledString(silence.cue)) {
+          problems.push(`"${label}.cue" precisa ser uma palavra da narração`);
+        }
+        if (
+          silence.occurrence !== undefined &&
+          !(
+            Number.isInteger(silence.occurrence) &&
+            Number(silence.occurrence) > 0
+          )
+        ) {
+          problems.push(
+            `"${label}.occurrence" precisa ser um inteiro positivo`,
+          );
+        }
+      });
+    }
   }
   return problems;
 };
@@ -258,7 +380,12 @@ export const parseScript = (data: unknown): Script => {
     });
   }
 
-  problems.push(...findMusicProblems(data.music));
+  problems.push(
+    ...findMusicProblems(
+      data.music,
+      Array.isArray(data.scenes) ? data.scenes : [],
+    ),
+  );
 
   if (problems.length > 0) {
     throw new Error(`Roteiro inválido:\n- ${problems.join("\n- ")}`);

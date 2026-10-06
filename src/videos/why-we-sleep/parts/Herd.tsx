@@ -1,6 +1,11 @@
 import { useId } from "react";
-import { Elephant } from "../../../art/Elephant";
-import { blink, breath, wave } from "../../../components/Idle";
+import { interpolateColors } from "remotion";
+import {
+  Elephant,
+  STRIDE_LENGTH,
+  type ElephantColors,
+} from "../../../art/Elephant";
+import { blink, breath, phaseOf, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
@@ -40,8 +45,42 @@ export const daylightAt = (cycles: number): number =>
 /** Onde o astro está no arco, de 0 a 1: o sol na primeira metade da volta, a lua na segunda. */
 export const orbAt = (cycles: number): number => (cycleOf(cycles) % 0.5) * 2;
 
-// O ritmo do passo de uma elefanta.
+// O ritmo do passo de uma elefanta, no passo antigo (`walking`).
 const STEP_SECONDS = 1.3;
+// A largura do desenho da elefanta, nas unidades dele: é o que converte a passada em pixels do quadro.
+const ELEPHANT_UNITS = 520;
+// As patas no desenho (o x de cada uma, parada) e a fase em que cada uma pisa: a poeira nasce sob elas.
+const FEET = [
+  [150, 0],
+  [-50, 0.25],
+  [130, 0.5],
+  [-70, 0.75],
+] as const;
+// A poeira de cada pisada: por quanto do ciclo ela dura, e o tamanho e a subida dela, nas unidades do desenho.
+const DUST = { lasts: 0.3, radius: 26, rise: 30 };
+
+/** A passada de uma elefanta desta largura: quantos pixels do quadro ela avança por volta do ciclo de passos. */
+export const strideOf = (width: number): number =>
+  (STRIDE_LENGTH * width) / ELEPHANT_UNITS;
+
+const ELEPHANT_KEYS = Object.keys(elephant) as (keyof ElephantColors)[];
+
+/** A pintura da elefanta entre a noite e o dia: as cores passam de uma à outra com a luz, em vez de trocar num quadro. */
+const elephantAt = (daylight: number): ElephantColors =>
+  daylight <= 0
+    ? elephantNight
+    : daylight >= 1
+      ? elephant
+      : (Object.fromEntries(
+          ELEPHANT_KEYS.map((key) => [
+            key,
+            interpolateColors(
+              daylight,
+              [0, 1],
+              [elephantNight[key], elephant[key]],
+            ),
+          ]),
+        ) as ElephantColors);
 
 export type HerdMember = {
   /** Onde ela pisa: x no quadro, e y a partir do chão da savana (negativo é mais longe). */
@@ -54,16 +93,45 @@ export type HerdMember = {
   readonly flipped?: boolean;
 };
 
+/** Um valor para a manada inteira, ou um por elefanta, na ordem de `members`; sem valor, a pausa viva dela. */
+type Each = number | readonly (number | undefined)[];
+
+const eachOf = (value: Each | undefined, index: number): number | undefined =>
+  typeof value === "number" || value === undefined ? value : value[index];
+
+/** A caminhada da manada: quanto ela já andou e com que passada. */
+export type HerdStride = {
+  /**
+   * A distância que a manada teria andado a passo inteiro, em pixels do
+   * quadro: é o que faz as patas de cada uma avançarem no ciclo, as das
+   * menores mais depressa. Cresce junto com o deslocamento que a cena dá a
+   * elas; na freada continua crescendo no mesmo ritmo, e é `pace` que encurta
+   * a passada junto com a velocidade.
+   */
+  readonly along: number;
+  /** O tamanho da passada, de 0 (paradas) a 1. */
+  readonly pace: number;
+};
+
 type HerdProps = {
   readonly members: readonly HerdMember[];
-  /** 1 é dia, 0 é noite: a cor da sombra de contato. */
+  /** 1 é dia, 0 é noite: a pintura delas e a cor da sombra de contato. */
   readonly daylight: number;
-  /** Quanto andam, de 0 (paradas) a 1 (a passo). */
+  /** Quanto andam, de 0 (paradas) a 1 (a passo): o passo antigo, sem tirar as patas do chão. */
   readonly walking?: number;
+  /**
+   * A caminhada de verdade: cada pata sai do chão na sua vez, o corpo sobe e
+   * desce a cada pisada e a poeira nasce sob os pés. Vale acima de `walking`.
+   */
+  readonly stride?: HerdStride;
   /** Quanto dormem, de 0 (acordadas) a 1 (olho fechado, tromba caída, cabeça pendida): uma medida só, ou uma por elefanta. */
   readonly asleep?: number | readonly number[];
-  /** A tromba de cada uma, de 0 a 1, quando a cena a conduz; sem valor, balança sozinha. */
-  readonly trunk?: number;
+  /** A tromba, de 0 a 1, quando a cena a conduz; sem valor, balança sozinha. */
+  readonly trunk?: Each;
+  /** A tromba estendida para a frente, de 0 a 1: o cumprimento. */
+  readonly reach?: Each;
+  /** Quanto a pálpebra desce além da piscada e do sono, de 0 a 1. */
+  readonly lid?: Each;
   readonly seconds: number;
 };
 
@@ -75,52 +143,115 @@ export const Herd: React.FC<HerdProps> = ({
   members,
   daylight,
   walking = 0,
+  stride,
   asleep = 0,
   trunk,
+  reach,
+  lid,
   seconds,
-}) => (
-  <>
-    <SvgLayer>
-      {members.map(({ x, y = 0, width, seed }) => (
-        <SavannaShadow
-          key={seed}
-          x={x}
-          y={SAVANNA_GROUND_Y + y + 6}
-          width={width * 0.8}
-          daylight={daylight}
-        />
-      ))}
-    </SvgLayer>
-    {members.map(({ x, y = 0, width, seed, flipped }, index) => {
-      const sleeping = typeof asleep === "number" ? asleep : asleep[index];
-      const awake = 1 - sleeping;
-      const phase = index * 0.37;
-      const bob =
-        walking * 6 * Math.abs(wave(seconds, STEP_SECONDS / 2, phase));
-      return (
-        <Place
-          key={seed}
-          x={x}
-          y={SAVANNA_GROUND_Y + y - bob}
-          anchor="bottom"
-          style={{
-            scale: `${flipped ? -1 : 1} ${breath(seconds, seed, { amplitude: 0.012, period: 4.5 })}`,
-          }}
-        >
-          <Elephant
-            width={width}
-            colors={daylight < 0.5 ? elephantNight : elephant}
-            lid={Math.max(sleeping, blink(seconds, seed))}
-            droop={sleeping}
-            trunk={trunk ?? awake * (0.15 + 0.1 * wave(seconds, 3.1, phase))}
-            ear={0.3 * awake + 0.2 * Math.abs(wave(seconds, 2.2, phase))}
-            stride={walking * wave(seconds, STEP_SECONDS, phase)}
+}) => {
+  const colors = elephantAt(daylight);
+  /** A fase do ciclo de passos de uma elefanta: cada uma começa num ponto, para não marcharem juntas. */
+  const gaitOf = (width: number, seed: string) =>
+    stride === undefined
+      ? 0
+      : stride.along / strideOf(width) + phaseOf(`gait-${seed}`);
+
+  return (
+    <>
+      <SvgLayer>
+        {members.map(({ x, y = 0, width, seed }) => (
+          <SavannaShadow
+            key={seed}
+            x={x}
+            y={SAVANNA_GROUND_Y + y + 6}
+            width={width * 0.8}
+            daylight={daylight}
           />
-        </Place>
-      );
-    })}
-  </>
-);
+        ))}
+      </SvgLayer>
+      {members.map(({ x, y = 0, width, seed, flipped }, index) => {
+        const sleeping = typeof asleep === "number" ? asleep : asleep[index];
+        const awake = 1 - sleeping;
+        const phase = index * 0.37;
+        const gait = gaitOf(width, seed);
+        const pace = stride?.pace ?? 0;
+        // O corpo sobe a cada pata que passa pelo apoio: quatro vezes por volta, e pouco, que ela é pesada.
+        const bob = stride
+          ? pace * width * 0.012 * (0.5 - 0.5 * Math.cos(gait * Math.PI * 8))
+          : walking * 6 * Math.abs(wave(seconds, STEP_SECONDS / 2, phase));
+        // A cabeça acompanha o passo, baixando um pouco a cada par de pisadas.
+        const nod = stride ? 0.07 * pace * Math.sin(gait * Math.PI * 4) : 0;
+        return (
+          <Place
+            key={seed}
+            x={x}
+            y={SAVANNA_GROUND_Y + y - bob}
+            anchor="bottom"
+            style={{
+              scale: `${flipped ? -1 : 1} ${breath(seconds, seed, { amplitude: 0.012, period: 4.5 })}`,
+            }}
+          >
+            <Elephant
+              width={width}
+              colors={colors}
+              lid={Math.max(
+                sleeping,
+                eachOf(lid, index) ?? 0,
+                // Quem dorme não pisca.
+                awake * blink(seconds, seed),
+              )}
+              droop={Math.max(0, sleeping + nod)}
+              trunk={
+                eachOf(trunk, index) ??
+                awake * (0.15 + 0.1 * wave(seconds, 3.1, phase)) +
+                  // Dormindo, a tromba pende e ainda oscila um nada, como um pêndulo.
+                  sleeping * 0.03 * (1 + wave(seconds, 4.7, phase))
+              }
+              reach={eachOf(reach, index) ?? 0}
+              ear={0.3 * awake + 0.2 * Math.abs(wave(seconds, 2.2, phase))}
+              stride={stride ? 0 : walking * wave(seconds, STEP_SECONDS, phase)}
+              gait={stride ? gait : undefined}
+              pace={pace}
+            />
+          </Place>
+        );
+      })}
+      {stride && stride.pace > 0 ? (
+        <SvgLayer>
+          {members.flatMap(({ x, y = 0, width, seed, flipped }) => {
+            const scale = width / ELEPHANT_UNITS;
+            const side = flipped ? -1 : 1;
+            const gait = gaitOf(width, seed);
+            return FEET.map(([foot, phase]) => {
+              // A pata pisa na metade da volta dela; a poeira nasce ali e fica para trás, no chão.
+              const since = (((gait + phase - 0.5) % 1) + 1) % 1;
+              if (since > DUST.lasts) {
+                return null;
+              }
+              const t = since / DUST.lasts;
+              const behind = STRIDE_LENGTH * stride.pace * since;
+              return (
+                <circle
+                  key={`${seed}-${foot}`}
+                  cx={x + side * (foot - STRIDE_LENGTH / 4 + behind) * scale}
+                  cy={SAVANNA_GROUND_Y + y - (4 + DUST.rise * t) * scale}
+                  r={DUST.radius * scale * (0.35 + 0.65 * t)}
+                  fill={interpolateColors(
+                    daylight,
+                    [0, 1],
+                    [savanna.night.far, savanna.day.sun],
+                  )}
+                  opacity={0.5 * stride.pace * (1 - t)}
+                />
+              );
+            });
+          })}
+        </SvgLayer>
+      ) : null}
+    </>
+  );
+};
 
 type SleepingElephantProps = {
   /** Onde ela pisa, em pixels do quadro. */

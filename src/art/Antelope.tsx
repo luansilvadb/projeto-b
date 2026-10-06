@@ -1,5 +1,6 @@
 import { useId } from "react";
 import { taperPath, type Point } from "./shapes";
+import { mix, clamp01 } from "../components/timing";
 
 export type AntelopeColors = {
   readonly body: string;
@@ -98,12 +99,10 @@ const GAIT = {
 // A cabeça vista de frente, no meio da virada, tem esta fração da largura de perfil.
 const HEAD_ON = 0.3;
 
-const mix = (from: number, to: number, t: number) => from + (to - from) * t;
 const between = (a: Point, b: Point, t: number): Point => [
   mix(a[0], b[0], t),
   mix(a[1], b[1], t),
 ];
-const clamp01 = (value: number) => Math.max(0, Math.min(1, value));
 
 /**
  * O antílope, de perfil: uma gazela de corpo cor de areia queimada, com a

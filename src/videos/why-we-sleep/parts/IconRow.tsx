@@ -1,5 +1,11 @@
 import "../../../design/fonts";
-import { useCurrentFrame, useVideoConfig } from "remotion";
+import {
+  Easing,
+  interpolate,
+  interpolateColors,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { Brain } from "../../../art/Brain";
 import { taperPath } from "../../../art/shapes";
 import { wave } from "../../../components/Idle";
@@ -18,6 +24,7 @@ import {
   street,
 } from "../palette";
 import { Tag } from "./Tag";
+import { clamp01 } from "../../../components/timing";
 
 /**
  * A fila dos cinco ícones: o mapa do vídeo (art.md, oitava versão). Entra em
@@ -308,7 +315,43 @@ type MapIconProps = {
   readonly question?: boolean;
   /** O movimento de dentro do ícone; sem valor, o desenho parado. */
   readonly motion?: IconMotion;
+  /**
+   * O fundo liso está a caminho de outro matiz: o de que ele vem e quanto do
+   * atual já tomou o lugar, de 0 a 1. O ícone apagado é feito da cor do fundo,
+   * e passa de uma à outra junto com ele. Sem valor, a cor é a de `hue`.
+   */
+  readonly tint?: HueTint;
+  /**
+   * A interrogação estourando: a escala e a opacidade dela. Sem valor, ela
+   * está no tamanho final, com a opacidade de `mark`.
+   */
+  readonly asked?: { readonly scale: number; readonly opacity: number };
 };
+
+/** O matiz de que o fundo vem, e quanto do matiz atual já tomou o lugar. */
+export type HueTint = { readonly from: Hue; readonly progress: number };
+
+// A interrogação estoura de 0,7 a 1,08 e assenta, em volta do meio dela.
+const QUESTION = { from: 0.7, overshoot: 1.08, y: 22 };
+
+/**
+ * A entrada da interrogação num instante: cresce, passa do tamanho e assenta.
+ * A curva desacelera sem chegar de uma vez, para o crescimento ser visto; a
+ * opacidade só acompanha os primeiros quadros.
+ */
+export const questionPop = (frame: number, at: number, frames: number) => ({
+  scale: interpolate(
+    frame,
+    [at, at + frames * 0.65, at + frames],
+    [QUESTION.from, QUESTION.overshoot, 1],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: Easing.out(Easing.quad),
+    },
+  ),
+  opacity: popOpacity(frame, at, frames),
+});
 
 /**
  * Um ícone do mapa, sozinho: é o mesmo desenho da fila, para a cena da virada
@@ -322,9 +365,25 @@ export const MapIcon: React.FC<MapIconProps> = ({
   mark = 1,
   question = false,
   motion = {},
+  tint,
+  asked,
 }) => {
   const lit = state === "on" || state === "check";
-  const dim = idea[hue];
+  const dim =
+    tint && tint.progress < 1
+      ? {
+          contact: interpolateColors(
+            tint.progress,
+            [0, 1],
+            [idea[tint.from].contact, idea[hue].contact],
+          ),
+          spot: interpolateColors(
+            tint.progress,
+            [0, 1],
+            [idea[tint.from].spot, idea[hue].spot],
+          ),
+        }
+      : idea[hue];
   // Apagado, o ícone é a própria silhueta em dois tons do fundo.
   const paint: Paint = (color, role = "shape") =>
     lit ? color : role === "shape" ? dim.contact : dim.spot;
@@ -357,6 +416,7 @@ export const MapIcon: React.FC<MapIconProps> = ({
       {question && icon === "shop" ? (
         <text
           y={52}
+          transform={`translate(0 ${QUESTION.y}) scale(${asked?.scale ?? 1}) translate(0 ${-QUESTION.y})`}
           textAnchor="middle"
           fontFamily={typography.family}
           fontWeight={typography.weight}
@@ -365,7 +425,7 @@ export const MapIcon: React.FC<MapIconProps> = ({
           stroke={street.night.sky[1]}
           strokeWidth={10}
           paintOrder="stroke fill"
-          opacity={mark}
+          opacity={asked?.opacity ?? mark}
         >
           ?
         </text>
@@ -448,6 +508,8 @@ type IconRowProps = RowPlacement & {
    * de quem está parado. A pílula do número vai junto. Sem valor, fica no lugar.
    */
   readonly lift?: Partial<Record<IconKey, number>>;
+  /** O fundo a caminho de outro matiz: os ícones apagados e as pílulas mudam de cor junto com ele. */
+  readonly tint?: HueTint;
 };
 
 // A pílula do número é mais apagada sob o ícone apagado ou riscado.
@@ -475,6 +537,7 @@ export const IconRow: React.FC<IconRowProps> = ({
   tilt = {},
   motion = {},
   lift = {},
+  tint,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -484,8 +547,11 @@ export const IconRow: React.FC<IconRowProps> = ({
     <div
       style={{
         position: "absolute",
-        left: x,
-        top: y,
+        left: 0,
+        top: 0,
+        // A fila deriva devagar com a câmera do plano. Posta por `left` e `top`, ela
+        // caía em pixel inteiro e andava em degraus de 1 px; pela transformação, não.
+        translate: `${x}px ${y}px`,
         scale: `${scale}`,
         transformOrigin: "0 0",
       }}
@@ -502,25 +568,27 @@ export const IconRow: React.FC<IconRowProps> = ({
               popScale(frame, at, frames, 0.4, 1.2);
         const asked =
           questionAt === undefined
-            ? 1
-            : popOpacity(frame, questionAt, frames) *
-              popScale(frame, questionAt, frames, 0.4, 1.2);
+            ? undefined
+            : questionPop(frame, questionAt, frames);
+        const turningHue = tint !== undefined && tint.progress < 1;
         const number = NUMBERS[icon];
         const offset = (ICONS.indexOf(icon) - 2) * ICON_PITCH;
         const size = grow[icon] ?? 1;
         const here = present[icon] ?? 1;
         const raised = lift[icon] ?? 0;
         const turn = turning[icon];
-        const arrived = turn ? Math.min(1, Math.max(0, turn.progress)) : 1;
+        const arrived = turn ? clamp01(turn.progress) : 1;
         const drawn = (
           <MapIcon
             icon={icon}
             state={state}
             size={ICON_SIZE}
             hue={hue}
-            mark={icon === "shop" && question ? asked : mark}
+            mark={mark}
             question={question}
+            asked={asked}
             motion={motion[icon]}
+            tint={tint}
           />
         );
         return (
@@ -529,8 +597,10 @@ export const IconRow: React.FC<IconRowProps> = ({
               style={{
                 position: "absolute",
                 left: offset,
-                top: raised,
-                translate: "-50% -50%",
+                top: 0,
+                // A flutuação vai pela transformação, e não por `top`: a posição de
+                // layout cai em pixel inteiro, e o ícone andava em degraus de 1 px.
+                translate: `-50% calc(-50% + ${raised}px)`,
                 scale: `${here * size * (changed ? popScale(frame, at, frames, 0.9, 1.08) : 1)}`,
                 rotate: `${tilt[icon] ?? 0}deg`,
               }}
@@ -551,6 +621,7 @@ export const IconRow: React.FC<IconRowProps> = ({
                       state={turn.from}
                       size={ICON_SIZE}
                       hue={hue}
+                      tint={tint}
                       // A barra da régua só se mexe no estado novo: no antigo ela é a do desenho parado.
                       motion={{ ...motion[icon], bar: undefined }}
                     />
@@ -568,8 +639,8 @@ export const IconRow: React.FC<IconRowProps> = ({
                 style={{
                   position: "absolute",
                   left: offset,
-                  top: raised + PILL_DROP + (ICON_SIZE * (size - 1)) / 2,
-                  translate: "-50% -50%",
+                  top: 0,
+                  translate: `-50% calc(-50% + ${raised + PILL_DROP + (ICON_SIZE * (size - 1)) / 2}px)`,
                   scale: `${here}`,
                   opacity: turn
                     ? pillOpacity(turn.from) +
@@ -577,9 +648,24 @@ export const IconRow: React.FC<IconRowProps> = ({
                     : pillOpacity(state),
                 }}
               >
-                <Tag on={hue} size="note">
-                  {number}
-                </Tag>
+                {/* Com o fundo mudando de matiz, a pílula do matiz anterior fica por baixo até a nova cobri-la. */}
+                {turningHue ? (
+                  <div style={{ position: "absolute", left: 0, top: 0 }}>
+                    <Tag on={tint.from} size="note">
+                      {number}
+                    </Tag>
+                  </div>
+                ) : null}
+                <div
+                  style={{
+                    position: "relative",
+                    opacity: turningHue ? tint.progress : 1,
+                  }}
+                >
+                  <Tag on={hue} size="note">
+                    {number}
+                  </Tag>
+                </div>
               </div>
             ) : null}
           </div>

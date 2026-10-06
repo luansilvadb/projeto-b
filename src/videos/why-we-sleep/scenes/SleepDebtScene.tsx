@@ -11,7 +11,7 @@ import { blink, wave } from "../../../components/Idle";
 import { Onomatopoeia } from "../../../components/Onomatopoeia";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, drop, linear, mix, ramp } from "../../../components/timing";
+import { cue, drop, linear, mix, ramp, clamp01 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { person, savanna, sound } from "../palette";
@@ -37,7 +37,7 @@ export const DRIFT = 0.04;
 
 /** A aproximação da deriva num quadro do plano: de `1 - by`, no começo, a 1, no fim. */
 export const driftZoom = (frame: number, length: number, by = DRIFT): number =>
-  1 - by * (1 - Math.min(1, Math.max(0, frame / length)));
+  1 - by * (1 - clamp01(frame / length));
 
 type Point = readonly [number, number];
 
@@ -191,8 +191,19 @@ const TABLE_FOCUS = [820, 560] as const;
 // A pessoa entra crescendo nos últimos quadros do plano da savana, enquanto o
 // cenário desce: na primeira palavra do plano dela, já está sentada.
 const SEATED_BEFORE_FRAMES = 14;
-// Em quantos quadros a conta desliza do lado do bicho para o lado da mesa.
-const BILL_SLIDE_FRAMES = 20;
+// A conta vai do lado do bicho para o lado da mesa num arco, por cima da
+// cabeça de quem está sentado: em linha reta ela deslizava por trás da cabeça.
+// Em quantos quadros, quanto sobe no alto do arco (o pé do papel passa acima
+// do cabelo) e quanto o papel, preso pelo alto, se inclina com o caminho.
+const BILL_ARC = { frames: 26, lift: 450, tilt: 9 };
+
+/**
+ * Um ponto do quadro para um `Place` que se move devagar: o `Place` fica na
+ * origem e o lugar vai pela transformação. Posto por `left` e `top`, o que se
+ * move menos de um pixel por quadro cai em pixel inteiro e anda em degraus.
+ */
+export const placedAt = (x: number, y: number, anchor = "-50%"): string =>
+  `calc(${anchor} + ${x}px) ${y}px`;
 // A cabeça que pesa, em quadros a partir da deixa: cede, segura, e então cai até o tampo; a batida a faz quicar.
 const HEAD = { give: 13, hold: 6, fall: 14, bounce: 7, lids: 14 };
 
@@ -436,23 +447,33 @@ const MorningShot: React.FC<MorningShotProps> = ({ dropAt, clock }) => {
     knock <= 0 || knock >= 1
       ? 0
       : 7 * (1 - knock) * Math.sin(knock * Math.PI * 6);
-  // A conta vem do lado do bicho, onde o plano anterior a deixou, para o lado da mesa.
-  const slid = ramp(frame, 0, BILL_SLIDE_FRAMES);
+  // A conta vem do lado do bicho, onde o plano anterior a deixou, para o lado da mesa:
+  // sobe, passa por cima da cabeça dela e desce, com peso.
+  const slid = ramp(frame, 0, BILL_ARC.frames);
+  const flight = clamp01(frame / BILL_ARC.frames);
+  // O alto do arco vem antes do meio do caminho: é quando o papel está sobre a cabeça.
+  const lifted = Math.sin(Math.PI * flight ** 0.8);
+  // O pé do papel fica para trás na subida e passa à frente na descida.
+  const swung = BILL_ARC.tilt * Math.sin(2 * Math.PI * flight);
 
   return (
     <AbsoluteFill>
       <FlatStage backdrop={<IdeaBackdrop hue="peach" spot={[0.42, 0.5]} />}>
         {/* A conta continua no plano seguinte: não sai com este, e quando o outro chega é ele quem a desenha.
-            Vai por trás de quem está sentado: no caminho de um lado ao outro, passa atrás da cabeça. */}
+            No caminho de um lado ao outro ela sobe e passa por cima da cabeça de quem está sentado. */}
         {stage.handedOver ? null : (
           <Stay>
             <Place
-              x={mix(OWING_BILL.x, TABLE_BILL.x, slid)}
-              y={mix(OWING_BILL.y, TABLE_BILL.y, slid)}
+              x={0}
+              y={0}
               style={{
-                translate: "-50% 0",
+                translate: placedAt(
+                  mix(OWING_BILL.x, TABLE_BILL.x, slid),
+                  mix(OWING_BILL.y, TABLE_BILL.y, slid) -
+                    BILL_ARC.lift * lifted,
+                ),
                 transformOrigin: "50% 0",
-                rotate: `${billSway((clock + frame) / fps)}deg`,
+                rotate: `${billSway((clock + frame) / fps) + swung}deg`,
               }}
             >
               <SleepBill

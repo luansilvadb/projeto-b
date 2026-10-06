@@ -26,12 +26,7 @@ export type StorefrontColors = {
 
 /** O que a placa mostra: a lua do sono, ou o bicho dono da loja. */
 export type StorefrontSign =
-  | "moon"
-  | "trunk"
-  | "fin"
-  | "wing"
-  | "bell"
-  | "mouse";
+  "moon" | "trunk" | "fin" | "wing" | "bell" | "mouse";
 
 type StorefrontProps = {
   /** Largura da loja, de uma ponta à outra do toldo, em pixels do quadro. */
@@ -46,6 +41,11 @@ type StorefrontProps = {
   readonly half?: boolean;
   /** A porta aberta: um vão escuro com o balcão do caixa, onde alguém pode ficar. */
   readonly doorOpen?: boolean;
+  /**
+   * O toldo balança: o tempo, em ciclos, da onda que corre pela barra dele, de
+   * uma ponta à outra. Sem valor, o toldo está parado.
+   */
+  readonly awning?: number;
 };
 
 // A loja cabe nesta caixa, com a calçada no meio da base.
@@ -122,6 +122,7 @@ export const Storefront: React.FC<StorefrontProps> = ({
   lamp = 1,
   half = false,
   doorOpen = false,
+  awning,
 }) => {
   const id = useId();
   const scale = width / VIEW.width;
@@ -301,10 +302,15 @@ export const Storefront: React.FC<StorefrontProps> = ({
       {Array.from({ length: STRIPES }, (_, stripe) => {
         const x = -260 + stripe * 65;
         const tone = colors.awning[stripe % 2];
+        // A barra sobe e desce numa onda que corre pelas listras: o pano é mole, a barra de cima é fixa.
+        const lift =
+          awning === undefined
+            ? 0
+            : 6 * Math.sin((awning + stripe / STRIPES) * Math.PI * 2);
         return (
           <g key={stripe} fill={tone}>
-            <rect x={x} y={-398} width={65.5} height={62} />
-            <circle cx={x + 32.5} cy={-336} r={32.5} />
+            <rect x={x} y={-398} width={65.5} height={62 + lift} />
+            <circle cx={x + 32.5} cy={-336 + lift} r={32.5} />
           </g>
         );
       })}

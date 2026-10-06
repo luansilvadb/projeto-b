@@ -21,6 +21,78 @@ Decisão do usuário para o vídeo inteiro: entre dois planos não há transiç�
 - **Cenários que permanecem** (`sets`): a savana (`night-falls` 1 a 3, `last-to-know`, `skip-a-night` 1 e 2, `sleep-debt` 1; `elephants` 1 a 4, `two-hours` 1 e 2, `elephant-verdict` 1 e 2); a lagoa (`jellyfish` 1 e 2, `jellyfish-night` 1 e 2); o laboratório do tanque (`jellyfish-night` 3, `jellyfish-platform` 1 e 2, `jellyfish-debt` 2 e 3, `older-than-brain` 1); a sala do quadro-negro (`forced-awake` 3 e 4); a bancada dos ratos (`rats-disc` 1 a 3, `rats-result` 1 a 3); o quarto de Gardner (`awake-record` 2 a 4, `gardner-hours` 1); a rua da loja (`but-what` 2 e 3); a loja por dentro (`stockroom` 3, `stockroom-night` 1 e 3); a fila dos ícones em fundo lilás (`debt-returns` 2, `sleep-less` 1; `maybe-brain` 1 e 2; `so-far` 1 a 5).
 - **Varreduras do roteiro entre cenas** (`two-hours` 1, `elephant-awake` 1, `jellyfish-night` 1, `skip-a-night` 2): o plano novo redesenha o último quadro do anterior por baixo e a borda passa por cima, em 0,25 s.
 
+## Decisões do piloto
+
+O gancho e o capítulo 1 foram animados primeiro, criticados duas vezes e aceitos pelo usuário em 2026-10-05. O que ficou decidido ali vale para o vídeo inteiro e ganha da letra de cada plano abaixo:
+
+1. **Pausa viva em todo plano.** Nenhum trecho tem dois quadros iguais: quem está de pé respira e pisca, quem dorme tem o flanco ou o cobertor subindo e descendo, a fila de ícones pulsa em fases, o papel balança, a luz e o capim se mexem.
+2. **Deriva lenta de câmera nos planos de fundo liso**, de 3% a 6% ao longo do plano, terminando no quadro composto.
+3. **Nenhuma troca deixa a tela vazia.** O que os dois planos têm em comum fica e se transforma, e o elenco do plano novo já está no lugar na primeira palavra dele.
+4. **Nada troca de estado num quadro**: expressão, pose e forma passam por um estado intermediário.
+5. **Ninguém desliza rígido**: quem anda alterna os membros e sobe e desce a cada passo (`stride` na pessoa, `gait` e `pace` no antílope).
+6. **A última mudança de um plano assenta 0,5 s antes da troca.**
+7. **Entradas com forma**: nada que tem forma entra só por opacidade.
+8. **Um corte de verdade** entre `last-to-know` e `skip-a-night` 1: a vigília abre com o bicho já em pé.
+9. **A onomatopeia estoura e sai em cerca de 0,5 s** ("PLOFT", "SNIP", "PSSST", "TRIIIM").
+10. **Tela dividida**: os dois lados existem desde a divisão, apagados, e cada um acende na sua palavra.
+11. **Cinco câmeras com motivo**, uma por plano: `night-falls` 1 (acompanha o bicho que entra), `time-to-fix` 2 (segue a ponta da linha do tempo), `third-of-life` 1 (aproxima no espanto), `debt-test` 1 (recua quando a prancheta cresce), `debt-returns` 2 (aproxima da régua em "Falta"). Nos outros capítulos, cada plano sem câmera que tenha uma ação a seguir ganha a dele.
+12. **A medida "mais de 10% do quadro em movimento"** ficou em 18% no piloto, contra a faixa de 29% a 51%: aceita pelo usuário como preço do andamento contido. A tela quase parada ficou em 7%, dentro da faixa.
+
+Desvios da letra aceitos no piloto: o bicho entra pela direita em `night-falls` 1, em 2,2 s; `sleep-debt` 1 não tem câmera fechando; a poda de `time-to-fix` 1 termina por cima do começo da linha do tempo; `biggest-mistake` 3 para 4 é uma troca com o quadro-negro grande entrando pela direita, e não um recuo; "dorme mais tempo" é o sol andando no céu; a vinheta sai por uma janela redonda que encolhe até o centro.
+
+## Mapa da trilha
+
+A trilha acompanha o vídeo em três camadas: uma música por momento, a ênfase na mixagem e os efeitos sonoros (a seção seguinte). O usuário pediu isso em 2026-10-05, depois de recusar três sementes de uma trilha de fundo única: "a música precisa estar conexa com o vídeo". Mapa aprovado pelo usuário em 2026-10-05, com o respiro nas viradas; os instantes da tabela são os de antes do respiro, e os de agora saem da narração.
+
+### As faixas
+
+Dez faixas, todas em lá menor ou dó maior (as mesmas notas) e com os mesmos três timbres de base (piano de feltro, sintetizador analógico quente, cordas), para soarem como uma trilha só. O que muda de uma para a outra é o andamento, a energia e um timbre próprio do capítulo.
+
+A primeira versão usava marimba, kalimba e caixinha de música, com climas "brincalhões", e o usuário a recusou em 2026-10-05: "tá muito infantil; o vídeo é para todas as idades, mesmo feito em vetores não é vídeo infantil". A trilha é de documentário de ciência para adulto: nada de timbre de brinquedo, nada de clima de desenho animado. A segunda versão, gerada com a semente 1, foi aprovada de ouvido pelo usuário em 2026-10-05, no som do vídeo inteiro (voz e trilha mixadas).
+
+| # | Trecho | Começa | Termina | O que a música faz | Timbre próprio | bpm |
+|---|---|---|---|---|---|---|
+| 1 | Gancho | 0:00, `third-of-life` | 0:40,6, fim da pergunta | curiosa e rala, cresce até a pergunta | piano de feltro sozinho, que ganha um pulso de sintetizador | 96 |
+| 2 | Vinheta | 0:40,6, o silêncio de `the-question` | 0:46,6 | o tema do vídeo, cheio e confiante, em primeiro plano | arpejo de sintetizador com acordes de piano e cordas | 96 |
+| 3 | 1. Dormir é perigoso | 0:46,6, `five-parts` | 1:55,3 | leve e curiosa, andando para a frente, fim de tarde | arpejo suave de sintetizador, percussão eletrônica leve | 96 |
+| 4 | 2. Elefantas | 1:55,3, `sleep-less` | 2:57,1 | larga e calorosa, pulso lento | baixo fundo, acordes largos de cordas, trompa | 84 |
+| 5 | 3. Água-viva | 2:57,1, `maybe-brain` | 4:25,6 | aquática e misteriosa, pulsando devagar | texturas cintilantes de sintetizador, sub-grave | 72 |
+| 6 | 4. À força | 4:25,6, `forced-awake` | 6:23,2 | laboratório: um pulso de relógio que aperta com as horas | pulso de sintetizador, piano grave, cordas contidas | 104 |
+| 7 | Recapitulação | 6:23,2, `so-far` | 6:39, antes da resposta | quase nada, um respiro | só um pad e notas soltas de piano | 72 |
+| 8 | 5. O que o sono faz | 6:46,1, `but-what` | 8:05,6 | quente e esperançosa, a virada do vídeo | piano de feltro e cordas com arco | 88 |
+| 9 | Fechamento | 8:05,6, `nobody-escaped` | 9:11,7 | o tema volta, calmo e contemplativo, e resolve | piano de feltro lento sobre pads e cordas | 76 |
+| 10 | Inscrição | 9:11,7, `subscribe` | 9:27, fim | o tema da vinheta de novo | o mesmo da faixa 2 | 96 |
+
+Cada faixa entra na primeira palavra da cena dela e cruza com a anterior em 3 segundos, menos onde a tabela de ênfase manda silêncio.
+
+### A ênfase na mixagem
+
+A regra geral não muda: a música fica 18 dB abaixo da voz enquanto alguém fala. Estes pontos fogem dela.
+
+**A música sobe ao primeiro plano**, onde não há fala:
+
+| Instante | Cena | Por quê |
+|---|---|---|
+| 0:40,6 a 0:46,6 | `the-question`, o silêncio | a vinheta: a música é o assunto |
+| 9:10,2 a 9:11,7 | `tonight`, o silêncio | "Que seja um bom sono": o tema resolve antes da inscrição |
+| 9:26 a 9:27 | `subscribe`, a sobra | a última nota, antes do fade |
+
+**A música some**, para o silêncio pesar:
+
+| Instante | Cena | Por quê |
+|---|---|---|
+| 1:09,0 a 1:13,0 | `last-to-know` | "Se um predador chegar perto, você demora a perceber": os olhos acendem no capim sem música; ela volta no corte para a vigília |
+| 5:04 a 5:11,5 | `rats-result`, da palavra "morreram" ao fim | a morte dos ratos não leva o tique do relógio |
+| 6:39 a 6:46,1 | `so-far`, a última frase | a resposta do vídeo ("nenhum animal estudado até hoje conseguiu parar de dormir") é dita no silêncio; a faixa 8 entra em seguida |
+
+### O respiro nas viradas (aprovado)
+
+Fora da vinheta e do fim, o roteiro não tem silêncio: uma cena começa colada na outra, e a música nunca tem espaço para aparecer nas viradas de capítulo. A decisão foi dar 1 segundo sem fala (`holdMs`) no fim de cinco cenas: `debt-returns`, `elephant-verdict`, `older-than-brain`, `gardner-sleeps` e `stockroom-solid`. A faixa nova entra nesse segundo, em primeiro plano, e cede quando a fala volta. Custa 5 segundos de vídeo, e o último plano de cada uma dessas cenas dura 1 segundo a mais, na pausa viva que ele já tem.
+
+### O que a ferramenta não faz
+
+O ACE-Step não põe um acento num segundo exato dentro de uma faixa, e duas faixas com descrições irmãs saem parecidas, não com a mesma melodia: "o tema volta" quer dizer o mesmo timbre e o mesmo clima. A sincronia com a imagem vem de onde cada faixa começa e termina, do volume e dos efeitos.
+
 ## Momentos de som (a aprovar)
 
 Doze, só onde algo acontece na imagem. Texto que entra não leva som.

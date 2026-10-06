@@ -9,7 +9,7 @@ import {
   POP_SECONDS,
 } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { ALREADY_SHOWN, mix, ramp } from "../../../components/timing";
+import { ALREADY_SHOWN, mix, ramp, clamp } from "../../../components/timing";
 import { typography } from "../../../design/tokens";
 import { chalkboard, ink, sleepResearcher, type TagTone } from "../palette";
 import { LifeTree } from "./LifeTree";
@@ -142,13 +142,21 @@ type StampProps = {
    * grande, recua (o aviso) e desce de uma vez. Sem valor, só cai em `at`.
    */
   readonly raisedAt?: number;
+  /**
+   * O pulso do carimbo, de 0 a 1: ele cresce um pouco e ganha um aro em
+   * volta, que abre e some. É o "pisca" de quem aponta para ele. Por padrão, 0.
+   */
+  readonly pulse?: number;
+  /** Quanto o carimbo gira além da inclinação dele, em graus: o tremor. Por padrão, 0. */
+  readonly tilt?: number;
 };
 
 // O carimbo no ar: o tamanho com que paira, até onde recua, e quanto afunda ao bater.
 const RAISED = { hover: 1.4, back: 1.75, sunk: 0.93 };
 // Em quadros: quanto dura o recuo antes da batida, a descida e o assentar.
 const STRIKE = { windup: 9, fall: 3, settle: 6 };
-const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
+// O pulso: quanto o carimbo cresce no auge, e até onde o aro abre, em fração da altura da letra.
+const PULSE = { grow: 0.07, halo: 0.3 };
 
 /** O carimbo "erro?": coral e enorme quando vale; um contorno de giz apagado quando não vale mais. */
 export const Stamp: React.FC<StampProps> = ({
@@ -158,6 +166,8 @@ export const Stamp: React.FC<StampProps> = ({
   at = ALREADY_SHOWN,
   faded = 0,
   raisedAt,
+  pulse = 0,
+  tilt = 0,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -207,10 +217,22 @@ export const Stamp: React.FC<StampProps> = ({
           position: "relative",
           opacity: popOpacity(frame, raisedAt ?? at, frames),
           // O carimbo cai de cima: chega grande e assenta.
-          scale: struck,
-          rotate: `${cocked}deg`,
+          scale: struck * (1 + PULSE.grow * pulse),
+          rotate: `${cocked + tilt}deg`,
         }}
       >
+        {/* O aro do pulso, na cor do carimbo: abre em volta dele e some. */}
+        {pulse > 0 ? (
+          <div
+            style={{
+              position: "absolute",
+              inset: -size * PULSE.halo * pulse,
+              borderRadius: size * (0.22 + PULSE.halo * pulse),
+              border: `${border}px solid ${chalkboard.stamp}`,
+              opacity: 0.7 * (1 - pulse) * (1 - faded),
+            }}
+          />
+        ) : null}
         {/* O contorno apagado fica por baixo e aparece quando a cor sai. */}
         <div
           style={{
@@ -281,6 +303,17 @@ type ChalkboardProps = {
   readonly trunk?: number;
   readonly buds?: number;
   readonly closed?: number;
+  /** O pulso e o tremor do carimbo, como em `Stamp`. */
+  readonly stampPulse?: number;
+  readonly stampTilt?: number;
+  /**
+   * O tamanho da interrogação pequena ao lado do tronco, em fração do final:
+   * com valor, ela entra quando a cena manda (estoura depois de o carimbo
+   * perder a cor). Sem valor, acompanha `faded`.
+   */
+  readonly question?: number;
+  /** O instante, em segundos, para os bichos da árvore ressonarem, como em `LifeTree`. Sem valor, parados. */
+  readonly doze?: number;
   readonly children?: React.ReactNode;
 };
 
@@ -299,6 +332,10 @@ export const Chalkboard: React.FC<ChalkboardProps> = ({
   trunk,
   buds,
   closed,
+  stampPulse,
+  stampTilt,
+  question,
+  doze,
   children,
 }) => {
   const faded = ownFaded ?? (stamp === "faded" ? 1 : 0);
@@ -320,6 +357,7 @@ export const Chalkboard: React.FC<ChalkboardProps> = ({
           trunk={trunk}
           buds={buds}
           closed={closed}
+          doze={doze}
         />
       </Place>
       {stamp === "none" ? null : (
@@ -331,6 +369,8 @@ export const Chalkboard: React.FC<ChalkboardProps> = ({
             at={stampAt}
             faded={faded}
             raisedAt={stampRaisedAt}
+            pulse={stampPulse}
+            tilt={stampTilt}
           />
           {/* A pergunta continua, pequena, ao lado da árvore. */}
           <Place
@@ -338,8 +378,9 @@ export const Chalkboard: React.FC<ChalkboardProps> = ({
             y={box.y + box.height * 0.8}
             style={{
               rotate: "-8deg",
-              opacity: faded,
-              scale: `${0.6 + 0.4 * faded}`,
+              opacity:
+                question === undefined ? faded : Math.min(1, question * 3),
+              scale: `${question ?? 0.6 + 0.4 * faded}`,
             }}
           >
             <div

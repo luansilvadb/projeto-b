@@ -5,6 +5,7 @@ import { StarField } from "../components/StarField";
 import { SvgLayer } from "../components/SvgLayer";
 import { space } from "./palette";
 import { blob, pick, type WorldProps } from "./shapes";
+import { mix } from "../components/timing";
 
 // O globo é desenhado com raio 300 e posto no tamanho pedido.
 const GLOBE = 300;
@@ -146,7 +147,6 @@ type PlanetWorldProps = WorldProps & {
   readonly channel?: string;
 };
 
-const mix = (from: number, to: number, t: number) => from + (to - from) * t;
 
 /**
  * O quarto mundo da vinheta, e o fecho dela: o planeta no espaço, com o sol de

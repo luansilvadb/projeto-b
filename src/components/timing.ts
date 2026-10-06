@@ -6,17 +6,20 @@ import {
   type SceneTimeline,
 } from "../narration/timeline";
 
+/** As opções do `interpolate` que seguram o valor nas pontas do trecho. */
+export const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
+
+/** O valor preso entre 0 e 1. */
+export const clamp01 = (value: number): number =>
+  Math.min(1, Math.max(0, value));
+
 const progress = (
   frame: number,
   at: number,
   frames: number,
   easing: (t: number) => number,
 ): number =>
-  interpolate(frame, [at, at + frames], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing,
-  });
+  interpolate(frame, [at, at + frames], [0, 1], { ...clamp, easing });
 
 /**
  * Progresso, de 0 a 1, de uma mudança que começa em `at` e dura `frames` e

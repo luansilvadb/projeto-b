@@ -90,15 +90,24 @@ type TankProps = {
   readonly platform?: number;
   /** O que está dentro da água, em pixels do quadro. */
   readonly children?: React.ReactNode;
+  /**
+   * Quadros a somar ao relógio do plano: com o quadro do vídeo em que o plano
+   * começa, as bolhas não pulam de lugar na troca de um plano para outro.
+   */
+  readonly clock?: number;
 };
 
 /** Altura do tampo da plataforma em que a água-viva pousa. */
 export const PLATFORM_Y = 640;
 
 /** O tanque de vidro com água, de frente. O conteúdo fica entre a água e o reflexo do vidro. */
-export const Tank: React.FC<TankProps> = ({ platform, children }) => {
+export const Tank: React.FC<TankProps> = ({
+  platform,
+  children,
+  clock = 0,
+}) => {
   const id = useId();
-  const frame = useCurrentFrame();
+  const frame = clock + useCurrentFrame();
   const { fps } = useVideoConfig();
   const { x, y, width, height, water } = TANK;
   const depth = y + height - water;

@@ -26,6 +26,7 @@ import {
   type IconMotion,
   type IconState,
 } from "../parts/IconRow";
+import { DUSK_RISE, DuskPrelude } from "./NightFallsScene";
 import { VIGNETTE_FRAMES } from "./TheQuestionScene";
 
 /** O fundo da fila: o mesmo matiz em todas as voltas dela, para o mapa ser reconhecido. */
@@ -168,6 +169,8 @@ type RowShotProps = {
   readonly leaving?: boolean;
   /** O quadro da cena em que o plano começa. */
   readonly clock?: number;
+  /** O quadro do vídeo em que o plano começa: o relógio do cenário que sobe no fim dele. */
+  readonly videoClock?: number;
 };
 
 /** A fila sobre o fundo liso, com os ícones acendendo na fala. */
@@ -183,6 +186,7 @@ const RowShot: React.FC<RowShotProps> = ({
   arriveAt,
   leaving = false,
   clock = 0,
+  videoClock = 0,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -292,6 +296,11 @@ const RowShot: React.FC<RowShotProps> = ({
           </Sequence>
         </AbsoluteFill>
       ) : null}
+      {/* A savana do plano seguinte já sobe por baixo dos ícones que encolhem: a troca não deixa a
+          tela só com o fundo. Quando o plano dela chega, é ele quem a desenha, no mesmo ponto da subida. */}
+      {leaving && frame >= length - DUSK_RISE.lead && !stage.handedOver ? (
+        <DuskPrelude until={length - frame} clock={videoClock} />
+      ) : null}
       <IconRow
         {...seen}
         hue={ROW_HUE}
@@ -360,6 +369,7 @@ export const FivePartsScene: React.FC<SceneProps> = ({ scene, shots }) => (
         already={["eyes", "ruler", "brain", "alarm"]}
         lighting={[{ icon: "shop", at: 6 }]}
         questionAt={cue(scene, "sabe") - shots[3].from}
+        videoClock={scene.from + shots[3].from}
         leaving
       />
     </Shot>

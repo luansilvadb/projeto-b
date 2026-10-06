@@ -37,8 +37,15 @@ export const billSway = (seconds: number): number => 1.5 * wave(seconds, 3.6);
 
 // Em pé ele é alto: o plano fecha até ele ter metade da altura do quadro, com a árvore e a lua por cima.
 const VIGIL = framing([DEN.x + 70, DEN.y - 130], 2.7, [900, 620]);
-// A lua sobe de onde estava até o meio do céu, a velocidade constante.
-const MOON = { top: 0.5, seconds: 2.5 };
+// O plano abre em corte, logo depois de um plano no mesmo lugar: para o corte
+// não ser um pulo, o primeiro quadro é outro enquadramento, bem mais aberto e
+// com o bicho do outro lado do meio, e a câmera chega ao quadro composto em
+// seguida, com peso.
+const VIGIL_OPENING = framing([DEN.x - 40, DEN.y - 170], 1.75, [1120, 640]);
+const OPENING_SECONDS = 1;
+// A noite andou no corte: a lua já está mais alta do que o plano anterior a
+// deixou (`LATE_ORB`), noutro ponto do céu, e dali sobe até o meio dele, a velocidade constante.
+const MOON = { from: LATE_ORB + 0.055, top: 0.5, seconds: 2.5 };
 // As duas viradas de cabeça, de 0,5 s cada: em quantos quadros a cabeça vai
 // (ou volta) e quantos fica olhando para trás na primeira. Na segunda ela não
 // volta: o corpo é que a segue.
@@ -54,6 +61,12 @@ const ABOUT = { crouch: 3, spin: 7, settle: 6, camera: 19, rest: 15 };
  */
 export const drowsyNod = (seconds: number): number =>
   0.85 + 0.07 * wave(seconds, 2.1);
+
+// O tranco de quem cochila em pé: quanto da cabeça caída ele desfaz, quanto o
+// olho arregala e o corpo recua, e os quadros da subida, da parada e da queda.
+const JERK = { lift: 0.9, stare: 0.85, lean: 2.5, up: 4, hold: 4, fall: 12 };
+// Quantos quadros antes do fim do plano o tranco precisa começar, para assentar 0,5 s antes da troca.
+const JERK_BEFORE_END = JERK.up + JERK.hold + JERK.fall + 15;
 
 // De vigia, as orelhas giram: uma baixa e volta, de tempos em tempos.
 const watchfulEar = (seconds: number): number =>
@@ -128,12 +141,16 @@ const VigilShot: React.FC<VigilShotProps> = ({ moonAt, lookAt, clock }) => {
   return (
     <SavannaShot
       camera={cameraBetween(
-        VIGIL,
+        cameraBetween(
+          VIGIL_OPENING,
+          VIGIL,
+          ramp(frame, 0, OPENING_SECONDS * fps),
+        ),
         OWING,
         ramp(frame, length - ABOUT.rest - ABOUT.camera, ABOUT.camera),
       )}
       daylight={0}
-      orb={mix(LATE_ORB, MOON.top, linear(frame, moonAt, MOON.seconds * fps))}
+      orb={mix(MOON.from, MOON.top, linear(frame, moonAt, MOON.seconds * fps))}
       clock={clock}
     >
       <Thicket daylight={0} seconds={seconds} />
@@ -173,18 +190,19 @@ const OwingShot: React.FC<OwingShotProps> = ({
   const seconds = (clock + frame) / fps;
   // A cabeça cai aos poucos e os joelhos cedem; no meio do plano ela dá um
   // tranco para cima e volta a cair, e é caída que o plano termina.
-  const jerk = interpolate(
-    frame,
-    [jerkAt, jerkAt + 4, jerkAt + 8, jerkAt + 24],
-    [0, 1, 1, 0],
-    {
+  // O tranco: a cabeça sobe de uma vez, em quatro quadros, de olho arregalado,
+  // fica um instante lá em cima e volta a cair, com peso.
+  const jerk =
+    interpolate(frame, [jerkAt, jerkAt + JERK.up], [0, 1], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-      easing: Easing.inOut(Easing.quad),
-    },
-  );
+      easing: Easing.out(Easing.quad),
+    }) *
+    (1 - ramp(frame, jerkAt + JERK.up + JERK.hold, JERK.fall));
   const nod =
-    drowsyNod(seconds) * ramp(frame, 0.1 * fps, 1.2 * fps) * (1 - 0.6 * jerk);
+    drowsyNod(seconds) *
+    ramp(frame, 0.1 * fps, 1.2 * fps) *
+    (1 - JERK.lift * jerk);
   // A conta desliza de cima do quadro para o lugar dela, e só então as linhas se escrevem, uma a uma.
   const slid = interpolate(frame, [oweAt, oweAt + 0.4 * fps], [0, 1], {
     extrapolateLeft: "clamp",
@@ -227,8 +245,9 @@ const OwingShot: React.FC<OwingShotProps> = ({
             // Os olhos arregalados da noite pesam logo que o dia chega; a vigia (a
             // orelha, a cabeça que varre) se desfaz com eles. Enquanto a borda
             // passa, as duas pinturas ainda têm a mesma pose.
-            alert={watch}
-            lean={idle.lean * watch}
+            alert={Math.max(watch, JERK.stare * jerk)}
+            // No tranco o corpo vai um pouco para trás, com a cabeça.
+            lean={idle.lean * watch + JERK.lean * jerk}
             head={idle.head * watch}
             glance={idle.glance * watch}
             ear={idle.ear * watch}
@@ -254,9 +273,9 @@ const OwingShot: React.FC<OwingShotProps> = ({
   );
 };
 
-// O tranco da cabeça vem na pausa da fala, depois de "faltou": cedo o bastante
-// para ela já estar caída de novo, e parada, bem antes de o plano acabar.
-const JERK_AFTER_FRAMES = 14;
+// O tranco da cabeça vem logo depois de "dívida", como na partitura, e nunca
+// tão tarde que ela não esteja caída de novo, e parada, 0,5 s antes de o plano acabar.
+const JERK_AFTER_FRAMES = 4;
 
 export const SkipANightScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
@@ -271,7 +290,10 @@ export const SkipANightScene: React.FC<SceneProps> = ({ scene, shots }) => (
       <OwingShot
         oweAt={cue(scene, "cobra") - shots[1].from}
         doneAt={cue(scene, "dívida") - shots[1].from}
-        jerkAt={cue(scene, "faltou") - shots[1].from + JERK_AFTER_FRAMES}
+        jerkAt={Math.min(
+          cue(scene, "dívida") - shots[1].from + JERK_AFTER_FRAMES,
+          shots[1].to - shots[1].from - JERK_BEFORE_END,
+        )}
         clock={scene.from + shots[1].from}
       />
     </Shot>

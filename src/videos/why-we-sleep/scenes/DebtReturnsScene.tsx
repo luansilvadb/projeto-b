@@ -9,10 +9,9 @@ import { FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { cue, linear, mix, ramp } from "../../../components/timing";
+import { cue, linear, mix, ramp, clamp01 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
-import { idea } from "../palette";
 import { IdeaBackdrop } from "../parts/IdeaBackdrop";
 import {
   ICONS,
@@ -25,7 +24,7 @@ import { BillPocket, BillToPocket, POCKET_CORNER } from "../parts/SleepBill";
 import { SIDE_BILL } from "./DebtTestScene";
 import { ROW_HUE, rowLife } from "./FivePartsScene";
 import { billSway } from "./SkipANightScene";
-import { Drift, DRIFT, drifted, driftZoom, undrifted } from "./SleepDebtScene";
+import { Drift, DRIFT, drifted, undrifted } from "./SleepDebtScene";
 
 // De perto: a conta à esquerda e o bolso, grande, à direita. No fim do plano o bolso vai para o canto.
 const BILL = { x: 540, y: 180, scale: 1.45 };
@@ -53,8 +52,22 @@ const CORNER = { after: 4, frames: 18 };
 const ROW_BEFORE = { frames: 22, step: 3, each: 9 };
 
 const ROW = { x: 960, y: 560, scale: 1.12 };
-// O plano da fila deriva para a régua, "1": é ela que acende e cresce no fim dele.
+// A câmera do plano da fila (decisão do usuário): aproxima da régua, "1", em
+// "Falta", quando ela acende e cresce. A escala aprovada não muda: o plano abre
+// `wider` mais aberto, em volta da régua, chega devagar (`creep`) até a deixa,
+// e nela a câmera vai, com peso, até o quadro composto, onde fica.
 const ROW_FOCUS = [iconSpot("ruler", ROW).x, ROW.y] as const;
+const ROW_PUSH = { wider: 0.09, creep: 0.02, seconds: 0.8 };
+// A aproximação com que a fila entra, ainda no fim do plano do bolso.
+const ROW_OPENING = 1 - ROW_PUSH.wider;
+
+/** A aproximação do plano da fila num quadro dele, com a régua acendendo em `pushAt`. */
+const rowZoom = (frame: number, pushAt: number, frames: number): number =>
+  mix(
+    ROW_OPENING + ROW_PUSH.creep * clamp01(frame / pushAt),
+    1,
+    ramp(frame, pushAt, frames),
+  );
 
 /** A fila num instante da deriva do plano dela. */
 const rowAt = (zoom: number) => {
@@ -166,7 +179,7 @@ const PocketShot: React.FC<PocketShotProps> = ({ foldAt, patAt, clock }) => {
         {frame >= rowFrom && !stage.handedOver ? (
           <Stay>
             <IconRow
-              {...rowAt(1 - DRIFT)}
+              {...rowAt(ROW_OPENING)}
               hue="peach"
               states={{ eyes: "on" }}
               motion={life.motion}
@@ -215,10 +228,13 @@ const MapShot: React.FC<MapShotProps> = ({ checkAt, nextAt, clock }) => {
     ...life.grow,
     ruler: (life.grow.ruler ?? 1) * mix(1, 1.3, ramp(frame, nextAt, 0.5 * fps)),
   };
-  const row = (hue: keyof typeof idea) => (
+  const taken = stage.enter();
+  const row = (
     <IconRow
-      {...rowAt(driftZoom(frame, length))}
-      hue={hue}
+      {...rowAt(rowZoom(frame, nextAt, ROW_PUSH.seconds * fps))}
+      hue={ROW_HUE}
+      // A fila entrou sobre o fundo do plano anterior: a cor dos ícones apagados passa à deste junto com o fundo.
+      tint={{ from: "peach", progress: taken }}
       states={states}
       since={{ eyes: check, ruler: nextAt }}
       turning={{
@@ -238,17 +254,15 @@ const MapShot: React.FC<MapShotProps> = ({ checkAt, nextAt, clock }) => {
       lift={life.lift}
     />
   );
-  const taken = stage.enter();
 
   return (
     <AbsoluteFill>
       <FlatStage backdrop={<IdeaBackdrop hue={ROW_HUE} spot={[0.36, 0.5]} />}>
         {/* A fila já estava no palco, entrou no fim do plano anterior: não entra de novo. Os
-            ícones apagados têm a cor do fundo, e passam do tom do plano anterior ao deste junto com ele. */}
-        <Stay>
-          {taken < 1 ? row("peach") : null}
-          <AbsoluteFill style={{ opacity: taken }}>{row(ROW_HUE)}</AbsoluteFill>
-        </Stay>
+            ícones apagados têm a cor do fundo, e passam do tom do plano anterior ao deste junto com ele:
+            uma fila só, com a cor interpolada. Duas filas translúcidas, uma sobre a outra, somavam o
+            escuro das duas e clareavam de uma vez quando a de baixo saía. */}
+        <Stay>{row}</Stay>
         {/* O bolso da conta veio do plano anterior e fica marcado no canto: não entra de novo. */}
         <Stay>
           <Place

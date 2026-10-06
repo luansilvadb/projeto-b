@@ -25,7 +25,7 @@ import { blink, phaseOf, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { POP_SECONDS, popOpacity, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp } from "../../../components/timing";
+import { cue, linear, mix, ramp, clamp01 } from "../../../components/timing";
 import { typography } from "../../../design/tokens";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength, type Wipe } from "../../../video/Shot";
@@ -42,12 +42,19 @@ export const DEN = { x: 1380, y: SAVANNA_GROUND_Y + 40, width: 220 };
 export const THICKET = { x: DEN.x + 250, y: SAVANNA_GROUND_Y + 30 };
 
 export const DEN_WIDE = framing([960, 540], 1);
-// O plano aberto deriva devagar para o pé da árvore, 4% do começo ao fim: antes
-// de o bicho entrar, é o que impede a savana vazia de congelar.
+// O plano aberto deriva devagar para o pé da árvore, 5,5% do começo ao fim: antes
+// de o bicho entrar, é o que impede a savana vazia de congelar. (5,5%: o plano é largo e quase tudo nele é pequeno.)
 const DEN_SPOT = [DEN.x - 120, DEN.y - 90] as const;
-const DEN_WIDE_END = framing(DEN_SPOT, 1.04, DEN_SPOT);
+const DEN_WIDE_END = framing(DEN_SPOT, 1.055, DEN_SPOT);
 /** O plano médio: o bicho e a moita, com a árvore inteira em cima. */
 export const DEN_MEDIUM = framing([DEN.x + 40, DEN.y - 110], 2.9, [960, 640]);
+// Chegada ao plano médio, a câmera continua se aproximando devagar do bicho até
+// o plano acabar: é o que mexe o quadro depois de ele fechar os olhos. O close parte daqui.
+const DEN_MEDIUM_END = framing(
+  [DEN.x + 40, DEN.y - 110],
+  2.9 * 1.035,
+  [960, 640],
+);
 /**
  * De perto: o bicho deitado enche o quadro, do focinho à anca, e da moita
  * sobra a beirada, atrás dele. Deitado ele é largo e baixo, e por isso o close
@@ -61,7 +68,7 @@ export const NIGHT_ORB = 0.36;
 /** Onde ela está quando o bicho já ressona e o predador chega: é de onde `skip-a-night` a faz subir. */
 export const LATE_ORB = NIGHT_ORB + 0.04;
 // O sol do entardecer desce devagar, à esquerda, do começo ao fim do plano aberto.
-const DUSK_ORB = { from: 0.33, to: 0.3 };
+const DUSK_ORB = { from: 0.335, to: 0.295 };
 // A noite desce do alto do quadro sobre o entardecer, em 0,25 s.
 export const NIGHTFALL: Wipe = { frames: 8, from: "top" };
 
@@ -75,6 +82,14 @@ type SavannaShotProps = {
    * de onde estavam na troca de plano, em vez de saltar.
    */
   readonly clock?: number;
+  /**
+   * Quanto do cenário já subiu ao palco, de 0 a 1, quando é o plano quem
+   * decide (a savana que começa a subir antes de o plano chegar). Sem valor,
+   * é o palco quem diz.
+   */
+  readonly risen?: number;
+  /** Sem a granulação: para quem desenha a savana por baixo de outro plano, que já tem a dele. */
+  readonly bare?: boolean;
   readonly children: React.ReactNode;
 };
 
@@ -194,9 +209,13 @@ export const SavannaShot: React.FC<SavannaShotProps> = ({
   daylight,
   orb,
   clock = 0,
+  risen,
+  bare = false,
   children,
 }) => {
-  const build = useBuild();
+  const stage = useBuild();
+  const build =
+    risen === undefined ? stage : { ...stage, lit: risen, risen: risen };
   return (
     <AbsoluteFill>
       <Build {...build} takeover={1}>
@@ -214,7 +233,7 @@ export const SavannaShot: React.FC<SavannaShotProps> = ({
           </Camera>
         </Sequence>
       </Build>
-      <Grain />
+      {bare ? null : <Grain />}
     </AbsoluteFill>
   );
 };
@@ -288,6 +307,8 @@ type CritterProps = {
   readonly lookBack?: number;
   /** O olho que se abre numa fresta no meio do sono, de 0 a 1: quem quase acorda. */
   readonly peek?: number;
+  /** Quanto o corpo sobe a cada passada de `gait`, em pixels do cenário. De longe precisa de mais, para ser visto. */
+  readonly bob?: number;
   /** Quanto o corpo sai do chão, em pixels do cenário: o pulinho de quem se vira. */
   readonly hop?: number;
   /** Virado para a direita, para a moita. O desenho olha para a esquerda. */
@@ -333,6 +354,7 @@ export const Critter: React.FC<CritterProps> = ({
   pace = 1,
   lookBack = 0,
   peek = 0,
+  bob: stepRise = 7,
   hop = 0,
   flipped = false,
   facing = flipped ? -1 : 1,
@@ -354,7 +376,9 @@ export const Critter: React.FC<CritterProps> = ({
     1 + mix(mix(swell("awake"), swell("asleep"), asleep), swell("deep"), deep);
   // A cada passada o corpo sobe e desce (duas vezes por ciclo): sem isso ele desliza.
   const bob =
-    gait === undefined ? 0 : 7 * pace * Math.abs(Math.sin(gait * Math.PI * 2));
+    gait === undefined
+      ? 0
+      : stepRise * Math.min(1, pace) * Math.abs(Math.sin(gait * Math.PI * 2));
   // De lado ele nunca some: no meio da meia-volta é visto de frente, estreito.
   const side =
     Math.abs(facing) < TURN_WIDTH
@@ -467,6 +491,8 @@ type ThicketProps = {
   readonly stir?: number;
   /** Quanto o capim se abre para os lados, de 0 a 1: algo o afasta por dentro. */
   readonly part?: number;
+  /** Quanto o vento dobra a ponta das folhas, em pixels do cenário. De longe precisa de mais, para ser visto. */
+  readonly wind?: number;
   /** Quem está dentro da moita: fica entre as folhas de trás e as da frente. */
   readonly children?: React.ReactNode;
 };
@@ -477,11 +503,12 @@ export const Thicket: React.FC<ThicketProps> = ({
   seconds,
   stir = 0,
   part = 0,
+  wind = 6,
   children,
 }) => {
   // O vento e a agitação são duas ondas somadas: a agitação entra e sai sem a folha saltar.
   const sway = (index: number) =>
-    6 * wave(seconds, 3.2, index / 5) +
+    wind * wave(seconds, 3.2, index / 5) +
     22 * stir * wave(seconds, 0.5, index / 5);
   // Aberto, cada folha pende para o lado em que está, as das pontas mais.
   const spread = (x: number) => 52 * part * (x / 150);
@@ -575,14 +602,101 @@ export const Stalker: React.FC<StalkerProps> = ({
 // De quão longe ele vem andando até o pé da árvore: de fora do quadro, pela
 // direita. A caminhada é a velocidade constante e só freia no fim (`brake` é a
 // fração do tempo em que ele ainda não freou); `cycles` são os ciclos de
-// passos do caminho inteiro, duas passadas cada um.
-const WALK = { from: 680, seconds: 2.2, brake: 0.84, cycles: 5 };
+// passos do caminho inteiro, duas passadas cada um. De longe o andar precisa
+// ser largo para ser lido: a passada é maior que a do desenho (`pace`), o corpo
+// sobe `bob` pixels a cada passada e balança `pitch` graus, e a cabeça acena.
+// Com quatro ciclos e meio cada passada dura 0,24 s; com mais, o sobe-e-desce virava tremor.
+const WALK = {
+  // Com a câmera deslocada para a direita, fora do quadro é mais longe.
+  from: 820,
+  seconds: 2.2,
+  brake: 0.84,
+  cycles: 4.5,
+  pace: 1.5,
+  bob: 14,
+  pitch: 1.3,
+  nod: 3.5,
+};
+// No plano aberto a moita é pequena: o vento a dobra mais, para ela não parecer parada antes de o bicho entrar.
+const DUSK_WIND = 13;
+// A câmera do plano (decisão do usuário): abre deslocada para a direita, de
+// onde o bicho vem, e o acompanha, com peso, até o quadro composto. Não muda a
+// escala: é um deslize de `pan` pixels, em 1,8 s, que começa `after` quadros
+// depois de ele aparecer e acaba junto com a caminhada.
+const FOLLOW = { pan: 110, after: 8, seconds: 1.8 };
+/**
+ * A savana começa a subir antes de o plano chegar: `lead` quadros antes, sob
+ * os ícones da fila que ainda encolhem, para a troca não deixar a tela só com
+ * o fundo. Quem desenha esses quadros é o plano anterior, com `DuskPrelude`.
+ */
+export const DUSK_RISE = { lead: 16, frames: 26 };
+
+/** Quanto da savana do entardecer já subiu, de 0 a 1, no quadro `frame` do plano aberto (negativo antes de ele chegar). */
+const duskRisen = (frame: number): number =>
+  interpolate(
+    frame,
+    [-DUSK_RISE.lead, DUSK_RISE.frames - DUSK_RISE.lead],
+    [0, 1],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: Easing.out(Easing.cubic),
+    },
+  );
+
+/** A câmera do plano aberto: a deriva lenta para o pé da árvore, mais o deslize que acompanha o bicho. */
+const duskCamera = (
+  frame: number,
+  length: number,
+  followAt: number,
+  followFrames: number,
+): CameraState => {
+  const drift = cameraBetween(DEN_WIDE, DEN_WIDE_END, linear(frame, 0, length));
+  return {
+    ...drift,
+    x: drift.x + FOLLOW.pan * (1 - ramp(frame, followAt, followFrames)),
+  };
+};
+
+type DuskPreludeProps = {
+  /** Quantos quadros faltam para o plano aberto da savana começar. */
+  readonly until: number;
+  /** O quadro do vídeo em que começa o plano que desenha isto: o relógio do cenário. */
+  readonly clock: number;
+};
+
+/**
+ * Os primeiros quadros da subida da savana, para o plano anterior desenhar por
+ * baixo do que ele ainda tem na tela: é o mesmo cenário, na mesma câmera e no
+ * mesmo ponto da subida em que o plano aberto o assume.
+ */
+export const DuskPrelude: React.FC<DuskPreludeProps> = ({ until, clock }) => (
+  <SavannaShot
+    camera={duskCamera(-until, 1, 1, 1)}
+    daylight={0.5}
+    orb={DUSK_ORB.from}
+    clock={clock}
+    risen={duskRisen(-until)}
+    bare
+  >
+    <DuskThicket clock={clock} />
+  </SavannaShot>
+);
+
+/** A moita do entardecer, no relógio do vídeo. */
+const DuskThicket: React.FC<{ clock: number }> = ({ clock }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  return (
+    <Thicket daylight={0.5} seconds={(clock + frame) / fps} wind={DUSK_WIND} />
+  );
+};
 // Chegando, ele olha em volta uma vez antes de a noite descer: quanto a cabeça gira, em graus, e por quanto tempo.
 const ARRIVAL_LOOK = { degrees: -9, seconds: 0.7 };
 
 /** Quanto do caminho já foi andado, de 0 a 1, com `t` de 0 a 1: reta até `brake`, e dali uma freada que termina parada. */
 const walked = (t: number): number => {
-  const u = Math.min(1, Math.max(0, t));
+  const u = clamp01(t);
   const stop = 1 / (1 - WALK.brake ** 2);
   return u < WALK.brake
     ? 2 * stop * (1 - WALK.brake) * u
@@ -608,7 +722,11 @@ const DuskShot: React.FC<DuskShotProps> = ({ walkAt, clock }) => {
   const t = (frame - walkAt) / (WALK.seconds * fps);
   const arrived = walked(t);
   // A passada encurta na freada, junto com a velocidade, e ele para com as quatro patas no chão.
-  const pace = Math.min(1, Math.max(0, (1 - t) / (1 - WALK.brake)));
+  const slowing = clamp01((1 - t) / (1 - WALK.brake));
+  const pace = WALK.pace * slowing;
+  const gait = WALK.cycles * arrived;
+  // A cada passada o corpo balança para a frente e a cabeça acena; os dois morrem na freada.
+  const step = Math.sin(gait * Math.PI * 4);
   const stopAt = walkAt + WALK.seconds * fps;
   // Parado, o peso ainda vai um pouco à frente e volta; depois ele ergue a cabeça e olha em volta.
   const halt = (frame - stopAt) / (0.4 * fps);
@@ -624,19 +742,26 @@ const DuskShot: React.FC<DuskShotProps> = ({ walkAt, clock }) => {
 
   return (
     <SavannaShot
-      camera={cameraBetween(DEN_WIDE, DEN_WIDE_END, linear(frame, 0, length))}
+      camera={duskCamera(
+        frame,
+        length,
+        walkAt + FOLLOW.after,
+        FOLLOW.seconds * fps,
+      )}
       daylight={0.5}
       orb={mix(DUSK_ORB.from, DUSK_ORB.to, linear(frame, 0, length))}
       clock={clock}
+      risen={duskRisen(frame)}
     >
-      <Thicket daylight={0.5} seconds={seconds} />
+      <Thicket daylight={0.5} seconds={seconds} wind={DUSK_WIND} />
       <Critter
         daylight={0.5}
         x={DEN.x + WALK.from * (1 - arrived)}
-        gait={WALK.cycles * arrived}
+        gait={gait}
         pace={pace}
-        lean={sway}
-        head={looking}
+        bob={WALK.bob}
+        lean={sway + WALK.pitch * slowing * step}
+        head={looking + WALK.nod * slowing * step}
         seconds={seconds}
       />
     </SavannaShot>
@@ -653,13 +778,19 @@ type LyingShotProps = ShotClock & {
 const LyingShot: React.FC<LyingShotProps> = ({ lieAt, closeAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const length = useShotLength();
   const seconds = (clock + frame) / fps;
   // A câmera parte de onde a deriva do plano aberto a deixou.
   const camera = cameraBetween(
     DEN_WIDE_END,
-    DEN_MEDIUM,
+    cameraBetween(DEN_MEDIUM, DEN_MEDIUM_END, linear(frame, 0, length)),
     ramp(frame, 0, 0.7 * fps),
   );
+  // O vento largo do plano aberto volta ao de sempre enquanto a câmera chega: a moita não salta na troca.
+  const wind = mix(DUSK_WIND, 6, ramp(frame, 0, 0.7 * fps));
+  // Fechados os olhos, ele solta um suspiro: o corpo enche e esvazia uma vez, devagar.
+  const sigh = (frame - closeAt - 0.3 * fps) / (0.7 * fps);
+  const sighing = sigh <= 0 || sigh >= 1 ? 0 : Math.sin(Math.PI * sigh) ** 2;
 
   return (
     <Sweep
@@ -672,17 +803,19 @@ const LyingShot: React.FC<LyingShotProps> = ({ lieAt, closeAt, clock }) => {
           orb={DUSK_ORB.to}
           clock={clock}
         >
-          <Thicket daylight={0.5} seconds={seconds} />
+          <Thicket daylight={0.5} seconds={seconds} wind={wind} />
           <Critter daylight={0.5} seconds={seconds} />
         </SavannaShot>
       }
     >
       <SavannaShot camera={camera} daylight={0} orb={NIGHT_ORB} clock={clock}>
-        <Thicket daylight={0} seconds={seconds} />
+        <Thicket daylight={0} seconds={seconds} wind={wind} />
         <Critter
           daylight={0}
           rest={ramp(frame, lieAt, 0.6 * fps)}
           asleep={ramp(frame, closeAt, 0.3 * fps)}
+          squash={1 + 0.05 * sighing}
+          ear={0.25 * sighing}
           seconds={seconds}
         />
       </SavannaShot>
@@ -775,7 +908,11 @@ const AsleepShot: React.FC<AsleepShotProps> = ({ snoreAt, stirAt, clock }) => {
   return (
     <>
       <SavannaShot
-        camera={cameraBetween(DEN_MEDIUM, DEN_CLOSE, ramp(frame, 0, 0.8 * fps))}
+        camera={cameraBetween(
+          DEN_MEDIUM_END,
+          DEN_CLOSE,
+          ramp(frame, 0, 0.8 * fps),
+        )}
         daylight={0}
         orb={mix(NIGHT_ORB, LATE_ORB, linear(frame, 0, length))}
         clock={clock}

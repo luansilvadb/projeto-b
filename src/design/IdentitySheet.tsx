@@ -41,7 +41,7 @@ const rampColors = (ramp: Ramp) => [ramp.light, ramp.base, ramp.dark];
 /**
  * Folha da direção de arte ativa num quadro só: paleta, escala de texto,
  * etiquetas, traços, desenhos e a margem segura. É a referência visual de
- * quem compõe cenas e o que se compara ao escolher uma identidade.
+ * quem compõe cenas.
  */
 export const IdentitySheet: React.FC = () => {
   const { width, height } = useVideoConfig();

@@ -1,6 +1,7 @@
 import { useId } from "react";
 import { random } from "remotion";
 import { normalOnCurve, pointOnCurve, taperPath, type Point } from "./shapes";
+import { clamp01 } from "../components/timing";
 
 /** Tons de uma franja: três tons do babado, acento e brilho. */
 type FrillTones = readonly [string, string, string, string, string];
@@ -45,6 +46,17 @@ type CassiopeaProps = {
   readonly sway?: number;
   /** Rede de nervos acesa por cima do corpo, de 0 a 1. O corpo fica translúcido junto. */
   readonly nerves?: number;
+  /**
+   * Até onde a rede já acendeu, do centro do sino para as pontas dos braços,
+   * de 0 a 1: os fios da cúpula, o anel da borda, um fio por braço e, por
+   * fim, o ponto de cada ponta. Por padrão, inteira.
+   */
+  readonly spread?: number;
+  /**
+   * O instante, em segundos, para os pontos da rede piscarem, cada um na
+   * própria fase. Sem valor, ficam parados.
+   */
+  readonly twinkle?: number;
 };
 
 // O sino, de lado: a borda fica em cima e a cúpula desce até o chão.
@@ -209,8 +221,13 @@ export const Cassiopea: React.FC<CassiopeaProps> = ({
   droop = 0,
   sway = 0,
   nerves = 0,
+  spread = 1,
+  twinkle,
 }) => {
   const id = useId();
+  // Cada parte da rede acende num trecho de `spread`, de dentro para fora.
+  const lit = (from: number, to: number) =>
+    clamp01((spread - from) / (to - from));
   const glowId = `${id}-glow`;
   const domeId = `${id}-dome`;
   const sheenId = `${id}-sheen`;
@@ -387,7 +404,13 @@ export const Cassiopea: React.FC<CassiopeaProps> = ({
           opacity={nerves}
         >
           {/* Rede sem centro: um anel na borda, fios que descem pela cúpula e um fio por braço. */}
-          <ellipse cy={rimY} rx={rx * 0.93} ry={ry * 0.9} strokeWidth={5} />
+          <ellipse
+            cy={rimY}
+            rx={rx * 0.93}
+            ry={ry * 0.9}
+            strokeWidth={5}
+            opacity={lit(0.25, 0.45)}
+          />
           {Array.from({ length: CANALS }, (_, index) => {
             const across = (index / (CANALS - 1)) * 2 - 1;
             return (
@@ -395,24 +418,48 @@ export const Cassiopea: React.FC<CassiopeaProps> = ({
                 key={index}
                 d={`M${across * rx * 0.86},${rimY + ry * 0.6} Q${across * rx * 0.8},${rimY + depth * 0.7} ${across * rx * 0.34},${FLOOR - 8}`}
                 strokeWidth={3.5}
+                // O fio acende do fundo da cúpula, que é o meio dela, para a borda.
+                pathLength={1}
+                strokeDasharray={1}
+                strokeDashoffset={-(1 - lit(0, 0.35))}
               />
             );
           })}
           {[...BACK_ARMS, ...FRONT_ARMS].map(([baseX, tipX, rise], index) => {
             const { base, end, control } = armCurve(baseX, tipX, rise, pose);
+            const tip = lit(0.8, 1);
+            const blink =
+              twinkle === undefined
+                ? 0
+                : 0.5 +
+                  0.5 *
+                    Math.sin(
+                      (twinkle / (1.1 + 0.9 * random(`nerve-pace-${index}`)) +
+                        random(`nerve-phase-${index}`)) *
+                        Math.PI *
+                        2,
+                    );
             return (
               <g key={index}>
                 <path
                   d={`M${base[0]},${base[1]} Q${control[0]},${control[1]} ${end[0]},${end[1]}`}
                   strokeWidth={5}
+                  pathLength={1}
+                  strokeDasharray={1}
+                  strokeDashoffset={1 - lit(0.4, 0.85)}
                 />
-                <circle
-                  cx={end[0]}
-                  cy={end[1]}
-                  r={9}
-                  fill={colors.nerves}
-                  stroke="none"
-                />
+                {tip > 0 ? (
+                  <circle
+                    cx={end[0]}
+                    cy={end[1]}
+                    r={9 * tip * (1 + 0.35 * blink)}
+                    fill={colors.nerves}
+                    stroke="none"
+                    opacity={
+                      1 - 0.45 * (1 - blink) * (twinkle === undefined ? 0 : 1)
+                    }
+                  />
+                ) : null}
               </g>
             );
           })}

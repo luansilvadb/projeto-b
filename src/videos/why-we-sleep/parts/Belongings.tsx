@@ -3,7 +3,6 @@ import { idea, ink } from "../palette";
 
 /**
  * O que a pessoa segura, nas unidades do desenho dela: vão em `held` da Person.
- * Os três objetos da cena do terço da vida; o travesseiro volta na rua da loja.
  */
 
 type MugProps = {
@@ -32,32 +31,3 @@ export const Mug: React.FC<MugProps> = ({ seconds }) => (
     />
   </g>
 );
-
-/** Um livro aberto, seguro com as duas mãos. */
-export const Book: React.FC = () => (
-  <g transform="translate(0 -300)">
-    <path
-      d="M-96,-52 L0,-34 L96,-52 L96,34 L0,52 L-96,34 Z"
-      fill={ink.tagEdge}
-    />
-    <path d="M-86,-48 L0,-32 L0,44 L-86,28 Z" fill={idea.peach.spot} />
-    <path d="M86,-48 L0,-32 L0,44 L86,28 Z" fill={idea.peach.top} />
-  </g>
-);
-
-/** O travesseiro, abraçado. */
-export const Pillow: React.FC = () => (
-  <g transform="rotate(-12 0 -270)">
-    <rect x={-92} y={-340} width={184} height={150} rx={46} fill={ink.ring} />
-    <path
-      d="M-92,-240 Q0,-214 92,-240 L92,-236 Q92,-190 46,-190 L-46,-190 Q-92,-190 -92,-236 Z"
-      fill={idea.peach.top}
-    />
-  </g>
-);
-
-/** Como a pessoa segura o travesseiro: as duas mãos em volta dele. */
-export const HUGGING = {
-  frontArm: { hand: [40, -250] as [number, number], bend: 50 },
-  backArm: { hand: [-30, -230] as [number, number], bend: 40 },
-} as const;

@@ -25,6 +25,11 @@ type FishProps = {
   readonly blink?: number;
   /** Ângulo da cauda, em graus: positivo balança para baixo. */
   readonly tail?: number;
+  /**
+   * O bocejo chegando, de 0 a 1, para o humor não trocar num quadro só: a
+   * boca abre e a pálpebra desce até onde o humor "yawning" as deixa.
+   */
+  readonly yawn?: number;
 };
 
 // Simétrico em volta do centro do corpo, para o desenho ser posicionado por ele.
@@ -33,6 +38,9 @@ const EYE = { x: -42, y: -12 };
 // A cauda gira onde encontra o corpo.
 const TAIL_BASE = { x: 66, y: 0 };
 
+// Até onde a pálpebra desce no bocejo.
+const YAWN_LID = 0.45;
+
 const eye = (
   mood: FishMood,
   look: readonly [number, number],
@@ -40,7 +48,7 @@ const eye = (
   colors: FishColors,
 ) => {
   // Bocejando, a pálpebra desce até quase a metade; a piscada fecha o resto.
-  const lid = Math.max(mood === "yawning" ? 0.45 : 0, blink);
+  const lid = Math.max(mood === "yawning" ? YAWN_LID : 0, blink);
   if (mood === "asleep" || lid > 0.9) {
     return (
       <path
@@ -108,10 +116,12 @@ export const Fish: React.FC<FishProps> = ({
   look = [-0.6, 0.5],
   blink = 0,
   tail = 0,
+  yawn = 0,
 }) => {
   const clipId = useId();
   const scale = width / 214;
-  const [mouthX, mouthY] = MOUTH[mood];
+  const mouthX = MOUTH[mood][0] + (MOUTH.yawning[0] - MOUTH[mood][0]) * yawn;
+  const mouthY = MOUTH[mood][1] + (MOUTH.yawning[1] - MOUTH[mood][1]) * yawn;
 
   return (
     <svg
@@ -161,7 +171,7 @@ export const Fish: React.FC<FishProps> = ({
         fill={colors.blush}
         opacity={0.75}
       />
-      {eye(mood, look, blink, colors)}
+      {eye(mood, look, Math.max(blink, YAWN_LID * yawn), colors)}
       <ellipse cx={-79} cy={10} rx={mouthX} ry={mouthY} fill={colors.mouth} />
     </svg>
   );

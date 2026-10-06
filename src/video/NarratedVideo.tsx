@@ -1,6 +1,7 @@
 import { Audio } from "@remotion/media";
 import { useMemo } from "react";
 import {
+  Sequence,
   Series,
   interpolate,
   staticFile,
@@ -8,6 +9,16 @@ import {
   useVideoConfig,
 } from "remotion";
 import { MUSIC_MIX, duckedVolume, gainBelowVoice } from "../audio/ducking";
+import {
+  MUSIC_PARTS,
+  featureAmount,
+  holdRanges,
+  musicParts,
+  partEnvelopes,
+  partGain,
+  silenceGain,
+  silenceRanges,
+} from "../audio/parts";
 import { SoundContext } from "../audio/Sfx";
 import { OneStage } from "../components/Camera";
 import type { MusicTrack } from "../media";
@@ -46,25 +57,31 @@ type MusicBedProps = {
   readonly track: MusicTrack;
   readonly voiceLufs: number;
   readonly speech: readonly FrameRange[];
+  /** Os silêncios do roteiro, em que a trilha sobe ao primeiro plano. */
+  readonly holds: readonly FrameRange[];
+  /** Os trechos em que o roteiro tira a trilha. */
+  readonly silences: readonly FrameRange[];
 };
 
-const MusicBed: React.FC<MusicBedProps> = ({ track, voiceLufs, speech }) => {
+const MusicBed: React.FC<MusicBedProps> = ({
+  track,
+  voiceLufs,
+  speech,
+  holds,
+  silences,
+}) => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
 
-  const ducked = duckedVolume(frame, speech, {
-    full: gainBelowVoice(
-      voiceLufs,
-      track.loudnessLufs,
-      MUSIC_MIX.betweenSpeechDb,
-    ),
-    ducked: gainBelowVoice(
-      voiceLufs,
-      track.loudnessLufs,
-      MUSIC_MIX.underSpeechDb,
-    ),
-    rampFrames: MUSIC_MIX.rampSeconds * fps,
-  });
+  const parts = musicParts(track);
+  const envelopes = partEnvelopes(parts, silences, fps);
+  const rampFrames = MUSIC_MIX.rampSeconds * fps;
+  const featured = featureAmount(frame, holds, rampFrames);
+  const audible = silenceGain(
+    frame,
+    silences,
+    MUSIC_PARTS.silenceRampSeconds * fps,
+  );
   const fadeOut = interpolate(
     frame,
     [durationInFrames - MUSIC_MIX.fadeOutSeconds * fps, durationInFrames],
@@ -72,14 +89,42 @@ const MusicBed: React.FC<MusicBedProps> = ({ track, voiceLufs, speech }) => {
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
 
-  return (
-    <Audio
-      name="Trilha"
-      src={staticFile(track.file)}
-      volume={ducked * fadeOut}
-      premountFor={fps}
-    />
-  );
+  // Uma faixa por parte da trilha, cada uma no instante dela. O volume de cada
+  // uma é medido contra a voz em separado: assim todas ficam à mesma distância
+  // da fala e a troca de faixa não muda de volume.
+  return parts.map((part, index) => {
+    const below = (db: number) =>
+      gainBelowVoice(voiceLufs, part.loudnessLufs, db);
+    // O nível é um só no vídeo inteiro, e só sobe nos silêncios que o roteiro
+    // pediu: uma pausa entre duas frases não abre a trilha.
+    const under = below(MUSIC_MIX.underSpeechDb);
+    const ducked = duckedVolume(frame, speech, {
+      full: under + (below(MUSIC_MIX.featuredDb) - under) * featured,
+      ducked: under,
+      rampFrames,
+    });
+    const envelope = envelopes[index];
+    // A faixa só fica montada enquanto se ouve: até acabar de sair.
+    const length =
+      envelope.out === undefined
+        ? durationInFrames - envelope.from
+        : envelope.out + envelope.fadeOut - envelope.from;
+    return (
+      <Sequence
+        key={part.file}
+        name={parts.length > 1 ? `Trilha ${index + 1}` : "Trilha"}
+        from={envelope.from}
+        durationInFrames={Math.max(length, 1)}
+        layout="none"
+      >
+        <Audio
+          src={staticFile(part.file)}
+          volume={ducked * partGain(frame, envelope) * audible * fadeOut}
+          premountFor={fps}
+        />
+      </Sequence>
+    );
+  });
 };
 
 type Props = NarratedVideoProps & {
@@ -203,6 +248,8 @@ export const NarratedVideo: React.FC<Props> = ({
           track={music}
           voiceLufs={narration.loudnessLufs}
           speech={timeline.speech}
+          holds={holdRanges(timeline.scenes)}
+          silences={silenceRanges(timeline.scenes, script.music)}
         />
       ) : null}
     </SoundContext.Provider>

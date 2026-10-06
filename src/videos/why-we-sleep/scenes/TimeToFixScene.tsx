@@ -19,14 +19,7 @@ import { wave } from "../../../components/Idle";
 import { Onomatopoeia } from "../../../components/Onomatopoeia";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
-import {
-  cue,
-  drop,
-  linear,
-  mix,
-  ramp,
-  settle,
-} from "../../../components/timing";
+import { cue, drop, linear, mix, ramp, settle, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { ink, sound } from "../palette";
@@ -151,7 +144,6 @@ type Pruning = {
   readonly cutAt: number;
 };
 
-const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
 /** Quanto alguém já saiu do palco, de 0 a 1, entre dois quadros: acelera para fora, como toda saída do elenco. */
 const gone = (frame: number, [from, to]: readonly [number, number]): number =>
@@ -284,6 +276,13 @@ const ARROW_GROWS_OVER = 0.04;
 const LINE_SECONDS = 1.5;
 // A deriva lenta do plano: a câmera vai um pouco mais para perto, na direção para onde a linha corre.
 const SEA_DRIFT = { by: 0.045, focus: [1180, 640] } as const;
+// A câmera do plano (decisão do usuário): segue a ponta da linha do tempo
+// enquanto ela se desenha. Não muda a escala: o plano abre deslocado `pan`
+// pixels para o lado da marca do sono, e a câmera desliza com a ponta, no mesmo
+// tempo e com o mesmo peso dela, até o quadro composto. O fundo do mar está
+// mais longe e anda só `floor` disso; para a borda dele não aparecer no
+// deslize, é desenhado `overscan` maior.
+const FOLLOW = { pan: 96, floor: 0.4, overscan: 1.045 };
 // A marca do sono acende na palavra: o palco não a segura meio segundo.
 const TIMELINE_SOONER = 14;
 
@@ -308,6 +307,7 @@ const TimelineShot: React.FC<TimelineShotProps> = ({
   const length = useShotLength();
   const lineAt = sleepAt + LINE_AFTER_PIN_FRAMES;
   const drawn = ramp(frame, lineAt, LINE_SECONDS * fps);
+  const pan = FOLLOW.pan * (1 - drawn);
   return (
     <AbsoluteFill>
       <AbsoluteFill
@@ -321,19 +321,28 @@ const TimelineShot: React.FC<TimelineShotProps> = ({
           <FlatStage
             backdrop={
               <Troupe cast={false}>
-                <SeaFloor shimmer />
+                <AbsoluteFill
+                  style={{
+                    translate: `${FOLLOW.floor * pan}px 0`,
+                    scale: `${FOLLOW.overscan}`,
+                  }}
+                >
+                  <SeaFloor shimmer />
+                </AbsoluteFill>
               </Troupe>
             }
           >
-            <Timeline
-              floor={false}
-              eased
-              alive
-              arrow={Math.min(1, drawn / ARROW_GROWS_OVER)}
-              drawn={drawn}
-              sleepAt={sleepAt}
-              yearsAt={yearsAt}
-            />
+            <AbsoluteFill style={{ translate: `${pan}px 0` }}>
+              <Timeline
+                floor={false}
+                eased
+                alive
+                arrow={Math.min(1, drawn / ARROW_GROWS_OVER)}
+                drawn={drawn}
+                sleepAt={sleepAt}
+                yearsAt={yearsAt}
+              />
+            </AbsoluteFill>
           </FlatStage>
         </Sooner>
       </AbsoluteFill>

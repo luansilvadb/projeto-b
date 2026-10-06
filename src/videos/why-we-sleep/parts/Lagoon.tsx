@@ -29,6 +29,11 @@ type LagoonProps = {
   readonly shadows?: readonly ContactShadow[];
   /** O assunto, no plano da areia. */
   readonly children: React.ReactNode;
+  /**
+   * Quadros a somar ao relógio do plano: com o quadro do vídeo em que o plano
+   * começa, a luz, o capim e o plâncton não saltam na troca de plano.
+   */
+  readonly clock?: number;
 };
 
 // Raízes de mangue: x de onde descem, quanto se inclinam e a largura no alto.
@@ -124,9 +129,10 @@ export const Lagoon: React.FC<LagoonProps> = ({
   night = false,
   shadows = [],
   children,
+  clock = 0,
 }) => {
   const id = useId();
-  const frame = useCurrentFrame();
+  const frame = clock + useCurrentFrame();
   const { fps } = useVideoConfig();
   const seconds = frame / fps;
   const [top, upper, lower, bottom] = colors.water;

@@ -16,6 +16,7 @@ import { CoastWorld, LAGOON_SPOT } from "./CoastWorld";
 import { JELLYFISH, LagoonWorld } from "./LagoonWorld";
 import { COAST_MARK, PlanetWorld } from "./PlanetWorld";
 import type { WorldProps } from "./shapes";
+import { clamp } from "../components/timing";
 
 /**
  * A vinheta do canal, a mesma em todo vídeo: uma viagem do minúsculo ao
@@ -60,7 +61,6 @@ export const VIGNETTE_LEAVE_FRAMES = 10;
 export const VIGNETTE_HANDOFF_FRAMES = 8;
 export const VIGNETTE_COVERED_FRAMES = VIGNETTE_HANDOFF_FRAMES + JOIN_FRAMES;
 
-const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
 type VignetteProps = {
   /** O nome do canal, debaixo do símbolo. O canal ainda não tem nome: sem ele, fica só o símbolo. */

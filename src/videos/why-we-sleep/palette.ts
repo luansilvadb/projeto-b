@@ -352,14 +352,6 @@ export const signs = {
   dim: "#B49FE8",
 } as const;
 
-/** Os bichos em silhueta de "qualquer animal", e o olho deles. */
-export const crowd = {
-  body: "#088A52",
-  shade: "#046B40",
-  eye: "#FFFFFF",
-  predator: "#010433",
-} as const;
-
 const shopDay: StorefrontColors = {
   wall: "#0EADD6",
   wallShade: "#078DB8",
@@ -536,16 +528,6 @@ export const savanna = {
   },
 } as const;
 
-/** O mar aberto do golfinho: céu claro e quente, água turquesa que escurece para baixo. */
-export const openSea = {
-  sky: ["#FFE6B8", "#A8ECF0"],
-  surface: "#76E8E5",
-  water: ["#1BB8B8", "#077C93", "#015778"],
-  foam: "#FFFFFF",
-  spray: "#E6FBFA",
-  contact: "#013B52",
-} as const;
-
 /** O céu da fragata, sobre o oceano: lavanda de dia, índigo com estrelas de noite; o mar lá embaixo é verde-petróleo, de outra família. */
 export const sky = {
   day: {
@@ -573,16 +555,6 @@ export const sky = {
     sun: "#FFC335",
   },
 } as const;
-
-/** A fragata de noite é repintada: corpo azul-ardósia com a borda iluminada pela lua. */
-export const frigatebirdNight: FrigatebirdColors = {
-  ...frigatebird,
-  body: "#1A2588",
-  shade: "#0C146A",
-  light: "#7589D8",
-  breast: "#AEBEF0",
-  beak: "#8C9ED6",
-};
 
 /** Por dentro: o cérebro do golfinho, metade acesa e metade apagada, sobre índigo profundo. */
 export const inside = {

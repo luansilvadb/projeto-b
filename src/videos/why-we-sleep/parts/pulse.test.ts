@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { pulseCycles, pulseRate, pulseShape, steady } from "./pulse";
+import {
+  pulseCycles,
+  pulseFrame,
+  pulseRate,
+  pulseShape,
+  settledPhase,
+  steady,
+} from "./pulse";
 
 const FPS = 30;
 
@@ -51,6 +58,55 @@ describe("pulseCycles", () => {
   });
 });
 
+describe("pulseFrame", () => {
+  const rhythm = [
+    { from: 0, perMinute: 60 },
+    { from: 2 * FPS, perMinute: 30 },
+  ];
+
+  it("é o inverso de pulseCycles, em qualquer trecho", () => {
+    for (const frame of [0, 17, 60, 61, 143]) {
+      expect(pulseFrame(pulseCycles(frame, FPS, rhythm), FPS, rhythm)).toBeCloseTo(frame);
+    }
+  });
+
+  it("pula o trecho em que ela não pulsa", () => {
+    const paused = [
+      { from: 0, perMinute: 60 },
+      { from: FPS, perMinute: 0 },
+      { from: 3 * FPS, perMinute: 60 },
+    ];
+    // Um pulso no primeiro segundo, nenhum nos dois seguintes: o segundo pulso fecha no quarto segundo.
+    expect(pulseCycles(3 * FPS, FPS, paused)).toBeCloseTo(1);
+    expect(pulseFrame(2, FPS, paused)).toBeCloseTo(4 * FPS);
+  });
+
+  it("não chega nunca se o ritmo parou antes", () => {
+    const stopped = [
+      { from: 0, perMinute: 60 },
+      { from: FPS, perMinute: 0 },
+    ];
+    expect(pulseFrame(5, FPS, stopped)).toBe(Infinity);
+  });
+});
+
+describe("settledPhase", () => {
+  it("põe o último trecho na contagem de quem pulsa nele desde o quadro 0", () => {
+    const rhythm = [
+      { from: 0, perMinute: 58 },
+      { from: 6300, perMinute: 39 },
+    ];
+    const frame = 6500;
+    expect(
+      settledPhase(FPS, rhythm) + pulseCycles(frame, FPS, rhythm),
+    ).toBeCloseTo(pulseCycles(frame, FPS, steady(39)));
+  });
+
+  it("é zero num ritmo só", () => {
+    expect(settledPhase(FPS, steady(58))).toBeCloseTo(0);
+  });
+});
+
 describe("pulseShape", () => {
   it("começa e termina o ciclo com o sino relaxado", () => {
     expect(pulseShape(0)).toBeCloseTo(0);
@@ -59,6 +115,10 @@ describe("pulseShape", () => {
 
   it("chega à contração máxima no fim da fase rápida", () => {
     expect(pulseShape(0.3)).toBeCloseTo(1);
+  });
+
+  it("vale também para a contagem negativa, antes de uma âncora", () => {
+    expect(pulseShape(-0.58)).toBeCloseTo(pulseShape(0.42));
   });
 
   it("repete a mesma forma a cada ciclo", () => {

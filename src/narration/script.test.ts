@@ -56,6 +56,83 @@ describe("parseScript", () => {
     expect(parse).toThrowError(/"music" precisa de um "caption"/);
   });
 
+  it("aceita a trilha em partes e recusa a troca de faixa fora de ordem ou em cena que não existe", () => {
+    const withParts = (parts: unknown) => () =>
+      parseScript({
+        title: "x",
+        scenes: [
+          validScene,
+          { ...validScene, id: "moon" },
+          { ...validScene, id: "stars" },
+        ],
+        music: { caption: "calm ambient", parts },
+      });
+
+    expect(
+      withParts([
+        { from: "moon" },
+        { from: "stars", caption: "warm", bpm: 80 },
+      ]),
+    ).not.toThrow();
+    expect(withParts([])).toThrowError(/ao menos uma troca de faixa/);
+    expect(withParts([{}])).toThrowError(/precisa de um "from"/);
+    expect(withParts([{ from: "comet" }])).toThrowError(/não há cena "comet"/);
+    expect(withParts([{ from: "sun" }])).toThrowError(
+      /depois da primeira cena/,
+    );
+    expect(withParts([{ from: "stars" }, { from: "moon" }])).toThrowError(
+      /depois da troca anterior/,
+    );
+    expect(withParts([{ from: "moon", bpm: 0 }])).toThrowError(
+      /"music.parts\[0\].bpm" precisa ser um número positivo/,
+    );
+  });
+
+  it("aceita a faixa que entra no silêncio de uma cena, e só de uma cena que tem silêncio", () => {
+    const withMusic = (music: object) => () =>
+      parseScript({
+        title: "x",
+        scenes: [
+          { ...validScene, holdMs: 2000 },
+          { ...validScene, id: "moon" },
+        ],
+        music: { caption: "calm ambient", ...music },
+      });
+
+    // O silêncio da primeira cena vem depois do começo da trilha, então vale.
+    expect(
+      withMusic({ parts: [{ from: "sun", at: "hold" }, { from: "moon" }] }),
+    ).not.toThrow();
+    expect(withMusic({ parts: [{ from: "moon", at: "hold" }] })).toThrowError(
+      /a cena "moon" não tem "holdMs"/,
+    );
+    expect(withMusic({ parts: [{ from: "moon", at: "end" }] })).toThrowError(
+      /"music.parts\[0\].at" só pode ser "hold"/,
+    );
+  });
+
+  it("aceita os trechos sem música e recusa o que aponta para cena que não existe", () => {
+    const withSilences = (silences: unknown) => () =>
+      parseScript({
+        title: "x",
+        scenes: [validScene],
+        music: { caption: "calm ambient", silences },
+      });
+
+    expect(
+      withSilences([{ from: "sun" }, { from: "sun", cue: "oito" }]),
+    ).not.toThrow();
+    expect(withSilences([{ from: "comet" }])).toThrowError(
+      /não há cena "comet"/,
+    );
+    expect(withSilences([{ cue: "oito" }])).toThrowError(
+      /precisa de um "from"/,
+    );
+    expect(withSilences([{ from: "sun", occurrence: 0 }])).toThrowError(
+      /occurrence" precisa ser um inteiro positivo/,
+    );
+  });
+
   it("aceita um silêncio depois da fala e recusa o que não é um tempo válido", () => {
     const withHold = (holdMs: unknown) => () =>
       parseScript({ title: "x", scenes: [{ ...validScene, holdMs }] });

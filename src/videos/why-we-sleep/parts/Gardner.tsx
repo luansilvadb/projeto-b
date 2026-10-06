@@ -1,15 +1,25 @@
 import "../../../design/fonts";
-import { AbsoluteFill } from "remotion";
+import { useId } from "react";
+import {
+  AbsoluteFill,
+  Easing,
+  interpolate,
+  interpolateColors,
+  useCurrentFrame,
+} from "remotion";
 import {
   Person,
   type Expression,
   type PersonColors,
+  type Stride,
 } from "../../../art/Person";
 import type { Point } from "../../../art/shapes";
+import { Leftovers } from "../../../components/Actors";
+import { Camera, Layer, type CameraState } from "../../../components/Camera";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { ALREADY_SHOWN } from "../../../components/timing";
+import { ALREADY_SHOWN, clamp01 } from "../../../components/timing";
 import { typography } from "../../../design/tokens";
 import {
   alarmClock,
@@ -102,48 +112,199 @@ const HEAD_TILT: Record<Expression, number> = {
 
 type Arm = { readonly hand: Point; readonly bend?: number };
 
+// Quanto a pálpebra de cada expressão cobre o olho, e a pupila de quem se espanta: os mesmos valores de art/Person.
+const LIDS: Record<Expression, number> = {
+  neutral: 0.1,
+  curious: 0,
+  puzzled: 0.25,
+  surprised: 0,
+  sleepy: 0.58,
+  yawning: 0.8,
+  asleep: 1,
+  reading: 0.45,
+};
+const pupilOf = (expression: Expression) =>
+  expression === "surprised" ? 9 : 13;
+
 type GazeProps = {
   readonly height: number;
   readonly colors: PersonColors;
   readonly expression: Expression;
   /** Para onde os olhos vão, de -1 a 1 em cada eixo. */
   readonly toward: Point;
+  /** A piscada, de 0 a 1: a mesma que a pessoa recebe. */
+  readonly blink?: number;
 };
 
 /**
  * O olhar para um ponto do quadro: os olhos da pessoa redesenhados por cima
  * dos dela, com a pupila encostada na borda do lado para onde ela olha. O
  * desenho da pessoa só desvia a pupila um pouco, e de longe os três pareciam
- * olhar para a câmera.
+ * olhar para a câmera. A pálpebra é a da expressão, e desce com a piscada;
+ * com o olho fechado, quem aparece é o traço da pessoa, por baixo.
  */
-const Gaze: React.FC<GazeProps> = ({ height, colors, expression, toward }) => (
-  <svg
-    width={(400 * height) / 650}
-    height={height}
-    viewBox="-200 -650 400 650"
-    style={{ position: "absolute", left: 0, top: 0 }}
-    overflow="visible"
-  >
-    <g transform={`rotate(2.5 0 -180) rotate(${HEAD_TILT[expression]} 0 -390)`}>
-      {[-1, 1].map((side) => {
-        const x = side * EYE.gap + toward[0] * 13;
-        const y = EYE.y + toward[1] * 13;
-        return (
-          <g key={side}>
-            <circle
-              cx={side * EYE.gap}
-              cy={EYE.y}
-              r={EYE.radius + 0.5}
-              fill={colors.eye}
+const Gaze: React.FC<GazeProps> = ({
+  height,
+  colors,
+  expression,
+  toward,
+  blink = 0,
+}) => {
+  const id = useId();
+  if (blink > 0.9 || expression === "asleep") {
+    return null;
+  }
+  const lid = LIDS[expression] + (1 - LIDS[expression]) * blink;
+  const pupil = pupilOf(expression);
+  return (
+    <svg
+      width={(400 * height) / 650}
+      height={height}
+      viewBox="-200 -650 400 650"
+      style={{ position: "absolute", left: 0, top: 0 }}
+      overflow="visible"
+    >
+      <g
+        transform={`rotate(2.5 0 -180) rotate(${HEAD_TILT[expression]} 0 -390)`}
+      >
+        {[-1, 1].map((side) => {
+          const center = side * EYE.gap;
+          const x = center + toward[0] * (26 - pupil);
+          const y = EYE.y + toward[1] * (26 - pupil);
+          const edge = EYE.y - EYE.radius + 2 * EYE.radius * lid;
+          return (
+            <g key={side}>
+              <clipPath id={`${id}-${side}`}>
+                <circle cx={center} cy={EYE.y} r={EYE.radius + 0.5} />
+              </clipPath>
+              <circle
+                cx={center}
+                cy={EYE.y}
+                r={EYE.radius + 0.5}
+                fill={colors.eye}
+              />
+              <g clipPath={`url(#${id}-${side})`}>
+                <circle cx={x} cy={y} r={pupil} fill={colors.pupil} />
+                <circle
+                  cx={x - pupil * 0.4}
+                  cy={y - pupil * 0.45}
+                  r={pupil * 0.36}
+                  fill={colors.eye}
+                />
+                {lid > 0 ? (
+                  <path
+                    d={`M${center - EYE.radius - 2},${EYE.y - EYE.radius - 2} L${center + EYE.radius + 2},${EYE.y - EYE.radius - 2} L${center + EYE.radius + 2},${edge} Q${center},${edge + 6} ${center - EYE.radius - 2},${edge} Z`}
+                    fill={colors.lid}
+                  />
+                ) : null}
+              </g>
+            </g>
+          );
+        })}
+      </g>
+    </svg>
+  );
+};
+
+/** Um tom que sobe ao rosto: o verde de quem enjoa, o vermelho de quem se irrita. */
+export type Flush = { readonly color: string; readonly amount: number };
+
+type FaceMarksProps = {
+  readonly height: number;
+  readonly colors: PersonColors;
+  readonly expression: Expression;
+  readonly tired: number;
+  readonly flush?: Flush;
+  readonly frown?: boolean;
+};
+
+// A boca da pessoa, nas unidades do desenho dela (art/Person).
+const MOUTH_Y = EYE.y + EYE.radius * 1.85;
+
+/**
+ * O que o desenho da pessoa não tem e fica por cima do rosto, com a inclinação
+ * da cabeça: as olheiras, o tom que sobe às bochechas e a boca virada para
+ * baixo de quem se irrita (que cobre a da expressão).
+ */
+const FaceMarks: React.FC<FaceMarksProps> = ({
+  height,
+  colors,
+  expression,
+  tired,
+  flush,
+  frown = false,
+}) => {
+  const id = useId();
+  const flushed = flush !== undefined && flush.amount > 0;
+  if (tired <= 0 && !flushed && !frown) {
+    return null;
+  }
+  return (
+    <svg
+      width={(400 * height) / 650}
+      height={height}
+      viewBox="-200 -650 400 650"
+      style={{ position: "absolute", left: 0, top: 0 }}
+      overflow="visible"
+    >
+      <g
+        transform={`rotate(2.5 0 -180) rotate(${HEAD_TILT[expression]} 0 -390)`}
+      >
+        {frown ? (
+          <>
+            <rect
+              x={-22}
+              y={MOUTH_Y - 12}
+              width={62}
+              height={30}
+              rx={12}
+              fill={colors.skin}
             />
-            <circle cx={x} cy={y} r={13} fill={colors.pupil} />
-            <circle cx={x - 5} cy={y - 6} r={4.7} fill={colors.eye} />
+            <path
+              d={`M-17,${MOUTH_Y + 10} Q0,${MOUTH_Y - 6} 17,${MOUTH_Y + 10}`}
+              fill="none"
+              stroke={colors.mouth}
+              strokeWidth={7}
+              strokeLinecap="round"
+            />
+          </>
+        ) : null}
+        {flushed ? (
+          // Abaixo dos olhos, dentro do contorno do rosto, sem borda: o tom se desfaz para os lados.
+          <>
+            <defs>
+              <radialGradient id={id}>
+                <stop offset={0.35} stopColor={flush.color} stopOpacity={1} />
+                <stop offset={1} stopColor={flush.color} stopOpacity={0} />
+              </radialGradient>
+            </defs>
+            <ellipse
+              cy={-416}
+              rx={104}
+              ry={46}
+              fill={`url(#${id})`}
+              opacity={flush.amount}
+            />
+          </>
+        ) : null}
+        {tired > 0 ? (
+          <g opacity={tired}>
+            {[-1, 1].map((side) => (
+              <path
+                key={side}
+                d={`M${side * EYE.gap - 26},${EYE.y + EYE.radius - 2} Q${side * EYE.gap},${EYE.y + EYE.radius + 30} ${side * EYE.gap + 26},${EYE.y + EYE.radius - 2} Q${side * EYE.gap},${EYE.y + EYE.radius + 12} ${side * EYE.gap - 26},${EYE.y + EYE.radius - 2} Z`}
+                fill={colors.skinShade}
+                stroke={colors.skinShade}
+                strokeWidth={4}
+                strokeLinejoin="round"
+              />
+            ))}
           </g>
-        );
-      })}
-    </g>
-  </svg>
-);
+        ) : null}
+      </g>
+    </svg>
+  );
+};
 
 type GardnerProps = {
   /** O chão entre os pés, no quadro. */
@@ -166,6 +327,24 @@ type GardnerProps = {
   /** A etiqueta que ele leva: por padrão, o nome. */
   readonly name?: string;
   readonly on?: TagTone;
+  /** A piscada, de 0 a 1: é sob ela que a expressão troca. */
+  readonly blink?: number;
+  /** A respiração: a altura do corpo num instante, em volta de 1. */
+  readonly breath?: number;
+  /** A largura do corpo, de -1 (virado para a esquerda) a 1: a meia-volta passa pelo zero. Sem valor, vem de `flip`. */
+  readonly facing?: number;
+  /** Quanto o corpo pende, em graus, em volta dos pés. */
+  readonly lean?: number;
+  /** A passada de quem anda (ver art/Person). */
+  readonly stride?: Stride;
+  /** A identidade dele no palco: entre dois planos do mesmo cenário, ele vai de um lugar ao outro. */
+  readonly id?: string;
+  /** O tom que sobe ao rosto. */
+  readonly flush?: Flush;
+  /** A boca virada para baixo, de quem se irrita: o desenho da pessoa não tem essa. */
+  readonly frown?: boolean;
+  /** Quanto a etiqueta já saiu, de 0 a 1: encolhe no lugar. */
+  readonly nameGone?: number;
 };
 
 /** Randy Gardner, de pé: o mesmo rapaz nas três cenas do bloco. */
@@ -183,9 +362,27 @@ export const Gardner: React.FC<GardnerProps> = ({
   nameAt,
   name = "Randy Gardner",
   on = "lilac",
+  blink = 0,
+  breath = 1,
+  facing,
+  lean = 0,
+  stride,
+  id,
+  flush,
+  frown,
+  nameGone = 0,
 }) => (
   <>
-    <Place x={x} y={y} anchor="bottom" style={{ scale: `${flip ? -1 : 1} 1` }}>
+    <Place
+      id={id}
+      x={x}
+      y={y}
+      anchor="bottom"
+      style={{
+        scale: `${facing ?? (flip ? -1 : 1)} ${breath}`,
+        rotate: lean === 0 ? undefined : `${lean}deg`,
+      }}
+    >
       <Pop at={enter} from={0.8} origin="bottom">
         <div style={{ position: "relative" }}>
           <Person
@@ -194,6 +391,8 @@ export const Gardner: React.FC<GardnerProps> = ({
             expression={expression}
             frontArm={frontArm}
             backArm={backArm}
+            blink={blink}
+            stride={stride}
           />
           {gaze ? (
             <Gaze
@@ -201,39 +400,26 @@ export const Gardner: React.FC<GardnerProps> = ({
               colors={gardner}
               expression={expression}
               toward={gaze}
+              blink={blink}
             />
           ) : null}
-          {tired > 0 ? (
-            // As olheiras: o desenho da pessoa não as tem; ficam por cima, com a inclinação da cabeça.
-            <svg
-              width={(400 * height) / 650}
-              height={height}
-              viewBox="-200 -650 400 650"
-              style={{ position: "absolute", left: 0, top: 0 }}
-              overflow="visible"
-            >
-              <g
-                transform={`rotate(2.5 0 -180) rotate(${HEAD_TILT[expression]} 0 -390)`}
-                opacity={tired}
-              >
-                {[-1, 1].map((side) => (
-                  <path
-                    key={side}
-                    d={`M${side * EYE.gap - 26},${EYE.y + EYE.radius - 2} Q${side * EYE.gap},${EYE.y + EYE.radius + 30} ${side * EYE.gap + 26},${EYE.y + EYE.radius - 2} Q${side * EYE.gap},${EYE.y + EYE.radius + 12} ${side * EYE.gap - 26},${EYE.y + EYE.radius - 2} Z`}
-                    fill={gardner.skinShade}
-                    stroke={gardner.skinShade}
-                    strokeWidth={4}
-                    strokeLinejoin="round"
-                  />
-                ))}
-              </g>
-            </svg>
-          ) : null}
+          <FaceMarks
+            height={height}
+            colors={gardner}
+            expression={expression}
+            tired={tired}
+            flush={flush}
+            frown={frown}
+          />
         </div>
       </Pop>
     </Place>
-    {nameAt === undefined ? null : (
-      <Place x={x} y={y - height - 60}>
+    {nameAt === undefined || nameGone >= 1 ? null : (
+      <Place
+        x={x}
+        y={y - height - 60}
+        style={nameGone > 0 ? { scale: `${1 - nameGone}` } : undefined}
+      >
         <Pop at={nameAt}>
           <Tag size="note" on={on}>
             {name}
@@ -255,11 +441,28 @@ type FriendProps = {
   readonly gaze?: Point;
   /** Aponta para o lado em que Gardner está: o da direita ou o da esquerda de quem assiste. */
   readonly pointing?: "left" | "right";
+  /** Quanto o braço que aponta já subiu, de 0 (solto) a 1; pode passar de 1 na sobra. Por padrão, 1. */
+  readonly reach?: number;
+  /** A pose dos braços quando ele não aponta: quem joga a moeda, por exemplo. */
+  readonly frontArm?: Arm;
+  readonly backArm?: Arm;
+  readonly blink?: number;
+  /** A respiração: a altura do corpo num instante, em volta de 1. */
+  readonly breath?: number;
+  /** Quadro em que ele entra, crescendo dos pés; sem valor, já está em cena. */
+  readonly enter?: number;
+  /** A identidade dele no palco. */
+  readonly id?: string;
 };
 
-// Os ombros da pessoa e o braço esticado de quem aponta: os mesmos valores de art/Person.
+// Os ombros da pessoa, o braço solto e o braço esticado de quem aponta: os mesmos valores de art/Person.
 const SHOULDERS = { front: [-70, -346], back: [72, -338] } as const;
 const POINTING = { front: [-140, -400], back: [140, -400] } as const;
+const LOOSE = {
+  front: { hand: [-136, -214], bend: 26 },
+  back: { hand: [100, -214], bend: 73 },
+} as const;
+const POINT_BEND = 14;
 
 /** Um dos dois amigos: figurante com rosto, para poder olhar o cartaz e apontar. */
 export const Friend: React.FC<FriendProps> = ({
@@ -270,64 +473,97 @@ export const Friend: React.FC<FriendProps> = ({
   expression = "neutral",
   gaze,
   pointing,
+  reach = 1,
+  frontArm,
+  backArm,
+  blink = 0,
+  breath = 1,
+  enter = ALREADY_SHOWN,
+  id,
 }) => {
-  const arm = pointing === "left" ? "front" : "back";
-  const hand = POINTING[arm];
-  // O dedo continua a direção do braço, do ombro para a mão.
-  const reach = Math.hypot(
-    hand[0] - SHOULDERS[arm][0],
-    hand[1] - SHOULDERS[arm][1],
+  const frame = useCurrentFrame();
+  // Ele entra crescendo dos pés, sem opacidade: passa um pouco do tamanho e assenta.
+  const entered = interpolate(
+    frame,
+    [enter, enter + 8, enter + 11],
+    [0, 1.06, 1],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: Easing.out(Easing.quad),
+    },
   );
+  const arm = pointing === "left" ? "front" : "back";
+  const rest = {
+    front: { ...LOOSE.front, ...frontArm },
+    back: { ...LOOSE.back, ...backArm },
+  };
+  // O braço vai do repouso até o gesto: a mão sobe e o cotovelo estica.
+  const raised: Arm = {
+    hand: [
+      rest[arm].hand[0] + (POINTING[arm][0] - rest[arm].hand[0]) * reach,
+      rest[arm].hand[1] + (POINTING[arm][1] - rest[arm].hand[1]) * reach,
+    ],
+    bend: rest[arm].bend + (POINT_BEND - rest[arm].bend) * reach,
+  };
+  const hand = raised.hand;
+  // O dedo continua a direção do braço, do ombro para a mão.
+  const length =
+    Math.hypot(hand[0] - SHOULDERS[arm][0], hand[1] - SHOULDERS[arm][1]) || 1;
   const toward = [
-    (hand[0] - SHOULDERS[arm][0]) / reach,
-    (hand[1] - SHOULDERS[arm][1]) / reach,
+    (hand[0] - SHOULDERS[arm][0]) / length,
+    (hand[1] - SHOULDERS[arm][1]) / length,
   ] as const;
+  // Ele só estica o dedo com o braço já quase no alto.
+  const finger = clamp01((reach - 0.5) / 0.4);
 
   return (
-    <Place x={x} y={y} anchor="bottom">
-      <div style={{ position: "relative" }}>
-        <Person
-          height={height}
-          colors={friends[which]}
-          expression={expression}
-          frontArm={
-            pointing === "left" ? { hand: POINTING.front, bend: 14 } : undefined
-          }
-          backArm={
-            pointing === "right" ? { hand: POINTING.back, bend: 14 } : undefined
-          }
-        />
-        {gaze ? (
-          <Gaze
+    <Place id={id} x={x} y={y} anchor="bottom" style={{ scale: `1 ${breath}` }}>
+      <div style={{ scale: `${entered}`, transformOrigin: "50% 100%" }}>
+        <div style={{ position: "relative" }}>
+          <Person
             height={height}
             colors={friends[which]}
             expression={expression}
-            toward={gaze}
+            blink={blink}
+            frontArm={pointing === "left" ? raised : frontArm}
+            backArm={pointing === "right" ? raised : backArm}
           />
-        ) : null}
-        {pointing ? (
-          // O dedo esticado: a mão da pessoa é um círculo, e sem ele o braço erguido lê como aceno.
-          <svg
-            width={(400 * height) / 650}
-            height={height}
-            viewBox="-200 -650 400 650"
-            style={{ position: "absolute", left: 0, top: 0 }}
-            overflow="visible"
-          >
-            <line
-              transform="rotate(2.5 0 -180)"
-              x1={hand[0] + toward[0] * 14}
-              y1={hand[1] + toward[1] * 14}
-              x2={hand[0] + toward[0] * 62}
-              y2={hand[1] + toward[1] * 62}
-              stroke={
-                arm === "front" ? friends[which].hand : friends[which].handShade
-              }
-              strokeWidth={17}
-              strokeLinecap="round"
+          {gaze ? (
+            <Gaze
+              height={height}
+              colors={friends[which]}
+              expression={expression}
+              toward={gaze}
+              blink={blink}
             />
-          </svg>
-        ) : null}
+          ) : null}
+          {pointing && finger > 0 ? (
+            // O dedo esticado: a mão da pessoa é um círculo, e sem ele o braço erguido lê como aceno.
+            <svg
+              width={(400 * height) / 650}
+              height={height}
+              viewBox="-200 -650 400 650"
+              style={{ position: "absolute", left: 0, top: 0 }}
+              overflow="visible"
+            >
+              <line
+                transform="rotate(2.5 0 -180)"
+                x1={hand[0] + toward[0] * 14}
+                y1={hand[1] + toward[1] * 14}
+                x2={hand[0] + toward[0] * (14 + 48 * finger)}
+                y2={hand[1] + toward[1] * (14 + 48 * finger)}
+                stroke={
+                  arm === "front"
+                    ? friends[which].hand
+                    : friends[which].handShade
+                }
+                strokeWidth={17}
+                strokeLinecap="round"
+              />
+            </svg>
+          ) : null}
+        </div>
       </div>
     </Place>
   );
@@ -369,6 +605,15 @@ type DementProps = {
   /** Quadro em que a etiqueta "William Dement" entra; sem valor, não há etiqueta. */
   readonly nameAt?: number;
   readonly on?: TagTone;
+  /** A passada de quem anda (ver art/Person). */
+  readonly stride?: Stride;
+  readonly blink?: number;
+  /** A respiração: a altura do corpo num instante, em volta de 1. */
+  readonly breath?: number;
+  /** Quanto ele anota, de -1 a 1: a mão que segura a caneta vai e vem sobre a prancheta. */
+  readonly note?: number;
+  /** Onde a etiqueta de nome fica, quando ele ainda não chegou ao lugar dele. Por padrão, sobre ele. */
+  readonly nameX?: number;
 };
 
 /** William Dement: pesquisador de jaleco, de prancheta na mão, observando. Sem gesto clínico. */
@@ -379,21 +624,33 @@ export const Dement: React.FC<DementProps> = ({
   flip = false,
   nameAt,
   on = "lilac",
+  stride,
+  blink = 0,
+  breath = 1,
+  note = 0,
+  nameX,
 }) => (
   <>
-    <Place x={x} y={y} anchor="bottom" style={{ scale: `${flip ? -1 : 1} 1` }}>
+    <Place
+      x={x}
+      y={y}
+      anchor="bottom"
+      style={{ scale: `${flip ? -1 : 1} ${breath}` }}
+    >
       <Person
         height={height}
         colors={dement}
         expression="curious"
         held={<NotesBoard />}
         heldInFront
+        blink={blink}
+        stride={stride}
         frontArm={{ hand: [-128, -250], bend: 30 }}
-        backArm={{ hand: [18, -300], bend: 52 }}
+        backArm={{ hand: [18 + 16 * note, -300 + 9 * note], bend: 52 }}
       />
     </Place>
     {nameAt === undefined ? null : (
-      <Place x={x} y={y - height - 60}>
+      <Place x={nameX ?? x} y={y - height - 60}>
         <Pop at={nameAt}>
           <Tag size="note" on={on}>
             William Dement
@@ -422,6 +679,25 @@ export const View: React.FC<ViewProps> = ({ focus, zoom, children }) => (
   >
     {children}
   </AbsoluteFill>
+);
+
+type RoomSetProps = {
+  readonly camera: CameraState;
+  readonly children: React.ReactNode;
+};
+
+/**
+ * O quarto como cenário do palco: uma câmera e uma camada só. Nos planos
+ * seguidos do quarto (`sets` em index.tsx) a câmera continua de onde o plano
+ * anterior a deixou, e quem tem `id` vai de um lugar ao outro.
+ */
+export const RoomSet: React.FC<RoomSetProps> = ({ camera, children }) => (
+  <Camera {...camera}>
+    <Layer depth={1}>
+      {children}
+      <Leftovers />
+    </Layer>
+  </Camera>
 );
 
 type FloorProps = {
@@ -477,6 +753,8 @@ type RecordPosterProps = {
   readonly x: number;
   readonly y: number;
   readonly enter?: number;
+  /** Quanto o papel balança nos percevejos, em graus. */
+  readonly sway?: number;
 };
 
 /** O cartaz pregado na parede: "recorde: 260 h", o que os três querem bater. É texto do mundo, o mesmo nos planos do quarto. */
@@ -484,8 +762,9 @@ export const RecordPoster: React.FC<RecordPosterProps> = ({
   x,
   y,
   enter = ALREADY_SHOWN,
+  sway = 0,
 }) => (
-  <Place x={x} y={y} style={{ rotate: "-3deg" }}>
+  <Place x={x} y={y} style={{ rotate: `${-3 + sway}deg` }}>
     <Pop at={enter}>
       <div
         style={{
@@ -546,11 +825,16 @@ type WallCalendarProps = {
   readonly on?: TagTone;
   /** Quadro em que a etiqueta do mês entra. */
   readonly monthAt?: number;
+  /** Quadro em que o calendário estoura na parede; sem valor, já está nela. */
+  readonly enter?: number;
+  /** Quanto ele balança no prego, em graus. */
+  readonly sway?: number;
 };
 
 /**
  * O calendário de parede do quarto: a folha de dezembro de 1963, que vira e
- * deixa janeiro de 1964 à vista. O mês vai numa etiqueta, presa embaixo.
+ * deixa janeiro de 1964 à vista. O mês vai numa etiqueta, presa embaixo: na
+ * virada ela gira com a folha e volta com o mês novo.
  */
 export const WallCalendar: React.FC<WallCalendarProps> = ({
   x,
@@ -560,6 +844,8 @@ export const WallCalendar: React.FC<WallCalendarProps> = ({
   filled = [27, 0],
   on = "lilac",
   monthAt = ALREADY_SHOWN,
+  enter = ALREADY_SHOWN,
+  sway = 0,
 }) => (
   <>
     <div
@@ -570,44 +856,55 @@ export const WallCalendar: React.FC<WallCalendarProps> = ({
         width: 0,
         height: 0,
         scale: `${scale}`,
+        // Pendurado pelo alto: balança em volta da espiral.
+        transformOrigin: `0 ${-PAGE.height / 2}px`,
+        rotate: sway === 0 ? undefined : `${sway}deg`,
       }}
     >
-      <Calendar x={0} y={0} days={MONTH_DAYS} filled={filled[1]} />
-      {turned < 1 ? (
-        // A folha de cima sobe pela espiral: encolhe para o alto até sumir.
+      <Pop at={enter}>
+        <Calendar x={0} y={0} days={MONTH_DAYS} filled={filled[1]} gradual />
+        {turned < 1 ? (
+          // A folha de cima sobe pela espiral: encolhe para o alto até sumir.
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              top: -PAGE.height / 2,
+              width: 0,
+              height: 0,
+              transformOrigin: "0 0",
+              scale: `1 ${1 - turned}`,
+            }}
+          >
+            <Calendar
+              x={0}
+              y={PAGE.height / 2}
+              days={MONTH_DAYS}
+              filled={filled[0]}
+              gradual
+            />
+          </div>
+        ) : null}
+        {/* A espiral que prende as folhas, no alto. */}
         <div
           style={{
             position: "absolute",
-            left: 0,
-            top: -PAGE.height / 2,
-            width: 0,
-            height: 0,
-            transformOrigin: "0 0",
-            scale: `1 ${1 - turned}`,
+            left: -PAGE.width / 2,
+            top: -PAGE.height / 2 - 22,
+            width: PAGE.width,
+            height: 34,
+            borderRadius: 14,
+            background: chalkboard.stamp,
           }}
-        >
-          <Calendar
-            x={0}
-            y={PAGE.height / 2}
-            days={MONTH_DAYS}
-            filled={filled[0]}
-          />
-        </div>
-      ) : null}
-      {/* A espiral que prende as folhas, no alto. */}
-      <div
-        style={{
-          position: "absolute",
-          left: -PAGE.width / 2,
-          top: -PAGE.height / 2 - 22,
-          width: PAGE.width,
-          height: 34,
-          borderRadius: 14,
-          background: chalkboard.stamp,
-        }}
-      />
+        />
+      </Pop>
     </div>
-    <Place x={x} y={y + (PAGE.height / 2) * scale + 62}>
+    <Place
+      x={x}
+      y={y + (PAGE.height / 2) * scale + 62}
+      // O mês troca com a etiqueta de perfil: ela fecha, troca e abre.
+      style={{ scale: `1 ${Math.abs(1 - 2 * turned)}` }}
+    >
       <Pop at={monthAt}>
         <Tag size="note" on={on}>
           {turned > 0.5 ? "jan. 1964" : "dez. 1963"}
@@ -625,6 +922,12 @@ type HourCounterProps = {
   readonly hours: number;
   /** As horas do recorde: ao passar delas, o visor muda de cor. */
   readonly record?: number;
+  /** Quanto o visor já tomou a cor de alarme, de 0 a 1. Sem valor, troca ao passar do recorde. */
+  readonly hot?: number;
+  /** O tamanho do contador num instante, em volta de 1: o pulo ao passar do recorde. */
+  readonly bump?: number;
+  /** Quadro em que o contador estoura; sem valor, já está em cena. */
+  readonly enter?: number;
 };
 
 /** O contador de horas acordado: um visor que sobe e muda de cor ao passar do recorde do cartaz. */
@@ -633,36 +936,43 @@ export const HourCounter: React.FC<HourCounterProps> = ({
   y,
   hours,
   record = 260,
+  hot,
+  bump = 1,
+  enter = ALREADY_SHOWN,
 }) => {
-  const colors = hours > record ? stopwatchAlarm : stopwatch;
+  const heat = hot ?? (hours > record ? 1 : 0);
+  const tone = (key: "rim" | "display" | "text") =>
+    interpolateColors(heat, [0, 1], [stopwatch[key], stopwatchAlarm[key]]);
   return (
-    <Place x={x} y={y}>
-      <div
-        style={{
-          padding: 16,
-          borderRadius: 36,
-          background: colors.rim,
-        }}
-      >
+    <Place x={x} y={y} style={{ scale: `${bump}` }}>
+      <Pop at={enter}>
         <div
           style={{
-            minWidth: 360,
-            padding: "14px 26px",
-            borderRadius: 22,
-            background: colors.display,
-            color: colors.text,
-            fontFamily: typography.family,
-            fontWeight: typography.weight,
-            fontSize: typography.size.headline,
-            fontVariantNumeric: "tabular-nums",
-            lineHeight: 1.1,
-            textAlign: "center",
-            whiteSpace: "nowrap",
+            padding: 16,
+            borderRadius: 36,
+            background: tone("rim"),
           }}
         >
-          {Math.floor(hours)} h
+          <div
+            style={{
+              minWidth: 360,
+              padding: "14px 26px",
+              borderRadius: 22,
+              background: tone("display"),
+              color: tone("text"),
+              fontFamily: typography.family,
+              fontWeight: typography.weight,
+              fontSize: typography.size.headline,
+              fontVariantNumeric: "tabular-nums",
+              lineHeight: 1.1,
+              textAlign: "center",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {Math.floor(hours)} h
+          </div>
         </div>
-      </div>
+      </Pop>
     </Place>
   );
 };
@@ -672,14 +982,27 @@ type EmptyDiscProps = {
   readonly x: number;
   readonly y: number;
   readonly scale?: number;
+  /** Quanto o tampo girou, em radianos: a marca dele dá a volta. */
+  readonly turn?: number;
+  /** A água da bandeja: o brilho dela vai e vem, de -1 a 1. */
+  readonly ripple?: number;
 };
+
+// A marca do tampo anda nesta elipse; em repouso fica à direita, na frente.
+const MARK = { rx: 165, ry: 33.5, rest: Math.acos(150 / 165) };
 
 /**
  * O disco dos ratos, vazio, sobre a bandeja de água. É um desenho provisório:
  * o disco do experimento está em `parts/Rats.tsx`, e é ele que deve entrar
  * aqui quando estiver pronto.
  */
-export const EmptyDisc: React.FC<EmptyDiscProps> = ({ x, y, scale = 1 }) => (
+export const EmptyDisc: React.FC<EmptyDiscProps> = ({
+  x,
+  y,
+  scale = 1,
+  turn = 0,
+  ripple = 0,
+}) => (
   <Place x={x} y={y}>
     <svg
       width={640 * scale}
@@ -696,12 +1019,25 @@ export const EmptyDisc: React.FC<EmptyDiscProps> = ({ x, y, scale = 1 }) => (
         rx={22}
         fill={lab.waterDeep}
       />
-      <rect x={-282} y={96} width={564} height={24} rx={12} fill={lab.water} />
+      <rect
+        x={-282}
+        y={96 - 3 * ripple}
+        width={564}
+        height={24 + 3 * ripple}
+        rx={12}
+        fill={lab.water}
+      />
       <rect x={-16} y={0} width={32} height={150} fill={lab.platformShade} />
       <ellipse cy={22} rx={250} ry={50} fill={lab.platformShade} />
       <ellipse rx={250} ry={50} fill={lab.platform} />
       {/* A marca do tampo: é ela que mostra o giro. */}
-      <ellipse cx={150} cy={14} rx={34} ry={10} fill={lab.clip} />
+      <ellipse
+        cx={MARK.rx * Math.cos(MARK.rest + turn)}
+        cy={MARK.ry * Math.sin(MARK.rest + turn)}
+        rx={34}
+        ry={10}
+        fill={lab.clip}
+      />
     </svg>
   </Place>
 );
@@ -841,10 +1177,17 @@ type SymptomsProps = {
   readonly at: readonly [number, number, number];
   /** A cabeça de quem sente: os balões apontam para ela. */
   readonly head: Point;
+  /** O tempo, em segundos: os balões boiam, cada um na própria fase. Sem valor, parados. */
+  readonly seconds?: number;
 };
 
 /** Os três balões sobre Gardner: enjoo, um branco, raiva. Sem texto. */
-export const Symptoms: React.FC<SymptomsProps> = ({ spots, at, head }) => (
+export const Symptoms: React.FC<SymptomsProps> = ({
+  spots,
+  at,
+  head,
+  seconds,
+}) => (
   <>
     {SYMPTOMS.map((icon, index) => {
       const [x, y] = spots[index];
@@ -854,6 +1197,10 @@ export const Symptoms: React.FC<SymptomsProps> = ({ spots, at, head }) => (
         (head[1] - y) * t,
       ];
       const length = Math.hypot(head[0] - x, head[1] - y) || 1;
+      const float =
+        seconds === undefined
+          ? 0
+          : Math.sin((seconds / (2.7 + 0.5 * index) + index / 3) * Math.PI * 2);
       return (
         <Place key={index} x={x} y={y}>
           <Pop at={at[index]}>
@@ -863,20 +1210,23 @@ export const Symptoms: React.FC<SymptomsProps> = ({ spots, at, head }) => (
               viewBox={`${-BALLOON} ${-BALLOON} ${BALLOON * 2} ${BALLOON * 2}`}
               overflow="visible"
             >
+              {/* As bolinhas ficam presas à cabeça; o balão é que boia, e elas pulsam fora de fase com ele. */}
               {[
                 { t: (BALLOON + 26) / length, r: 18 },
                 { t: (BALLOON + 62) / length, r: 11 },
-              ].map(({ t, r }) => (
+              ].map(({ t, r }, dot) => (
                 <circle
                   key={r}
                   cx={toward(t)[0]}
-                  cy={toward(t)[1]}
-                  r={r}
+                  cy={toward(t)[1] + 3 * float * (1 - dot)}
+                  r={r * (1 - 0.08 * float * (dot === 0 ? 1 : -1))}
                   fill={ink.ring}
                 />
               ))}
-              <circle r={BALLOON} fill={ink.ring} />
-              {icon}
+              <g transform={`translate(0 ${7 * float}) rotate(${1.5 * float})`}>
+                <circle r={BALLOON} fill={ink.ring} />
+                {icon}
+              </g>
             </svg>
           </Pop>
         </Place>
@@ -962,6 +1312,13 @@ type BedroomProps = {
   readonly turned?: number;
   readonly filled?: readonly [number, number];
   readonly on?: TagTone;
+  /** Quadros em que o cartaz e o calendário estouram na parede; sem valor, já estão nela. */
+  readonly posterAt?: number;
+  readonly calendarAt?: number;
+  /** Quanto o chão ainda está abaixo do lugar dele, em pixels: o quarto montando. */
+  readonly sunk?: number;
+  /** O tempo, em segundos: os papéis da parede balançam de leve. Sem valor, parados. */
+  readonly seconds?: number;
 };
 
 /** O quarto vazio: o chão, o cartaz do recorde e o calendário, nos lugares de `ROOM`. */
@@ -970,10 +1327,33 @@ export const Bedroom: React.FC<BedroomProps> = ({
   turned,
   filled,
   on = "lilac",
-}) => (
-  <>
-    <RoomFloor hue={hue} y={ROOM.floor} />
-    <RecordPoster {...ROOM.poster} />
-    <WallCalendar {...ROOM.calendar} turned={turned} filled={filled} on={on} />
-  </>
-);
+  posterAt,
+  calendarAt,
+  sunk = 0,
+  seconds,
+}) => {
+  const swing = (period: number, phase: number) =>
+    seconds === undefined
+      ? 0
+      : Math.sin((seconds / period + phase) * Math.PI * 2);
+  return (
+    <>
+      <RoomFloor hue={hue} y={ROOM.floor + sunk} />
+      <RecordPoster
+        {...ROOM.poster}
+        enter={posterAt}
+        sway={1.1 * swing(4.3, 0.2)}
+      />
+      <WallCalendar
+        {...ROOM.calendar}
+        turned={turned}
+        filled={filled}
+        on={on}
+        enter={calendarAt}
+        // A etiqueta do mês entra logo depois da folha.
+        monthAt={calendarAt === undefined ? undefined : calendarAt + 5}
+        sway={1.5 * swing(3.7, 0.6)}
+      />
+    </>
+  );
+};

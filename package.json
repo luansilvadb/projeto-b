@@ -16,21 +16,20 @@
     "sfx": "tsx scripts/sfx.ts",
     "stills": "tsx scripts/stills.ts",
     "critique": "tsx scripts/critique.ts",
-    "identity": "tsx scripts/identity.ts",
     "render": "remotion render",
     "setup:tools": "tsx scripts/setup-tools.ts"
   },
   "license": "UNLICENSED",
   "dependencies": {
-    "@remotion/cli": "4.0.532",
-    "@remotion/fonts": "4.0.532",
-    "@remotion/media": "4.0.532",
+    "@remotion/cli": "4.0.533",
+    "@remotion/fonts": "4.0.533",
+    "@remotion/media": "4.0.533",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "remotion": "4.0.532"
+    "remotion": "4.0.533"
   },
   "devDependencies": {
-    "@remotion/eslint-config-flat": "4.0.532",
+    "@remotion/eslint-config-flat": "4.0.533",
     "@types/node": "^24.19.0",
     "@types/react": "19.3.0",
     "@types/web": "0.0.357",

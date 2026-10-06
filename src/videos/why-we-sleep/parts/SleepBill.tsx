@@ -11,6 +11,7 @@ import {
   tags,
   type TagTone,
 } from "../palette";
+import { clamp01, mix } from "../../../components/timing";
 
 /**
  * A conta de sono: a forma visual da analogia central do vídeo (a dívida).
@@ -533,7 +534,18 @@ type SleepBillDetailProps = {
   readonly deeper?: number;
   /** A família da etiqueta "mais fundo": a do fundo do plano. */
   readonly on?: TagTone;
+  /** O tamanho do "14 h" num instante, em fração do final: o estouro dele. Sem valor, só a opacidade de `hours`. */
+  readonly hoursSize?: number;
+  /** Quanto a seta já se desenhou, de cima para baixo, de 0 a 1. Sem valor, acompanha `deeper`. */
+  readonly arrow?: number;
+  /** O tamanho da etiqueta "mais fundo" num instante, em fração do final. Sem valor, acompanha `deeper`. */
+  readonly tagSize?: number;
+  /** O pisca das onze luas, de 0 a 1: crescem um pouco e clareiam, juntas. */
+  readonly pulse?: number;
 };
+
+// A seta: o comprimento da haste, para desenhá-la aos poucos.
+const ARROW = { shaft: 76 };
 
 /**
  * A conta de perto, como detalhe: de um lado, onze noites riscadas; do outro,
@@ -546,9 +558,16 @@ export const SleepBillDetail: React.FC<SleepBillDetailProps> = ({
   hours = 1,
   deeper = 0,
   on = "lilac",
+  hoursSize = 1,
+  arrow,
+  tagSize,
+  pulse = 0,
 }) => {
   const { width, height } = DETAIL;
   const half = width / 2;
+  const led = arrow !== undefined || tagSize !== undefined;
+  const drawn = arrow ?? 1;
+  const tag = tagSize ?? 1;
   return (
     <svg
       width={width * scale}
@@ -577,10 +596,22 @@ export const SleepBillDetail: React.FC<SleepBillDetailProps> = ({
       {Array.from({ length: DETAIL_NIGHTS }, (_, index) => {
         const x = 96 + (index % 4) * 98 + (index >= 8 ? 49 : 0);
         const y = 150 + Math.floor(index / 4) * 130;
-        const struck = Math.max(0, Math.min(1, nights - index));
+        const struck = clamp01(nights - index);
         return (
-          <g key={index}>
+          <g
+            key={index}
+            transform={
+              pulse > 0
+                ? `translate(${x} ${y}) scale(${1 + 0.16 * pulse}) translate(${-x} ${-y})`
+                : undefined
+            }
+          >
             <Moon x={x} y={y} r={34} fill={idea.lilac.contact} />
+            {pulse > 0 ? (
+              <g opacity={0.55 * pulse}>
+                <Moon x={x} y={y} r={34} fill={idea.lilac.spot} />
+              </g>
+            ) : null}
             <line
               x1={x - 40}
               y1={y + 40}
@@ -603,36 +634,65 @@ export const SleepBillDetail: React.FC<SleepBillDetailProps> = ({
         fontSize={typography.size.display}
         fill={ink.dark}
         opacity={hours}
+        transform={
+          hoursSize === 1
+            ? undefined
+            : `translate(${half + half / 2} 200) scale(${hoursSize}) translate(${-half - half / 2} -200)`
+        }
       >
         14 h
       </text>
-      <g opacity={deeper} transform={`translate(${half + half / 2} 0)`}>
-        <path
-          d="M0,296 L0,372 M-30,346 L0,378 L30,346"
-          fill="none"
-          stroke={chalkboard.stamp}
-          strokeWidth={16}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <rect
-          x={-170}
-          y={404}
-          width={340}
-          height={86}
-          rx={43}
-          fill={tags[on].fill}
-        />
-        <text
-          y={466}
-          textAnchor="middle"
-          fontFamily={typography.family}
-          fontWeight={typography.weight}
-          fontSize={typography.size.note}
-          fill={tags[on].text}
-        >
-          mais fundo
-        </text>
+      <g
+        opacity={led ? 1 : deeper}
+        transform={`translate(${half + half / 2} 0)`}
+      >
+        {drawn > 0 ? (
+          <>
+            <path
+              d="M0,296 L0,372"
+              fill="none"
+              stroke={chalkboard.stamp}
+              strokeWidth={16}
+              strokeLinecap="round"
+              strokeDasharray={ARROW.shaft}
+              strokeDashoffset={ARROW.shaft * (1 - Math.min(1, drawn / 0.6))}
+            />
+            {drawn > 0.6 ? (
+              <path
+                d="M-30,346 L0,378 L30,346"
+                fill="none"
+                stroke={chalkboard.stamp}
+                strokeWidth={16}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                // A ponta abre do bico para as duas abas.
+                transform={`translate(0 378) scale(${(drawn - 0.6) / 0.4}) translate(0 -378)`}
+              />
+            ) : null}
+          </>
+        ) : null}
+        {tag > 0 ? (
+          <g transform={`translate(0 447) scale(${tag}) translate(0 -447)`}>
+            <rect
+              x={-170}
+              y={404}
+              width={340}
+              height={86}
+              rx={43}
+              fill={tags[on].fill}
+            />
+            <text
+              y={466}
+              textAnchor="middle"
+              fontFamily={typography.family}
+              fontWeight={typography.weight}
+              fontSize={typography.size.note}
+              fill={tags[on].text}
+            >
+              mais fundo
+            </text>
+          </g>
+        ) : null}
       </g>
     </svg>
   );
@@ -678,8 +738,6 @@ type BillToPocketProps = {
 const FOLD_END = 0.4;
 // O maço chega à boca do bolso neste ponto do caminho; daí em diante é o bolso quem mostra o papel descendo.
 const ARRIVAL = 0.8;
-const between = (from: number, to: number, t: number) => from + (to - from) * t;
-const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 // Uma aba que cai: sai devagar da folha aberta e chega depressa, como papel solto.
 const flap = (t: number) => Math.cos(Math.PI * clamp01(t) ** 1.6);
 // A folga em volta do papel que o recorte de cada metade deixa passar: a sombra e o picote.
@@ -832,7 +890,7 @@ export const BillToPocket: React.FC<BillToPocketProps> = ({
   const entering = clamp01((travel - ARRIVAL) / (1 - ARRIVAL));
   const height = billHeight(lines, form) * scale;
   // O maço chega do tamanho da ponta de papel que o bolso mostra, logo acima da boca dele.
-  const packet = between(scale, (pocket.scale * 116) / FOLDED.width, flying);
+  const packet = mix(scale, (pocket.scale * 116) / FOLDED.width, flying);
   const mouth = [
     pocket.x - 4 * pocket.scale,
     pocket.y - 174 * pocket.scale,
@@ -895,10 +953,10 @@ export const BillToPocket: React.FC<BillToPocketProps> = ({
         <div
           style={{
             position: "absolute",
-            left: between(quarter.x, mouth[0], flying),
-            top: between(quarter.y, mouth[1], flying),
+            left: mix(quarter.x, mouth[0], flying),
+            top: mix(quarter.y, mouth[1], flying),
             translate: "-50% -50%",
-            scale: `${between(quarter.scale[0], packet, clamp01(flying * 2))} ${between(quarter.scale[1], packet, clamp01(flying * 2))}`,
+            scale: `${mix(quarter.scale[0], packet, clamp01(flying * 2))} ${mix(quarter.scale[1], packet, clamp01(flying * 2))}`,
           }}
         >
           <FoldedBill />
@@ -911,7 +969,7 @@ export const BillToPocket: React.FC<BillToPocketProps> = ({
             top: from[1] + height / 2,
             translate: "-50% -50%",
             // A dobra, em dois tempos: primeiro o papel dobra de baixo para cima, depois dos lados para o meio.
-            scale: `${between(1, FOLDED.width / BILL_WIDTH, clamp01(folding * 2 - 1))} ${between(1, (FOLDED.height * scale) / height, clamp01(folding * 2))}`,
+            scale: `${mix(1, FOLDED.width / BILL_WIDTH, clamp01(folding * 2 - 1))} ${mix(1, (FOLDED.height * scale) / height, clamp01(folding * 2))}`,
           }}
         >
           {open}
@@ -920,8 +978,8 @@ export const BillToPocket: React.FC<BillToPocketProps> = ({
         <div
           style={{
             position: "absolute",
-            left: between(from[0], mouth[0], flying),
-            top: between(from[1] + height / 2, mouth[1], flying),
+            left: mix(from[0], mouth[0], flying),
+            top: mix(from[1] + height / 2, mouth[1], flying),
             translate: "-50% -50%",
           }}
         >

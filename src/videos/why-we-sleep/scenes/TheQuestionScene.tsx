@@ -17,7 +17,7 @@ import { FlatStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { Pop } from "../../../components/Pop";
+import { POP_SECONDS } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { cue, linear, mix, ramp } from "../../../components/timing";
 import { typography } from "../../../design/tokens";
@@ -26,6 +26,7 @@ import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot } from "../../../video/Shot";
 import { Vignette } from "../../../vignette/Vignette";
 import { pedestal } from "../palette";
+import { questionPop } from "../parts/IconRow";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import {
   CLOSE_SIGN,
@@ -74,6 +75,9 @@ const LENS = { searching: 130, found: 310 / NEARER };
 const LENS_SECONDS = 0.9;
 // A lupa insiste: o cabo sobe, passa do ponto e volta um pouco.
 const INSIST = { degrees: -15, back: 4, frames: 9, settle: 6 };
+// No caminho a lupa é levada com o cabo erguido e sobe um pouco, em arco: com o
+// cabo pendurado a 45°, ele passava por cima da placa "acordado 24 h" ao chegar.
+const CARRY = { degrees: -32, lift: 40 };
 
 /** A câmera `camera` com uma aproximação a mais, de `zoom` vezes, em volta do ponto `focus` do quadro. */
 const pushedIn = (
@@ -110,11 +114,17 @@ const EmptyShot: React.FC<EmptyShotProps> = ({ questionAt, insistAt }) => {
   // A lupa continua o vaivém do plano aberto enquanto vai até o lugar vazio; lá, só paira.
   const found = ramp(frame, 0, LENS_SECONDS * fps);
   const wander = searchWander(seconds);
+  const carried = Math.sin(Math.PI * found);
   const lens = [
     mix(wander[0], SLOT[0], found) + 4 * found * wave(seconds, 3.7),
-    mix(wander[1], SLOT[1], found) + 5 * found * wave(seconds, 2.9, 0.3),
+    mix(wander[1], SLOT[1], found) +
+      5 * found * wave(seconds, 2.9, 0.3) -
+      CARRY.lift * carried,
   ];
+  // A interrogação estoura: cresce de 0,7 a 1,08 e assenta, à vista, e não só pela opacidade.
+  const asked = questionPop(frame, questionAt, POP_SECONDS * fps);
   const tilt =
+    CARRY.degrees * carried +
     INSIST.degrees * ramp(frame, insistAt, INSIST.frames) +
     INSIST.back * ramp(frame, insistAt + INSIST.frames, INSIST.settle);
 
@@ -146,7 +156,9 @@ const EmptyShot: React.FC<EmptyShotProps> = ({ questionAt, insistAt }) => {
             <Layer depth={1}>
               <VacantSign {...SEARCH_SIGN} />
               <Place x={SLOT[0]} y={SLOT[1]}>
-                <Pop at={questionAt}>
+                <div
+                  style={{ opacity: asked.opacity, scale: `${asked.scale}` }}
+                >
                   <div
                     style={{
                       fontFamily: typography.family,
@@ -160,7 +172,7 @@ const EmptyShot: React.FC<EmptyShotProps> = ({ questionAt, insistAt }) => {
                   >
                     ?
                   </div>
-                </Pop>
+                </div>
               </Place>
               <Magnifier
                 x={lens[0]}

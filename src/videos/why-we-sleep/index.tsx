@@ -136,10 +136,10 @@ const SOURCES: Readonly<Record<string, string>> = {
 // Os planos que dividem o palco com o anterior: os elementos saem e entram,
 // e o que os dois têm em comum nunca sai da tela. O plano 0 é a entrada da
 // cena. É o padrão do vídeo inteiro (decisão do usuário, na partitura de
-// score.md). Ficam de fora a abertura, a entrada depois da vinheta e os
-// planos que já fazem a própria transformação por dentro. Por ora só o
-// trecho do piloto (o gancho e o capítulo 1) está ligado: os outros capítulos
-// entram quando forem animados.
+// score.md). Ficam de fora a abertura, a entrada depois da vinheta, o corte
+// de verdade depois do predador (a vigília abre com o bicho já em pé, para
+// ele não levantar logo depois de "você demora a perceber") e os planos que
+// já fazem a própria transformação por dentro.
 const JOINED = {
   "third-of-life": [1],
   "biggest-mistake": [0, 1, 2, 3],
@@ -148,13 +148,41 @@ const JOINED = {
   "five-parts": [1, 2, 3],
   "night-falls": [0, 1, 2],
   "last-to-know": [0],
-  // A vigília entra por corte: o bicho já está em pé e acordado. Dividir o
-  // palco com o plano do predador o faria levantar logo depois de "você
-  // demora a perceber" (decisão do usuário no piloto).
   "skip-a-night": [1],
   "sleep-debt": [0, 1],
   "debt-test": [0, 1],
   "debt-returns": [0, 1],
+  "sleep-less": [1],
+  elephants: [0, 1, 2, 3],
+  "two-hours": [0, 1],
+  "elephant-awake": [0, 1],
+  "elephant-verdict": [0, 1, 2, 3],
+  "maybe-brain": [0, 1, 2, 3],
+  jellyfish: [0, 1, 2],
+  "jellyfish-night": [0, 1, 2],
+  "jellyfish-platform": [0, 1, 2],
+  "jellyfish-debt": [0, 1, 2],
+  "older-than-brain": [0, 1, 2],
+  "forced-awake": [0, 2, 3],
+  "rats-disc": [0, 1, 2],
+  "rats-result": [0, 1, 2],
+  "unknown-cause": [0, 1],
+  "awake-record": [0, 1, 2, 3],
+  "gardner-hours": [0, 1],
+  "gardner-sleeps": [0, 1, 2, 3, 4],
+  "so-far": [0, 1, 2, 3, 4],
+  "but-what": [0, 2],
+  "memory-test": [0, 1],
+  "memory-result": [0, 1, 2],
+  stockroom: [0, 2],
+  "stockroom-night": [1, 2],
+  "stockroom-solid": [0, 1],
+  "nobody-escaped": [0, 1],
+  "one-of-them": [0, 1],
+  "still-unknown": [0, 1],
+  "what-it-is": [0, 1],
+  tonight: [0, 1, 2, 3],
+  subscribe: [0, 1, 2, 3],
 };
 
 // O cenário de cada plano. Planos seguidos com o mesmo nome dividem o palco
@@ -166,6 +194,27 @@ const SETS = {
   "last-to-know": ["savanna"],
   "skip-a-night": ["savanna", "savanna"],
   "sleep-debt": ["savanna", null],
+  "debt-returns": [null, "icons"],
+  "sleep-less": ["icons", null],
+  elephants: ["savanna", "savanna", "savanna", "savanna"],
+  "two-hours": ["savanna", "savanna"],
+  "elephant-awake": ["savanna", null],
+  "elephant-verdict": ["savanna", "savanna", null, null],
+  "maybe-brain": ["icons", "icons", null, null],
+  jellyfish: ["lagoon", "lagoon", null],
+  "jellyfish-night": ["lagoon", "lagoon", "tank"],
+  "jellyfish-platform": ["tank", "tank", null],
+  "jellyfish-debt": [null, "tank", "tank"],
+  "older-than-brain": ["tank", null, null],
+  "forced-awake": ["icons", null, "board", "board"],
+  "rats-disc": ["bench", "bench", "bench"],
+  "rats-result": ["bench", "bench", "bench"],
+  "awake-record": [null, "room", "room", "room"],
+  "gardner-hours": ["room", null],
+  "so-far": ["icons", "icons", "icons", "icons", "icons"],
+  "but-what": ["icons", "street", "street"],
+  stockroom: [null, null, "shop"],
+  "stockroom-night": ["shop", null, "shop"],
 };
 
 // Cada cena com fonte ganha o selo no canto, do começo ao fim. Quando a cena

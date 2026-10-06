@@ -4,6 +4,7 @@ import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { ink, lagoon, signs, type TagTone } from "../palette";
 import { Tag } from "./Tag";
+import { clamp01 } from "../../../components/timing";
 
 /** A fração da vida que se passa dormindo: um terço. */
 export const SLEPT_SHARE = 1 / 3;
@@ -39,6 +40,14 @@ type LifeBarProps = {
   readonly thirdAt?: number;
   /** O fundo sobre o qual a etiqueta fica. */
   readonly on?: TagTone;
+  /**
+   * Quanto do céu do terço aceso já entrou, de 0 a 1: as estrelas estouram
+   * uma a uma, da esquerda para a direita, e a lua cresce por último. Por
+   * padrão, inteiro: o céu só acompanha `lit`.
+   */
+  readonly sky?: number;
+  /** O instante, em segundos, para as estrelas piscarem, cada uma na própria fase. Sem valor, paradas. */
+  readonly twinkle?: number;
 };
 
 // As estrelas do terço aceso: posição em fração do terço e raio em fração da altura.
@@ -49,6 +58,15 @@ const STARS = [
   [0.86, 0.7, 0.05],
   [0.9, 0.24, 0.03],
 ] as const;
+
+// O céu entra em partes: cada estrela ocupa duas, a seguinte começa uma depois, e a lua fecha.
+const SKY_PARTS = STARS.length + 2;
+
+/** A entrada com sobra de uma peça do céu, num trecho do caminho de 0 a 1: do nada, passa do tamanho e assenta. */
+const entered = (sky: number, from: number, to: number): number => {
+  const t = clamp01((sky - from) / (to - from));
+  return t < 0.7 ? (t / 0.7) * 1.25 : 1.25 - ((t - 0.7) / 0.3) * 0.25;
+};
 
 /**
  * A vida inteira numa barra só: o tempo acordado em coral e, no fim dela, o
@@ -62,6 +80,8 @@ export const LifeBar: React.FC<LifeBarProps> = ({
   lit = 0,
   thirdAt,
   on = "peach",
+  sky = 1,
+  twinkle,
 }) => {
   const id = useId();
   const { x, y, width, height } = box;
@@ -140,17 +160,26 @@ export const LifeBar: React.FC<LifeBarProps> = ({
               height={height * 0.34}
               fill={lagoon.night.water[0]}
             />
-            {STARS.map(([sx, sy, r]) => (
+            {STARS.map(([sx, sy, r], index) => (
               <circle
                 key={sx}
                 cx={thirdX + thirdWidth * sx}
                 cy={y + height * sy}
-                r={height * r}
+                r={
+                  height *
+                  r *
+                  entered(sky, index / SKY_PARTS, (index + 2) / SKY_PARTS) *
+                  (twinkle === undefined
+                    ? 1
+                    : 1 +
+                      0.22 *
+                        Math.sin(twinkle * (1.9 + index * 0.37) + index * 2.1))
+                }
                 fill={ink.moon}
               />
             ))}
             <g
-              transform={`translate(${thirdX + thirdWidth * 0.64} ${y + height * 0.48}) scale(${height / 150})`}
+              transform={`translate(${thirdX + thirdWidth * 0.64} ${y + height * 0.48}) scale(${(height / 150) * entered(sky, (STARS.length - 1) / SKY_PARTS, 1)})`}
             >
               <path
                 d="M10,-46 A46,46 0 1 0 46,14 A38,38 0 1 1 10,-46 Z"
