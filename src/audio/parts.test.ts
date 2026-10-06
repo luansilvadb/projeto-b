@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
+import { MUSIC_MIX } from "./ducking";
 import {
   MUSIC_PARTS,
   featureAmount,
   holdRanges,
+  levelChanges,
+  levelDb,
   musicParts,
   partEnvelopes,
   partGain,
@@ -27,6 +30,7 @@ describe("planMusicParts", () => {
         fadeMs: 0,
         durationSeconds: 350 + MUSIC_PARTS.tailSeconds,
         ...music,
+        moments: [],
       },
     ]);
   });
@@ -248,5 +252,102 @@ describe("silenceRanges e holdRanges", () => {
 
   it("acha o silêncio no fim de cada cena que o roteiro mandou esperar", () => {
     expect(holdRanges(timeline)).toEqual([{ from: 240, to: 300 }]);
+    // O silêncio de 60 quadros não chega ao mínimo de 90.
+    expect(holdRanges(timeline, 90)).toEqual([]);
+  });
+});
+
+describe("os momentos da trilha", () => {
+  // Quatro cenas de 40 s.
+  const short = ["a", "b", "c", "d"].map((id) => ({ id, durationMs: 40_000 }));
+
+  it("põe cada momento na faixa em que ele começa, em segundos a partir dela", () => {
+    const [first, second] = planMusicParts(short, {
+      ...music,
+      parts: [{ from: "c" }],
+      moments: [
+        { from: "b", caption: "sparse" },
+        { from: "d", caption: "calm" },
+      ],
+    });
+    expect(first.moments).toEqual([
+      { startSeconds: 40, endSeconds: 80, caption: "sparse" },
+    ]);
+    // A segunda faixa começa em 80 s, com a cena "c"; a "d" começa 40 s depois.
+    expect(second.moments).toEqual([
+      { startSeconds: 40, endSeconds: 80, caption: "calm" },
+    ]);
+  });
+
+  it("recusa o momento mais longo do que o modelo refaz de uma vez", () => {
+    expect(() =>
+      planMusicParts(scenes, {
+        ...music,
+        moments: [{ from: "body", caption: "tense" }],
+      }),
+    ).toThrow(/dura 200\.0 s/);
+  });
+
+  it("recusa o momento que atravessa a troca de faixa", () => {
+    expect(() =>
+      planMusicParts(short, {
+        ...music,
+        parts: [{ from: "c" }],
+        // De 40 a 120 s, e a faixa seguinte entra em 80 s.
+        moments: [{ from: "b", to: "c", caption: "tense" }],
+      }),
+    ).toThrow(/passa da troca de faixa/);
+  });
+
+  it("recusa o momento que começa junto com a faixa, sem música antes dele", () => {
+    expect(() =>
+      planMusicParts(short, {
+        ...music,
+        moments: [{ from: "a", caption: "sparse" }],
+      }),
+    ).toThrow(/começa junto com a faixa/);
+  });
+
+  it("conta a sobra das pontas no limite de uma faixa", () => {
+    const seconds =
+      MUSIC_PARTS.maxSeconds -
+      MUSIC_PARTS.leadSeconds -
+      MUSIC_PARTS.tailPadSeconds;
+    expect(() =>
+      planMusicParts([{ id: "long", durationMs: seconds * 1000 }], music),
+    ).toThrow(/Divida a trilha/);
+  });
+});
+
+describe("os níveis da trilha", () => {
+  const timeline = [
+    { id: "hook", from: 0 },
+    { id: "body", from: 300 },
+  ] as never;
+  const changes = levelChanges(timeline, {
+    ...music,
+    levels: [{ from: "body", level: "recuo" }],
+  });
+  const { leito, recuo } = MUSIC_MIX.levelsDb;
+
+  it("começa em leito e chega ao nível pedido numa rampa centrada na cena", () => {
+    expect(levelDb(0, changes, 60)).toBe(leito);
+    expect(levelDb(270, changes, 60)).toBe(leito);
+    expect(levelDb(300, changes, 60)).toBe((leito + recuo) / 2);
+    expect(levelDb(330, changes, 60)).toBe(recuo);
+    expect(levelDb(900, changes, 60)).toBe(recuo);
+  });
+
+  it("fica em leito no vídeo inteiro quando o roteiro não pede nível", () => {
+    expect(levelDb(500, levelChanges(timeline, music), 60)).toBe(leito);
+  });
+
+  it("acusa a cena que não está na narração", () => {
+    expect(() =>
+      levelChanges(timeline, {
+        ...music,
+        levels: [{ from: "gone", level: "presente" }],
+      }),
+    ).toThrow(/não está na narração/);
   });
 });

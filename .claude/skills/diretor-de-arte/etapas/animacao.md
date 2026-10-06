@@ -6,7 +6,7 @@ Leia a skill `remotion-best-practices` (regras de `remotion-markup`) antes de es
 
 ## Passo 1: partitura
 
-Antes do código, a partitura de cada plano (`tempo/sincronia`): o que entra, muda ou sai, em que palavra, por quanto tempo, e onde cabe som. Os tempos das palavras vêm de `public/videos/<vídeo>/narration.json`; `scripts/check-script.ts` mostra a duração de cada plano. Registre a partitura em `src/videos/<vídeo>/score.md`, uma seção por cena (o `id` dela) e um item por plano, e siga por ela. Ela vai para o git: é o que o usuário aprova, o que o `motion-designer` recebe e o que o `critico-de-movimento` confere. As imagens e os vídeos de comparação das decisões continuam em `out/conceito/<vídeo>/`.
+Antes do código, a partitura de cada plano (`tempo/sincronia`): o que entra, muda ou sai, em que palavra e por quanto tempo. Os tempos das palavras vêm de `public/videos/<vídeo>/narration.json`; `scripts/check-script.ts` mostra a duração de cada plano. Registre a partitura em `src/videos/<vídeo>/score.md`, uma seção por cena (o `id` dela) e um item por plano, e siga por ela. Ela vai para o git: é o que o usuário aprova, o que o `motion-designer` recebe e o que o `critico-de-movimento` confere. As imagens e os vídeos de comparação das decisões continuam em `out/conceito/<vídeo>/`.
 
 ## Passo 2: movimento, com os primitivos do projeto
 
@@ -29,17 +29,9 @@ Movimento que se repete em mais de uma cena vira um primitivo em `src/components
 
 A mesma curva não serve para tudo: `motion.smooth` dos tokens chega em um décimo do tempo e rasteja o resto; uma porta que desce com ela parece fechar em 0,15 s. Use `ramp` para o que tem peso e `settle` só para o que chega e para.
 
-## Efeitos sonoros
+## Som
 
-A partitura marca onde cabe som, e a cena recebe a marca:
-
-```tsx
-<Sfx name="<uso>" from={cueFrame(scene, "oito")} />
-```
-
-Texto que entra na tela não leva efeito; reserve o som para o que acontece na imagem (impacto, entrada grande, mudança de cenário), e só quando importa, porque efeito demais cansa. Os momentos vão ao usuário antes de qualquer som ser buscado (`entrevista-movimento`).
-
-O `name` é um uso do catálogo (`src/audio/Sfx.tsx`). Buscar, escolher e catalogar um som novo é da skill `producao`, etapa `efeitos-sonoros`: entregue a ela a lista dos usos que faltam, com o que acontece na imagem em cada um.
+Nenhuma cena toca som. Os efeitos são da skill `diretor-de-som`, que os declara no roteiro (`sfx`) a partir da partitura: por isso cada ação da partitura diz a palavra de deixa e quanto tempo depois dela a coisa acontece (a moeda cai 1 s depois de ser jogada). Uma ação que pede som e não tem instante claro na partitura não ganha efeito.
 
 ## Passo 3: revisão (`revisao/critica-movimento`)
 
@@ -56,4 +48,4 @@ Com o trecho renderizado e as suas próprias tiras lidas, acione o subagente `cr
 
 Depois peça ao usuário para assistir, porque ritmo e suavidade só se julgam em movimento, e entregue junto as tiras das transições e as medidas. O "sim" dele é o **aceite da animação**: registre-o em `src/videos/<vídeo>/approvals.md` (formato nas convenções do `README.md`), com cada medida fora da faixa que ele aceitou.
 
-As próximas etapas são a trilha e o corte final, na skill `producao`.
+A próxima etapa é o som, na skill `diretor-de-som`; depois, o corte final, na skill `producao`.

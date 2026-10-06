@@ -6,7 +6,7 @@ O que cada plano faz em movimento: o que entra, muda ou sai, em que palavra e po
 
 - Uma seção por cena (o `id` do roteiro), um item por plano, com a escala, a entrada e a duração medidas na narração gravada.
 - Os tempos são em segundos a partir do começo do plano. A palavra entre aspas é a deixa; o movimento começa 4 quadros antes dela. O começo de cada plano já antecipa a própria deixa.
-- "Vivo" é a pausa viva: o que se mexe quando nada acontece. "Som" marca onde cabe efeito sonoro; nenhum som é buscado antes de o usuário aprovar os momentos.
+- "Vivo" é a pausa viva: o que se mexe quando nada acontece. "Som" marca uma ação que pode soar; o que soa de fato está em `sound.md`.
 - Durações da unidade `tempo/sincronia`: entrada de elemento, 0,3 s; ação de personagem, 0,6 a 1,2 s; mudança de cenário, 0,8 a 1,5 s; varredura, 0,25 s. Nos últimos 0,5 s de um plano nada entra.
 
 ## Andamento
@@ -40,77 +40,9 @@ O gancho e o capítulo 1 foram animados primeiro, criticados duas vezes e aceito
 
 Desvios da letra aceitos no piloto: o bicho entra pela direita em `night-falls` 1, em 2,2 s; `sleep-debt` 1 não tem câmera fechando; a poda de `time-to-fix` 1 termina por cima do começo da linha do tempo; `biggest-mistake` 3 para 4 é uma troca com o quadro-negro grande entrando pela direita, e não um recuo; "dorme mais tempo" é o sol andando no céu; a vinheta sai por uma janela redonda que encolhe até o centro.
 
-## Mapa da trilha
+## Som
 
-A trilha acompanha o vídeo em três camadas: uma música por momento, a ênfase na mixagem e os efeitos sonoros (a seção seguinte). O usuário pediu isso em 2026-10-05, depois de recusar três sementes de uma trilha de fundo única: "a música precisa estar conexa com o vídeo". Mapa aprovado pelo usuário em 2026-10-05, com o respiro nas viradas; os instantes da tabela são os de antes do respiro, e os de agora saem da narração.
-
-### As faixas
-
-Dez faixas, todas em lá menor ou dó maior (as mesmas notas) e com os mesmos três timbres de base (piano de feltro, sintetizador analógico quente, cordas), para soarem como uma trilha só. O que muda de uma para a outra é o andamento, a energia e um timbre próprio do capítulo.
-
-A primeira versão usava marimba, kalimba e caixinha de música, com climas "brincalhões", e o usuário a recusou em 2026-10-05: "tá muito infantil; o vídeo é para todas as idades, mesmo feito em vetores não é vídeo infantil". A trilha é de documentário de ciência para adulto: nada de timbre de brinquedo, nada de clima de desenho animado. A segunda versão, gerada com a semente 1, foi aprovada de ouvido pelo usuário em 2026-10-05, no som do vídeo inteiro (voz e trilha mixadas).
-
-| # | Trecho | Começa | Termina | O que a música faz | Timbre próprio | bpm |
-|---|---|---|---|---|---|---|
-| 1 | Gancho | 0:00, `third-of-life` | 0:40,6, fim da pergunta | curiosa e rala, cresce até a pergunta | piano de feltro sozinho, que ganha um pulso de sintetizador | 96 |
-| 2 | Vinheta | 0:40,6, o silêncio de `the-question` | 0:46,6 | o tema do vídeo, cheio e confiante, em primeiro plano | arpejo de sintetizador com acordes de piano e cordas | 96 |
-| 3 | 1. Dormir é perigoso | 0:46,6, `five-parts` | 1:55,3 | leve e curiosa, andando para a frente, fim de tarde | arpejo suave de sintetizador, percussão eletrônica leve | 96 |
-| 4 | 2. Elefantas | 1:55,3, `sleep-less` | 2:57,1 | larga e calorosa, pulso lento | baixo fundo, acordes largos de cordas, trompa | 84 |
-| 5 | 3. Água-viva | 2:57,1, `maybe-brain` | 4:25,6 | aquática e misteriosa, pulsando devagar | texturas cintilantes de sintetizador, sub-grave | 72 |
-| 6 | 4. À força | 4:25,6, `forced-awake` | 6:23,2 | laboratório: um pulso de relógio que aperta com as horas | pulso de sintetizador, piano grave, cordas contidas | 104 |
-| 7 | Recapitulação | 6:23,2, `so-far` | 6:39, antes da resposta | quase nada, um respiro | só um pad e notas soltas de piano | 72 |
-| 8 | 5. O que o sono faz | 6:46,1, `but-what` | 8:05,6 | quente e esperançosa, a virada do vídeo | piano de feltro e cordas com arco | 88 |
-| 9 | Fechamento | 8:05,6, `nobody-escaped` | 9:11,7 | o tema volta, calmo e contemplativo, e resolve | piano de feltro lento sobre pads e cordas | 76 |
-| 10 | Inscrição | 9:11,7, `subscribe` | 9:27, fim | o tema da vinheta de novo | o mesmo da faixa 2 | 96 |
-
-Cada faixa entra na primeira palavra da cena dela e cruza com a anterior em 3 segundos, menos onde a tabela de ênfase manda silêncio.
-
-### A ênfase na mixagem
-
-A regra geral não muda: a música fica 18 dB abaixo da voz enquanto alguém fala. Estes pontos fogem dela.
-
-**A música sobe ao primeiro plano**, onde não há fala:
-
-| Instante | Cena | Por quê |
-|---|---|---|
-| 0:40,6 a 0:46,6 | `the-question`, o silêncio | a vinheta: a música é o assunto |
-| 9:10,2 a 9:11,7 | `tonight`, o silêncio | "Que seja um bom sono": o tema resolve antes da inscrição |
-| 9:26 a 9:27 | `subscribe`, a sobra | a última nota, antes do fade |
-
-**A música some**, para o silêncio pesar:
-
-| Instante | Cena | Por quê |
-|---|---|---|
-| 1:09,0 a 1:13,0 | `last-to-know` | "Se um predador chegar perto, você demora a perceber": os olhos acendem no capim sem música; ela volta no corte para a vigília |
-| 5:04 a 5:11,5 | `rats-result`, da palavra "morreram" ao fim | a morte dos ratos não leva o tique do relógio |
-| 6:39 a 6:46,1 | `so-far`, a última frase | a resposta do vídeo ("nenhum animal estudado até hoje conseguiu parar de dormir") é dita no silêncio; a faixa 8 entra em seguida |
-
-### O respiro nas viradas (aprovado)
-
-Fora da vinheta e do fim, o roteiro não tem silêncio: uma cena começa colada na outra, e a música nunca tem espaço para aparecer nas viradas de capítulo. A decisão foi dar 1 segundo sem fala (`holdMs`) no fim de cinco cenas: `debt-returns`, `elephant-verdict`, `older-than-brain`, `gardner-sleeps` e `stockroom-solid`. A faixa nova entra nesse segundo, em primeiro plano, e cede quando a fala volta. Custa 5 segundos de vídeo, e o último plano de cada uma dessas cenas dura 1 segundo a mais, na pausa viva que ele já tem.
-
-### O que a ferramenta não faz
-
-O ACE-Step não põe um acento num segundo exato dentro de uma faixa, e duas faixas com descrições irmãs saem parecidas, não com a mesma melodia: "o tema volta" quer dizer o mesmo timbre e o mesmo clima. A sincronia com a imagem vem de onde cada faixa começa e termina, do volume e dos efeitos.
-
-## Momentos de som (a aprovar)
-
-Doze, só onde algo acontece na imagem. Texto que entra não leva som.
-
-| Cena, plano | Instante | O que acontece |
-|---|---|---|
-| `biggest-mistake` 4 | 1,0 | o carimbo "erro?" bate no quadro-negro |
-| `time-to-fix` 1 | 1,9 | a tesoura corta o galho ("SNIP") |
-| `last-to-know` 1 | 0,7 | os olhos acendem no capim |
-| `sleep-debt` 1 | 1,7 | o bicho desaba ("PLOFT") e o carimbo "cobrado" bate |
-| `debt-returns` 1 | 1,1 | a conta entra no bolso |
-| `jellyfish-platform` 1 | 1,3 | a plataforma é puxada |
-| `jellyfish-debt` 2 | 1,8 | os jatos de água ("PSSST") |
-| `forced-awake` 2 | 0,8 | o despertador toca ("TRIIIM") |
-| `rats-disc` 2 | 3,4 | o disco gira |
-| `awake-record` 4 | 0,1 | a moeda gira no ar e cai |
-| `stockroom-night` 1 | 0,9 | a porta de enrolar desce |
-| `tonight` 3 | 0,3 | o carimbo "erro?" perde a cor |
+A música, os níveis, os silêncios e os efeitos saíram desta partitura em 2026-10-05 e ficam em `sound.md`, da skill `diretor-de-som`. As linhas "Som:" de cada plano, abaixo, são as marcas da época em que a animação foi escrita: valem como registro do que acontece na imagem, e quem decide o que soa é o mapa de som.
 
 ## third-of-life
 

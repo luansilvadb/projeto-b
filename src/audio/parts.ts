@@ -1,5 +1,6 @@
 import type { MusicPart, MusicTrack } from "../media";
-import type { MusicSpec } from "../narration/script";
+import type { MusicLevel, MusicSpec } from "../narration/script";
+import { MUSIC_MIX } from "./ducking";
 import {
   cueFrame,
   type FrameRange,
@@ -14,6 +15,24 @@ import {
 export const MUSIC_PARTS = {
   /** O máximo que o ACE-Step gera por faixa numa GPU de 8 GB. */
   maxSeconds: 480,
+  /**
+   * A sobra pedida ao modelo antes e depois de cada faixa, e cortada depois
+   * (tools/music/trim.py). A faixa gerada leva de 10 a 20 s para chegar ao
+   * corpo e morre nos últimos 5 a 10 s: sem a sobra, em volta de cada troca
+   * a música quase some (medido nas dez faixas do why-we-sleep em 2026-10-05).
+   */
+  leadSeconds: 30,
+  tailPadSeconds: 10,
+  /** O trecho que o ACE-Step aceita refazer dentro de uma faixa ("repaint"). */
+  momentMinSeconds: 3,
+  momentMaxSeconds: 90,
+  /**
+   * Quanto de faixa um momento precisa ter antes dele. O trecho é refeito com
+   * o que vem antes como contexto: no segundo zero não há contexto, e o
+   * modelo abriu com 4 s de silêncio e 14 s de notas soltas (o gancho do
+   * why-we-sleep, em 2026-10-06).
+   */
+  momentContextSeconds: 5,
   /** O mínimo que vale pedir: mais curta que isto, a faixa sai sem forma. */
   minSeconds: 15,
   /** Sobra depois da última fala, para o fade final não cortar a música no meio. */
@@ -38,6 +57,14 @@ type PlannedPart = {
   readonly caption: string;
   readonly bpm?: number;
   readonly keyScale?: string;
+  /** Os trechos da faixa a refazer, em segundos a partir do começo dela. */
+  readonly moments: readonly PlannedMoment[];
+};
+
+type PlannedMoment = {
+  readonly startSeconds: number;
+  readonly endSeconds: number;
+  readonly caption: string;
 };
 
 type TimedScene = {
@@ -99,27 +126,83 @@ export const planMusicParts = (
     })),
   ];
 
+  // Cada momento cai na faixa que toca quando ele começa, e precisa caber
+  // nela: o trecho é refeito dentro de uma peça, não entre duas.
+  const moments = (music.moments ?? []).map((moment, index) => {
+    const startMs = startOf(moment.from);
+    const last = scenes.findIndex(
+      ({ id }) => id === (moment.to ?? moment.from),
+    );
+    if (last < 0) {
+      throw new Error(
+        `O momento ${index + 1} da trilha termina na cena "${moment.to}", que não está na narração.`,
+      );
+    }
+    const endMs = startOf(scenes[last].id) + scenes[last].durationMs;
+    const seconds = (endMs - startMs) / 1000;
+    if (
+      seconds < MUSIC_PARTS.momentMinSeconds ||
+      seconds > MUSIC_PARTS.momentMaxSeconds
+    ) {
+      throw new Error(
+        `O momento ${index + 1} da trilha (cena "${moment.from}") dura ${seconds.toFixed(1)} s, ` +
+          `mas o trecho refeito numa faixa vai de ${MUSIC_PARTS.momentMinSeconds} a ${MUSIC_PARTS.momentMaxSeconds} s.`,
+      );
+    }
+    return { startMs, endMs, caption: moment.caption, label: index + 1 };
+  });
+
   const planned = starts.map((part, index): PlannedPart => {
     const next = starts[index + 1];
     const endMs = next
       ? next.startMs + next.fadeMs
       : totalMs + MUSIC_PARTS.tailSeconds * 1000;
+    const inside = moments.filter(
+      (moment) =>
+        moment.startMs >= part.startMs &&
+        (!next || moment.startMs < next.startMs),
+    );
+    const early = inside.find(
+      (moment) =>
+        moment.startMs - part.startMs < MUSIC_PARTS.momentContextSeconds * 1000,
+    );
+    if (early) {
+      throw new Error(
+        `O momento ${early.label} da trilha começa junto com a faixa: comece-o uma cena depois, para o trecho ter música antes dele.`,
+      );
+    }
+    const crossing = inside.find((moment) => moment.endMs > endMs);
+    if (crossing) {
+      throw new Error(
+        `O momento ${crossing.label} da trilha passa da troca de faixa: termine-o antes da cena em que a faixa seguinte entra.`,
+      );
+    }
     return {
       ...part,
       durationSeconds: Math.max(
         Math.ceil((endMs - part.startMs) / 1000),
         MUSIC_PARTS.minSeconds,
       ),
+      moments: inside.map((moment) => ({
+        startSeconds: (moment.startMs - part.startMs) / 1000,
+        endSeconds: (moment.endMs - part.startMs) / 1000,
+        caption: moment.caption,
+      })),
     };
   });
 
+  // A sobra das pontas é gerada junto, e conta no limite do modelo.
+  const maxSeconds =
+    MUSIC_PARTS.maxSeconds -
+    MUSIC_PARTS.leadSeconds -
+    MUSIC_PARTS.tailPadSeconds;
   const tooLong = planned.findIndex(
-    (part) => part.durationSeconds > MUSIC_PARTS.maxSeconds,
+    (part) => part.durationSeconds > maxSeconds,
   );
   if (tooLong >= 0) {
     throw new Error(
       `A parte ${tooLong + 1} da trilha precisa de ${planned[tooLong].durationSeconds} s, ` +
-        `mas cada faixa é gerada numa peça só de até ${MUSIC_PARTS.maxSeconds} s. ` +
+        `mas cada faixa é gerada numa peça só de até ${maxSeconds} s. ` +
         'Divida a trilha no roteiro: em "music", acrescente "parts": [{ "from": "<id da cena em que a faixa troca>" }].',
     );
   }
@@ -223,10 +306,16 @@ export const silenceRanges = (
     };
   });
 
-/** Os silêncios que o roteiro pediu no fim das cenas ("holdMs"), em quadros do vídeo. */
-export const holdRanges = (scenes: readonly SceneTimeline[]): FrameRange[] =>
+/**
+ * Os silêncios que o roteiro pediu no fim das cenas ("holdMs"), em quadros do
+ * vídeo; com `minFrames`, só os que duram ao menos isso.
+ */
+export const holdRanges = (
+  scenes: readonly SceneTimeline[],
+  minFrames = 1,
+): FrameRange[] =>
   scenes
-    .filter((scene) => scene.holdFrames > 0)
+    .filter((scene) => scene.holdFrames >= minFrames)
     .map((scene) => ({
       from: scene.from + scene.durationInFrames - scene.holdFrames,
       to: scene.from + scene.durationInFrames,
@@ -272,3 +361,43 @@ export const featureAmount = (
           ),
     0,
   );
+
+/** Uma mudança de nível da trilha, em quadros do vídeo. */
+type LevelChange = {
+  readonly frame: number;
+  readonly level: MusicLevel;
+};
+
+/** Onde o roteiro muda o nível da trilha sob a fala, em quadros do vídeo. */
+export const levelChanges = (
+  scenes: readonly SceneTimeline[],
+  music: MusicSpec | undefined,
+): LevelChange[] =>
+  (music?.levels ?? []).map((change) => {
+    const scene = scenes.find(({ id }) => id === change.from);
+    if (!scene) {
+      throw new Error(
+        `A trilha muda de nível na cena "${change.from}", que não está na narração.`,
+      );
+    }
+    return { frame: scene.from, level: change.level };
+  });
+
+/**
+ * Quantos dB abaixo da voz a trilha fica num quadro. Cada mudança é uma rampa
+ * centrada no começo da cena, para o nível novo já estar perto quando a
+ * primeira palavra soa.
+ */
+export const levelDb = (
+  frame: number,
+  changes: readonly LevelChange[],
+  rampFrames: number,
+): number =>
+  changes.reduce((db, change) => {
+    const target = MUSIC_MIX.levelsDb[change.level];
+    const progress = Math.min(
+      Math.max((frame - change.frame) / rampFrames + 0.5, 0),
+      1,
+    );
+    return db + (target - db) * progress;
+  }, MUSIC_MIX.levelsDb.leito as number);

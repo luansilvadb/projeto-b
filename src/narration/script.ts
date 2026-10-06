@@ -1,3 +1,4 @@
+import { SFX, SFX_LEVELS, type SfxLevel, type SfxName } from "../audio/sfx";
 import { shotStartWords, type ShotCue } from "./shots";
 import { findNarrationProblems } from "./text";
 
@@ -49,6 +50,36 @@ export type MusicSpec = {
   readonly parts?: readonly MusicPartSpec[];
   /** Os trechos sem música, para o silêncio pesar. */
   readonly silences?: readonly MusicSilenceSpec[];
+  /**
+   * Os momentos em que a música muda de caráter sem trocar de faixa: o trecho
+   * é refeito dentro da mesma peça (o "repaint" do ACE-Step), com a descrição
+   * dele, e o resto da faixa fica como estava.
+   */
+  readonly moments?: readonly MusicMomentSpec[];
+  /** Onde o nível da trilha sob a fala muda. Sem isto, o vídeo inteiro fica em "leito". */
+  readonly levels?: readonly MusicLevelSpec[];
+};
+
+/**
+ * Os níveis da trilha sob a fala, do mais presente ao mais recuado. São
+ * poucos e próximos de propósito: a distância de cada um à voz está em
+ * `MUSIC_MIX` (src/audio/ducking.ts).
+ */
+export const MUSIC_LEVELS = ["presente", "leito", "recuo"] as const;
+export type MusicLevel = (typeof MUSIC_LEVELS)[number];
+
+/** Um momento da trilha: do começo da cena `from` ao fim da cena `to` (ou da própria `from`). */
+type MusicMomentSpec = {
+  readonly from: string;
+  readonly to?: string;
+  /** O que a música faz no trecho, com os mesmos timbres da faixa. */
+  readonly caption: string;
+};
+
+/** O nível da trilha a partir do começo da cena `from`, até a mudança seguinte. */
+type MusicLevelSpec = {
+  readonly from: string;
+  readonly level: MusicLevel;
 };
 
 type MusicPartSpec = {
@@ -72,10 +103,29 @@ type MusicSilenceSpec = {
   readonly occurrence?: number;
 };
 
+/**
+ * Um efeito sonoro do vídeo. Toca na palavra `cue` da cena (a `occurrence`
+ * quando ela se repete), ou no começo do plano `shot` (contado a partir de
+ * 1), ou no começo da cena; `offsetMs` desloca o som para antes ou depois.
+ */
+export type SfxSpec = {
+  readonly scene: string;
+  readonly cue?: string;
+  readonly occurrence?: number;
+  readonly shot?: number;
+  readonly offsetMs?: number;
+  /** Um uso do catálogo (src/audio/sfx.ts). */
+  readonly name: SfxName;
+  /** Sem isto, o nível normal de um efeito. */
+  readonly level?: SfxLevel;
+};
+
 export type Script = {
   readonly title: string;
   readonly scenes: readonly ScriptScene[];
   readonly music?: MusicSpec;
+  /** Os efeitos sonoros, na ordem do vídeo. */
+  readonly sfx?: readonly SfxSpec[];
 };
 
 const SCENE_ID = /^[a-z0-9]+(-[a-z0-9]+)*$/;
@@ -351,6 +401,145 @@ const findMusicProblems = (
       });
     }
   }
+
+  if (music.moments !== undefined) {
+    if (!Array.isArray(music.moments)) {
+      problems.push('"music.moments" precisa ser uma lista');
+    } else {
+      // Os momentos vêm na ordem do vídeo e não se sobrepõem: cada um refaz
+      // um trecho da faixa, e dois sobre o mesmo trecho se desfariam.
+      let last = -1;
+      music.moments.forEach((moment: unknown, index) => {
+        const label = `music.moments[${index}]`;
+        if (!isRecord(moment) || !isFilledString(moment.from)) {
+          problems.push(
+            `"${label}" precisa de um "from" com o "id" de uma cena`,
+          );
+          return;
+        }
+        if (!isFilledString(moment.caption)) {
+          problems.push(`"${label}" precisa de um "caption"`);
+        }
+        if (moment.to !== undefined && !isFilledString(moment.to)) {
+          problems.push(`"${label}.to" precisa ser o "id" de uma cena`);
+          return;
+        }
+        const start = sceneIds.indexOf(moment.from);
+        const end = sceneIds.indexOf(moment.to ?? moment.from);
+        if (start < 0 || end < 0) {
+          problems.push(
+            `"${label}": não há cena "${String(start < 0 ? moment.from : moment.to)}"`,
+          );
+        } else if (end < start) {
+          problems.push(`"${label}.to" precisa vir depois de "from"`);
+        } else if (start <= last) {
+          problems.push(
+            `"${label}.from": a cena "${moment.from}" precisa vir depois do momento anterior`,
+          );
+        } else {
+          last = end;
+        }
+      });
+    }
+  }
+
+  if (music.levels !== undefined) {
+    if (!Array.isArray(music.levels)) {
+      problems.push('"music.levels" precisa ser uma lista');
+    } else {
+      let last = -1;
+      music.levels.forEach((change: unknown, index) => {
+        const label = `music.levels[${index}]`;
+        if (!isRecord(change) || !isFilledString(change.from)) {
+          problems.push(
+            `"${label}" precisa de um "from" com o "id" de uma cena`,
+          );
+          return;
+        }
+        if (!MUSIC_LEVELS.includes(change.level as MusicLevel)) {
+          problems.push(
+            `"${label}.level" precisa ser um de: ${MUSIC_LEVELS.join(", ")}`,
+          );
+        }
+        const scene = sceneIds.indexOf(change.from);
+        if (scene < 0) {
+          problems.push(`"${label}.from": não há cena "${change.from}"`);
+        } else if (scene <= last) {
+          problems.push(
+            `"${label}.from": a cena "${change.from}" precisa vir depois da mudança anterior`,
+          );
+        } else {
+          last = scene;
+        }
+      });
+    }
+  }
+  return problems;
+};
+
+const findSfxProblems = (
+  sfx: unknown,
+  scenes: readonly unknown[],
+): string[] => {
+  if (sfx === undefined) {
+    return [];
+  }
+  if (!Array.isArray(sfx)) {
+    return ['"sfx" precisa ser uma lista'];
+  }
+  const problems: string[] = [];
+  sfx.forEach((effect: unknown, index) => {
+    const label = `sfx[${index}]`;
+    if (!isRecord(effect) || !isFilledString(effect.scene)) {
+      problems.push(`"${label}" precisa de um "scene" com o "id" de uma cena`);
+      return;
+    }
+    const scene = scenes.find(
+      (candidate) => isRecord(candidate) && candidate.id === effect.scene,
+    );
+    if (!isRecord(scene)) {
+      problems.push(`"${label}.scene": não há cena "${effect.scene}"`);
+      return;
+    }
+    if (!(typeof effect.name === "string" && effect.name in SFX)) {
+      problems.push(
+        `"${label}.name" precisa ser um uso do catálogo: ${Object.keys(SFX).join(", ")}`,
+      );
+    }
+    if (effect.level !== undefined && !(String(effect.level) in SFX_LEVELS)) {
+      problems.push(
+        `"${label}.level" precisa ser um de: ${Object.keys(SFX_LEVELS).join(", ")}`,
+      );
+    }
+    if (effect.cue !== undefined && effect.shot !== undefined) {
+      problems.push(`"${label}": use "cue" ou "shot", não os dois`);
+    }
+    if (effect.cue !== undefined && !isFilledString(effect.cue)) {
+      problems.push(`"${label}.cue" precisa ser uma palavra da narração`);
+    }
+    if (
+      effect.occurrence !== undefined &&
+      !(Number.isInteger(effect.occurrence) && Number(effect.occurrence) > 0)
+    ) {
+      problems.push(`"${label}.occurrence" precisa ser um inteiro positivo`);
+    }
+    const shots = Array.isArray(scene.shots) ? scene.shots.length : 0;
+    if (
+      effect.shot !== undefined &&
+      !(
+        Number.isInteger(effect.shot) &&
+        Number(effect.shot) >= 1 &&
+        Number(effect.shot) <= shots
+      )
+    ) {
+      problems.push(
+        `"${label}.shot" precisa ser um plano da cena, de 1 a ${shots}`,
+      );
+    }
+    if (effect.offsetMs !== undefined && !Number.isInteger(effect.offsetMs)) {
+      problems.push(`"${label}.offsetMs" precisa ser um inteiro`);
+    }
+  });
   return problems;
 };
 
@@ -385,6 +574,10 @@ export const parseScript = (data: unknown): Script => {
       data.music,
       Array.isArray(data.scenes) ? data.scenes : [],
     ),
+  );
+
+  problems.push(
+    ...findSfxProblems(data.sfx, Array.isArray(data.scenes) ? data.scenes : []),
   );
 
   if (problems.length > 0) {

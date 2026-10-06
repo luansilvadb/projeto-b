@@ -1,5 +1,4 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { Sfx } from "../../../audio/Sfx";
 import { cameraBetween, framing } from "../../../components/Camera";
 import {
   Cast,
@@ -463,7 +462,6 @@ export const JellyfishDebtScene: React.FC<SceneProps> = ({ scene, shots }) => {
         />
       </Shot>
       {/* O primeiro jato. */}
-      <Sfx name="splash" from={jetsFrom + jets[0]} />
     </>
   );
 };

@@ -6,7 +6,6 @@ import {
 } from "remotion";
 import { Stopwatch } from "../../../art/Stopwatch";
 import { taperPath, type Point } from "../../../art/shapes";
-import { Sfx } from "../../../audio/Sfx";
 import { cameraBetween, framing } from "../../../components/Camera";
 import { Cast, FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
@@ -505,7 +504,6 @@ export const JellyfishPlatformScene: React.FC<SceneProps> = ({
         </Prelude>
       </Shot>
       {/* O puxão. */}
-      <Sfx name="whoosh" from={pulledAt} />
     </>
   );
 };

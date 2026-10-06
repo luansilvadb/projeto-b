@@ -8,7 +8,7 @@
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { musicParts, planMusicParts } from "../src/audio/parts";
+import { MUSIC_PARTS, musicParts, planMusicParts } from "../src/audio/parts";
 import {
   musicFile,
   musicTrackFile,
@@ -26,6 +26,7 @@ import {
 } from "./lib/videos";
 
 const ACE_STEP = "vendor/ace-step";
+const GENERATE = "tools/music/generate.py";
 const USAGE = "pnpm music <vídeo> [semente] [parte]";
 
 const main = async () => {
@@ -87,24 +88,37 @@ const main = async () => {
     if (generate) {
       if (planned.length > 1) {
         console.log(
-          `\nParte ${index + 1} de ${planned.length} (${part.durationSeconds} s):`,
+          `\nParte ${index + 1} de ${planned.length} (${part.durationSeconds} s, ${part.moments.length} momento(s)):`,
         );
       }
+      const job = {
+        aceStepRoot,
+        caption: part.caption,
+        bpm: part.bpm,
+        keyScale: part.keyScale,
+        durationSeconds: part.durationSeconds,
+        seed,
+        output,
+      };
+      // É assim que o ACE-Step encontra a própria pasta de modelos.
+      const env = { ACESTEP_PROJECT_ROOT: aceStepRoot };
       await runPythonTool(
         ACE_STEP,
-        "tools/music/generate.py",
+        GENERATE,
         {
-          aceStepRoot,
-          caption: part.caption,
-          bpm: part.bpm,
-          keyScale: part.keyScale,
-          durationSeconds: part.durationSeconds,
-          seed,
-          output,
+          ...job,
+          leadSeconds: MUSIC_PARTS.leadSeconds,
+          tailPadSeconds: MUSIC_PARTS.tailPadSeconds,
         },
-        // É assim que o ACE-Step encontra a própria pasta de modelos.
-        { ACESTEP_PROJECT_ROOT: aceStepRoot },
+        env,
       );
+      // Um processo por momento: vários no mesmo derrubam o Python.
+      for (const [moment, spec] of part.moments.entries()) {
+        console.log(
+          `  Momento ${moment + 1} de ${part.moments.length} (${spec.startSeconds.toFixed(0)} a ${spec.endSeconds.toFixed(0)} s)`,
+        );
+        await runPythonTool(ACE_STEP, GENERATE, { ...job, moment: spec }, env);
+      }
     }
     parts.push({
       file,

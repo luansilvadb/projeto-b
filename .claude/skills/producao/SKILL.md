@@ -1,6 +1,6 @@
 ---
 name: producao
-description: "Som e arquivo final de um vídeo do canal: narração com a voz clonada, trilha instrumental, efeitos sonoros, corte final e descrição de publicação. Use para gerar a narração ou corrigir pronúncia, entonação ou amostra de voz; gerar ou trocar a trilha, ou ajustá-la contra a voz; buscar ou trocar um efeito sonoro; renderizar e conferir se o vídeo está pronto; e montar a descrição com as fontes."
+description: "Voz e arquivo final de um vídeo do canal, e a operação das ferramentas de som: narração com a voz clonada, geração da trilha, busca de efeitos sonoros, corte final e descrição de publicação. Use para gerar a narração ou corrigir pronúncia, entonação ou amostra de voz; rodar a trilha já decidida ou gerar de novo uma parte dela; buscar e baixar um efeito sonoro; renderizar e conferir se o vídeo está pronto; e montar a descrição com as fontes."
 ---
 
 ## FUNÇÃO
@@ -15,8 +15,9 @@ Opera as ferramentas que transformam o roteiro e as cenas aprovados em som e em 
 
 ## ANTI-ESCOPO
 
-- O texto de uma frase e a descrição da trilha no roteiro: pertencem à skill `diretor-criativo`. Aqui se aponta a frase que pede reescrita; a reescrita é de lá.
-- Desenho, composição e movimento: pertencem à skill `diretor-de-arte`, que também decide onde cabe um efeito sonoro e em que deixa ele toca.
+- O texto de uma frase: pertence à skill `diretor-criativo`. Aqui se aponta a frase que pede reescrita; a reescrita é de lá.
+- O que a música faz em cada trecho, os níveis, os silêncios e onde cabe um efeito: pertencem à skill `diretor-de-som`. Aqui se roda o que ela decidiu.
+- Desenho, composição e movimento: pertencem à skill `diretor-de-arte`.
 - Publicar o vídeo: é sempre ação do usuário. Tags, SEO, calendário e redes ficam fora.
 - Arte final de thumbnail.
 
@@ -27,8 +28,8 @@ O pedido decide a etapa. Cada etapa tem um procedimento só, lido inteiro; esta 
 | Etapa | Quando | Procedimento |
 |---|---|---|
 | 3. Narração | roteiro aprovado ou alterado; palavra mal pronunciada; troca da amostra de voz; render que acusa narração ausente ou desatualizada | `etapas/narracao.md` |
-| 6. Trilha | vídeo sem trilha; outra música ou outro clima; música alta ou baixa contra a voz; narração que mudou de duração | `etapas/trilha.md` |
-| Efeitos sonoros (dentro da animação) | a animação pede um uso que falta no catálogo; trocar um efeito; efeitos altos ou baixos | `etapas/efeitos-sonoros.md` |
+| 6. Som: trilha | a skill `diretor-de-som` pede a trilha, ou uma parte dela de novo; narração que mudou de duração | `etapas/trilha.md` |
+| 6. Som: efeitos | a skill `diretor-de-som` entrega usos que faltam no catálogo | `etapas/efeitos-sonoros.md` |
 | 7. Corte final | render final, exportar, finalizar; saber se o vídeo está pronto para publicar | `etapas/corte-final.md` |
 | 8. Publicação | vídeo aprovado no corte final; escrever ou refazer a descrição | `etapas/publicacao.md` |
 
@@ -49,6 +50,6 @@ A narração tem dois arquivos de apoio, lidos só na seção do caso:
 Pare quando:
 
 - a etapa pedida entregou o que o procedimento dela promete, com os avisos do comando resolvidos ou aceitos pelo usuário;
-- uma frase pede reescrita ou a trilha pede outra descrição: devolva à skill `diretor-criativo`;
+- uma frase pede reescrita: devolva à skill `diretor-criativo`; a trilha pede outra descrição, outro nível ou outro efeito: devolva à skill `diretor-de-som`;
 - o corte final tem pendência que só o usuário resolve: relate e espere, sem contorná-la;
 - o pedido estiver no anti-escopo.

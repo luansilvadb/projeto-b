@@ -11,12 +11,13 @@ Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio exp
 
 **Entradas:** tema (obrigatório); idioma (padrão pt-BR); duração-alvo (o alvo do canal está em `etapas/roteiro.md`); material de referência, quando houver.
 
-**Saídas:** na pasta `src/videos/<vídeo>/`: `research.md`, com fatos e fontes; `script.json`, com narração, planos, fontes e a descrição da trilha; `script.md`, o registro das decisões aprovadas, com os pares de título e conceito de thumbnail; a linha da 1ª aprovação em `approvals.md`.
+**Saídas:** na pasta `src/videos/<vídeo>/`: `research.md`, com fatos e fontes; `script.json`, com narração, planos e fontes; `script.md`, o registro das decisões aprovadas, com os pares de título e conceito de thumbnail; a linha da 1ª aprovação em `approvals.md`.
 
 ## ANTI-ESCOPO
 
 - Decupagem em planos, direção de arte, design de personagem e animação: pertencem à skill `diretor-de-arte`, que parte do texto e devolve a esta skill os pedidos de mudança de frase que a imagem fizer.
-- Locução, trilha e corte final: pertencem à skill `producao`.
+- Locução e corte final: pertencem à skill `producao`.
+- Música, silêncios e efeitos sonoros: pertencem à skill `diretor-de-som`, que escreve o arco de som dentro desta etapa e devolve a esta skill os `holdMs` que o som pedir.
 - Arte final de thumbnail.
 - Descrição do vídeo: é montada na skill `producao` (etapa `publicacao`), com o que foi aprovado aqui. Tags, SEO, calendário e estratégia de canal ficam fora.
 - Outros formatos de roteiro (ficção, publicidade, vídeo curto, vlog).
@@ -96,6 +97,7 @@ Injete o procedimento da etapa, depois `entrevista` e as unidades do passo em cu
 | | Estrutura | `ouvinte`, `moldes`, `arco`, `gancho`, `fechamento`, `chamada` |
 | | Escrita | `ouvinte`, `analogias`, `explicacao`, `fio`, `humor`, `narracao`, `procedencia`, `indicacao-visual` |
 | | Decupagem | skill `diretor-de-arte`, passos Conceito visual e Decupagem |
+| | Arco de som | skill `diretor-de-som`, etapa `arco-de-som` |
 | | Revisão | `ouvinte`, `checagem`, `procedencia`, `fio`, `narracao`, `critica` |
 | | Embalagem | `ouvinte`, `titulo-e-thumbnail` (versão final) |
 

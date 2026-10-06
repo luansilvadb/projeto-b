@@ -6,7 +6,6 @@ import {
   useVideoConfig,
 } from "remotion";
 import type { Expression } from "../../../art/Person";
-import { Sfx } from "../../../audio/Sfx";
 import {
   Build,
   framing,
@@ -842,7 +841,6 @@ export const AwakeRecordScene: React.FC<SceneProps> = ({ scene, shots }) => {
         />
       </Shot>
       {/* A moeda bate no chão. */}
-      <Sfx name="coinDrop" from={coinFrom + COIN_LANDS} />
     </>
   );
 };

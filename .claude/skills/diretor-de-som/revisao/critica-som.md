@@ -1,0 +1,75 @@
+## PERGUNTA
+Com que medidas e passadas julgar o som de um render?
+
+## RESPOSTA
+
+**Quando aplicar.** Sobre o som do vídeo inteiro, depois de gerado e mixado, antes de levá-lo ao usuário; e de novo, só nos trechos alterados, depois de cada conserto.
+
+**Postura.** A crítica não ouve. Ela mede, confere o som contra o mapa e aponta onde o ouvido do usuário precisa ir. As medidas e as passadas (passos 1 a 3 do procedimento) são de quem não escreveu o mapa; decidir e refazer (passos 4 a 6), de quem dirige.
+
+**Os instrumentos:**
+
+1. **As medidas do vídeo** (`pnpm critique <vídeo> som`): o som é separado em voz, música e efeitos e cada camada é medida contra a faixa da referência.
+2. **O mapa segundo a segundo**, gravado junto: a distância da música à voz em cada segundo, onde há fala, onde a música muda de seção, onde o volume vira, onde há efeito.
+3. **O mapa de som** do vídeo (`sound.md`) e os campos `music` e `sfx` do roteiro, com os instantes da narração.
+
+**Medidas.** As faixas são as de `CRITERIA`, em `src/critique/sound.ts`.
+
+| Medida | Faixa | Fora da faixa quer dizer |
+|---|---|---|
+| Música abaixo da voz, sob a fala | 9 a 15 dB | acima: a música virou massa; abaixo: disputa com a fala |
+| Do trecho mais presente ao mais recuado | até 9,6 dB | a música abre e abafa |
+| Tempo sem música | até 2,4% | buracos: silêncios demais, ou faixas que morrem nas pontas |
+| Viradas de volume por minuto | até 1,1 | o mesmo, visto no tempo |
+| Variação de timbre ao longo do vídeo | até 0,32 oitava | a trilha soa como mais de uma música |
+| Efeitos que se ouvem, por minuto | 4,4 ou mais | a imagem se mexe em silêncio |
+| Pico do efeito abaixo da voz | 11,5 a 14,7 dB | efeitos tímidos, ou altos demais |
+
+O que as medidas não veem: a contagem de efeitos tem um piso de 2 por minuto, de música e voz que vazam na separação; a variação de timbre sobe quando um silêncio longo entra na conta; nenhuma delas distingue música boa de ruim.
+
+**Passadas, nesta ordem.** Um problema de nível superior invalida o polimento dos níveis abaixo.
+
+1. **Unidade**
+   - A variação de timbre está na faixa? Se não, em que troca ou em que momento o centro do espectro salta?
+   - As descrições do roteiro têm todas o mesmo sufixo, palavra por palavra?
+2. **Continuidade**
+   - Cada trecho sem música do mapa segundo a segundo é um silêncio que o mapa de som pede?
+   - A música está no corpo dos dois lados de cada troca de leito, ou morre antes e demora a chegar depois?
+3. **O mapa cumprido**
+   - Cada momento começa e termina na cena que o mapa diz? Há uma mudança de seção perto de cada borda?
+   - Há salto de volume de mais de 6 dB em alguma borda de momento?
+   - Cada nível que não é `leito` aparece na distância à voz daquele trecho?
+4. **Nível**
+   - A distância mediana está na faixa? Há trecho de fala com a música a menos de 9 dB?
+5. **Efeitos**
+   - A contagem por minuto está na faixa, capítulo a capítulo?
+   - Cada efeito do roteiro aparece no mapa segundo a segundo, no instante dele? Algum caiu num trecho quieto?
+   - Há ação de impacto na partitura da animação sem efeito no roteiro?
+6. **Causa**
+   - Cada momento, silêncio e mudança de nível tem o porquê escrito no mapa de som, e o porquê está no roteiro?
+
+**Classificação:**
+
+- **Bloqueante**: a trilha soa como mais de uma música; há buraco que o mapa não pede; a música cobre a fala.
+- **Relevante**: medida fora da faixa sem decisão registrada; momento ou nível que não aparece no som; salto numa borda; capítulo sem efeitos.
+- **Polimento**: o resto.
+
+**Procedimento:**
+
+1. Tire as medidas e leia o mapa segundo a segundo.
+2. Faça as passadas, na ordem, com o mapa de som ao lado.
+3. Para cada problema: o instante, a medida que o mostra, o critério violado, a classificação.
+4. Conserte os bloqueantes e os relevantes: outra semente só para a faixa ou o momento em causa; outra descrição se duas sementes falharem.
+5. Meça de novo.
+6. Monte o roteiro de escuta (`entrevista-som`) com os instantes que sobraram e os que só o ouvido julga.
+
+## DEPENDÊNCIAS
+- leito, descricao, momentos, niveis, silencio, dose: fornecem os critérios das passadas.
+- entrevista-som: fornece o formato do roteiro de escuta.
+
+## LIMITES
+- Medida na faixa não é som bom: é som sem os defeitos que a medida conhece.
+- Uma medida fora da faixa por decisão do usuário (um segundo silêncio, uma trilha mais baixa) é registrada no aceite, e não consertada.
+
+## EXEMPLO
+> **Relevante, continuidade.** De 6:44 a 6:52 a música está ausente (8 s). O mapa pede silêncio de 6:39 a 6:50; os 2 s a mais são o leito B, que entra a −40 dB e leva 10 s para chegar ao corpo. Critério: a faixa está no corpo desde o primeiro segundo. Conserto: gerar o leito B de novo; o corte das pontas não achou o corpo.

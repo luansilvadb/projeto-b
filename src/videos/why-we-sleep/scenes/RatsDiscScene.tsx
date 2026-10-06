@@ -4,7 +4,6 @@ import {
   framing,
   type CameraState,
 } from "../../../components/Camera";
-import { Sfx } from "../../../audio/Sfx";
 import { wave } from "../../../components/Idle";
 import { Onomatopoeia } from "../../../components/Onomatopoeia";
 import { Place } from "../../../components/Place";
@@ -554,7 +553,6 @@ export const RatsDiscScene: React.FC<SceneProps> = ({ scene, shots }) => {
         />
       </Shot>
       {/* O giro do disco: o pico do capítulo. */}
-      <Sfx name="whoosh" from={cues.spinAt} />
     </>
   );
 };

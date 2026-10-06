@@ -13,13 +13,15 @@ import {
   MUSIC_PARTS,
   featureAmount,
   holdRanges,
+  levelChanges,
+  levelDb,
   musicParts,
   partEnvelopes,
   partGain,
   silenceGain,
   silenceRanges,
 } from "../audio/parts";
-import { SoundContext } from "../audio/Sfx";
+import { sfxEvents } from "../audio/sfx";
 import { OneStage } from "../components/Camera";
 import type { MusicTrack } from "../media";
 import type { NarrationManifest } from "../narration/manifest";
@@ -62,6 +64,8 @@ type MusicBedProps = {
   readonly holds: readonly FrameRange[];
   /** Os trechos em que o roteiro tira a trilha. */
   readonly silences: readonly FrameRange[];
+  /** Onde o roteiro muda o nível da trilha sob a fala. */
+  readonly levels: ReturnType<typeof levelChanges>;
 };
 
 const MusicBed: React.FC<MusicBedProps> = ({
@@ -70,6 +74,7 @@ const MusicBed: React.FC<MusicBedProps> = ({
   speech,
   holds,
   silences,
+  levels,
 }) => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
@@ -96,9 +101,12 @@ const MusicBed: React.FC<MusicBedProps> = ({
   return parts.map((part, index) => {
     const below = (db: number) =>
       gainBelowVoice(voiceLufs, part.loudnessLufs, db);
-    // O nível é um só no vídeo inteiro, e só sobe nos silêncios que o roteiro
-    // pediu: uma pausa entre duas frases não abre a trilha.
-    const under = below(MUSIC_MIX.underSpeechDb);
+    // O nível sob a fala é o do trecho no roteiro, e a trilha só vai ao
+    // primeiro plano nos silêncios que o roteiro pediu: uma pausa entre duas
+    // frases não a abre.
+    const under = below(
+      levelDb(frame, levels, MUSIC_MIX.levelRampSeconds * fps),
+    );
     const ducked = duckedVolume(frame, speech, {
       full: under + (below(MUSIC_MIX.featuredDb) - under) * featured,
       ducked: under,
@@ -195,9 +203,18 @@ export const NarratedVideo: React.FC<Props> = ({
       "O vídeo foi montado sem narração: falta o calculateMetadata na composição.",
     );
   }
+  const effects = silent
+    ? []
+    : sfxEvents(
+        script.sfx ?? [],
+        timeline.scenes,
+        script.scenes,
+        narration.loudnessLufs,
+        fps,
+      );
 
   return (
-    <SoundContext.Provider value={!silent}>
+    <>
       <ShotPlans.Provider value={staged.plans}>
         <OneStage>
           <Series>
@@ -236,6 +253,7 @@ export const NarratedVideo: React.FC<Props> = ({
                           src={staticFile(sentence.file)}
                           from={sentence.from}
                           premountFor={fps}
+                          hidden
                         />
                       ))}
                 </Series.Sequence>
@@ -249,10 +267,21 @@ export const NarratedVideo: React.FC<Props> = ({
           track={music}
           voiceLufs={narration.loudnessLufs}
           speech={timeline.speech}
-          holds={holdRanges(timeline.scenes)}
+          holds={holdRanges(timeline.scenes, MUSIC_MIX.featureMinSeconds * fps)}
           silences={silenceRanges(timeline.scenes, script.music)}
+          levels={levelChanges(timeline.scenes, script.music)}
         />
       ) : null}
-    </SoundContext.Provider>
+      {effects.map((effect, index) => (
+        <Audio
+          key={`${effect.name}-${index}`}
+          name={`Efeito: ${effect.name}`}
+          src={staticFile(effect.file)}
+          from={effect.frame}
+          volume={effect.volume}
+          premountFor={fps}
+        />
+      ))}
+    </>
   );
 };

@@ -11,12 +11,13 @@ Dono da imagem e do movimento de um ensaio explicativo animado no estilo Kurzges
 
 **Entradas:** o texto do roteiro, com narração, nota visual e analogia central (skill `diretor-criativo`); a base de fatos da pesquisa; a narração gravada, com o tempo de cada palavra (skill `producao`), a partir do animatic; a ficha visual de vídeos anteriores do canal, quando houver.
 
-**Saídas:** ficha visual (`art.md`: elenco, paletas e a forma visual das analogias); os planos de cada cena (`shots` em `script.json`); folha de modelo de cada personagem; um quadro composto por plano; a partitura da animação (`score.md`); cada plano em movimento; a lista dos momentos que pedem som; os relatórios das duas críticas; as linhas da 2ª aprovação e do aceite da animação em `approvals.md`.
+**Saídas:** ficha visual (`art.md`: elenco, paletas e a forma visual das analogias); os planos de cada cena (`shots` em `script.json`); folha de modelo de cada personagem; um quadro composto por plano; a partitura da animação (`score.md`); cada plano em movimento; os relatórios das duas críticas; as linhas da 2ª aprovação e do aceite da animação em `approvals.md`.
 
 ## ANTI-ESCOPO
 
 - Tese, estrutura, narração e fontes: pertencem à skill `diretor-criativo`. Quando a imagem pede outra frase, o pedido volta para lá.
-- Locução, trilha, mixagem e corte final: pertencem à skill `producao`. Os efeitos sonoros são marcados aqui (onde cabe um som e em que deixa) e buscados lá.
+- Locução e corte final: pertencem à skill `producao`.
+- Música, mixagem e efeitos sonoros: pertencem à skill `diretor-de-som`, que lê a partitura para saber o que acontece em cada plano. Aqui nenhuma cena toca som.
 - Arte final de thumbnail.
 - Cópia de personagens, desenhos, cenários, composições, paletas ou movimentos reconhecíveis de canais existentes: da referência usa-se o mecanismo e o método.
 
@@ -28,7 +29,7 @@ O pedido decide a etapa; a etapa decide o que ler.
 |---|---|---|
 | Decupagem (dentro do roteiro) | o texto do roteiro está escrito e ainda não aprovado; refazer elenco, paleta ou planos | `etapas/decupagem.md` |
 | 4. Animatic | narração pronta; criar a pasta e as cenas de um vídeo; storyboard, desenho ou composição | `etapas/animatic.md` |
-| 5. Animação | animatic aprovado; animar, ajustar tempo, transição ou câmera; marcar onde cabe som | `etapas/animacao.md` |
+| 5. Animação | animatic aprovado; animar, ajustar tempo, transição ou câmera | `etapas/animacao.md` |
 
 Movimento que pede outra composição devolve o plano ao passo Quadro.
 

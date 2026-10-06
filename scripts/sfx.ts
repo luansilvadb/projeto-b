@@ -7,6 +7,7 @@
 
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { measurePeakLoudness } from "./lib/loudness";
 import { exitWithError, publicPath } from "./lib/videos";
 
 const API = "https://freesound.org/apiv2";
@@ -122,7 +123,8 @@ const download = async (id: string) => {
   console.log(
     `Baixado: public/${file}\n` +
       `"${sound.name}", de ${sound.username}, ${sound.duration.toFixed(1)} s, CC0. ${sound.url}\n` +
-      `Para usar, acrescente ao catálogo em src/audio/Sfx.tsx: "${file}"`,
+      "Para usar, acrescente ao catálogo em src/audio/sfx.ts, com o nome do uso:\n" +
+      `  <uso>: { file: "${file}", peakLufs: ${(await measurePeakLoudness(output)).toFixed(1)} },`,
   );
 };
 

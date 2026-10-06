@@ -213,3 +213,69 @@ describe("parseScript, planos", () => {
     ).toThrowError(/cena 1 \(sun\): "visual" deu lugar a "shots"/);
   });
 });
+
+describe("o som no roteiro", () => {
+  const scenes = [
+    { ...validScene, id: "a" },
+    { ...validScene, id: "b" },
+    { ...validScene, id: "c" },
+  ];
+  const parse = (extra: object) => () =>
+    parseScript({ title: "Luz do Sol", scenes, ...extra });
+  const withMusic = (music: object) =>
+    parse({ music: { caption: "calm ambient", ...music } });
+
+  it("aceita momentos, níveis e efeitos", () => {
+    const script = parse({
+      music: {
+        caption: "calm ambient",
+        moments: [{ from: "a", to: "b", caption: "sparse" }],
+        levels: [{ from: "c", level: "recuo" }],
+      },
+      sfx: [
+        { scene: "a", cue: "oito", name: "whoosh", level: "leve" },
+        { scene: "b", shot: 1, offsetMs: 500, name: "coinDrop" },
+      ],
+    })();
+    expect(script.music?.moments).toHaveLength(1);
+    expect(script.sfx).toHaveLength(2);
+  });
+
+  it("recusa o momento sem descrição, fora de ordem ou de trás para frente", () => {
+    expect(withMusic({ moments: [{ from: "a" }] })).toThrowError(
+      /"music.moments\[0\]" precisa de um "caption"/,
+    );
+    expect(
+      withMusic({ moments: [{ from: "b", to: "a", caption: "x" }] }),
+    ).toThrowError(/"music.moments\[0\].to" precisa vir depois de "from"/);
+    expect(
+      withMusic({
+        moments: [
+          { from: "a", to: "b", caption: "x" },
+          { from: "b", caption: "y" },
+        ],
+      }),
+    ).toThrowError(/precisa vir depois do momento anterior/);
+  });
+
+  it("recusa o nível que não existe ou numa cena que não existe", () => {
+    expect(withMusic({ levels: [{ from: "a", level: "alto" }] })).toThrowError(
+      /precisa ser um de: presente, leito, recuo/,
+    );
+    expect(withMusic({ levels: [{ from: "z", level: "recuo" }] })).toThrowError(
+      /não há cena "z"/,
+    );
+  });
+
+  it("recusa o efeito fora do catálogo, num plano que não existe ou com duas âncoras", () => {
+    expect(parse({ sfx: [{ scene: "a", name: "boom" }] })).toThrowError(
+      /"sfx\[0\].name" precisa ser um uso do catálogo/,
+    );
+    expect(
+      parse({ sfx: [{ scene: "a", shot: 3, name: "whoosh" }] }),
+    ).toThrowError(/precisa ser um plano da cena, de 1 a 1/);
+    expect(
+      parse({ sfx: [{ scene: "a", shot: 1, cue: "oito", name: "whoosh" }] }),
+    ).toThrowError(/use "cue" ou "shot", não os dois/);
+  });
+});

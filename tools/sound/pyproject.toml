@@ -1,0 +1,31 @@
+[project]
+name = "sound-tools"
+version = "0.1.0"
+description = "Separação (CDX23) e medição do som de um vídeo: voz, música e efeitos"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    # As mesmas versões de tools/narration, para o uv reaproveitar os pacotes já baixados.
+    "torch==2.14.1",
+    "torchaudio==2.11.0",
+    # O CDX23 (vendor/cdx23) é um Demucs 4 treinado para separar diálogo, música e efeitos.
+    "demucs==4.0.1",
+    "numpy",
+    "scipy",
+    "librosa>=0.11",
+    "soundfile",
+]
+
+[dependency-groups]
+dev = ["pytest"]
+
+[tool.uv]
+package = false
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu126" }
+torchaudio = { index = "pytorch-cu126" }

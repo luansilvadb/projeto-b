@@ -11,8 +11,7 @@ Que decisões de movimento vão ao usuário, e quais o agente resolve sozinho?
 2. uma ação de personagem que acrescenta algo à narração (uma piada física, uma reação que o texto não diz);
 3. um movimento de câmera que troca a escala aprovada do plano;
 4. uma transição que muda a leitura de dois planos (um corte onde a decupagem pedia continuidade, ou o contrário);
-5. os momentos em que cabe efeito sonoro, antes de qualquer som ser buscado;
-6. mudança em qualquer movimento já aprovado.
+5. mudança em qualquer movimento já aprovado.
 
 **O que o agente resolve sozinho:** tempos, curvas, entradas e saídas, pausa viva, parallax, ênfase, e toda correção apontada pela crítica que não mexa em decisão aprovada.
 

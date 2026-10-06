@@ -6,7 +6,7 @@
     "dev": "remotion studio",
     "upgrade": "remotion upgrade",
     "lint": "eslint src scripts && tsc",
-    "test": "vitest run && uv run --project tools/narration pytest tools/narration -q",
+    "test": "vitest run && uv run --project tools/narration pytest tools/narration -q && uv run --project tools/sound pytest tools/music -q",
     "check-script": "tsx scripts/check-script.ts",
     "narrate": "tsx scripts/narrate.ts",
     "voice": "tsx scripts/voice-studio.ts",
@@ -16,6 +16,7 @@
     "stills": "tsx scripts/stills.ts",
     "critique": "tsx scripts/critique.ts",
     "render": "remotion render",
+    "sound": "remotion render --config=remotion.sound.config.ts",
     "setup:tools": "tsx scripts/setup-tools.ts"
   },
   "license": "UNLICENSED",

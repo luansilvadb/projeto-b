@@ -1,7 +1,6 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { Person } from "../../../art/Person";
 import { Storefront } from "../../../art/Storefront";
-import { Sfx } from "../../../audio/Sfx";
 import {
   Build,
   Camera,
@@ -17,7 +16,6 @@ import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { cue, drop, linear, mix, ramp } from "../../../components/timing";
-import { cueFrame } from "../../../narration/timeline";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import {
@@ -967,7 +965,6 @@ export const StockroomNightScene: React.FC<SceneProps> = ({ scene, shots }) => {
         </Prelude>
       </Shot>
       {/* A porta de enrolar desce: o som começa com ela. */}
-      <Sfx name="shutterDown" from={cueFrame(scene, "baixar")} />
     </>
   );
 };

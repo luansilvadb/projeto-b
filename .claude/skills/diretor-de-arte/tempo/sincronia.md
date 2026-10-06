@@ -35,8 +35,7 @@ Quando cada coisa acontece em relação à narração?
 3. Dê a cada mudança a palavra de deixa e a duração, pela tabela.
 4. Ordene: nada simultâneo que não seja a mesma ação.
 5. Confira os buracos: mais de 1,5 s sem nenhuma mudança é um buraco; o que preenche é a pausa viva, não uma entrada inventada.
-6. Marque onde cabe som: impacto, entrada grande, mudança de cenário.
-7. Registre a partitura do plano.
+6. Registre a partitura do plano.
 
 ## DEPENDÊNCIAS
 - encenacao, planos: fornecem o que acontece em cada plano e a deixa de cada um. Os tempos das palavras vêm da narração gravada.

@@ -1,3 +1,4 @@
+import type { MusicLevel } from "../narration/script";
 import type { FrameRange } from "../narration/timeline";
 
 /**
@@ -7,13 +8,28 @@ import type { FrameRange } from "../narration/timeline";
  */
 export const MUSIC_MIX = {
   /**
-   * O nível da trilha no vídeo inteiro, com fala ou nas pausas entre as
-   * frases. Ela não sobe a cada pausa: subir e descer o tempo todo soa como
-   * um som que abre e abafa, e não como música baixa.
+   * Os níveis da trilha sob a fala, que o roteiro escolhe por trecho
+   * ("music.levels"); sem escolha, vale "leito". Vêm do estudo de som de
+   * 2026-10-05: nos 12 vídeos de referência a música fica a 13 dB da voz
+   * (de 9 a 15 entre os vídeos) e, dentro de um vídeo, passa 80% do tempo
+   * numa faixa de 7 dB. Por isso os níveis são poucos e próximos. A trilha
+   * não sobe a cada pausa da fala: subir e descer o tempo todo soa como um
+   * som que abre e abafa, e não como música baixa.
    */
-  underSpeechDb: 18,
+  levelsDb: { presente: 10, leito: 13, recuo: 17 } satisfies Record<
+    MusicLevel,
+    number
+  >,
+  /** A passagem de um nível a outro é lenta, para não se ouvir o botão de volume. */
+  levelRampSeconds: 2,
   /** Nos silêncios que o roteiro pediu ("holdMs"), a música é o assunto. */
   featuredDb: 3,
+  /**
+   * Só o silêncio longo leva a música ao primeiro plano. Num respiro de 1 s
+   * a rampa nem termina de subir, e o que se ouve é um soluço de volume: a
+   * referência tem menos de uma virada de volume por minuto.
+   */
+  featureMinSeconds: 2,
   rampSeconds: 0.6,
   fadeOutSeconds: 1.5,
 } as const;

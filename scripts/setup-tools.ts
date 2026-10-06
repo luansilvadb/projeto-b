@@ -1,4 +1,4 @@
-// Instala as ferramentas de IA locais (voz e trilha): pnpm setup:tools
+// Instala as ferramentas de IA locais (voz, trilha e medição de som): pnpm setup:tools
 //
 // Pode ser repetido à vontade: cada passo confere se já foi feito. Precisa de
 // git, uv e de uma GPU NVIDIA. Baixa cerca de 20 GB na primeira vez; os modelos
@@ -17,7 +17,9 @@ const ACE_STEP = {
   commit: "ca1e85fe9430179831e6bc6be790c332190a3866",
 };
 
-const PYTHON_PROJECTS = ["tools/narration", ACE_STEP.folder];
+// O modelo que separa voz, música e efeitos (tools/sound) desce no primeiro
+// `pnpm critique <vídeo> som`.
+const PYTHON_PROJECTS = ["tools/narration", "tools/sound", ACE_STEP.folder];
 
 // O modelo de linguagem que cabe em 8 GB de VRAM não vem no pacote principal.
 const ACE_STEP_EXTRA_MODEL = "acestep-5Hz-lm-0.6B";

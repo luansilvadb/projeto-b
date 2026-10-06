@@ -32,15 +32,14 @@ Siga `src/videos/why-we-sleep/script.json`. O tipo e as regras estão em `src/na
       ],
       "sources": [1, 2]
     }
-  ],
-  "music": { "caption": "calm cinematic ambient, warm synth pads", "bpm": 90, "keyScale": "D minor" }
+  ]
 }
 ```
 
 - `id`: inglês, minúsculas e hifens, único. Liga a cena ao componente que a desenha.
 - `shots`: os planos da cena, na ordem da fala. Veja "Planos", abaixo.
 - `sources`: números das fontes em `research.md` que sustentam o que a cena afirma.
-- `music.caption`: em inglês, descrevendo gênero, instrumentos e clima. A trilha é sempre instrumental.
+- `music` e `sfx`, a trilha e os efeitos, são escritos depois, pela skill `diretor-de-som`. Com o texto pronto e antes da aprovação, acione-a para o arco de som (`diretor-de-som/etapas/arco-de-som.md`): é dele que saem os `holdMs` que o som pede.
 
 ## Narração: escreva para o ouvido
 

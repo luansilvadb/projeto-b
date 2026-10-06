@@ -1205,77 +1205,118 @@
     }
   ],
   "music": {
-    "caption": "curious sparse opening, a clear bright piano motif with crisp plucked synth notes, building anticipation toward a question, thoughtful and intriguing, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
+    "caption": "curious forward-moving theme, gentle steady pulse, clear melody, thoughtful wonder, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental",
     "bpm": 96,
     "keyScale": "A minor",
     "parts": [
       {
-        "from": "the-question",
-        "at": "hold",
-        "caption": "confident main theme, starts immediately at full energy, bright synth arpeggio with clear piano chords and shimmering strings, uplifting cinematic title moment, sense of wonder, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
-        "keyScale": "C major"
-      },
-      {
-        "from": "five-parts",
-        "caption": "light curious mood with gentle forward motion, crisp plucked synth arpeggio, clear piano, light bright percussion with shakers, dusk atmosphere, intelligent and inviting, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
-        "keyScale": "C major"
-      },
-      {
-        "from": "debt-returns",
-        "at": "hold",
-        "caption": "wide expansive mood, slow steady walking rhythm, clear bass, broad bright string chords, french horn melody, acoustic guitar, open landscape, calm and majestic, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
-        "bpm": 84,
-        "keyScale": "C major"
-      },
-      {
-        "from": "elephant-verdict",
-        "at": "hold",
-        "caption": "underwater mysterious mood, slow gentle rhythm, shimmering glassy synth textures, clear harp plucks, sparkling bells, floating and curious, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
-        "bpm": 72
-      },
-      {
-        "from": "older-than-brain",
-        "at": "hold",
-        "caption": "laboratory tension, steady crisp ticking staccato strings, clear low piano notes, strings slowly tightening, serious investigative mood, suspense without horror, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
-        "bpm": 104
-      },
-      {
-        "from": "gardner-sleeps",
-        "at": "hold",
-        "caption": "breathing space, very sparse, a few clear isolated piano notes with a light airy string note, calm and still, no percussion, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
-        "bpm": 72
-      },
-      {
         "from": "but-what",
-        "caption": "hopeful revelation, clear bright piano melody with bowed strings swelling gently, crisp plucked synth, tender and luminous, a turning point, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
-        "bpm": 88,
-        "keyScale": "C major"
-      },
-      {
-        "from": "stockroom-solid",
-        "at": "hold",
-        "caption": "calm reflective ending, slow clear piano melody over airy strings, gentle resolution, peaceful night mood, contemplative, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
-        "bpm": 76,
-        "keyScale": "C major"
-      },
-      {
-        "from": "subscribe",
-        "caption": "main theme reprise, bright synth arpeggio with clear piano chords and shimmering strings, uplifting closing, confident, bright clear grand piano, crisp plucked synth, airy string ensemble, sparkling high frequencies, clean open hi-fi studio mix, wide stereo, steady even dynamics, modern cinematic science documentary underscore, mature and elegant, instrumental",
+        "caption": "warm hopeful resolution of the same theme, full from the first bar, tender felt piano melody, bowed strings, steady calm pulse, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental",
         "keyScale": "C major"
       }
     ],
     "silences": [
       {
-        "from": "last-to-know"
-      },
-      {
-        "from": "rats-result",
-        "cue": "morreram"
-      },
-      {
         "from": "so-far",
         "cue": "Para"
       }
+    ],
+    "moments": [
+      {
+        "from": "night-falls",
+        "to": "last-to-know",
+        "caption": "the same theme hushed and wary, low sustained strings, soft slow pulse, felt piano notes far apart, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
+      },
+      {
+        "from": "elephants",
+        "to": "elephant-awake",
+        "caption": "the same theme broad and warm, long open string chords, slow and spacious, gentle pulse, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
+      },
+      {
+        "from": "jellyfish",
+        "to": "jellyfish-debt",
+        "caption": "the same theme weightless, slow swelling warm synth pads, soft sub bass, sparse felt piano, no percussion, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
+      },
+      {
+        "from": "forced-awake",
+        "to": "rats-disc",
+        "caption": "the same theme tightening, ticking staccato strings ostinato, low felt piano, restrained urgency, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
+      },
+      {
+        "from": "rats-result",
+        "to": "unknown-cause",
+        "caption": "the same theme reduced to a held low string note and slow soft felt piano notes far apart, no pulse, no percussion, grave and still, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
+      },
+      {
+        "from": "what-it-is",
+        "to": "tonight",
+        "caption": "the same theme slowed down, felt piano alone playing long notes over a soft string pad, no pulse, tender and still, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
+      }
+    ],
+    "levels": [
+      {
+        "from": "tonight",
+        "level": "recuo"
+      },
+      {
+        "from": "subscribe",
+        "level": "leito"
+      }
     ]
-  }
+  },
+  "sfx": [
+    {
+      "scene": "skip-a-night",
+      "shot": 2,
+      "name": "whoosh",
+      "level": "leve"
+    },
+    {
+      "scene": "two-hours",
+      "shot": 1,
+      "name": "whoosh",
+      "level": "leve"
+    },
+    {
+      "scene": "elephant-awake",
+      "shot": 1,
+      "name": "whoosh",
+      "level": "leve"
+    },
+    {
+      "scene": "jellyfish-night",
+      "shot": 1,
+      "name": "whoosh",
+      "level": "leve"
+    },
+    {
+      "scene": "jellyfish-platform",
+      "cue": "tiraram",
+      "name": "whoosh"
+    },
+    {
+      "scene": "jellyfish-debt",
+      "cue": "soltaram",
+      "offsetMs": -133,
+      "name": "splash"
+    },
+    {
+      "scene": "rats-disc",
+      "cue": "disco",
+      "occurrence": 2,
+      "offsetMs": -133,
+      "name": "whoosh"
+    },
+    {
+      "scene": "awake-record",
+      "shot": 4,
+      "offsetMs": 1000,
+      "name": "coinDrop"
+    },
+    {
+      "scene": "stockroom-night",
+      "cue": "baixar",
+      "name": "shutterDown"
+    }
+  ]
 }
