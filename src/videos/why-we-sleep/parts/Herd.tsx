@@ -4,6 +4,7 @@ import {
   Elephant,
   STRIDE_LENGTH,
   type ElephantColors,
+  type ElephantFinish,
 } from "../../../art/Elephant";
 import { blink, breath, phaseOf, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
@@ -17,7 +18,10 @@ import {
   ink,
   savanna,
   type TagTone,
+  elephantFinish,
+  elephantNightFinish,
 } from "../palette";
+import { polished } from "../polish";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "./Savanna";
 import { Tag } from "./Tag";
 
@@ -81,6 +85,23 @@ const elephantAt = (daylight: number): ElephantColors =>
             ),
           ]),
         ) as ElephantColors);
+
+const FINISH_KEYS = Object.keys(elephantFinish) as (keyof ElephantFinish)[];
+
+/** O acabamento da elefanta entre a noite e o dia, só no piloto do polimento. */
+const finishAt = (daylight: number): ElephantFinish | undefined =>
+  polished()
+    ? (Object.fromEntries(
+        FINISH_KEYS.map((key) => [
+          key,
+          interpolateColors(
+            Math.min(1, Math.max(0, daylight)),
+            [0, 1],
+            [elephantNightFinish[key], elephantFinish[key]],
+          ),
+        ]),
+      ) as ElephantFinish)
+    : undefined;
 
 export type HerdMember = {
   /** Onde ela pisa: x no quadro, e y a partir do chão da savana (negativo é mais longe). */
@@ -151,6 +172,7 @@ export const Herd: React.FC<HerdProps> = ({
   seconds,
 }) => {
   const colors = elephantAt(daylight);
+  const finish = finishAt(daylight);
   /** A fase do ciclo de passos de uma elefanta: cada uma começa num ponto, para não marcharem juntas. */
   const gaitOf = (width: number, seed: string) =>
     stride === undefined
@@ -195,6 +217,7 @@ export const Herd: React.FC<HerdProps> = ({
             <Elephant
               width={width}
               colors={colors}
+              finish={finish}
               lid={Math.max(
                 sleeping,
                 eachOf(lid, index) ?? 0,
@@ -296,7 +319,11 @@ export const SleepingElephant: React.FC<SleepingElephantProps> = ({
  * a freada dura e quanto ainda falta andar no quadro `frame`.
  */
 export const braked = (
-  walk: { readonly from: number; readonly speed: number; readonly least: number },
+  walk: {
+    readonly from: number;
+    readonly speed: number;
+    readonly least: number;
+  },
   walkedFor: number,
   frame: number,
 ): { brake: number; left: number } => {

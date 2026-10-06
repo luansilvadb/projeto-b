@@ -17,10 +17,19 @@ import { blink, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop, grown } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, drop, linear, mix, ramp, clamp01, clamp } from "../../../components/timing";
+import {
+  cue,
+  drop,
+  linear,
+  mix,
+  ramp,
+  clamp01,
+  clamp,
+} from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength, type Wipe } from "../../../video/Shot";
 import { ink, person, personInPajamas, savanna } from "../palette";
+import { polished } from "../polish";
 import { Bed } from "../parts/Bed";
 import {
   DAY_STRIP,
@@ -491,6 +500,7 @@ const ThreeDaysShot: React.FC<ThreeDaysShotProps> = ({
               <Person
                 height={WALKING.height}
                 colors={person}
+                finish={polished()}
                 expression={face}
                 blink={Math.max(blink(seconds, "you"), lids)}
                 stride={{
