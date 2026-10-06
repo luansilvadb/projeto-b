@@ -5,24 +5,22 @@ description: "Cria, melhora e refatora workflows de agente (uma skill com SKILL.
 
 ## FUNÇÃO E ESCOPO
 
-Transforma um domínio, projeto ou codebase em um workflow acionável e suas unidades de conhecimento.
-
-Use para criar, melhorar ou refatorar workflows e extrair padrões de projetos. Não use para executar tarefas do domínio ou substituir um workflow especializado.
+Transforma um domínio, projeto ou codebase em um workflow acionável e suas unidades de conhecimento. Não use para executar tarefas do domínio ou substituir um workflow especializado.
 
 ## PRINCÍPIO
 
 `DOMÍNIO → PERGUNTAS → LACUNAS → UNIDADES → ESTRUTURA → VALIDAÇÃO`
 
-Cada unidade responde a uma pergunta cognitiva central. Crie categorias e unidades por necessidade, cada uma com propósito claro, não por numeração ou preenchimento estrutural.
+Cada unidade responde a uma pergunta cognitiva central. Crie categorias e unidades por necessidade, cada uma com propósito claro.
 
 ## FLUXO
 
 1. Defina objetivo, escopo, anti-escopo, entradas, saídas, regras, exceções e restrições.
 2. Gere as perguntas que o agente deve responder para realizar o objetivo.
-3. Compare com as unidades existentes; marque lacunas, redundâncias e conteúdo fora do escopo. Atualize, consolide ou remova unidades quando necessário; redundâncias, conteúdos fora do escopo e falhas na validação final ainda sem solução são ajustes pendentes.
+3. Compare com as unidades existentes; marque lacunas, redundâncias e conteúdo fora do escopo. Atualize, consolide ou remova unidades; redundâncias, conteúdos fora do escopo e falhas na validação final ainda sem solução são ajustes pendentes.
 4. Para cada lacuna, defina ou reutilize a categoria adequada e crie uma unidade.
 5. Valide cada unidade. Repita os passos 2 a 5 enquanto houver lacunas ou ajustes pendentes.
-6. Gere ou atualize `<NAME>.md`, o índice de categorias e unidades e a ordem de injeção; valide a árvore completa. Se falhar, corrija a causa e retome os passos 2 a 6; se não for possível, sinalize e pare.
+6. Gere ou atualize `SKILL.md`, o índice de categorias e unidades e a ordem de injeção; valide a árvore completa. Se falhar, corrija a causa e retome os passos 2 a 6; se não for possível, sinalize e pare.
 
 ## VALIDAÇÃO DE UNIDADE
 
@@ -44,13 +42,7 @@ Pare quando não houver lacunas relevantes nem ajustes pendentes, quando uma ite
 
 ## ESTRUTURA
 
-```text
-skills/<workflow-name>/
-├── SKILL.md
-├── <categoria>/
-│   └── <unidade>.md
-└── ...
-```
+`skills/<workflow-name>/SKILL.md` na raiz; cada unidade em `skills/<workflow-name>/<categoria>/<unidade>.md`.
 
 ## SKILL.md
 
@@ -80,13 +72,12 @@ Categorias são apenas organizacionais e não entram na ordem de injeção. Inje
 ## VALIDAÇÃO FINAL
 
 - cobertura suficiente e sem redundância;
-- uma responsabilidade por unidade;
 - categorias e arquivos justificados;
 - dependências e injeção claras, sem ciclo;
 - `SKILL.md` com tudo o que a seção `SKILL.md` exige;
 - toda unidade do índice existe e todo arquivo de unidade está no índice;
 - a `description` de `SKILL.md` com dois-pontos está entre aspas: sem elas o YAML falha e a descrição some;
-- nenhuma unidade inválida, arquivo vazio, duplicado ou fora do escopo.
+- nenhuma unidade inválida nem arquivo vazio.
 
 ## ORGANIZAÇÃO
 

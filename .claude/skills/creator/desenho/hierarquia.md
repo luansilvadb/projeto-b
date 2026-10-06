@@ -8,10 +8,10 @@ Um documento é feito de dois tipos de conteúdo: **passos** (as ações ordenad
 A decisão central é onde cada trecho fica na **hierarquia de informação**, uma escada ordenada pela urgência com que o agente precisa do material:
 
 1. **Passo no arquivo** é o degrau principal: o que o agente faz, em ordem.
-2. **Referência no arquivo** é consultada sob demanda. Muitas vezes é um conjunto plano de pares legítimo (todas as regras de uma revisão no mesmo degrau), o que é um bom arranjo.
+2. **Referência no arquivo** é consultada sob demanda. Muitas vezes é um conjunto plano de pares (todas as regras de uma revisão no mesmo degrau), o que é um bom arranjo.
 3. **Referência divulgada** fica num arquivo separado, alcançado por um ponteiro de contexto e carregado só quando o ponteiro dispara. Vai de um arquivo irmão na mesma pasta até uma referência externa que mora em qualquer lugar e para a qual qualquer documento pode apontar.
 
-Empurre de menos e o topo incha; empurre demais e você esconde o que o agente de fato precisa. Essa tensão é a decisão inteira.
+Empurre de menos e o topo incha; empurre demais e você esconde o que o agente de fato precisa.
 
 **Divulgação progressiva** é o movimento escada abaixo, para fora do arquivo principal e para trás de um ponteiro, que mantém o topo legível. Ela protege a hierarquia antes de economizar tokens. O teste mais limpo é o ramo: deixe no arquivo o que todo ramo precisa e empurre para trás de um ponteiro o que só alguns ramos alcançam. Num documento com passos, a referência que deveria estar divulgada os enterra e transforma a atenção a eles em cara ou coroa: é uma alavanca de variância, além de legibilidade.
 
