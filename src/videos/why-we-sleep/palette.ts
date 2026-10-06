@@ -672,12 +672,13 @@ export const elephantNightFinish: ElephantFinish = {
 /**
  * O acabamento da savana de noite, do mesmo piloto: a lua emite luz e leva o
  * halo em dois degraus do céu até ela; as copas ganham um tom que se distingue
- * do céu.
+ * do céu, e um morro baixo passa atrás do assunto num segundo tom do chão.
  */
 export const savannaFinish = {
   night: {
     halo: ["#0C2098", "#1A32BC"],
     moonCore: "#FFF3C4",
     tree: "#0E1E90",
+    mound: "#5A1A8E",
   },
 } as const;

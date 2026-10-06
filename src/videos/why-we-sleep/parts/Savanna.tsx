@@ -115,15 +115,24 @@ export const Savanna: React.FC<SavannaProps> = ({
         />
         <SvgLayer>
           {isNight
-            ? Array.from({ length: 50 }, (_, index) => {
+            ? Array.from({ length: lit ? 16 : 50 }, (_, index) => {
                 const pick = (trait: string) =>
                   random(`savanna-star-${trait}-${index}`);
+                if (
+                  lit &&
+                  Math.hypot(
+                    pick("x") * 1920 - orbAt[0],
+                    pick("y") * 620 - orbAt[1],
+                  ) < 340
+                ) {
+                  return null;
+                }
                 return (
                   <circle
                     key={index}
                     cx={pick("x") * 1920}
                     cy={pick("y") * 620}
-                    r={1.5 + pick("size") * 2.5}
+                    r={(lit ? 4 : 1.5) + pick("size") * (lit ? 3 : 2.5)}
                     fill={night.sun}
                     opacity={
                       (1 - daylight * 2) *
@@ -190,7 +199,11 @@ export const Savanna: React.FC<SavannaProps> = ({
       <Layer depth={0.3}>
         <SvgLayer>
           <path
-            d="M-400,760 C0,680 500,720 900,700 C1300,680 1700,720 2300,690 L2300,900 L-400,900 Z"
+            d={
+              lit
+                ? "M-400,770 C-100,650 250,650 520,720 C760,780 1000,640 1320,650 C1620,660 1820,760 2300,680 L2300,900 L-400,900 Z"
+                : "M-400,760 C0,680 500,720 900,700 C1300,680 1700,720 2300,690 L2300,900 L-400,900 Z"
+            }
             fill={color("far")}
           />
         </SvgLayer>
@@ -199,7 +212,13 @@ export const Savanna: React.FC<SavannaProps> = ({
       <Layer depth={0.6}>
         <SvgLayer>
           {TREES.map(([x, width, height]) => (
-            <g key={x} fill={lit ? glow.tree : color("trees")}>
+            <g
+              key={x}
+              fill={lit ? glow.tree : color("trees")}
+              stroke={lit ? glow.tree : undefined}
+              strokeWidth={18}
+              strokeLinejoin="round"
+            >
               <path
                 d={taperPath(
                   [x, SAVANNA_GROUND_Y - 30],
@@ -217,8 +236,6 @@ export const Savanna: React.FC<SavannaProps> = ({
         </SvgLayer>
       </Layer>
 
-      {finish ? dust : null}
-
       <Layer depth={1}>
         <SvgLayer>
           <defs>
@@ -231,11 +248,20 @@ export const Savanna: React.FC<SavannaProps> = ({
             d={`M-400,${SAVANNA_GROUND_Y - 40} C200,${SAVANNA_GROUND_Y - 70} 900,${SAVANNA_GROUND_Y - 20} 1500,${SAVANNA_GROUND_Y - 50} C1900,${SAVANNA_GROUND_Y - 70} 2200,${SAVANNA_GROUND_Y - 30} 2300,${SAVANNA_GROUND_Y - 40} L2300,1400 L-400,1400 Z`}
             fill={`url(#${id})`}
           />
+          {lit ? (
+            <path
+              d={`M260,${SAVANNA_GROUND_Y + 60} C520,${SAVANNA_GROUND_Y - 130} 1280,${SAVANNA_GROUND_Y - 150} 1680,${SAVANNA_GROUND_Y + 60} Z`}
+              fill={glow.mound}
+            />
+          ) : null}
           {TUFTS.map((x, index) => (
             <g key={x} fill={color("grass")}>
               {[-26, -8, 10, 28].map((offset, blade) => (
                 <path
                   key={blade}
+                  stroke={lit ? color("grass") : undefined}
+                  strokeWidth={8}
+                  strokeLinejoin="round"
                   d={taperPath(
                     [x + offset, SAVANNA_GROUND_Y + 30 + (index % 3) * 40],
                     [
@@ -253,8 +279,8 @@ export const Savanna: React.FC<SavannaProps> = ({
                         (blade % 2) * 20 +
                         (index % 3) * 40,
                     ],
-                    lit ? 22 : 12,
-                    lit ? 9 : 3,
+                    lit ? 18 : 12,
+                    lit ? 2 : 3,
                   )}
                 />
               ))}
@@ -265,7 +291,7 @@ export const Savanna: React.FC<SavannaProps> = ({
         <Leftovers />
       </Layer>
 
-      {/* No acabamento a poeira fica atrás do assunto: partícula por cima dele lê como sujeira. */}
+      {/* No acabamento não há poeira: cinza translúcido no ar lê como sujeira, e o capim e o halo já mexem o quadro. */}
       {finish ? null : dust}
 
       <Layer depth={1.4}>
@@ -278,7 +304,7 @@ export const Savanna: React.FC<SavannaProps> = ({
         >
           <SvgLayer>
             {[-60, 1980].map((x) => (
-              <g key={x} fill={color("trees")} opacity={0.7}>
+              <g key={x} fill={color("trees")} opacity={lit ? 1 : 0.7}>
                 {[-60, -20, 20, 60].map((offset) => (
                   <path
                     key={offset}

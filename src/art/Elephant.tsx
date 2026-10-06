@@ -184,13 +184,30 @@ export const Elephant: React.FC<ElephantProps> = ({
   const nearFore = footfall(GAIT.phase.nearFore);
 
   if (finish) {
-    const trunkPath = taperPath([-166, -244], trunkControl, trunkTip, 66, 28);
-    /** A perna em tubo: larga na coxa, curva no joelho, com o pé e, na da frente, as unhas. */
+    // A tromba do acabamento cai quase a prumo, com a barriga da curva para a
+    // frente, e nasce larga, tomando a metade de baixo da face: assim ela é a
+    // continuação da testa, e não um tubo encostado numa bola.
+    const tip: Point = [
+      mix(mix(-214, -202, trunk), REACHING.tip[0], reach),
+      mix(-34 - 156 * trunk, REACHING.tip[1], reach),
+    ];
+    const control: Point = [
+      mix(mix(-270, -266, trunk), REACHING.control[0], reach),
+      mix(-150 - 60 * trunk, REACHING.control[1], reach),
+    ];
+    const trunkPath = taperPath([-170, -262], control, tip, 104, 28);
+    const trunkTip = tip;
+    /**
+     * A perna em tubo, que alarga até o pé: `thigh` é a largura no alto (a de
+     * trás nasce de uma coxa, a da frente é mais reta) e `bow`, para onde o
+     * joelho se curva. As do lado de lá não têm unhas.
+     */
     const limb = (
       x: number,
       shift: number,
       lift: number,
       bow: number,
+      thigh: number,
       far: boolean,
     ) => {
       const foot: Point = [x + shift, -lift];
@@ -198,19 +215,19 @@ export const Elephant: React.FC<ElephantProps> = ({
         <g key={`${x}-${far}`} fill={far ? finish.deep : finish.body}>
           <path
             d={taperPath(
-              [x, -176],
-              [x + shift * 0.4 - lift * 0.7 + bow, -96 - lift * 0.4],
-              [x + shift, -24 - lift],
-              104,
-              58,
+              [x, -190],
+              [x + shift * 0.4 - lift * 0.7 + bow, -100 - lift * 0.4],
+              [x + shift, -22 - lift],
+              thigh,
+              70,
             )}
           />
           <path
-            d={`M${foot[0] - 31},${foot[1] - 30} C${foot[0] - 40},${foot[1] - 8} ${foot[0] - 36},${foot[1]} ${foot[0] - 22},${foot[1]} L${foot[0] + 24},${foot[1]} C${foot[0] + 38},${foot[1]} ${foot[0] + 40},${foot[1] - 10} ${foot[0] + 30},${foot[1] - 30} Z`}
+            d={`M${foot[0] - 35},${foot[1] - 26} C${foot[0] - 42},${foot[1] - 8} ${foot[0] - 38},${foot[1]} ${foot[0] - 24},${foot[1]} L${foot[0] + 26},${foot[1]} C${foot[0] + 40},${foot[1]} ${foot[0] + 42},${foot[1] - 8} ${foot[0] + 35},${foot[1] - 26} Z`}
           />
           {far
             ? null
-            : [-17, 0, 17].map((toe) => (
+            : [-18, 0, 18].map((toe) => (
                 <ellipse
                   key={toe}
                   cx={foot[0] + toe - 3}
@@ -243,14 +260,18 @@ export const Elephant: React.FC<ElephantProps> = ({
           </clipPath>
         </defs>
 
+        {/* As pernas do lado de lá aparecem de verdade: mais de meia perna para dentro, e em outro ângulo. */}
         {walking
           ? [
-              limb(130, farHind.shift, farHind.lift, 8, true),
-              limb(-70, farFore.shift, farFore.lift, -4, true),
+              limb(92, farHind.shift, farHind.lift, 18, 110, true),
+              limb(-106, farFore.shift, farFore.lift, 4, 90, true),
             ]
-          : [limb(130, -step, 0, 8, true), limb(-70, step, 0, -4, true)]}
+          : [
+              limb(92, -step, 0, 18, 110, true),
+              limb(-106, step, 0, 4, 90, true),
+            ]}
         <path
-          d={taperPath([222, -262], [262, -206], [264, -122], 24, 12)}
+          d={taperPath([226, -256], [266, -204], [264, -122], 24, 12)}
           fill={finish.deep}
         />
         <path
@@ -259,29 +280,36 @@ export const Elephant: React.FC<ElephantProps> = ({
         />
 
         <path d={FINISHED_BODY} fill={finish.body} />
-        {/* A sombra da barriga, uma forma só: as pernas da frente passam por cima dela. */}
+        {/* A sombra da barriga: gorda no meio, zerando nas pernas, que passam por cima dela. */}
         <path
           clipPath={`url(#${id}-body)`}
-          d="M-184,-144 C-130,-106 -90,-114 -40,-98 C10,-82 60,-106 110,-96 C160,-86 212,-126 262,-164 L266,-20 L-186,-20 Z"
+          d="M-116,-58 C-70,-96 -10,-104 50,-100 C100,-96 150,-104 196,-84 L196,-20 L-116,-20 Z"
           fill={finish.shadow}
         />
         {walking
           ? [
-              limb(150, nearHind.shift, nearHind.lift, 10, false),
-              limb(-50, nearFore.shift, nearFore.lift, -6, false),
+              limb(152, nearHind.shift, nearHind.lift, 16, 132, false),
+              limb(-56, nearFore.shift, nearFore.lift, -4, 104, false),
             ]
-          : [limb(150, step, 0, 10, false), limb(-50, -step, 0, -6, false)]}
+          : [
+              limb(152, step, 0, 16, 132, false),
+              limb(-56, -step, 0, -4, 104, false),
+            ]}
 
-        <g transform={`rotate(${headTilt} -60 -300)`}>
+        <g transform={`rotate(${18 * droop} -60 -300)`}>
           <path d={trunkPath} fill={finish.body} />
           <g clipPath={`url(#${id}-trunk)`}>
+            {/* O lado de baixo da tromba: largo na raiz, sob o queixo, e zerando antes da ponta. */}
             <path
               d={taperPath(
-                [-166, -234],
-                [trunkControl[0] + 14, trunkControl[1] + 20],
-                [trunkTip[0] + 8, trunkTip[1] + 8],
-                30,
-                14,
+                [-140, -236],
+                [control[0] + 34, control[1] + 10],
+                [
+                  mix(control[0], tip[0], 0.7) + 12,
+                  mix(control[1], tip[1], 0.7),
+                ],
+                46,
+                2,
               )}
               fill={finish.shadow}
             />
@@ -360,15 +388,8 @@ export const Elephant: React.FC<ElephantProps> = ({
               strokeLinejoin="round"
             />
             <path
-              d="M-34,-316 C-6,-346 58,-338 76,-292 C88,-258 76,-212 44,-196 C14,-184 -12,-206 -22,-242 C-28,-268 -34,-292 -34,-316 Z"
+              d="M-46,-312 C-20,-340 44,-332 66,-290 C82,-256 76,-206 46,-186 C14,-170 -18,-196 -32,-238 C-40,-264 -46,-290 -46,-312 Z"
               fill={finish.earInside}
-            />
-            <path
-              d="M0,-300 C22,-272 24,-244 12,-222"
-              fill="none"
-              stroke={finish.shadow}
-              strokeWidth={9}
-              strokeLinecap="round"
             />
           </g>
         </g>
@@ -542,7 +563,7 @@ const EAR =
   "M-56,-336 C-20,-378 72,-368 98,-300 C114,-254 96,-194 50,-174 C10,-158 -30,-188 -44,-236 C-52,-268 -58,-300 -56,-336 Z";
 // O corpo do acabamento: a corcova no ombro, a sela do dorso, a garupa que cai e a barriga pendendo no meio.
 const FINISHED_BODY =
-  "M-150,-262 C-140,-330 -90,-378 -30,-378 C18,-378 44,-340 96,-338 C140,-336 190,-338 222,-300 C252,-264 262,-214 252,-170 C244,-128 216,-98 170,-86 C100,-66 0,-58 -90,-82 C-150,-98 -176,-150 -170,-200 C-168,-224 -158,-244 -150,-262 Z";
+  "M-150,-262 C-142,-326 -100,-386 -40,-386 C10,-386 40,-352 90,-346 C140,-340 186,-340 216,-312 C250,-280 262,-226 254,-176 C248,-138 228,-112 196,-100 C140,-82 110,-92 60,-74 C10,-56 -60,-56 -110,-84 C-158,-110 -176,-156 -170,-204 C-168,-226 -158,-246 -150,-262 Z";
 // Corpo em curva única: corcova do dorso, barriga baixa.
 const BODY =
   "M-150,-240 C-120,-330 -20,-372 100,-360 C190,-352 236,-300 240,-220 C244,-150 220,-100 170,-80 C80,-50 -60,-50 -140,-90 C-180,-110 -176,-180 -150,-240 Z";
