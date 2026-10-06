@@ -4,7 +4,7 @@
 // git, uv e de uma GPU NVIDIA. Baixa cerca de 20 GB na primeira vez; os modelos
 // de voz e de transcrição (mais uns 5 GB) descem no primeiro `pnpm narrate`.
 
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync } from "node:fs";
 import path from "node:path";
 import { run } from "./lib/tools";
 import { exitWithError } from "./lib/videos";
@@ -21,12 +21,6 @@ const PYTHON_PROJECTS = ["tools/narration", ACE_STEP.folder];
 
 // O modelo de linguagem que cabe em 8 GB de VRAM não vem no pacote principal.
 const ACE_STEP_EXTRA_MODEL = "acestep-5Hz-lm-0.6B";
-
-// Voz de teste, do demo do Chatterbox em pt-BR. Serve para verificar o pipeline, não para publicar.
-const PLACEHOLDER_VOICE = {
-  file: "voice/placeholder.wav",
-  url: "https://storage.googleapis.com/chatterbox-demo-samples/mtl-v3-single-language-prompts/pt-br/pt_br_f2.wav",
-};
 
 const step = (title: string) => console.log(`\n== ${title}`);
 
@@ -48,25 +42,6 @@ const checkout = async () => {
   await git("fetch", "-q", "--depth", "1", "origin", commit);
   await git("checkout", "-q", "FETCH_HEAD");
   console.log(`${folder} em ${commit.slice(0, 7)}.`);
-};
-
-const downloadPlaceholderVoice = async () => {
-  if (existsSync(PLACEHOLDER_VOICE.file)) {
-    console.log(`${PLACEHOLDER_VOICE.file} já existe.`);
-    return;
-  }
-  const response = await fetch(PLACEHOLDER_VOICE.url);
-  if (!response.ok) {
-    throw new Error(
-      `Não foi possível baixar a voz provisória (HTTP ${response.status}).`,
-    );
-  }
-  mkdirSync(path.dirname(PLACEHOLDER_VOICE.file), { recursive: true });
-  writeFileSync(
-    PLACEHOLDER_VOICE.file,
-    Buffer.from(await response.arrayBuffer()),
-  );
-  console.log(`${PLACEHOLDER_VOICE.file} baixada.`);
 };
 
 const main = async () => {
@@ -91,9 +66,6 @@ const main = async () => {
     );
   console.log((await download()).trim());
   console.log((await download("--model", ACE_STEP_EXTRA_MODEL)).trim());
-
-  step("Voz provisória");
-  await downloadPlaceholderVoice();
 
   console.log("\nFerramentas prontas.");
 };

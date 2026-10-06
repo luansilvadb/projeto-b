@@ -17,7 +17,6 @@ Como escrever um texto feito para ser ouvido?
 
 - Frase declarativa, com o sujeito dito pelo nome e repetido quando volta. O que amarra uma frase à outra é a ordem dos fatos e o sujeito em comum; conectivo entra onde há causa ou virada de verdade.
 - Palavra que a fala usa: "dá" e não "resulta em", "tem" e não "possui", "todo mundo" e não "a totalidade". "Pra", "pro" e "tá" entram onde a forma inteira soaria dura.
-- Forma literal, conforme `ouvinte`: a frase diz o que aconteceu, com o nome da coisa. A figura do texto é a analogia de `analogias`.
 - A passagem é dita, em tom de narrador, e leva a posição de `ouvinte`, o que ficou decidido e o que falta: "isso explica quem é quem; falta explicar como".
 - A ideia difícil pode ser dita duas vezes, a segunda depois de "ou seja" ou "em outras palavras", com a consequência para quem assiste.
 - "Você" aparece onde quem assiste entra na história, conforme `voz`; "a gente" e a fala do espectador ("aí você pensa:") ficam para os trechos que argumentam com ele, conforme `fio`.

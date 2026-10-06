@@ -61,11 +61,6 @@ const report = (
       console.log(`    roteiro: ${sentence.text}`);
     }
   }
-  if (manifest.voice === "placeholder") {
-    console.log(
-      "\nATENÇÃO: narração feita com a voz provisória. Grave voice/reference.wav antes de publicar.",
-    );
-  }
 };
 
 const main = async () => {

@@ -3,7 +3,6 @@ import type { NarrationManifest } from "./manifest";
 import { buildTimeline, cueFrame, shotRanges } from "./timeline";
 
 const manifest: NarrationManifest = {
-  voice: "placeholder",
   loudnessLufs: -25,
   scenes: [
     {
@@ -12,7 +11,7 @@ const manifest: NarrationManifest = {
       sentences: [
         {
           text: "A luz saiu.",
-          file: "videos/demo/narration/a.wav",
+          file: "videos/exemplo/narration/a.wav",
           startMs: 400,
           durationMs: 2000,
           words: [
@@ -32,7 +31,7 @@ const manifest: NarrationManifest = {
       sentences: [
         {
           text: "Luz, luz!",
-          file: "videos/demo/narration/b.wav",
+          file: "videos/exemplo/narration/b.wav",
           startMs: 400,
           durationMs: 1000,
           words: [

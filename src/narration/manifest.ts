@@ -52,8 +52,6 @@ type NarrationScene = {
 };
 
 export type NarrationManifest = {
-  /** "placeholder" marca narração feita com a voz provisória, que não pode ir ao ar. */
-  readonly voice: "reference" | "placeholder";
   /** Volume percebido da narração inteira, em LUFS. É a referência da mixagem. */
   readonly loudnessLufs: number;
   readonly scenes: readonly NarrationScene[];

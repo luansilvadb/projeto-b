@@ -19,8 +19,10 @@ from acestep.inference import GenerationConfig, GenerationParams, generate_music
 from acestep.llm_inference import LLMHandler
 
 DIT_MODEL = "acestep-v15-turbo"
-# Valores que a documentação do ACE-Step indica para o modelo turbo.
-INFERENCE_STEPS = 8
+# O modelo turbo aceita de 1 a 20 passos, e a documentação indica 8. Com 8 a
+# faixa sai fechada, com textura de ruído reduzido (o usuário ouviu assim no
+# why-we-sleep); com 20 ela mede mais aberta nos agudos, por meio minuto a mais.
+INFERENCE_STEPS = 20
 SHIFT = 3.0
 
 

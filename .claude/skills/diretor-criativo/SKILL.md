@@ -23,7 +23,7 @@ Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio exp
 
 ## ETAPAS
 
-O pedido decide a etapa; a etapa decide o que ler. Leia o procedimento da etapa e, dele, as unidades do passo em curso.
+O pedido decide a etapa; a etapa decide o que ler.
 
 | Etapa | Quando | Procedimento |
 |---|---|---|

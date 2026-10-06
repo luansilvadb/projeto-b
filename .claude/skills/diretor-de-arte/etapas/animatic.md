@@ -6,7 +6,7 @@ Antes de escrever qualquer cena, leia a skill `remotion-best-practices` e, dentr
 
 ## Estrutura de um vídeo
 
-Use `src/videos/why-we-sleep/` como modelo: o `demo` é anterior à ficha visual e às cores por vídeo, e não tem `art.md`, `script.md` nem `palette.ts`. O nome da pasta (o "slug") é também o id da composição e o argumento dos comandos.
+Use `src/videos/why-we-sleep/` como modelo.
 
 ```
 src/videos/<vídeo>/
@@ -44,7 +44,7 @@ A direção de arte mora na ficha visual do vídeo e no código, e é o que dá 
 - **Etiquetas**: o texto que nomeia ou qualifica algo na cena vai em etiqueta (`<Label tag={...}>`), presa ao que nomeia; números de destaque ficam presos ao que medem. Quanto texto cabe e onde ele fica vem da unidade `texto`.
 - **Desenhos** em `src/art/`: liste a pasta antes de desenhar. Um desenho novo que pode servir a outro vídeo nasce ali, construído conforme as unidades `forma`, `personagem` e `cenario`. O que só serve a um vídeo fica em `parts/`, na pasta dele.
 
-Desfoque: a regra está em `cenario` (Custo); o porquê, no comentário de `Glow`.
+Desfoque: a regra e o porquê estão em `cenario` (Custo).
 
 Mantenha texto importante dentro da margem `shape.safeArea` e nos tamanhos de `typography.size`.
 
@@ -62,8 +62,6 @@ pnpm critique <vídeo> animatic   # medidas do render contra os vídeos de refer
 Enquanto desenha, abra cada imagem gerada e corrija o que vir: nenhum quadro vai adiante sem ter sido aberto. Para ver um momento específico, passe os quadros: `pnpm stills <vídeo> 30 120`.
 
 Com os quadros de todos os planos renderizados, acione o subagente `critico-de-quadro`, que não desenhou nada e faz as passadas da unidade `critica-quadro`. Passe o nome da pasta do vídeo, o caminho dos quadros e a tabela do `pnpm critique`. Ele julga; quem decide e redesenha é você, pelos passos 4 a 6 do procedimento de `critica-quadro`, acionando-o de novo só com os planos alterados.
-
-Com `animatic`, o `pnpm critique` só reprova as medidas que já valem com os quadros parados (seção Medidas de `critica-quadro`).
 
 ## Segunda aprovação
 

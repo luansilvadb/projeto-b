@@ -3,7 +3,6 @@ import { Composition, Folder, Still } from "remotion";
 import { IdentitySheet } from "./design/IdentitySheet";
 import { MOTION_SAMPLE_SECONDS, MotionSample } from "./design/MotionSample";
 import { FPS, HEIGHT, WIDTH } from "./format";
-import { Demo, demoMetadata } from "./videos/demo";
 import { Vignette } from "./vignette/Vignette";
 import { WhyWeSleep, whyWeSleepMetadata } from "./videos/why-we-sleep";
 
@@ -15,15 +14,6 @@ const VIGNETTE_PREVIEW_SECONDS = 6;
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Composition
-        id="demo"
-        component={Demo}
-        width={WIDTH}
-        height={HEIGHT}
-        fps={30}
-        defaultProps={{ narration: null, music: null }}
-        calculateMetadata={demoMetadata}
-      />
       <Composition
         id="why-we-sleep"
         component={WhyWeSleep}

@@ -23,7 +23,6 @@ Que decisões de movimento vão ao usuário, e quais o agente resolve sozinho?
 **Partitura.** O registro de cada plano: o que acontece, em que palavra, por quanto tempo, com que entrada e com que ênfase. É o que a crítica confere e o que o usuário aprova.
 
 ## LIMITES
-- Não perguntar o que as unidades e o quadro aprovado já respondem.
 - Não pedir aprovação de vídeo que o próprio agente ainda não viu em quadros consecutivos.
 
 ## EXEMPLO

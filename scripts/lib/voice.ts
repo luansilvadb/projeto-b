@@ -45,10 +45,7 @@ export const VOICE_MODEL: VoiceModel = {
   takesPerAttempt: 4,
 };
 
-const VOICES = [
-  { kind: "reference", file: "voice/reference.wav" },
-  { kind: "placeholder", file: "voice/placeholder.wav" },
-] as const;
+const VOICE = { file: "voice/reference.wav" } as const;
 
 /** A amostra de voz e o que é dito nela. */
 export type VoiceSample = { readonly file: string; readonly text: string };
@@ -57,11 +54,12 @@ export const hash = (content: string | Buffer) =>
   createHash("sha256").update(content).digest("hex").slice(0, 16);
 
 export const resolveVoice = () => {
-  const voice = VOICES.find((candidate) => existsSync(candidate.file));
-  if (!voice) {
-    throw new Error("Nenhuma amostra de voz em voice/. Rode: pnpm setup:tools");
+  if (!existsSync(VOICE.file)) {
+    throw new Error(
+      `Falta a amostra de voz: grave de 5 a 10 segundos em ${VOICE.file}.`,
+    );
   }
-  return voice;
+  return VOICE;
 };
 
 export const transcribe = (audios: readonly string[]) =>

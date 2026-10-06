@@ -10,7 +10,7 @@ import type { Script } from "./script";
 
 const take = (text: string, durationMs: number): SentenceTake => ({
   text,
-  file: `videos/demo/narration/${text}.wav`,
+  file: `videos/exemplo/narration/${text}.wav`,
   durationMs,
   words: [{ text, startMs: 100, endMs: durationMs - 100 }],
   errors: 0,
@@ -71,7 +71,7 @@ describe("frases coladas", () => {
 
 describe("assertManifestMatchesScript", () => {
   const script: Script = {
-    title: "Demo",
+    title: "Exemplo",
     scenes: [
       {
         id: "sun",
@@ -88,7 +88,6 @@ describe("assertManifestMatchesScript", () => {
     ],
   };
   const manifestFor = (...texts: string[]): NarrationManifest => ({
-    voice: "placeholder",
     loudnessLufs: -25,
     scenes: [
       assembleScene(
@@ -100,13 +99,13 @@ describe("assertManifestMatchesScript", () => {
 
   it("aceita manifesto gerado a partir do roteiro atual", () => {
     expect(() =>
-      assertManifestMatchesScript(script, manifestFor("Um.", "Dois."), "demo"),
+      assertManifestMatchesScript(script, manifestFor("Um.", "Dois."), "exemplo"),
     ).not.toThrow();
   });
 
   it("recusa manifesto de um roteiro que mudou", () => {
     expect(() =>
-      assertManifestMatchesScript(script, manifestFor("Um.", "Três."), "demo"),
-    ).toThrowError(/pnpm narrate demo/);
+      assertManifestMatchesScript(script, manifestFor("Um.", "Três."), "exemplo"),
+    ).toThrowError(/pnpm narrate exemplo/);
   });
 });

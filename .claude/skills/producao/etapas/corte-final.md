@@ -7,7 +7,7 @@
 Confira antes de renderizar: descobrir uma pendência depois de meia hora de render é meia hora perdida.
 
 - **Aprovações**: `src/videos/<vídeo>/approvals.md` tem a 1ª aprovação, a 2ª e o aceite da animação, nenhum reaberto depois? Compare a data da 1ª com `git log -1 --format=%cs -- src/videos/<vídeo>/script.json`: se o roteiro mudou depois dela, mostre o que mudou.
-- **Narração**: rode `pnpm narrate <vídeo>`. Com tudo em cache ele só repete o resumo. Não pode haver aviso de **voz provisória**: sem `voice/reference.wav` o vídeo não sai. Se houver aviso de frases que diferem do roteiro ou com o fim cortado, o usuário precisa ter ouvido e aceitado cada uma.
+- **Narração**: rode `pnpm narrate <vídeo>`. Com tudo em cache ele só repete o resumo. Se houver aviso de frases que diferem do roteiro ou com o fim cortado, o usuário precisa ter ouvido e aceitado cada uma.
 - **Trilha**: existe `public/videos/<vídeo>/music.json`? Sem ele o vídeo renderiza sem música.
 - **Fatos**: acione o subagente `checador` com o nome da pasta do vídeo. Ele confere cada afirmação da fala e da tela contra `research.md`. Nenhuma pode voltar *não verificada*; a que voltar vai ao usuário e, se pedir outra frase, à skill `diretor-criativo`.
 - **Código**: `pnpm lint` e `pnpm test` passam.

@@ -20,7 +20,7 @@ O `setup:tools` clona as ferramentas de IA em `vendor/`, cria os ambientes Pytho
 
 Para buscar efeitos sonoros no [Freesound](https://freesound.org), copie `.env.example` para `.env` e preencha a chave gratuita. É o único serviço externo do projeto, e só o `pnpm sfx` depende dele.
 
-Para narrar com a sua voz, grave de 5 a 10 segundos em ambiente silencioso e salve em `voice/reference.wav`. Sem esse arquivo a narração usa uma voz provisória, que serve para testar e não para publicar.
+Para narrar com a sua voz, grave de 5 a 10 segundos em ambiente silencioso e salve em `voice/reference.wav`. Sem esse arquivo a narração não roda.
 
 ## Como um vídeo é feito
 
@@ -37,7 +37,7 @@ Cada etapa pertence a uma skill do Claude Code em `.claude/skills/`, que guarda 
 | 7. Corte final | `producao`         | `etapas/corte-final.md`  | `pnpm render <vídeo>`           | `out/<vídeo>.final.mp4` e a **3ª aprovação**       |
 | 8. Publicação  | `producao`         | `etapas/publicacao.md`   |                                 | `description.md`, com título e fontes              |
 
-`<vídeo>` é o nome da pasta em `src/videos/`. O vídeo `demo` serve de modelo para `research.md` e `script.json`; para a ficha visual, as cores e as cenas, o modelo é o `why-we-sleep`.
+`<vídeo>` é o nome da pasta em `src/videos/`. O vídeo `why-we-sleep` serve de modelo.
 
 São três skills, uma por dono de entrega: `diretor-criativo` (o texto: pesquisa, ângulo, estrutura e roteiro), `diretor-de-arte` (a imagem e o movimento: elenco, paletas, a divisão de cada cena em planos, desenho, composição e animação) e `producao` (o som e o arquivo final: narração, trilha, efeitos sonoros, corte final e a descrição de publicação). Em cada uma, `SKILL.md` leva do pedido à etapa; os arquivos de `etapas/` dizem como rodar a etapa neste repositório; as unidades, nas outras pastas, guardam o conhecimento do estilo. Os planos do roteiro são a única etapa que cruza duas skills: o `diretor-criativo` aciona o `diretor-de-arte` (`etapas/decupagem.md`) antes da 1ª aprovação. As skills dirigem na conversa; os especialistas que levantam, executam e julgam são subagentes em `.claude/agents/`, acionados por elas e sem o contexto de quem fez o trabalho: `pesquisador`, `checador` e `editor` (do `diretor-criativo`; o `checador` volta no corte final, acionado pela `producao`), `ilustrador`, `motion-designer`, `critico-de-quadro` e `critico-de-movimento` (do `diretor-de-arte`). A skill `remotion-best-practices` vem do Remotion, é atualizada com ele e fica fora do repositório, em `~/.claude/skills/` (global do Claude Code).
 
@@ -69,7 +69,7 @@ Ficam fora do git: `public/videos/` (narração e trilha geradas), `vendor/` (fe
 - O que o usuário decidiu fica na pasta do vídeo, no git: `script.md` (as decisões do texto, sem narração), `art.md` (a ficha visual) e `score.md` (a partitura da animação). `out/` guarda só o que pode ser gerado de novo.
 - Cada aprovação é uma linha de `src/videos/<vídeo>/approvals.md`, escrita só depois do "sim" do usuário na conversa: `| <1ª: roteiro, 2ª: animatic, aceite da animação ou 3ª: corte final> | <aaaa-mm-dd> | <o que cobriu, e as ressalvas aceitas> |`. Linha nunca é apagada: se o que foi aprovado mudar, entra uma linha `reaberta: <qual>` com o motivo, e a aprovação seguinte é uma linha nova. Vale a última linha de cada aprovação. As numeradas são três; o aceite da animação fica entre a 2ª e a 3ª.
 - Nenhuma cena escreve cor solta. As cores de um vídeo ficam em `src/videos/<vídeo>/palette.ts`, com os modos e o elenco da ficha visual dele (`art.md`). Tamanhos de texto, formas e curvas de movimento vêm de `src/design/tokens.ts`.
-- A direção de arte base do canal é a `abissal`, em `src/design/tokens.ts`. Ela vale para o vídeo `demo` e para as cenas que ainda não foram redesenhadas; as cores de cada vídeo ficam na `palette.ts` dele.
+- A direção de arte base do canal é a `abissal`, em `src/design/tokens.ts`. Ela vale para as cenas que ainda não foram redesenhadas; as cores de cada vídeo ficam na `palette.ts` dele.
 - A duração de cada cena vem da narração. Cenas não têm durações fixas.
 - A cena é a unidade da fala; a da imagem é o plano. Cada cena do roteiro lista os seus planos (`shots`), e cada plano começa numa palavra da narração.
 - O volume da trilha é calculado em relação ao da voz (`src/audio/ducking.ts`), não ajustado cena a cena, e é um só no vídeo inteiro: só sobe nos silêncios que o roteiro pede.

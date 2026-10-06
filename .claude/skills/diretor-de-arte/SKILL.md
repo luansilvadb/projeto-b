@@ -22,7 +22,7 @@ Dono da imagem e do movimento de um ensaio explicativo animado no estilo Kurzges
 
 ## ETAPAS
 
-O pedido decide a etapa; a etapa decide o que ler. Leia o procedimento da etapa e, dele, as unidades do passo em curso.
+O pedido decide a etapa; a etapa decide o que ler.
 
 | Etapa | Quando | Procedimento |
 |---|---|---|
@@ -30,7 +30,7 @@ O pedido decide a etapa; a etapa decide o que ler. Leia o procedimento da etapa 
 | 4. Animatic | narração pronta; criar a pasta e as cenas de um vídeo; storyboard, desenho ou composição | `etapas/animatic.md` |
 | 5. Animação | animatic aprovado; animar, ajustar tempo, transição ou câmera; marcar onde cabe som | `etapas/animacao.md` |
 
-A animação só começa com o animatic aprovado: movimento que pede outra composição devolve o plano ao passo Quadro.
+Movimento que pede outra composição devolve o plano ao passo Quadro.
 
 ## CONDUÇÃO
 

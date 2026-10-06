@@ -21,9 +21,6 @@ Que decisões criativas vão ao usuário, e quais o agente resolve sozinho?
 
 **Plano acordado.** É a soma das decisões registradas. Qualquer mudança fora dele, ainda que pareça melhoria, exige confirmação explícita. Se a escolha do usuário contradiz algo já aprovado ou a base de fatos, diga isso antes de seguir.
 
-## LIMITES
-- Não perguntar o que a pesquisa responde.
-
 ## EXEMPLO
 > Decisão: tese do vídeo sobre buracos negros.
 > A) "Buracos negros não sugam nada; eles são o lugar onde o futuro só aponta para dentro."

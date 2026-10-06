@@ -4,7 +4,7 @@ Primeira etapa da produção. O que sai daqui é `src/videos/<vídeo>/research.m
 
 ## Como trabalhar
 
-1. Combine com o usuário o nome da pasta do vídeo: inglês, minúsculas e hifens (`sunlight-travel-time`). Esse nome vira o id da composição e o argumento de todos os comandos.
+1. Combine com o usuário o nome da pasta do vídeo: inglês, minúsculas e hifens (`sunlight-travel-time`).
 2. Defina a ideia central em uma frase: o que a pessoa deve entender ao fim do vídeo. Ela decide o que entra e o que fica de fora.
 3. Liste as perguntas do tema (passos 1 e 2 de `pesquisa/levantamento`) e acione um subagente `pesquisador` por pergunta, em paralelo, passando a pergunta, a ideia central e o caminho de `research.md`, quando ele já existir. Para um fato avulso que o roteiro pediu, pesquise você mesmo, por `levantamento`.
 4. Antes de gravar um fato, cobre de cada relatório: a fonte aberta, com a frase ou o número conferido nela (resultado de busca resumido não é a fonte; página que não abriu é dita na entrada da fonte); a conta de cada número derivado, para quem revisa conseguir refazê-la; a expectativa que cada fato surpreendente quebra e o termo de comparação de cada número. O que vier como *não verificado* entra em "Pontos em aberto", nunca em "Fatos".
@@ -12,7 +12,7 @@ Primeira etapa da produção. O que sai daqui é `src/videos/<vídeo>/research.m
 
 ## Formato de research.md
 
-Siga `src/videos/demo/research.md`:
+Siga `src/videos/why-we-sleep/research.md`:
 
 ```markdown
 # Pesquisa: <pergunta ou tema do vídeo>

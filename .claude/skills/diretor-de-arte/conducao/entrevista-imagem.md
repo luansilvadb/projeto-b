@@ -24,7 +24,6 @@ Que decisões visuais vão ao usuário, e quais o agente resolve sozinho?
 **Ficha visual.** O registro das decisões visuais aprovadas do vídeo: elenco (com a ficha de cada personagem), paletas e a forma visual das analogias. É o que garante que o plano 40 use o mesmo desenho e as mesmas cores do plano 1.
 
 ## LIMITES
-- Não perguntar o que a pesquisa ou o render respondem.
 - Não pedir aprovação de imagem que o próprio agente ainda não abriu e criticou.
 
 ## EXEMPLO

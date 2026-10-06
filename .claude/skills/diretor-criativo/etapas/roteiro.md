@@ -6,7 +6,7 @@ Ao lado dele fica `src/videos/<vídeo>/script.md`, o registro das decisões apro
 
 ## Formato
 
-Siga `src/videos/demo/script.json`. O tipo e as regras estão em `src/narration/script.ts`.
+Siga `src/videos/why-we-sleep/script.json`. O tipo e as regras estão em `src/narration/script.ts`.
 
 ```json
 {
@@ -57,7 +57,8 @@ Além das regras do validador:
 
 - Antes de qualquer frase vêm o desenho (`escrita/explicacao`) e a ficha do fio (`escrita/fio`), na ordem de injeção do `SKILL.md`. O usuário aprova a estrutura, a ficha do fio e uma amostra de um minuto antes do roteiro inteiro.
 - As frases médias e encadeadas de `escrita/narracao` pesam em dobro aqui: o modelo de voz gera uma frase por vez, com pausa entre elas, e texto picotado em frases curtas sai monótono e mal-humorado.
-- A pontuação decide como a frase é falada; a tabela está na etapa `narracao` da skill `producao`.- A vírgula é uma pausa: o modelo de voz para em cada uma. Só ponha vírgula onde quem fala pararia. "E mesmo assim emagreciam", não "e, mesmo assim, emagreciam", que sai com duas pausas.
+- A pontuação decide como a frase é falada; a tabela está na etapa `narracao` da skill `producao`.
+- A vírgula é uma pausa: o modelo de voz para em cada uma. Só ponha vírgula onde quem fala pararia. "E mesmo assim emagreciam", não "e, mesmo assim, emagreciam", que sai com duas pausas.
 - A grafia decide a pronúncia. Se o usuário ouvir uma palavra dita errado, escreva em `narration` como ela deve soar e deixe a grafia correta em `script.md`, na seção de grafias de pronúncia. O modelo lê "mal-humorado" ligando o "l" à vogal ("malumorado"); "mau-humorado" sai certo. O Whisper não acusa esse tipo de erro, só o ouvido.
 - Só afirme o que está em `research.md`. Se faltar um fato, volte à etapa `pesquisa` em vez de completar de memória.
 

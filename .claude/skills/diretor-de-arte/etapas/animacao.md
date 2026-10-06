@@ -2,8 +2,6 @@
 
 Quinta etapa, depois do animatic aprovado: a 2ª aprovação está em `src/videos/<vídeo>/approvals.md`, sem reabertura; se não estiver, pergunte ao usuário. Aqui cada plano ganha movimento e acabamento. A composição já foi aprovada: mude posição, tamanho ou conteúdo só se a animação pedir, e avise o usuário quando mudar.
 
-Este arquivo diz onde o conhecimento das unidades de movimento vira código neste projeto.
-
 Leia a skill `remotion-best-practices` (regras de `remotion-markup`) antes de escrever. O essencial: todo movimento sai de `useCurrentFrame()` com `interpolate()` e `Easing`; transições e animações de CSS não renderizam; prefira as propriedades `scale`, `translate` e `rotate` a `transform`.
 
 ## Passo 1: partitura

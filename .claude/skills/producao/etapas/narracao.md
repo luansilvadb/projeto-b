@@ -12,17 +12,14 @@ Antes da primeira geração de um vídeo, diga ao usuário que os pesos do OmniV
 2. Transcreve cada geração com o Whisper, compara com o roteiro e guarda o momento em que cada palavra é falada. A animação usa esses tempos como deixas.
 3. Fica com a melhor: sem palavra errada, sem o fim cortado, com a curva que o lugar da frase pede e a altura próxima da amostra. Se a melhor ainda tem defeito, gera outra rodada, até três.
 
-As escolhas que o usuário fez de ouvido no estúdio de voz valem acima dessa.
-
 O resultado fica em `public/videos/<vídeo>/`, fora do git e regerável a partir do roteiro: os áudios em `narration/` e o manifesto `narration.json`, que dá a duração de cada cena. Cada frase fica em cache: mudou uma frase do roteiro, só ela é gerada de novo.
 
 ## 2. Ler os avisos
 
-Três avisos do resumo pedem ação:
+Dois avisos do resumo pedem ação:
 
 - **"frase(s) ainda diferem do roteiro"**: depois de três rodadas, o Whisper continua ouvindo algo diferente do que está escrito. O erro pode ser do modelo de voz ou do próprio Whisper, que às vezes erra termos raros. Peça ao usuário para ouvir o arquivo indicado. Pronúncia errada: mude a grafia em `narration` para como a palavra deve soar e rode de novo. Pronúncia certa: registre que o usuário conferiu e siga.
 - **"frase(s) com o fim cortado"**: depois de três rodadas, nenhuma geração terminou em silêncio, e a última palavra pode ter saído pela metade. O Whisper não serve de conferência aqui, porque costuma completar a palavra sozinho. Peça ao usuário para ouvir o fim do arquivo indicado. Cortado: mude o texto da frase em `narration` (qualquer mudança gera outra fala) e rode de novo. Inteiro: registre que o usuário conferiu e siga.
-- **"voz provisória"**: não existe `voice/reference.wav`, e a narração saiu com a amostra de teste. Serve para montar e revisar o vídeo, não para publicar: a etapa `corte-final` barra o vídeo nesse estado.
 
 Pronto quando: cada frase acusada foi ouvida pelo usuário, e corrigida ou registrada como conferida.
 

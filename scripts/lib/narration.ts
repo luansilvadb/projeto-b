@@ -330,7 +330,6 @@ export const writeManifest = async (
   );
 
   const manifest: NarrationManifest = {
-    voice: plan.voice.kind,
     loudnessLufs: await measureLoudness(
       uniqueSentences(plan).map((sentence) =>
         publicPath(takeAudio(plan, sentence.key)),
