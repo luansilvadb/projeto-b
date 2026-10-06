@@ -1,6 +1,6 @@
 import type { CassiopeaColors } from "../../art/Cassiopea";
 import type { AntelopeColors } from "../../art/Antelope";
-import type { ElephantColors } from "../../art/Elephant";
+import type { ElephantColors, ElephantFinish } from "../../art/Elephant";
 import type { FishColors } from "../../art/Fish";
 import type { PersonColors } from "../../art/Person";
 import type { StopwatchColors } from "../../art/Stopwatch";
@@ -642,3 +642,56 @@ export const elephantNight: ElephantColors = {
   shade: "#6F7AB8",
   light: "#BFC6EA",
 };
+
+/**
+ * A elefanta do acabamento, piloto do polimento (2026-10-06): cor cheia no
+ * lugar do cinza-lilás, sombra em violeta e não no corpo escurecido, e a borda
+ * de luz na cor do sol. Vale só onde a cena pede o acabamento; as cores
+ * aprovadas, acima, continuam como estão.
+ */
+export const elephantFinish: ElephantFinish = {
+  body: "#7B82EA",
+  light: "#A3A9FF",
+  shadow: "#5A45C6",
+  deep: "#3D2A98",
+  rim: "#FFFDF0",
+  ear: "#F0668E",
+  earRing: "#B43C82",
+  tusk: "#FFF0CC",
+  tuskShade: "#E3BE7A",
+  eye: "#FFFFFF",
+  pupil: "#1B1F3C",
+};
+
+/** A mesma elefanta sob a lua: mais clara, para não se apagar no céu, com a borda de luz na cor do luar. */
+export const elephantNightFinish: ElephantFinish = {
+  ...elephantFinish,
+  body: "#8D92F4",
+  light: "#B9BDFF",
+  shadow: "#6852DA",
+  deep: "#4530AC",
+  rim: "#FFE9A8",
+};
+
+/**
+ * O acabamento da savana de noite, do mesmo piloto: o halo da lua em três
+ * degraus do céu até ela, as nuvens um tom acima do céu, a borda de luz das
+ * colinas e das copas, e as manchas e a crista do chão.
+ */
+export const savannaFinish = {
+  night: {
+    clouds: ["#07188A", "#0C22A0"],
+    halo: ["#0A1C8E", "#1730B4", "#3A46D6"],
+    rays: "#3A55DC",
+    moonCore: "#FFF3C4",
+    star: "#BFD0FF",
+    starRing: "#2C48D2",
+    farBack: "#0C22A0",
+    rim: "#2C48D2",
+    groundPatch: ["#6A22A2", "#34106A"],
+    groundRim: "#6A2AA8",
+    grassLit: "#6A2AA8",
+    tree: "#0E1E90",
+    moonlight: "#5A24A0",
+  },
+} as const;

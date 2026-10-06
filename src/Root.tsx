@@ -1,3 +1,4 @@
+import { ElephantSheet } from "./videos/why-we-sleep/ElephantSheet";
 import { JellyfishSheet } from "./videos/why-we-sleep/JellyfishSheet";
 import { Composition, Folder, Still } from "remotion";
 import { IdentitySheet } from "./design/IdentitySheet";
@@ -45,6 +46,15 @@ export const RemotionRoot: React.FC = () => {
           component={JellyfishSheet}
           width={WIDTH}
           height={HEIGHT}
+        />
+        {/* O piloto do polimento: a elefanta antes e depois (quadro 0) e o plano de noite com e sem acabamento (1 e 2). */}
+        <Composition
+          id="elefanta"
+          component={ElephantSheet}
+          width={WIDTH}
+          height={HEIGHT}
+          fps={FPS}
+          durationInFrames={3}
         />
         {/* A vinheta do canal sozinha, para ver e ajustar sem o vídeo em volta. */}
         <Composition
