@@ -313,18 +313,19 @@ export const Elephant: React.FC<ElephantProps> = ({
               )}
               fill={finish.shadow}
             />
-            {/* A ponta rosada é uma mancha recortada no tubo; a tampa redonda, abaixo, tem a largura dele. */}
-            <circle
-              cx={trunkTip[0]}
-              cy={trunkTip[1] + 6}
-              r={24}
-              fill={finish.earInside}
-            />
           </g>
-          <circle
+          {/*
+            A ponta: arredondada, na cor do corpo, com a abertura rosada
+            dentro, menor que o tubo. Neste vídeo o sono é medido pela tromba,
+            e é a ponta que o olho segue; uma tampa rosa do tamanho do tubo
+            lia como borracha de lápis.
+          */}
+          <circle cx={trunkTip[0]} cy={trunkTip[1]} r={14} fill={finish.body} />
+          <ellipse
             cx={trunkTip[0]}
-            cy={trunkTip[1]}
-            r={14}
+            cy={trunkTip[1] + 4}
+            rx={8.5}
+            ry={6}
             fill={finish.earInside}
           />
           <path
