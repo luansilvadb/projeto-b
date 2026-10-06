@@ -28,6 +28,7 @@ import {
   TABLE_BILL,
   undrifted,
 } from "./SleepDebtScene";
+import { polished } from "../polish";
 
 type BillSpot = {
   readonly x: number;
@@ -268,6 +269,7 @@ const SplitShot: React.FC<SplitShotProps> = ({ checkAt, stillAt, clock }) => {
             >
               <Grow at={SLEEPER_AT_FRAMES} origin="bottom">
                 <Antelope
+                  finish={polished()}
                   width={ANIMAL.width}
                   colors={antelope}
                   rest={1}
@@ -315,6 +317,7 @@ const SplitShot: React.FC<SplitShotProps> = ({ checkAt, stillAt, clock }) => {
                   }}
                 >
                   <Antelope
+                    finish={polished()}
                     width={ANIMAL.width}
                     colors={antelope}
                     lid={blink(seconds, "still", { every: [1.4, 3] })}

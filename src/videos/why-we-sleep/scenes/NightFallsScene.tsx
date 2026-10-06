@@ -25,12 +25,20 @@ import { blink, phaseOf, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { POP_SECONDS, popOpacity, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp, clamp01, clamp } from "../../../components/timing";
+import {
+  cue,
+  linear,
+  mix,
+  ramp,
+  clamp01,
+  clamp,
+} from "../../../components/timing";
 import { typography } from "../../../design/tokens";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength, wipeClip, type Wipe } from "../../../video/Shot";
 import { antelope, antelopeNight, ink, savanna, sound } from "../palette";
 import { SAVANNA_GROUND_Y, Savanna, SavannaShadow } from "../parts/Savanna";
+import { polished } from "../polish";
 
 /**
  * O lugar do bloco 2: o pé de uma acácia, onde o bicho pequeno se deita, e a
@@ -223,6 +231,7 @@ export const SavannaShot: React.FC<SavannaShotProps> = ({
         <Sequence from={-clock} layout="none">
           <Camera {...camera}>
             <Savanna
+              finish={polished()}
               daylight={daylight}
               orb={orb}
               sky={daylight < 0.25 ? <Moonlight /> : undefined}
@@ -395,6 +404,7 @@ export const Critter: React.FC<CritterProps> = ({
         }}
       >
         <Antelope
+          finish={polished()}
           width={DEN.width}
           colors={daylight > 0.25 ? antelope : antelopeNight}
           rest={Math.max(rest, NOD.buckle * nod)}

@@ -31,6 +31,7 @@ import { LossBadge, PREY, Prey, type Loss } from "../parts/Prey";
 import { Savanna } from "../parts/Savanna";
 import { BiggestMistakeOpening } from "./BiggestMistakeScene";
 import { Prelude } from "./MaybeBrainScene";
+import { polished } from "../polish";
 
 type BarShotProps = {
   /** Quadro do plano em que o terço escurece e ganha nome. */
@@ -185,7 +186,7 @@ const LossesShot: React.FC<LossesShotProps> = ({ at }) => {
   return (
     <AbsoluteFill>
       <Camera {...cameraBetween(NIGHT, NIGHT_CLOSER, frame / length)}>
-        <Savanna daylight={0} orb={0.3}>
+        <Savanna daylight={0} orb={0.3} finish={polished()}>
           {/* A acácia sob a qual ele dorme: o tronco e a copa chata, na cor das árvores da noite. */}
           <SvgLayer>
             {/*

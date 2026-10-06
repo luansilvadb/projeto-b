@@ -5,6 +5,7 @@ import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { antelope, antelopeNight, ink } from "../palette";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "./Savanna";
+import { polished } from "../polish";
 
 /** Onde o antílope fica no plano aberto da savana, e o tamanho dele. */
 export const PREY = { x: 1040, y: SAVANNA_GROUND_Y + 40, width: 420 };
@@ -64,6 +65,7 @@ export const Prey: React.FC<PreyProps> = ({
         }}
       >
         <Antelope
+          finish={polished()}
           width={PREY.width}
           colors={daylight > 0.5 ? antelope : antelopeNight}
           rest={rest}

@@ -47,6 +47,12 @@ type AntelopeProps = {
    * caminho ela é vista de frente, estreita: é a virada, e não uma troca.
    */
   readonly lookBack?: number;
+  /**
+   * O traço gordo (unidade `forma` da direção de arte): pernas, chifres, rabo
+   * e cascos mais grossos e de ponta redonda, no peso das outras peças. A
+   * construção e as poses são as mesmas; sem ele, o antílope é o do animatic.
+   */
+  readonly finish?: boolean;
 };
 
 // A figura cabe nesta caixa, de perfil, olhando para a esquerda; a origem é o chão sob a barriga.
@@ -86,6 +92,12 @@ const HIND: Leg = {
   folded: { top: [122, -72], joint: [186, -36], hoof: [118, -12] },
   widths: [56, 19, 12],
 };
+// O traço gordo: as larguras das pernas (no alto, na articulação e no casco) e a meia largura do casco.
+const STOUT = {
+  front: [36, 23, 19],
+  hind: [58, 27, 20],
+  hoof: 15,
+} as const;
 // As pernas do outro lado do corpo aparecem um pouco à frente das de cá.
 const FAR_SIDE = -24;
 // O andar: quanto o casco vai à frente e atrás, quanto sobe ao avançar, e a
@@ -125,6 +137,7 @@ export const Antelope: React.FC<AntelopeProps> = ({
   gait,
   pace = 1,
   lookBack = 0,
+  finish = false,
 }) => {
   const id = useId();
   const scale = width / VIEW.width;
@@ -166,12 +179,17 @@ export const Antelope: React.FC<AntelopeProps> = ({
   const neckEnd = fromShoulder(NECK, neckTurn);
 
   const leg = (
-    { standing, folded, widths }: Leg,
+    { standing, folded, widths: thin }: Leg,
     phase: number,
     swing: number,
     far: boolean,
     lift = 0,
   ) => {
+    const widths = !finish
+      ? thin
+      : thin === HIND.widths
+        ? STOUT.hind
+        : STOUT.front;
     const offset = far ? FAR_SIDE : 0;
     const shift = (point: Point, by: number, up = 0): Point => [
       point[0] + offset + by,
@@ -184,11 +202,7 @@ export const Antelope: React.FC<AntelopeProps> = ({
       swing * 0.45 - lift * 0.5,
       lift * 0.45,
     );
-    const hoof = shift(
-      between(standing.hoof, folded.hoof, phase),
-      swing,
-      lift,
-    );
+    const hoof = shift(between(standing.hoof, folded.hoof, phase), swing, lift);
     const fill = far ? colors.shade : colors.body;
     const upper: Point = [(top[0] + joint[0]) / 2, (top[1] + joint[1]) / 2];
     const lower: Point = [(joint[0] + hoof[0]) / 2, (joint[1] + hoof[1]) / 2];
@@ -204,10 +218,20 @@ export const Antelope: React.FC<AntelopeProps> = ({
         />
         <circle cx={joint[0]} cy={joint[1]} r={widths[1] / 2} fill={fill} />
         {/* O casco: uma cunha escura, virada para a frente. */}
-        <path
-          d={`M${hoof[0] - 9},${hoof[1] - 6} L${hoof[0] + 9},${hoof[1] - 6} L${hoof[0] + 8},${hoof[1] + 8} L${hoof[0] - 14},${hoof[1] + 8} Z`}
-          fill={colors.band}
-        />
+        {finish ? (
+          <path
+            d={`M${hoof[0] - STOUT.hoof + 3},${hoof[1] - 8} L${hoof[0] + STOUT.hoof - 3},${hoof[1] - 8} L${hoof[0] + STOUT.hoof - 4},${hoof[1] + 6} L${hoof[0] - STOUT.hoof - 4},${hoof[1] + 6} Z`}
+            fill={colors.band}
+            stroke={colors.band}
+            strokeWidth={6}
+            strokeLinejoin="round"
+          />
+        ) : (
+          <path
+            d={`M${hoof[0] - 9},${hoof[1] - 6} L${hoof[0] + 9},${hoof[1] - 6} L${hoof[0] + 8},${hoof[1] + 8} L${hoof[0] - 14},${hoof[1] + 8} Z`}
+            fill={colors.band}
+          />
+        )}
       </g>
     );
   };
@@ -220,8 +244,8 @@ export const Antelope: React.FC<AntelopeProps> = ({
           [-2 + offset, -24],
           [18 + offset, -72],
           [6 + offset, -116],
-          17,
-          11,
+          finish ? 23 : 17,
+          finish ? 17 : 11,
         )}
         fill={colors.band}
       />
@@ -230,8 +254,8 @@ export const Antelope: React.FC<AntelopeProps> = ({
           [6 + offset, -116],
           [-8 + offset, -156],
           [14 + offset, -196],
-          11,
-          3,
+          finish ? 17 : 11,
+          finish ? 9 : 3,
         )}
         fill={colors.band}
       />
@@ -273,7 +297,13 @@ export const Antelope: React.FC<AntelopeProps> = ({
         {/* O rabo: curto e escuro, pendurado na anca. */}
         <g transform={`translate(182 -214) rotate(-20)`}>
           <path
-            d={taperPath([0, 0], [16, 22], [14, 58], 15, 6)}
+            d={taperPath(
+              [0, 0],
+              [16, 22],
+              [14, 58],
+              finish ? 20 : 15,
+              finish ? 11 : 6,
+            )}
             fill={colors.band}
           />
         </g>
@@ -395,7 +425,7 @@ export const Antelope: React.FC<AntelopeProps> = ({
               d={`M${EYE.x - EYE.radius},${EYE.y + 2} Q${EYE.x},${EYE.y + 10} ${EYE.x + EYE.radius},${EYE.y + 2}`}
               fill="none"
               stroke={colors.band}
-              strokeWidth={4}
+              strokeWidth={finish ? 8 : 4}
               strokeLinecap="round"
             />
           ) : null}
