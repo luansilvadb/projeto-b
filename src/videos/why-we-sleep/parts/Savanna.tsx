@@ -275,6 +275,8 @@ export const Savanna: React.FC<SavannaProps> = ({
             <path
               d={`M260,${SAVANNA_GROUND_Y + 60} C520,${SAVANNA_GROUND_Y - 130} 1280,${SAVANNA_GROUND_Y - 150} 1680,${SAVANNA_GROUND_Y + 60} Z`}
               fill={glow.mound}
+              // Só de dia: de noite, mais claro que o chão escuro, o morro lia como uma mancha acesa sob as elefantas.
+              opacity={Math.max(0, daylight * 2 - 1)}
             />
           ) : null}
           {TUFTS.map((x, index) => (
