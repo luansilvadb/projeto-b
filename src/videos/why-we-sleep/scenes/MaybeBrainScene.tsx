@@ -56,7 +56,7 @@ import { RESEARCHER, TankShot } from "../parts/TankShot";
 import { ROW_HUE, rowLife } from "./FivePartsScene";
 import { JellyfishOpening } from "./JellyfishScene";
 import { Drift, Grow, driftZoom, drifted } from "./SleepDebtScene";
-import { elephantPolish } from "../polish";
+import { elephantPolish, polished } from "../polish";
 
 /**
  * O elenco de um plano entra antes da marcação de sempre: quem abre o plano
@@ -683,6 +683,7 @@ const SuspectsShot: React.FC<SuspectsShotProps> = ({
                 <Person
                   height={YOU.height}
                   colors={person}
+                  finish={polished()}
                   expression={frame >= lookAt + 2 ? "surprised" : "curious"}
                   blink={Math.max(
                     blink(seconds, "you"),

@@ -12,7 +12,13 @@ import { Place } from "../../../components/Place";
 import { popOpacity, popScale, POP_SECONDS } from "../../../components/Pop";
 import { SlowPush } from "../../../components/SlowPush";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { ALREADY_SHOWN, cue, linear, ramp, clamp } from "../../../components/timing";
+import {
+  ALREADY_SHOWN,
+  cue,
+  linear,
+  ramp,
+  clamp,
+} from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot } from "../../../video/Shot";
 import { person } from "../palette";
@@ -31,6 +37,7 @@ import {
 import { RECALL_LEAD, TonightOpening } from "./TonightScene";
 import { LineGroup, SeaStage } from "./NobodyEscapedScene";
 import { billSway } from "./SkipANightScene";
+import { polished } from "../polish";
 
 // A pessoa e a barra já estão no lugar quando "Mas agora" soa.
 const LIT_SOONER = 20;
@@ -91,6 +98,7 @@ const LitShot: React.FC<LitShotProps> = ({ litAt, lookAt }) => {
           <Person
             height={STANDING.height}
             colors={person}
+            finish={polished()}
             // O rosto troca com a pálpebra fechada.
             expression={frame >= lookAt + LID_FRAMES ? "curious" : "neutral"}
             blink={Math.max(

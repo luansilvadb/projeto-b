@@ -40,7 +40,7 @@ import {
 import { NEVER, Preluded, flash, useCastScale } from "./MaybeBrainScene";
 import { Drift, Grow } from "./SleepDebtScene";
 import { SHOP_RISE, ShopPrelude } from "./StillUnknownScene";
-import { elephantPolish } from "../polish";
+import { elephantPolish, polished } from "../polish";
 
 type Hue = keyof typeof idea;
 type Point = readonly [number, number];
@@ -577,6 +577,7 @@ const Among: React.FC<AmongProps> = ({
                 <Person
                   height={layout.person.height}
                   colors={person}
+                  finish={polished()}
                   expression={expression}
                   blink={Math.max(
                     at < rubAt ? blink(seconds, "you") : 0,
