@@ -64,17 +64,17 @@ Dentro da cena (veja `src/videos/why-we-sleep/scenes/ThirdOfLifeScene.tsx`):
 - O movimento usa as curvas de `timing.ts` (`ramp`, `settle`, `linear`, `drop`) e os primitivos de `src/components/` (`Place`, `Pop`, `SlowPush`, `Camera`, `Idle`, `SvgLayer`); os desenhos reutilizáveis ficam em `src/art/`, os de um vídeo só em `src/videos/<vídeo>/parts/`.
 - Nenhuma cor solta: as cores vêm de `src/videos/<vídeo>/palette.ts`; tamanhos de texto, formas e curvas, de `src/design/tokens.ts`.
 
-Um vídeo novo também entra em `src/Root.tsx` como `Composition` com o `calculateMetadata` dele; o formato (1920×1080, 30 fps) vem de `src/format.ts`. A pasta `design` do `Root.tsx` guarda as composições de conferência, que não são vídeos: `identity-sheet`, `motion-sample`, `agua-viva` (folha de modelo) e `vinheta` (a vinheta do canal, de `src/vignette/`). O `demo` é o modelo de `research.md` e `script.json`; o `why-we-sleep`, da ficha visual, das cores e das cenas.
+Um vídeo novo também entra em `src/Root.tsx` como `Composition` com o `calculateMetadata` dele; o formato (1920×1080, 30 fps) vem de `src/format.ts`. A pasta `design` do `Root.tsx` guarda as composições de conferência, que não são vídeos: `identity-sheet`, `motion-sample`, `agua-viva` (folha de modelo) e `vinheta` (a vinheta do canal, de `src/vignette/`). O `why-we-sleep` é o vídeo modelo.
 
 ### Scripts e ferramentas
 
 `scripts/*.ts` são os comandos pnpm (rodam com `tsx`) e importam a lógica pura de `src/` (`src/narration/`, `src/critique/`, `src/audio/`), que é onde os testes estão. `scripts/lib/tools.ts` roda os processos externos (Remotion, ffmpeg, Python via `uv`); `scripts/lib/videos.ts` lê roteiro e manifesto. `tools/narration/` é um projeto `uv` próprio (Python 3.11, torch com CUDA); `vendor/` guarda as ferramentas clonadas pelo `setup:tools`.
 
-Detalhe que custa tempo: o `pnpm stills` monta o vídeo com `silent`, porque o Remotion 4.0.532 falha ao renderizar quadros avulsos de uma composição com áudio.
+Detalhe que custa tempo: o `pnpm stills` monta o vídeo com `silent`, porque o Remotion falha ao renderizar quadros avulsos de uma composição com áudio.
 
 ### Skills e subagentes
 
-O processo de produção mora em `.claude/skills/`, uma skill por dono de entrega: `diretor-criativo` (texto), `diretor-de-arte` (imagem e movimento) e `producao` (som e arquivo final). Em cada uma, `SKILL.md` leva do pedido à etapa, `etapas/<etapa>.md` diz como rodá-la neste repositório e as demais pastas guardam o conhecimento do estilo. As skills dirigem na conversa e acionam os subagentes de `.claude/agents/` para levantar, executar e julgar. Use a skill da etapa em vez de improvisar o procedimento; a skill `creator` é a que cria e poda essas skills. `remotion-best-practices` vem do Remotion e fica fora do repositório, em `~/.claude/skills/`: não edite à mão.
+O processo de produção mora em `.claude/skills/`, uma skill por dono de entrega: `diretor-criativo` (texto), `diretor-de-arte` (imagem e movimento) e `producao` (som e arquivo final). Em cada uma, `SKILL.md` leva do pedido à etapa, `etapas/<etapa>.md` diz como rodá-la neste repositório e as demais pastas guardam o conhecimento do estilo. As skills dirigem na conversa e acionam os subagentes de `.claude/agents/` para levantar, executar e julgar. Use a skill da etapa em vez de improvisar o procedimento; a skill `creator` é a que cria e poda essas skills, e a `grilling` é a entrevista que `diretor-criativo` e `diretor-de-arte` acionam para levar decisões ao usuário. `remotion-best-practices` vem do Remotion e fica fora do repositório, em `~/.claude/skills/`: não edite à mão.
 
 ## Convenções que mudam o que se escreve
 
