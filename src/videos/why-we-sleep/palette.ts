@@ -670,23 +670,18 @@ export const elephantNightFinish: ElephantFinish = {
 };
 
 /**
- * O acabamento da savana, do piloto do polimento: o astro emite luz e leva o
- * halo em dois degraus do céu até ele; as copas têm um tom que se distingue do
- * céu. Os três jogos acompanham os de `savanna`, e a luz passa de um ao outro.
+ * O acabamento da savana, do piloto do polimento: as copas num tom que se
+ * distingue do céu. O sol e a lua ficam como no animatic: o halo em degraus
+ * foi recusado pelo usuário. Os três jogos acompanham os de `savanna`.
  */
 export const savannaFinish = {
   day: {
-    halo: ["#FFE2A0", "#FFEAB2"],
     tree: "#A9460F",
   },
   dusk: {
-    halo: ["#6B3AA6", "#A04E96"],
     tree: "#400F58",
   },
   night: {
-    halo: ["#0C2098", "#1A32BC"],
     tree: "#0E1E90",
   },
-  /** O miolo claro da lua. */
-  moonCore: "#FFF3C4",
 } as const;

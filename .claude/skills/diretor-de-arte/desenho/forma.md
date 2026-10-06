@@ -44,7 +44,7 @@ Num vídeo de referência com gente, o rosto da protagonista de perto tem umas q
 **Por dentro, e o que emite luz:**
 
 - **Degraus aninhados.** A forma clara vem dentro de um ou dois aros da mesma forma, cada um mais largo e um tom mais perto do fundo: a mancha amarela tem aro laranja, que tem aro vermelho. É o brilho feito de chapado.
-- **Luz como material.** Quem emite leva o centro mais claro que a borda, o crescente de luz na borda, o halo saturado em volta e, no plano de espetáculo, raios largos atrás.
+- **Luz como material.** Vale por dentro e para o astro que é o assunto do plano; o sol e a lua de um cenário do mundo ficam simples, um disco com um brilho leve, porque anéis em volta deles leem como enfeite gerado (recusado pelo usuário num piloto). Quem emite leva o centro mais claro que a borda, o crescente de luz na borda, o halo saturado em volta e, no plano de espetáculo, raios largos atrás.
 - **Superfície viva.** A área grande é coberta por um espalhamento em três tons vizinhos (anéis, manchas, pontilhado, bolhas que passam da borda), em três tamanhos, mais denso perto da borda, com zonas de descanso.
 - **Unidade repetida.** A célula, a escama, o grão: poucas formas cada, com variação pequena de tamanho, giro e tom, e uma diferente das outras, que é o foco.
 
