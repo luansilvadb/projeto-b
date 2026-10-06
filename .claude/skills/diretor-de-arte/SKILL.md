@@ -9,8 +9,6 @@ Dono da imagem e do movimento de um ensaio explicativo animado no estilo Kurzges
 
 ## ESCOPO
 
-A imagem e o movimento do vídeo, pelas três etapas e pelas unidades do ÍNDICE.
-
 **Entradas:** o texto do roteiro, com narração, nota visual e analogia central (skill `diretor-criativo`); a base de fatos da pesquisa; a narração gravada, com o tempo de cada palavra (skill `producao`), a partir do animatic; a ficha visual de vídeos anteriores do canal, quando houver.
 
 **Saídas:** ficha visual (`art.md`: elenco, paletas e a forma visual das analogias); os planos de cada cena (`shots` em `script.json`); folha de modelo de cada personagem; um quadro composto por plano; a partitura da animação (`score.md`); cada plano em movimento; a lista dos momentos que pedem som; os relatórios das duas críticas; as linhas da 2ª aprovação e do aceite da animação em `approvals.md`.
@@ -32,11 +30,11 @@ O pedido decide a etapa; a etapa decide o que ler. Leia o procedimento da etapa 
 | 4. Animatic | narração pronta; criar a pasta e as cenas de um vídeo; storyboard, desenho ou composição | `etapas/animatic.md` |
 | 5. Animação | animatic aprovado; animar, ajustar tempo, transição ou câmera; marcar onde cabe som | `etapas/animacao.md` |
 
-A decupagem acontece antes de a narração ser gravada: enquanto o áudio não existe, a encenação ainda pode pedir uma frase diferente sem custo. A animação só começa com o animatic aprovado: movimento que pede outra composição devolve o plano ao passo Quadro.
+A animação só começa com o animatic aprovado: movimento que pede outra composição devolve o plano ao passo Quadro.
 
 ## CONDUÇÃO
 
-A skill opera em modo entrevista: o agente resolve sozinho o que é fato ou execução e leva ao usuário só o que é decisão, pelas REGRAS do `CLAUDE.md`. `entrevista-imagem` define as decisões de imagem, tomadas diante de imagem renderizada; `entrevista-movimento`, as de movimento, tomadas diante de vídeo renderizado.
+A skill opera em modo entrevista: o agente resolve sozinho o que é fato ou execução e leva ao usuário só o que é decisão, acionando a skill `grilling`. `entrevista-imagem` define as decisões de imagem, tomadas diante de imagem renderizada; `entrevista-movimento`, as de movimento, tomadas diante de vídeo renderizado.
 
 Se a escolha contradiz algo aprovado, a base de fatos ou um limite medido, diga isso antes de seguir. Cada decisão é registrada; o **plano acordado** é a soma das decisões registradas: qualquer mudança fora dele, ainda que pareça melhoria, exige confirmação explícita.
 
@@ -49,7 +47,6 @@ Quem faz não julga: o `ilustrador` e o `motion-designer` executam, o `critico-d
 - **Arquivos.** Cada pedido lista os arquivos que o subagente pode tocar. Dois subagentes só rodam em paralelo com listas que não se cruzam; `src/components/`, `src/design/tokens.ts`, `palette.ts`, `index.tsx` e `src/Root.tsx` são alterados aqui, um de cada vez.
 - **Decisão no meio do trabalho.** O subagente não fala com o usuário: o que for decisão (`entrevista-imagem`, `entrevista-movimento`) volta no relatório como pergunta, com as alternativas renderizadas, e é levado ao usuário daqui.
 - **Trabalho pequeno.** Um ajuste de um plano ou de um desenho é feito aqui, sem subagente: o disparo relê as unidades do zero.
-- **Decupagem.** As passadas 1 e 2 de `critica-quadro`, antes de existir imagem, continuam feitas aqui.
 
 ## ORGANIZAÇÃO
 
@@ -134,7 +131,6 @@ Para tarefas parciais (redesenhar um personagem, refazer os planos de uma cena, 
 - Toda mudança de estado tem uma causa visível na fala ou na cena.
 - Nenhum movimento muda a composição aprovada sem confirmação.
 - Um passo só começa com as decisões do passo anterior aprovadas.
-- A skill não executa nada do anti-escopo; se solicitado, sinaliza e devolve ao usuário.
 
 ## CRITÉRIOS DE PARADA
 

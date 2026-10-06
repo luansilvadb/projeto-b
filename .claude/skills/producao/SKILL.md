@@ -9,8 +9,6 @@ Opera as ferramentas que transformam o roteiro e as cenas aprovados em som e em 
 
 ## ESCOPO
 
-As cinco etapas da tabela de ETAPAS.
-
 **Entradas:** `script.json` aprovado (skill `diretor-criativo`); para o corte final, as cenas animadas e aprovadas (skill `diretor-de-arte`).
 
 **Saídas:** `public/videos/<vídeo>/` com a narração, o tempo de cada palavra e a trilha; `out/<vídeo>.final.mp4`; `src/videos/<vídeo>/description.md`.
@@ -41,15 +39,10 @@ A narração tem dois arquivos de apoio, lidos só na seção do caso:
 | `etapas/narracao-voz.md` | fora do fluxo normal: editar uma frase à mão no estúdio; achar as escolhas e as tomadas; ajustar a regra de escolha; trocar a amostra de voz; mudar o ritmo |
 | `etapas/narracao-diagnostico.md` | reclamação da voz (sem energia ou mal-humorada; robótica ou diferente da amostra; fim de frase cortado ou sumindo), antes de mexer em parâmetro, amostra ou texto: guarda o que já foi medido e descartado com a voz atual |
 
-## SUBAGENTE
-
-A conferência dos fatos no corte final é do subagente `checador`, acionado em `etapas/corte-final.md`; levar a pendência ao usuário é desta skill.
-
 ## LIMITES
 
 - Um comando pesado por vez: `pnpm narrate`, `pnpm voice`, `pnpm music` e `pnpm render` disputam os 8 GB da placa e a memória da máquina.
 - O agente não ouve áudio nem assiste ao vídeo: o que só o ouvido julga (pronúncia, entonação, música, ritmo) vai ao usuário com o caminho do arquivo, e a entrega diz o que foi medido e o que só ele pode conferir.
-- Uma pendência do corte final vai ao usuário; nunca é contornada.
 
 ## CRITÉRIOS DE PARADA
 
@@ -57,5 +50,5 @@ Pare quando:
 
 - a etapa pedida entregou o que o procedimento dela promete, com os avisos do comando resolvidos ou aceitos pelo usuário;
 - uma frase pede reescrita ou a trilha pede outra descrição: devolva à skill `diretor-criativo`;
-- o corte final tem pendência que só o usuário resolve: relate e espere;
+- o corte final tem pendência que só o usuário resolve: relate e espere, sem contorná-la;
 - o pedido estiver no anti-escopo.

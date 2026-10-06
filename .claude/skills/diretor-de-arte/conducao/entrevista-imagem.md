@@ -19,7 +19,7 @@ Que decisões visuais vão ao usuário, e quais o agente resolve sozinho?
 
 **Mostrar, não descrever.** Decisão sobre imagem é tomada diante de imagem. As alternativas chegam renderizadas, lado a lado, no tamanho em que serão usadas. Descrição em palavras só vale para o que ainda não dá para desenhar sem a própria decisão (por exemplo, quem é o protagonista); mesmo aí, a alternativa recomendada vai com um esboço renderizado.
 
-**Nesta unidade**, as REGRAS do `CLAUDE.md` ganham: a ordem das dependências é elenco antes de decupagem, paleta antes de desenho; o nível de cada alternativa é o desenho, a paleta aplicada, a lista de planos (nunca "algo mais colorido"); o registro é na ficha visual do vídeo.
+**Nesta unidade**, a entrevista da skill `grilling` ganha: a ordem das dependências é elenco antes de decupagem, paleta antes de desenho; o nível de cada alternativa é o desenho, a paleta aplicada, a lista de planos (nunca "algo mais colorido"); o registro é na ficha visual do vídeo.
 
 **Ficha visual.** O registro das decisões visuais aprovadas do vídeo: elenco (com a ficha de cada personagem), paletas e a forma visual das analogias. É o que garante que o plano 40 use o mesmo desenho e as mesmas cores do plano 1.
 

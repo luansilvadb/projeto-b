@@ -59,7 +59,3 @@ O texto é cortado em unidades de fala (`splitUtterances`, em `src/narration/tex
 - Fala emendada onde devia haver pausa, ou picada onde devia correr: a primeira correção é a pontuação do roteiro, não a tomada.
 - Frase de ligação, a que precisa sustentar a entonação: troque o ponto por vírgula ou travessão (as duas partes viram uma geração só) ou por dois-pontos (a primeira parte é gerada sozinha e termina em suspenso); ou cole-a na próxima, que também muda a curva que a escolha automática procura.
 - A voz costuma errar "não" e palavras terminadas em "-ão" perto do fim da frase, e "Então" no começo. Quando o conferidor acusar uma dessas e as tomadas novas não resolverem, mude a redação.
-
-## Fora do fluxo normal e reclamação da voz
-
-Leia a seção do caso em `narracao-voz.md` ou em `narracao-diagnostico.md`, conforme a tabela de apoio do `SKILL.md`.

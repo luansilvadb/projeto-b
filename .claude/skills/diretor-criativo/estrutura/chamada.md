@@ -22,7 +22,7 @@ Como pedir a curtida e a inscrição sem desfazer o fechamento?
 
 1. Escreva a ponte com a sensação nomeada no fechamento aprovado. Pronto quando a oração não serviria a nenhum outro vídeo.
 2. Escreva o pedido, o motivo e o agradecimento. Pronto quando cada parte tem a sua frase e a chamada cabe no tamanho.
-3. Leve ao usuário: a redação do pedido, do motivo e do agradecimento, depois de aprovada, vale para os vídeos seguintes; só a ponte muda de vídeo para vídeo.
+3. Leve ao usuário: a redação do pedido, do motivo e do agradecimento, depois de aprovada, vale para os vídeos seguintes.
 
 ## DEPENDÊNCIAS
 - ouvinte: fornece a regra de um pedido só: a chamada é o único gesto que o vídeo pede.

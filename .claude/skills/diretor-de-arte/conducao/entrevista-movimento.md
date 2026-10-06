@@ -18,7 +18,7 @@ Que decisões de movimento vão ao usuário, e quais o agente resolve sozinho?
 
 **Mostrar, não descrever.** Movimento só se julga em movimento. Uma decisão chega como vídeo renderizado do plano, ou dos planos vizinhos quando é uma transição. Alternativas vão lado a lado, no mesmo trecho. Para a leitura de um instante, uma tira de quadros consecutivos; para a decisão, o vídeo.
 
-**Nesta unidade**, as REGRAS do `CLAUDE.md` ganham: a ordem das dependências é a partitura do plano antes da atuação, a atuação antes da câmera; toda alternativa chega renderizada; o registro é na partitura do plano.
+**Nesta unidade**, a entrevista da skill `grilling` ganha: a ordem das dependências é a partitura do plano antes da atuação, a atuação antes da câmera; toda alternativa chega renderizada; o registro é na partitura do plano.
 
 **Partitura.** O registro de cada plano: o que acontece, em que palavra, por quanto tempo, com que entrada e com que ênfase. É o que a crítica confere e o que o usuário aprova.
 

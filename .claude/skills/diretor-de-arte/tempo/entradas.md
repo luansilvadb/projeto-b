@@ -38,7 +38,6 @@ Como um elemento entra, muda de estado e sai?
 
 ## LIMITES
 - Não usar opacidade como única entrada de nada que tenha forma: ela faz o elemento parecer fantasma.
-- Não trocar estado em corte seco dentro de um plano.
 - A execução das entradas entre planos pertence a `transicoes`.
 
 ## EXEMPLO

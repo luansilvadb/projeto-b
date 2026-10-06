@@ -69,7 +69,6 @@ Além do total, um **mapa segundo a segundo** da fração de quadros quase parad
 ## LIMITES
 - Não julgar por gosto: todo problema aponta um critério violado.
 - Não julgar composição, desenho ou cor: pertencem a `critica-quadro`.
-- Não alterar decisões aprovadas sem confirmação.
 
 ## EXEMPLO
 > Plano 3, "a lagoa escurece", 1,2 s — critério: estado em corte (o contador "39" aparece inteiro no quadro em que a varredura termina). Classificação: bloqueante. Ação: o contador entra com sobra 0,3 s depois de a borda sair pelo chão; não altera nada aprovado.

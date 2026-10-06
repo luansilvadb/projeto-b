@@ -97,7 +97,6 @@ Com que critérios julgar o rascunho e decidir o que reescrever?
 ## LIMITES
 - Não reverificar fatos aqui; a crítica julga forma e efeito.
 - Não reescrever por gosto: todo problema aponta um critério violado.
-- Não alterar decisões aprovadas sem confirmação.
 
 ## EXEMPLO
 > Bloco 5 — critério: conceito usado antes da hora ("horizonte de eventos" aparece no bloco 5 e só é explicado no 6). Classificação: bloqueante. Ação: mover a explicação para o início do bloco 5; não altera a estrutura aprovada.

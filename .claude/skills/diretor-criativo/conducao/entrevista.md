@@ -17,7 +17,7 @@ Que decisões criativas vão ao usuário, e quais o agente resolve sozinho?
 8. reescritas que mudam algo já aprovado;
 9. título e conceito de thumbnail.
 
-**Nesta unidade**, as REGRAS do `CLAUDE.md` ganham: a ordem das dependências é o ângulo antes da estrutura; o nível de cada alternativa é o texto já redigido (a frase da tese, nunca "uma tese mais ousada"); a decisão tomada é registrada e passa a integrar o plano acordado.
+**Nesta unidade**, a entrevista da skill `grilling` ganha: a ordem das dependências é o ângulo antes da estrutura; o nível de cada alternativa é o texto já redigido (a frase da tese, nunca "uma tese mais ousada"); a decisão tomada é registrada e passa a integrar o plano acordado.
 
 **Plano acordado.** É a soma das decisões registradas. Qualquer mudança fora dele, ainda que pareça melhoria, exige confirmação explícita. Se a escolha do usuário contradiz algo já aprovado ou a base de fatos, diga isso antes de seguir.
 

@@ -68,8 +68,6 @@ Com os quadros de todos os planos renderizados, acione o subagente `critico-de-q
 
 Com `animatic`, o `pnpm critique` só reprova as medidas que já valem com os quadros parados (seção Medidas de `critica-quadro`).
 
-O `pnpm stills` monta o vídeo sem áudio (um defeito do Remotion impede renderizar quadros avulsos com áudio); isso não afeta as imagens.
-
 ## Segunda aprovação
 
 Entregue ao usuário:

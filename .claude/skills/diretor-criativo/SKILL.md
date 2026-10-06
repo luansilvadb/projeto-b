@@ -9,8 +9,6 @@ Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio exp
 
 ## ESCOPO
 
-O texto do vídeo, pelas duas etapas e pelas categorias de ORGANIZAÇÃO.
-
 **Entradas:** tema (obrigatório); idioma (padrão pt-BR); duração-alvo (o alvo do canal está em `etapas/roteiro.md`); material de referência, quando houver.
 
 **Saídas:** na pasta `src/videos/<vídeo>/`: `research.md`, com fatos e fontes; `script.json`, com narração, planos, fontes e a descrição da trilha; `script.md`, o registro das decisões aprovadas, com os pares de título e conceito de thumbnail; a linha da 1ª aprovação em `approvals.md`.
@@ -36,7 +34,7 @@ A etapa seguinte é a narração, na skill `producao`.
 
 ## CONDUÇÃO
 
-A skill opera em modo entrevista: o agente resolve os fatos por conta própria e leva ao usuário apenas decisões, pelas REGRAS do `CLAUDE.md`; `entrevista` lista as decisões. Nada fora do plano acordado é alterado sem confirmação explícita.
+A skill opera em modo entrevista: o agente resolve os fatos por conta própria e leva ao usuário apenas decisões, acionando a skill `grilling`; `entrevista` lista as decisões.
 
 ## SUBAGENTES
 
@@ -109,7 +107,6 @@ Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), inje
 - Um passo só começa com as decisões do passo anterior aprovadas.
 - Das referências usa-se o mecanismo (padrão, molde, movimento); as frases, os exemplos, as metáforas e os bordões ficam com elas.
 - O exemplo de uma unidade é exemplo de forma: cada afirmação dele precisa estar na base de fatos antes de entrar num roteiro.
-- A skill não executa nada do anti-escopo; se solicitado, sinaliza e devolve ao usuário.
 
 ## CRITÉRIOS DE PARADA
 

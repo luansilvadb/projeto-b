@@ -80,7 +80,6 @@ As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família ma
 - Não julgar por gosto: todo problema aponta um critério violado.
 - Não refazer fatos nem narração aqui: a fidelidade só confere a imagem contra a base de fatos.
 - Não julgar movimento; as três últimas medidas só valem com o vídeo animado.
-- Não alterar decisões aprovadas sem confirmação.
 
 ## EXEMPLO
 > Plano 4, cena "three-signs" — critério: encenação (três etiquetas em fila ao lado de uma silhueta; sem as etiquetas, o plano não diz nada). Classificação: bloqueante. Ação: encenar cada sinal como acontecimento (a lagoa escurece e ela para; algo a cutuca e ela demora a reagir; no dia seguinte ela pulsa devagar), um por oração; não altera a narração aprovada.

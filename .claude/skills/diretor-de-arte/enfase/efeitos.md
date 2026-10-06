@@ -40,7 +40,6 @@ Que recursos fazem um movimento ser sentido, e quando usá-los?
 ## LIMITES
 - Nenhum recurso sem ação por baixo.
 - Nenhum recurso para texto que entra: etiqueta e número não têm rastro nem estouro.
-- Os desenhos dos recursos usam as cores da ficha visual; não há cor própria de efeito.
 
 ## EXEMPLO
 > A moeda chega à porta fechada: arco pontilhado desde a borda do quadro, rastro de três cópias nos últimos 4 quadros antes do impacto, estouro de seis riscos na cor da moeda por 0,3 s no ponto da batida, e a moeda cai com rastro curto até a calçada, onde achata um quadro e assenta.
