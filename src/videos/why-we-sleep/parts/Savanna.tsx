@@ -96,7 +96,6 @@ export const Savanna: React.FC<SavannaProps> = ({
     pick: (set: {
       readonly halo: readonly [string, string];
       readonly tree: string;
-      readonly mound: string;
     }) => string,
   ) =>
     blend(
@@ -108,7 +107,6 @@ export const Savanna: React.FC<SavannaProps> = ({
   const glow = {
     halo: [tint((set) => set.halo[0]), tint((set) => set.halo[1])],
     tree: tint((set) => set.tree),
-    mound: tint((set) => set.mound),
     moonCore: savannaFinish.moonCore,
   };
   const dust = (
@@ -271,14 +269,6 @@ export const Savanna: React.FC<SavannaProps> = ({
             d={`M-400,${SAVANNA_GROUND_Y - 40} C200,${SAVANNA_GROUND_Y - 70} 900,${SAVANNA_GROUND_Y - 20} 1500,${SAVANNA_GROUND_Y - 50} C1900,${SAVANNA_GROUND_Y - 70} 2200,${SAVANNA_GROUND_Y - 30} 2300,${SAVANNA_GROUND_Y - 40} L2300,1400 L-400,1400 Z`}
             fill={`url(#${id})`}
           />
-          {lit ? (
-            <path
-              d={`M260,${SAVANNA_GROUND_Y + 60} C520,${SAVANNA_GROUND_Y - 130} 1280,${SAVANNA_GROUND_Y - 150} 1680,${SAVANNA_GROUND_Y + 60} Z`}
-              fill={glow.mound}
-              // Só de dia: de noite, mais claro que o chão escuro, o morro lia como uma mancha acesa sob as elefantas.
-              opacity={Math.max(0, daylight * 2 - 1)}
-            />
-          ) : null}
           {TUFTS.map((x, index) => (
             <g key={x} fill={color("grass")}>
               {[-26, -8, 10, 28].map((offset, blade) => (
