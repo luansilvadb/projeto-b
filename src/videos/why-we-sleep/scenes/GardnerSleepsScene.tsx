@@ -4,7 +4,7 @@ import { Cast, FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { popScale } from "../../../components/Pop";
+import { grown, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { cue, drop, linear, mix, ramp, clamp01 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
@@ -33,7 +33,7 @@ import {
   billHeight,
 } from "../parts/SleepBill";
 import { OUR_HOURS, RULER, rulerX, SleepBar } from "../parts/SleepRuler";
-import { glance, grown, swapUnderLid } from "./AwakeRecordScene";
+import { glance, swapUnderLid } from "./AwakeRecordScene";
 import { Sooner, flash, shake } from "./MaybeBrainScene";
 import { RECAP_LEAD, RecapPrelude } from "./SoFarScene";
 import { billSway } from "./SkipANightScene";

@@ -289,6 +289,26 @@ export const SleepingElephant: React.FC<SleepingElephantProps> = ({
   </Place>
 );
 
+/**
+ * A freada de uma manada que andou `walkedFor` quadros no plano anterior: a
+ * velocidade cai em linha reta até zero. O que faltava andar quando aquele
+ * plano acabou (no mínimo `least`) é percorrido aqui. Devolve quantos quadros
+ * a freada dura e quanto ainda falta andar no quadro `frame`.
+ */
+export const braked = (
+  walk: { readonly from: number; readonly speed: number; readonly least: number },
+  walkedFor: number,
+  frame: number,
+): { brake: number; left: number } => {
+  const rest = Math.max(walk.least, walk.from - walk.speed * walkedFor);
+  const brake = (2 * rest) / walk.speed;
+  const braking = Math.min(frame, brake);
+  return {
+    brake,
+    left: rest - walk.speed * (braking - (braking * braking) / (2 * brake)),
+  };
+};
+
 /** A faixa de três dias: de meia-noite de segunda à meia-noite de quarta. */
 export const DAY_STRIP = { x: 160, y: 660, width: 1600, height: 120 };
 const STRIP_DAYS = 3;

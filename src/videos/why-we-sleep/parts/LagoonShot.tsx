@@ -22,6 +22,7 @@ import {
   pulseRate,
   pulseShape,
 } from "./pulse";
+import { clamp } from "../../../components/timing";
 
 export type FishSpot = {
   /** Centro do corpo e comprimento do peixe, no plano do assunto. */
@@ -162,8 +163,7 @@ const LagoonView: React.FC<LagoonShotProps> = ({
   const turned =
     arrival?.turned ??
     interpolate(landed, TURNING, [0, 1], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
+      ...clamp,
       easing: Easing.inOut(Easing.cubic),
     });
   const offset = arrival ?? {

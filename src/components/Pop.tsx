@@ -4,6 +4,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { clamp } from "./timing";
 
 /** Quanto dura uma entrada com sobra, em segundos. */
 export const POP_SECONDS = 0.3;
@@ -25,8 +26,7 @@ export const popScale = (
     [at, at + frames * 0.7, at + frames],
     [from, overshoot, 1],
     {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
+      ...clamp,
       // Uma curva que desacelera sem pressa. A de chegada rápida dos tokens
       // (`motion.smooth`) cumpre quase todo o caminho no primeiro quadro: o
       // elemento aparecia já no tamanho, e a entrada lia como só opacidade.
@@ -34,12 +34,13 @@ export const popScale = (
     },
   );
 
+/** A entrada de quem tem forma, sem opacidade: cresce do próprio ponto, passa um pouco do tamanho e assenta. */
+export const grown = (frame: number, at: number, frames = 11): number =>
+  popScale(frame, at, frames, 0);
+
 /** A opacidade da mesma entrada: só acompanha os primeiros quadros, para a forma entrar sólida. */
 export const popOpacity = (frame: number, at: number, frames: number): number =>
-  interpolate(frame, [at, at + frames * 0.4], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  interpolate(frame, [at, at + frames * 0.4], [0, 1], clamp);
 
 type PopProps = {
   /** Quadro, no tempo de quem o contém, em que o elemento entra. */

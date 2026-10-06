@@ -12,7 +12,7 @@ import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp } from "../../../components/timing";
+import { cue, linear, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { antelope, idea, ink, stopwatch } from "../palette";
@@ -109,8 +109,7 @@ const FormShot: React.FC<FormShotProps> = ({ formAt, handAt, clock }) => {
   // O braço chega e para; sai pelo caminho por onde veio, antes de o plano seguinte chegar.
   const reached =
     interpolate(frame, [handAt, handAt + 0.6 * fps], [0, 1], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
+      ...clamp,
       easing: Easing.out(Easing.cubic),
     }) *
     (1 - stage.leave());
@@ -196,8 +195,7 @@ const LIGHT_SECONDS = 1;
 /** Quanto uma metade já acendeu, de 0 a 1: começa logo e desacelera ao chegar. */
 const lighting = (frame: number, at: number, frames: number): number =>
   interpolate(frame, [at, at + frames], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
+    ...clamp,
     easing: Easing.out(Easing.quad),
   });
 // Cada metade deriva para o bicho dela.
@@ -242,7 +240,7 @@ const SplitShot: React.FC<SplitShotProps> = ({ checkAt, stillAt, clock }) => {
     frame,
     [stillAt + 4, stillAt + 7, stillAt + 11, stillAt + 14, stillAt + 20],
     [0, -0.5, 0, -0.3, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+    clamp,
   );
   const outlineAt = stillAt + 0.3 * fps;
 

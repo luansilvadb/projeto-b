@@ -55,7 +55,7 @@ type RatProps = {
  * O movimento de um rato, por cima do `state`. Sem valores, o rato é o
  * desenho parado: é o que recebem as cenas que não o animam.
  */
-export type RatMotion = {
+type RatMotion = {
   /** Quanto a pálpebra está fechada, de 0 a 1: o olho fecha e abre aos poucos, em vez de trocar de estado num quadro. */
   readonly lid?: number;
   /** Quanto a cor já saiu, de 0 a 1: o rato a caminho da silhueta apagada. Só na silhueta. */

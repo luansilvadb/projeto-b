@@ -8,6 +8,7 @@ import { Label } from "../../../components/Label";
 import { shape } from "../../../design/tokens";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { sourceSeal } from "../palette";
+import { clamp } from "../../../components/timing";
 
 type SourceSealProps = {
   /** Autor e ano, como na lista de fontes: "Nath et al., 2017". */
@@ -35,10 +36,7 @@ const SourceSeal: React.FC<SourceSealProps> = ({
         padding: `${shape.safeArea.y * 0.5}px ${shape.safeArea.x * 0.5}px`,
         opacity: steady
           ? 1
-          : interpolate(frame, [0.2 * fps, 0.6 * fps], [0, 1], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-            }),
+          : interpolate(frame, [0.2 * fps, 0.6 * fps], [0, 1], clamp),
         pointerEvents: "none",
       }}
     >

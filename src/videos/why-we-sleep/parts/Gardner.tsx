@@ -18,7 +18,7 @@ import { Camera, Layer, type CameraState } from "../../../components/Camera";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { ALREADY_SHOWN, clamp01 } from "../../../components/timing";
+import { ALREADY_SHOWN, clamp01, clamp } from "../../../components/timing";
 import { typography } from "../../../design/tokens";
 import {
   alarmClock,
@@ -487,8 +487,7 @@ export const Friend: React.FC<FriendProps> = ({
     [enter, enter + 8, enter + 11],
     [0, 1.06, 1],
     {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
+      ...clamp,
       easing: Easing.out(Easing.quad),
     },
   );

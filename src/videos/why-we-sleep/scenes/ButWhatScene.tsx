@@ -1,7 +1,5 @@
 import {
   AbsoluteFill,
-  Easing,
-  interpolate,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -15,7 +13,7 @@ import { Grain } from "../../../components/Grain";
 import { wave } from "../../../components/Idle";
 import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
-import { Pop } from "../../../components/Pop";
+import { Pop, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { cue, linear, mix, ramp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
@@ -78,16 +76,7 @@ const MapRow: React.FC<MapRowProps> = ({
   const present: Partial<Record<IconKey, number>> = {};
   ICONS.forEach((icon, index) => {
     const at = index * CASCADE.step - MAP_LEAD;
-    present[icon] = interpolate(
-      frame,
-      [at, at + CASCADE.frames * 0.7, at + CASCADE.frames],
-      [0, 1.06, 1],
-      {
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
-        easing: Easing.out(Easing.quad),
-      },
-    );
+    present[icon] = popScale(frame, at, CASCADE.frames, 0);
   });
 
   return (

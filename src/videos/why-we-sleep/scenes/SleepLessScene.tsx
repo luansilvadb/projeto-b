@@ -13,7 +13,7 @@ import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
 import { POP_SECONDS, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, mix, ramp } from "../../../components/timing";
+import { cue, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { idea, ink, personInPajamas } from "../palette";
@@ -317,10 +317,6 @@ const RulerShot: React.FC<RulerShotProps> = ({ stretchAt, clock }) => {
   const { fps } = useVideoConfig();
   const stage = useStage();
   const seconds = (clock + frame) / fps;
-  const clamp = {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  } as const;
   const spot = iconSpot("ruler", ROW);
   // O ícone parte do lugar dele na fila. Dentro do plano ele está no grupo da régua, que deriva e
   // é maior que o quadro: o ponto de partida é desfeito da deriva do primeiro quadro e da escala do grupo.

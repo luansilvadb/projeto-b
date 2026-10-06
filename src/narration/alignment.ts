@@ -6,7 +6,7 @@ export type TimedWord = {
   readonly endMs: number;
 };
 
-export type Alignment = {
+type Alignment = {
   /** As palavras do roteiro, cada uma com o momento em que é falada. */
   readonly words: readonly TimedWord[];
   /** Distância de edição, em palavras, entre o roteiro e o que foi ouvido. */

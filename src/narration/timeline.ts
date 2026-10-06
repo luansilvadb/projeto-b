@@ -30,7 +30,7 @@ export type SceneTimeline = {
   readonly words: readonly WordCue[];
 };
 
-export type VideoTimeline = {
+type VideoTimeline = {
   readonly durationInFrames: number;
   readonly scenes: readonly SceneTimeline[];
   /** Trechos do vídeo em que há fala, para baixar a trilha. */

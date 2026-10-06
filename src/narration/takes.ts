@@ -21,7 +21,7 @@ export type MeasuredTake = SentenceTake & {
 };
 
 /** Como a frase deve terminar: fechando, em suspenso, ou tanto faz. */
-export type Ending = "fall" | "sustain" | "any";
+type Ending = "fall" | "sustain" | "any";
 
 /** Uma afirmação que fecha termina pelo menos isto abaixo da mediana, em semitons. */
 const FALL_AT = -2;

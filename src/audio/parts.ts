@@ -30,7 +30,7 @@ export const MUSIC_PARTS = {
 } as const;
 
 /** Uma faixa a gerar: onde ela começa no vídeo, quanto dura e o que pedir ao modelo. */
-export type PlannedPart = {
+type PlannedPart = {
   readonly startMs: number;
   /** Quanto a faixa leva para entrar, enquanto a anterior sai. */
   readonly fadeMs: number;
@@ -133,7 +133,7 @@ export const musicParts = (track: MusicTrack): MusicPart[] => [
 ];
 
 /** Quando uma faixa entra e sai, em quadros do vídeo. */
-export type PartEnvelope = {
+type PartEnvelope = {
   readonly from: number;
   readonly fadeIn: number;
   /** O quadro em que a faixa seguinte começa; a última não tem. */

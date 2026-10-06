@@ -1,6 +1,6 @@
 import { spawn } from "node:child_process";
 
-export type FrameFormat = {
+type FrameFormat = {
   readonly width: number;
   readonly height: number;
   readonly fps: number;

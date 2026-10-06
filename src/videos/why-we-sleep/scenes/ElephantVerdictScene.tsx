@@ -12,13 +12,14 @@ import { Grain } from "../../../components/Grain";
 import { wave } from "../../../components/Idle";
 import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
-import { Pop } from "../../../components/Pop";
+import { Pop, grown } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp } from "../../../components/timing";
+import { cue, linear, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { idea, ink } from "../palette";
 import {
+  braked,
   Herd,
   SleepingElephant,
   type HerdMember,
@@ -40,10 +41,6 @@ const PAIR: readonly HerdMember[] = [
 // A caminhada delas: de quão longe vêm, em pixels, e a velocidade, em pixels por quadro. O que falta
 // quando o plano aberto acaba é percorrido na freada do seguinte (`least` é o mínimo que ela tem).
 const WALK = { from: 260, speed: 2, least: 8 };
-
-/** Quanto falta andar quando o plano aberto acaba, para um plano com esta duração. */
-const restAfter = (length: number): number =>
-  Math.max(WALK.least, WALK.from - WALK.speed * length);
 const MOON = 0.36;
 const WIDE = framing([960, 540], 1);
 // O plano aberto deriva devagar para as duas, e termina no quadro composto.
@@ -275,25 +272,13 @@ const AsleepShot: React.FC<AsleepShotProps> = ({
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
   // A freada: a velocidade cai em linha reta até zero, e a passada encurta junto.
-  const rest = restAfter(walkedFor);
-  const brake = (2 * rest) / WALK.speed;
-  const braking = Math.min(frame, brake);
-  const ahead =
-    rest - WALK.speed * (braking - (braking * braking) / (2 * brake));
+  const { brake, left: ahead } = braked(WALK, walkedFor, frame);
   // A tromba perde o balanço e desce até ficar solta; a de trás começa antes.
   const idle = (phase: number) => 0.15 + 0.1 * wave(seconds, 3.1, phase);
   const falling = (at: number, phase: number) =>
     idle(phase) * (1 - ramp(frame, at, DROWSE.trunk * fps));
   const lid = (at: number) => ramp(frame, at, DROWSE.lid * fps);
   const beforeAt = length - RULER_BEFORE.frames;
-  /** A entrada de quem tem forma: cresce do próprio ponto, passa um pouco do tamanho e assenta. */
-  const grown = (at: number, frames: number) =>
-    interpolate(frame, [at, at + frames * 0.7, at + frames], [0, 1.06, 1], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-      easing: Easing.out(Easing.quad),
-    });
-
   return (
     <>
       <SavannaStage
@@ -321,7 +306,7 @@ const AsleepShot: React.FC<AsleepShotProps> = ({
             <AbsoluteFill
               style={{
                 transformOrigin: `${CLOSE.zero + CLOSE.hour}px ${CLOSE.bar}px`,
-                scale: `${grown(beforeAt, RULER_BEFORE.ruler)}`,
+                scale: `${grown(frame, beforeAt, RULER_BEFORE.ruler)}`,
               }}
             >
               <CloseRuler />
@@ -329,7 +314,7 @@ const AsleepShot: React.FC<AsleepShotProps> = ({
             <AbsoluteFill
               style={{
                 transformOrigin: `${WHO.x}px ${WHO.y}px`,
-                scale: `${grown(beforeAt + RULER_BEFORE.who, RULER_BEFORE.whoFrames)}`,
+                scale: `${grown(frame, beforeAt + RULER_BEFORE.who, RULER_BEFORE.whoFrames)}`,
               }}
             >
               <Sleeper {...WHO} seconds={seconds} />
@@ -363,10 +348,6 @@ type CloseRulerProps = {
 /** O começo da régua de 24 horas: a barra dela em "2 h" e o zero, onde nenhuma barra parou. */
 const CloseRuler: React.FC<CloseRulerProps> = ({ shrinkAt, emptyAt }) => {
   const frame = useCurrentFrame();
-  const clamp = {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  } as const;
   // Encolhe um pouco na direção do zero, treme sem conseguir passar dali, e volta para as duas horas.
   const shaken = shrinkAt === undefined ? 0 : frame - shrinkAt - SHRINK.in;
   const lost =

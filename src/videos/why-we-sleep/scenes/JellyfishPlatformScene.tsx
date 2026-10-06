@@ -14,7 +14,7 @@ import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp, settle } from "../../../components/timing";
+import { cue, linear, mix, ramp, settle, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import {
@@ -283,7 +283,7 @@ const nudgeAt = (frame: number, at: number): number =>
     frame,
     [at, at + 2, at + 5, at + NUDGE.frames],
     [0, 1, -0.45, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+    clamp,
   );
 
 type ShakenShotProps = {

@@ -1,3 +1,4 @@
+import { percent } from "../narration/profile";
 import type { Critique } from "./measures";
 
 /**
@@ -18,7 +19,6 @@ type Criterion = {
   readonly format: (value: number) => string;
 };
 
-const percent = (value: number) => `${Math.round(value * 100)}%`;
 const seconds = (value: number) => `${value.toFixed(1)} s`;
 const decimal = (value: number) => value.toFixed(1);
 
@@ -93,7 +93,7 @@ const CRITERIA: readonly Criterion[] = [
   },
 ];
 
-export type Verdict = {
+type Verdict = {
   readonly label: string;
   readonly value: string;
   readonly band: string;

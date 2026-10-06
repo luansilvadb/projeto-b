@@ -1,3 +1,4 @@
+import { isRecord } from "./script";
 import { splitUtterances } from "./text";
 
 /**
@@ -24,9 +25,6 @@ export const NO_CHOICES: VoiceChoices = { takes: {}, tight: [], rejected: {} };
 
 /** Depois de tantas tomadas rejeitadas, o problema é do texto: a frase pede reescrita. */
 export const REWRITE_AFTER_REJECTIONS = 3;
-
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === "object" && value !== null && !Array.isArray(value);
 
 /** Lê o conteúdo de voice.json, recusando o que não tem a forma esperada. */
 export const parseChoices = (value: unknown): VoiceChoices => {

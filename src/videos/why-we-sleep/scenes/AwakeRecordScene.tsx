@@ -17,9 +17,9 @@ import { FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { Pop } from "../../../components/Pop";
+import { Pop, grown } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, mix, ramp, clamp01 } from "../../../components/timing";
+import { cue, mix, ramp, clamp01, clamp } from "../../../components/timing";
 import { HEIGHT, WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
@@ -59,14 +59,6 @@ export const glance = (
     },
     [keys[0][1], keys[0][2]],
   );
-
-/** A entrada com forma, sem opacidade: de 0 até passar um pouco do tamanho, e assenta. */
-export const grown = (frame: number, at: number, frames = 11): number =>
-  interpolate(frame, [at, at + frames * 0.7, at + frames], [0, 1.06, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.out(Easing.quad),
-  });
 
 /** O ponto do cenário que a câmera mostra num ponto da tela: o contrário do enquadramento. */
 const unseen = (camera: CameraState, screen: Point): Point => [
@@ -587,10 +579,6 @@ const CoinShot: React.FC<CoinShotProps> = ({ pointAt, shockAt, clock }) => {
   const length = useShotLength();
   const { fps } = useVideoConfig();
   const seconds = (clock + frame) / fps;
-  const clamp = {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  } as const;
   const landAt = TOSS.at + TOSS.frames;
   const flick = (values: readonly number[]) =>
     interpolate(frame, FLICK.frames, values, {

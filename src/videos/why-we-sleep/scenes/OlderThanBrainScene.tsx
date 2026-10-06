@@ -13,7 +13,7 @@ import { Grain } from "../../../components/Grain";
 import { breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, mix, ramp, clamp01 } from "../../../components/timing";
+import { cue, mix, ramp, clamp01, clamp } from "../../../components/timing";
 import { WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
@@ -31,6 +31,7 @@ import { seenAt } from "./JellyfishScene";
 import { Sooner, flash, useCastScale } from "./MaybeBrainScene";
 import { billSway } from "./SkipANightScene";
 import { Drift } from "./SleepDebtScene";
+import { grown } from "../../../components/Pop";
 
 // De onde a câmera vem: o fim da aproximação lenta de `jellyfish-debt` 3.
 const LAB_BEFORE = framing([TANK_CENTER, 600], 1.05, [TANK_CENTER, 600]);
@@ -49,14 +50,6 @@ const SPLIT_X = 400;
 const STOW_SECONDS = 0.7;
 // A pessoa é desenhada com esta altura, nas unidades dela: dá a escala da prancheta na mão da pesquisadora.
 const PERSON_UNITS = 650;
-
-/** Entra crescendo do próprio ponto, passa um pouco do tamanho e assenta: de 0 a 1,06 e a 1. */
-const grown = (frame: number, at: number, frames = 11): number =>
-  interpolate(frame, [at, at + frames * 0.7, at + frames], [0, 1.06, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.out(Easing.quad),
-  });
 
 type ProofShotProps = {
   /** Quadros do plano em que os vistos piscam e em que a conta volta para o bolso. */
@@ -314,8 +307,7 @@ const VacantShot: React.FC<VacantShotProps> = ({ landAt, blinkAt, clock }) => {
     [landAt, landAt + LANDING.seconds * fps],
     [0, 1],
     {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
+      ...clamp,
       easing: Easing.out(Easing.cubic),
     },
   );

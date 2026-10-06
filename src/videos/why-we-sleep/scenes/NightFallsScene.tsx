@@ -25,10 +25,10 @@ import { blink, phaseOf, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { POP_SECONDS, popOpacity, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp, clamp01 } from "../../../components/timing";
+import { cue, linear, mix, ramp, clamp01, clamp } from "../../../components/timing";
 import { typography } from "../../../design/tokens";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { Shot, useShotLength, type Wipe } from "../../../video/Shot";
+import { Shot, useShotLength, wipeClip, type Wipe } from "../../../video/Shot";
 import { antelope, antelopeNight, ink, savanna, sound } from "../palette";
 import { SAVANNA_GROUND_Y, Savanna, SavannaShadow } from "../parts/Savanna";
 
@@ -254,25 +254,13 @@ type SweepProps = {
  */
 export const Sweep: React.FC<SweepProps> = ({ wipe, under, children }) => {
   const frame = useCurrentFrame();
-  // A borda cruza o quadro quase a velocidade constante, só freando no fim.
-  const hidden = interpolate(frame, [0, wipe.frames], [100, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.out(Easing.quad),
-  });
-  const inset = {
-    left: `0 ${hidden}% 0 0`,
-    right: `0 0 0 ${hidden}%`,
-    top: `0 0 ${hidden}% 0`,
-    bottom: `${hidden}% 0 0 0`,
-  }[wipe.from];
 
   return (
     <>
       {frame < wipe.frames ? under : null}
       <AbsoluteFill
         style={{
-          clipPath: frame < wipe.frames ? `inset(${inset})` : undefined,
+          clipPath: frame < wipe.frames ? wipeClip(frame, wipe) : undefined,
         }}
       >
         {children}
@@ -638,8 +626,7 @@ const duskRisen = (frame: number): number =>
     [-DUSK_RISE.lead, DUSK_RISE.frames - DUSK_RISE.lead],
     [0, 1],
     {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
+      ...clamp,
       easing: Easing.out(Easing.cubic),
     },
   );
@@ -899,8 +886,7 @@ const AsleepShot: React.FC<AsleepShotProps> = ({ snoreAt, stirAt, clock }) => {
     [stirAt, stirAt + 0.2 * fps, stirAt + 0.6 * fps],
     [0, 1, 0],
     {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
+      ...clamp,
       easing: Easing.inOut(Easing.quad),
     },
   );

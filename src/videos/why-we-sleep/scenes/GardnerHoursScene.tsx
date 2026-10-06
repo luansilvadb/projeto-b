@@ -11,7 +11,8 @@ import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, drop, linear, mix, ramp } from "../../../components/timing";
+import { grown } from "../../../components/Pop";
+import { cue, drop, linear, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { CoffeeTable } from "../parts/CoffeeTable";
@@ -30,7 +31,6 @@ import {
   LeavingFriends,
   Room,
   glance,
-  grown,
   settling,
   shifting,
   swapUnderLid,
@@ -116,10 +116,6 @@ const Vigil: React.FC<VigilProps> = ({
     [crossAt + 4, 1, 0.2],
     [done + 12, 0.1, 0.75],
   ]);
-  const clamp = {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  } as const;
   // O pulo do visor ao passar do recorde, e um menor ao parar.
   const bump =
     interpolate(at, [crossAt, crossAt + 3, crossAt + 9], [1, 1.16, 1], clamp) *

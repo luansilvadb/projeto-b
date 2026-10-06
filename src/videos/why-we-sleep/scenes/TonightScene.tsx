@@ -7,7 +7,7 @@ import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SlowPush } from "../../../components/SlowPush";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp } from "../../../components/timing";
+import { cue, linear, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { idea, ink, personInPajamas, street } from "../palette";
@@ -200,8 +200,7 @@ const StampShot: React.FC<StampShotProps> = ({
         [questionAt, questionAt + 8, questionAt + 12],
         [0, 1.15, 1],
         {
-          extrapolateLeft: "clamp",
-          extrapolateRight: "clamp",
+          ...clamp,
           easing: Easing.out(Easing.quad),
         },
       )}

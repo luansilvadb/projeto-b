@@ -1,11 +1,11 @@
 import { useId } from "react";
-import { Easing, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import { useCurrentFrame, useVideoConfig } from "remotion";
 import { FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, mix, ramp, clamp } from "../../../components/timing";
+import { cue, mix, ramp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot } from "../../../video/Shot";
 import { Globe } from "../../../vignette/PlanetWorld";
@@ -15,6 +15,7 @@ import { Sooner } from "./MaybeBrainScene";
 import { SleepingTrio, TRIO_PUSH, trioBed, WIDE } from "./OneOfThemScene";
 import { Drift } from "./SleepDebtScene";
 import { SLEEPER_AT_HANDOVER } from "./TonightScene";
+import { popScale } from "../../../components/Pop";
 
 // O plano dos três abre um pouco mais perto e recua até o quadro composto em "nós".
 const TRIO_CLOSER = 0.07;
@@ -225,12 +226,7 @@ const Planet: React.FC<PlanetProps> = ({
   const { fps } = useVideoConfig();
   const at = from + frame;
   const seconds = at / fps;
-  const grown = interpolate(
-    at,
-    [growAt, growAt + SETTLE_FRAMES * 0.7, growAt + SETTLE_FRAMES],
-    [0, 1.06, 1],
-    { ...clamp, easing: Easing.out(Easing.quad) },
-  );
+  const grown = popScale(at, growAt, SETTLE_FRAMES, 0);
   // O planeta abre espaço enquanto os quadros saem, e volta ao centro quando se recolhem.
   const homeAt = recallAt + (CARDS.length - 1) * RECALL.every + RECALL.frames;
   const away = ramp(at, sendAt, MOVE_FRAMES);

@@ -25,7 +25,7 @@ export const CAST_ENTER_FRAMES = 12;
 export const CASCADE_STEP = 4;
 
 /** O papel de um elemento no palco: um objeto de cena, desenhado no quadro, ou alguém posto num ponto dele. */
-export type Role = "prop" | "actor";
+type Role = "prop" | "actor";
 
 /** Quando um elemento entra, em quadros depois de o plano chegar, e quando sai, em quadros depois de a saída começar. */
 export type Mark = { readonly enterAt: number; readonly leaveAt: number };

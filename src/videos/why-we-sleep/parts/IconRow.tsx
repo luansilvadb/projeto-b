@@ -24,7 +24,7 @@ import {
   street,
 } from "../palette";
 import { Tag } from "./Tag";
-import { clamp01 } from "../../../components/timing";
+import { clamp01, clamp } from "../../../components/timing";
 
 /**
  * A fila dos cinco ícones: o mapa do vídeo (art.md, oitava versão). Entra em
@@ -345,8 +345,7 @@ export const questionPop = (frame: number, at: number, frames: number) => ({
     [at, at + frames * 0.65, at + frames],
     [QUESTION.from, QUESTION.overshoot, 1],
     {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
+      ...clamp,
       easing: Easing.out(Easing.quad),
     },
   ),

@@ -3,7 +3,7 @@ import { cameraBetween, framing } from "../../../components/Camera";
 import { Stay } from "../../../components/Cast";
 import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { cue, linear, mix, ramp } from "../../../components/timing";
+import { cue, linear, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength, type Wipe } from "../../../video/Shot";
 import { billHeight, BILL_LINES, SleepBill } from "../parts/SleepBill";
@@ -194,8 +194,7 @@ const OwingShot: React.FC<OwingShotProps> = ({
   // fica um instante lá em cima e volta a cair, com peso.
   const jerk =
     interpolate(frame, [jerkAt, jerkAt + JERK.up], [0, 1], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
+      ...clamp,
       easing: Easing.out(Easing.quad),
     }) *
     (1 - ramp(frame, jerkAt + JERK.up + JERK.hold, JERK.fall));
@@ -205,8 +204,7 @@ const OwingShot: React.FC<OwingShotProps> = ({
     (1 - JERK.lift * jerk);
   // A conta desliza de cima do quadro para o lugar dela, e só então as linhas se escrevem, uma a uma.
   const slid = interpolate(frame, [oweAt, oweAt + 0.4 * fps], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
+    ...clamp,
     easing: Easing.out(Easing.cubic),
   });
   const writeFrom = oweAt + 0.45 * fps;

@@ -1,7 +1,6 @@
 import { useId } from "react";
 import {
   AbsoluteFill,
-  Easing,
   interpolate,
   interpolateColors,
   useCurrentFrame,
@@ -16,9 +15,9 @@ import { Cast, FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { Pop } from "../../../components/Pop";
+import { Pop, grown } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, drop, linear, mix, ramp, clamp01 } from "../../../components/timing";
+import { cue, drop, linear, mix, ramp, clamp01, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength, type Wipe } from "../../../video/Shot";
 import { ink, person, personInPajamas, savanna } from "../palette";
@@ -236,14 +235,6 @@ const AwakeShot: React.FC<AwakeShotProps> = ({ hoursAt, clock }) => {
   const walked = WALK.speed * frame;
   const stage = useStage();
   const beforeAt = length - STRIP_BEFORE.frames;
-  /** A entrada de quem tem forma: cresce do próprio ponto, passa um pouco do tamanho e assenta. */
-  const grown = (at: number, frames: number) =>
-    interpolate(frame, [at, at + frames * 0.7, at + frames], [0, 1.06, 1], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-      easing: Easing.out(Easing.quad),
-    });
-
   return (
     <>
       <Sweep wipe={DAYBREAK} under={<QuarterStill clock={clock} />}>
@@ -276,7 +267,7 @@ const AwakeShot: React.FC<AwakeShotProps> = ({ hoursAt, clock }) => {
             <AbsoluteFill
               style={{
                 transformOrigin: `${DAY_STRIP.x + DAY_STRIP.width / 2}px ${DAY_STRIP.y + DAY_STRIP.height / 2}px`,
-                scale: `${grown(beforeAt, STRIP_BEFORE.strip)}`,
+                scale: `${grown(frame, beforeAt, STRIP_BEFORE.strip)}`,
               }}
             >
               <DayStrip
@@ -288,7 +279,7 @@ const AwakeShot: React.FC<AwakeShotProps> = ({ hoursAt, clock }) => {
             <AbsoluteFill
               style={{
                 transformOrigin: `${BED_X}px ${STRIP_TOP}px`,
-                scale: `${grown(beforeAt + STRIP_BEFORE.bed, STRIP_BEFORE.bedFrames)}`,
+                scale: `${grown(frame, beforeAt + STRIP_BEFORE.bed, STRIP_BEFORE.bedFrames)}`,
               }}
             >
               <WaitingBed />
@@ -302,7 +293,7 @@ const AwakeShot: React.FC<AwakeShotProps> = ({ hoursAt, clock }) => {
           <AbsoluteFill
             style={{
               transformOrigin: `${TRAIL.x + TRAIL.width / 2}px ${TRAIL.y + TRAIL.height / 2}px`,
-              scale: `${grown(TRAIL_IN.at, TRAIL_IN.frames)}`,
+              scale: `${grown(frame, TRAIL_IN.at, TRAIL_IN.frames)}`,
             }}
           >
             <PassedDays passed={(SPAN.cycles / 2) * passing} />
@@ -429,7 +420,7 @@ const ThreeDaysShot: React.FC<ThreeDaysShotProps> = ({
         frame,
         [at - LID_FRAMES, at, at + 1, at + 1 + LID_FRAMES],
         [0, 1, 1, 0],
-        { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+        clamp,
       ),
     );
   }, 0);

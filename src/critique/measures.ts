@@ -115,7 +115,7 @@ export const drawnShare = (
   return drawn / (columns * rows);
 };
 
-export type ColorProfile = {
+type ColorProfile = {
   /** Quantas cores distintas ocupam uma parte visível do quadro. */
   readonly colors: number;
   /** Família de cor (0 a 11, a partir do vermelho) que domina o quadro; -1 se ele é quase todo neutro. */
@@ -207,7 +207,7 @@ const halve = (
   return half;
 };
 
-const median = (values: readonly number[]): number => {
+export const median = (values: readonly number[]): number => {
   const sorted = [...values].sort((a, b) => a - b);
   const middle = Math.floor(sorted.length / 2);
   return sorted.length % 2 === 1

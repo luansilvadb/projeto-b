@@ -43,7 +43,7 @@ export type SentenceTake = {
 /** Uma frase posicionada na cena: tempos relativos ao início da cena. */
 type NarrationSentence = SentenceTake & { readonly startMs: number };
 
-export type NarrationScene = {
+type NarrationScene = {
   readonly id: string;
   readonly durationMs: number;
   /** Silêncio pedido pelo roteiro depois da última frase, já contado em durationMs. */

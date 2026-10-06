@@ -1,6 +1,5 @@
 import {
   AbsoluteFill,
-  Easing,
   interpolate,
   useCurrentFrame,
   useVideoConfig,
@@ -38,6 +37,7 @@ import { VacantSign } from "../parts/VacantSign";
 import { LAST_MAP_LEAD, LastMapPrelude } from "./ButWhatScene";
 import { ROW_HUE, rowLife } from "./FivePartsScene";
 import { Grow } from "./SleepDebtScene";
+import { grown } from "../../../components/Pop";
 
 /**
  * O resumo dos três jeitos de escapar. No primeiro plano, a fila dos ícones
@@ -141,13 +141,6 @@ const pushed = (
   y: focus[1] + (slot.y - focus[1]) * (1 + by),
   scale: slot.scale * (1 + by),
 });
-
-/** Cresce do próprio ponto, passa um pouco do tamanho e assenta: a entrada de quem tem forma, em escala. */
-const grown = (frame: number, at: number, frames: number): number =>
-  interpolate(frame, [at, at + frames * 0.7, at + frames], [0, 1.06, 1], {
-    ...clamp,
-    easing: Easing.out(Easing.quad),
-  });
 
 // Quanto as molduras vazias se veem enquanto esperam a vez delas.
 const WAITING = 0.38;

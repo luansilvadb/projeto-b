@@ -80,7 +80,7 @@ export type Script = {
 
 const SCENE_ID = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
+export const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
 
 const isFilledString = (value: unknown): value is string =>

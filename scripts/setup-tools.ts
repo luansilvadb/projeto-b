@@ -11,17 +11,14 @@ import { exitWithError } from "./lib/videos";
 
 // Código de terceiros fica fora do repositório, preso a um commit exato, para
 // uma atualização deles nunca mudar a voz ou a trilha sem ninguém decidir.
-const VENDORS = [
-  {
-    folder: "vendor/ace-step",
-    repository: "https://github.com/ace-step/ACE-Step-1.5.git",
-    commit: "ca1e85fe9430179831e6bc6be790c332190a3866",
-  },
-] as const;
+const ACE_STEP = {
+  folder: "vendor/ace-step",
+  repository: "https://github.com/ace-step/ACE-Step-1.5.git",
+  commit: "ca1e85fe9430179831e6bc6be790c332190a3866",
+};
 
-const PYTHON_PROJECTS = ["tools/narration", "vendor/ace-step"];
+const PYTHON_PROJECTS = ["tools/narration", ACE_STEP.folder];
 
-const ACE_STEP = "vendor/ace-step";
 // O modelo de linguagem que cabe em 8 GB de VRAM não vem no pacote principal.
 const ACE_STEP_EXTRA_MODEL = "acestep-5Hz-lm-0.6B";
 
@@ -33,11 +30,8 @@ const PLACEHOLDER_VOICE = {
 
 const step = (title: string) => console.log(`\n== ${title}`);
 
-const checkout = async ({
-  folder,
-  repository,
-  commit,
-}: (typeof VENDORS)[number]) => {
+const checkout = async () => {
+  const { folder, repository, commit } = ACE_STEP;
   const git = (...args: string[]) =>
     run("git", ["-C", folder, ...args], { GIT_LFS_SKIP_SMUDGE: "1" });
 
@@ -77,9 +71,7 @@ const downloadPlaceholderVoice = async () => {
 
 const main = async () => {
   step("Código das ferramentas");
-  for (const vendor of VENDORS) {
-    await checkout(vendor);
-  }
+  await checkout();
 
   step("Ambientes Python");
   for (const project of PYTHON_PROJECTS) {
@@ -88,13 +80,13 @@ const main = async () => {
 
   step("Modelos do ACE-Step");
   const aceStepEnv = {
-    ACESTEP_PROJECT_ROOT: path.resolve(ACE_STEP),
+    ACESTEP_PROJECT_ROOT: path.resolve(ACE_STEP.folder),
     PYTHONUTF8: "1",
   };
   const download = (...args: string[]) =>
     run(
       "uv",
-      ["run", "--project", ACE_STEP, "acestep-download", ...args],
+      ["run", "--project", ACE_STEP.folder, "acestep-download", ...args],
       aceStepEnv,
     );
   console.log((await download()).trim());

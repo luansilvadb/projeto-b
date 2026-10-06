@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import {
   AbsoluteFill,
-  Easing,
   Freeze,
   interpolate,
   useCurrentFrame,
@@ -27,9 +26,9 @@ import {
 import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { Pop } from "../../../components/Pop";
+import { Pop, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, drop, mix, ramp } from "../../../components/timing";
+import { cue, drop, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { enterProgress, markFor } from "../../../video/stage";
@@ -278,10 +277,7 @@ export const shake = (
 
 /** Um pisca: sobe a 1 em `frames / 2` quadros e volta, a partir de `at`. */
 export const flash = (frame: number, at: number, frames: number): number =>
-  interpolate(frame, [at, at + frames / 2, at + frames], [0, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  interpolate(frame, [at, at + frames / 2, at + frames], [0, 1, 0], clamp);
 
 // A fila no mesmo lugar em que `debt-returns` a deixou.
 const ROW = { x: 960, y: 560, scale: 1.12 };
@@ -324,16 +320,7 @@ const MapRow: React.FC<MapRowProps> = ({
   const present: Partial<Record<IconKey, number>> = {};
   ICONS.forEach((icon, index) => {
     const at = index * CASCADE.step - MAP_LEAD;
-    present[icon] = interpolate(
-      frame,
-      [at, at + CASCADE.frames * 0.7, at + CASCADE.frames],
-      [0, 1.06, 1],
-      {
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
-        easing: Easing.out(Easing.quad),
-      },
-    );
+    present[icon] = popScale(frame, at, CASCADE.frames, 0);
   });
 
   return (

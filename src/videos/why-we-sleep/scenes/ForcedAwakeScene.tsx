@@ -17,7 +17,7 @@ import { wave } from "../../../components/Idle";
 import { Onomatopoeia } from "../../../components/Onomatopoeia";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp, clamp, clamp01 } from "../../../components/timing";
+import { cue, linear, mix, ramp, clamp, clamp01, shake } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { enterProgress } from "../../../video/stage";
@@ -44,32 +44,12 @@ import { ROW_HUE, rowLife } from "./FivePartsScene";
 import { NEVER, Prelude } from "./MaybeBrainScene";
 import { RatsDiscOpening } from "./RatsDiscScene";
 import { Drift, DRIFT } from "./SleepDebtScene";
+import { grown } from "../../../components/Pop";
 
 // A fila no mesmo lugar das outras voltas dela.
 const ROW = { x: 960, y: 560, scale: 1.12 };
 // Quanto o ícone aceso cresce em relação aos vizinhos.
 const GROWN = 1.3;
-
-/** Um tremor que morre: `turns` idas e voltas em `frames` quadros, a partir de `at`. */
-const shake = (
-  frame: number,
-  at: number,
-  frames: number,
-  degrees: number,
-  turns: number,
-): number => {
-  const t = (frame - at) / frames;
-  return t <= 0 || t >= 1
-    ? 0
-    : degrees * (1 - t) * Math.sin(t * turns * Math.PI * 2);
-};
-
-/** Cresce do próprio ponto, passa um pouco do tamanho e assenta: a entrada de quem tem forma, em escala. */
-const grown = (frame: number, at: number, frames: number): number =>
-  interpolate(frame, [at, at + frames * 0.7, at + frames], [0, 1.06, 1], {
-    ...clamp,
-    easing: Easing.out(Easing.quad),
-  });
 
 // A fila entra em cascata no começo do plano: o intervalo entre um ícone e o seguinte, e quanto cada um leva, em quadros.
 const ROW_IN = { at: -3, step: 2, each: 8 };

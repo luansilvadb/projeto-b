@@ -19,6 +19,7 @@ import { SvgLayer } from "../../../components/SvgLayer";
 import { palette, shape } from "../../../design/tokens";
 import { cueFrame } from "../../../narration/timeline";
 import type { SceneProps } from "../../../video/NarratedVideo";
+import { clamp } from "../../../components/timing";
 
 const SUN = { x: 300, y: 620 };
 const EARTH = { x: 1620, y: 620 };
@@ -34,7 +35,7 @@ export const DistanceScene: React.FC<SceneProps> = ({ scene }) => {
     frame,
     [0.4 * fps, scene.durationInFrames - 0.6 * fps],
     [PATH.from, PATH.to],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+    clamp,
   );
   const distanceAppears = cueFrame(scene, "cento");
 

@@ -33,6 +33,7 @@ import {
 
 import { ShotPlans } from "./Shot";
 import { JOIN_FRAMES, planShots } from "./stage";
+import { clamp } from "../components/timing";
 
 export type SceneProps = {
   /** Tempos da cena: duração e o quadro em que cada palavra é falada. */
@@ -86,7 +87,7 @@ const MusicBed: React.FC<MusicBedProps> = ({
     frame,
     [durationInFrames - MUSIC_MIX.fadeOutSeconds * fps, durationInFrames],
     [1, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+    clamp,
   );
 
   // Uma faixa por parte da trilha, cada uma no instante dela. O volume de cada

@@ -53,3 +53,17 @@ export const cue = (
 
 /** Quadro de entrada para o que já está na tela quando a cena começa. */
 export const ALREADY_SHOWN = -1000;
+
+/** Um tremor que morre: `turns` idas e voltas em `frames` quadros, a partir de `at`. */
+export const shake = (
+  frame: number,
+  at: number,
+  frames: number,
+  degrees: number,
+  turns: number,
+): number => {
+  const t = (frame - at) / frames;
+  return t <= 0 || t >= 1
+    ? 0
+    : degrees * (1 - t) * Math.sin(t * turns * Math.PI * 2);
+};

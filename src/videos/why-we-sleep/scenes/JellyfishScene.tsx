@@ -20,7 +20,7 @@ import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp, settle } from "../../../components/timing";
+import { cue, linear, mix, ramp, settle, clamp } from "../../../components/timing";
 import { HEIGHT, WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
@@ -92,8 +92,7 @@ const ArrivalShot: React.FC<ArrivalShotProps> = ({
   const turnFrames = TURN_SECONDS * fps;
   // Ela atravessa a água freando até ficar sobre o lugar de pouso, no fim da virada; cada pulso a empurra um pouco.
   const across = interpolate(frame, [swimAt, turnAt + turnFrames], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
+    ...clamp,
     easing: (t) => 1 - (1 - t) ** 2,
   });
   const turned = ramp(frame, turnAt, turnFrames);

@@ -27,7 +27,7 @@ export const gainBelowVoice = (
   // Nunca amplifica: uma trilha já baixa demais fica como está.
   Math.min(1, 10 ** ((voiceLufs - belowVoiceDb - musicLufs) / 20));
 
-export type DuckingLevels = {
+type DuckingLevels = {
   /** Volume da trilha quando ninguém fala. */
   readonly full: number;
   /** Volume da trilha sob a narração. */

@@ -1,6 +1,6 @@
 import { interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import { cameraBetween, framing } from "../../../components/Camera";
-import { cue, linear, ramp } from "../../../components/timing";
+import { cue, linear, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import {
@@ -55,7 +55,7 @@ const EyesShot: React.FC<EyesShotProps> = ({ litAt, nearAt, earAt, clock }) => {
     frame,
     [earAt, earAt + 3, earAt + 7, earAt + 10, earAt + 16],
     [0, 0.55, 0.1, 0.4, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+    clamp,
   );
 
   return (

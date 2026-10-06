@@ -21,12 +21,13 @@ import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp } from "../../../components/timing";
+import { cue, linear, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength, type Wipe } from "../../../video/Shot";
 import { ink, stopwatch } from "../palette";
 import { Calendar } from "../parts/Calendar";
 import {
+  braked,
   daylightAt,
   Herd,
   orbAt,
@@ -217,10 +218,6 @@ type ShotClock = {
   readonly clock: number;
 };
 
-/** Quanto falta andar quando o plano aberto acaba, para um plano com esta duração: é o que a freada do seguinte percorre. */
-const restAfter = (length: number): number =>
-  Math.max(WALK.least, WALK.from - WALK.speed * length);
-
 /**
  * A savana começa a subir antes de o plano aberto chegar: `lead` quadros
  * antes, sob o que o plano anterior ainda tem na tela, para a troca não deixar
@@ -236,8 +233,7 @@ export const risenAt = (at: number): number =>
     [-HERDS_RISE.lead, HERDS_RISE.frames - HERDS_RISE.lead],
     [0, 1],
     {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
+      ...clamp,
       easing: Easing.out(Easing.cubic),
     },
   );
@@ -281,8 +277,7 @@ const WideHerds: React.FC<WideHerdsProps> = ({
             ],
             [0, 1, 1, 0],
             {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
+              ...clamp,
               easing: Easing.inOut(Easing.quad),
             },
           ),
@@ -365,11 +360,7 @@ const MatriarchsShot: React.FC<MatriarchsShotProps> = ({
   const { fps } = useVideoConfig();
   const seconds = (clock + frame) / fps;
   // A freada: a velocidade cai em linha reta até zero, e a passada encurta junto.
-  const rest = restAfter(walkedFor);
-  const brake = (2 * rest) / WALK.speed;
-  const braking = Math.min(frame, brake);
-  const apart =
-    rest - WALK.speed * (braking - (braking * braking) / (2 * brake));
+  const { brake, left: apart } = braked(WALK, walkedFor, frame);
   const touching =
     ramp(frame, brake + TOUCH.after, TOUCH.frames) * touchOf(seconds);
 

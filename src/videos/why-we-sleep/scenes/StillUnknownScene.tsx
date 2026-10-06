@@ -16,7 +16,7 @@ import { Stay } from "../../../components/Cast";
 import { wave } from "../../../components/Idle";
 import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
-import { cue, drop, mix, ramp } from "../../../components/timing";
+import { cue, drop, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { leaveProgress, SCENERY_EXIT_FRAMES } from "../../../video/stage";
@@ -58,8 +58,7 @@ const shopRisen = (at: number): number =>
     [-SHOP_RISE.lead, SHOP_RISE.frames - SHOP_RISE.lead],
     [0, 1],
     {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
+      ...clamp,
       easing: Easing.out(Easing.cubic),
     },
   );
@@ -234,8 +233,7 @@ const FitsShot: React.FC<FitsShotProps> = ({
     ],
     [0, 1.06, 1],
     {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
+      ...clamp,
       easing: Easing.inOut(Easing.quad),
     },
   );

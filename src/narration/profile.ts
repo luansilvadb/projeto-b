@@ -1,3 +1,4 @@
+import { median } from "../critique/measures";
 import { splitSentences, tokenize } from "./text";
 
 /**
@@ -6,7 +7,7 @@ import { splitSentences, tokenize } from "./text";
  * vídeos do Kurzgesagt em português que o usuário indicou como referência de
  * texto.
  */
-export type NarrationProfile = {
+type NarrationProfile = {
   readonly words: number;
   readonly sentences: number;
   /** Mediana de palavras por frase. */
@@ -83,14 +84,6 @@ const CONNECTIVES = new Set([
 const SHORT_WORDS = 6;
 const LONG_WORDS = 25;
 
-const median = (values: readonly number[]): number => {
-  const sorted = [...values].sort((a, b) => a - b);
-  const middle = Math.floor(sorted.length / 2);
-  return sorted.length % 2 === 1
-    ? sorted[middle]
-    : (sorted[middle - 1] + sorted[middle]) / 2;
-};
-
 const lower = (word: string) => word.toLowerCase().replace(/[^\p{L}]/gu, "");
 
 /** Mede o perfil da narração inteira de um roteiro. */
@@ -116,7 +109,7 @@ export const narrationProfile = (
   };
 };
 
-export type ProfileCriterion = {
+type ProfileCriterion = {
   readonly label: string;
   readonly value: (profile: NarrationProfile) => number;
   readonly format: (value: number) => string;
@@ -124,7 +117,7 @@ export type ProfileCriterion = {
   readonly range: readonly [number, number];
 };
 
-const percent = (value: number) => `${Math.round(value * 100)}%`;
+export const percent = (value: number) => `${Math.round(value * 100)}%`;
 const decimal = (value: number) => value.toFixed(1).replace(".", ",");
 
 /**

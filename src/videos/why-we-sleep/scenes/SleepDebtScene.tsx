@@ -11,7 +11,7 @@ import { blink, wave } from "../../../components/Idle";
 import { Onomatopoeia } from "../../../components/Onomatopoeia";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, drop, linear, mix, ramp, clamp01 } from "../../../components/timing";
+import { cue, drop, linear, mix, ramp, clamp01, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { person, savanna, sound } from "../palette";
@@ -26,6 +26,7 @@ import {
   OWING,
   OWING_BILL,
 } from "./SkipANightScene";
+import { popScale } from "../../../components/Pop";
 
 /**
  * A deriva lenta dos planos de fundo liso: quanto o quadro se aproxima do
@@ -110,16 +111,7 @@ export const Grow: React.FC<GrowProps> = ({
   children,
 }) => {
   const frame = useCurrentFrame();
-  const size = interpolate(
-    frame,
-    [at, at + frames * 0.7, at + frames],
-    [0, 1.06, 1],
-    {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-      easing: Easing.out(Easing.quad),
-    },
-  );
+  const size = popScale(frame, at, frames, 0);
   return (
     <div
       style={{
@@ -269,10 +261,6 @@ const PayingShot: React.FC<PayingShotProps> = ({
   const landAt = fallAt + FALL.seconds * fps;
   const stampAt = landAt + FALL.stampAfter * fps;
   const hitAt = stampAt + STAMP.frames;
-  const clamp = {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  } as const;
   // O aviso: ele balança para um lado, para o outro, e vai.
   const lean = interpolate(
     frame,

@@ -14,6 +14,7 @@ import { castScale, FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
+import { popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { cue, drop, linear, mix, ramp, clamp, clamp01 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
@@ -40,7 +41,7 @@ const RESTING = 124 / 660;
 // A figura da cama é desenhada com 800 px de altura; de pé, o meio dela fica 5 px à esquerda do meio da cama.
 const BED_FIGURE = { height: 800, offset: 5 };
 
-export type TrioLayout = {
+type TrioLayout = {
   readonly ground: number;
   readonly elephant: { readonly x: number; readonly width: number };
   readonly person: { readonly x: number; readonly height: number };
@@ -484,16 +485,7 @@ const Among: React.FC<AmongProps> = ({
     landed <= 0 || landed >= 1
       ? 0
       : 0.07 * (1 - landed) * Math.sin(Math.PI * landed);
-  const bedIn = interpolate(
-    at,
-    [
-      wideAt - BED_IN.lead,
-      wideAt - BED_IN.lead + BED_IN.frames * 0.7,
-      wideAt - BED_IN.lead + BED_IN.frames,
-    ],
-    [0, 1.05, 1],
-    { ...clamp, easing: Easing.out(Easing.quad) },
-  );
+  const bedIn = popScale(at, wideAt - BED_IN.lead, BED_IN.frames, 0, 1.05);
   const lying = at >= landAt;
   const standing = at < wideAt;
 

@@ -16,6 +16,7 @@ import {
   leaveProgress,
   SCENERY_EXIT_FRAMES,
 } from "./stage";
+import { clamp } from "../components/timing";
 
 export type Wipe = {
   /** Quantos quadros a varredura leva para cobrir o plano anterior. */
@@ -180,15 +181,11 @@ const OnStage: React.FC<OnStageProps> = ({
   );
 };
 
-const Wiping: React.FC<{ wipe: Wipe; children: React.ReactNode }> = ({
-  wipe,
-  children,
-}) => {
-  const frame = useCurrentFrame();
+/** O `clip-path` de quem entra por varredura, no quadro `frame` dela. */
+export const wipeClip = (frame: number, wipe: Wipe): string => {
   // A borda cruza o quadro quase a velocidade constante, só freando no fim.
   const hidden = interpolate(frame, [0, wipe.frames], [100, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
+    ...clamp,
     easing: Easing.out(Easing.quad),
   });
   // A parte do quadro que a varredura ainda não alcançou, no lado oposto ao que ela entra.
@@ -198,10 +195,14 @@ const Wiping: React.FC<{ wipe: Wipe; children: React.ReactNode }> = ({
     top: `0 0 ${hidden}% 0`,
     bottom: `${hidden}% 0 0 0`,
   }[wipe.from];
-
-  return (
-    <AbsoluteFill style={{ clipPath: `inset(${inset})` }}>
-      {children}
-    </AbsoluteFill>
-  );
+  return `inset(${inset})`;
 };
+
+const Wiping: React.FC<{ wipe: Wipe; children: React.ReactNode }> = ({
+  wipe,
+  children,
+}) => (
+  <AbsoluteFill style={{ clipPath: wipeClip(useCurrentFrame(), wipe) }}>
+    {children}
+  </AbsoluteFill>
+);

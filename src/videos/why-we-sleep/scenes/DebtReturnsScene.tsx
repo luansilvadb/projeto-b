@@ -1,7 +1,5 @@
 import {
   AbsoluteFill,
-  Easing,
-  interpolate,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -25,6 +23,7 @@ import { SIDE_BILL } from "./DebtTestScene";
 import { ROW_HUE, rowLife } from "./FivePartsScene";
 import { billSway } from "./SkipANightScene";
 import { Drift, DRIFT, drifted, undrifted } from "./SleepDebtScene";
+import { popScale } from "../../../components/Pop";
 
 // De perto: a conta à esquerda e o bolso, grande, à direita. No fim do plano o bolso vai para o canto.
 const BILL = { x: 540, y: 180, scale: 1.45 };
@@ -96,10 +95,6 @@ const PocketShot: React.FC<PocketShotProps> = ({ foldAt, patAt, clock }) => {
   const stage = useStage();
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
-  const clamp = {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  } as const;
   // A ficha do plano anterior vem do canto dela e, no caminho, volta a ser só a conta: perde o visto e a prancheta.
   const arrived = ramp(frame, 0, ARRIVE_FRAMES);
   // A conta só dobra depois de chegar, e as batidas vêm depois de ela estar guardada.
@@ -112,12 +107,7 @@ const PocketShot: React.FC<PocketShotProps> = ({ foldAt, patAt, clock }) => {
     0.4 * linear(frame, fold, FOLD_FRAMES) +
     0.6 * ramp(frame, stowAt, STOW_FRAMES);
   // O bolso surge crescendo, com sobra, enquanto a conta chega.
-  const surged = interpolate(
-    frame,
-    [POCKET_AT_FRAMES, POCKET_AT_FRAMES + 7, POCKET_AT_FRAMES + 10],
-    [0, 1.06, 1],
-    { ...clamp, easing: Easing.out(Easing.quad) },
-  );
+  const surged = popScale(frame, POCKET_AT_FRAMES, 10, 0);
   const patted = [0, 1].reduce((sum, index) => {
     const t = (frame - pat - index * PAT.gap * fps) / (PAT.seconds * fps);
     return t <= 0 || t >= 1
@@ -133,12 +123,7 @@ const PocketShot: React.FC<PocketShotProps> = ({ foldAt, patAt, clock }) => {
   const present: Partial<Record<IconKey, number>> = {};
   ICONS.forEach((icon, index) => {
     const at = rowFrom + index * ROW_BEFORE.step;
-    present[icon] = interpolate(
-      frame,
-      [at, at + ROW_BEFORE.each * 0.7, at + ROW_BEFORE.each],
-      [0, 1.06, 1],
-      { ...clamp, easing: Easing.out(Easing.quad) },
-    );
+    present[icon] = popScale(frame, at, ROW_BEFORE.each, 0);
   });
 
   return (

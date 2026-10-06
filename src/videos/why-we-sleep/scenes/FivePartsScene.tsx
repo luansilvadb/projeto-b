@@ -10,7 +10,7 @@ import {
 import { useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { phaseOf, wave } from "../../../components/Idle";
-import { cue, linear, ramp } from "../../../components/timing";
+import { cue, linear, ramp, shake, clamp } from "../../../components/timing";
 import { HEIGHT, WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
@@ -96,20 +96,6 @@ const EYES_SPOT = iconSpot("eyes", ON_EYES);
 const ON_EYES_END = pushed(ON_EYES, [EYES_SPOT.x, EYES_SPOT.y]);
 const ON_WAYS_END = pushed(ON_WAYS, [ON_WAYS.x, ON_WAYS.y]);
 const LAST_END = pushed(WIDE, [WIDE.x, WIDE.y], 0.03);
-
-/** Um tremor que morre: `turns` idas e voltas em `frames` quadros, a partir de `at`. */
-const shake = (
-  frame: number,
-  at: number,
-  frames: number,
-  degrees: number,
-  turns: number,
-): number => {
-  const t = (frame - at) / frames;
-  return t <= 0 || t >= 1
-    ? 0
-    : degrees * (1 - t) * Math.sin(t * turns * Math.PI * 2);
-};
 
 type RowLife = {
   readonly grow: Partial<Record<IconKey, number>>;
@@ -244,10 +230,7 @@ const RowShot: React.FC<RowShotProps> = ({
     eyelid:
       blinkAt === undefined
         ? 0
-        : interpolate(frame, [blinkAt, blinkAt + 3, blinkAt + 7], [0, 1, 0], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-          }),
+        : interpolate(frame, [blinkAt, blinkAt + 3, blinkAt + 7], [0, 1, 0], clamp),
   };
 
   const present: Partial<Record<IconKey, number>> = {};
@@ -260,8 +243,7 @@ const RowShot: React.FC<RowShotProps> = ({
         [at, at + 0.2 * fps, at + 0.3 * fps],
         [0, 1.06, 1],
         {
-          extrapolateLeft: "clamp",
-          extrapolateRight: "clamp",
+          ...clamp,
           easing: Easing.out(Easing.quad),
         },
       );
@@ -286,7 +268,7 @@ const RowShot: React.FC<RowShotProps> = ({
           style={{
             scale: `${world}`,
             // Com o quadro inteiro a janela cobre os cantos; logo se fecha até caber na altura.
-            clipPath: `circle(${interpolate(world, [0.88, 1], VIGNETTE_WINDOW, { extrapolateLeft: "clamp", extrapolateRight: "clamp" })}px at 50% 50%)`,
+            clipPath: `circle(${interpolate(world, [0.88, 1], VIGNETTE_WINDOW, clamp)}px at 50% 50%)`,
           }}
         >
           <Sequence durationInFrames={VIGNETTE_FRAMES} layout="none">
