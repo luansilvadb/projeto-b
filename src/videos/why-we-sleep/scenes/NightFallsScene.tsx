@@ -41,13 +41,13 @@ export const DEN = { x: 1380, y: SAVANNA_GROUND_Y + 40, width: 220 };
 /** A moita atrás dele, de onde o predador espia. */
 export const THICKET = { x: DEN.x + 250, y: SAVANNA_GROUND_Y + 30 };
 
-export const DEN_WIDE = framing([960, 540], 1);
+const DEN_WIDE = framing([960, 540], 1);
 // O plano aberto deriva devagar para o pé da árvore, 5,5% do começo ao fim: antes
 // de o bicho entrar, é o que impede a savana vazia de congelar. (5,5%: o plano é largo e quase tudo nele é pequeno.)
 const DEN_SPOT = [DEN.x - 120, DEN.y - 90] as const;
 const DEN_WIDE_END = framing(DEN_SPOT, 1.055, DEN_SPOT);
 /** O plano médio: o bicho e a moita, com a árvore inteira em cima. */
-export const DEN_MEDIUM = framing([DEN.x + 40, DEN.y - 110], 2.9, [960, 640]);
+const DEN_MEDIUM = framing([DEN.x + 40, DEN.y - 110], 2.9, [960, 640]);
 // Chegada ao plano médio, a câmera continua se aproximando devagar do bicho até
 // o plano acabar: é o que mexe o quadro depois de ele fechar os olhos. O close parte daqui.
 const DEN_MEDIUM_END = framing(
@@ -64,13 +64,13 @@ const DEN_MEDIUM_END = framing(
 export const DEN_CLOSE = framing([DEN.x - 20, DEN.y - 44], 5.6, [900, 640]);
 
 /** Onde a lua está quando a noite cai: alta, à esquerda, para aparecer também nos planos de perto. */
-export const NIGHT_ORB = 0.36;
+const NIGHT_ORB = 0.36;
 /** Onde ela está quando o bicho já ressona e o predador chega: é de onde `skip-a-night` a faz subir. */
 export const LATE_ORB = NIGHT_ORB + 0.04;
 // O sol do entardecer desce devagar, à esquerda, do começo ao fim do plano aberto.
 const DUSK_ORB = { from: 0.335, to: 0.295 };
 // A noite desce do alto do quadro sobre o entardecer, em 0,25 s.
-export const NIGHTFALL: Wipe = { frames: 8, from: "top" };
+const NIGHTFALL: Wipe = { frames: 8, from: "top" };
 
 type SavannaShotProps = {
   readonly camera: CameraState;

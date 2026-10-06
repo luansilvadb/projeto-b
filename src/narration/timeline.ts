@@ -7,13 +7,13 @@ export type FrameRange = {
   readonly to: number;
 };
 
-export type SentenceTimeline = {
+type SentenceTimeline = {
   readonly file: string;
   /** Quadro, relativo à cena, em que o áudio da frase começa. */
   readonly from: number;
 };
 
-export type WordCue = {
+type WordCue = {
   readonly text: string;
   /** Quadro, relativo à cena, em que a palavra começa a ser falada. */
   readonly frame: number;

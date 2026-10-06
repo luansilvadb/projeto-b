@@ -69,7 +69,7 @@ export const grown = (frame: number, at: number, frames = 11): number =>
   });
 
 /** O ponto do cenário que a câmera mostra num ponto da tela: o contrário do enquadramento. */
-export const unseen = (camera: CameraState, screen: Point): Point => [
+const unseen = (camera: CameraState, screen: Point): Point => [
   WIDTH / 2 + (screen[0] + camera.x - WIDTH / 2) / camera.zoom,
   HEIGHT / 2 + (screen[1] + camera.y - HEIGHT / 2) / camera.zoom,
 ];
@@ -117,7 +117,7 @@ const DISC = {
   to: { x: 310, y: 840, scale: 0.5 },
 };
 /** Onde Gardner para no plano em que entra: o plano do quarto o recebe daqui. */
-export const NEWCOMER = { x: 1000, y: 980, height: 720 };
+const NEWCOMER = { x: 1000, y: 980, height: 720 };
 // Ele vem de fora do quadro, pela direita. A partitura dava 0,9 s à entrada; andando, e não deslizando,
 // a travessia de meio quadro pede mais: seis passos, a pouco menos de 0,3 s cada.
 const WALK = { from: 2260, frames: 50, steps: 6, brake: 7, turn: 8 };

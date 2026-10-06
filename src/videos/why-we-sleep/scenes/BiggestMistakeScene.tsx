@@ -856,7 +856,7 @@ const HANG = { degrees: 0.35, seconds: 5.3 };
  * enquanto vai para o lugar novo. Começa antes de o plano seguinte chegar e
  * termina dentro dele; `TimeToFixScene` desenha a segunda metade.
  */
-export const TREE_MORPH = { lead: 10, frames: 20, board: 2.4 } as const;
+const TREE_MORPH = { lead: 10, frames: 20, board: 2.4 } as const;
 
 /** De 0 a 1, quanto a árvore já foi do quadro-negro ao lugar dela na poda, `sinceCut` quadros depois (ou antes) de o plano da poda chegar. */
 export const treeMorphed = (sinceCut: number): number =>

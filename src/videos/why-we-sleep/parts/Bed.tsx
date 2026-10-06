@@ -23,14 +23,14 @@ import { mix } from "../../../components/timing";
 type Hue = keyof typeof idea;
 
 /** Dormindo; de pálpebra a meio, quando alguém a chama; ou bocejando, ao acordar. */
-export type BedState = "asleep" | "sleepy" | "waking";
+type BedState = "asleep" | "sleepy" | "waking";
 
 /**
  * O cobertor: coral para a pessoa "você", o acento dos planos dela; azul-lilás
  * para Gardner, para a cama dele não ser a dela; verde, o da blusa dele, para
  * o participante de 1924, que de azul era Gardner dormindo.
  */
-export type Blanket = "coral" | "blue" | "green";
+type Blanket = "coral" | "blue" | "green";
 
 const BLANKETS: Record<
   Blanket,

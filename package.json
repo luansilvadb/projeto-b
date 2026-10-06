@@ -4,7 +4,6 @@
   "description": "Vídeos educativos de ciência em motion graphics por código",
   "scripts": {
     "dev": "remotion studio",
-    "build": "remotion bundle",
     "upgrade": "remotion upgrade",
     "lint": "eslint src scripts && tsc",
     "test": "vitest run && uv run --project tools/narration pytest tools/narration -q",

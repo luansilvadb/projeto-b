@@ -15,7 +15,7 @@ import type { LagoonColors } from "../palette";
 /** Onde a água-viva pousa no plano aberto: o centro da borda do sino e a largura dele. */
 export const JELLYFISH_SPOT = { x: 860, y: 716, width: 330 };
 
-export type ContactShadow = {
+type ContactShadow = {
   readonly x: number;
   readonly y: number;
   readonly width: number;

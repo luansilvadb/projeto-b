@@ -348,14 +348,14 @@ export const SleepBill: React.FC<SleepBillProps> = ({
 };
 
 /** Tamanho da conta dobrada, em escala 1. */
-export const FOLDED = { width: 230, height: 170 };
+const FOLDED = { width: 230, height: 170 };
 
 type FoldedBillProps = {
   readonly scale?: number;
 };
 
 /** A conta dobrada em quatro: um maço de papel com a ponta do carimbo à vista. */
-export const FoldedBill: React.FC<FoldedBillProps> = ({ scale = 1 }) => {
+const FoldedBill: React.FC<FoldedBillProps> = ({ scale = 1 }) => {
   const id = useId();
   return (
     <svg
@@ -422,7 +422,7 @@ export const FoldedBill: React.FC<FoldedBillProps> = ({ scale = 1 }) => {
 };
 
 /** Tamanho do bolso (o retalho de tecido inteiro), em escala 1. */
-export const POCKET = { width: 200, height: 230 };
+const POCKET = { width: 200, height: 230 };
 /** Onde o bolso fica marcado: o canto de cima, à direita, dentro da margem segura. O selo da fonte ocupa o de baixo. */
 export const POCKET_CORNER = { x: 1700, y: 190, scale: 0.8 };
 

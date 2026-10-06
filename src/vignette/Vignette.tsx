@@ -1,16 +1,11 @@
-import { useMemo } from "react";
 import {
   AbsoluteFill,
   Easing,
-  Freeze,
   interpolate,
-  Sequence,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { StageContext, type Stage } from "../components/Cast";
 import { HEIGHT, WIDTH } from "../format";
-import { JOIN_FRAMES } from "../video/stage";
 import { CellWorld } from "./CellWorld";
 import { CoastWorld, LAGOON_SPOT } from "./CoastWorld";
 import { JELLYFISH, LagoonWorld } from "./LagoonWorld";
@@ -54,13 +49,6 @@ const IRIS = 0.05;
 const FIRST_HOLD = 0.07;
 const LEG = 0.2;
 const SETTLE = 0.14;
-/** Quanto dura o círculo que fecha a vinheta sobre o plano seguinte. */
-/** Em quantos quadros o que está desenhado na vinheta sai do palco. */
-export const VIGNETTE_LEAVE_FRAMES = 10;
-/** O quadro em que o plano seguinte começa a tomar o palco, e aquele em que já o cobriu. */
-export const VIGNETTE_HANDOFF_FRAMES = 8;
-export const VIGNETTE_COVERED_FRAMES = VIGNETTE_HANDOFF_FRAMES + JOIN_FRAMES;
-
 
 type VignetteProps = {
   /** O nome do canal, debaixo do símbolo. O canal ainda não tem nome: sem ele, fica só o símbolo. */
@@ -149,49 +137,5 @@ export const Vignette: React.FC<VignetteProps> = ({ channel }) => {
         </AbsoluteFill>
       ) : null}
     </AbsoluteFill>
-  );
-};
-
-type VignetteLeavingProps = VignetteProps & {
-  /** Quantos quadros a vinheta durou: a saída parte do último deles. */
-  readonly frames: number;
-};
-
-/**
- * A vinheta saindo do palco, para pôr por baixo do começo do plano seguinte.
- * É o mesmo palco: o céu dela fica como fundo, o planeta e o que mais estiver
- * desenhado encolhem e saem, e o plano seguinte toma o lugar por cima. Não há
- * recorte nem efeito por cima das duas imagens.
- */
-export const VignetteLeaving: React.FC<VignetteLeavingProps> = ({
-  frames,
-  channel,
-}) => {
-  const frame = useCurrentFrame();
-  const stage = useMemo<Stage>(
-    () => ({
-      enter: () => 1,
-      // Tudo sai junto e logo: o plano seguinte começa a cobrir o palco em seguida.
-      leave: () =>
-        interpolate(frame, [0, VIGNETTE_LEAVE_FRAMES], [0, 1], {
-          ...clamp,
-          easing: Easing.in(Easing.cubic),
-        }),
-      handedOver: false,
-      cast: true,
-    }),
-    [frame],
-  );
-  if (frame >= VIGNETTE_COVERED_FRAMES) {
-    return null;
-  }
-  return (
-    <StageContext.Provider value={stage}>
-      <Sequence durationInFrames={frames} layout="none">
-        <Freeze frame={frames - 1}>
-          <Vignette channel={channel} />
-        </Freeze>
-      </Sequence>
-    </StageContext.Provider>
   );
 };

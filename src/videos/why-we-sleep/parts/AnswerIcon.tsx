@@ -1,7 +1,7 @@
 import { goods, ink, shopInside } from "../palette";
 
 /** As três respostas para o sono, na ordem do capítulo: o estoque, as prateleiras e a faxina. */
-export type Answer = "stock" | "shelves" | "cleaning";
+type Answer = "stock" | "shelves" | "cleaning";
 
 const ICONS: Record<Answer, React.ReactNode> = {
   // O estoque: uma caixa.

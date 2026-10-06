@@ -38,7 +38,7 @@ import { Drift, driftZoom, Grow, undrifted } from "./SleepDebtScene";
  * em comum, e fica na tela até o plano seguinte chegar, para a troca não
  * deixar o quadro só com o fundo.
  */
-export const Later: React.FC<{ by: number; children: React.ReactNode }> = ({
+const Later: React.FC<{ by: number; children: React.ReactNode }> = ({
   by,
   children,
 }) => {

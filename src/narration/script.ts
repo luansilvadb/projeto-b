@@ -1,11 +1,11 @@
 import { shotStartWords, type ShotCue } from "./shots";
 import { findNarrationProblems } from "./text";
 
-export const SHOT_SCALES = ["wide", "medium", "close", "detail"] as const;
-export const SHOT_ENTRIES = ["cut", "camera", "transform", "wipe"] as const;
+const SHOT_SCALES = ["wide", "medium", "close", "detail"] as const;
+const SHOT_ENTRIES = ["cut", "camera", "transform", "wipe"] as const;
 
 /** Um plano: uma composição que fica na tela enquanto um trecho da narração toca. */
-export type ScriptShot = ShotCue & {
+type ScriptShot = ShotCue & {
   /** O que se encena: quem faz o quê, e onde. */
   readonly staging: string;
   /** Quão de perto o assunto é visto. */
@@ -16,7 +16,7 @@ export type ScriptShot = ShotCue & {
   readonly entry: (typeof SHOT_ENTRIES)[number];
 };
 
-export type ScriptScene = {
+type ScriptScene = {
   /** Liga a cena do roteiro ao componente que a desenha. */
   readonly id: string;
   /** Exatamente o que é falado, já por extenso. */
@@ -33,7 +33,7 @@ export type ScriptScene = {
 };
 
 /** Mais que isto sem fala deixa de ser respiro e vira buraco na narração. */
-export const MAX_HOLD_MS = 8000;
+const MAX_HOLD_MS = 8000;
 
 export type MusicSpec = {
   /** Descrição de estilo, clima e instrumentos, em inglês. */
@@ -51,7 +51,7 @@ export type MusicSpec = {
   readonly silences?: readonly MusicSilenceSpec[];
 };
 
-export type MusicPartSpec = {
+type MusicPartSpec = {
   /** O "id" da cena em que a faixa nova começa a entrar. */
   readonly from: string;
   /**
@@ -66,7 +66,7 @@ export type MusicPartSpec = {
 };
 
 /** Um trecho sem música: da palavra de deixa (ou do começo da cena) ao fim da cena. */
-export type MusicSilenceSpec = {
+type MusicSilenceSpec = {
   readonly from: string;
   readonly cue?: string;
   readonly occurrence?: number;

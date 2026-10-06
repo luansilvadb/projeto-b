@@ -42,8 +42,7 @@ import script from "../script.json";
 
 /**
  * Quanto a vinheta dura: o silêncio que o roteiro reserva para ela no fim
- * desta cena. A cena seguinte usa o valor para tirar a vinheta do palco
- * (`VignetteLeaving`).
+ * desta cena.
  */
 export const VIGNETTE_FRAMES = Math.round(
   ((script.scenes.find((scene) => scene.id === "the-question")?.holdMs ?? 0) /

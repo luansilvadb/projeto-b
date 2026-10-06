@@ -1,4 +1,4 @@
-import { random, useCurrentFrame, useVideoConfig } from "remotion";
+import { random } from "remotion";
 
 /**
  * A pausa viva: o movimento de quem não está agindo. Os ciclos recebem o
@@ -57,44 +57,4 @@ export const blink = (
   // Fecha na primeira metade, abre na segunda.
   const progress = (seconds - at) / length;
   return progress < 0.5 ? progress * 2 : 2 - progress * 2;
-};
-
-type IdleProps = {
-  /** Graus que o desenho balança para cada lado. */
-  readonly sway?: number;
-  /** Fração da altura que o desenho ganha e perde ao "respirar". */
-  readonly breath?: number;
-  /** Duração de um ciclo completo. */
-  readonly seconds?: number;
-  /** Fração do ciclo em que o desenho começa, para vizinhos não se moverem juntos. */
-  readonly phase?: number;
-  /** Ponto fixo do movimento: os pés de quem respira, a base de quem balança. */
-  readonly origin?: string;
-  readonly children: React.ReactNode;
-};
-
-/** Movimento de quem está vivo e parado: respira e balança de leve, sem sair do lugar. */
-export const Idle: React.FC<IdleProps> = ({
-  sway = 0,
-  breath: rise = 0,
-  seconds = 4,
-  phase = 0,
-  origin = "50% 100%",
-  children,
-}) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const cycle = wave(frame / fps, seconds, phase);
-
-  return (
-    <div
-      style={{
-        transformOrigin: origin,
-        rotate: `${sway * cycle}deg`,
-        scale: `1 ${1 + rise * cycle}`,
-      }}
-    >
-      {children}
-    </div>
-  );
 };

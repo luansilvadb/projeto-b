@@ -29,7 +29,7 @@ import { clamp01 } from "../../../components/timing";
  */
 
 /** De olho aberto, com a pálpebra a meio, cochilando, ou já fora do experimento: só a silhueta. */
-export type RatState = "awake" | "sleepy" | "asleep" | "gone";
+type RatState = "awake" | "sleepy" | "asleep" | "gone";
 
 // A caixa do desenho do rato em `Silhouettes` e o olho dele, nas unidades dela.
 const VIEW = { width: 260, height: 130 };
@@ -452,7 +452,7 @@ type BenchProps = {
 };
 
 /** A bancada do laboratório sem o tanque: o tampo e a frente. Como chão, só o tampo. */
-export const RatBench: React.FC<BenchProps> = ({ floor = false }) => (
+const RatBench: React.FC<BenchProps> = ({ floor = false }) => (
   <SvgLayer>
     <rect
       x={-400}
@@ -592,7 +592,7 @@ export const DISC = {
   apart: 150,
 };
 /** Da base da bandeja até o tampo do disco, em escala 1. */
-export const DISC_TOP = DISC.tray.depth + DISC.tray.ry + DISC.lift;
+const DISC_TOP = DISC.tray.depth + DISC.tray.ry + DISC.lift;
 // As marcas do tampo: são elas que mostram o giro.
 const SPOKES = 6;
 

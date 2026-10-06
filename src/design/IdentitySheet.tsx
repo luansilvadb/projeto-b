@@ -5,7 +5,7 @@ import { Backdrop } from "../components/Backdrop";
 import { Grain } from "../components/Grain";
 import { Label } from "../components/Label";
 import { SvgLayer } from "../components/SvgLayer";
-import type { Ramp } from "./directions";
+import type { Ramp } from "./tokens";
 import { palette, shape } from "./tokens";
 
 const SWATCH = 88;

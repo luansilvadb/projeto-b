@@ -100,7 +100,7 @@ export const useBoard = (): Carried | null => useContext(CarryContext);
  * o plano que chega parte do valor que o anterior tem agora e vai até o dele,
  * em vez de saltar. Fora desse caso devolve o valor recebido.
  */
-export const useCarried = <Value,>(
+const useCarried = <Value,>(
   name: string,
   value: Value,
   between: (from: Value, to: Value, t: number) => Value,

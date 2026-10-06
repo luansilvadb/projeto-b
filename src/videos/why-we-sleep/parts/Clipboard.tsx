@@ -13,7 +13,7 @@ import { clamp01 } from "../../../components/timing";
  */
 
 /** As duas linhas, na ordem dos testes. */
-export const CLIPBOARD_LINES = ["lenta para reagir", "cobra depois"] as const;
+const CLIPBOARD_LINES = ["lenta para reagir", "cobra depois"] as const;
 
 /** Tamanho da prancheta, em escala 1: a letra é a do tamanho "note". */
 export const CLIPBOARD = { width: 740, height: 330 };

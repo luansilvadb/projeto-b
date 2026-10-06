@@ -338,7 +338,7 @@ type InsideViewProps = {
  * plano 3 desta cena e, no último quadro dele, o que a noite de
  * `jellyfish-night` varre.
  */
-export const InsideView: React.FC<InsideViewProps> = ({
+const InsideView: React.FC<InsideViewProps> = ({
   seconds,
   cycles,
   zoom = 1,

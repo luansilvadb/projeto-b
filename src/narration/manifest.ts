@@ -41,7 +41,7 @@ export type SentenceTake = {
 };
 
 /** Uma frase posicionada na cena: tempos relativos ao início da cena. */
-export type NarrationSentence = SentenceTake & { readonly startMs: number };
+type NarrationSentence = SentenceTake & { readonly startMs: number };
 
 export type NarrationScene = {
   readonly id: string;

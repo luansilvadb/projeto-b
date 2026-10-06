@@ -45,7 +45,7 @@ import { type PulseRhythm, pulseCycles, pulseShape } from "./pulse";
 /** Onde a pesquisadora fica: os pés dela, atrás da bancada, à esquerda do tanque. */
 export const RESEARCHER = { x: 392, y: 966, height: 760 };
 /** Largura do sino da água-viva dentro do tanque. */
-export const JELLYFISH_WIDTH = 300;
+const JELLYFISH_WIDTH = 300;
 // Do centro do desenho dela até onde o sino encosta no apoio, em fração da largura do sino.
 const RESTING = 62 / 330;
 /** O centro dela quando está pousada na plataforma, quando boia sem apoio e quando pousa no chão do tanque. */
@@ -166,7 +166,7 @@ const LabWindow: React.FC<{ hour: Hour; clock: number }> = ({
 };
 
 /** O que a pesquisadora faz com a prancheta num plano. Sem valores, ela a segura erguida, com as duas linhas escritas. */
-export type Board = {
+type Board = {
   /** Quanto ela já ergueu a prancheta, de 0 (baixa, atrás da bancada) a 1. */
   readonly raised?: number;
   /** Quanto de cada linha já se escreveu, de 0 a 1. */
@@ -185,7 +185,7 @@ type LabResearcherProps = Board & {
 };
 
 /** A pesquisadora atrás da bancada, com a prancheta dos dois testes virada para quem assiste. */
-export const LabResearcher: React.FC<LabResearcherProps> = ({
+const LabResearcher: React.FC<LabResearcherProps> = ({
   checked,
   raised = 1,
   written,

@@ -1,7 +1,6 @@
 import "../../../design/fonts";
 import { useId } from "react";
 import {
-  AbsoluteFill,
   Easing,
   interpolate,
   interpolateColors,
@@ -60,7 +59,7 @@ type Hue = keyof typeof idea;
 export const gardner: PersonColors = gardnerColors;
 
 /** Os dois amigos: um de verde e cabelo ruivo, o outro de amarelo. Nenhum de azul nem de laranja. */
-export const friends: readonly [PersonColors, PersonColors] = [
+const friends: readonly [PersonColors, PersonColors] = [
   {
     ...person,
     hair: idea.peach.contact,
@@ -95,7 +94,7 @@ export const friends: readonly [PersonColors, PersonColors] = [
  * redondos, que são de Rechtschaffen. De cabelo escuro e da altura dos
  * rapazes, lia como um quarto rapaz de jaleco (decisão do usuário).
  */
-export const dement: PersonColors = sleepResearcher;
+const dement: PersonColors = sleepResearcher;
 
 // Os olhos da pessoa e a inclinação da cabeça em cada expressão: os mesmos valores de art/Person.
 const EYE = { gap: 42, radius: 27, y: -462 };
@@ -661,26 +660,6 @@ export const Dement: React.FC<DementProps> = ({
   </>
 );
 
-type ViewProps = {
-  /** O ponto do quarto que vai para o centro do quadro, e a aproximação. */
-  readonly focus: readonly [number, number];
-  readonly zoom: number;
-  readonly children: React.ReactNode;
-};
-
-/** O enquadramento de um plano do quarto: o mesmo cenário, mais de perto ou mais de longe. */
-export const View: React.FC<ViewProps> = ({ focus, zoom, children }) => (
-  <AbsoluteFill
-    style={{
-      transformOrigin: "0 0",
-      translate: `${960 - focus[0] * zoom}px ${540 - focus[1] * zoom}px`,
-      scale: `${zoom}`,
-    }}
-  >
-    {children}
-  </AbsoluteFill>
-);
-
 type RoomSetProps = {
   readonly camera: CameraState;
   readonly children: React.ReactNode;
@@ -731,8 +710,7 @@ export const RoomFloor: React.FC<FloorProps> = ({ hue, y }) => (
 /**
  * O quarto dos três rapazes, em coordenadas do plano aberto: o chão, onde cada
  * um fica (o amigo de verde, Gardner no meio, o amigo de amarelo) e, na parede
- * da direita, o cartaz do recorde e o calendário. Os planos mais fechados são
- * enquadramentos (`View`) deste mesmo quarto.
+ * da direita, o cartaz do recorde e o calendário.
  */
 export const ROOM = {
   floor: 960,
@@ -746,7 +724,7 @@ export const ROOM = {
 } as const;
 
 /** Tamanho do cartaz do recorde, em escala 1. */
-export const POSTER = { width: 340, height: 230 };
+const POSTER = { width: 340, height: 230 };
 
 type RecordPosterProps = {
   /** O centro do cartaz no quadro. */
@@ -758,7 +736,7 @@ type RecordPosterProps = {
 };
 
 /** O cartaz pregado na parede: "recorde: 260 h", o que os três querem bater. É texto do mundo, o mesmo nos planos do quarto. */
-export const RecordPoster: React.FC<RecordPosterProps> = ({
+const RecordPoster: React.FC<RecordPosterProps> = ({
   x,
   y,
   enter = ALREADY_SHOWN,
@@ -836,7 +814,7 @@ type WallCalendarProps = {
  * deixa janeiro de 1964 à vista. O mês vai numa etiqueta, presa embaixo: na
  * virada ela gira com a folha e volta com o mês novo.
  */
-export const WallCalendar: React.FC<WallCalendarProps> = ({
+const WallCalendar: React.FC<WallCalendarProps> = ({
   x,
   y,
   scale = 1,

@@ -132,7 +132,7 @@ export const Ahead: React.FC<{
 };
 
 /** Quantos quadros antes da cena o plano que a abre começa a entrar, quando a cena anterior o desenha. */
-export const PRELUDE_LEAD = 8;
+const PRELUDE_LEAD = 8;
 
 // A entrada adiantada de um plano inteiro: o cenário e o elenco começam antes, e o fundo não. O fundo é
 // quem pede a entrada sem atraso nem duração (`FlatStage`, a cor que acompanha o fundo): ele só toma a

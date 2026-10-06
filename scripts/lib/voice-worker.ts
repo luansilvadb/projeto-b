@@ -12,7 +12,7 @@ import { PYTHON_ENV } from "./tools";
 import { NARRATION_TOOLS } from "./voice";
 
 /** Uma tomada como o processo a devolve: gerada, medida e transcrita. */
-export type GeneratedTake = {
+type GeneratedTake = {
   readonly seed: number;
   readonly durationMs: number;
   readonly cutOff: boolean;

@@ -20,15 +20,6 @@ type Shape = {
 };
 
 const SHAPES = {
-  // Peixe pequeno: o mesmo perfil da testemunha da lagoa.
-  fish: {
-    view: [220, 130],
-    body: [
-      "M8,66 C8,30 50,10 96,10 C120,10 142,18 158,32 L212,6 Q196,62 212,122 L158,98 C142,112 120,122 96,122 C50,122 8,102 8,66 Z",
-      "M62,18 Q96,-20 136,24 Z",
-    ],
-    eye: [48, 56, 9],
-  },
   // Elefanta: testa alta, orelha grande, tromba caída.
   elephant: {
     view: [300, 220],
@@ -40,22 +31,6 @@ const SHAPES = {
     ],
     eye: [58, 80, 7],
   },
-  // Golfinho: bico, testa redonda, nadadeira curva e cauda em meia-lua.
-  dolphin: {
-    view: [300, 150],
-    body: [
-      "M4,86 L40,78 C48,54 84,36 128,34 C140,14 162,4 182,4 C174,18 174,30 184,40 C214,48 238,62 258,78 C272,74 286,62 296,48 C294,70 292,84 296,104 C282,98 268,92 256,92 C222,112 170,120 124,114 C122,128 110,140 94,142 C100,130 100,120 96,110 C70,104 50,96 40,92 Z",
-    ],
-    eye: [66, 76, 6],
-  },
-  // Fragata planando: asas longas e dobradas, cauda em forquilha, bico para a esquerda.
-  frigatebird: {
-    view: [340, 150],
-    body: [
-      "M2,62 C44,34 92,22 128,28 C142,30 152,40 158,52 L124,62 L160,66 C166,62 176,60 184,62 C196,40 216,26 240,24 C276,22 310,36 338,62 C300,52 264,52 234,60 C214,66 200,78 194,92 L214,146 L176,112 L150,146 L160,94 C150,76 134,64 112,58 C82,52 44,54 2,62 Z",
-    ],
-    eye: [158, 58, 4],
-  },
   // Camundongo: corpo em gota, orelha redonda, cauda fina.
   mouse: {
     view: [260, 130],
@@ -66,17 +41,9 @@ const SHAPES = {
     detail: ["M74,46 C74,34 86,28 96,32 C104,36 106,46 102,54 Z"],
     eye: [44, 82, 6],
   },
-  // Predador: um peixe grande e comprido, de nadadeira alta e cauda em foice.
-  predator: {
-    view: [600, 220],
-    body: [
-      "M20,110 C60,70 120,60 180,62 L215,20 L250,60 C330,58 420,70 500,96 C530,84 560,60 590,40 C582,80 578,100 580,118 C584,140 590,170 596,196 C560,172 532,150 500,138 C440,160 360,170 300,166 L270,204 L250,164 C170,160 80,150 20,110 Z",
-    ],
-    eye: [86, 98, 8],
-  },
 } satisfies Record<string, Shape>;
 
-export type SilhouetteKind = keyof typeof SHAPES;
+type SilhouetteKind = keyof typeof SHAPES;
 
 type Props = SilhouetteProps & { readonly kind: SilhouetteKind };
 

@@ -34,7 +34,7 @@ const decimal = (value: number) => value.toFixed(1);
  * 26%; tela quase parada 10%; mais de 10% do quadro em movimento 43%; até 40%
  * do quadro ser outro 2,0 s.
  */
-export const CRITERIA: readonly Criterion[] = [
+const CRITERIA: readonly Criterion[] = [
   {
     measure: "drawnShare",
     label: "Área do quadro com desenho",

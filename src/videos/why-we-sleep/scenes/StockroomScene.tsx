@@ -67,7 +67,7 @@ import {
 import { centeredAt } from "./MemoryTestScene";
 
 /** O cérebro da comparação: cheio, na cor quente das etiquetas, com as dobras num tom abaixo. */
-export const SHOP_BRAIN = { fill: ink.tag, line: ink.tagEdge };
+const SHOP_BRAIN = { fill: ink.tag, line: ink.tagEdge };
 // A cor do brilho: a silhueta clara por que o cérebro passa para virar a loja.
 const BRIGHT = ink.ring;
 
@@ -309,10 +309,10 @@ export const SHOPPERS: readonly PersonColors[] = [
 ];
 
 /** O passo de quem anda, em fração da altura: a passada conta um passo a cada tanto de chão. */
-export const STEP = 0.27;
+const STEP = 0.27;
 
 /** Quanto do caminho já foi andado, de 0 a 1, com `t` de 0 a 1: reta, e uma freada no fim que termina parada. */
-export const walked = (t: number, brake = 0.75): number => {
+const walked = (t: number, brake = 0.75): number => {
   const u = clamp01(t);
   const stop = 1 / (1 - brake ** 2);
   return u < brake ? 2 * stop * (1 - brake) * u : 1 - stop * (1 - u) ** 2;

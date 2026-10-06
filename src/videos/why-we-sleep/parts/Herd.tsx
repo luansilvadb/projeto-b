@@ -60,7 +60,7 @@ const FEET = [
 const DUST = { lasts: 0.3, radius: 26, rise: 30 };
 
 /** A passada de uma elefanta desta largura: quantos pixels do quadro ela avança por volta do ciclo de passos. */
-export const strideOf = (width: number): number =>
+const strideOf = (width: number): number =>
   (STRIDE_LENGTH * width) / ELEPHANT_UNITS;
 
 const ELEPHANT_KEYS = Object.keys(elephant) as (keyof ElephantColors)[];

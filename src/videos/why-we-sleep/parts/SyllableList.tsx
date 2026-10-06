@@ -74,7 +74,7 @@ export const EXPERIMENTERS: readonly [PersonColors, PersonColors] = [
 ];
 
 /** Sílabas inventadas, sem sentido em português: as da lista (simplificação aprovada em art.md). */
-export const SYLLABLES = [
+const SYLLABLES = [
   "zof",
   "bim",
   "tul",

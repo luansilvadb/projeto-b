@@ -7,13 +7,13 @@ import { Tag } from "./Tag";
 import { clamp01 } from "../../../components/timing";
 
 /** A fração da vida que se passa dormindo: um terço. */
-export const SLEPT_SHARE = 1 / 3;
+const SLEPT_SHARE = 1 / 3;
 
 /**
  * Onde a barra fica quando ninguém diz outra coisa: de um lado ao outro do
  * quadro, na altura do peito de quem está em pé no centro (`STANDING`).
  */
-export const LIFE_BAR = { x: 160, y: 640, width: 1600, height: 150 };
+const LIFE_BAR = { x: 160, y: 640, width: 1600, height: 150 };
 /** Quem fica em pé na frente da barra: os pés e a altura. */
 export const STANDING = { x: 960, y: 1040, height: 760 };
 

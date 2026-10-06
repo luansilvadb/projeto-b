@@ -145,7 +145,7 @@ type TrioProps = {
  * faz: a elefanta respira, pisca e abana a orelha, e a água-viva pulsa. A
  * chamada final reusa o trio, já dormindo.
  */
-export const Trio: React.FC<TrioProps> = ({
+const Trio: React.FC<TrioProps> = ({
   layout,
   hue,
   seconds,

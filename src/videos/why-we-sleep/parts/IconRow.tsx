@@ -56,7 +56,7 @@ const NUMBERS: Partial<Record<IconKey, string>> = {
 };
 
 /** Diâmetro de um ícone e distância entre os centros de dois vizinhos, com a fila em escala 1. */
-export const ICON_SIZE = 220;
+const ICON_SIZE = 220;
 export const ICON_PITCH = 280;
 // A pílula do número fica logo abaixo do ícone.
 const PILL_DROP = ICON_SIZE / 2 + 54;
@@ -329,7 +329,7 @@ type MapIconProps = {
 };
 
 /** O matiz de que o fundo vem, e quanto do matiz atual já tomou o lugar. */
-export type HueTint = { readonly from: Hue; readonly progress: number };
+type HueTint = { readonly from: Hue; readonly progress: number };
 
 // A interrogação estoura de 0,7 a 1,08 e assenta, em volta do meio dela.
 const QUESTION = { from: 0.7, overshoot: 1.08, y: 22 };

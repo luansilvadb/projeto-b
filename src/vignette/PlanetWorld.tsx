@@ -132,7 +132,7 @@ export const Globe: React.FC<GlobeProps> = ({ x, y, radius, seconds }) => (
 // Onde o planeta está enquanto é um mundo, e onde assenta quando vira o símbolo do canal.
 const AS_WORLD = { x: 1020, y: 560, radius: 310 };
 /** Onde o símbolo assenta: mais acima quando o nome do canal vai embaixo dele; sozinho, no centro e maior. */
-export const symbolAt = (channel?: string) =>
+const symbolAt = (channel?: string) =>
   channel ? { x: 960, y: 420, radius: 170 } : { x: 960, y: 540, radius: 230 };
 /** Onde a costa marcada no planeta cai no quadro, enquanto ele é um mundo. */
 export const COAST_MARK = [

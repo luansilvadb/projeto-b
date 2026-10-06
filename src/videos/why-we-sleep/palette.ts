@@ -1,10 +1,7 @@
-import type { BrainHalvesColors } from "../../art/BrainHalves";
 import type { CassiopeaColors } from "../../art/Cassiopea";
-import type { DolphinColors } from "../../art/Dolphin";
 import type { AntelopeColors } from "../../art/Antelope";
 import type { ElephantColors } from "../../art/Elephant";
 import type { FishColors } from "../../art/Fish";
-import type { FrigatebirdColors } from "../../art/Frigatebird";
 import type { PersonColors } from "../../art/Person";
 import type { StopwatchColors } from "../../art/Stopwatch";
 import type { StorefrontColors } from "../../art/Storefront";
@@ -193,28 +190,6 @@ export const elephant: ElephantColors = {
   nail: "#D9DCEA",
   eye: "#FFFFFF",
   pupil: "#1B1F3C",
-};
-
-/** O golfinho: dorso azul-aço, barriga clara. Proposta para o capítulo 2. */
-export const dolphin: DolphinColors = {
-  back: "#275AA5",
-  belly: "#DCE9F5",
-  shade: "#0C397F",
-  light: "#5683C8",
-  eye: "#FFFFFF",
-  pupil: "#101A33",
-  mouth: "#2A3F66",
-};
-
-/** A fragata fêmea: corpo preto-azulado, peito branco, bico cinza-azulado. Proposta para o capítulo 2. */
-export const frigatebird: FrigatebirdColors = {
-  body: "#09144D",
-  shade: "#040C38",
-  light: "#1B2D86",
-  breast: "#F2F5FA",
-  beak: "#7084C0",
-  eye: "#FFFFFF",
-  pupil: "#0B0E22",
 };
 
 /** A pesquisadora, figurante das cenas de laboratório: jaleco claro e luvas violeta. */
@@ -562,16 +537,10 @@ export const inside = {
   spark: "#FFDD78",
 } as const;
 
-export const brainHalves: BrainHalvesColors = {
+export const brainHalves = {
   awake: "#5CDDF0",
-  awakeCore: "#EFFAF8",
-  asleep: "#30218E",
   asleepShade: "#110770",
-  fold: "#07045A",
-  eye: "#FFFFFF",
-  pupil: "#1B1F3C",
-  lid: "#C7BEF5",
-};
+} as const;
 
 /** O pedestal vazio "acordado 24 h", o cenário-âncora: o mesmo desenho em todas as voltas. */
 export const pedestal = {

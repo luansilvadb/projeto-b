@@ -12,7 +12,7 @@ import { chalkboard, ink, lab, researcher, signs } from "../palette";
  */
 
 /** Tamanho da prancheta de exame, em escala 1. */
-export const EXAM = { width: 640, height: 820 };
+const EXAM = { width: 640, height: 820 };
 
 const MARGIN = 26;
 // As linhas preenchidas: o comprimento de cada risco de texto, em fração da largura livre.

@@ -25,7 +25,7 @@ export type StorefrontColors = {
 };
 
 /** O que a placa mostra: a lua do sono, ou o bicho dono da loja. */
-export type StorefrontSign =
+type StorefrontSign =
   "moon" | "trunk" | "fin" | "wing" | "bell" | "mouse";
 
 type StorefrontProps = {
@@ -52,9 +52,9 @@ type StorefrontProps = {
 const VIEW = { width: 520, height: 510 };
 const OPENING = { x: -206, y: -306, width: 412, height: 270 };
 /** A vitrine, dentro da abertura: a metade que fecha quando só metade da loja fecha. */
-export const WINDOW = { x: -206, y: -306, width: 252, height: 214 };
+const WINDOW = { x: -206, y: -306, width: 252, height: 214 };
 /** A porta, dentro da abertura: onde o funcionário fica quando ela está aberta. */
-export const DOOR = { x: 74, y: -306, width: 132, height: 270 };
+const DOOR = { x: 74, y: -306, width: 132, height: 270 };
 const STRIPES = 8;
 const SLAT = 18;
 

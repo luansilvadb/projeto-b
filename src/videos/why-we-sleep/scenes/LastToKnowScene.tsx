@@ -22,7 +22,7 @@ const ON_EYES = framing(EYES_SUBJECT, 3.5, [960, 600]);
  * aproxima um pouco, o plano inteiro. É o único trecho do capítulo em que a
  * tensão sobe. `skip-a-night` parte daqui.
  */
-export const STALKED = framing(EYES_SUBJECT, 3.62, [960, 600]);
+const STALKED = framing(EYES_SUBJECT, 3.62, [960, 600]);
 
 // Em quanto tempo a câmera vai do bicho à moita, e os olhos acendem, em segundos.
 const SLIDE_SECONDS = 0.6;

@@ -21,7 +21,7 @@ type SourceSealProps = {
  * o que aquele estudo mediu. É o que diz a quem assiste que o fato não foi
  * inventado.
  */
-export const SourceSeal: React.FC<SourceSealProps> = ({
+const SourceSeal: React.FC<SourceSealProps> = ({
   children,
   steady = false,
 }) => {
