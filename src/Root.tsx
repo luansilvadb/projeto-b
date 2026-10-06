@@ -1,5 +1,6 @@
 import { ElephantSheet } from "./videos/why-we-sleep/ElephantSheet";
 import { JellyfishSheet } from "./videos/why-we-sleep/JellyfishSheet";
+import { PersonSheet } from "./videos/why-we-sleep/PersonSheet";
 import { Composition, Folder, Still } from "remotion";
 import { IdentitySheet } from "./design/IdentitySheet";
 import { MOTION_SAMPLE_SECONDS, MotionSample } from "./design/MotionSample";
@@ -55,6 +56,15 @@ export const RemotionRoot: React.FC = () => {
           height={HEIGHT}
           fps={FPS}
           durationInFrames={3}
+        />
+        {/* A folha da pessoa: as poses em silhueta numa cor só (quadro 0) e pintadas (1). */}
+        <Composition
+          id="pessoa"
+          component={PersonSheet}
+          width={WIDTH}
+          height={HEIGHT}
+          fps={FPS}
+          durationInFrames={2}
         />
         {/* A vinheta do canal sozinha, para ver e ajustar sem o vídeo em volta. */}
         <Composition
