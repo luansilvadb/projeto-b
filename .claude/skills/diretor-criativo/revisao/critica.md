@@ -16,10 +16,7 @@ Com que critérios julgar o rascunho e decidir o que reescrever?
    - O vídeo pede a quem assiste algum gesto além do da chamada?
    - Qual é a tensão do vídeo, em uma frase ("era de esperar X, e no entanto Y")? Ela está no gancho e volta no fim?
    - Para cada fato surpreendente: em que frase anterior o espectador ganhou a expectativa que ele quebra? Se em nenhuma, falta o bloco de fundamento, e o problema é bloqueante.
-   - Cada frase decorre da anterior, ou os fatos estão só enfileirados?
-   - Os números de cada bloco são da mesma medida, sobre os mesmos poucos elementos, e vêm traduzidos?
-   - O bloco mostra a coisa acontecendo, ou conta que alguém a mediu?
-   - Cada bloco fecha com um veredito dito em frase simples?
+   - Responda, por bloco, às perguntas de `explicacao`.
    - Quem assiste está dentro de cada bloco, como "você", como "nós" ou com o corpo dele de medida? Conte os blocos em que ele não aparece: mais de um seguido é texto frio.
    - Há em cada bloco uma frase que só este narrador diria (opinião, humor seco, objeção dita antes do espectador, admissão do que não se sabe)? Marque-a. Bloco sem nenhuma é relatório.
    - Cada fato surpreendente passa no teste de `procedencia`: selo da fonte pedido na nota visual e âncora na fala?

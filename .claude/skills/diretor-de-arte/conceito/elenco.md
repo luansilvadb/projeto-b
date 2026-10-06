@@ -3,7 +3,7 @@ Quem conduz o vídeo na tela, e o que ganha rosto?
 
 ## RESPOSTA
 
-**Por que elenco.** O estilo explica por meio de alguém. Na referência, 71% dos planos lidos têm uma figura com rosto ou olhos, e em 48% um personagem é o assunto do plano. A parcela varia com o tema: de 33% num vídeo sobre árvores a 100% num vídeo sobre o cérebro. Até os esquemas têm gente: dos 66 diagramas lidos, 29 tinham um personagem dentro.
+**Por que elenco.** O estilo explica por meio de alguém. Na referência, 71% dos planos lidos têm uma figura com rosto ou olhos, e em 48% um personagem é o assunto do plano. A parcela varia com o tema: de 33% num vídeo sobre árvores a 100% num vídeo sobre o cérebro.
 
 **Papéis.** Cada figura do vídeo cumpre um:
 

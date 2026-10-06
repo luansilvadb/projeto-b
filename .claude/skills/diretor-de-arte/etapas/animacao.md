@@ -2,7 +2,7 @@
 
 Quinta etapa, depois do animatic aprovado: a 2ª aprovação está em `src/videos/<vídeo>/approvals.md`, sem reabertura; se não estiver, pergunte ao usuário. Aqui cada plano ganha movimento e acabamento. A composição já foi aprovada: mude posição, tamanho ou conteúdo só se a animação pedir, e avise o usuário quando mudar.
 
-O conhecimento de como animar está nas unidades de movimento desta skill, lidas passo a passo pela ordem de injeção de `SKILL.md`: as da Partitura no passo 1, as do Movimento no passo 2 e `critica-movimento` no passo 3; as do passo seguinte, só ao chegar nele. Este arquivo diz onde esse conhecimento vira código neste projeto.
+Este arquivo diz onde o conhecimento das unidades de movimento vira código neste projeto.
 
 Leia a skill `remotion-best-practices` (regras de `remotion-markup`) antes de escrever. O essencial: todo movimento sai de `useCurrentFrame()` com `interpolate()` e `Easing`; transições e animações de CSS não renderizam; prefira as propriedades `scale`, `translate` e `rotate` a `transform`.
 
@@ -12,7 +12,7 @@ Antes do código, a partitura de cada plano (`tempo/sincronia`): o que entra, mu
 
 ## Passo 2: movimento, com os primitivos do projeto
 
-Com a partitura aprovada, quem anima em volume é o subagente `motion-designer`: um disparo por cena, com a pasta do vídeo, a cena, a partitura dela e a lista dos arquivos que ele pode tocar; em paralelo, só com listas que não se cruzam. Um primitivo novo em `src/components/` e a transição que atravessa duas cenas são feitos por você, antes ou depois dos disparos. As regras abaixo valem para ele e para o que você ajustar à mão.
+Com a partitura aprovada, quem anima em volume é o subagente `motion-designer`: um disparo por cena, com a pasta do vídeo, a cena, a partitura dela e a lista dos arquivos que ele pode tocar. Um primitivo novo em `src/components/` e a transição que atravessa duas cenas são feitos por você, antes ou depois dos disparos. As regras abaixo valem para ele e para o que você ajustar à mão.
 
 Cada plano é um componente pequeno dentro de `<Shot range={shots[i]}>` (`src/video/Shot.tsx`): dentro dele `useCurrentFrame()` conta a partir do começo do plano, e `useShotLength()` (do mesmo arquivo) dá a duração dele. Não use `useVideoConfig().durationInFrames` para isso: num plano que divide o palco com o seguinte ele vem esticado pelos quadros da passagem, e o que termina "no fim do plano" pula na troca. As deixas vêm de `cue(scene, "palavra")` (`src/components/timing.ts`, já com a antecipação de alguns quadros), descontando `shots[i].from` quando o plano não é o primeiro da cena. Os limites dos planos já antecipam a palavra de deixa (`CUE_LEAD_FRAMES` em `src/narration/timeline.ts`).
 

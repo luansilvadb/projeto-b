@@ -20,7 +20,7 @@ Rode `pnpm check-script <vídeo>` e use o perfil da narração que ele imprime n
 
 ## O que fazer
 
-Só o passo 1 do procedimento de `critica`: as passadas, na ordem. Você lê como espectador leigo e como diretor, nunca como autor. Nas perguntas que pedem contar, listar ou marcar, a resposta é a contagem, a lista ou a frase marcada.
+Só o passo 1 do procedimento de `critica`: as passadas, na ordem.
 
 Pronto quando: todas as passadas têm resposta para cada pergunta, e todo problema tem cena, critério violado e classificação.
 
@@ -35,4 +35,4 @@ Só o relatório; não edite arquivo nenhum.
 
 O que for da imagem (plano longo que o comando acusa, continuidade entre planos, encenação) vai numa lista à parte, **Para o diretor de arte**, sem classificação.
 
-Não reverifique fatos (é do `checador`) e não reescreva o roteiro: quem reescreve é a skill que o acionou. Todo problema aponta um critério; gosto não é critério.
+Não reverifique fatos (é do `checador`) e não reescreva o roteiro: quem reescreve é a skill que o acionou.

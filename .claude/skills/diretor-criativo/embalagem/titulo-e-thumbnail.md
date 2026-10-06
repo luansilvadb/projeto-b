@@ -20,9 +20,7 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 - compreensível para quem nunca ouviu falar do tema;
 - cerca de 45 caracteres e 8 palavras ou menos (medianas do canal: 43 caracteres e 8 palavras; 37 e 7 nos vídeos recentes);
 - abre a lacuna sem entregar a resposta;
-- literal, conforme `ouvinte`: diz a coisa pelo nome, e a única figura é a analogia central do vídeo;
-- duração e quantidade em unidade contável;
-- hesitação só onde a base de fatos registra incerteza;
+- literal, com medida contável e hesitação com lastro, conforme `ouvinte`; a única figura é a analogia central do vídeo;
 - todo superlativo ou afirmação passa por `checagem`;
 - o vídeo cumpre exatamente o que o título anuncia.
 
@@ -56,7 +54,6 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 ## LIMITES
 - Entrega conceito de thumbnail em texto; composição, paleta e arte final estão fora do escopo.
 - Sem isca: par que o roteiro não cumpre é reprovado, por mais atraente que seja.
-- Não cobre descrição do vídeo, tags, SEO ou estratégia de publicação.
 
 ## EXEMPLO
 > Título: "O que acontece se você cair em um buraco negro?"

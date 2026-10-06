@@ -28,7 +28,7 @@ Pronto quando: cada frase acusada foi ouvida pelo usuário, e corrigida ou regis
 
 ## 3. Conferir de ouvido no estúdio de voz
 
-O modelo só recebe texto, e a entonação muda de uma geração para outra. A escolha automática (`src/narration/takes.ts`) fica com a tomada sem defeito cuja curva do fim serve à frase: a afirmação fecha caindo, a frase colada na seguinte fica em suspenso. Os limites dessa regra ainda não foram calibrados contra o ouvido do usuário, então a narração passa por uma conferência dele, feita para custar uns dez minutos por vídeo.
+O modelo só recebe texto, e a entonação muda de uma geração para outra. Os limites da escolha automática (`src/narration/takes.ts`) ainda não foram calibrados contra o ouvido do usuário, então a narração passa por uma conferência dele, feita para custar uns dez minutos por vídeo.
 
 `pnpm voice <vídeo>` abre uma página em `http://localhost:4747`, com o modelo de voz e o Whisper carregados uma vez (cerca de 7,6 GB dos 8 GB da placa; feche com Ctrl+C). O fluxo do usuário:
 

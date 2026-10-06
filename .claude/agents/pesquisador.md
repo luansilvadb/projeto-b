@@ -19,7 +19,7 @@ Pronto quando: a pergunta recebida tem resposta com fonte aberta e conferida, o 
 
 ## O que devolver
 
-Só o relatório, sem gravar arquivo. Quem escreve `research.md` é a skill que o acionou.
+Só o relatório. Quem escreve `research.md` é a skill que o acionou.
 
 - **Fatos**: uma linha por afirmação, com valor e unidade, a conta quando houver, fonte (instituição ou autor, título, URL), ano e grau de consenso.
 - **Expectativas e comparações**: para cada achado surpreendente, o que um leigo esperaria e o termo de comparação, com fonte.

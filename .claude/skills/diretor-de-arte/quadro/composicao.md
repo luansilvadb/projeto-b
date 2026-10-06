@@ -53,8 +53,6 @@ Teste: veja o quadro em tons de cinza e pequeno, do tamanho de um selo. O assunt
 | De baixo para cima | tamanho, poder |
 | Sobre o ombro | acompanhar quem observa |
 
-**De um plano para o outro.** Varie a escala e o ângulo. Mantenha cada personagem no seu lado do quadro e a direção do movimento.
-
 **Pronto para animar.** O quadro final do plano é a composição completa. O quadro inicial, antes de as coisas entrarem, também precisa se sustentar: reserve o lugar do que entra, sem deixar um buraco evidente.
 
 **Procedimento, plano a plano:**

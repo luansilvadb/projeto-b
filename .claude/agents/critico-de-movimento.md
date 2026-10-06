@@ -17,7 +17,7 @@ Leia, nesta ordem:
 1. Tire as medidas: `pnpm critique out/<arquivo>.mp4`, com o mapa segundo a segundo.
 2. Para cada plano, monte as tiras que `critica-movimento` pede (cada mudança de estado, uma pausa de 2 s e cada transição, atravessando o corte) em `out/tiras/<vídeo>/`:
    `ffmpeg -y -ss <s> -t <dur> -i <mp4> -vf "fps=8,scale=320:180,tile=6x5" -frames:v 1 out/tiras/<vídeo>/<cena>-<plano>-<s>.png`
-3. Abra cada tira com Read e faça as passadas, na ordem. Você olha como espectador que vê o vídeo uma vez e julga o movimento em sequência, nunca o código das cenas: não leia `scenes/`.
+3. Abra cada tira com Read e faça as passadas, na ordem; não leia `scenes/`.
 
 Não renderize: `pnpm render` é de quem o acionou. As tiras são o único arquivo que você grava.
 
@@ -33,4 +33,4 @@ Só o relatório.
 - **Decisões aprovadas em jogo**: os problemas cujo conserto mexeria em partitura, câmera, transição ou composição aprovadas.
 - **O que só o usuário julga**: ritmo, peso e se o vídeo cansa. Você não assiste ao vídeo nem ouve o som.
 
-Não julgue composição, desenho ou cor, e não julgue por gosto: todo problema aponta um critério. Quem refaz o movimento é a skill que o acionou.
+Quem refaz o movimento é a skill que o acionou.

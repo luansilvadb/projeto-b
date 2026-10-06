@@ -2,7 +2,7 @@
 
 Segunda etapa, depois de `pesquisa`. O roteiro é o arquivo `src/videos/<vídeo>/script.json`, a fonte de tudo que vem depois: a narração é gerada a partir dele, cada cena ganha um componente, a duração do vídeo sai da fala e cada plano diz o que aparece na tela. Termina na **primeira aprovação do usuário**, que cobre o texto e os planos juntos.
 
-Ao lado dele fica `src/videos/<vídeo>/script.md`, o registro da direção criativa: as decisões que o usuário aprovou (tese, voz, estrutura em blocos com as cenas de cada um, ficha do fio), sem narração. Ele nasce com o ângulo aprovado e é atualizado a cada decisão, conforme `escrita/formato`.
+Ao lado dele fica `src/videos/<vídeo>/script.md`, o registro das decisões aprovadas (`escrita/formato`).
 
 ## Formato
 
@@ -57,8 +57,7 @@ Além das regras do validador:
 
 - Antes de qualquer frase vêm o desenho (`escrita/explicacao`) e a ficha do fio (`escrita/fio`), na ordem de injeção do `SKILL.md`. O usuário aprova a estrutura, a ficha do fio e uma amostra de um minuto antes do roteiro inteiro.
 - As frases médias e encadeadas de `escrita/narracao` pesam em dobro aqui: o modelo de voz gera uma frase por vez, com pausa entre elas, e texto picotado em frases curtas sai monótono e mal-humorado.
-- A pontuação decide como a frase é falada; a tabela está na etapa `narracao` da skill `producao`. Uma citação se escreve com dois-pontos entre quem falou e o que foi dito.
-- A vírgula é uma pausa: o modelo de voz para em cada uma. Só ponha vírgula onde quem fala pararia. "E mesmo assim emagreciam", não "e, mesmo assim, emagreciam", que sai com duas pausas.
+- A pontuação decide como a frase é falada; a tabela está na etapa `narracao` da skill `producao`.- A vírgula é uma pausa: o modelo de voz para em cada uma. Só ponha vírgula onde quem fala pararia. "E mesmo assim emagreciam", não "e, mesmo assim, emagreciam", que sai com duas pausas.
 - A grafia decide a pronúncia. Se o usuário ouvir uma palavra dita errado, escreva em `narration` como ela deve soar e deixe a grafia correta em `script.md`, na seção de grafias de pronúncia. O modelo lê "mal-humorado" ligando o "l" à vogal ("malumorado"); "mau-humorado" sai certo. O Whisper não acusa esse tipo de erro, só o ouvido.
 - Só afirme o que está em `research.md`. Se faltar um fato, volte à etapa `pesquisa` em vez de completar de memória.
 
@@ -70,17 +69,13 @@ Uma cena é um trecho da narração, de uma a três frases, que o áudio trata c
 
 Um plano é uma composição: o que fica na tela enquanto um trecho da cena é falado. Os planos vêm da skill `diretor-de-arte`: com o texto escrito e antes da aprovação, acione-a na etapa de decupagem (`etapas/decupagem.md`, na pasta dela), que decide elenco e paletas com o usuário, grava a ficha visual em `art.md` e devolve os planos de cada cena. Os campos de `shots` e os valores que o validador aceita estão lá, no passo 2.
 
-A imagem troca a cada oração, não a cada cena.
-
-Mexer nos planos nunca regera áudio. Mexer numa frase, sim: se a encenação pedir outra frase, a hora de mudar é agora.
-
 ## Validar
 
 ```bash
 pnpm check-script <vídeo>
 ```
 
-Confere todas as regras, lista os problemas de uma vez e estima a duração de cada cena, de cada plano e do vídeo. No fim imprime o **perfil da narração** contra os vídeos de referência (tamanho de frase, frases curtas e longas, "você" ou "nós" e conectivos a cada 100 palavras). Medida FORA quer dizer que o texto relata em vez de explicar: volte à unidade `escrita/explicacao`, que manda rever o assunto e a cadeia de causas, e não trocar palavras. Não gere a voz com o perfil fora da faixa sem o usuário saber. O alvo do canal é de 6 a 10 minutos. Ele também aponta os planos longos, tratados na decupagem conforme a unidade `planos` da skill `diretor-de-arte`. Por fim confere `script.md` contra o roteiro e falha se alguma cena estiver fora da tabela de estrutura, em dois blocos ou fora de ordem; sem `script.md`, só avisa. Corrija até passar antes de mostrar ao usuário.
+Confere todas as regras, lista os problemas de uma vez e estima a duração de cada cena, de cada plano e do vídeo. No fim imprime o **perfil da narração** contra os vídeos de referência. Medida FORA: volte à unidade `escrita/explicacao`. Não gere a voz com o perfil fora da faixa sem o usuário saber. O alvo do canal é de 6 a 10 minutos. Ele também aponta os planos longos, tratados na decupagem conforme a unidade `planos` da skill `diretor-de-arte`. Por fim confere `script.md` contra o roteiro e falha se alguma cena estiver fora da tabela de estrutura, em dois blocos ou fora de ordem; sem `script.md`, só avisa. Corrija até passar antes de mostrar ao usuário.
 
 ## Checagem e crítica independentes
 

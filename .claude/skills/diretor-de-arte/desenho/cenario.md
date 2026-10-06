@@ -13,7 +13,7 @@ Como construir o fundo e a profundidade?
 | Cenário | situar: abertura de bloco, lugar citado na fala, vida do protagonista | três a cinco camadas |
 | Padrão | dizer "muitos": células, leitos, multidão | o mesmo elemento repetido enchendo o quadro |
 
-**Fundo liso nunca é uma cor só.** É um degradê de duas ou três paradas com pelo menos um apoio: vinheta nos cantos, manchas grandes e suaves do mesmo matiz, um chão sugerido por uma faixa mais escura, partículas discretas ou raios saindo do centro para dar ênfase. O assunto recebe sombra de contato no mundo e halo por dentro.
+**Fundo liso nunca é uma cor só.** É um degradê de duas ou três paradas com pelo menos um apoio: vinheta nos cantos, manchas grandes e suaves do mesmo matiz, um chão sugerido por uma faixa mais escura, partículas discretas ou raios saindo do centro para dar ênfase.
 
 **Cenário em camadas**, do fundo para a frente:
 

@@ -27,7 +27,7 @@ Pronto quando: toda afirmação factual de toda cena recebida, da fala, do texto
 
 ## O que devolver
 
-Só o relatório; não edite arquivo nenhum.
+Só o relatório.
 
 - **Tabela**, uma linha por afirmação: cena, a frase ou o texto de tela, o item de `research.md` e a fonte, a classificação (*verificada*, *simplificada* ou *não verificada*), as marcas "fonte não aberta" e "fonte não sustenta" quando couberem e, quando não for *verificada*, o que diverge.
 - **Contas refeitas**, com o resultado de cada uma.

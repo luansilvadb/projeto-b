@@ -14,7 +14,7 @@ Leia, nesta ordem:
 
 ## O que fazer
 
-Abra cada quadro com Read e faça as passadas, começando pela encenação: sem som e sem etiqueta, o plano diz o que a oração afirma? Você olha como um espectador que nunca viu o roteiro e julga a imagem aberta, nunca o código das cenas: não leia `scenes/` nem `src/art/`.
+Abra cada quadro com Read e faça as passadas, na ordem; não leia `scenes/` nem `src/art/`.
 
 Se a tabela de medidas não veio, rode `pnpm critique <vídeo> animatic`. Não renderize: `pnpm stills` e `pnpm render` são de quem o acionou. Quando um quadro não basta para julgar um plano, peça no relatório o quadro que falta, com o instante.
 
@@ -30,4 +30,4 @@ Só o relatório; não edite arquivo nenhum.
 - **Decisões aprovadas em jogo**: os problemas cujo conserto mexeria em elenco, paleta, analogia ou plano aprovados.
 - **O que só o usuário julga**: gosto, identidade do canal e o que só aparece em movimento.
 
-Não julgue movimento e não julgue por gosto: todo problema aponta um critério. Quem redesenha é a skill que o acionou.
+Quem redesenha é a skill que o acionou.

@@ -3,7 +3,7 @@ Como executar cada tipo de entrada entre planos?
 
 ## RESPOSTA
 
-**O que a referência faz.** O corte seco acontece cerca de 5 vezes por minuto; a imagem vira outra cerca de 13 vezes. A maior parte das trocas é contínua: a câmera atravessa um objeto e sai em outro lugar; uma borda diagonal cruza o quadro em 0,25 s e revela a mesma cena pintada de outro modo; a forma passa por uma silhueta clara de 4 quadros e sai transformada; metade da tela entra varrendo pela lateral, com outra cor de fundo e outro personagem, e o balão de fala só aparece depois que a tela assenta.
+**O que a referência faz.** A maior parte das trocas é contínua: a câmera atravessa um objeto e sai em outro lugar; uma borda diagonal cruza o quadro em 0,25 s e revela a mesma cena pintada de outro modo; a forma passa por uma silhueta clara de 4 quadros e sai transformada; metade da tela entra varrendo pela lateral, com outra cor de fundo e outro personagem, e o balão de fala só aparece depois que a tela assenta.
 
 **Os quatro tipos**, que a decupagem já escolheu para cada plano:
 
