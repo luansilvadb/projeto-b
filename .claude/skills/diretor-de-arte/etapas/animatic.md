@@ -30,7 +30,7 @@ A duração de cada cena vem da narração: não escreva durações fixas. Use `
 
 ## Compor as cenas
 
-Quem desenha e compõe em volume é o subagente `ilustrador`: um disparo por desenho reutilizável (personagem, objeto, cenário) e, com os desenhos prontos, um por cena. Passe a pasta do vídeo, o que fazer e a lista dos arquivos que ele pode tocar. Primeiro crie você a pasta, o `index.tsx`, a paleta e o registro em `src/Root.tsx`. As regras abaixo valem para ele e para o que você ajustar à mão.
+Quem desenha e compõe em volume é o subagente `ilustrador`: um disparo por desenho reutilizável (personagem, objeto, cenário) e, com os desenhos prontos, um por cena. Cada desenho passa duas vezes por ele: a silhueta numa cor só, que o `critico-de-quadro` julga pela construção de `forma`, e só então a pintura. Passe a pasta do vídeo, o que fazer e a lista dos arquivos que ele pode tocar. Primeiro crie você a pasta, o `index.tsx`, a paleta e o registro em `src/Root.tsx`. As regras abaixo valem para ele e para o que você ajustar à mão.
 
 Siga os planos de cada cena (`shots` em `script.json`). Cada plano é uma composição própria: enquadramento, lugar e paleta. A imagem troca na deixa do plano (`cueFrame(scene, "<cue>")`), e não só no fim da cena. Um plano não é a composição anterior com uma etiqueta a mais.
 

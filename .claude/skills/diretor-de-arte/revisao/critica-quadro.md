@@ -27,20 +27,18 @@ Com que critérios e medidas julgar os quadros?
    - O fundo troca de matiz entre ideias vizinhas?
    - O escuro tem cor? O maior contraste está no ponto focal?
 5. **Desenho**
-   - A silhueta se lê numa cor só?
+   - Construção, julgada na silhueta numa cor só, antes de qualquer outro item desta passada: os cinco itens de `forma` estão lá (a pose conta a cena, junção em curva, membro nasce de massa, o que se repete não é cópia, a linha de cima tem acontecimentos)? Silhueta reprovada é bloqueante, e o resto da passada espera por ela.
    - Cada parte tem base, sombra e, onde cabe, brilho?
    - O assunto tem formas na faixa do orçamento?
-   - Registro e contenção, julgados num recorte em tamanho real (um quarto do quadro, sem reduzir) de cada personagem e do assunto de cada cenário: o desenho está no registro certo de `forma`? Aponte cada forma que, tirada, não faria falta. Registro trocado é bloqueante; três ou mais formas sobrando é relevante. A folha de quadros reduzidos não mostra nada disso.
-   - O personagem bate com a folha de modelo? A expressão serve ao momento?
+   - Registro e contenção, julgados num recorte em tamanho real (um quarto do quadro, sem reduzir) de cada personagem e do assunto de cada cenário: o desenho está no registro certo de `forma`? Aponte cada forma que, tirada, não faria falta em nenhum plano em que a peça aparece: leia esses planos no roteiro antes de apontar. Registro trocado é bloqueante; três ou mais formas sobrando é relevante. A folha de quadros reduzidos não mostra nada disso.
+   - O personagem bate com a folha de modelo? Confira o estado do plano pelo nome que a ficha dá, item por item ("dormindo em pé: olho fechado, tromba caída, cabeça pendida" são três conferências). A expressão serve ao momento?
 6. **Cenário, profundidade e luz**
    - O fundo liso tem degradê, e trama só onde `cenario` a pede? O cenário tem três camadas ou mais?
    - Há sombra de contato no mundo e halo por dentro? A luz vem de um lado só?
    - No que emite luz e por dentro: há centro claro, aros e halo, e a área grande tem superfície viva?
-   - O bloco tem o seu plano de espetáculo? Nele, sem narração e sem etiqueta, o quadro serviria de papel de parede? Se não, é relevante.
 7. **Texto**
    - Um texto novo por vez, cada um preso ao que nomeia?
    - Conte os textos à vista em cada plano. Mais de cinco é relevante.
-   - Meça a maior etiqueta do plano. Acima do tamanho de `texto` é relevante.
    - Alguma frase da narração foi parar na tela?
    - Todo plano que afirma um fato vindo de um estudo tem o selo da fonte no canto?
 8. **Fidelidade**
@@ -58,9 +56,11 @@ As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família ma
 
 **Lado a lado.** Ponha o quadro ao lado de um da referência do mesmo tipo (personagem, dado, cenário) e nomeie três diferenças; os recortes em tamanho real ficam em `out/referencias/0NY2gAftzJE/recortes/` (personagem e mundo) e `out/referencias/hfz4uDuicaQ/recortes/` (o que emite luz), com o vídeo na pasta acima, para tirar outros. A comparação serve para ver o que falta, não para copiar.
 
+**Propostas não reprovam.** O que uma unidade marca como proposta (`SKILL.md`, Base das medidas) ainda não é critério: descumpri-la não é problema, e segui-la mal vai no relatório como observação para o usuário.
+
 **Classificação dos problemas:**
 
-- **Bloqueante**: o plano é um slide; a imagem afirma um fato falso; o personagem está fora do modelo; uma medida que já vale está fora da faixa. Refazer é obrigatório.
+- **Bloqueante**: o plano é um slide; a imagem afirma um fato falso; o personagem está fora do modelo; a silhueta reprova na construção; o registro está trocado; uma medida que já vale está fora da faixa. Refazer é obrigatório.
 - **Relevante**: composição, cor, profundidade ou excesso de texto enfraquecem a leitura. Refazer, salvo custo desproporcional.
 - **Polimento**: ajuste fino de forma, posição ou tom. Aplicar se não mexer em nada aprovado.
 

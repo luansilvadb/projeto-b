@@ -10,6 +10,14 @@ Como construir qualquer coisa em formas chapadas, em SVG?
 - **Preenchimento chapado.** O volume vem de empilhar formas, não de degradê: tom base, uma forma de sombra e, às vezes, uma de brilho. Degradê fica para fundo, céu, água, chão e brilho de luz.
 - **Padrão interno em poucos tons**: manchas, listras e dobras em três ou quatro tons vizinhos, agrupados.
 
+**Construção.** Vem antes de cor, sombra e detalhe, e nenhum acabamento a conserta: num piloto, três rodadas de acabamento sobre uma silhueta fraca deram um desenho carregado e ainda fraco. A silhueta é renderizada numa cor só, na pose que a cena pede, e julgada sozinha:
+
+- **A pose conta a cena** sem cor nem rosto: quem dorme pende, quem espera apoia o peso num lado. Uma figura só parada, de olho fechado, não dorme.
+- **Junção em curva.** Onde duas partes se encontram (tromba e testa, perna e barriga, pescoço e ombro), o contorno de uma vira o da outra, sem quina e sem uma forma encostada na outra.
+- **Membro nasce de uma massa**: a perna de trás sai de uma coxa, a da frente de um ombro, a tromba toma a metade de baixo da face. Membro que sai de um ponto é palito espetado.
+- **O que se repete não é cópia.** As quatro pernas, os dois braços, as folhas: cada um com largura, ângulo ou curva própria; os do lado de lá aparecem de verdade, deslocados mais de meia largura, ou somem.
+- **A linha de cima tem acontecimentos**: sobe, afunda e cai (a testa, a nuca, o ombro, a sela, a garupa). Um arco só é um balão.
+
 **Dois registros.** O desenho muda conforme o que é desenhado, e trocar um pelo outro é o erro mais caro: aro, textura e halo num personagem leem como enfeite gerado.
 
 | | Personagem e mundo | Por dentro, e o que emite luz |
@@ -23,12 +31,12 @@ Como construir qualquer coisa em formas chapadas, em SVG?
 
 Num vídeo de referência com gente, o rosto da protagonista de perto tem umas quinze formas, sem borda de luz, mancha, prega nem aro; os figurantes têm dez e nenhum rosto. No mesmo vídeo, cada célula são quatro formas arredondadas aninhadas, um núcleo com crescente e três pontos, e cem delas enchem o quadro.
 
-**Contenção.** Vale para os dois registros: cada forma precisa de um motivo. Teste, forma a forma, no recorte em tamanho real: tirando esta, o desenho piora? Se não piora, ela sai. Um desenho de doze formas boas parece mais caprichado que um de setenta.
+**Contenção.** Vale para os dois registros: cada forma precisa de um motivo. Teste, forma a forma, no recorte em tamanho real: tirando esta, o desenho piora, neste plano ou em outro em que a peça aparece? Se não piora em nenhum, ela sai. A marca que parece sobrar num plano pode ser o que o olho segue em outro: confira nos planos do roteiro antes de cortar. Um desenho de doze formas boas parece mais caprichado que um de setenta.
 
 **Personagem e mundo:**
 
 - **Um matiz por parte.** De quatro a seis famílias de cor no assunto, todas saturadas: é a cor que separa as partes, não a linha nem o detalhe. O personagem inteiro numa família só lê como desenho sem tinta.
-- **Uma sombra por parte**, na cor que `cor` define: o tom base puxado para o matiz vizinho (pele laranja com sombra laranja-avermelhada, lilás com sombra violeta), nunca o cinza.
+- **Uma sombra por parte**, na cor que `cor` define: o tom base puxado para o matiz vizinho (pele laranja com sombra laranja-avermelhada, lilás com sombra violeta), nunca o cinza. A sombra é uma forma desenhada: larga onde cobre, zerando onde encontra outra parte, com a borda acompanhando o volume. Faixa de largura constante lê como listra.
 - **Curva gorda.** Braço, perna, pescoço e cauda são uma forma só, de lados curvos, que se funde na vizinha sem quina.
 - **Peso.** Membro de figura pequena, de 16 a 24 pixels num quadro de 1080; detalhe (bigode, capim, pálpebra fechada, chifre), de 8 para cima, com ponta redonda.
 - **Um acento.** Um detalhe pequeno de matiz oposto (o brinco, a unha, o olho) perto do ponto focal.
@@ -40,7 +48,7 @@ Num vídeo de referência com gente, o rosto da protagonista de perto tem umas q
 - **Superfície viva.** A área grande é coberta por um espalhamento em três tons vizinhos (anéis, manchas, pontilhado, bolhas que passam da borda), em três tamanhos, mais denso perto da borda, com zonas de descanso.
 - **Unidade repetida.** A célula, a escama, o grão: poucas formas cada, com variação pequena de tamanho, giro e tom, e uma diferente das outras, que é o foco.
 
-**Nos dois:** partícula, estrela e poeira ficam atrás do assunto; objeto de apoio leva dois tons.
+**Nos dois:** estrela e partícula ficam atrás do assunto, e partícula só existe onde `pausa-viva` a admite; objeto de apoio leva dois tons.
 
 **Método, da silhueta ao detalhe:**
 
@@ -69,7 +77,7 @@ Abaixo da faixa, o desenho parece ícone. Acima, o detalhe compete com a leitura
 - **Silhueta orgânica**: `path` com curvas Bézier. Elipse mais retângulos lê como boneco de blocos.
 - **Tubo que afina** (braço, caule, tentáculo, raiz, cauda): uma forma fechada ao longo de uma curva, com a largura diminuindo da base à ponta. Uma função gera todos.
 - **Recorte**: `clipPath` com a silhueta mantém padrão, sombra e brilho dentro do corpo.
-- **Sombra e borda de luz**: a própria silhueta repetida, deslocada alguns pixels e recortada, em outra cor.
+- **Sombra**: uma forma própria, recortada na silhueta da parte com `clipPath`; a silhueta repetida e deslocada dá uma faixa de largura constante, e serve só à borda de luz de quem emite.
 - **Repetição com sorteio fixo**: manchas, folhas, escamas e cachos saem de um laço com sorteio de semente fixa, para o desenho ser o mesmo em todo render. Organize em grupos legíveis (um grande cercado de menores), não em distribuição uniforme.
 - **Brilho de luz**: núcleo quase branco e halo em degradê radial, que sai sem desfoque. Desfoque grande custa caro no render.
 - **Aro**: a mesma forma desenhada de novo por baixo, mais larga (traço grosso da cor do aro, com junção redonda), uma vez por degrau.
@@ -93,7 +101,7 @@ Abaixo da faixa, o desenho parece ícone. Acima, o detalhe compete com a leitura
 **Procedimento:**
 
 1. Levante na pesquisa como a coisa é de verdade e escolha os três traços que a tornam reconhecível.
-2. Desenhe a silhueta e aplique o teste.
+2. Desenhe a silhueta, renderize-a numa cor só, na pose da cena, ao lado da silhueta de uma referência do mesmo tipo, e confira os cinco itens da construção. A silhueta é uma entrega: quem julga não desenhou, e nada é pintado antes de ela passar.
 3. Construa na ordem do método.
 4. Renderize o desenho sozinho, no tamanho em que será usado, sobre o fundo claro e sobre o fundo escuro do vídeo.
 5. Abra a imagem e compare com o orçamento e com a lista de erros. Depois recorte um quarto do quadro em tamanho real (960 por 540, sem reduzir), ponha ao lado de um recorte do mesmo registro (`out/referencias/0NY2gAftzJE/recortes/` para personagem e mundo, `out/referencias/hfz4uDuicaQ/recortes/` para o que emite luz) e faça o teste da contenção: o excesso não aparece no quadro reduzido.

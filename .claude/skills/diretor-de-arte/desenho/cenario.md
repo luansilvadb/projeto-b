@@ -15,7 +15,7 @@ Como construir o fundo e a profundidade?
 
 **Fundo liso nunca é uma cor só**, e quase nunca é mais que um degradê. O plano de personagem leva um degradê de duas paradas e a sombra de contato, e nada mais: o fundo vazio é o que deixa a figura falar. A trama (grade em perspectiva, manchas do mesmo matiz) entra só no palco em que se compara e mede (`dado`) e no mundo por dentro; a vinheta e os raios saindo do centro, só como ênfase de um plano.
 
-**O lugar toma a cor do assunto.** No plano de espetáculo (`planos`), o cenário inteiro é pintado na família de cor de quem emite a luz: nuvens e manchas em três ou quatro tons dessa família, do quase preto ao saturado, com as mais escuras em primeiro plano cobrindo parte do assunto.
+**O lugar toma a cor do assunto** (proposta). No plano de espetáculo (`planos`), o cenário inteiro é pintado na família de cor de quem emite a luz: nuvens e manchas em três ou quatro tons dessa família, do quase preto ao saturado, com as mais escuras em primeiro plano cobrindo parte do assunto.
 
 **Cenário em camadas**, do fundo para a frente:
 

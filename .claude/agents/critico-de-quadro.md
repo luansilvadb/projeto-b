@@ -14,7 +14,7 @@ Leia, nesta ordem:
 
 ## O que fazer
 
-Abra cada quadro com Read e faça as passadas, na ordem; não leia `scenes/` nem `src/art/`. Para o registro e a contenção, recorte o quadro em tamanho real com o ffmpeg (`-vf crop=960:540:x:y`), no scratchpad, e abra o recorte ao lado de um da referência.
+Abra cada quadro com Read e faça as passadas, na ordem; não leia `scenes/` nem `src/art/`. Mesmo numa crítica parcial, leia em `script.json` os planos em que o personagem julgado aparece e a ficha dele em `art.md`: uma forma só sobra se não faz falta em nenhum deles. Para o registro e a contenção, recorte o quadro em tamanho real com o ffmpeg (`-vf crop=960:540:x:y`), no scratchpad, e abra o recorte ao lado de um da referência.
 
 Se a tabela de medidas não veio, rode `pnpm critique <vídeo> animatic`. Não renderize: `pnpm stills` e `pnpm render` são de quem o acionou. Quando um quadro não basta para julgar um plano, peça no relatório o quadro que falta, com o instante.
 

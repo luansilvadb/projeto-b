@@ -9,7 +9,7 @@ Que texto entra na tela, e preso a quê?
 
 | Tipo | O que é | Regras |
 |---|---|---|
-| Etiqueta de nome | sobre fundo liso, o nome em letra clara sobre um sublinhado fino, que dobra e segue até o objeto; sobre cenário detalhado, pílula de cor sólida com texto claro, ligada por linha fina e ponto. A medida do item vai embaixo do nome, menor e mais apagada | uma a três palavras; aparece quando a narração nomeia a coisa pela primeira vez; sai com o plano |
+| Etiqueta de nome | pílula de cor sólida com texto claro, ligada ao objeto por linha fina e ponto. Proposta: sobre fundo liso, o nome em letra clara sobre um sublinhado fino, que dobra e segue até o objeto, com a medida do item embaixo, menor e mais apagada | uma a três palavras; aparece quando a narração nomeia a coisa pela primeira vez; sai com o plano |
 | Número | o valor, preso ao que mede por colchete, régua ou seta, ou escrito num objeto da cena | a forma do número vem de `dado` |
 | Balão | fala ou pensamento curtíssimo de um personagem | até cinco palavras; humor ou reação; nunca informação de que o vídeo depende. O balão da testemunha pode trazer, em até duas linhas, a ressalva que a narração não diz |
 | Onomatopeia | o som da ação desenhado: letras grossas em arco ou inclinadas, de cor quente com contorno, saindo de quem faz o som | uma palavra; só som (riso, mordida, ronco, batida), nunca informação; sai com a ação |
@@ -40,7 +40,7 @@ Que texto entra na tela, e preso a quê?
 - contraste alto entre o texto e a pílula;
 - a cor do número solto depende do que está atrás dele: claro sobre fundo escuro, escuro sobre fundo claro. Uma cor fixa para o vídeo inteiro some na primeira vez que o fundo troca;
 - caixa normal; tudo em maiúsculas só na cartela e na onomatopeia;
-- tamanho: a etiqueta inteira (letra e pílula) tem de 3% a 4% da altura do quadro, e o número em destaque, até 5%. O texto precisa ser lido numa tela de celular; o mínimo é o que o projeto define. Etiqueta maior que isso disputa o quadro com o desenho;
+- tamanho: na referência a pílula tem de 3% a 5% da altura do quadro. O texto precisa ser lido numa tela de celular; o mínimo é o que o projeto define. Proposta: teto de 4% para a etiqueta e de 5% para o número em destaque, porque etiqueta maior disputa o quadro com o desenho;
 - tempo: fica na tela pelo menos um segundo mais um terço de segundo por palavra.
 
 **Forma do conteúdo.** O que a narração soletra a tela escreve como se escreve: "dê-ene-á" vira "DNA". Nome científico vai em itálico, sob o nome comum.
