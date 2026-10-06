@@ -32,6 +32,7 @@ import { Sooner, flash, useCastScale } from "./MaybeBrainScene";
 import { billSway } from "./SkipANightScene";
 import { Drift } from "./SleepDebtScene";
 import { grown } from "../../../components/Pop";
+import { elephantPolish } from "../polish";
 
 // De onde a câmera vem: o fim da aproximação lenta de `jellyfish-debt` 3.
 const LAB_BEFORE = framing([TANK_CENTER, 600], 1.05, [TANK_CENTER, 600]);
@@ -364,6 +365,7 @@ const VacantShot: React.FC<VacantShotProps> = ({ landAt, blinkAt, clock }) => {
               <Elephant
                 width={ELEPHANT.width}
                 colors={elephant}
+                finish={elephantPolish()}
                 lid={1}
                 droop={1}
                 ear={0.1 + 0.06 * wave(seconds, 4.5, 0.2)}

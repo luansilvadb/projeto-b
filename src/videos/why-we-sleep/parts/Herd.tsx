@@ -21,7 +21,7 @@ import {
   elephantFinish,
   elephantNightFinish,
 } from "../palette";
-import { polished } from "../polish";
+import { elephantPolish, polished } from "../polish";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "./Savanna";
 import { Tag } from "./Tag";
 
@@ -304,6 +304,7 @@ export const SleepingElephant: React.FC<SleepingElephantProps> = ({
     <Elephant
       width={width}
       colors={elephant}
+      finish={elephantPolish()}
       lid={1}
       droop={1}
       trunk={0}

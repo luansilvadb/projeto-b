@@ -1,4 +1,6 @@
 import { getInputProps } from "remotion";
+import type { ElephantFinish } from "../../art/Elephant";
+import { elephantFinish } from "./palette";
 
 /**
  * O piloto do polimento: com `--props='{"polish":true}'` no render, as cenas
@@ -7,3 +9,7 @@ import { getInputProps } from "remotion";
  * quando o usuário aprovar a adoção e o acabamento virar o desenho de sempre.
  */
 export const polished = (): boolean => getInputProps().polish === true;
+
+/** O acabamento da elefanta de dia, para as cenas que a desenham fora da manada; sem o piloto, nenhum. */
+export const elephantPolish = (): ElephantFinish | undefined =>
+  polished() ? elephantFinish : undefined;

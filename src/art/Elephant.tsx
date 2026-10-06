@@ -91,6 +91,27 @@ export const STRIDE_LENGTH = 4 * GAIT.reach;
 const REACHING = { tip: [-316, -196], control: [-262, -268] } as const;
 
 /**
+ * Onde está a ponta da tromba, nas unidades do desenho (a origem é o chão sob
+ * a barriga, e ela olha para a esquerda), sem contar a cabeça que pende. A
+ * cena que prende algo à ponta pergunta aqui, em vez de repetir os números: a
+ * tromba do acabamento cai mais a prumo que a do animatic.
+ */
+export const trunkTipAt = (
+  trunk: number,
+  reach: number,
+  finished: boolean,
+): Point =>
+  finished
+    ? [
+        mix(mix(-214, -202, trunk), REACHING.tip[0], reach),
+        mix(-34 - 156 * trunk, REACHING.tip[1], reach),
+      ]
+    : [
+        mix(-262 + 60 * trunk, REACHING.tip[0], reach),
+        mix(-40 - 150 * trunk, REACHING.tip[1], reach),
+      ];
+
+/**
  * A elefanta, de perfil: dorso em corcova, testa alta, orelha grande, tromba
  * em tubo que afina. Os três traços que a identificam de longe são a orelha,
  * a tromba e as pernas em coluna. A base do desenho é o chão sob ela.
@@ -114,10 +135,7 @@ export const Elephant: React.FC<ElephantProps> = ({
   const scale = width / VIEW.width;
   // A cabeça pende para a frente quando dorme; o pescoço é o giro.
   const headTilt = 12 * droop;
-  const trunkTip: Point = [
-    mix(-262 + 60 * trunk, REACHING.tip[0], reach),
-    mix(-40 - 150 * trunk, REACHING.tip[1], reach),
-  ];
+  const trunkTip = trunkTipAt(trunk, reach, false);
   const trunkControl: Point = [
     mix(-246 - 20 * trunk, REACHING.control[0], reach),
     mix(-150 - 60 * trunk, REACHING.control[1], reach),
@@ -187,10 +205,7 @@ export const Elephant: React.FC<ElephantProps> = ({
     // A tromba do acabamento cai quase a prumo, com a barriga da curva para a
     // frente, e nasce larga, tomando a metade de baixo da face: assim ela é a
     // continuação da testa, e não um tubo encostado numa bola.
-    const tip: Point = [
-      mix(mix(-214, -202, trunk), REACHING.tip[0], reach),
-      mix(-34 - 156 * trunk, REACHING.tip[1], reach),
-    ];
+    const tip = trunkTipAt(trunk, reach, true);
     const control: Point = [
       mix(mix(-270, -266, trunk), REACHING.control[0], reach),
       mix(-150 - 60 * trunk, REACHING.control[1], reach),
@@ -240,6 +255,13 @@ export const Elephant: React.FC<ElephantProps> = ({
         </g>
       );
     };
+
+    // A pupila desce com a pálpebra: parada no meio do olho, a pálpebra pesada a
+    // cobria e sobrava uma lasca branca, que lia como raiva e não como sono.
+    const pupilY = Math.min(
+      EYE.y + 8,
+      Math.max(EYE.y + look[1] * 4, EYE.y - 15 + 40 * lid),
+    );
 
     return (
       <svg
@@ -342,7 +364,8 @@ export const Elephant: React.FC<ElephantProps> = ({
             fill={finish.shadow}
           />
 
-          {lid > 0.9 ? (
+          {/* Passando de dois terços, a pálpebra deixava só uma lasca branca, sem pupila: o olho já se desenha fechado. */}
+          {lid > 0.66 ? (
             <path
               d={`M${EYE.x - 13},${EYE.y + 1} Q${EYE.x},${EYE.y + 11} ${EYE.x + 13},${EYE.y + 1}`}
               fill="none"
@@ -360,13 +383,13 @@ export const Elephant: React.FC<ElephantProps> = ({
               />
               <circle
                 cx={EYE.x + look[0] * 4}
-                cy={EYE.y + look[1] * 4}
+                cy={pupilY}
                 r={10}
                 fill={finish.pupil}
               />
               <circle
                 cx={EYE.x + look[0] * 4 - 3}
-                cy={EYE.y + look[1] * 4 - 3}
+                cy={pupilY - 3}
                 r={3.5}
                 fill={finish.eye}
               />

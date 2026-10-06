@@ -6,6 +6,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { trunkTipAt } from "../../../art/Elephant";
 import { Stopwatch } from "../../../art/Stopwatch";
 import {
   Build,
@@ -405,17 +406,12 @@ const RECORD = {
 };
 // A tromba inquieta chega ao ritmo dela aos poucos, saindo do cumprimento.
 const RESTLESS_FRAMES = 12;
-// A ponta da tromba no desenho da elefanta (ver `Elephant`): onde fica com a tromba em 0 e quanto anda até 1.
-const TRUNK_TIP = { x: 262, y: 40, lift: [60, 150] } as const;
-
-/** Onde está a ponta da tromba da matriarca da esquerda, no chão da savana. */
+/** Onde está a ponta da tromba da matriarca da esquerda, no chão da savana. Ela olha para a direita: o desenho vai espelhado. */
 const trunkTip = (trunk: number): readonly [number, number] => {
   const { x, y, width } = MATRIARCHS.left;
   const scale = width / 520;
-  return [
-    x + scale * (TRUNK_TIP.x - TRUNK_TIP.lift[0] * trunk),
-    SAVANNA_GROUND_Y + y - scale * (TRUNK_TIP.y + TRUNK_TIP.lift[1] * trunk),
-  ];
+  const [tipX, tipY] = trunkTipAt(trunk, 0, polished());
+  return [x - scale * tipX, SAVANNA_GROUND_Y + y + scale * tipY];
 };
 
 type CountShotProps = ShotClock & {

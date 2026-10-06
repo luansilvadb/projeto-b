@@ -12,7 +12,14 @@ import { Grain } from "../../../components/Grain";
 import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { ALREADY_SHOWN, cue, linear, mix, ramp, clamp } from "../../../components/timing";
+import {
+  ALREADY_SHOWN,
+  cue,
+  linear,
+  mix,
+  ramp,
+  clamp,
+} from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { markFor } from "../../../video/stage";
@@ -38,6 +45,7 @@ import { LAST_MAP_LEAD, LastMapPrelude } from "./ButWhatScene";
 import { ROW_HUE, rowLife } from "./FivePartsScene";
 import { Grow } from "./SleepDebtScene";
 import { grown } from "../../../components/Pop";
+import { elephantPolish } from "../polish";
 
 /**
  * O resumo dos três jeitos de escapar. No primeiro plano, a fila dos ícones
@@ -308,6 +316,7 @@ const ElephantMemory: React.FC<ElephantMemoryProps> = ({
           <Elephant
             width={410}
             colors={elephant}
+            finish={elephantPolish()}
             lid={1}
             droop={1}
             trunk={0}

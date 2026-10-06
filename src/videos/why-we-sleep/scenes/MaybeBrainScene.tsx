@@ -56,6 +56,7 @@ import { RESEARCHER, TankShot } from "../parts/TankShot";
 import { ROW_HUE, rowLife } from "./FivePartsScene";
 import { JellyfishOpening } from "./JellyfishScene";
 import { Drift, Grow, driftZoom, drifted } from "./SleepDebtScene";
+import { elephantPolish } from "../polish";
 
 /**
  * O elenco de um plano entra antes da marcação de sempre: quem abre o plano
@@ -659,6 +660,7 @@ const SuspectsShot: React.FC<SuspectsShotProps> = ({
               <Elephant
                 width={ELEPHANT.width}
                 colors={elephant}
+                finish={elephantPolish()}
                 lid={blink(seconds, "suspect-elephant")}
                 trunk={0.2 + 0.12 * looking + 0.03 * wave(seconds, 3.7)}
                 ear={0.4 + 0.12 * wave(seconds, 2.9)}

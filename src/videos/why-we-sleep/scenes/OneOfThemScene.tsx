@@ -16,7 +16,15 @@ import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, drop, linear, mix, ramp, clamp, clamp01 } from "../../../components/timing";
+import {
+  cue,
+  drop,
+  linear,
+  mix,
+  ramp,
+  clamp,
+  clamp01,
+} from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { markFor } from "../../../video/stage";
@@ -32,6 +40,7 @@ import {
 import { NEVER, Preluded, flash, useCastScale } from "./MaybeBrainScene";
 import { Drift, Grow } from "./SleepDebtScene";
 import { SHOP_RISE, ShopPrelude } from "./StillUnknownScene";
+import { elephantPolish } from "../polish";
 
 type Hue = keyof typeof idea;
 type Point = readonly [number, number];
@@ -202,6 +211,7 @@ const Trio: React.FC<TrioProps> = ({
         <Elephant
           width={layout.elephant.width}
           colors={elephant}
+          finish={elephantPolish()}
           lid={Math.max(asleep, blink(seconds, "trio-elephant"))}
           droop={beast.droop ?? 0}
           trunk={beast.trunk ?? 0}
@@ -275,7 +285,6 @@ const dressed = (pajamas: number): PersonColors =>
             ),
           ]),
         ) as PersonColors);
-
 
 // A elefanta entra andando pela esquerda: de quão longe vem (de fora do
 // quadro), em quanto tempo, e a partir de que ponto do caminho freia.
