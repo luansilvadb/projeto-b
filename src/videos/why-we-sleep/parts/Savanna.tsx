@@ -25,7 +25,7 @@ type SavannaProps = {
   /** O que mais houver no céu, atrás das colinas: o arco da noite, por exemplo. */
   readonly sky?: React.ReactNode;
   /**
-   * O acabamento do cenário (unidades `cenario` e `forma`), só de noite: a lua
+   * O acabamento do cenário (unidades `cenario` e `forma`): o astro
    * com halo em degraus, as copas num tom que se distingue do céu, o capim de
    * traço gordo e a poeira atrás do assunto. Desligado, a savana é a do
    * animatic aprovado.
@@ -89,9 +89,28 @@ export const Savanna: React.FC<SavannaProps> = ({
     ARC.y - ARC.ry * Math.sin(angle) + (1 - build) * ARC.ry,
   ];
   const isNight = daylight < 0.5;
-  // ponytail: o acabamento só existe de noite, que é o plano do piloto; o dia entra quando ele for aprovado.
-  const lit = finish && isNight;
-  const glow = savannaFinish.night;
+  // O acabamento vale de dia e de noite, e as cores dele passam de um jogo ao
+  // outro com a luz: decidido pela hora, o desenho trocava num quadro quando o sol se punha.
+  const lit = finish;
+  const tint = (
+    pick: (set: {
+      readonly halo: readonly [string, string];
+      readonly tree: string;
+      readonly mound: string;
+    }) => string,
+  ) =>
+    blend(
+      pick(savannaFinish.day),
+      pick(savannaFinish.dusk),
+      pick(savannaFinish.night),
+      daylight,
+    );
+  const glow = {
+    halo: [tint((set) => set.halo[0]), tint((set) => set.halo[1])],
+    tree: tint((set) => set.tree),
+    mound: tint((set) => set.mound),
+    moonCore: savannaFinish.moonCore,
+  };
   const dust = (
     <Layer depth={0.8}>
       {/* Poeira e sementes no ar: o que impede o quadro de congelar. */}
@@ -146,7 +165,7 @@ export const Savanna: React.FC<SavannaProps> = ({
             : null}
           {orb === undefined ? null : lit ? (
             <>
-              {/* O halo em degraus chapados, do céu até a lua: o brilho de quem emite, sem desfoque. */}
+              {/* O halo em degraus chapados, do céu até o astro: o brilho de quem emite, sem desfoque. */}
               {[190, 125].map((radius, step) => (
                 <circle
                   key={radius}
@@ -156,20 +175,24 @@ export const Savanna: React.FC<SavannaProps> = ({
                   fill={glow.halo[step]}
                 />
               ))}
-              <circle cx={orbAt[0]} cy={orbAt[1]} r={72} fill={night.sun} />
-              <circle
-                cx={orbAt[0] - 26}
-                cy={orbAt[1] + 18}
-                r={30}
-                fill={glow.moonCore}
-              />
-              {/* A sombra que faz da lua uma crescente tem a cor do degrau de dentro do halo. */}
-              <circle
-                cx={orbAt[0] + 28}
-                cy={orbAt[1] - 20}
-                r={62}
-                fill={glow.halo[1]}
-              />
+              <circle cx={orbAt[0]} cy={orbAt[1]} r={72} fill={color("sun")} />
+              {isNight ? (
+                <>
+                  <circle
+                    cx={orbAt[0] - 26}
+                    cy={orbAt[1] + 18}
+                    r={30}
+                    fill={glow.moonCore}
+                  />
+                  {/* A sombra que faz da lua uma crescente tem a cor do degrau de dentro do halo. */}
+                  <circle
+                    cx={orbAt[0] + 28}
+                    cy={orbAt[1] - 20}
+                    r={62}
+                    fill={glow.halo[1]}
+                  />
+                </>
+              ) : null}
             </>
           ) : (
             <>
