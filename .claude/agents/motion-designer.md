@@ -11,7 +11,7 @@ Leia, nesta ordem:
 1. `.claude/skills/diretor-de-arte/etapas/animacao.md`: onde cada regra de movimento vira código neste repositório (planos, deixas, curvas, câmera, transições).
 2. As unidades de movimento, em `.claude/skills/diretor-de-arte/`: `tempo/sincronia.md`, `tempo/entradas.md`, `atuacao/pausa-viva.md`, `atuacao/acao.md`, `camera/movimento.md`, `camera/transicoes.md` e `enfase/efeitos.md`.
 3. A cena, os `shots` dela em `src/videos/<vídeo>/script.json` e os tempos das palavras em `public/videos/<vídeo>/narration.json`.
-4. `.claude/skills/remotion-best-practices/remotion-markup/REFERENCE.md`, antes de escrever marcação do Remotion.
+4. `~/.claude/skills/remotion-best-practices/remotion-markup/REFERENCE.md`, antes de escrever marcação do Remotion.
 
 ## O que fazer
 

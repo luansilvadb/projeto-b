@@ -74,7 +74,7 @@ Detalhe que custa tempo: o `pnpm stills` monta o vídeo com `silent`, porque o R
 
 ### Skills e subagentes
 
-O processo de produção mora em `.claude/skills/`, uma skill por dono de entrega: `diretor-criativo` (texto), `diretor-de-arte` (imagem e movimento) e `producao` (som e arquivo final). Em cada uma, `SKILL.md` leva do pedido à etapa, `etapas/<etapa>.md` diz como rodá-la neste repositório e as demais pastas guardam o conhecimento do estilo. As skills dirigem na conversa e acionam os subagentes de `.claude/agents/` para levantar, executar e julgar. Use a skill da etapa em vez de improvisar o procedimento; a skill `creator` é a que cria e poda essas skills. `remotion-best-practices` vem do Remotion: não edite à mão.
+O processo de produção mora em `.claude/skills/`, uma skill por dono de entrega: `diretor-criativo` (texto), `diretor-de-arte` (imagem e movimento) e `producao` (som e arquivo final). Em cada uma, `SKILL.md` leva do pedido à etapa, `etapas/<etapa>.md` diz como rodá-la neste repositório e as demais pastas guardam o conhecimento do estilo. As skills dirigem na conversa e acionam os subagentes de `.claude/agents/` para levantar, executar e julgar. Use a skill da etapa em vez de improvisar o procedimento; a skill `creator` é a que cria e poda essas skills. `remotion-best-practices` vem do Remotion e fica fora do repositório, em `~/.claude/skills/`: não edite à mão.
 
 ## Convenções que mudam o que se escreve
 
