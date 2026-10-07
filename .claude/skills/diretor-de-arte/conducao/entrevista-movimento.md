@@ -24,7 +24,7 @@ Dúvida técnica não é pergunta de produto: havendo critério para experimenta
 - **contraria a intenção de uma decisão já tomada.**
 - **fixa algo para o resto do vídeo que muda a cara dele**: o andamento, a linguagem de câmera, um comportamento que um personagem passa a repetir, um padrão de passagem, um humor recorrente. O que pesa é mudar a identidade, não o número de usos.
 
-**Aprovação fixa a intenção, não a implementação.** Refinar é melhorar a mesma decisão: a câmera que chega um pouco menos perto para não cortar a figura, a curva mais pesada, a entrada menos elástica, uma técnica equivalente. Isso o agente faz, em plano aprovado ou não. Mudar a decisão é alterar o sentido, o tom, o foco, a relação entre planos ou a identidade: isso volta ao usuário. A pergunta, antes de mexer em algo aprovado: a mudança preserva o que foi aprovado ali?
+**A decisão material do usuário fixa a intenção, não a implementação.** Refinar é melhorar a mesma decisão: a câmera que chega um pouco menos perto para não cortar a figura, a curva mais pesada, a entrada menos elástica, uma técnica equivalente. Isso o agente faz, havendo ou não uma decisão material já tomada sobre o plano. Mudar a decisão é alterar o sentido, o tom, o foco, a relação entre planos ou a identidade: isso volta ao usuário. A pergunta, antes de mexer em algo que o usuário decidiu: a mudança preserva o que ele decidiu ali?
 
 **Quanto pesa uma decisão.** A autonomia é maior quanto mais barato for testar e desfazer, e menor quanto mais lugares a escolha afeta e quanto mais ela vira precedente.
 
@@ -43,11 +43,11 @@ Dúvida técnica não é pergunta de produto: havendo critério para experimenta
 
 Uma decisão está resolvida quando a intenção escolhida está clara, a troca foi aceita e há o bastante para agir. Não se continua perguntando sobre o que os princípios resolvem.
 
-**Partitura.** O registro de cada plano em `score.md`: o que acontece, em que palavra e com que intenção, mais o estado atual da execução (os tempos, a entrada, a ênfase). O usuário aprova o que acontece e a intenção; a execução acompanha a melhor solução encontrada, e a partitura é atualizada com ela, em vez de segurar o vídeo numa solução pior por ter sido escrita antes. De uma decisão tomada com o usuário fica o que foi decidido e por que importa. As alternativas recusadas não ficam: o antes é o git.
+**Partitura.** O registro de cada plano em `score.md`: o que acontece, em que palavra e com que intenção, mais o estado atual da execução (os tempos, a entrada, a ênfase). Quando o que acontece ou a intenção é uma decisão material, ela é do usuário; a execução acompanha a melhor solução encontrada, e a partitura é atualizada com ela, em vez de segurar o vídeo numa solução pior por ter sido escrita antes. De uma decisão tomada com o usuário fica o que foi decidido e por que importa. As alternativas recusadas não ficam: o antes é o git.
 
 ## LIMITES
 - Não pedir decisão sobre vídeo que o próprio agente ainda não viu em quadros consecutivos.
-- Quando renderizar, quando acionar o crítico e onde registrar o aceite pertencem a `etapas/animacao`.
+- Quando renderizar e quando acionar o crítico pertencem ao procedimento de animação (`etapas/animacao`).
 
 ## EXEMPLO
 > Vai ao usuário: na cena da loja, a lojista boceja antes de baixar a porta, ou só baixa? As duas funcionam, e contam coisas diferentes.

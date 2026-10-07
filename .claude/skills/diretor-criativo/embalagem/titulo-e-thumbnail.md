@@ -61,7 +61,7 @@ Que expectativa título e thumbnail criam juntos antes do clique, e ela correspo
 - Título que fala com "você": de 17% para 26%.
 - Os recentes tendem à afirmação curta e direta, com um adjetivo forte. O adjetivo entra quando o vídeo pede aquela palavra, e não para soar recente.
 
-**Registro.** A seção `Título e thumbnail` de `script.md` (`formato`) guarda o par atual, e a alternativa só enquanto há uma decisão aberta com o usuário. A aprovação fixa o que a embalagem vende, e não a palavra nem a composição (`entrevista`).
+**Registro.** A seção `Título e thumbnail` de `script.md` (`formato`) guarda o par atual, e a alternativa só enquanto há uma decisão aberta com o usuário. A decisão material do usuário fixa o que a embalagem vende, e não a palavra nem a composição (`entrevista`).
 
 ## DEPENDÊNCIAS
 - angulo: fornece o compromisso de que a embalagem escolhe um aspecto.

@@ -26,7 +26,7 @@ Quando uma escolha visual é do agente, e quando ela muda sentido, identidade ou
 - **faz a imagem afirmar outra coisa.** Dar rosto é afirmar intenção e emoção; um mecanismo que vira personagem, uma abstração que vira objeto, mostrar alguém sofrendo ou só o processo, a composição que troca o protagonista, o símbolo que acrescenta uma emoção.
 - **define quem conduz o vídeo e o que ganha rosto**: o protagonista, a figura que volta, quem representa uma coisa sem corpo, quem carrega o vínculo com o espectador.
 - **define a forma da analogia condutora**, quando o vídeo tem uma: o que representa o quê, e que relação ela afirma (o processo como máquina ou como criatura). Como essa forma é desenhada é do agente.
-- **define o que as cores significam**: os modos do vídeo, a regra de troca entre eles, a cor que passa a querer dizer algo. A aprovação fixa os papéis e o sentido, não o valor de cada cor.
+- **define o que as cores significam**: os modos do vídeo, a regra de troca entre eles, a cor que passa a querer dizer algo. A decisão fixa os papéis e o sentido, não o valor de cada cor.
 - **sacrifica um traço que importa.** Simplificar sem mudar a afirmação é do agente. Quando a simplificação faz sumir algo cientificamente relevante e as duas saídas são defensáveis (a fiel emociona menos, a expressiva arrisca falsear), a troca é explícita e do usuário, e fica registrada como simplificação. A que faz a imagem afirmar algo falso não é levada: é corrigida.
 - **muda o que um bloco mostra como ideia principal**: a sequência de causas, o foco, a relação entre os conceitos.
 - **contraria a intenção de uma decisão já tomada.**
@@ -34,7 +34,7 @@ Quando uma escolha visual é do agente, e quando ela muda sentido, identidade ou
 
 O que a imagem pede ao texto (outra frase, outro fato, outra analogia de conceito, outra estrutura) não se decide aqui: volta ao `diretor-criativo`, com a oração, o que a imagem não consegue mostrar e a frase que resolveria.
 
-**Aprovação fixa o que a imagem diz e quem a figura é, não cada detalhe.** Refinar é melhorar a mesma decisão: corrigir o braço mal ligado de um personagem aprovado, esfriar o fundo para a figura se soltar, tirar a forma que sobra, simplificar o cenário para o tamanho final, redesenhar a engrenagem da analogia em formas mais simples. Isso o agente faz, em desenho aprovado ou não. Mudar a decisão é alterar a espécie ou o traço que distingue a figura, a personificação, o papel, o registro, o sentido de uma cor, o assunto de um plano ou a relação que a analogia afirma: isso volta ao usuário. A pergunta, antes de mexer em algo aprovado: ainda é a mesma decisão?
+**Uma decisão material do usuário fixa o que a imagem diz e quem a figura é, não cada detalhe da execução.** Refinar é melhorar a mesma decisão: corrigir o braço mal ligado de um personagem cuja identidade já foi decidida, esfriar o fundo para a figura se soltar, tirar a forma que sobra, simplificar o cenário para o tamanho final, redesenhar a engrenagem da analogia em formas mais simples. Isso o agente faz, haja ou não uma decisão material sobre o desenho. Mudar a decisão é alterar a espécie ou o traço que distingue a figura, a personificação, o papel, o registro, o sentido de uma cor, o assunto de um plano ou a relação que a analogia afirma: isso volta ao usuário. A pergunta, antes de mexer em algo que o usuário decidiu: ainda é a mesma decisão?
 
 **Quanto pesa uma decisão.** A autonomia é maior quanto mais barato for testar e desfazer, e menor quanto mais planos a escolha atinge e quanto mais ela vira precedente.
 
@@ -55,7 +55,7 @@ Uma decisão está resolvida quando a intenção ou a identidade escolhida está
 
 ## LIMITES
 - Não pedir decisão sobre imagem que o próprio agente ainda não abriu e criticou.
-- Quando renderizar, quando acionar o crítico e onde registrar a aprovação pertencem às etapas (`etapas/decupagem`, `etapas/animatic`).
+- Quando renderizar e quando acionar o crítico pertencem aos procedimentos do trabalho (`etapas/decupagem`, `etapas/animatic`).
 
 ## EXEMPLO
 > Vai ao usuário: a água-viva, que não tem olhos, ganha rosto? As duas funcionam, e afirmam coisas diferentes sobre ela.
@@ -63,4 +63,4 @@ Uma decisão está resolvida quando a intenção ou a identidade escolhida está
 > B) Com dois olhos simples no sino. (quadro renderizado)
 > Recomendo A: o vídeo afirma que ela não tem cérebro, e um rosto sugere o contrário. Custo: o espectador se apega menos a ela.
 >
-> Fica com o agente: a pessoa aprovada tem o braço saindo de um ponto e some quando cruza o tronco. Refazer a junção e dar ao braço uma sombra própria conserta a construção, e ela continua a mesma pessoa. A ficha é atualizada.
+> Fica com o agente: a pessoa, cuja identidade já foi decidida, tem o braço saindo de um ponto e some quando cruza o tronco. Refazer a junção e dar ao braço uma sombra própria conserta a construção, e ela continua a mesma pessoa. A ficha é atualizada.

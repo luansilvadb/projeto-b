@@ -48,7 +48,7 @@ O que uma unidade marca como proposta não reprova (`critica-quadro`).
 - **O trecho calmo.** As faixas vêm de vídeos inteiros: um gancho ou uma explicação pode ficar abaixo de "mais de 10% em movimento" sem que o vídeo inteiro fique. Quando falta movimento grande e isso é defeito, a lente é a de atuação ou a de câmera, não a de repouso.
 - **O mapa segundo a segundo** da fração de quadros quase parados e em movimento grande diz em que plano a medida saiu da faixa, e onde um cansaço sem defeito local se concentra. É por ele que se volta ao vídeo no trecho certo.
 
-**O relatório** tem o tamanho do diagnóstico. Sem defeito, uma linha por trecho julgado, com o motivo onde algo poderia parecer defeito. Cada defeito leva o plano e o instante, o que o espectador perde, a evidência mínima que o mostra, a unidade dona e a gravidade, e diz quando o conserto mexeria numa decisão já aprovada. Medida e mapa acompanham só o problema que eles localizaram. O que ninguém além do usuário julga (ritmo, peso, cansaço) vai dito como tal.
+**O relatório** tem o tamanho do diagnóstico. Sem defeito, uma linha por trecho julgado, com o motivo onde algo poderia parecer defeito. Cada defeito leva o plano e o instante, o que o espectador perde, a evidência mínima que o mostra, a unidade dona e a gravidade, e diz quando o conserto mexeria numa decisão material já tomada pelo usuário. Medida e mapa acompanham só o problema que eles localizaram. O que ninguém além do usuário julga (ritmo, peso, cansaço) vai dito como tal.
 
 ## DEPENDÊNCIAS
 - sincronia, entradas, pausa-viva, acao, movimento, transicoes, efeitos: fornecem os critérios de cada lente.
@@ -61,5 +61,5 @@ O que uma unidade marca como proposta não reprova (`critica-quadro`).
 - O que refazer, o que levar ao usuário e quando renderizar de novo pertencem à etapa (`etapas/animacao`) e a `entrevista-movimento`.
 
 ## EXEMPLO
-> Plano 3, "a lagoa escurece", 1,2 s. O que se perde: o contador "39" aparece inteiro, sem chegada, no quadro em que a borda termina, e lê como erro de montagem. Evidência: tira de 1 s em volta da borda. Dono: `entradas`. Gravidade: bloqueante. Não mexe em nada aprovado.
+> Plano 3, "a lagoa escurece", 1,2 s. O que se perde: o contador "39" aparece inteiro, sem chegada, no quadro em que a borda termina, e lê como erro de montagem. Evidência: tira de 1 s em volta da borda. Dono: `entradas`. Gravidade: bloqueante. Não muda nenhuma decisão material já tomada.
 > Plano 5, "ela para", 2,4 s. A tela quase parada sobe a 60% no mapa. No trecho, a água-viva deixa de pulsar e a lagoa fica imóvel com ela: a parada é o que a fala afirma. Sem defeito.

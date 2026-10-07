@@ -59,7 +59,7 @@ O que não cede é a fronteira: nenhuma afirmação factual entra no roteiro sem
 
 - para testar um ângulo: a premissa, a relação central e o grau de certeza que ele usa;
 - para escrever um bloco: as afirmações daquele bloco;
-- para a 1ª aprovação: toda afirmação factual do roteiro, da fala, da tela e da encenação.
+- para o roteiro inteiro, antes da voz: toda afirmação factual do roteiro, da fala, da tela e da encenação.
 
 "Novas buscas só repetem" é sinal de parada **da pergunta atual**: ela está respondida no grau necessário, com fonte adequada, as condições que importam claras e o contraditório procurado quando a afirmação o pede. Não é meta para o tema.
 

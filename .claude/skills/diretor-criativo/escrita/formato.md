@@ -12,8 +12,8 @@ Que decisões atuais do texto precisam ficar registradas para outra etapa não t
 | `script.json` | o texto que vale: narração, planos e fontes de cada cena (`etapas/roteiro.md`) |
 | `script.md` | os compromissos atuais que não se rederivam dos outros arquivos, o agrupamento das cenas em blocos e os registros operacionais que outra etapa consome |
 | `research.md` | fatos e fontes |
-| `art.md`, `sound.md` | as decisões da imagem e do som, das skills donas |
-| `approvals.md` | o que foi aprovado ou reaberto, e quando |
+| `art.md`, `score.md`, `sound.md` | as decisões atuais da imagem, do movimento e do som, das skills donas |
+| `voice.json` | as tomadas de voz escolhidas de ouvido, da skill `producao` |
 | git | a história: o que a decisão era antes, o que saiu, como se chegou aqui |
 
 `script.md` nunca leva narração: uma frase copiada para cá envelhece na primeira reescrita.
@@ -22,7 +22,7 @@ Que decisões atuais do texto precisam ficar registradas para outra etapa não t
 
 - **Rederivação.** Sai com segurança de `script.json`, `research.md`, `art.md`, `sound.md` ou da unidade dona? Então não se copia. A exceção é a escolha entre alternativas igualmente válidas, que é justamente o que o registro fixa.
 - **Pressão.** O campo faria alguém inventar uma decisão só para não deixá-lo vazio? Então ele não é fixo: aparece quando a decisão existe.
-- **História.** Diz o que vale agora, ou como se chegou aqui? O segundo é do git e de `approvals.md`.
+- **História.** Diz o que vale agora, ou como se chegou aqui? O segundo é do git.
 - **Handoff.** Quem recebe só este arquivo sabe o que não pode mudar sem mudar o vídeo? Se não sabe, falta uma decisão, e não necessariamente um campo.
 
 **Bloco e cena.** As unidades falam em bloco; o roteiro tem cenas. Um bloco é um grupo de cenas vizinhas que produz uma mudança reconhecível no que o ouvinte sabe, espera ou pergunta (`arco`). O assunto visual pode coincidir com ele, e não o define. Bloco também não é capítulo: um capítulo pode ter vários blocos, um bloco pode não ter capítulo, um vídeo pode não ter nenhum.
@@ -89,7 +89,7 @@ As seções seguem a ordem desta tabela, com `Voz` antes de `Estrutura`.
 - Esta unidade não decide conteúdo: se há tensão, mapa, capítulos, analogia, fio ou que fechamento ter é da unidade dona. Aqui só se diz onde fica quando existe.
 - Sem seção genérica de decisões: a decisão global vai no cabeçalho, o ajuste vai na seção da unidade dona, o que é de um bloco vai na linha dele.
 - Sem narração, colunas de tempo, planos, elenco, paleta, mapa de som, inventário de elementos nem lista do que saiu.
-- As aprovações do usuário vão para `approvals.md`, conforme o procedimento da etapa.
+- Sem registro à parte das decisões do usuário: a decisão atual fica no arquivo do dono, e quando uma formulação equivalente melhora, o arquivo acompanha a melhor solução.
 
 ## EXEMPLO
 ```markdown

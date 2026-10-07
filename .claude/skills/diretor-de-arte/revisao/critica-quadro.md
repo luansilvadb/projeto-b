@@ -57,7 +57,7 @@ A mesma falha muda de gravidade conforme a perda. A silhueta que não deixa reco
 
 As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família mais comum) só fazem sentido sobre um trecho com mais de um lugar. Um trecho que se passa num lugar só sai da faixa nelas sem ter defeito: o gancho de um vídeo, inteiro numa lagoa, ficou em 67% de uma família e caiu a 36% quando entraram o laboratório e a rua. Mede-se o trecho inteiro, nunca uma cena isolada.
 
-**O relatório** tem o tamanho do diagnóstico. Sem defeito, uma linha por trecho julgado, com o motivo onde algo poderia parecer defeito. Cada defeito leva o plano, o que o espectador perde, a evidência mínima que o mostra, a unidade dona e a gravidade, e diz quando o conserto mexeria numa decisão já aprovada. Folha, medida e comparação acompanham só o problema que elas localizaram. O que ninguém além do usuário julga (gosto, identidade do canal) vai dito como tal.
+**O relatório** tem o tamanho do diagnóstico. Sem defeito, uma linha por trecho julgado, com o motivo onde algo poderia parecer defeito. Cada defeito leva o plano, o que o espectador perde, a evidência mínima que o mostra, a unidade dona e a gravidade, e diz quando o conserto mexeria numa decisão material já tomada pelo usuário. Folha, medida e comparação acompanham só o problema que elas localizaram. O que ninguém além do usuário julga (gosto, identidade do canal) vai dito como tal.
 
 ## DEPENDÊNCIAS
 - encenacao, planos, dado: fornecem os critérios das lentes de encenação e de decupagem.
@@ -71,5 +71,5 @@ As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família ma
 - O que refazer, o que levar ao usuário e quando renderizar de novo pertencem às etapas (`etapas/decupagem`, `etapas/animatic`) e a `entrevista-imagem`.
 
 ## EXEMPLO
-> Plano 4, cena "three-signs". O que se perde: sem as três etiquetas em fila ao lado da silhueta, o plano não diz nada; os sinais são lidos, e não vistos. Evidência: o quadro com as etiquetas cobertas. Dono: `encenacao`. Gravidade: bloqueante. Não mexe na narração aprovada.
+> Plano 4, cena "three-signs". O que se perde: sem as três etiquetas em fila ao lado da silhueta, o plano não diz nada; os sinais são lidos, e não vistos. Evidência: o quadro com as etiquetas cobertas. Dono: `encenacao`. Gravidade: bloqueante. Não mexe numa decisão material do texto.
 > Trecho do gancho, inteiro na lagoa. O peso da família de cor mais comum sai da faixa, em 67%. Nos quadros, a água-viva e o peixe se soltam do fundo e o olho os acha de primeira: o trecho tem um lugar só. Sem defeito.

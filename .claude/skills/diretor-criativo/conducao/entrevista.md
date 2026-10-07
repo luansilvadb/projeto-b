@@ -35,9 +35,9 @@ Quando o agente explora, escreve, compara e escolhe sozinho, e quando duas alter
 - **fixam algo para o canal**: o que a chamada pede e com que intensidade, um traço de voz que passa a valer para os próximos vídeos.
 - **contrariam a intenção de uma decisão já tomada**, ou mudam o escopo, a profundidade ou o custo dela: a duração que obriga a cortar parte do que foi prometido, a mudança que desfaz o trabalho de arte, de som ou de voz.
 
-**Entrada e padrão não são pergunta.** O tema e o idioma que o usuário pediu são dados. Sem pedido, o idioma é pt-BR, sem nova aprovação a cada vídeo, e não há duração-alvo: a duração decorre do conteúdo, e a faixa do canal é sensor (`etapas/roteiro.md`). Quando a pesquisa só sustenta um recorte forte, ele é recomendado e seguido; a pergunta aparece quando há motivo para sair do padrão ou quando sobram recortes que fazem vídeos diferentes.
+**Entrada e padrão não são pergunta.** O tema e o idioma que o usuário pediu são dados. Sem pedido, o idioma é pt-BR, sem nova pergunta a cada vídeo, e não há duração-alvo: a duração decorre do conteúdo, e a faixa do canal é sensor (`etapas/roteiro.md`). Quando a pesquisa só sustenta um recorte forte, ele é recomendado e seguido; a pergunta aparece quando há motivo para sair do padrão ou quando sobram recortes que fazem vídeos diferentes.
 
-**Aprovação fixa o que o vídeo quer dizer, não a formulação daquele momento.** Ficam fixos a tese, a promessa, o recorte, a identidade do narrador, a experiência que a estrutura dá, a relação afirmada pela analogia que estrutura o vídeo, quando há, e o que a embalagem vende. A frase, a ordem local, a contagem de palavras, a duração exata e o título de trabalho continuam melhorando, aprovados ou não. A pergunta, antes de mexer em algo aprovado: a nova versão preserva o que foi decidido? Se preserva, reescreva, critique e atualize o registro. Se muda, volta ao usuário. Tirar uma frase de efeito que não foi ganha é refino; o bloco que passa a defender outra causa é decisão.
+**A decisão material do usuário fixa o que o vídeo quer dizer, não a formulação daquele momento.** Ficam fixos, quando ele os decidiu, a tese, a promessa, o recorte, a identidade do narrador, a experiência que a estrutura dá, a relação afirmada pela analogia que estrutura o vídeo, quando há, e o que a embalagem vende. A frase, a ordem local, a contagem de palavras, a duração exata e o título de trabalho continuam melhorando, haja ou não uma decisão do usuário sobre o trecho. A pergunta, antes de mexer em algo que ele decidiu: a nova versão preserva o que foi decidido? Se preserva, reescreva, critique e atualize `script.md`. Se muda, volta ao usuário. Tirar uma frase de efeito que não foi ganha é refino; o bloco que passa a defender outra causa é decisão.
 
 **Quanto pesa uma decisão.** A autonomia é maior quanto mais barato for escrever, criticar e desfazer, e menor quanto mais blocos a escolha atinge, quanto mais ela vira precedente e quanto mais trabalho de imagem, som ou voz depende dela. O custo futuro adianta a pergunta, e não dispensa a evidência: antes de uma tese que vai custar oito minutos de roteiro, um gancho ou um bloco escrito mostra se ela se sustenta.
 
@@ -55,7 +55,7 @@ Se a escolha do usuário contradiz uma decisão anterior ou a base de fatos, dig
 
 A conversa termina quando o compromisso está claro, a troca foi escolhida e há o bastante para escrever o próximo trecho. As frases, os blocos e as analogias que faltam, as unidades resolvem.
 
-**Registro.** `script.md` guarda as decisões atuais do vídeo e acompanha a melhor solução: a formulação que melhora sem mudar a decisão atualiza a linha dela. De uma decisão tomada com o usuário fica o compromisso, e o porquê quando ele impede a reescrita seguinte de desfazê-la (`formato`); a data é de `approvals.md`, e a alternativa recusada, do git.
+**Registro.** `script.md` guarda as decisões atuais do vídeo e acompanha a melhor solução: a formulação que melhora sem mudar a decisão atualiza a linha dela. De uma decisão tomada com o usuário fica o compromisso, e o porquê quando ele impede a reescrita seguinte de desfazê-la (`formato`). A história, com a alternativa recusada, é do git.
 
 ## DEPENDÊNCIAS
 - checagem: fornece o limite factual, de que nenhuma alternativa passa.
@@ -64,7 +64,7 @@ A conversa termina quando o compromisso está claro, a troca foi escolhida e há
 
 ## LIMITES
 - Não pedir decisão sobre texto que o próprio agente ainda não escreveu e criticou.
-- Quando escrever, quando acionar os subagentes e onde registrar a aprovação pertencem às etapas (`etapas/pesquisa`, `etapas/roteiro`).
+- Quando escrever e quando acionar os subagentes pertencem aos procedimentos do trabalho (`etapas/pesquisa`, `etapas/roteiro`).
 
 ## EXEMPLO
 > Vai ao usuário: a tese do vídeo sobre buracos negros. As duas se sustentam na pesquisa, e fazem vídeos diferentes.
