@@ -17,7 +17,7 @@ Como desenhar e posar uma figura com rosto?
 - **O figurante não disputa atenção** com o assunto do plano.
 - **O desenho permite as ações que o roteiro pede.** O que varia num personagem para ele atuar é a direção do olhar, a abertura da pálpebra, a boca, a inclinação da cabeça e do tronco, os braços e as pernas; como uma parte se move sozinha é de `forma`.
 
-**Folha de modelo.** É a referência de constância: todo plano é conferido contra ela. Por isso cobre o que o vídeo de fato usa do personagem: as poses e as expressões que o roteiro pede, os estados da ficha, os modos de cor em que ele aparece e o tamanho dele ao lado de outro do elenco.
+**Folha de modelo.** É a referência de constância do personagem que volta: é contra ela que se tira a dúvida de continuidade. Por isso cobre o que o vídeo de fato usa do personagem: as poses e as expressões que o roteiro pede, os estados da ficha, os modos de cor em que ele aparece e o tamanho dele ao lado de outro do elenco.
 
 **Repertório**, lido na referência. São pontos de partida, não medidas:
 

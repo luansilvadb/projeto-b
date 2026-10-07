@@ -31,7 +31,7 @@ O pedido decide a etapa; a etapa decide o que ler.
 | 4. Animatic | narração pronta; criar a pasta e as cenas de um vídeo; storyboard, desenho ou composição | `etapas/animatic.md` |
 | 5. Animação | animatic aprovado; animar, ajustar tempo, transição ou câmera | `etapas/animacao.md` |
 
-Movimento que pede outra composição devolve o plano ao passo Quadro.
+Movimento que pede outra composição, e não só um refino dela, devolve o plano ao passo Quadro.
 
 ## CONDUÇÃO
 
@@ -43,7 +43,7 @@ Se a escolha contradiz algo aprovado, a base de fatos ou um limite medido, diga 
 
 Esta skill dirige, na conversa com o usuário; os especialistas são subagentes em `.claude/agents/`, que leem as unidades desta pasta e devolvem um relatório. O procedimento da etapa diz quando acionar cada um e o que passar.
 
-Quem faz não julga: o `ilustrador` e o `motion-designer` executam, o `critico-de-quadro` e o `critico-de-movimento` julgam o que eles entregaram, e decidir, renderizar o vídeo e falar com o usuário é desta skill. Relatório de subagente não é aprovação.
+Quem produz vê e corrige o próprio trabalho: o `ilustrador` e o `motion-designer` abrem o que fizeram e consertam o que enxergam. A leitura de quem não fez (o `critico-de-quadro`, o `critico-de-movimento`) entra onde a cegueira de quem fez custa caro, nos pontos que a etapa diz, e não a cada ajuste. Decidir, renderizar o vídeo e falar com o usuário é desta skill. Relatório de subagente não é aprovação.
 
 - **Arquivos.** Cada pedido lista os arquivos que o subagente pode tocar. Dois subagentes só rodam em paralelo com listas que não se cruzam; `src/components/`, `src/design/tokens.ts`, `palette.ts`, `index.tsx` e `src/Root.tsx` são alterados aqui, um de cada vez.
 - **Decisão no meio do trabalho.** O subagente não fala com o usuário: o que for decisão (`entrevista-imagem`, `entrevista-movimento`) volta no relatório como pergunta, com as alternativas renderizadas, e é levado ao usuário daqui.
@@ -141,7 +141,7 @@ Para tarefas parciais (redesenhar um personagem, refazer os planos de uma cena, 
 Pare quando:
 
 - os quadros de todos os planos (animatic) ou todos os planos em movimento (animação) estiverem aprovados pelo usuário;
-- a crítica da etapa não encontrar problema bloqueante nem relevante, e cada medida fora da faixa da referência tiver sido conferida no trecho: sem defeito visível, ela segue no relatório e não segura a etapa;
+- não restar defeito bloqueante, nem relevante cujo conserto compense, e cada medida fora da faixa da referência tiver sido conferida no trecho: sem defeito visível, ela segue no relatório e não segura a etapa;
 - uma rodada de crítica não resolver nenhum problema pendente: relate o que ficou em aberto;
 - um desenho ou um movimento não ficar legível depois de três rodadas de render e correção: relate e proponha uma encenação ou uma ação mais simples;
 - o pedido estiver no anti-escopo.

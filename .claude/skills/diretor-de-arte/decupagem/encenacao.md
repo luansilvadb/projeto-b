@@ -9,8 +9,8 @@ Como transformar uma afirmação em algo que acontece na tela?
 
 - **A imagem carrega a afirmação.** Sem o som e sem a etiqueta, dá para dizer o que o trecho afirmou. O que só se entende ouvindo ou lendo é um **slide**: o defeito que esta unidade existe para evitar, e o conserto é qualquer imagem que passe no teste.
 - **O meio vem do que se afirma.** O que é acontecimento se vê acontecer, com alguém que age e algo que muda. O esquema e o dado entram quando a relação entre as partes ou a quantidade é o próprio assunto. Nenhum meio vale mais que outro; texto solto na tela não é meio nenhum.
-- **A analogia tem uma forma só.** A analogia central do roteiro, e todo conceito sem corpo que atravessa o vídeo (um sentimento, uma dívida), ganha uma forma visual simples, aprovada pelo usuário, que volta igual do primeiro ao último uso. Cada retomada mostra uma propriedade nova dela.
-- **A imagem afirma tanto quanto a frase.** Ela não mostra o que a base de fatos não sustenta (um comportamento, uma anatomia, uma proporção). Simplificar a aparência é permitido; inventar um fato visual, não. Quando a simplificação sacrifica precisão, a decisão é do usuário.
+- **A analogia tem uma forma só.** A analogia central do roteiro, e todo conceito sem corpo que atravessa o vídeo (um sentimento, uma dívida), ganha uma forma visual simples, que volta igual do primeiro ao último uso. O que ela representa e a relação que afirma são decisão do usuário; o desenho dela, não (`entrevista-imagem`). Cada retomada mostra uma propriedade nova dela.
+- **A imagem afirma tanto quanto a frase.** Ela não mostra o que a base de fatos não sustenta (um comportamento, uma anatomia, uma proporção). Simplificar a aparência é permitido; inventar um fato visual, não. Quando a simplificação faz sumir um traço que importa, a decisão é do usuário (`entrevista-imagem`).
 
 **Repertório**, para quando a imagem não vem. São famílias de solução, sem ordem entre elas:
 

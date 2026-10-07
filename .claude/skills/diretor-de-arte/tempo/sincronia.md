@@ -10,7 +10,7 @@ Quando cada coisa acontece em relação à narração?
 - **Toda mudança tem causa à vista.** A causa pode ser uma palavra, uma ação anterior, a reação de alguém, algo que entrou no quadro ou uma expectativa armada antes. O que não tem causa não entra, nem para preencher tempo.
 - **A consequência chega com a causa.** O espectador ouve a palavra e vê a coisa, e percebe as duas juntas. Ver antes de ouvir, ou muito depois, só quando é de propósito.
 - **O que é um acontecimento só acontece junto, e o que são dois se distingue.** Os dois olhos abrem juntos, a figura e a sombra reagem juntas, as duas barras de uma comparação crescem juntas. Duas novidades sem relação chegam separadas o bastante para serem duas.
-- **A ordem que carrega sentido se mantém**: o preparo antes da ação, a reação depois dela.
+- **A ordem que carrega sentido se lê**: o preparo vem antes do que ele prepara, e a reação parece consequência do que foi percebido ou esperado, venha ela depois, durante ou um pouco antes.
 - **A imagem acompanha o sentido da fala**, não a gramática dela: muda quando a ideia, a ação ou o foco mudam (`planos`). Uma oração pode sustentar o que já está na tela, e outra pode pedir várias mudanças.
 - **O tempo sem novidade tem função.** Um **buraco** é o trecho em que nada novo acontece: ele serve a uma reação, a uma espera, à leitura, à contemplação. O que mantém a imagem viva dentro dele é de `pausa-viva`. Buraco que não serve a nada é o plano que morreu.
 - **A última informação tem tempo de ser percebida** antes de o plano acabar, a não ser quando ela continua no plano seguinte ou é a própria transição.
