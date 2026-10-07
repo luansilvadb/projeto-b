@@ -9,7 +9,7 @@ Como julgar o movimento, com medidas e quadros consecutivos?
 
 **Como ver.** Movimento não aparece num quadro. Dois instrumentos:
 
-1. **Tira de quadros consecutivos**: um trecho de 2 a 6 s a 8 ou 10 quadros por segundo, lado a lado, com o tempo em cada quadro. É nela que se vê preparo, ação e assentamento, se algo pulou de lugar, se um elemento entrou antes da palavra, se há quadros iguais.
+1. **Tira de quadros consecutivos**: um trecho de 2 a 6 s a 8 ou 10 quadros por segundo, lado a lado, com o tempo em cada quadro. É nela que se vê como uma ação começa, acontece e termina, se algo pulou de lugar, se um elemento entrou antes da palavra, se há quadros iguais.
 2. **O vídeo**, para o que a tira não mostra: ritmo, peso, se o olho acompanha.
 
 **Passadas, nesta ordem.** Um problema de nível superior invalida o polimento dos níveis abaixo.
@@ -28,9 +28,11 @@ Como julgar o movimento, com medidas e quadros consecutivos?
    - Há dois quadros iguais em qualquer tira?
    - Os ciclos estão fora de fase entre vizinhos?
 4. **Atuação**
-   - Cada ação tem preparo, ação e assentamento?
-   - A pose nova se lê em silhueta? A expressão mudou antes, durante e depois?
-   - Quem vê a ação reage, e reage depois dela?
+   - Entende-se o que a figura fez e com que intenção? O preparo, a execução e a consequência estão lá quando fazem falta?
+   - O corpo participa da ação, ou a figura só desliza? A duração e o fim têm a força e o peso que a ação afirma?
+   - Pose e expressão dizem a mesma coisa? A pose nova se lê em silhueta?
+   - A reação parece causada pelo que foi percebido? A criatura atua com o corpo que tem, e a deformação a deixa reconhecível?
+   - Falta de preparo, de sobra ou de assentamento, reação que começa junto, uma expressão só e medida fora da faixa não reprovam por si: reprova o que não se entendeu.
 5. **Câmera e transições**
    - O movimento de câmera tem motivo, e o espectador sabe o que acompanhar até a chegada? A orientação se mantém, e nada do que o plano ainda precisa se perde?
    - Na transição, lê-se de onde se saiu, aonde se chegou e o que liga os dois? O que devia continuar ficou reconhecível, e o que rompeu, rompeu de propósito?
@@ -52,8 +54,8 @@ Além do total, um **mapa segundo a segundo** da fração de quadros quase parad
 
 **Classificação dos problemas:**
 
-- **Bloqueante**: mudança sem causa, ou tão longe dela que a relação se perde; mudança de estado em que a coisa deixa de ser reconhecida, ou troca seca que lê como erro; quadros iguais numa tira; ação sem os três tempos; ponte de transição quebrada. Refazer é obrigatório.
-- **Relevante**: curva dura (uma ação que termina em um décimo do tempo escrito), sobra demais, sequência que lê como um acontecimento só (ou o contrário), câmera que perde o foco, recurso solto. Refazer, salvo custo desproporcional; o que ficar, relatar com o mapa segundo a segundo.
+- **Bloqueante**: mudança sem causa, ou tão longe dela que a relação se perde; mudança de estado em que a coisa deixa de ser reconhecida, ou troca seca que lê como erro; quadros iguais numa tira; ação que não se entende, corpo que contradiz a ação, reação que parece vir antes da causa; ponte de transição quebrada. Refazer é obrigatório.
+- **Relevante**: curva dura (uma ação que termina em um décimo do tempo escrito), sobra demais, ação que se entende mas não tem o peso ou a força que afirma, sequência que lê como um acontecimento só (ou o contrário), câmera que perde o foco, recurso solto. Refazer, salvo custo desproporcional; o que ficar, relatar com o mapa segundo a segundo.
 - **Polimento**: ajuste fino de tempo, amplitude ou fase. Aplicar se não mexer em nada aprovado.
 
 **Procedimento:**

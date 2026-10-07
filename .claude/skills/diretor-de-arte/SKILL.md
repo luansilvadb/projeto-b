@@ -94,7 +94,7 @@ Movimento:
 | `tempo/sincronia` | Quando cada coisa acontece em relação à narração? |
 | `tempo/entradas` | O que faz um elemento aparecer, mudar ou sair de modo que se entenda de onde veio, o que mudou e em que estado terminou? |
 | `atuacao/pausa-viva` | O que se move quando nada acontece? |
-| `atuacao/acao` | Como uma figura ou criatura atua uma ação? |
+| `atuacao/acao` | O que faz uma ação parecer intencional, legível e fisicamente coerente para aquele personagem ou criatura? |
 | `camera/movimento` | Quando e como a câmera se move dentro de um plano? |
 | `camera/transicoes` | O que continua, o que muda e quanto se sente a passagem entre dois planos? |
 | `enfase/efeitos` | Que recursos fazem um movimento ser sentido, e quando usá-los? |
