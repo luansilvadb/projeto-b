@@ -2,24 +2,37 @@
 
 Sexta etapa, depois da animação aceita: o aceite da animação está em `src/videos/<vídeo>/approvals.md`, sem reabertura; se não estiver, pergunte ao usuário. Aqui o vídeo ganha a música e os efeitos. Termina no **aceite do som**.
 
-O que esta etapa decide fica em dois lugares: `src/videos/<vídeo>/sound.md`, o mapa de som com o porquê de cada decisão, e os campos `music` e `sfx` de `script.json`, que as ferramentas leem. Quem roda as ferramentas é a skill `producao` (`etapas/trilha.md` e `etapas/efeitos-sonoros.md`).
+O estado do som fica em dois lugares: `src/videos/<vídeo>/sound.md`, o mapa de som com a intenção e o porquê de cada escolha, e os campos `music` e `sfx` de `script.json`, que as ferramentas leem. Os dois guardam a hipótese atual e mudam juntos; o anterior é o git. Quem roda as ferramentas é a skill `producao` (`etapas/trilha.md` e `etapas/efeitos-sonoros.md`).
 
-## Passo 1: mapa de som
+A única aprovação da etapa é o aceite, no fim. Até lá o som cresce por risco (`entrevista-som`): o mapa só o bastante para gerar, o menor som que responde a maior dúvida, a medida, o conserto, o ouvido do usuário onde a medida não alcança, e então a camada seguinte.
 
-Unidades `entrevista-som`, `leito`, `descricao`, `momentos`, `niveis`, `silencio` e `dose`. Parta dos compromissos antecipados que houver na seção "Arco" de `sound.md` (pode ser uma linha, e o arquivo pode não existir), da duração de cada cena (`public/videos/<vídeo>/narration.json`; `pnpm check-script <vídeo>` a imprime) e da partitura da animação (`score.md`).
+## O ciclo
 
-É aqui, com a voz real e a animação aceita, que se decidem os timbres, o andamento, o tom, os leitos e o silêncio de música: o que o arco antecipado deixou em aberto é completado agora, e a intenção que ele registrou sem realização ganha a sua. A duração que pede mais de um leito é restrição desta etapa (`leito`).
+Parta dos compromissos que houver na seção "Arco" de `sound.md` (pode ser uma linha, e o arquivo pode não existir), da duração de cada cena (`public/videos/<vídeo>/narration.json`; `pnpm check-script <vídeo>` a imprime) e da partitura da animação (`score.md`). O que o arco deixou em aberto é completado aqui, e a intenção que ele registrou sem realização ganha a sua. A duração que pede mais de um leito é restrição desta etapa (`leito`).
 
-Escreva em `sound.md` a seção "Mapa", com uma tabela por camada; `src/videos/why-we-sleep/sound.md` é o modelo:
+1. **A maior incerteza.** O que, se estiver errado, joga fora o resto? Num vídeo novo costuma ser a identidade da trilha: se o leito pertence ao vídeo.
+2. **O mapa que basta.** Escreva em `sound.md` e em `script.json` só o que essa dúvida pede (`leito`, `descricao`). Para a identidade, um leito: `caption`, `bpm` e `keyScale`, sem momentos, níveis nem efeitos; num vídeo que passa de um leito, também a troca (`parts`), que o comando exige.
+3. **O menor som.** Peça à skill `producao` só o que a dúvida pede: a trilha ainda sem momentos (`pnpm music <vídeo>`; o leito sozinho se ouve em `public/videos/<vídeo>/music.wav`), mais tarde uma parte só (`pnpm music <vídeo> <semente> <parte>`, com as outras já geradas) e, quando a dúvida é contra a voz, o som do vídeo.
+4. **Medir e consertar.** O que a medida, o comando ou o `pnpm check-script` acusam é consertado antes de qualquer escuta, sem pergunta.
+5. **O ouvido, se for preciso.** Sobrando uma dúvida que só o ouvido resolve e que pesa sobre o que vem depois, leve o arquivo, o instante e a pergunta. A resposta é evidência: não vai a `approvals.md`.
+6. **Crescer.** O que funcionou fica, e o mapa ganha a camada seguinte: o momento onde a mudança é necessária, os níveis onde a fala ou a imagem pedem, os efeitos (`momentos`, `niveis`, `silencio`, `dose`). Volte ao passo 1.
+
+A ordem das camadas é dependência: os momentos são refeitos sobre o leito, e os efeitos são julgados contra a música. Um efeito ou um silêncio que seja a maior incerteza pode ser testado antes. Duas versões que passam e fazem cenas diferentes vão ao usuário em A e B, em `out/rascunho/`; a escolhida entra no mapa.
+
+Um vídeo simples fecha em um leito gerado, uma escuta curta, as camadas, o conjunto e o aceite. Um difícil dá mais voltas, e cada uma nasce de uma medida ou de uma escuta, e não de uma lista.
+
+## O mapa
+
+A seção "Mapa" de `sound.md` tem uma tabela por camada que já existe, e só com o que está em `script.json`:
 
 - **Leitos**: o trecho, o caráter, a descrição.
 - **Momentos**: as cenas, a duração, o que a música faz e por quê.
 - **Níveis e silêncios**: a cena, o nível, por quê.
 - **Efeitos**: a cena e o plano, a ação, o uso, o nível; e, à parte, os usos que o catálogo não tem.
 
-Leve o mapa ao usuário pela `entrevista-som` e só passe ao roteiro depois do "sim".
+Sem descrição recusada, semente tentada nem alternativa perdida. O que o usuário decidiu leva essa marca na linha, para a iteração seguinte não desfazê-lo. `src/videos/why-we-sleep/sound.md` mostra o formato das tabelas; a história do piloto que ele guarda não é modelo.
 
-## Passo 2: o roteiro
+## O roteiro
 
 Os campos de `script.json`; o tipo e as regras estão em `src/narration/script.ts`, e o `pnpm check-script` recusa o que não fecha.
 
@@ -46,19 +59,19 @@ Os campos de `script.json`; o tipo e as regras estão em `src/narration/script.t
 
 Uma ação cujo instante só existe no código da cena (o fim de uma queda, o terceiro de três jatos) é ancorada no plano ou na palavra mais próxima, com o `offsetMs` medido na partitura.
 
-## Passo 3: sons que faltam
+## Sons que faltam
 
-Unidade `escolha`. Entregue à skill `producao` (`etapas/efeitos-sonoros.md`) a lista dos usos que o catálogo não tem, com a ação de cada um; ela busca, leva os candidatos ao usuário e devolve o `name`. Um efeito sem som no catálogo fica fora de `sfx` e anotado em `sound.md` como pendente.
+Unidade `escolha`. O uso que o catálogo já tem é usado, sem consulta. Entregue à skill `producao` (`etapas/efeitos-sonoros.md`) a lista dos que faltam, com a ação de cada um; ela busca, filtra, leva os candidatos ao ouvido do usuário e devolve o `name`. Um efeito sem som no catálogo fica fora de `sfx` e anotado em `sound.md` como pendente.
 
-## Passo 4: gerar e ouvir
+## O conjunto
 
-Peça à skill `producao` a trilha (`pnpm music <vídeo>`) e o som do vídeo sem a imagem, que sai em minutos:
+Com o mapa realizado, peça à skill `producao` o que falta da trilha e o som do vídeo sem a imagem, que sai em minutos:
 
 ```bash
 pnpm sound <vídeo> out/<vídeo>/<vídeo>.som.mp3
 ```
 
-## Passo 5: revisão (`revisao/critica-som`)
+## Revisão e aceite (`revisao/critica-som`)
 
 ```bash
 pnpm critique out/<vídeo>/<vídeo>.som.mp3 som
@@ -66,6 +79,8 @@ pnpm critique out/<vídeo>/<vídeo>.som.mp3 som
 
 Leia você mesmo a tabela e o mapa segundo a segundo (`out/<vídeo>/som/<vídeo>.som/medidas.json`) e depois acione o subagente `critico-de-som`, que não escreveu o mapa. Passe o nome da pasta do vídeo e o caminho do arquivo de som. Ele julga; quem decide e refaz é você, pelos passos 4 a 6 do procedimento de `critica-som`. Uma faixa ou um momento ruim é gerado de novo sozinho, com outra semente: `pnpm music <vídeo> <semente> <parte>`.
 
-Depois entregue ao usuário o arquivo de som, as medidas e o roteiro de escuta (`entrevista-som`). O "sim" dele é o **aceite do som**: registre-o em `approvals.md` (formato nas convenções do `README.md`), com cada medida fora da faixa que ele aceitou e cada efeito pendente.
+Depois entregue ao usuário o arquivo de som, as medidas e o roteiro de escuta (`entrevista-som`): as dúvidas de ouvido que sobraram e a pergunta do todo. O "sim" dele é o **aceite do som**: registre-o em `approvals.md` (formato nas convenções do `README.md`), com cada medida fora da faixa que ele aceitou e cada efeito pendente.
+
+Depois do aceite, a correção que preserva o que ele aceitou ouvir entra e é medida de novo no trecho, sem outra linha; a que muda a experiência volta a ele (`entrevista-som`).
 
 A próxima etapa é o corte final, na skill `producao`.

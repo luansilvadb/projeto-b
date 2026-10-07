@@ -4,7 +4,7 @@ Parte da sexta etapa, o som. Roda quando a skill `diretor-de-som` entrega a list
 
 ## O catálogo
 
-Fica em `src/audio/sfx.ts`: cada efeito tem o nome do uso (`shutterDown`, e não o id do arquivo), o arquivo e o pico de volume dele. Os arquivos ficam em `public/sfx/freesound/`. Antes de buscar, confira se um uso do catálogo já serve.
+Fica em `src/audio/sfx.ts`: cada efeito tem o nome do uso (`shutterDown`, e não o id do arquivo), o arquivo e o pico de volume dele. Os arquivos ficam em `public/sfx/freesound/`. Antes de buscar, confira se um uso do catálogo já serve: se serve, é ele, sem busca e sem consulta ao usuário. O catálogo existe para que a escuta feita uma vez valha em todo vídeo.
 
 ## Buscar
 
@@ -17,9 +17,9 @@ pnpm sfx <id>                  # baixa para public/sfx/freesound/<id>.ogg e impr
 
 ## Escolher
 
-Descarte pelos critérios de `diretor-de-som/efeitos/escolha`. Mostre ao usuário de dois a quatro links por uso e deixe que ele escolha ouvindo. Só então baixe e cole no catálogo a linha que o comando imprime, trocando `<uso>` pelo nome do uso.
+Descarte pelos critérios de `diretor-de-som/efeitos/escolha`. O agente não ouve os que sobram: mostre ao usuário de dois a quatro links por uso, com a ação ("a porta de enrolar desce"), e pergunte qual soa como ela. A resposta é o ouvido que faltava para dizer que arquivo realiza o uso, e não uma aprovação: não vai a `approvals.md`. Só então baixe e cole no catálogo a linha que o comando imprime, trocando `<uso>` pelo nome do uso.
 
-Pronto quando: todo uso da lista tem um som escolhido pelo usuário, baixado e no catálogo, e `pnpm lint` passa. Devolva à skill `diretor-de-som` o `name` de cada um.
+Pronto quando: todo uso da lista tem um som que o usuário ouviu como a ação, baixado e no catálogo, e `pnpm lint` passa. Devolva à skill `diretor-de-som` o `name` de cada um.
 
 ## Volume
 

@@ -1,6 +1,6 @@
 # Trilha de um vídeo
 
-Parte da sexta etapa, o som. O que a música faz em cada trecho é decisão da skill `diretor-de-som`, escrita no campo `music` do roteiro e aprovada pelo usuário antes de chegar aqui (`diretor-de-som/etapas/som.md`). Aqui se gera, se mede e se entrega para ouvir.
+Parte da sexta etapa, o som. O campo `music` do roteiro é a hipótese atual da skill `diretor-de-som` (`diretor-de-som/etapas/som.md`), e pode chegar parcial: um leito só, sem momentos. Aqui se gera o que foi pedido, se mede e se entrega o arquivo. Ler as medidas, mudar a hipótese e conversar com o usuário sobre o som continua sendo de lá.
 
 ## Gerar
 
@@ -8,11 +8,11 @@ Parte da sexta etapa, o som. O que a música faz em cada trecho é decisão da s
 
 Cada leito é uma geração de até 7 minutos e 20 s, seguida de uma passada por momento (`music.moments`), que refaz só aquele trecho. Conte de quatro a cinco minutos por leito e de três a quatro por momento, e quase toda a memória da máquina (uns 11 GB de RAM, mais a GPU): um vídeo de 9 minutos com seis momentos leva perto de meia hora. Cada momento roda num processo próprio, porque vários seguidos no mesmo derrubam o Python. O comando para antes de gerar se um leito passa do limite, se um momento não cabe (de 3 a 90 s, dentro de um leito só, e não no começo dele) ou se uma cena do roteiro não está na narração.
 
-Um leito ou um momento não agradou: `pnpm music <vídeo> <semente> <parte>` gera só aquela parte de novo, com os momentos dela, e mantém as outras.
+Para gerar uma parte só, ou de novo: `pnpm music <vídeo> <semente> <parte>` gera aquela parte, com os momentos dela, e mantém as outras.
 
 Três coisas que o comando faz e que custaram caro descobrir:
 
-- **Não deixa o modelo reescrever a descrição.** O ACE-Step, por padrão, troca o texto recebido por um dele antes de gerar. Com isso ligado, a direção aprovada nunca chegava à música.
+- **Não deixa o modelo reescrever a descrição.** O ACE-Step, por padrão, troca o texto recebido por um dele antes de gerar. Com isso ligado, a descrição pedida nunca chegava à música.
 - **Pede a faixa com sobra e corta as pontas** (`tools/music/trim.py`). Uma faixa gerada demora de 10 a 35 s para chegar ao corpo e morre nos últimos 5 a 10 s.
 - **Mede o volume de cada faixa depois dos momentos**, porque cada passada baixa a faixa em cerca de 1 dB.
 
@@ -26,9 +26,9 @@ O som do vídeo sem a imagem (voz, trilha e efeitos já mixados) sai em minutos:
 pnpm sound <vídeo> out/<vídeo>/<vídeo>.som.mp3
 ```
 
-Entregue o caminho à skill `diretor-de-som`, que mede (`pnpm critique out/<vídeo>/<vídeo>.som.mp3 som`), aciona o crítico e leva o som ao usuário com o roteiro de escuta.
+Entregue o caminho à skill `diretor-de-som`, que mede (`pnpm critique out/<vídeo>/<vídeo>.som.mp3 som`), aciona o crítico e leva ao usuário o que ainda pede ouvido. Quando o pedido é um leito só, para ouvir a identidade, o arquivo é o próprio `music.wav`.
 
-Pronto quando: `music.json` existe, o som do vídeo foi renderizado e o caminho foi entregue.
+Pronto quando: `music.json` existe, o que foi pedido (a parte ou o som do vídeo) foi gerado e o caminho foi entregue.
 
 ## Mixagem
 

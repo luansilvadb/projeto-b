@@ -17,7 +17,7 @@ Que som serve a uma ação, e como ele entra no catálogo?
 
 **Um som por família.** Varreduras do roteiro, vistos que se desenham, etiquetas que estouram: cada família tem um som só, repetido. Variar o som de uma mesma ação a cada vez soa como acaso.
 
-**Quem escolhe.** O agente descarta pelo nome, pela duração e pela nota e leva ao usuário de dois a quatro candidatos por uso, com o link de cada um: escolher som é de ouvido.
+**Quem ouve.** O agente descarta pelo nome, pela duração e pela nota e leva ao usuário de dois a quatro candidatos por uso, com o link de cada um: só ele ouve qual soa como a ação. É o ouvido que seleciona o arquivo, e não uma aprovação (`entrevista-som`).
 
 **Procedimento:**
 
@@ -26,7 +26,7 @@ Que som serve a uma ação, e como ele entra no catálogo?
 3. Leve ao usuário os que sobram, agrupados por uso.
 4. Baixe os escolhidos e acrescente-os ao catálogo, com o nome do uso e o pico medido.
 
-Pronto quando: todo uso do mapa tem um som no catálogo, escolhido pelo usuário.
+Pronto quando: todo uso do mapa tem um som no catálogo, que o usuário ouviu como a ação.
 
 ## DEPENDÊNCIAS
 - dose: fornece a lista dos usos e o nível de cada um.
