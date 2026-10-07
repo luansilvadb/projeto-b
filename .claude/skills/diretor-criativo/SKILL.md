@@ -17,7 +17,7 @@ Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio exp
 
 - Decupagem em planos, direção de arte, design de personagem e animação: pertencem à skill `diretor-de-arte`, que parte do texto e devolve a esta skill os pedidos de mudança de frase que a imagem fizer.
 - Locução e corte final: pertencem à skill `producao`.
-- Música, silêncios e efeitos sonoros: pertencem à skill `diretor-de-som`, que escreve o arco de som dentro desta etapa e devolve a esta skill os `holdMs` que o som pedir.
+- Música, silêncios e efeitos sonoros: pertencem à skill `diretor-de-som`, acionada dentro desta etapa quando um silêncio precisa ser decidido antes da voz; o `holdMs` de cada cena é gravado por esta skill.
 - Arte final de thumbnail.
 - Descrição do vídeo: é montada na skill `producao` (etapa `publicacao`), com o que foi aprovado aqui. Tags, SEO, calendário e estratégia de canal ficam fora.
 - Outros formatos de roteiro (ficção, publicidade, vídeo curto, vlog).
@@ -96,8 +96,8 @@ Injete o procedimento da etapa, depois `entrevista` e as unidades do passo em cu
 | 2. Roteiro | Conceito | `ouvinte`, `angulo`, `voz`, `titulo-e-thumbnail` (título provisório), `formato` |
 | | Estrutura | `ouvinte`, `moldes`, `arco`, `gancho`, `fechamento`, `chamada` |
 | | Escrita | `ouvinte`, `analogias`, `explicacao`, `fio`, `humor`, `narracao`, `procedencia`, `indicacao-visual` |
-| | Decupagem | skill `diretor-de-arte`, passos Conceito visual e Decupagem |
-| | Arco de som | skill `diretor-de-som`, etapa `arco-de-som` |
+| | Decupagem | skill `diretor-de-arte`, passos Conceito visual e Decupagem: a prova visual quando o risco pede, os planos de todas as cenas antes da voz |
+| | Silêncio | skill `diretor-de-som`, etapa `arco-de-som`, quando um silêncio precisa ser decidido antes da voz |
 | | Revisão | `critica`, `checagem` e a unidade dona de cada defeito apontado |
 | | Embalagem | `ouvinte`, `titulo-e-thumbnail` (o par) |
 
@@ -106,7 +106,7 @@ Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), inje
 ## LIMITES
 
 - Nenhuma afirmação factual sem fonte chega ao roteiro final.
-- Um trabalho começa quando há o bastante para produzir uma evidência válida, e o que o artefato mostra volta à decisão anterior: um gancho tentado pode mostrar que o ângulo não tem tensão; uma amostra de narração, que a estrutura está montada demais; a decupagem, que a frase não se encena. O que tranca são as dependências reais: o fato só entra no texto depois de estar em `research.md`, a voz só é gerada depois da 1ª aprovação, e mudar o que o usuário já decidiu volta a ele (`entrevista`). Onde uma unidade ainda põe uma aprovação antes de qualquer frase, vale este limite.
+- Um trabalho começa quando há o bastante para produzir uma evidência válida, e o que o artefato mostra volta à decisão anterior: um gancho tentado pode mostrar que o ângulo não tem tensão; uma amostra de narração, que a estrutura está montada demais; a decupagem, que a frase não se encena. O que tranca são as dependências reais: o fato só entra no texto depois de estar em `research.md`, toda cena tem planos antes da voz, a voz só é gerada depois da 1ª aprovação, e mudar o que o usuário já decidiu volta a ele (`entrevista`). Onde uma unidade ainda põe uma aprovação antes de qualquer frase, vale este limite.
 - Das referências usa-se o mecanismo (padrão, molde, movimento); as frases, os exemplos, as metáforas e os bordões ficam com elas.
 - O exemplo de uma unidade é exemplo de forma: cada afirmação dele precisa estar na base de fatos antes de entrar num roteiro.
 
@@ -114,9 +114,9 @@ Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), inje
 
 Pare quando:
 
-- o roteiro e o par título/thumbnail estiverem aprovados pelo usuário, com a 1ª aprovação registrada em `approvals.md`;
+- a 1ª aprovação estiver registrada em `approvals.md`: ela libera a voz e fixa o que o vídeo diz e o que a embalagem vende, e não a redação, a composição nem a execução dos planos (`etapas/roteiro.md`);
 - não restar problema bloqueante, e a correção dos relevantes que sobraram custar mais do que devolve: relate-os;
-- uma rodada de revisão não resolver nenhum problema pendente nem melhorar o texto: relate o que ficou em aberto;
+- uma correção não resolver nenhum problema pendente nem melhorar o texto: relate o que ficou em aberto;
 - a pesquisa não sustentar nenhum ângulo honesto para o tema: relate e proponha redelimitar o tema;
 - o pedido estiver no anti-escopo.
 

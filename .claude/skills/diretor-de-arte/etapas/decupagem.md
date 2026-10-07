@@ -1,6 +1,6 @@
 # Decupagem de um vídeo
 
-Acontece dentro da etapa de roteiro, acionada pela skill `diretor-criativo` com o texto escrito e ainda não aprovado. Aqui se descobre uma direção visual para o vídeo e se deixa o bastante para o animatic começar: a ficha visual, `src/videos/<vídeo>/art.md`, e os planos de cada cena, o campo `shots` de `src/videos/<vídeo>/script.json`.
+Acontece dentro da etapa de roteiro, acionada pela skill `diretor-criativo` de dois modos: com um trecho, antes do roteiro inteiro, para a prova do passo 1, quando o texto depende de uma imagem incerta; e com o texto completo e ainda não aprovado, quando todas as cenas recebem `shots`, que o roteiro precisa ter para a voz ser gerada. Aqui se descobre uma direção visual para o vídeo e se deixa o bastante para o animatic começar: a ficha visual, `src/videos/<vídeo>/art.md`, e os planos de cada cena, o campo `shots` de `src/videos/<vídeo>/script.json`.
 
 É a única etapa em que a imagem ainda pode pedir outra frase sem custo: a narração não foi gravada. Mexer nos planos nunca regera áudio; mexer numa frase, depois da narração, sim.
 

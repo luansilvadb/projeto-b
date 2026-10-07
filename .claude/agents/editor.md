@@ -1,6 +1,6 @@
 ---
 name: editor
-description: "Editor de texto de um vídeo do canal: lê o roteiro, ou um trecho dele, como quem ouve uma vez, e devolve o que o ouvinte perde, com causa, evidência, unidade dona e gravidade, ou diz que não há defeito. Acionado pela skill diretor-criativo sobre uma amostra, antes da primeira aprovação e depois de cada rodada de reescrita."
+description: "Editor de texto de um vídeo do canal: lê o roteiro, ou um trecho dele, como quem ouve uma vez, e devolve o que o ouvinte perde, com causa, evidência, unidade dona e gravidade, ou diz que não há defeito. Acionado pela skill diretor-criativo sobre um trecho em que há dúvida de entendimento ou de continuidade, sobre o roteiro inteiro antes da primeira aprovação e sobre as cenas que uma reescrita de estrutura afetou."
 tools: Read, Grep, Glob, Bash
 ---
 
