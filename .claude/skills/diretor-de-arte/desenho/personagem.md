@@ -37,6 +37,7 @@ No bicho real, o olho fica onde fica de verdade, com anel, pupila e brilho; a ex
 
 **Pose.** O corpo diz a ação antes do rosto:
 
+- **A pose conta a cena** sem cor nem rosto: quem dorme pende, quem espera apoia o peso num lado. Uma figura só parada, de olho fechado, não dorme. O corpo e o rosto dizem a mesma coisa, e o corpo se inclina inteiro, dos pés à cabeça: o tronco dobrado sobre pernas a prumo, com o rosto descansado, lê como coluna quebrada. Uma inclinação mora num lugar só, no desenho ou na cena; nos dois, elas se somam. Vem do piloto da pessoa e da elefanta.
 - **Linha de ação**: uma curva só, dos pés à cabeça. Figura em pé e reta é boneco.
 - **Peso**: apoiado num pé; o quadril e os ombros inclinam em sentidos opostos.
 - **Assimetria**: os dois braços nunca fazem a mesma coisa.

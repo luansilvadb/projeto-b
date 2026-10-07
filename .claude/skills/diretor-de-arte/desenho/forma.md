@@ -7,9 +7,8 @@ Como construir qualquer coisa em formas chapadas, em SVG?
 
 **O que o projeto já provou.** As quatro regras abaixo vieram de defeito nosso, visto em render e corrigido até o usuário aprovar (o piloto da elefanta, da pessoa e do antílope: seis renders e quatro críticas). Têm mais peso que qualquer coisa lida na referência.
 
-**1. Construção antes do acabamento.** Nenhum acabamento conserta a construção: no piloto, três rodadas de acabamento sobre uma silhueta fraca deram um desenho carregado e ainda fraco. Por isso a silhueta é uma entrega: renderizada numa cor só, na pose que a cena pede, julgada por quem não desenhou, e nada é pintado antes de ela passar. Ela parte de como a coisa é de verdade, pelos traços que a tornam reconhecível, e pintada de uma cor só contra o fundo ainda diz o que é. Numa figura viva, cinco coisas separaram o bicho do boneco de blocos:
+**1. Construção antes do acabamento.** Nenhum acabamento conserta a construção: no piloto, três rodadas de acabamento sobre uma silhueta fraca deram um desenho carregado e ainda fraco. A construção se julga na silhueta: numa cor só contra o fundo, na pose que a cena pede (a pose é de `personagem`), ela ainda diz o que é. Ela parte de como a coisa é de verdade, pelos traços que a tornam reconhecível. Numa figura viva, quatro coisas separaram o bicho do boneco de blocos:
 
-- **A pose conta a cena** sem cor nem rosto (`personagem`): quem dorme pende, quem espera apoia o peso num lado. O corpo se inclina inteiro, dos pés à cabeça: o tronco dobrado sobre pernas a prumo lê como coluna quebrada. Uma inclinação mora num lugar só, no desenho ou na cena; nos dois, elas se somam.
 - **Junção em curva.** Onde duas partes se encontram (tromba e testa, perna e barriga, pescoço e ombro), o contorno de uma vira o da outra, sem quina e sem uma forma encostada na outra.
 - **Membro nasce de uma massa**: a perna de trás sai de uma coxa, a da frente de um ombro. Membro que sai de um ponto é palito espetado.
 - **O que se repete não é cópia.** As quatro pernas, os dois braços, as folhas: cada um com largura, ângulo ou curva própria; os do lado de lá aparecem de verdade, deslocados mais de meia largura, ou somem.
@@ -26,18 +25,16 @@ Como construir qualquer coisa em formas chapadas, em SVG?
 
 **O que o repositório e o vídeo exigem:**
 
-- **Espessura mínima.** Nenhum traço ou detalhe com menos de 8 pixels num quadro de 1080 de altura: o fino some na compressão do vídeo e lê como rascunho.
-- **O que se move nasce separado.** O que vai mexer (olho, braço, sino, porta) é um grupo próprio, com o ponto de giro no lugar da articulação e um parâmetro nomeado para o quanto abre, dobra ou contrai.
-- **O mesmo desenho em todo render.** O que se repete por sorteio (manchas, folhas, escamas) usa semente fixa.
-- **Brilho sem desfoque.** O halo é um degradê radial: desfoque grande custa caro no render.
-- **Silhueta em `path`**, com curvas Bézier: elipse mais retângulos lê como boneco de blocos. O tubo que afina (braço, caule, tentáculo, cauda) sai de `taperPath`, em `src/art/shapes.ts`.
-- **Sombra e padrão recortados** na silhueta da parte, com `clipPath`. A silhueta repetida e deslocada não serve de sombra: dá a faixa de largura constante.
+- **O menor detalhe sobrevive ao vídeo.** O traço fino some na compressão e lê como rascunho. Abaixo de 8 pixels num quadro de 1080 de altura, confira num quadro tirado do vídeo renderizado: o PNG do `pnpm stills` não passa pela compressão.
+- **O que se move consegue se mover sozinho.** A parte que vai mexer (olho, braço, sino, porta) gira na articulação e responde a um parâmetro nomeado, sem arrastar o resto.
+- **O desenho é o mesmo em todo quadro e em todo render.** Os quadros são renderizados em paralelo: o que se repete por sorteio (manchas, folhas, escamas) sai de uma semente fixa, ou tremula.
 
 **Pronto quando:**
 
-- a silhueta passou sozinha, antes de qualquer pintura;
-- renderizado sozinho, no tamanho em que será usado, sobre o fundo claro e sobre o fundo escuro do vídeo, o desenho se lê;
-- num recorte de um quarto do quadro em tamanho real, ao lado de um recorte do mesmo registro (`critica-quadro`, Lado a lado), toda forma passa na contenção: o excesso não aparece no quadro reduzido.
+- a silhueta, numa cor só, diz o que é;
+- o desenho se lê sozinho, no tamanho em que será usado, sobre o fundo claro e sobre o fundo escuro do vídeo;
+- o acabamento é o do registro da coisa;
+- num recorte de um quarto do quadro em tamanho real, toda forma passa na contenção: o excesso não aparece no quadro reduzido.
 
 **Sinais de desenho fraco**, além dos que as regras já nomeiam: todas as formas do mesmo tamanho; silhueta simétrica e parada; cor única, sem sombra; degradê dentro de objeto que não emite luz; detalhe fino espalhado por igual, sem grupo nem descanso; estrela ou partícula por cima do assunto; o desenho flutuando, sem sombra de contato nem halo.
 
@@ -55,6 +52,9 @@ Bem abaixo, confira se o desenho virou ícone; acima, confira no recorte se o de
 
 | Problema | Uma saída | De onde vem |
 |---|---|---|
+| A silhueta saiu em blocos | `path` com curvas Bézier no lugar de elipse mais retângulos; o tubo que afina (braço, caule, tentáculo, cauda) já existe em `taperPath`, de `src/art/shapes.ts` | código do projeto |
+| A sombra ou o padrão vazam da parte | `clipPath` com a silhueta da parte. Repetir a silhueta deslocada dá a faixa de largura constante | piloto |
+| O brilho pesa no render | halo em degradê radial; desfoque grande custa caro | código do projeto |
 | O corpo não tem hierarquia | de duas a cinco massas em curvas contínuas, de proporção desigual: uma grande, uma média, uma pequena | referência |
 | A figura pequena some | membro de 16 a 24 pixels num quadro de 1080, com ponta redonda | piloto |
 | O assunto não prende o olho | um acento: um detalhe pequeno de matiz oposto (o brinco, a unha, o olho) perto do ponto focal | referência |

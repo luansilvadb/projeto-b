@@ -27,7 +27,7 @@ Com que critérios e medidas julgar os quadros?
    - O fundo troca de matiz entre ideias vizinhas?
    - O escuro tem cor? O maior contraste está no ponto focal?
 5. **Desenho**
-   - Construção, julgada na silhueta numa cor só, antes de qualquer outro item desta passada: os cinco itens de `forma` estão lá (a pose conta a cena, junção em curva, membro nasce de massa, o que se repete não é cópia, a linha de cima tem acontecimentos)? Silhueta reprovada é bloqueante, e o resto da passada espera por ela.
+   - Construção, julgada na silhueta numa cor só, antes de qualquer outro item desta passada: os quatro itens de `forma` estão lá (junção em curva, membro nasce de massa, o que se repete não é cópia, a linha de cima tem acontecimentos), e a pose conta a cena, como `personagem` pede? Silhueta reprovada é bloqueante, e o resto da passada espera por ela.
    - O volume se lê, e a sombra é uma forma desenhada, que acompanha o volume?
    - O orçamento de `forma` acusa ícone ou excesso? Confira no recorte antes de apontar.
    - Registro e contenção, julgados num recorte em tamanho real (um quarto do quadro, sem reduzir) de cada personagem e do assunto de cada cenário: o desenho está no registro certo de `forma`? Aponte cada forma que, tirada, não faria falta em nenhum plano em que a peça aparece: leia esses planos no roteiro antes de apontar. Registro trocado é bloqueante; forma sobrando é relevante. A folha de quadros reduzidos não mostra nada disso.

@@ -17,7 +17,7 @@ Leia, nesta ordem:
 
 Desenhe ou componha só o que foi pedido, só nos arquivos da lista. O que está aprovado (elenco, paleta, encenação, escala e entrada de cada plano) é dado: você executa. Da referência usa-se o método; nenhum desenho de outro canal é copiado.
 
-Um desenho novo ou refeito começa pela silhueta: renderize-a numa cor só, na pose da cena, devolva o quadro e pare; a cor, a sombra e o detalhe ficam para o disparo seguinte, depois de a silhueta passar pela crítica. Todo desenho é julgado pela imagem: renderize o quadro (`pnpm stills <vídeo> <quadros>`), abra com Read, corrija e repita. Rode `pnpm lint` antes de entregar. Entradas simples pela deixa bastam; movimento é de outra etapa.
+Um desenho novo ou refeito chega em dois disparos (`etapas/animatic.md`, Compor as cenas): no da silhueta, renderize-a numa cor só, na pose da cena, devolva o quadro e pare. Todo desenho é julgado pela imagem: renderize o quadro (`pnpm stills <vídeo> <quadros>`), abra com Read, corrija e repita. Rode `pnpm lint` antes de entregar. Entradas simples pela deixa bastam; movimento é de outra etapa.
 
 Pronto quando: cada plano ou desenho pedido tem um quadro renderizado que você abriu, que diz sem etiqueta o que a encenação pede, que bate com a folha de modelo, e `pnpm lint` passa. Depois de três rodadas de render e correção sem o desenho ficar legível, pare e relate.
 
