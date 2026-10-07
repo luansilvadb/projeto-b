@@ -60,7 +60,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, campos, 
 | `conducao/entrevista-som` | No som, o que o agente resolve sozinho, o que pede só o ouvido do usuário e o que é decisão dele, e como cada coisa chega a quem ouve? |
 | `trilha/leito` | O que faz a trilha soar como a música de um vídeo só, e em quantas partes ela é gerada? |
 | `trilha/descricao` | Como pedir ao gerador a música de uma parte ou de um momento, e o que a descrição prova? |
-| `trilha/momentos` | Onde a música muda de caráter dentro do leito, e quanto? |
+| `trilha/momentos` | Quando uma região da parte merece um repaint local, e onde ele começa e termina? |
 | `mixagem/niveis` | A que distância da voz a música fica em cada trecho? |
 | `mixagem/silencio` | Quando a música some, e quando o roteiro abre espaço para ela? |
 | `efeitos/dose` | Que ações da imagem ganham som, quantas, e a que volume? |

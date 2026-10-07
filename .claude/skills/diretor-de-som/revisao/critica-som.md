@@ -36,7 +36,7 @@ O que as medidas não veem: a contagem de efeitos tem um piso de 2 por minuto, d
    - Cada trecho sem música do mapa segundo a segundo é um silêncio que o mapa de som pede?
    - A música está no corpo dos dois lados de cada troca de leito, ou morre antes e demora a chegar depois?
 3. **O mapa cumprido**
-   - Cada momento começa e termina na cena que o mapa diz? Há uma mudança de seção perto de cada borda?
+   - Cada momento começa e termina na cena que o mapa diz? O trecho mostra nas medidas a mudança que o mapa tentou produzir (seção, densidade, timbre, volume)? A falta dela pode ser um momento que não se realizou, ou uma mudança sutil que a medida não vê: se a medida não basta, marque o instante para a escuta (`momentos`).
    - Há salto de volume de mais de 6 dB em alguma borda de momento?
    - Cada nível que não é `leito` aparece na distância à voz daquele trecho?
 4. **Nível**
@@ -46,12 +46,12 @@ O que as medidas não veem: a contagem de efeitos tem um piso de 2 por minuto, d
    - Cada efeito do roteiro aparece no mapa segundo a segundo, no instante dele? Algum caiu num trecho quieto?
    - Há ação de impacto na partitura da animação sem efeito no roteiro?
 6. **Causa**
-   - Cada momento, silêncio e mudança de nível tem o porquê escrito no mapa de som, e o porquê está no roteiro?
+   - Cada momento, silêncio e mudança de nível tem o porquê escrito no mapa de som, e o porquê é um trabalho que se percebe no vídeo (narração, imagem, ritmo, estrutura)?
 
 **Classificação:**
 
 - **Bloqueante**: o usuário ouve a trilha como músicas desconexas, sem que a ruptura seja deliberada (a medida aponta a fronteira, e quem diz é o ouvido); há buraco que o mapa não pede; a música cobre a fala.
-- **Relevante**: medida fora da faixa sem decisão registrada; momento ou nível que não aparece no som; salto numa borda; capítulo sem efeitos.
+- **Relevante**: medida fora da faixa sem decisão registrada; momento ou nível que não aparece no som, nem na medida nem na escuta; salto numa borda; capítulo sem efeitos.
 - **Polimento**: o resto.
 
 **Procedimento:**
