@@ -15,9 +15,9 @@ Com que critérios e medidas julgar os quadros?
    - Os diagramas passam de 37% dos planos? Na referência vão de 3% a 37%.
    - Há uma figura com olhos na parcela de planos que o tema pede?
 2. **Decupagem**
-   - Cada oração tem a sua imagem? Algum plano passa do limite de duração de `planos` sem mudar?
-   - As escalas se alternam? O bloco situa, age e detalha?
-   - As entradas foram escolhidas, ou é tudo corte?
+   - A imagem responde quando a ideia, a ação ou o foco mudam, e toda troca de composição tem um motivo na fala?
+   - A escala serve ao momento, a entrada diz quanto mudou, e o que volta, volta igual?
+   - Cada sinal de falha de `planos` que aparece tem resposta no trecho?
 3. **Composição**
    - Há um ponto focal, e só um?
    - O assunto tem o tamanho que a escala pede?
@@ -50,9 +50,9 @@ Com que critérios e medidas julgar os quadros?
 - desde os quadros parados: área do quadro com desenho, cores por quadro, trocas da cor dominante por minuto e peso da família de cor mais comum;
 - só depois de animar: tempo com a tela quase parada, tempo com mais de 10% do quadro em movimento e tempo até 40% do quadro ser outro.
 
-As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família mais comum) só fazem sentido sobre um trecho com mais de um lugar. Um trecho que se passa num lugar só reprova nelas sem ter defeito: o gancho de um vídeo, inteiro numa lagoa, ficou em 67% de uma família e caiu a 36% quando entraram o laboratório e a rua. Meça o trecho de teste inteiro, nunca uma cena isolada.
+As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família mais comum) só fazem sentido sobre um trecho com mais de um lugar. Um trecho que se passa num lugar só sai da faixa nelas sem ter defeito: o gancho de um vídeo, inteiro numa lagoa, ficou em 67% de uma família e caiu a 36% quando entraram o laboratório e a rua. Meça o trecho de teste inteiro, nunca uma cena isolada.
 
-**Medida não é qualidade.** As medidas acusam o vídeo vazio, parado ou de uma cor só. Um vídeo cheio, colorido e mal encenado passa em todas. Por isso as passadas são obrigatórias, e a encenação vem primeiro.
+**Medida não é qualidade.** As medidas acusam o vídeo vazio, parado ou de uma cor só. Um vídeo cheio, colorido e mal encenado passa em todas. Por isso as passadas são obrigatórias, e a encenação vem primeiro. E a faixa é o que os vídeos de referência fazem, não uma exigência do projeto: a medida fora dela diz onde olhar. Abra os quadros do trecho e classifique o defeito que se vê, pela passada dele; sem defeito visível, a medida vai ao relatório com o motivo.
 
 **Lado a lado.** Ponha o quadro ao lado de um da referência do mesmo tipo (personagem, dado, cenário) e nomeie três diferenças; os recortes em tamanho real ficam em `out/referencias/0NY2gAftzJE/recortes/` (personagem e mundo) e `out/referencias/hfz4uDuicaQ/recortes/` (o que emite luz), com o vídeo na pasta acima, para tirar outros. A comparação serve para ver o que falta, não para copiar.
 
@@ -60,7 +60,7 @@ As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família ma
 
 **Classificação dos problemas:**
 
-- **Bloqueante**: o plano é um slide; a imagem afirma um fato falso; o personagem está fora do modelo; a silhueta reprova na construção; o registro está trocado; uma medida que já vale está fora da faixa. Refazer é obrigatório.
+- **Bloqueante**: o plano é um slide; a imagem afirma um fato falso; o personagem está fora do modelo; a silhueta reprova na construção; o registro está trocado. Refazer é obrigatório.
 - **Relevante**: composição, cor, profundidade ou excesso de texto enfraquecem a leitura. Refazer, salvo custo desproporcional.
 - **Polimento**: ajuste fino de forma, posição ou tom. Aplicar se não mexer em nada aprovado.
 
@@ -86,4 +86,4 @@ As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família ma
 - Não julgar movimento; as três últimas medidas só valem com o vídeo animado.
 
 ## EXEMPLO
-> Plano 4, cena "three-signs" — critério: encenação (três etiquetas em fila ao lado de uma silhueta; sem as etiquetas, o plano não diz nada). Classificação: bloqueante. Ação: encenar cada sinal como acontecimento (a lagoa escurece e ela para; algo a cutuca e ela demora a reagir; no dia seguinte ela pulsa devagar), um por oração; não altera a narração aprovada.
+> Plano 4, cena "three-signs" — critério: encenação (três etiquetas em fila ao lado de uma silhueta; sem as etiquetas, o plano não diz nada). Classificação: bloqueante. Ação: encenar cada sinal como acontecimento (a lagoa escurece e ela para; algo a cutuca e ela demora a reagir; no dia seguinte ela pulsa devagar); não altera a narração aprovada.

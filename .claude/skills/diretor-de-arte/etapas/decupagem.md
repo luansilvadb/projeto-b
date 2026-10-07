@@ -35,11 +35,11 @@ Pronto quando: toda cena tem `shots`, todo plano depois do primeiro tem `cue`, e
 pnpm check-script <vídeo>
 ```
 
-Ele recusa plano sem deixa ou com deixa que não está na narração, estima a duração de cada plano e aponta os que passam do limite de `planos`: trate cada um pelo passo 6 do procedimento dela.
+Ele recusa plano sem deixa ou com deixa que não está na narração, estima a duração de cada plano e marca os longos. A marca é um sinal de falha de `planos`: responda a ele olhando o trecho.
 
 Depois faça as passadas 1 e 2 de `critica-quadro` sobre os planos escritos, lendo só a coluna da encenação, sem a narração. Aqui não há subagente: ainda não existe imagem para um crítico abrir.
 
-Pronto quando: o comando passa, nenhum plano longo ficou sem divisão ou sem justificativa, e as duas passadas não acham bloqueante.
+Pronto quando: o comando passa, todo plano marcado tem a resposta ao sinal (a mudança escrita na encenação dele, ou o motivo de estar certo assim, dito na entrega), e as duas passadas não acham bloqueante.
 
 ## Entrega
 

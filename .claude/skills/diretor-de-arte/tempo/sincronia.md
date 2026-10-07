@@ -26,7 +26,7 @@ Quando cada coisa acontece em relação à narração?
 
 **O fim do plano.** Nos últimos 0,5 s nada entra: o que entrar não será lido. A última mudança de um plano acontece até 0,5 s antes do corte, salvo a transição que começa ali.
 
-**Plano que evolui.** Um plano longo (mais de 8 s) muda de estado a cada oração, como se fossem planos dentro do plano: a câmera, o cenário ou a pose trocam na deixa de cada uma.
+**Plano que evolui.** Cada mudança que a encenação de um plano escreve acontece na palavra dela, como se fossem planos dentro do plano: a câmera, o cenário ou a pose trocam ali.
 
 **Procedimento, a partitura:**
 

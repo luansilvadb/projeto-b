@@ -62,7 +62,7 @@ Teste: veja o quadro em tons de cinza e pequeno, do tamanho de um selo. O assunt
 3. Posicione: no centro se o assunto está só; num terço se há par ou olhar.
 4. Disponha o resto para apontar ao ponto focal; corte o que compete com ele.
 5. Renderize e aplique o teste do selo em cinza.
-6. Confira a sequência: três planos seguidos não têm o assunto do mesmo tamanho.
+6. Confira a sequência: o assunto do mesmo tamanho por vários planos seguidos é o sinal de escala repetida de `planos`.
 
 ## DEPENDÊNCIAS
 - planos: fornece a encenação e a escala de cada plano.
