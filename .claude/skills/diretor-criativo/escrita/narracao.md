@@ -63,7 +63,7 @@ Como escrever um texto feito para ser ouvido?
 
 ## DEPENDÊNCIAS
 - ouvinte: fornece para quem o texto é escrito e o que ele precisa de cada trecho.
-- explicacao: fornece o assunto de cada bloco, a cadeia de causas e o dispositivo do vídeo; a frase só é escrita depois deles.
+- explicacao: fornece a relação que cada bloco torna compreensível, com a base e a consequência dela, que a frase realiza.
 - fio: fornece o que fica vivo entre os trechos e os mecanismos escolhidos para sustentá-lo.
 - humor: fornece a regra que deixa a gíria de fora.
 - arco: fornece o que cada bloco faz, o que o liga ao seguinte e a estimativa de tamanho.

@@ -20,7 +20,7 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 - Idioma: <idioma>
 - Duração-alvo: <minutos>
 - Molde / Forma de arco: <os de `moldes` e de `arco`, quando nomeá-los ajuda>
-- Tensão: era de esperar <X>, e no entanto <Y>
+- Tensão: <a contradição ou a pergunta que dá direção ao vídeo, quando registrá-la ajuda; "era de esperar X, e no entanto Y" é um jeito de dizê-la>
 - Mapa: <como quem assiste percebe o caminho (`ouvinte`): as partes, na ordem, quando são ditas, e o que o vídeo promete para o fim>
 - Fechamento: <a sensação e a moral de `fechamento`, e o trecho do gancho a que a última frase responde>
 - Analogia central: <a analogia e os blocos em que volta>
