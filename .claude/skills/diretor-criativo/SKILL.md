@@ -71,7 +71,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `estrutura/moldes` | Que mecanismos recorrentes podem carregar um vídeo e pôr quem assiste dentro dele, e quando um deles ajuda a reconhecer o que o material pede? |
 | `estrutura/arco` | Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, dê motivo para o seguinte e leve da promessa à entrega? |
 | `estrutura/gancho` | Como abrir o vídeo para criar a pergunta que segura o espectador nos primeiros 30 segundos? |
-| `estrutura/fechamento` | Como encerrar o vídeo de modo que quem assiste saia maior do que entrou, e querendo ver outro? |
+| `estrutura/fechamento` | O que precisa acontecer no fim para que a promessa soe entregue, o que foi construído ganhe o seu sentido final e o vídeo possa parar? |
 | `estrutura/chamada` | Como pedir a curtida e a inscrição sem desfazer o fechamento? |
 | `escrita/explicacao` | O que faz um fato mudar o entendimento de quem assiste, em vez de ser só mais uma informação verdadeira? |
 | `escrita/fio` | O que faz uma sequência soar contada como uma coisa só, em vez de uma coleção de fatos bem escritos, e que mecanismos mantêm algo vivo de um trecho para o seguinte? |

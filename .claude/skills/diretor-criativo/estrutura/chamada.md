@@ -3,13 +3,13 @@ Como pedir a curtida e a inscrição sem desfazer o fechamento?
 
 ## RESPOSTA
 
-**Função.** A chamada converte a vontade de ver mais, que o fechamento deixou, num gesto: curtir e se inscrever (decisão do usuário em 2026-10-04: todo vídeo do canal termina com ela). A base é a chamada dos dois vídeos de `fechamento`.
+**Função.** A chamada converte em gesto o interesse de quem ficou até o fim: curtir e se inscrever (decisão do usuário em 2026-10-04: todo vídeo do canal termina com ela). A base é a chamada dos dois vídeos de `fechamento`.
 
 **Lugar.** Uma cena própria, a última do roteiro, depois da última frase do fechamento e de um silêncio (`holdMs`, cerca de um segundo). Na estrutura de `script.md` ela é o último bloco, "(chamada)".
 
 **Quatro partes, nesta ordem:**
 
-1. **Ponte**: a primeira oração ainda é do vídeo. Ela dá nome à sensação que o fechamento deixou e só então chega ao canal ("Se quiser continuar admirando este mundo...", "Se quiser continuar explorando as maravilhas do universo..."). É a única parte que muda de um vídeo para outro.
+1. **Ponte**: a primeira oração ainda é do vídeo. Ela parte do estado em que o fim do vídeo deixou quem assiste (uma sensação, uma pergunta, uma curiosidade) e só então chega ao canal ("Se quiser continuar admirando este mundo...", "Se quiser continuar explorando as maravilhas do universo..."). É a única parte que muda de um vídeo para outro.
 2. **Pedido**: curtir e se inscrever, numa frase, na voz do canal ("nós").
 3. **Motivo**: o que quem assiste ganha com isso, que é o próximo vídeo; ou o que o gesto faz pelo canal, dito com simplicidade.
 4. **Agradecimento**: a última coisa que se ouve.
@@ -20,13 +20,13 @@ Como pedir a curtida e a inscrição sem desfazer o fechamento?
 
 **Procedimento:**
 
-1. Escreva a ponte com a sensação nomeada no fechamento aprovado. Pronto quando a oração não serviria a nenhum outro vídeo.
+1. Escreva a ponte a partir do que o fim do vídeo deixou. Pronto quando a oração não serviria a nenhum outro vídeo.
 2. Escreva o pedido, o motivo e o agradecimento. Pronto quando cada parte tem a sua frase e a chamada cabe no tamanho.
 3. O que a chamada pede, e com que intensidade, é compromisso do canal: decidido com o usuário uma vez (`entrevista`), vale para os vídeos seguintes. A redação se ajusta a cada vídeo.
 
 ## DEPENDÊNCIAS
 - ouvinte: fornece a regra de um pedido só: a chamada é o único gesto que o vídeo pede.
-- fechamento: fornece a sensação e a última frase, de que a ponte parte.
+- fechamento: fornece a entrega final, de que a ponte parte.
 - narracao: fornece o registro do narrador em off, que não diz "eu".
 - formato: fornece o registro do bloco em `script.md`.
 
