@@ -13,7 +13,7 @@ Com que critérios e medidas julgar os quadros?
    - Sem som e sem etiqueta, o plano diz o que a oração afirma?
    - O meio vem do que se afirma: o acontecimento se vê acontecer, e o esquema ou o dado está onde a relação ou a quantidade é o assunto?
    - Os diagramas passam de 37% dos planos, o teto da referência? Confira se o vídeo está explicando por slide.
-   - Há uma figura com olhos na parcela de planos que o tema pede?
+   - Onde há rosto, ele afirma só a intenção e a emoção que a base de fatos sustenta? Onde a explicação depende de alguém viver ou reagir, há alguém?
 2. **Decupagem**
    - A imagem responde quando a ideia, a ação ou o foco mudam, e toda troca de composição tem um motivo na fala?
    - A escala serve ao momento, a entrada diz quanto mudou, e o que volta, volta igual?
@@ -79,7 +79,7 @@ As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família ma
 ## DEPENDÊNCIAS
 - encenacao, planos, dado: fornecem os critérios das passadas 1 e 2.
 - composicao, cor, forma, personagem, cenario, texto: fornecem os critérios das passadas 3 a 7.
-- elenco: fornece as folhas de modelo e a parcela de planos com figura que o tema pede.
+- elenco: fornece a ficha de cada personagem e o critério do rosto.
 
 ## LIMITES
 - Não julgar por gosto: todo problema aponta um critério violado.
