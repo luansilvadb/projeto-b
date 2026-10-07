@@ -11,7 +11,7 @@ Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio exp
 
 **Entradas:** tema (obrigatório); idioma (padrão pt-BR); duração-alvo (o alvo do canal está em `etapas/roteiro.md`); material de referência, quando houver.
 
-**Saídas:** na pasta `src/videos/<vídeo>/`: `research.md`, com fatos e fontes; `script.json`, com narração, planos e fontes; `script.md`, o registro das decisões atuais do vídeo, com os pares de título e conceito de thumbnail; a linha da 1ª aprovação em `approvals.md`.
+**Saídas:** na pasta `src/videos/<vídeo>/`: `research.md`, com fatos e fontes; `script.json`, com narração, planos e fontes; `script.md`, o registro das decisões atuais do vídeo, com o título e o conceito de thumbnail; a linha da 1ª aprovação em `approvals.md`.
 
 ## ANTI-ESCOPO
 
@@ -56,7 +56,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `estrutura` | Como o vídeo é organizado, aberto e encerrado. |
 | `escrita` | Como o texto, as analogias, o humor, as notas visuais e o documento final são produzidos. |
 | `revisao` | Como um trecho ou o roteiro inteiro é julgado. |
-| `embalagem` | Como a promessa do vídeo vira título e thumbnail. |
+| `embalagem` | Que expectativa título e thumbnail criam antes do clique. |
 
 ## ÍNDICE DE UNIDADES
 
@@ -82,7 +82,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `escrita/indicacao-visual` | O que a imagem não pode escolher livremente sem mudar o que o vídeo diz, e qual é o mínimo a registrar para a arte? |
 | `escrita/formato` | Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas do roteiro? |
 | `revisao/critica` | O que o ouvinte perde num trecho, qual é a menor causa da perda, e que evidência a confirma? |
-| `embalagem/titulo-e-thumbnail` | Como derivar título e conceito de thumbnail da promessa do vídeo? |
+| `embalagem/titulo-e-thumbnail` | Que expectativa título e thumbnail criam juntos antes do clique, e ela corresponde ao vídeo que existe? |
 
 Os números que as unidades dão como medidos "no canal" vêm das legendas em inglês do Kurzgesagt (245 vídeos, medidos em 2026-10-02): valem como ordem de grandeza para o português, e nenhum é prova de desempenho.
 
@@ -93,13 +93,13 @@ Injete o procedimento da etapa, depois `entrevista` e as unidades do passo em cu
 | Etapa | Passo | Unidades |
 |---|---|---|
 | 1. Pesquisa | Pesquisa | `levantamento`, `checagem` |
-| 2. Roteiro | Conceito | `ouvinte`, `angulo`, `voz`, `titulo-e-thumbnail` (primeira versão), `formato` |
+| 2. Roteiro | Conceito | `ouvinte`, `angulo`, `voz`, `titulo-e-thumbnail` (título provisório), `formato` |
 | | Estrutura | `ouvinte`, `moldes`, `arco`, `gancho`, `fechamento`, `chamada` |
 | | Escrita | `ouvinte`, `analogias`, `explicacao`, `fio`, `humor`, `narracao`, `procedencia`, `indicacao-visual` |
 | | Decupagem | skill `diretor-de-arte`, passos Conceito visual e Decupagem |
 | | Arco de som | skill `diretor-de-som`, etapa `arco-de-som` |
 | | Revisão | `critica`, `checagem` e a unidade dona de cada defeito apontado |
-| | Embalagem | `ouvinte`, `titulo-e-thumbnail` (versão final) |
+| | Embalagem | `ouvinte`, `titulo-e-thumbnail` (o par) |
 
 Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), injete apenas as unidades do passo e as suas dependências declaradas.
 

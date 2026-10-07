@@ -8,7 +8,7 @@ Esta etapa monta, não escreve: toda frase vem do que já foi aprovado.
 
 | Parte | Fonte |
 |---|---|
-| Título | `title` de `script.json`. Se o usuário ainda não escolheu entre os pares de título e thumbnail, a escolha é da skill `diretor-criativo` (`embalagem/titulo-e-thumbnail`), antes desta etapa. |
+| Título | `title` de `script.json`. Se a embalagem ainda tem uma escolha aberta com o usuário, ela se fecha na skill `diretor-criativo` (`embalagem/titulo-e-thumbnail`), antes desta etapa. |
 | Abertura | Duas linhas, as únicas visíveis antes de "mostrar mais": a promessa do vídeo, como ela está no gancho aprovado. Abre a pergunta e não entrega a resposta. |
 | Fontes | As de `research.md` que alguma cena cita no campo `sources` de `script.json`, com instituição ou autor, título e link, na ordem e com o número de `research.md`. |
 | Simplificações | A seção `Simplificações` de `script.md` e os pontos em aberto de `research.md` que o vídeo toca, uma linha cada. |

@@ -48,7 +48,9 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 - Bloco <n>: <analogia ou número derivado> = <valores usados e cálculo>
 
 ## Título e thumbnail
-- <título> / <conceito de thumbnail>; escolhido: <qual>
+- Título: <o atual>
+- Thumbnail: <o conceito atual (`titulo-e-thumbnail`)>
+- Em aberto: <o par alternativo e o que ele vende de diferente, só enquanto a escolha está com o usuário>
 ```
 
 - O gancho é um bloco sem capítulo. O bloco sem fala traz a cena com `holdMs` e a nota visual.
