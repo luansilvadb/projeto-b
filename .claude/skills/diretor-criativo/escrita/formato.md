@@ -49,14 +49,11 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 
 ## Título e thumbnail
 - <título> / <conceito de thumbnail>; escolhido: <qual>
-
-## Versões
-- <data>: <o que mudou em relação à anterior, e por quê>
 ```
 
 - O gancho é um bloco sem capítulo. O bloco sem fala traz a cena com `holdMs` e a nota visual.
 - `Simplificações`, `Contas` e `Grafias de pronúncia` só aparecem quando houver itens.
-- `Versões` conta por que uma direção foi trocada (o que o usuário reprovou, o que saiu); é o que impede a reescrita seguinte de repetir o erro.
+- O porquê de uma decisão (o que ela evita, a troca aceita, a ressalva) fica na linha dela quando ajuda a reescrita seguinte a não repetir o erro. O que a decisão era antes fica no git.
 
 **Lista de fontes.** É o nome que as unidades dão a três lugares: as fontes numeradas de `research.md`, o campo `sources` de cada cena em `script.json` e as seções `Simplificações` e `Contas` daqui. A situação de cada afirmação (verificada, simplificada) vem do relatório de `checagem`, e não é copiada.
 
@@ -65,7 +62,7 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 1. Crie `script.md` com o cabeçalho quando houver um ângulo de trabalho. Pronto quando tese, promessa, idioma e duração-alvo estão escritos.
 2. Acrescente cada decisão no passo em que ela é tomada: voz, estrutura, fio, analogia central. Pronto quando toda decisão já tomada tem a sua linha, e a tomada com o usuário leva a data e o porquê (`entrevista`).
 3. Com `script.json` escrito, preencha a coluna Cenas. Pronto quando todo `id` do roteiro aparece em exatamente um bloco, na ordem do roteiro: é o que o `pnpm check-script` confere, lendo os `id` entre crases da última coluna.
-4. A cada reescrita que troque uma decisão, altere a linha dela e acrescente uma linha em `Versões`, na mesma rodada.
+4. A cada reescrita que troque uma decisão, substitua a linha dela pelo estado atual, na mesma rodada.
 
 ## LIMITES
 - O conteúdo de cada seção é da unidade que o modelo nomeia, lida no passo dela; aqui só se decide onde ele fica.
