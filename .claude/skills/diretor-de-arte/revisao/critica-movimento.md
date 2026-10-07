@@ -9,7 +9,7 @@ Como julgar o movimento, com medidas e quadros consecutivos?
 
 **Como ver.** Movimento não aparece num quadro. Dois instrumentos:
 
-1. **Tira de quadros consecutivos**: um trecho de 2 a 6 s a 8 ou 10 quadros por segundo, lado a lado, com o tempo em cada quadro. É nela que se vê como uma ação começa, acontece e termina, se algo pulou de lugar, se um elemento entrou antes da palavra, se há quadros iguais.
+1. **Tira de quadros consecutivos**: um trecho de 2 a 6 s a 8 ou 10 quadros por segundo, lado a lado, com o tempo em cada quadro. É nela que se vê como uma ação começa, acontece e termina, se algo pulou de lugar, se um elemento entrou antes da palavra, se algo travou.
 2. **O vídeo**, para o que a tira não mostra: ritmo, peso, se o olho acompanha.
 
 **Passadas, nesta ordem.** Um problema de nível superior invalida o polimento dos níveis abaixo.
@@ -25,8 +25,10 @@ Como julgar o movimento, com medidas e quadros consecutivos?
    - Alguma entrada ou saída escondeu o que ainda precisava ser visto?
    - Sobra, máscara, opacidade, cascata, faixa de duração e saída inversa não reprovam por si: reprova o que não se entendeu.
 3. **Pausa viva**
-   - Há dois quadros iguais em qualquer tira?
-   - Os ciclos estão fora de fase entre vizinhos?
+   - O trecho sem novidade parece intencional, e o estado sustentado continua legível? A imobilidade, onde existe, lê como escolha ou como animação que travou?
+   - Move-se o que continuaria acontecendo naquele estado? Há movimento decorativo sem causa no corpo ou no meio (vento, partícula, halo que respira)?
+   - Algum movimento residual disputa com o foco, ou virou uma ação nova, que seria de `acao`? O que é independente se move como cópia, sem causa comum?
+   - Quadros iguais, câmera parada, personagem que não pisca, vizinhos que se movem juntos por uma causa comum e pouca área em movimento não reprovam por si: reprova o quadro que parece morto por acidente. Julgue no vídeo, e não pela diferença entre dois quadros.
 4. **Atuação**
    - Entende-se o que a figura fez e com que intenção? O preparo, a execução e a consequência estão lá quando fazem falta?
    - O corpo participa da ação, ou a figura só desliza? A duração e o fim têm a força e o peso que a ação afirma?
@@ -54,8 +56,8 @@ Além do total, um **mapa segundo a segundo** da fração de quadros quase parad
 
 **Classificação dos problemas:**
 
-- **Bloqueante**: mudança sem causa, ou tão longe dela que a relação se perde; mudança de estado em que a coisa deixa de ser reconhecida, ou troca seca que lê como erro; quadros iguais numa tira; ação que não se entende, corpo que contradiz a ação, reação que parece vir antes da causa; ponte de transição quebrada. Refazer é obrigatório.
-- **Relevante**: curva dura (uma ação que termina em um décimo do tempo escrito), sobra demais, ação que se entende mas não tem o peso ou a força que afirma, sequência que lê como um acontecimento só (ou o contrário), câmera que perde o foco, recurso solto. Refazer, salvo custo desproporcional; o que ficar, relatar com o mapa segundo a segundo.
+- **Bloqueante**: mudança sem causa, ou tão longe dela que a relação se perde; mudança de estado em que a coisa deixa de ser reconhecida, ou troca seca que lê como erro; animação que travou (uma ação ou um ciclo que devia continuar e congelou); ação que não se entende, corpo que contradiz a ação, reação que parece vir antes da causa; ponte de transição quebrada. Refazer é obrigatório.
+- **Relevante**: curva dura (uma ação que termina em um décimo do tempo escrito), sobra demais, ação que se entende mas não tem o peso ou a força que afirma, sequência que lê como um acontecimento só (ou o contrário), câmera que perde o foco, movimento residual sem causa ou que disputa o foco, recurso solto. Refazer, salvo custo desproporcional; o que ficar, relatar com o mapa segundo a segundo.
 - **Polimento**: ajuste fino de tempo, amplitude ou fase. Aplicar se não mexer em nada aprovado.
 
 **Procedimento:**

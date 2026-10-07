@@ -93,7 +93,7 @@ Movimento:
 | `conducao/entrevista-movimento` | Que decisões de movimento vão ao usuário, e quais o agente resolve sozinho? |
 | `tempo/sincronia` | Quando cada coisa acontece em relação à narração? |
 | `tempo/entradas` | O que faz um elemento aparecer, mudar ou sair de modo que se entenda de onde veio, o que mudou e em que estado terminou? |
-| `atuacao/pausa-viva` | O que se move quando nada acontece? |
+| `atuacao/pausa-viva` | Quando nada novo acontece, o que faz o quadro continuar parecendo intencional e coerente com o estado da cena? |
 | `atuacao/acao` | O que faz uma ação parecer intencional, legível e fisicamente coerente para aquele personagem ou criatura? |
 | `camera/movimento` | Quando e como a câmera se move dentro de um plano? |
 | `camera/transicoes` | O que continua, o que muda e quanto se sente a passagem entre dois planos? |
