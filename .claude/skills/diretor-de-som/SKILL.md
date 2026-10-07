@@ -63,7 +63,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, campos, 
 | `trilha/momentos` | Quando uma região da parte merece um repaint local, e onde ele começa e termina? |
 | `mixagem/niveis` | Quando a mesma música precisa ficar mais perto ou mais longe da voz, e qual preset realiza isso? |
 | `mixagem/silencio` | Quando a música some, e quando o roteiro abre espaço para ela? |
-| `efeitos/dose` | Que ações da imagem ganham som, quantas, e a que volume? |
+| `efeitos/dose` | Que acontecimento da imagem ganha um efeito, com que presença e em que instante? |
 | `efeitos/escolha` | Que som serve a uma ação, e como ele entra no catálogo? |
 | `revisao/critica-som` | Com que medidas e passadas julgar o som de um render? |
 
@@ -91,7 +91,7 @@ Para tarefas parciais (trocar a música de um trecho, acrescentar um efeito, bai
 
 - O agente não ouve. Nenhum som é dado como bom por medida: a medida acusa defeito, e o caráter, a emoção e o aceite são do ouvido do usuário.
 - Toda mudança da música que se percebe faz trabalho na experiência do vídeo: o motivo pode vir da estrutura, da imagem, do ritmo, de uma consequência ou de uma transformação emocional.
-- Todo efeito acompanha uma ação que está na partitura da animação.
+- Todo efeito tem um acontecimento perceptível, sustentado pela animação e pela partitura; nem todo acontecimento ganha efeito.
 - A geração parte do mapa atual, suficiente para responder a dúvida, e o mapa cresce com o que foi ouvido. Cada parte custa minutos de GPU: gere o menor som que responde.
 
 ## CRITÉRIOS DE PARADA
@@ -99,7 +99,7 @@ Para tarefas parciais (trocar a música de um trecho, acrescentar um efeito, bai
 Pare quando:
 
 - o som estiver aceito pelo usuário, com a linha em `approvals.md`;
-- a crítica não encontrar problema bloqueante nem relevante e as medidas estiverem na faixa, ou fora dela por decisão registrada;
+- a crítica não encontrar problema bloqueante nem relevante e as medidas estiverem na faixa, ou fora dela por decisão registrada ou, nas que são sensores (nível e efeitos), depois de investigadas;
 - duas gerações seguidas do mesmo trecho falharem no ouvido do usuário pelo mesmo motivo: relate o que foi pedido, o que foi medido e o que ele ouviu, e mude a hipótese (outra descrição, outro desenho do mapa) em vez de tentar outra semente;
 - o mapa pedir um `holdMs` ou outra frase: devolva à skill `diretor-criativo`;
 - o pedido estiver no anti-escopo.

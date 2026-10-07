@@ -15,7 +15,7 @@ Parta dos compromissos que houver na seção "Arco" de `sound.md` (pode ser uma 
 3. **O menor som.** Peça à skill `producao` só o que a dúvida pede: a trilha ainda sem momentos (`pnpm music <vídeo>`; o leito sozinho se ouve em `public/videos/<vídeo>/music.wav`), mais tarde uma parte só (`pnpm music <vídeo> <semente> <parte>`, com as outras já geradas) e, quando a dúvida é contra a voz, o som do vídeo.
 4. **Medir e consertar.** O que a medida, o comando ou o `pnpm check-script` acusam é consertado antes de qualquer escuta, sem pergunta.
 5. **O ouvido, se for preciso.** Sobrando uma dúvida que só o ouvido resolve e que pesa sobre o que vem depois, leve o arquivo, o instante e a pergunta. A resposta é evidência: não vai a `approvals.md`.
-6. **Crescer.** O que funcionou fica, e o mapa ganha a camada seguinte, se o som a pedir: o momento na região em que o leito gerado não realiza o que o vídeo precisa (pode não haver nenhum), os níveis só nas regiões em que a presença do leito gerado está errada (pode não haver nenhum), os efeitos (`momentos`, `niveis`, `silencio`, `dose`). Volte ao passo 1.
+6. **Crescer.** O que funcionou fica, e o mapa ganha a camada seguinte, se o som a pedir: o momento na região em que o leito gerado não realiza o que o vídeo precisa (pode não haver nenhum), os níveis só nas regiões em que a presença do leito gerado está errada (pode não haver nenhum), os efeitos só nos acontecimentos em que a consequência sonora faz trabalho (podem ser poucos, ou nenhum) (`momentos`, `niveis`, `silencio`, `dose`). Volte ao passo 1.
 
 A ordem das camadas é dependência: os momentos são refeitos sobre o leito, e os efeitos são julgados contra a música. Um efeito ou um silêncio que seja a maior incerteza pode ser testado antes. Duas versões que passam e fazem cenas diferentes vão ao usuário em A e B, em `out/rascunho/`; a escolhida entra no mapa.
 
@@ -28,7 +28,7 @@ A seção "Mapa" de `sound.md` tem uma tabela por camada que já existe, e só c
 - **Leitos**: o trecho, o caráter, a descrição.
 - **Momentos**: as cenas, a duração, o que a música faz ali e por quê; só os que existem.
 - **Níveis e silêncios**: a cena, o nível, por quê.
-- **Efeitos**: a cena e o plano, a ação, o uso, o nível; e, à parte, os usos que o catálogo não tem.
+- **Efeitos**: a cena e o plano, o acontecimento, o uso, o nível; só os que existem; e, à parte, os usos que o catálogo não tem.
 
 Sem descrição recusada, semente tentada nem alternativa perdida. O que o usuário decidiu leva essa marca na linha, para a iteração seguinte não desfazê-lo. `src/videos/why-we-sleep/sound.md` mostra o formato das tabelas; a história do piloto que ele guarda não é modelo.
 
@@ -56,13 +56,13 @@ Os campos de `script.json`; o tipo e as regras estão em `src/narration/script.t
 - `parts`: cada item começa uma parte na cena `from`. Sem `at`, a faixa cruza com a anterior em 3 s, por baixo da fala; depois de um silêncio de música, entra sem cruzar. `"at": "hold"` a faz entrar no silêncio de fala do fim da cena.
 - `moments`: do começo da cena `from` ao fim da cena `to` (ou da própria `from`), de 3 a 90 s, dentro de uma parte só e começando ao menos 5 s depois do início dela. O campo é opcional.
 - `levels`: o nível vale da cena `from` até a mudança seguinte; para voltar, escreva a volta (`"level": "leito"`).
-- `sfx`: o efeito toca na palavra `cue` (com `occurrence` quando ela se repete), ou no começo do plano `shot` (contado de 1), ou no começo da cena; `offsetMs` desloca. A imagem antecipa a palavra em 4 quadros: para o som cair junto com um movimento disparado pela mesma palavra, use `"offsetMs": -133`. `name` é um uso do catálogo (`src/audio/sfx.ts`).
+- `sfx`: o efeito toca na palavra `cue` (com `occurrence` quando ela se repete), ou no começo do plano `shot` (contado de 1), ou no começo da cena; `cue` e `shot` não convivem. `offsetMs`, inteiro, desloca da âncora ao acontecimento real, e vem da partitura da ação (`dose`), e não de um valor padrão. O `-133` do exemplo é um caso: as cenas adiantam a imagem em 4 quadros em relação à palavra (`CUE_LEAD_FRAMES`), e o movimento disparado no instante da deixa começa 133 ms antes dela. Sem `level`, vale `normal`. `name` é um uso do catálogo (`src/audio/sfx.ts`).
 
-Uma ação cujo instante só existe no código da cena (o fim de uma queda, o terceiro de três jatos) é ancorada no plano ou na palavra mais próxima, com o `offsetMs` medido na partitura.
+Um acontecimento cujo instante só existe no código da cena (o fim de uma queda, o terceiro de três jatos) é ancorada no plano ou na palavra mais próxima, com o `offsetMs` medido na partitura.
 
 ## Sons que faltam
 
-Unidade `escolha`. O uso que o catálogo já tem é usado, sem consulta. Entregue à skill `producao` (`etapas/efeitos-sonoros.md`) a lista dos que faltam, com a ação de cada um; ela busca, filtra, leva os candidatos ao ouvido do usuário e devolve o `name`. Um efeito sem som no catálogo fica fora de `sfx` e anotado em `sound.md` como pendente.
+Unidade `escolha`. O uso que o catálogo já tem é usado, sem consulta, e nenhum uso novo nasce para aumentar a quantidade de efeitos. Entregue à skill `producao` (`etapas/efeitos-sonoros.md`) a lista dos que faltam, com a ação de cada um; ela busca, filtra, leva os candidatos ao ouvido do usuário e devolve o `name`. Um efeito sem som no catálogo fica fora de `sfx` e anotado em `sound.md` como pendente.
 
 ## O conjunto
 

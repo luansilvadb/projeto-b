@@ -22,10 +22,10 @@ Com que medidas e passadas julgar o som de um render?
 | Tempo sem música | até 2,4% | buracos: silêncios demais, ou faixas que morrem nas pontas |
 | Viradas de volume por minuto | até 1,1 | o mesmo, visto no tempo |
 | Variação de timbre ao longo do vídeo | até 0,32 oitava | possível quebra de identidade: achar a fronteira e levá-la ao ouvido |
-| Efeitos que se ouvem, por minuto | 4,4 ou mais | a imagem se mexe em silêncio |
-| Pico do efeito abaixo da voz | 11,5 a 14,7 dB | efeitos tímidos, ou altos demais |
+| Efeitos que se ouvem, por minuto | 4,4 ou mais | sensor: pode haver acontecimentos sem consequência sonora (`dose`) |
+| Pico do efeito abaixo da voz | 11,5 a 14,7 dB | sensor: pode haver efeitos que somem, ou que disputam com a voz (`dose`) |
 
-O que as medidas não veem: a contagem de efeitos tem um piso de 2 por minuto, de música e voz que vazam na separação; a variação de timbre sobe quando um silêncio longo entra na conta e quando a música se transforma por um motivo, e pode ficar na faixa numa trilha que o ouvido acha desconexa; nenhuma delas distingue música boa de ruim.
+O que as medidas não veem: a contagem de efeitos tem um piso de 2 por minuto, de música e voz que vazam na separação, e por isso localiza uma região, e não conta os efeitos que existem; a variação de timbre sobe quando um silêncio longo entra na conta e quando a música se transforma por um motivo, e pode ficar na faixa numa trilha que o ouvido acha desconexa; nenhuma delas distingue música boa de ruim.
 
 **Passadas, nesta ordem.** Um problema de nível superior invalida o polimento dos níveis abaixo.
 
@@ -40,18 +40,19 @@ O que as medidas não veem: a contagem de efeitos tem um piso de 2 por minuto, d
    - Há salto de volume de mais de 6 dB em alguma borda de momento?
    - Cada nível que não é `leito` aparece na distância à voz daquele trecho?
 4. **Nível**
-   - Onde a distância sai da referência ou muda muito? Nesses trechos, a fala continua fácil e a música continua fazendo o trabalho dela? A medida localiza a escuta e não reprova sozinha: as faixas de nível são sensores, e `recuo` fica fora dos 9 a 15 dB por projeto (`niveis`). Marque o instante para o roteiro de escuta.
-5. **Efeitos**
-   - A contagem por minuto está na faixa, capítulo a capítulo?
-   - Cada efeito do roteiro aparece no mapa segundo a segundo, no instante dele? Algum caiu num trecho quieto?
-   - Há ação de impacto na partitura da animação sem efeito no roteiro?
+   - Onde a distância sai da referência ou muda muito? Nesses trechos, a fala continua fácil e a música continua fazendo o trabalho dela? A medida localiza a escuta e não reprova sozinha: as faixas de nível são sensores, e `recuo` fica fora dos 9 a 15 dB por projeto (`niveis`). Investigue; se a gravidade depender da percepção e a dúvida pesar, marque o instante para o roteiro de escuta.
+5. **Efeitos** (`dose`)
+   - A densidade está muito distante da referência, ou concentrada numa região? Isso corresponde ao que acontece na imagem, ou sugere acontecimentos sem consequência sonora, ou efeitos acumulados sem dono? A contagem é sensor, com piso falso de 2 por minuto: não há piso, teto nem cota por capítulo ou por plano, e nenhum efeito é pedido para subir o número.
+   - Cada efeito do roteiro aparece no mapa segundo a segundo, no instante do acontecimento dele? Algum contradiz uma quietude deliberada, ou acrescenta atividade sem função? Silêncio de música e `recuo` não bastam para chamar um trecho de quieto.
+   - Há acontecimento na partitura da animação cuja percepção perde peso, materialidade ou causalidade sem efeito? Impacto é pista, e não obrigação.
+   - O pico de algum efeito sugere que ele some ou disputa com a voz? `forte` e `leve` ficam fora dos 11,5 a 14,7 dB por projeto, e a quantidade de `forte` não reprova.
 6. **Causa**
    - Cada momento, silêncio e mudança de nível tem o porquê escrito no mapa de som, e o porquê é um trabalho que se percebe no vídeo (narração, imagem, ritmo, estrutura)?
 
 **Classificação:**
 
 - **Bloqueante**: o usuário ouve a trilha como músicas desconexas, sem que a ruptura seja deliberada (a medida aponta a fronteira, e quem diz é o ouvido); há buraco que o mapa não pede; a música cobre a fala.
-- **Relevante**: medida fora da faixa sem decisão registrada; momento ou nível que não aparece no som, nem na medida nem na escuta; salto numa borda; capítulo sem efeitos.
+- **Relevante**: medida fora da faixa sem decisão registrada, salvo as de nível e as de efeitos, que são sensores e pedem investigação; momento ou nível que não aparece no som, nem na medida nem na escuta; salto numa borda; efeito sem dono, fora do instante do acontecimento ou que muda a leitura da imagem; região em que os acontecimentos perdem materialidade por falta de efeito.
 - **Polimento**: o resto.
 
 **Procedimento:**

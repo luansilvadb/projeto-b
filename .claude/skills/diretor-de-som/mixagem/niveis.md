@@ -31,7 +31,7 @@ Quando a mesma música precisa ficar mais perto ou mais longe da voz, e qual pre
 | a música segue pulsando, densa ou articulada onde devia quase parar | momento (`momentos`) |
 | a trilha soa genérica, infantil, de playlist | o leito e a descrição (`leito`, `descricao`) |
 | a música devia sumir | silêncio de música (`silencio`) |
-| a música devia assumir o primeiro plano | um `holdMs`, pedido ao roteiro (`silencio`) |
+| há, ou é preciso, um intervalo real sem fala em que a música assume o primeiro plano | um `holdMs`, pedido ao roteiro (`silencio`); a pausa não é criada só como substituto de nível |
 | uma ação precisa de impacto | efeito (`dose`) |
 | o vídeo inteiro está errado do mesmo jeito | não é o mapa (veja os limites) |
 
@@ -56,10 +56,10 @@ Os dados sustentam o padrão conservador: presença estável, sem nível escrito
 
 **Procedimento:**
 
-1. Ouça e meça o vídeo em `leito`, com os momentos que já existem.
+1. Renderize e meça o vídeo em `leito`, com os momentos que já existem.
 2. Ache as regiões em que a música certa está na distância errada, e confirme que o problema é de presença.
 3. Escolha o preset mais próximo; registre a mudança e, se a região termina, a volta.
-4. Meça de novo e leve o trecho ao ouvido. A mudança fica se melhora a relação sem que se ouça a operação.
+4. Meça de novo. Se restar uma dúvida de percepção que pese (a inteligibilidade, a presença útil ou a operação do volume), leve só essa dúvida ao ouvido. A mudança fica se melhora a relação sem que se ouça a operação.
 
 **Em `sound.md`**, cada mudança leva a intenção, e não só o preset, para depois se poder ver se o preset era a realização certa. Só as mudanças que existem: nada de trecho que ficou em `leito` nem de mudança considerada e descartada.
 
