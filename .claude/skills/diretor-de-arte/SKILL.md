@@ -77,7 +77,7 @@ Imagem:
 | `conceito/elenco` | Quem conduz o vídeo na tela, e o que ganha rosto? |
 | `conceito/cor` | Que paletas o vídeo usa, e quando troca de uma para outra? |
 | `decupagem/encenacao` | Como transformar uma afirmação em algo que acontece na tela? |
-| `decupagem/planos` | Como dividir a cena em planos, um por oração? |
+| `decupagem/planos` | Como dividir a cena em planos de modo que a imagem acompanhe a fala? |
 | `decupagem/dado` | Como mostrar número, escala e comparação sem virar slide? |
 | `desenho/forma` | Como construir qualquer coisa em formas chapadas, em SVG? |
 | `desenho/personagem` | Como desenhar e posar uma figura com rosto? |
