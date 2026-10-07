@@ -86,9 +86,9 @@ O comando dá dois tipos de resposta, com autoridades diferentes.
 Com o validador passando, o roteiro vai a dois subagentes que não viram o texto ser escrito. Acione os dois na mesma mensagem, passando o nome da pasta do vídeo:
 
 - `checador`: classifica cada afirmação da fala e da tela contra `research.md` (unidade `pesquisa/checagem`).
-- `editor`: faz as passadas de `revisao/critica` e devolve os problemas por cena. Ele confere contra `script.md`: antes de acioná-lo, `script.md` está em dia com as decisões atuais, e a coluna Cenas da estrutura, preenchida.
+- `editor`: lê o texto como quem ouve uma vez e devolve o que o ouvinte perde, por cena, ou diz que não há defeito (`revisao/critica`). Ele lê `script.md` para saber o que o vídeo quer dizer: antes de acioná-lo, `script.md` está em dia com as decisões atuais, e a coluna Cenas da estrutura, preenchida. Ele também julga um trecho (o gancho, um bloco, a amostra): passe as cenas.
 
-Eles julgam; quem decide e reescreve é você, pelos passos 2 a 5 do procedimento de `revisao/critica`. A lista **Para o diretor de arte** que o `editor` devolve vai à skill `diretor-de-arte` (etapa de decupagem), que refaz os planos apontados antes da aprovação. A cada rodada, rode o validador e acione de novo os dois, o `checador` só com as cenas alteradas; além do que a crítica exige, não pode restar afirmação *não verificada*.
+Eles julgam; quem decide e reescreve é você. Diante de cada defeito do `editor`, a pergunta é a de `conducao/entrevista`: o conserto preserva a decisão atual, ou pede uma nova? Se preserva, reescreva pela unidade dona, atacando a perda que o diagnóstico nomeia; se pede, leve ao usuário. A lista **Para o diretor de arte** vai à skill `diretor-de-arte` (etapa de decupagem), que refaz os planos apontados antes da aprovação. A cada rodada, rode o validador e acione de novo os dois, só com as cenas alteradas e as que dependem delas. O bloqueante é resolvido, o relevante é corrigido enquanto o retorno paga (critérios de parada do `SKILL.md`), e não pode restar afirmação *não verificada*.
 
 ## Primeira aprovação
 

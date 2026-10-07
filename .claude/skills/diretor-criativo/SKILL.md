@@ -55,7 +55,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `conceito` | O que o vídeo afirma, com que voz e para quem. |
 | `estrutura` | Como o vídeo é organizado, aberto e encerrado. |
 | `escrita` | Como o texto, as analogias, o humor, as notas visuais e o documento final são produzidos. |
-| `revisao` | Como o rascunho é julgado e reescrito. |
+| `revisao` | Como um trecho ou o roteiro inteiro é julgado. |
 | `embalagem` | Como a promessa do vídeo vira título e thumbnail. |
 
 ## ÍNDICE DE UNIDADES
@@ -81,7 +81,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `escrita/humor` | Quando e como usar humor seco e alívio cômico sem minar a credibilidade? |
 | `escrita/indicacao-visual` | O que a nota visual de cada bloco deve dizer, e o que não deve? |
 | `escrita/formato` | Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas do roteiro? |
-| `revisao/critica` | Com que critérios julgar o rascunho e decidir o que reescrever? |
+| `revisao/critica` | O que o ouvinte perde num trecho, qual é a menor causa da perda, e que evidência a confirma? |
 | `embalagem/titulo-e-thumbnail` | Como derivar título e conceito de thumbnail da promessa do vídeo? |
 
 Os números que as unidades dão como medidos "no canal" vêm das legendas em inglês do Kurzgesagt (245 vídeos, medidos em 2026-10-02): valem como ordem de grandeza para o português, e nenhum é prova de desempenho.
@@ -98,7 +98,7 @@ Injete o procedimento da etapa, depois `entrevista` e as unidades do passo em cu
 | | Escrita | `ouvinte`, `analogias`, `explicacao`, `fio`, `humor`, `narracao`, `procedencia`, `indicacao-visual` |
 | | Decupagem | skill `diretor-de-arte`, passos Conceito visual e Decupagem |
 | | Arco de som | skill `diretor-de-som`, etapa `arco-de-som` |
-| | Revisão | `ouvinte`, `checagem`, `procedencia`, `fio`, `narracao`, `critica` |
+| | Revisão | `critica`, `checagem` e a unidade dona de cada defeito apontado |
 | | Embalagem | `ouvinte`, `titulo-e-thumbnail` (versão final) |
 
 Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), injete apenas as unidades do passo e as suas dependências declaradas.
