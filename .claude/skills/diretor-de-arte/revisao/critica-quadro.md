@@ -33,8 +33,9 @@ Com que critérios e medidas julgar os quadros?
    - Registro e contenção, julgados num recorte em tamanho real (um quarto do quadro, sem reduzir) de cada personagem e do assunto de cada cenário: o desenho está no registro certo de `forma`? Aponte cada forma que, tirada, não faria falta em nenhum plano em que a peça aparece: leia esses planos no roteiro antes de apontar. Registro trocado é bloqueante; forma sobrando é relevante. A folha de quadros reduzidos não mostra nada disso.
    - O personagem bate com a folha de modelo? Confira o estado do plano pelo nome que a ficha dá, item por item ("dormindo em pé: olho fechado, tromba caída, cabeça pendida" são três conferências). A expressão e o olhar servem ao momento, e se leem no tamanho em que aparecem?
 6. **Cenário, profundidade e luz**
-   - O fundo liso tem degradê, e trama só onde `cenario` a pede? O cenário tem três camadas ou mais?
-   - Há sombra de contato no mundo e halo por dentro? A luz vem de um lado só?
+   - O plano tem o lugar de que precisa, e o assunto continua a coisa mais fácil de achar, sem nada atrás dele disputando?
+   - Onde o plano depende de profundidade, ela se lê? A luz é coerente entre os elementos, e o que está no lugar está assentado nele?
+   - Cada coisa do ambiente tem um serviço, e o lugar que volta é o mesmo?
    - O que emite luz parece fonte de luz, e o que é muitos se lê como massa, com um foco?
 7. **Texto**
    - Um texto novo por vez, cada um preso ao que nomeia?
