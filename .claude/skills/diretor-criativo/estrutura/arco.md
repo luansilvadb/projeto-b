@@ -60,9 +60,9 @@ Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, d
 - **Respiro**, quando a densidade atropela: humor, imagem, um caso concreto, uma recapitulação de uma frase, um silêncio, um trecho de narrativa simples.
 - **Escopo declarado**, quando o tema é amplo ou polêmico e a promessa poderia parecer maior que o vídeo: um bloco curto depois do gancho diz o que o vídeo não trata e que aspecto escolheu. O título e a promessa já delimitados, ou uma ressalva no gancho, fazem o mesmo.
 
-**Estimativa de palavras.** A duração-alvo vira uma estimativa de palavras, para dimensionar o escopo e notar desequilíbrio. Referência medida no canal, em inglês: mediana de 160 palavras por minuto (167 nos vídeos recentes). Para pt-BR, cerca de 150, até haver uma locução real do projeto cronometrada, que passa a valer. A estimativa por bloco é ponto de partida: o texto escrito a corrige, e ela não justifica encher um bloco nem cortar o que ele precisa.
+**Estimativa de palavras.** Quando há uma duração-alvo de verdade (o usuário ou o produto impôs um tamanho), ela vira uma estimativa de palavras, para dimensionar o escopo e notar desequilíbrio. Sem ela, a duração sai do percurso, e a faixa do canal é sensor. Referência medida no canal, em inglês: mediana de 160 palavras por minuto (167 nos vídeos recentes). Para pt-BR, cerca de 150, até haver uma locução real do projeto cronometrada, que passa a valer. A estimativa por bloco é ponto de partida: o texto escrito a corrige, e ela não justifica encher um bloco nem cortar o que ele precisa.
 
-**Registro.** Na tabela de estrutura de `script.md` (`formato`), o que ajuda de cada bloco: o que ele faz, a pergunta ou a tensão que carrega, o que o liga ao seguinte, os fatos que usa e o tamanho estimado. Os nomes das fases servem para dizer a função, e uma descrição livre também.
+**Registro.** Na tabela de estrutura de `script.md` (`formato`), o que a leitura do texto não deixa inferir com segurança: a mudança que define cada bloco e por que o seguinte vem agora. Um nome de fase cabe na descrição quando ajuda. Os fatos e o tamanho do bloco ficam no texto e na saída do `pnpm check-script`.
 
 **Sensores.** Medidas da referência. Servem para localizar desequilíbrio (abertura longa demais, corpo sem desenvolvimento, virada que chega tarde, fim sem espaço), e não aprovam nem reprovam uma estrutura.
 
@@ -82,5 +82,5 @@ Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, d
 - Se uma estrutura perde o ouvinte, e com que gravidade, é de `critica`.
 
 ## EXEMPLO
-> Bloco 4, "O ponto sem volta". Faz: mostra por que nada escapa (escalada). Leva ao seguinte: então o que acontece com quem entra? Fatos: velocidade de escape, horizonte de eventos. Cerca de 140 palavras.
+> Bloco 4, "O ponto sem volta". O que muda: fica claro por que nada escapa (escalada). Por que o seguinte vem agora: se nada sai, resta saber o que acontece com quem entra.
 > Teste de remoção num bloco sobre o maior buraco negro conhecido: sem ele, nada do que vem depois fica sem base. É um fato excelente e não muda o que se entende nem o que se espera: candidato a corte.

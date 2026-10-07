@@ -14,7 +14,7 @@ Leia, nesta ordem:
 
 As unidades da pasta `.claude/skills/diretor-criativo/` são lidas quando a lente de um defeito percebido as chama, e só essas. `src/videos/<vídeo>/research.md`, só para saber se o conserto de um defeito tem material na pesquisa.
 
-As unidades falam em **bloco**; o roteiro tem **cenas**. Um bloco é um grupo de cenas vizinhas com uma ideia e um assunto visual, conforme a estrutura de `script.md`. Sem `script.md`, agrupe as cenas por ideia e diga no relatório o agrupamento que adotou. Cada problema cita o bloco e a cena.
+As unidades falam em **bloco**; o roteiro tem **cenas**. Um bloco é um grupo de cenas vizinhas que produz uma mudança reconhecível no que o ouvinte sabe, espera ou pergunta, conforme a estrutura de `script.md`. Sem `script.md`, agrupe as cenas por essa mudança e diga no relatório o agrupamento que adotou. Cada problema cita o bloco e a cena.
 
 Você pode rodar `pnpm check-script <vídeo>`, e é o único comando que roda. O perfil que ele imprime é pista, conforme `critica`.
 

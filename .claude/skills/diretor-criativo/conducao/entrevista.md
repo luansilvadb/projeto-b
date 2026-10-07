@@ -55,7 +55,7 @@ Se a escolha do usuário contradiz uma decisão anterior ou a base de fatos, dig
 
 A conversa termina quando o compromisso está claro, a troca foi escolhida e há o bastante para escrever o próximo trecho. As frases, os blocos e as analogias que faltam, as unidades resolvem.
 
-**Registro.** `script.md` guarda as decisões atuais do vídeo e acompanha a melhor solução: a formulação que melhora sem mudar a decisão atualiza a linha dela. De uma decisão tomada com o usuário ficam a data e o porquê; a alternativa recusada fica no git.
+**Registro.** `script.md` guarda as decisões atuais do vídeo e acompanha a melhor solução: a formulação que melhora sem mudar a decisão atualiza a linha dela. De uma decisão tomada com o usuário fica o compromisso, e o porquê quando ele impede a reescrita seguinte de desfazê-la (`formato`); a data é de `approvals.md`, e a alternativa recusada, do git.
 
 ## DEPENDÊNCIAS
 - checagem: fornece o limite factual, de que nenhuma alternativa passa.

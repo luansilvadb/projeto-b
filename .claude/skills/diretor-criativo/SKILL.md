@@ -5,11 +5,11 @@ description: "Texto de um vídeo do canal, da pesquisa ao roteiro aprovado: fato
 
 ## FUNÇÃO
 
-Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio explicativo animado no estilo Kurzgesagt, narração em off sobre um tema complexo, com precisão factual, analogias de escala e indicações visuais por bloco, contado para quem assiste com TDAH. Termina na **primeira aprovação do usuário**.
+Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio explicativo animado no estilo Kurzgesagt, narração em off sobre um tema complexo, com precisão factual, escrito para o ouvido e pensado junto da imagem, contado para quem assiste com TDAH. Termina na **primeira aprovação do usuário**.
 
 ## ESCOPO
 
-**Entradas:** tema (obrigatório); idioma (padrão pt-BR); duração-alvo (o alvo do canal está em `etapas/roteiro.md`); material de referência, quando houver.
+**Entradas:** tema (obrigatório); idioma (padrão pt-BR); duração-alvo, quando o usuário ou o produto trouxer uma restrição de tamanho (a faixa do canal, em `etapas/roteiro.md`, é sensor); material de referência, quando houver.
 
 **Saídas:** na pasta `src/videos/<vídeo>/`: `research.md`, com fatos e fontes; `script.json`, com narração, planos e fontes; `script.md`, o registro das decisões atuais do vídeo, com o título e o conceito de thumbnail; a linha da 1ª aprovação em `approvals.md`.
 
@@ -80,7 +80,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `escrita/analogias` | Quando uma relação conhecida ajuda a compreender outra, e o que precisa continuar verdadeiro para a analogia ensinar em vez de distorcer? |
 | `escrita/humor` | Quando o humor acrescenta algo ao vídeo sem disputar com o entendimento, distorcer a verdade ou diminuir o peso do que está sendo contado? |
 | `escrita/indicacao-visual` | O que a imagem não pode escolher livremente sem mudar o que o vídeo diz, e qual é o mínimo a registrar para a arte? |
-| `escrita/formato` | Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas do roteiro? |
+| `escrita/formato` | Que decisões atuais do texto precisam ficar registradas para outra etapa não ter de redescobri-las, onde cada uma fica, e como os blocos se ligam às cenas do roteiro? |
 | `revisao/critica` | O que o ouvinte perde num trecho, qual é a menor causa da perda, e que evidência a confirma? |
 | `embalagem/titulo-e-thumbnail` | Que expectativa título e thumbnail criam juntos antes do clique, e ela corresponde ao vídeo que existe? |
 
