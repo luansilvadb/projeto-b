@@ -1,6 +1,6 @@
 ---
 name: diretor-de-som
-description: "Som de um vídeo do canal, fora a voz: a música como um leito contínuo, os momentos em que ela muda, os níveis da mixagem, os silêncios e os efeitos sonoros. Use quando o usuário achar a trilha desconexa, genérica, alta, baixa ou repetitiva; ao escrever o arco de som de um roteiro; ao fazer ou refazer o som de um vídeo animado; ao decidir onde cabe um efeito ou um silêncio; e ao julgar o som de um render."
+description: "Som de um vídeo do canal, fora a voz: a música como um leito contínuo, os momentos em que ela muda, os níveis da mixagem, os silêncios e os efeitos sonoros. Use quando o usuário achar a trilha desconexa, genérica, alta, baixa ou repetitiva; ao decidir, antes da voz, uma pausa ou outro compromisso de som que muda o tempo do vídeo; ao fazer ou refazer o som de um vídeo animado; ao decidir onde cabe um efeito ou um silêncio; e ao julgar o som de um render."
 ---
 
 ## FUNÇÃO
@@ -9,15 +9,15 @@ Dono de tudo que se ouve além da narração: decide o que a música faz em cada
 
 ## ESCOPO
 
-**Entradas:** o texto do roteiro, com os capítulos e a virada (skill `diretor-criativo`); a narração gravada, com a duração de cada cena (skill `producao`); a partitura da animação, com o que acontece em cada plano (skill `diretor-de-arte`); o vídeo animado e aceito.
+**Entradas:** o roteiro e as decisões de estrutura que ele tiver (skill `diretor-criativo`); a narração gravada, com a duração de cada cena (skill `producao`); a partitura da animação, com o que acontece em cada plano (skill `diretor-de-arte`); o vídeo animado e aceito.
 
-**Saídas:** o arco de som e o mapa de som (`src/videos/<vídeo>/sound.md`); os campos `music` e `sfx` de `script.json`; a lista dos sons que faltam no catálogo; o relatório da crítica de som; a linha do aceite do som em `approvals.md`.
+**Saídas:** os compromissos de som antecipados, quando houver, e o mapa de som (`src/videos/<vídeo>/sound.md`); os campos `music` e `sfx` de `script.json`; a lista dos sons que faltam no catálogo; o relatório da crítica de som; a linha do aceite do som em `approvals.md`.
 
 ## ANTI-ESCOPO
 
 - A voz: geração, pronúncia e entonação pertencem à skill `producao`.
 - Rodar as ferramentas (`pnpm music`, `pnpm sfx`, render, normalização do arquivo final): pertence à skill `producao`, que opera o que esta skill decide.
-- O texto de uma frase e os `holdMs`: pertencem à skill `diretor-criativo`. O arco de som pede; quem escreve é ela.
+- O texto de uma frase e os `holdMs`: pertencem à skill `diretor-criativo`. Esta skill pede; quem escreve é ela, que também grava sozinha a pausa que nasce da imagem ou do texto.
 - O que acontece na imagem: pertence à skill `diretor-de-arte`. Esta skill lê a partitura e não toca em arquivo de cena.
 - Cópia de melodia, tema ou timbre reconhecível de trilha existente: da referência usa-se a medida e o método.
 
@@ -27,7 +27,7 @@ O pedido decide a etapa; a etapa decide o que ler.
 
 | Etapa | Quando | Procedimento |
 |---|---|---|
-| Arco de som (dentro do roteiro) | o texto do roteiro está escrito e ainda não aprovado; o roteiro pede ou perde um silêncio | `etapas/arco-de-som.md` |
+| Arco de som antecipado (dentro do roteiro) | antes da voz, a skill `diretor-criativo` traz uma dúvida de pausa ou de som que muda o tempo ou o sentido do vídeo; sem dúvida, a etapa não abre | `etapas/arco-de-som.md` |
 | 6. Som | animação aceita; trilha desconexa, genérica, alta ou baixa; trocar a música de um trecho; pôr, tirar ou trocar um efeito; julgar o som de um render | `etapas/som.md` |
 
 ## CONDUÇÃO
@@ -80,7 +80,7 @@ Injete o procedimento da etapa, depois `entrevista-som` e as unidades do passo e
 
 | Etapa | Passo | Unidades | Entrega |
 |---|---|---|---|
-| Arco de som | Arco | `leito`, `silencio` | o arco de som em `sound.md`, aprovado junto com o texto |
+| Arco de som antecipado | Dúvida | `silencio`; `leito` só se a dúvida é de continuidade da música | o `holdMs` pedido ao roteiro e o compromisso em `sound.md`, quando houver; sem aprovação própria |
 | 6. Som | Mapa | `leito`, `descricao`, `momentos`, `niveis`, `silencio`, `dose` | o mapa de som em `sound.md` e os campos `music` e `sfx`, aprovados antes de gerar |
 | | Sons | `escolha` | todo uso do mapa com um som no catálogo |
 | | Revisão | `critica-som` | medidas, relatório e roteiro de escuta, levados ao aceite |
@@ -92,7 +92,7 @@ Para tarefas parciais (trocar a música de um trecho, acrescentar um efeito, bai
 - O agente não ouve. Nenhum som é dado como bom por medida: a medida acusa defeito, e o aceite é do ouvido do usuário.
 - Toda mudança da música tem uma causa no roteiro: uma virada de capítulo, uma mudança de assunto, um fato que pesa.
 - Todo efeito acompanha uma ação que está na partitura da animação.
-- O mapa é aprovado antes de qualquer geração: cada leito custa minutos de GPU.
+- O mapa é aprovado antes de qualquer geração: cada leito custa minutos de GPU. Essa aprovação é da etapa `som`, e não se adianta para antes da voz.
 
 ## CRITÉRIOS DE PARADA
 

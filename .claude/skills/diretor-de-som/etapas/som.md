@@ -6,7 +6,9 @@ O que esta etapa decide fica em dois lugares: `src/videos/<vídeo>/sound.md`, o 
 
 ## Passo 1: mapa de som
 
-Unidades `entrevista-som`, `leito`, `descricao`, `momentos`, `niveis`, `silencio` e `dose`. Parta do arco de som já aprovado (a seção "Arco" de `sound.md`), da duração de cada cena (`public/videos/<vídeo>/narration.json`; `pnpm check-script <vídeo>` a imprime) e da partitura da animação (`score.md`).
+Unidades `entrevista-som`, `leito`, `descricao`, `momentos`, `niveis`, `silencio` e `dose`. Parta dos compromissos antecipados que houver na seção "Arco" de `sound.md` (pode ser uma linha, e o arquivo pode não existir), da duração de cada cena (`public/videos/<vídeo>/narration.json`; `pnpm check-script <vídeo>` a imprime) e da partitura da animação (`score.md`).
+
+É aqui, com a voz real e a animação aceita, que se decidem os timbres, o andamento, o tom, os leitos e o silêncio de música: o que o arco antecipado deixou em aberto é completado agora, e a intenção que ele registrou sem realização ganha a sua. A duração que pede mais de um leito é restrição desta etapa (`leito`).
 
 Escreva em `sound.md` a seção "Mapa", com uma tabela por camada; `src/videos/why-we-sleep/sound.md` é o modelo:
 
