@@ -55,7 +55,7 @@ O número em algarismos, o símbolo e a sigla vão para a tela, descritos na enc
 Além das regras do validador:
 
 - O desenho (`escrita/explicacao`) e o fio (`escrita/fio`) vêm antes do roteiro inteiro. Um trecho curto pode ser escrito antes deles, para testá-los, e o que ele mostrar volta a eles. Antes do roteiro inteiro, uma amostra curta prova a maneira de contar e é mostrada ao usuário, com as decisões que ela pôs em jogo (`conducao/entrevista`); a estrutura e o fio seguem acompanhando o que o texto mostrar.
-- As frases médias e encadeadas de `escrita/narracao` pesam em dobro aqui: o modelo de voz gera uma frase por vez, com pausa entre elas, e texto picotado em frases curtas sai monótono e mal-humorado.
+- O modelo de voz gera uma frase por vez, com pausa entre elas, e o raciocínio picotado em frases curtas sai monótono e mal-humorado: o encadeamento de `escrita/narracao` pesa em dobro aqui.
 - A pontuação decide como a frase é falada; a tabela está na etapa `narracao` da skill `producao`.
 - A vírgula é uma pausa: o modelo de voz para em cada uma. Só ponha vírgula onde quem fala pararia. "E mesmo assim emagreciam", não "e, mesmo assim, emagreciam", que sai com duas pausas.
 - A grafia decide a pronúncia. Se o usuário ouvir uma palavra dita errado, escreva em `narration` como ela deve soar e deixe a grafia correta em `script.md`, na seção de grafias de pronúncia. O modelo lê "mal-humorado" ligando o "l" à vogal ("malumorado"); "mau-humorado" sai certo. O Whisper não acusa esse tipo de erro, só o ouvido.
@@ -79,7 +79,7 @@ O comando dá dois tipos de resposta, com autoridades diferentes.
 
 **Erro**, o que ele recusa: as regras do formato e da narração (`src/narration/script.ts`), listadas de uma vez, e `script.md` contra o roteiro, quando alguma cena está fora da tabela de estrutura, em dois blocos ou fora de ordem (sem `script.md`, só avisa). Corrija até passar antes de mostrar ao usuário.
 
-**Sinal**, o que ele só imprime: a duração estimada de cada cena, de cada plano e do vídeo (o alvo do canal é de 6 a 10 minutos), os planos longos, tratados na decupagem conforme a unidade `planos` da skill `diretor-de-arte`, e o **perfil da narração** contra os vídeos de referência. Medida FORA diz onde olhar e não reprova o texto: leia o trecho pelas perguntas de `escrita/explicacao`. O defeito que a leitura confirma é corrigido, no desenho do bloco e não trocando palavras; sem defeito, o texto segue, e a medida vai no relato da primeira aprovação, para o usuário saber dela antes de a voz ser gerada.
+**Sinal**, o que ele só imprime: a duração estimada de cada cena, de cada plano e do vídeo (o alvo do canal é de 6 a 10 minutos), os planos longos, tratados na decupagem conforme a unidade `planos` da skill `diretor-de-arte`, e o **perfil da narração** contra os vídeos de referência. Medida FORA diz onde olhar e não reprova o texto: leia e ouça o trecho. O defeito que a leitura confirma é corrigido pela unidade dona (`escrita/explicacao` se é a relação, `escrita/fio` se é a continuidade, `escrita/narracao` se é a frase); sem defeito, o texto segue, e a medida vai no relato da primeira aprovação, para o usuário saber dela antes de a voz ser gerada.
 
 ## Checagem e crítica independentes
 

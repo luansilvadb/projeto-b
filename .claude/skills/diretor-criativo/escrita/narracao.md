@@ -1,77 +1,84 @@
 ## PERGUNTA
-Como escrever um texto feito para ser ouvido?
+O que uma frase precisa fazer para ser entendida, soar natural e se ligar à seguinte quando é ouvida uma vez?
 
 ## RESPOSTA
 
-**Premissa.** O espectador ouve uma vez, na velocidade do narrador, sem poder reler. Toda regra abaixo decorre disso.
+**Premissa.** O espectador ouve uma vez, na velocidade do narrador, sem poder reler. Quando a frase termina, ele sabe quem fez o quê, o que mudou e como isso se liga ao que vinha ouvindo, sem voltar ao começo dela, sem decidir a quem um "ele" se refere e sem reorganizar a oração.
 
-**Frase:**
+**Quatro autoridades**, que esta unidade mantém separadas:
 
-- Uma ideia por frase. Se há "que", "o qual" e "sendo que" na mesma frase, divida.
-- Sujeito e verbo próximos e no começo; a informação nova vai para o fim, onde a voz cai.
-- Voz ativa e verbos concretos: "a estrela engole o planeta", não "ocorre a absorção do planeta".
-- Frase média é o padrão. A curta entra só onde a ideia vira, e o bloco pode terminar numa frase média, no meio do raciocínio que o próximo continua.
-- Presente do indicativo como tempo padrão.
+- **O ouvido**: o que a frase precisa fazer para ser entendida. Manda.
+- **O registro do canal**: decisões do usuário sobre quem narra. Mandam, e são dele.
+- **A ferramenta de voz**: o que o modelo atual consegue dizer. É restrição de produção, obedecida enquanto a ferramenta for esta, e não uma teoria de boa escrita.
+- **O perfil das referências**: medidas. Dizem onde ouvir de novo, e nada mais.
 
-**Registro.** O narrador conta em off: é alguém que apurou a história e a conta com calma, e não um apresentador conversando com a câmera. Português do Brasil escrito direto em português, falado e sem gíria (decisões do usuário em 2026-10-04; o tom é o do vídeo da JBS, base de `fio`). O teste de cada frase: um bom narrador de documentário brasileiro diria isso, com essas palavras?
+### O ouvido
 
-- Frase declarativa, com o sujeito dito pelo nome e repetido quando volta. O que amarra uma frase à outra é a ordem dos fatos e o sujeito em comum; conectivo entra onde há causa ou virada de verdade.
-- Palavra que a fala usa: "dá" e não "resulta em", "tem" e não "possui", "todo mundo" e não "a totalidade". "Pra", "pro" e "tá" entram onde a forma inteira soaria dura.
-- A passagem é dita em tom de narrador. Quando a virada pede orientação (`ouvinte`), ela diz o que ficou decidido e o que falta: "isso explica quem é quem; falta explicar como".
-- A ideia difícil pode ser dita duas vezes, a segunda depois de "ou seja" ou "em outras palavras", com a consequência para quem assiste.
+- **A frase cabe numa escuta.** Ela é uma unidade de escuta, e não uma ideia contada: causa e consequência, condição e resultado, uma comparação ou uma enumeração simples cabem juntas ("a temperatura sobe, e por isso a reação acelera"), e uma única ideia cercada de três orações antes do verbo não cabe. A frase longa que se ouve bem não tem defeito.
+- **O raciocínio sobrevive entre os pontos.** Quando cada oração vira uma frase, causa e consequência soam como fatos independentes e a voz para demais. Frases médias e encadeadas são o jeito mais forte de manter o raciocínio inteiro, e o bloco pode terminar numa delas, no meio do raciocínio que o próximo continua. A frase curta ganha força quando contrasta com o ritmo em volta e carrega uma mudança real; sem mudança, soa encenada.
+- **Quem age não se perde.** O ouvinte não espera tanto pelo verbo que esquece o sujeito. Sujeito e verbo próximos é a heurística; uma abertura de tempo, condição ou cenário não a quebra ("depois de onze dias acordado, Gardner finalmente dormiu"). A frase entrega a informação na ordem em que dá para integrá-la, em geral o conhecido antes do novo. Ela deixa claro o que muda e, quando importa, quem produz a mudança: "a estrela engole o planeta" se ouve melhor que "ocorre a absorção do planeta", e a passiva serve quando o agente é desconhecido ou não importa ("a amostra foi destruída antes da análise").
+- **O referente está disponível.** "Ele", "isso", "esse processo" apontam para uma coisa só; se podem apontar para duas, o nome volta. O termo central fica com o mesmo nome, porque o sinônimo posto para variar faz o ouvinte achar que é outra coisa; onde não há ambiguidade, o sinônimo é natural. A repetição que mantém o referente vivo, dá ritmo ou carrega o fio fica; a acidental cansa.
+- **O tempo verbal situa.** O presente põe o processo diante do ouvinte e serve ao mecanismo; o passado serve à história, ao experimento concluído e à descoberta; o futuro, ao experimento mental e à consequência prevista. O que vale é ficar claro onde o narrador está em relação ao acontecimento, sem trocas que confundam.
+- **A abstração ganha corpo antes de carregar raciocínio**: antes, logo depois, ou pela imagem. O termo técnico entra quando dá precisão, quando o nome importa ou quando o público espera conhecê-lo, mesmo que apareça uma vez; ele não substitui o entendimento (`explicacao`).
+- **O número é reconhecível e útil antes de outro disputar com ele.** A carga está na relação, e não na contagem: "caiu de oito horas para duas" e "ela dorme duas horas; nós, oito" são dois números e uma relação só; um ano, uma porcentagem e uma distância sobre atores diferentes pesam mesmo um por frase. É dito como se fala ("quase quatro milhões"), arredondado quando a precisão não importa e a base de fatos sustenta. A comparação entra quando o contexto ainda não deu a escala (`explicacao`).
+- **A frase não começa do zero quando o raciocínio continua.** O que liga uma à outra é a ordem dos fatos, o sujeito em comum, a consequência, o contraste, a repetição. O conectivo diz uma relação que existe, e pode faltar quando ela já se percebe. Quando entra, o da fala ("só que", "então", "acontece que") costuma soar melhor que o da escrita ("entretanto", "outrossim", "dessa forma").
+- **O contraste é marcado quando existe.** O "mas", o "só que" e a construção paralela fazem o ouvido reconhecer a virada. Um texto também avança por consequência, descoberta, acumulação, cronologia ou hipótese: vários blocos sem "mas" numa investigação que progride não são exposição, e "mas" posto para dar dinamismo soa fabricado.
+- **A pergunta faz trabalho.** A que o narrador faz pelo espectador ("ok, mas por que não ir mais rápido?") nasce de onde ele está, e o trecho seguinte trabalha nela. A que pode sair sem mudar nada ("mas o que isso significa?") sai.
+- **O ritmo vem do raciocínio**: da alternância entre desenvolver, virar e pausar conforme ele pede, e não de frases curtas, perguntas e "mas" a intervalos regulares.
+- **O ouvinte sabe de quem são as palavras.** Quando a fala deixa de ser do narrador, isso se ouve: o nome antes da fala, o anúncio em dois-pontos, o discurso indireto ("ele dizia que..."), a citação curta, o texto na tela. O nome entra quando a pessoa carrega o vídeo, quando quem ela é pesa, quando é citada ou quando é preciso distinguir atores; o pesquisador de um estudo que aparece uma vez pode ficar no selo (`procedencia`).
+
+### O registro do canal
+
+O narrador conta em off: é alguém que apurou a história e a conta com calma, e não um apresentador conversando com a câmera. Português do Brasil escrito direto em português, falado e sem gíria (decisões do usuário em 2026-10-04; o tom é o do vídeo da JBS, base de `fio`). Quem ele é (temperatura, distância, humor) é de `voz`; aqui está como isso atravessa frases que se ouvem.
+
+- O teste: um bom narrador de documentário brasileiro diria isso, com essas palavras? Ele se responde com o que dá para apontar: a palavra existe na fala, a construção tropeça, soa a tradução, o registro muda sem motivo.
+- Entre duas palavras que dizem o mesmo com a mesma precisão, a que soa natural na boca dele: "dá" e não "resulta em", "tem" e não "possui", "todo mundo" e não "a totalidade". O termo técnico necessário fica.
+- "Pra", "pro" e "tá" entram onde a forma inteira soaria dura, e não para provar que o texto é falado.
 - "Você" aparece onde quem assiste entra na história, conforme `voz`; "a gente" e a fala do espectador ("aí você pensa:") ficam para os trechos que argumentam com ele, conforme `fio`.
+- A ideia difícil pode ser dita duas vezes, a segunda depois de "ou seja" ou "em outras palavras", com a consequência para quem assiste.
 - Gíria e interjeição ("tipo", "putz", "pô") ficam fora, pela regra de `humor`.
 
-**Perfil de frase.** O texto não é feito de frases curtas: é feito de frases médias, com uma muito curta a cada nove ou dez. As faixas são as que o `pnpm check-script` confere. Frase de uma ou duas palavras ("Ah. Ah, não.") marca a reviravolta; por isso é rara. Frase longa é permitida quando é uma enumeração em que cada item cabe numa respiração.
+### A ferramenta de voz
 
-**Vocabulário:**
+O modelo lê `narration` literalmente e gera uma frase por vez. O que ele recusa (números, unidades e siglas por extenso, o tamanho da frase, a pontuação final) e o que ele faz com a vírgula, o dois-pontos e a grafia estão em `etapas/roteiro.md` e na etapa `narracao` da skill `producao`. O que esta unidade guarda disso:
 
-- Palavra comum sempre que existir. Termo técnico só entra quando será reutilizado; nesse caso é explicado antes de ser nomeado ("essa fronteira tem nome: horizonte de eventos").
-- Um nome por coisa. Trocar por sinônimo faz o ouvinte achar que é outra coisa.
-- Concreto antes do abstrato: primeiro o exemplo, depois o conceito.
-- Sem siglas não explicadas e sem parênteses; o que está entre parênteses não se narra.
+- O texto picotado em frases curtas saiu monótono e mal-humorado no áudio real: cada ponto é uma pausa do modelo. Aqui a ferramenta e o ouvido pedem a mesma coisa.
+- A pontuação escreve a pausa e a relação que a fala precisa. Pausa é ponto, e não reticências; o dois-pontos deixa a voz em suspenso antes de uma citação.
+- A grafia que faz o modelo pronunciar certo é adaptação para a produção, com a grafia correta guardada para a tela e para o registro; não é a escrita melhor. O erro de pronúncia só o ouvido pega.
+- Uma frase boa que o modelo atual não consegue dizer é reescrita para ele, e continua sendo uma frase boa: a restrição é da ferramenta.
 
-**Números:**
+### Testes
 
-- No máximo um número relevante por frase, e cerca de dois por minuto de narração. Mais que isso só em arcos de escada de escala, num bloco que responde a uma pergunta anunciada com números de uma medida só, sobre os mesmos elementos, conforme `explicacao`, ou na conta em voz alta de `fio`.
-- Arredondado e dito por extenso do jeito que se fala ("quase quatro milhões").
-- Todo número grande ganha referência de comparação logo em seguida.
+- **Uma escuta.** Ouvida uma vez, dá para dizer quem fez o quê sem reconstruir a frase? Se não, a causa escolhe o conserto (o sujeito longe do verbo, a oração encaixada, o referente ambíguo, números demais, a abstração sem corpo, a informação antes da base), e nem sempre é dividir.
+- **Ligação.** Dá para dizer como esta frase se liga à anterior?
+- **Referência.** Cada "ele", "isso" e "essa" aponta para uma coisa só?
+- **Boca.** O narrador diria isso?
+- **Ouvir de verdade.** Na dúvida de ritmo, ar ou pronúncia, a evidência é o som, pela mais barata primeiro: ler em voz alta, comparar duas formulações, gerar o menor trecho na voz. O ouvido real vale mais que a regra.
 
-**Citação:**
+### Sensores
 
-- Diga quem falou, pelo nome, antes da fala: "um pesquisador" sem nome soa como enfeite, e o espectador não tem como conferir.
-- O anúncio termina em dois-pontos e a fala citada vem depois dele: a voz para em suspenso e o ouvinte entende que as próximas palavras são de outra pessoa.
-- Cite o que a pessoa disse. Se a frase original não cabe na voz, diga que é um resumo ("ele dizia que...") em vez de pôr palavras na boca dela.
-- Nome estrangeiro vai escrito como se pronuncia na narração; a grafia correta vai para a tela e para o registro do roteiro.
+Medidas das referências. Respondem "onde vale ouvir de novo?", quando o texto soa picotado, monótono, formal, distante ou carregado de números. Nunca se escreve para preencher uma: frase curta, pergunta, conectivo ou "você" postos porque faltavam são o texto calibrado que o ouvinte reconhece.
 
-**Ritmo e encadeamento:**
-
-- O bloco seguinte abre no que o anterior deixou aberto: a saída que o espectador tentaria, conforme `fio`, ou a consequência do que foi dito.
-- Conectores falados ("só que", "então", "acontece que") em vez de escritos ("entretanto", "outrossim", "dessa forma").
-- Repetição deliberada de uma palavra-chave ajuda o ouvido; repetição acidental cansa.
-- Pausas são escritas com ponto e quebra de linha, não com reticências. O dois-pontos também é pausa, com a voz em suspenso: ele anuncia uma citação ou a fala do espectador ("aí você pensa:"). No resto, a frase corre com vírgula ou "que".
-- A virada com "mas" é o motor do texto: cada explicação dura até encontrar seu problema. Se dois blocos seguidos não têm um "mas", um "só que" ou equivalente, o texto virou exposição.
-- A pergunta do espectador pode ser feita pelo narrador ("ok, mas por que não ir mais rápido?"), cerca de uma a cada dois minutos; ela marca a troca de assunto melhor que um conector.
-
-**Procedimento:**
-
-1. Escreva bloco a bloco, a partir do que cada um faz na estrutura. A estimativa de palavras orienta, e o texto a corrige.
-2. Releia cada bloco em voz alta mentalmente: onde faltaria ar ou a língua tropeçaria, reescreva.
-3. Passe cada frase pelo teste do registro. A que o narrador não diria é reescrita como seria dita.
-4. Corte a frase de efeito que não foi ganha, conforme `fio`. O fato seco, o detalhe e a retomada que fazem trabalho no fio ficam: são eles que dão tempo ao ouvido.
-5. Confira o bloco contra a ficha de voz, o fio e o que `ouvinte` pede do trecho.
+- As cinco medidas do `pnpm check-script` (palavras por frase, frases de até 6 palavras, frases de 25 ou mais, "você" e "nós", conectivos), com as faixas em `PROFILE_CRITERIA`, `src/narration/profile.ts`.
+- Uma frase muito curta a cada nove ou dez, na referência. A de uma ou duas palavras ("Ah. Ah, não.") marca a reviravolta, e por isso é rara.
+- Um número relevante por frase, e cerca de dois por minuto de narração.
+- Uma pergunta feita pelo narrador a cada dois minutos, mais ou menos.
+- Dois blocos seguidos sem nenhuma virada.
 
 ## DEPENDÊNCIAS
-- ouvinte: fornece para quem o texto é escrito e o que ele precisa de cada trecho.
+- ouvinte: fornece o que quem ouve consegue manter vivo, que a frase respeita.
 - explicacao: fornece a relação que cada bloco torna compreensível, com a base e a consequência dela, que a frase realiza.
-- fio: fornece o que fica vivo entre os trechos e os mecanismos escolhidos para sustentá-lo.
+- fio: fornece o que fica vivo entre os trechos, que a frase reconhece e leva adiante.
+- voz: fornece quem narra.
 - humor: fornece a regra que deixa a gíria de fora.
-- arco: fornece o que cada bloco faz, o que o liga ao seguinte e a estimativa de tamanho.
-- voz: fornece a ficha de voz que a narração deve respeitar.
+- arco: fornece o que cada bloco faz e o que o liga ao seguinte.
 
 ## LIMITES
-- Não inserir afirmação fora da base de fatos durante a escrita; se faltar, volte a `levantamento`.
-- Analogias, humor e notas visuais têm unidades próprias.
+- A formulação não acrescenta fato: o que falta na base de fatos volta a `levantamento`.
+- Citação só leva as palavras que a fonte disse. O que foi condensado é dito como resumo, sem aspas.
+- O arredondamento e a simplificação da fala passam por `checagem`.
+- O que o validador recusa é erro, e não estilo: é corrigido sempre (`etapas/roteiro.md`).
+- Analogias, humor e notas visuais têm unidades próprias; quando escrever, ouvir e revisar é de `etapas/roteiro`.
 
 ## EXEMPLO
 > Antes: "A fotossíntese, processo pelo qual os organismos autotróficos convertem energia luminosa em energia química, é fundamental para a manutenção da vida."

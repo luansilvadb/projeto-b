@@ -75,7 +75,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `estrutura/chamada` | Como pedir a curtida e a inscrição sem desfazer o fechamento? |
 | `escrita/explicacao` | O que faz um fato mudar o entendimento de quem assiste, em vez de ser só mais uma informação verdadeira? |
 | `escrita/fio` | O que faz uma sequência soar contada como uma coisa só, em vez de uma coleção de fatos bem escritos, e que mecanismos mantêm algo vivo de um trecho para o seguinte? |
-| `escrita/narracao` | Como escrever um texto feito para ser ouvido? |
+| `escrita/narracao` | O que uma frase precisa fazer para ser entendida, soar natural e se ligar à seguinte quando é ouvida uma vez? |
 | `escrita/procedencia` | Como mostrar de onde vem cada fato, na fala e na tela, para o vídeo não parecer inventado? |
 | `escrita/analogias` | Como tornar escala e abstração compreensíveis e desenháveis? |
 | `escrita/humor` | Quando e como usar humor seco e alívio cômico sem minar a credibilidade? |

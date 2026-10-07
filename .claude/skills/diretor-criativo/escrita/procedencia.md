@@ -13,7 +13,7 @@ Como mostrar de onde vem cada fato, na fala e na tela, para o vídeo não parece
 
 - **A âncora situa; o achado continua acontecendo.** "Em dois mil e dezessete, um grupo quis saber se ela dorme. O teste foi simples: tirar o apoio de baixo dela, de noite." Depois disso o texto mostra a coisa acontecendo, no presente, conforme `explicacao`. "Pesquisadores mediram que..." abrindo cada frase é relato.
 - **O como é a melhor âncora.** O experimento contado como cena convence mais que o nome de quem o fez.
-- **Nome próprio só entra** quando a pessoa é citada ou volta no vídeo, conforme a regra de citação de `narracao`.
+- **Nome próprio só entra** quando a pessoa é citada ou volta no vídeo, conforme `narracao`.
 - **A desconfiança é dita antes do espectador.** Quando o fato parece exagero, o narrador admite ("parece invenção, mas...") e então dá a âncora.
 
 **Quais fatos pedem o quê:**
@@ -39,7 +39,7 @@ Como mostrar de onde vem cada fato, na fala e na tela, para o vídeo não parece
 ## DEPENDÊNCIAS
 - levantamento: fornece autor, ano e método de cada achado.
 - explicacao: fornece a regra de contar o que acontece acontecendo; a âncora não a suspende.
-- narracao: fornece a regra de citação e a de um número por frase.
+- narracao: fornece como a citação e o número soam na fala.
 
 ## LIMITES
 - A âncora só diz o que a base de fatos tem: ano, lugar e método conferidos. Detalhe pitoresco sem fonte não entra.
