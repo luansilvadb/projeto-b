@@ -11,7 +11,7 @@ Dono da imagem e do movimento de um ensaio explicativo animado no estilo Kurzges
 
 **Entradas:** o texto do roteiro, com narração, nota visual e analogia central (skill `diretor-criativo`); a base de fatos da pesquisa; a narração gravada, com o tempo de cada palavra (skill `producao`), a partir do animatic; a ficha visual de vídeos anteriores do canal, quando houver.
 
-**Saídas:** ficha visual (`art.md`: elenco, paletas e a forma visual das analogias); os planos de cada cena (`shots` em `script.json`); folha de modelo de cada personagem; um quadro composto por plano; a partitura da animação (`score.md`); cada plano em movimento; os relatórios das duas críticas; as linhas da 2ª aprovação e do aceite da animação em `approvals.md`.
+**Saídas:** ficha visual (`art.md`: elenco, paletas e a forma visual das analogias); os planos de cada cena (`shots` em `script.json`); folha de modelo de cada personagem que volta; um quadro composto por plano; a partitura da animação (`score.md`); cada plano em movimento; os relatórios das duas críticas; as linhas da 2ª aprovação e do aceite da animação em `approvals.md`.
 
 ## ANTI-ESCOPO
 
@@ -119,7 +119,7 @@ Injete o procedimento da etapa, depois a unidade de condução e as unidades do 
 |---|---|---|---|
 | Decupagem | Conceito visual | `entrevista-imagem`, `elenco`, `cor` | ficha visual: os compromissos do vídeo e o estado atual da solução |
 | | Decupagem | `entrevista-imagem`, `encenacao`, `planos`, `dado`, `critica-quadro` (lentes de encenação e de decupagem) | planos de cada cena, aprovados junto com o texto |
-| Animatic | Desenho | `entrevista-imagem`, `forma`, `personagem`, `cenario` | folhas de modelo e desenhos reutilizáveis |
+| Animatic | Desenho | `entrevista-imagem`, `forma`, `personagem`, `cenario` | os desenhos que o vídeo usa, e a folha de modelo de quem volta |
 | | Quadro | `composicao`, `texto` | um quadro composto por plano |
 | | Revisão | `critica-quadro` | os quadros e o diagnóstico deles, levados à aprovação |
 | Animação | Partitura | `entrevista-movimento`, `sincronia`, `entradas` | para cada plano, a lista do que acontece, em que palavra e por quanto tempo |
