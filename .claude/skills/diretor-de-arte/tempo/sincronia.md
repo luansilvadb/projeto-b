@@ -3,46 +3,52 @@ Quando cada coisa acontece em relação à narração?
 
 ## RESPOSTA
 
-**Princípio.** Cada movimento tem uma causa na fala ou na cena, e acontece quando a causa aparece. O espectador ouve a palavra e vê a coisa; nunca vê a coisa e depois ouve, nem vê três coisas de uma vez.
+**Princípio.** Cada movimento tem uma causa na fala ou na cena, e acontece quando a causa aparece. O teste, para qualquer mudança: o espectador sabe dizer por que isso mudou agora?
 
-**O que a referência faz.** Em cada oração há uma mudança na imagem; dentro da oração, os elementos entram um a um, de 0,3 a 1 s entre si, cada um na palavra que o nomeia. Um plano de 6 s tem de três a quatro mudanças de estado. Nada entra "do nada": em 11 s de um plano de humor, cada batida da narração tinha uma ação própria (andar, parar, sentir, esperar, a porta abrir, alguém espiar, o balão estourar).
+**A sincronia serve quando:**
 
-**A deixa.** A palavra que dispara um movimento é a que nomeia ou anuncia a coisa: "cinquenta" dispara o número, "noite" dispara o escurecer, "tiraram" dispara o puxão. O movimento começa um pouco antes da palavra, de 3 a 5 quadros a 30 por segundo: começar em cima dela parece atrasado.
+- **Toda mudança tem causa à vista.** A causa pode ser uma palavra, uma ação anterior, a reação de alguém, algo que entrou no quadro ou uma expectativa armada antes. O que não tem causa não entra, nem para preencher tempo.
+- **A consequência chega com a causa.** O espectador ouve a palavra e vê a coisa, e percebe as duas juntas. Ver antes de ouvir, ou muito depois, só quando é de propósito.
+- **O que é um acontecimento só acontece junto, e o que são dois se distingue.** Os dois olhos abrem juntos, a figura e a sombra reagem juntas, as duas barras de uma comparação crescem juntas. Duas novidades sem relação chegam separadas o bastante para serem duas.
+- **A ordem que carrega sentido se mantém**: o preparo antes da ação, a reação depois dela.
+- **A imagem acompanha o sentido da fala**, não a gramática dela: muda quando a ideia, a ação ou o foco mudam (`planos`). Uma oração pode sustentar o que já está na tela, e outra pode pedir várias mudanças.
+- **O tempo sem novidade tem função.** Um **buraco** é o trecho em que nada novo acontece: ele serve a uma reação, a uma espera, à leitura, à contemplação. O que mantém a imagem viva dentro dele é de `pausa-viva`. Buraco que não serve a nada é o plano que morreu.
+- **A última informação tem tempo de ser percebida** antes de o plano acabar, a não ser quando ela continua no plano seguinte ou é a própria transição.
+- **O plano que evolui tem marcos.** Cada mudança que a encenação escreve cai na deixa dela. Uma transformação contínua pode atravessar várias palavras, com os marcos dela no sentido da fala.
+- **O texto chega com o que nomeia**: o nome quando a coisa é apresentada, o número quando a quantidade vira assunto. Quanto tempo ele fica é de `texto`.
 
-**Antecipação.** Uma ação grande avisa que vem: o braço recua antes de bater, a figura se agacha antes de pular, a porta treme antes de descer. O aviso leva cerca de 0,3 s e cabe antes da deixa; a ação em si cai na deixa.
+**O que o repositório fixa:**
 
-**Uma coisa de cada vez.** Quando a fala lista itens, cada item acende na própria palavra. Quando duas coisas precisam mudar na mesma palavra, uma vai 0,3 s depois da outra, a menos que sejam a mesma ação (os dois olhos abrem juntos).
+- **A deixa** é a palavra da narração que nomeia ou anuncia a coisa: "cinquenta" dispara o número, "noite" dispara o escurecer, "tiraram" dispara o puxão. O instante dela vem da narração gravada.
+- **O adiantamento já está no código.** `cue()` devolve o quadro da palavra 4 quadros antes (`CUE_LEAD_FRAMES`), e o começo de cada plano faz o mesmo: um movimento com aceleração que começa em cima da palavra parece atrasado.
+- **A deixa não muda de palavra para caber.** Se o que a encenação pede não cabe no trecho, o plano volta à decupagem (`planos`).
+- **A partitura** é onde tudo isso fica escrito, plano a plano; o formato e o lugar dela são de `entrevista-movimento` e da etapa de animação.
 
-**Ritmo dentro do plano:**
+**Heurísticas e medidas** (pontos de partida e evidência da referência: situam e não reprovam por si).
 
-| Trecho | Dura |
-|---|---|
-| Entrada de um elemento | 0,25 a 0,35 s |
-| Ação de personagem, do preparo ao assentar | 0,6 a 1,2 s |
-| Mudança de estado de um cenário (escurecer, alagar, acender) | 0,8 a 1,5 s |
-| Pausa de reação, quase parada | 1 a 1,5 s |
-| Rastro ou estouro de ênfase | 0,3 a 0,6 s; um aviso insistente, até 2,5 s |
-| Varredura entre dois estados da mesma cena | 0,25 s |
+- **Densidade.** Na referência há uma mudança na imagem em quase toda oração, os elementos entram de 0,3 a 1 s entre si, e um plano de 6 s tem de três a quatro mudanças de estado. Em 11 s de um plano de humor, cada batida da narração tinha uma ação própria (andar, parar, sentir, esperar, a porta abrir, alguém espiar, o balão estourar).
+- **Separar duas mudanças na mesma palavra:** cerca de 0,3 s entre uma e outra.
+- **Antecipação.** A ação grande avisa que vem (o braço recua antes de bater, a porta treme antes de descer). O aviso leva cerca de 0,3 s e cabe antes da deixa, e a ação cai nela. Como se atua é de `acao`.
+- **Fim do plano.** O que entra nos últimos 0,5 s costuma não ser lido.
+- **Buraco.** Passando de 1,5 s sem nada novo, vale perguntar que função o trecho tem.
+- **Durações**, cada uma com a unidade que decide:
 
-**O fim do plano.** Nos últimos 0,5 s nada entra: o que entrar não será lido. A última mudança de um plano acontece até 0,5 s antes do corte, salvo a transição que começa ali.
+| Trecho | Costuma durar | Quem decide |
+|---|---|---|
+| Entrada de um elemento | 0,25 a 0,35 s | `entradas` |
+| Ação de personagem, do preparo ao assentar | 0,6 a 1,2 s | `acao` |
+| Mudança de estado de um cenário (escurecer, alagar, acender) | 0,8 a 1,5 s | `entradas` |
+| Pausa de reação, quase parada | 1 a 1,5 s | `pausa-viva` |
+| Rastro ou estouro de ênfase | 0,3 a 0,6 s; um aviso insistente, até 2,5 s | `efeitos` |
+| Varredura entre dois estados da mesma cena | 0,25 s | `transicoes` |
 
-**Plano que evolui.** Cada mudança que a encenação de um plano escreve acontece na palavra dela, como se fossem planos dentro do plano: a câmera, o cenário ou a pose trocam ali.
-
-**Procedimento, a partitura:**
-
-1. Pegue a encenação do plano e a narração que ele cobre, com o tempo de cada palavra.
-2. Liste as mudanças de estado: o que entra, o que muda, o que sai.
-3. Dê a cada mudança a palavra de deixa e a duração, pela tabela.
-4. Ordene: nada simultâneo que não seja a mesma ação.
-5. Confira os buracos: mais de 1,5 s sem nenhuma mudança é um buraco; o que preenche é a pausa viva, não uma entrada inventada.
-6. Registre a partitura do plano.
+A medida comum a todas: tempo bastante para a mudança ser percebida, sem atrasar a fala que a motivou.
 
 ## DEPENDÊNCIAS
 - encenacao, planos: fornecem o que acontece em cada plano e a deixa de cada um. Os tempos das palavras vêm da narração gravada.
 
 ## LIMITES
-- Não inventar mudança para preencher tempo: o que não tem causa na fala ou na cena não entra.
-- Não mover a deixa para outra palavra para "caber": se não cabe, o plano volta à decupagem (`planos`).
+- Como a figura atua pertence a `acao`; por que e por onde a câmera se move, a `movimento`; que ponte liga dois planos, a `transicoes`. Aqui se decide quando cada uma delas acontece em relação à causa.
 
 ## EXEMPLO
 > Plano: "A água-viva pulsa, de cabeça para baixo. Cinquenta e oito vezes por minuto." (5,9 s)

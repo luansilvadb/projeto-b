@@ -15,9 +15,9 @@ Como julgar o movimento, com medidas e quadros consecutivos?
 **Passadas, nesta ordem.** Um problema de nível superior invalida o polimento dos níveis abaixo.
 
 1. **Sincronia**
-   - Cada mudança acontece na palavra que a causa, um pouco antes dela?
-   - Alguma coisa entra sem causa, ou duas coisas entram juntas sem ser a mesma ação?
-   - Há buraco de mais de 1,5 s sem mudança nem pausa viva?
+   - Cada mudança tem causa à vista e chega com ela, sem parecer atrasada nem adiantada?
+   - O que entra junto é um acontecimento só, e o que são dois se distingue?
+   - O trecho sem novidade tem função, e a última informação teve tempo de ser percebida?
 2. **Entradas e estados**
    - O que surge tem sobra e assenta? Texto entra por máscara ou espaçamento?
    - Algum estado troca em corte seco dentro do plano?
@@ -48,7 +48,7 @@ Além do total, um **mapa segundo a segundo** da fração de quadros quase parad
 
 **Classificação dos problemas:**
 
-- **Bloqueante**: mudança fora da deixa; estado trocando em corte; quadros iguais numa tira; ação sem os três tempos; ponte de transição quebrada. Refazer é obrigatório.
+- **Bloqueante**: mudança sem causa, ou tão longe dela que a relação se perde; estado trocando em corte; quadros iguais numa tira; ação sem os três tempos; ponte de transição quebrada. Refazer é obrigatório.
 - **Relevante**: curva dura (uma ação que termina em um décimo do tempo escrito), sobra demais, família em uníssono, câmera que perde o foco, recurso solto. Refazer, salvo custo desproporcional; o que ficar, relatar com o mapa segundo a segundo.
 - **Polimento**: ajuste fino de tempo, amplitude ou fase. Aplicar se não mexer em nada aprovado.
 
