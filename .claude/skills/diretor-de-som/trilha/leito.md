@@ -18,9 +18,9 @@ A identidade sobrevive por várias pistas (a família de timbres, o tipo de puls
 
 O agente não ouve. Quando a unidade é uma dúvida que pesa, gere o trecho em volta da fronteira e leve-o ao usuário com a pergunta do teste (`entrevista-som`); se a ruptura era intencional, a pergunta é se ela realiza a transformação que o vídeo pede. O número de partes, o andamento e o tom não são perguntados.
 
-**Quantas partes.** O limite é da ferramenta: cada parte tem até 440 s (7 minutos e 20 s), os 480 s que o ACE-Step gera nesta máquina menos a sobra cortada das pontas. Uma parte planejada acima disso derruba o `pnpm music`.
+**Quantas partes.** O limite é da ferramenta: o `pnpm music` recusa a parte cuja duração planejada passa de 440 s (7 minutos e 20 s), os 480 s que o ACE-Step gera nesta máquina menos a sobra cortada das pontas. A duração planejada inclui o cruzamento com a parte seguinte ou a cauda do fim do vídeo: quem diz se a divisão cabe é o comando.
 
-- O vídeo cabe numa parte: uma parte.
+- Se o vídeo cabe numa parte, comece com uma parte.
 - Não cabe: quantas o limite exigir, duas, três ou mais.
 - **Poucas, por padrão.** Cada parte a mais é outra geração, outra costura e outra chance de o timbre derivar.
 - **Uma parte que a duração não exige paga a costura.** O que ela permite que um momento dentro da parte atual não realiza? "Mudou o capítulo, o lugar, o assunto" costuma pedir um momento, ou nada. Uma transformação longa que o momento não alcança (não cabe nele, costura mal, não chega ao outro estado) faz da parte nova uma hipótese válida, provada no som. E o teste inverso: feita a mudança com um momento, o que se perde? Se nada que importe, fica o momento.
@@ -49,7 +49,7 @@ Comece por uma identidade e pelo menor número de partes que a ferramenta permit
 
 **Pronto quando:**
 
-- cada parte cabe em 440 s;
+- o `pnpm music` aceita a divisão;
 - nenhuma costura tem defeito que a medida acusa;
 - cada mudança que se ouve faz trabalho no vídeo;
 - onde a unidade era dúvida que pesa, o usuário ouviu a fronteira;
@@ -59,7 +59,7 @@ Comece por uma identidade e pelo menor número de partes que a ferramenta permit
 - entrevista-som: como a dúvida de unidade chega ao ouvido do usuário, e o que é execução.
 
 ## LIMITES
-- A vinheta e a chamada final não têm faixa própria: são o leito em primeiro plano (`niveis`).
+- A vinheta e a chamada final não ganham parte própria só por serem vinheta ou chamada: são o leito em primeiro plano (`niveis`) enquanto ele realizar a intenção.
 
 ## EXEMPLO
 > Vídeo de 9 min 32 s: uma parte não cabe, duas bastam.

@@ -22,7 +22,7 @@ O que não é momento: uma frase de efeito, uma piada, um corte. A música da re
 | moderado ("the same theme, sparse, held strings") | as notas caem de 5,4 para 3 por segundo, o timbre escurece meia oitava, e as costuras saltam 2,6 e 0,7 dB |
 | grande ("underwater, no drums", sem os timbres de base) | costura de 9,4 dB na saída, e a variação de timbre da faixa vai a 0,98 oitava, três vezes o teto da referência |
 
-Por isso toda descrição de momento começa por "the same theme" e termina no sufixo do vídeo (`descricao`).
+Por isso a forma de menor risco que se achou para pedir a transformação é começar por "the same theme" e repetir o sufixo do vídeo (`descricao`). É linguagem de prompt que ajudou no trecho refeito, e não garantia de tema mantido: o som em volta também segura a identidade, e quem confirma é o que se ouve.
 
 **Dose.** De três a sete momentos num vídeo de 9 minutos, cobrindo até metade dele; o resto é o leito. Cada momento refeito baixa a faixa inteira em 1 dB, que a mixagem compensa, e custa de três a quatro minutos de GPU.
 
@@ -33,12 +33,12 @@ Por isso toda descrição de momento começa por "the same theme" e termina no s
 1. Percorra o roteiro capítulo a capítulo e marque onde o assunto ou o peso muda por duas cenas ou mais.
 2. Para cada marca, escreva o que a música faz ali em uma frase, e o porquê.
 3. Corte os que não têm causa no texto e os que só repetem o leito.
-4. Escreva a descrição de cada um pelo molde de `descricao`.
+4. Escreva a descrição de cada um (`descricao`).
 5. Confira as durações (de 3 a 90 s) e que nenhum cruza a troca de leito; o `pnpm music` recusa o que não cabe.
 
 ## DEPENDÊNCIAS
 - leito: fornece a peça dentro da qual o momento é refeito.
-- descricao: fornece o molde e o sufixo.
+- descricao: como pedir ao gerador o estado da música no trecho, e o sufixo.
 
 ## LIMITES
 - Sem causa no roteiro, não há momento.

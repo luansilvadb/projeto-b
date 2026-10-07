@@ -1,38 +1,66 @@
 ## PERGUNTA
-Como descrever ao modelo a música de um leito ou de um momento?
+Como pedir ao gerador a música de uma parte ou de um momento, e o que a descrição prova?
 
 ## RESPOSTA
 
-**Princípio.** A descrição é lida ao pé da letra. O gerador recebe o texto como foi escrito (o `pnpm music` desliga a reescrita do ACE-Step, que trocava "suspense contido" por "tímpanos e pratos"), então cada palavra pesa e nenhuma é corrigida.
+**Princípio.** A descrição é uma **hipótese de controle** do gerador: diz, de forma concreta e sem comandos concorrentes, só as propriedades sonoras que precisam sobreviver nesta geração. Ela não é a música nem a prova de que a música foi realizada: quem confirma é o som gerado.
 
-**As três partes de uma descrição**, nesta ordem, em inglês:
+**Cada palavra pesa.** O ACE-Step recebe o texto como foi escrito: `tools/music/generate.py` desliga a reescrita dele (`use_cot_caption`), que trocava "suspense contido" por "tímpanos e pratos". Nada corrige a descrição depois, e cada termo é uma força sobre o modelo. Por isso cada termo está ali porque tenta controlar alguma coisa, e nenhum entra por enfeite.
 
-1. **O que a música faz**: o gesto e o humor, em poucas palavras concretas. "curious forward-moving theme, gentle steady pulse, clear melody".
-2. **Os timbres de base**: dois ou três instrumentos. "felt piano, warm analog synth, string ensemble".
-3. **O gênero e o uso**: "cinematic science documentary score, instrumental".
+**Descrição = delta.** O que esta geração precisa realizar que não pode ficar por conta do modelo? Pode ser o gesto, a energia, a densidade, o registro, o pulso, o material (instrumento, modo de tocar, textura), o caráter, o tipo de trilha. Nenhum é obrigatório, não há ordem nem tamanho: "restrained low strings, sparse steady pulse" é uma descrição inteira quando gera o que o vídeo precisa. Ela cresce por evidência: a geração que cai no genérico pede mais uma propriedade concreta, e a que já funciona com cinco termos não ganha o sexto.
 
-As partes 2 e 3 são o **sufixo** do vídeo. Copiá-lo inteiro, com as mesmas palavras, em cada parte e em cada momento é o jeito mais confiável que se achou de conter a deriva do ACE-Step: três descrições de climas diferentes, com o mesmo sufixo, saem a 0,21 oitava uma da outra; sem ele, a 0,64. É o ponto de partida enquanto o vídeo não dá razão para mudar o mundo sonoro. A descrição que pede uma transformação pode mudá-lo, e quem diz se a trilha continuou uma só é o som gerado, e não a comparação dos textos (`leito`).
+- **Uma parte** é uma geração autônoma, sem som em volta: costuma precisar de mais sinais de identidade.
+- **Um momento** é refeito dentro do som que já existe, e esse contexto segura parte da identidade: a descrição pede sobretudo o que muda ali, e repete sinais estáveis quando isso ajuda a não perdê-la (`momentos`).
 
-**Palavras que funcionam.** Instrumento e modo de tocar ("staccato strings ostinato", "held low string note", "slow swelling pads"), densidade ("sparse", "full"), movimento ("steady pulse", "no pulse"), humor de adulto ("thoughtful", "wary", "tender", "restrained").
+**Controles que já deram efeito** nos testes. É repertório, e não vocabulário autorizado:
 
-**Palavras que atrapalham:**
+- o material e o modo de tocar: "staccato strings ostinato", "held low string note", "slow swelling pads";
+- a densidade ("sparse", "full"), o movimento ("steady pulse", "no pulse"), o registro ("low");
+- o caráter ("thoughtful", "wary", "tender", "restrained"), quando acrescenta uma direção que as propriedades ainda não dão;
+- o tipo de trilha ("cinematic science documentary score"), como pista de função que estreita o que o modelo escolhe;
+- poucos timbres nomeados, dois ou três, deram uma identidade mais controlável.
 
-- as que se contradizem na mesma descrição ("laboratory tension" com "sparkling"; "peaceful night" com "bright");
-- as que proíbem a música de mudar ("steady even dynamics") num leito que tem momentos;
-- timbre de brinquedo e humor de desenho animado (marimba, kalimba, caixinha de música, "playful", "quirky"): o usuário recusou uma trilha inteira por isso, "o vídeo é para todas as idades, não é vídeo infantil";
-- o nome de um artista, de um canal ou de uma trilha.
+Onde der, traduza a intenção em propriedades que um músico poderia tocar: "epic" e "emotional" devolvem a escolha ao modelo. As descrições são em inglês, a língua em que tudo isto foi testado.
 
-**Andamento e tom.** `bpm` e `keyScale` vão nos campos próprios, não no texto. O andamento da referência fica entre 112 e 129 bpm; um vídeo de andamento contido pode pedir menos. Um momento não troca o andamento do leito: é o mesmo relógio.
+**O sufixo** é a técnica de estabilização: o conjunto mínimo de sinais que o gerador deve tratar como a identidade do vídeo (timbres, textura, tipo de produção, pulso, o que os testes mostrarem útil), repetido com as mesmas palavras. Três descrições de climas diferentes, com o mesmo sufixo, saíram a 0,21 oitava uma da outra; sem ele, a 0,64. Enquanto a intenção é a mesma, repetir a formulação é o caminho de menor risco conhecido: "warm analog synth" que já dá o mundo certo não vira "soft electronic pads" para variar a redação. A descrição que pede uma transformação pode mudá-lo. Texto estável é controle provável, e não unidade comprovada: duas descrições iguais podem gerar sons que derivam, e duas diferentes, uma evolução que pertence ao vídeo (`leito`).
 
-**Teste.** Leia a descrição sem saber do vídeo: ela diz um humor só? Um músico saberia o que tocar? Compare-a com a de outro trecho do mesmo vídeo: o sufixo só difere onde uma transformação foi pedida?
+**Onde uma descrição costuma falhar**, três causas diferentes:
+
+- **Comandos concorrentes.** "laboratory tension" com "sparkling", "peaceful night" com "bright": termos sem relação entre si, que puxam o modelo para lados que se anulam. Emoção composta não é isso: "tender but uneasy" é uma intenção, e o som diz se o modelo a realiza. O teste: os termos conseguem coexistir na mesma música?
+- **O termo que congela o que precisa variar.** "steady even dynamics" numa parte que tem momentos.
+- **Sinais de infantil.** O canal é ciência para todas as idades, decisão do usuário, que recusou uma trilha inteira: "não é vídeo infantil". O que viola a decisão é o resultado soar como desenho animado, pela soma de timbre de brinquedo, registro agudo, articulação saltitante e humor de cartum. Marimba, kalimba, caixinha de música, "playful" e "quirky" estavam naquela trilha: são sinais de risco, que pedem o ouvido, e nenhum reprova pelo nome. Adulto não é um gênero: energia, humor e leveza cabem.
+
+Peça pelo que a música faz: "restrained, low register, sparse" em vez de "not playful", que põe no texto a palavra que se queria fora.
+
+**O que não é da descrição:**
+
+- **Andamento e tom**: `bpm` e `keyScale` são campos próprios e opcionais, e entram quando a hipótese precisa deles (as sementes variam de velocidade e isso atrapalha a intenção), nunca escritos no texto. Os 112 a 129 bpm da referência descrevem aqueles vídeos; o andamento deste sai do vídeo e do som.
+- **O momento não tem `bpm` nem `keyScale`**: é refeito dentro da parte, no relógio dela. A mudança que se percebe de impulso, pulso, densidade ou registro (suspender, rarefazer, parecer mais lento) é pedida no texto.
+- **O instante**: "drums enter at 30 seconds" não é obedecido. A descrição diz o estado da música no trecho; o que acontece num instante é de um momento, de uma parte, de um nível, de um silêncio ou de um efeito.
+- **A voz**: a geração é sempre instrumental, pedida pelo comando. "instrumental" no texto não é o que a garante.
+- **O nome** de um artista, de um canal ou de uma trilha: descreva as propriedades.
+
+**Antes de gerar**, perguntas baratas, que melhoram a hipótese e não aprovam música:
+
+- cada termo controla alguma coisa, e nenhum repete o que outro já diz?
+- os termos conseguem coexistir?
+- algum pede o que é de `bpm`, `keyScale`, momento, parte, nível ou efeito?
+- que sinais de identidade precisam ficar, e qual é o delta deste trecho?
+
+**Depois de gerar**, a pergunta que decide: o som realizou o que a descrição precisava controlar? A medida elimina o defeito que conhece, e o ouvido do usuário responde a dúvida que pesa (`entrevista-som`). O usuário diz o que percebeu, e traduzir isso em palavras da descrição é do agente; o instrumento que ele pede por conta própria é entrada para este vídeo.
+
+Duas sementes que falham pelo mesmo motivo acusam a descrição: a propriedade pedida é a errada, é pouco concreta, concorre com outra ou restringe demais. Reescreva o menor trecho que controla o defeito: o som adulto e coerente, mas denso demais, muda o termo de densidade, de pulso ou de registro, e mantém o resto. É para isso que cada termo tem uma função: a falha aponta qual mexer.
 
 ## DEPENDÊNCIAS
-- leito: fornece a identidade que as descrições tentam preservar entre as gerações.
+- leito: fornece a identidade percebida que a descrição tenta realizar e preservar.
+- entrevista-som: como a percepção do usuário chega ao agente.
 
 ## LIMITES
-- Vocais nunca entram: o comando sempre pede instrumental.
-- A descrição não marca tempo ("at one minute the drums enter"): o modelo não obedece a instante escrito. A mudança num instante é um momento (`momentos`).
+- A forma não aprova nem reprova. A descrição com sufixo, timbres e tipo de trilha que gera um som infantil, desconexo ou genérico falhou; a de quatro palavras que gera o que o vídeo pede passou.
 
 ## EXEMPLO
-> Leito: "curious forward-moving theme, gentle steady pulse, clear melody, thoughtful wonder, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
-> Momento no laboratório: "the same theme tightening, ticking staccato strings ostinato, low felt piano, restrained urgency, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
+> Parte: "curious forward-moving theme, gentle steady pulse, clear melody, thoughtful wonder, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
+> Momento no laboratório, com o sufixo repetido: "the same theme tightening, ticking staccato strings ostinato, low felt piano, restrained urgency, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
+> Outra parte, curta, que também vale: "restrained low strings, sparse steady pulse, uneasy"
+>
+> O usuário ouve a primeira e diz "está infantil". Hipótese: "clear melody" com "wonder" levou a melodia ao agudo. Muda só isso: "low unhurried melody" no lugar dos dois termos. O resto da descrição fica, e a mesma pergunta volta ao ouvido.
