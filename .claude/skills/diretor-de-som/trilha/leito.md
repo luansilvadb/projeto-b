@@ -1,42 +1,68 @@
 ## PERGUNTA
-Em quantas peças a trilha se divide, e o que as mantém uma música só?
+O que faz a trilha soar como a música de um vídeo só, e em quantas partes ela é gerada?
 
 ## RESPOSTA
 
-**Princípio.** A trilha é um **leito**: uma peça contínua, que começa com o vídeo e o acompanha até o fim. O espectador não deve notar que a música trocou; deve notar, quando muito, que ela mudou de humor.
+**Princípio.** O **leito** é a identidade musical contínua do vídeo: a música pode mudar, e até ser gerada em mais de um arquivo, sem que quem assiste sinta que entrou outra trilha sem motivo. Continuidade é percebida, e não declarada pelos parâmetros: timbre, andamento e tom preveem, e o som gerado confirma.
 
-**O que a referência faz.** A música toca em 99,5% do tempo (de 97,6% a 100% entre os vídeos). O timbre varia 0,23 oitava do começo ao fim (de 0,15 a 0,32), medido pelo centro do espectro em janelas de 30 s: é uma peça só. Dentro dela, a música muda de seção a cada 20 s, mais ou menos (de 15 a 49 s), sem sair do mesmo mundo de timbres.
+**Parte e identidade.** Uma **parte** é um arquivo: a primeira geração e cada item de `music.parts`. É primeiro uma segmentação técnica, e só vira mudança que se ouve quando o vídeo pede. Um vídeo pode ter uma parte e uma identidade, várias partes e uma identidade ou, quando o produto pede mesmo, uma ruptura deliberada.
 
-**O que deu errado quando não foi assim.** Um vídeo de 9 minutos com dez faixas, uma por capítulo, mediu 0,61 oitava entre as faixas, o dobro do teto da referência, e o usuário ouviu "qualquer música ambiente posta para preencher espaço". Dividir a trilha por capítulo é o que a faz soar como playlist.
+**O que deu errado uma vez.** Um vídeo de 9 minutos com dez faixas, uma por capítulo, e o usuário ouviu "qualquer música ambiente posta para preencher espaço". O defeito não eram os dez arquivos nem os capítulos: cada trecho soava como uma música independente, e o vídeo perdeu a identidade e a sensação de trilha composta para ele. É a **playlist**, e ela é o defeito que esta unidade evita.
 
-**Quantos leitos.** O mínimo que a duração permite: cada leito é gerado numa peça só, de até 7 minutos e 20 s. Um vídeo de até 7 minutos e 20 s tem um leito. Um mais longo tem dois, e a troca fica na **virada** do vídeo (a fase que `diretor-criativo/estrutura/arco` chama assim), onde o assunto muda de sentido e a música tem motivo para ser outra.
+**O teste**, em cada fronteira em que a música muda: parece que a música se desenvolveu, ou que alguém trocou a faixa?
 
-**O que mantém dois leitos uma música só:**
+- **Desenvolveu**: passa, por mais que tenha mudado. Densidade, registro, pulso, instrumentação, harmonia e energia podem mudar bastante, e a mudança pode ser notada: "a mesma trilha abriu", "escureceu".
+- **Trocou a faixa**: a ruptura é parte deliberada da experiência (um colapso, uma revelação, uma passagem radical de contexto)? Se é, vale pelo que realiza. Se não é, é playlist, e é consertada.
 
-- os mesmos timbres de base nas duas descrições, palavra por palavra (`descricao`);
-- o mesmo andamento, ou um a até 10 bpm do outro;
-- o mesmo tom ou o relativo (lá menor e dó maior têm as mesmas notas);
-- a troca escondida num silêncio do roteiro, quando houver um ali (`silencio`), ou cruzada por baixo da fala.
+A identidade sobrevive por várias pistas (a família de timbres, o tipo de pulso, a densidade, o espaço da produção, o gesto, o andamento, a harmonia, o modo de tocar, a própria transição), sem que alguma seja obrigatória nem que haja uma conta de quantas. Melodia repetida não está entre as disponíveis: gerações independentes do ACE-Step não repetem um tema (`momentos` guarda o teste).
 
-**O que muda dentro de um leito** são os momentos (`momentos`), e não a faixa.
+O agente não ouve. Quando a unidade é uma dúvida que pesa, gere o trecho em volta da fronteira e leve-o ao usuário com a pergunta do teste (`entrevista-som`); se a ruptura era intencional, a pergunta é se ela realiza a transformação que o vídeo pede. O número de partes, o andamento e o tom não são perguntados.
 
-**Procedimento:**
+**Quantas partes.** O limite é da ferramenta: cada parte tem até 440 s (7 minutos e 20 s), os 480 s que o ACE-Step gera nesta máquina menos a sobra cortada das pontas. Uma parte planejada acima disso derruba o `pnpm music`.
 
-1. Some a duração do vídeo pela narração. Até 7 minutos e 20 s: um leito.
-2. Acima disso, ache a virada no roteiro e ponha a troca na primeira cena depois dela. Confira que nenhum leito passa de 7 minutos e 20 s.
-3. Escreva o caráter de cada leito numa frase: o que a música faz enquanto o vídeo faz o quê.
-4. Fixe os timbres de base, o andamento e o tom, e registre-os no mapa.
+- O vídeo cabe numa parte: uma parte.
+- Não cabe: quantas o limite exigir, duas, três ou mais.
+- **Poucas, por padrão.** Cada parte a mais é outra geração, outra costura e outra chance de o timbre derivar.
+- **Uma parte que a duração não exige paga a costura.** O que ela permite que um momento dentro da parte atual não realiza? "Mudou o capítulo, o lugar, o assunto" costuma pedir um momento, ou nada. Uma transformação longa que o momento não alcança (não cabe nele, costura mal, não chega ao outro estado) faz da parte nova uma hipótese válida, provada no som. E o teste inverso: feita a mudança com um momento, o que se perde? Se nada que importe, fica o momento.
+
+**Onde trocar.** Numa cena em que a costura possa desaparecer, a música já tenha motivo para mudar e a parte nova tenha espaço para entrar no corpo. O roteiro propõe, e o som decide: se a fronteira elegante no papel dá faixa morrendo cedo, entrada fria ou costura que chama atenção e outra cena costura melhor, a troca vai para a outra. Capítulo é estrutura do texto e não decide faixa: a música atravessa capítulos, muda no meio de um e troca onde não há capítulo nenhum.
+
+**A costura** é mecânica (`src/audio/parts.ts`):
+
+- sem `at`, a parte nova cruza com a anterior em 3 s, por baixo da fala;
+- depois de um silêncio de música, entra de uma vez, sem cruzar;
+- com `"at": "hold"`, entra no silêncio de fala do fim da cena;
+- cada parte é gerada com sobra e tem as pontas cortadas, para estar no corpo dos dois lados.
+
+São ferramentas: escondem a borda de volume, e não fazem de duas identidades uma música. Um silêncio que o vídeo já tem é bom lugar para a troca; nenhum silêncio é criado para ela (`silencio`). Defeito de costura é consertado sem pergunta: a parte anterior morre antes da troca, a seguinte demora a chegar ao corpo, há buraco, há salto de volume.
+
+**O que já funcionou** contra a deriva, o caminho de menor risco conhecido, usado enquanto o vídeo não dá razão para mudar o mundo sonoro. É repertório: nenhuma destas técnicas prova unidade, e a falta de uma não reprova a trilha.
+
+- Repetir os timbres de base nas descrições, com as mesmas palavras: três descrições de climas diferentes saíram a 0,21 oitava uma da outra com o trecho repetido, e a 0,64 sem ele (`descricao`).
+- Andamento igual ou próximo entre as partes.
+- O mesmo tom, ou o relativo.
+- A troca numa fronteira estrutural do vídeo, depois de um silêncio.
+
+Comece por uma identidade e pelo menor número de partes que a ferramenta permite, preserve explicitamente alguns sinais dela entre as gerações e só aumente a ruptura quando o vídeo ou o som mostrar que ela melhora a experiência.
+
+**Sensores.** Na referência a música toca em 99,5% do tempo (de 97,6% a 100%), o timbre varia 0,23 oitava do começo ao fim (de 0,15 a 0,32, pelo centro do espectro em janelas de 30 s) e a música muda de seção a cada 20 s, mais ou menos (de 15 a 49 s): muda muito, dentro de uma identidade. O piloto das dez faixas mediu 0,61. A variação alta diz em que fronteira ouvir. Ela não sabe o que é playlist: sobe com um silêncio longo e com uma transformação legítima, e pode ficar na faixa numa trilha que o ouvido acha desconexa. Quando a medida e o ouvido discordam, vale o ouvido.
+
+**Pronto quando:**
+
+- cada parte cabe em 440 s;
+- nenhuma costura tem defeito que a medida acusa;
+- cada mudança que se ouve faz trabalho no vídeo;
+- onde a unidade era dúvida que pesa, o usuário ouviu a fronteira;
+- nenhuma troca que não é ruptura deliberada soa como playlist.
 
 ## DEPENDÊNCIAS
-- diretor-criativo/estrutura/arco: fornece as fases do vídeo e a virada.
+- entrevista-som: como a dúvida de unidade chega ao ouvido do usuário, e o que é execução.
 
 ## LIMITES
-- Um leito a mais só entra por duração. "Este capítulo é diferente" pede um momento, não outra faixa.
 - A vinheta e a chamada final não têm faixa própria: são o leito em primeiro plano (`niveis`).
 
 ## EXEMPLO
-> Vídeo de 9 min 32 s, com a virada aos 6 min 50 s ("mas o que o sono faz?").
-> Leito A, de 0:00 a 6:50: o tema curioso, que anda para a frente; lá menor, 96 bpm.
-> Leito B, de 6:50 ao fim: o mesmo tema resolvido, quente; dó maior, 96 bpm.
-> Timbres de base nos dois: piano de feltro, sintetizador analógico quente, cordas.
-> A troca fica depois do silêncio em que a resposta do vídeo é dita.
+> Vídeo de 9 min 32 s: uma parte não cabe, duas bastam.
+> Hipótese: a troca depois do silêncio em que a resposta do vídeo é dita, aos 6:50. A música já muda ali (o tema curioso passa a resolvido e quente), e a parte nova entra sem cruzar.
+> Sinais preservados entre as duas descrições: piano de feltro, sintetizador analógico quente, cordas; 96 bpm nas duas.
+> A medida não acusa buraco nem salto na costura. Ao usuário, com o trecho de 6:30 a 7:20: "aqui a música se desenvolveu, ou começou outra?"

@@ -21,17 +21,17 @@ Com que medidas e passadas julgar o som de um render?
 | Do trecho mais presente ao mais recuado | até 9,6 dB | a música abre e abafa |
 | Tempo sem música | até 2,4% | buracos: silêncios demais, ou faixas que morrem nas pontas |
 | Viradas de volume por minuto | até 1,1 | o mesmo, visto no tempo |
-| Variação de timbre ao longo do vídeo | até 0,32 oitava | a trilha soa como mais de uma música |
+| Variação de timbre ao longo do vídeo | até 0,32 oitava | possível quebra de identidade: achar a fronteira e levá-la ao ouvido |
 | Efeitos que se ouvem, por minuto | 4,4 ou mais | a imagem se mexe em silêncio |
 | Pico do efeito abaixo da voz | 11,5 a 14,7 dB | efeitos tímidos, ou altos demais |
 
-O que as medidas não veem: a contagem de efeitos tem um piso de 2 por minuto, de música e voz que vazam na separação; a variação de timbre sobe quando um silêncio longo entra na conta; nenhuma delas distingue música boa de ruim.
+O que as medidas não veem: a contagem de efeitos tem um piso de 2 por minuto, de música e voz que vazam na separação; a variação de timbre sobe quando um silêncio longo entra na conta e quando a música se transforma por um motivo, e pode ficar na faixa numa trilha que o ouvido acha desconexa; nenhuma delas distingue música boa de ruim.
 
 **Passadas, nesta ordem.** Um problema de nível superior invalida o polimento dos níveis abaixo.
 
 1. **Unidade**
    - A variação de timbre está na faixa? Se não, em que troca ou em que momento o centro do espectro salta?
-   - As descrições do roteiro têm todas o mesmo sufixo, palavra por palavra?
+   - Nessa fronteira, o mapa pede uma transformação, e as descrições dos dois lados guardam algum sinal em comum? A resposta diz o que perguntar ao ouvido, e não reprova: a fronteira vai ao roteiro de escuta (`leito`).
 2. **Continuidade**
    - Cada trecho sem música do mapa segundo a segundo é um silêncio que o mapa de som pede?
    - A música está no corpo dos dois lados de cada troca de leito, ou morre antes e demora a chegar depois?
@@ -50,7 +50,7 @@ O que as medidas não veem: a contagem de efeitos tem um piso de 2 por minuto, d
 
 **Classificação:**
 
-- **Bloqueante**: a trilha soa como mais de uma música; há buraco que o mapa não pede; a música cobre a fala.
+- **Bloqueante**: o usuário ouve a trilha como músicas desconexas, sem que a ruptura seja deliberada (a medida aponta a fronteira, e quem diz é o ouvido); há buraco que o mapa não pede; a música cobre a fala.
 - **Relevante**: medida fora da faixa sem decisão registrada; momento ou nível que não aparece no som; salto numa borda; capítulo sem efeitos.
 - **Polimento**: o resto.
 

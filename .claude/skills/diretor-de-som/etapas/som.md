@@ -8,10 +8,10 @@ A única aprovação da etapa é o aceite, no fim. Até lá o som cresce por ris
 
 ## O ciclo
 
-Parta dos compromissos que houver na seção "Arco" de `sound.md` (pode ser uma linha, e o arquivo pode não existir), da duração de cada cena (`public/videos/<vídeo>/narration.json`; `pnpm check-script <vídeo>` a imprime) e da partitura da animação (`score.md`). O que o arco deixou em aberto é completado aqui, e a intenção que ele registrou sem realização ganha a sua. A duração que pede mais de um leito é restrição desta etapa (`leito`).
+Parta dos compromissos que houver na seção "Arco" de `sound.md` (pode ser uma linha, e o arquivo pode não existir), da duração de cada cena (`public/videos/<vídeo>/narration.json`; `pnpm check-script <vídeo>` a imprime) e da partitura da animação (`score.md`). O que o arco deixou em aberto é completado aqui, e a intenção que ele registrou sem realização ganha a sua. A duração que pede mais de uma parte é restrição desta etapa (`leito`).
 
 1. **A maior incerteza.** O que, se estiver errado, joga fora o resto? Num vídeo novo costuma ser a identidade da trilha: se o leito pertence ao vídeo.
-2. **O mapa que basta.** Escreva em `sound.md` e em `script.json` só o que essa dúvida pede (`leito`, `descricao`). Para a identidade, um leito: `caption`, `bpm` e `keyScale`, sem momentos, níveis nem efeitos; num vídeo que passa de um leito, também a troca (`parts`), que o comando exige.
+2. **O mapa que basta.** Escreva em `sound.md` e em `script.json` só o que essa dúvida pede (`leito`, `descricao`). Para a identidade, o leito sozinho: o `caption` e, de `bpm` e `keyScale`, só o que a hipótese precisa, sem momentos, níveis nem efeitos. Num vídeo que não cabe numa parte, também as trocas (`parts`), que o comando exige: cada uma numa cena em que a costura se defende, e o som gerado pode mudá-la de lugar.
 3. **O menor som.** Peça à skill `producao` só o que a dúvida pede: a trilha ainda sem momentos (`pnpm music <vídeo>`; o leito sozinho se ouve em `public/videos/<vídeo>/music.wav`), mais tarde uma parte só (`pnpm music <vídeo> <semente> <parte>`, com as outras já geradas) e, quando a dúvida é contra a voz, o som do vídeo.
 4. **Medir e consertar.** O que a medida, o comando ou o `pnpm check-script` acusam é consertado antes de qualquer escuta, sem pergunta.
 5. **O ouvido, se for preciso.** Sobrando uma dúvida que só o ouvido resolve e que pesa sobre o que vem depois, leve o arquivo, o instante e a pergunta. A resposta é evidência: não vai a `approvals.md`.
@@ -38,10 +38,10 @@ Os campos de `script.json`; o tipo e as regras estão em `src/narration/script.t
 
 ```json
 "music": {
-  "caption": "<o leito A>",
+  "caption": "<a primeira parte>",
   "bpm": 96,
   "keyScale": "A minor",
-  "parts": [{ "from": "<cena da troca>", "caption": "<o leito B>", "keyScale": "C major" }],
+  "parts": [{ "from": "<cena da troca>", "caption": "<a parte seguinte>" }],
   "silences": [{ "from": "<cena>", "cue": "<palavra>" }],
   "moments": [{ "from": "<cena>", "to": "<cena>", "caption": "<o momento>" }],
   "levels": [{ "from": "<cena>", "level": "recuo" }]
@@ -52,8 +52,9 @@ Os campos de `script.json`; o tipo e as regras estão em `src/narration/script.t
 ]
 ```
 
-- `parts`: cada item começa um leito na cena `from`. Sem `at`, a faixa cruza com a anterior em 3 s, por baixo da fala; depois de um silêncio de música, entra sem cruzar. `"at": "hold"` a faz entrar no silêncio de fala do fim da cena.
-- `moments`: do começo da cena `from` ao fim da cena `to` (ou da própria `from`), de 3 a 90 s, dentro de um leito só.
+- `caption` é o único campo obrigatório de `music`. `bpm` e `keyScale` são opcionais, na trilha e em cada parte, que herda da trilha o que não declara.
+- `parts`: cada item começa uma parte na cena `from`. Sem `at`, a faixa cruza com a anterior em 3 s, por baixo da fala; depois de um silêncio de música, entra sem cruzar. `"at": "hold"` a faz entrar no silêncio de fala do fim da cena.
+- `moments`: do começo da cena `from` ao fim da cena `to` (ou da própria `from`), de 3 a 90 s, dentro de uma parte só.
 - `levels`: o nível vale da cena `from` até a mudança seguinte; para voltar, escreva a volta (`"level": "leito"`).
 - `sfx`: o efeito toca na palavra `cue` (com `occurrence` quando ela se repete), ou no começo do plano `shot` (contado de 1), ou no começo da cena; `offsetMs` desloca. A imagem antecipa a palavra em 4 quadros: para o som cair junto com um movimento disparado pela mesma palavra, use `"offsetMs": -133`. `name` é um uso do catálogo (`src/audio/sfx.ts`).
 

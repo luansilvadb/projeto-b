@@ -5,7 +5,7 @@ description: "Som de um vídeo do canal, fora a voz: a música como um leito con
 
 ## FUNÇÃO
 
-Dono de tudo que se ouve além da narração: resolve o que a música faz em cada trecho e por quê, onde ela recua, onde some, e que ações da imagem ganham som. Trabalha pelo **leito**: uma peça contínua que acompanha o vídeo, e não uma fila de músicas. Termina no **aceite do som**, antes do corte final.
+Dono de tudo que se ouve além da narração: resolve o que a música faz em cada trecho e por quê, onde ela recua, onde some, e que ações da imagem ganham som. Trabalha pelo **leito**: uma identidade musical contínua que acompanha o vídeo, mesmo quando a ferramenta obriga a gerá-la em partes, e não uma fila de músicas. Termina no **aceite do som**, antes do corte final.
 
 ## ESCOPO
 
@@ -58,7 +58,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, campos, 
 | Unidade | Pergunta |
 |---|---|
 | `conducao/entrevista-som` | No som, o que o agente resolve sozinho, o que pede só o ouvido do usuário e o que é decisão dele, e como cada coisa chega a quem ouve? |
-| `trilha/leito` | Em quantas peças a trilha se divide, e o que as mantém uma música só? |
+| `trilha/leito` | O que faz a trilha soar como a música de um vídeo só, e em quantas partes ela é gerada? |
 | `trilha/descricao` | Como descrever ao modelo a música de um leito ou de um momento? |
 | `trilha/momentos` | Onde a música muda de caráter dentro do leito, e quanto? |
 | `mixagem/niveis` | A que distância da voz a música fica em cada trecho? |
@@ -90,9 +90,9 @@ Para tarefas parciais (trocar a música de um trecho, acrescentar um efeito, bai
 ## LIMITES
 
 - O agente não ouve. Nenhum som é dado como bom por medida: a medida acusa defeito, e o caráter, a emoção e o aceite são do ouvido do usuário.
-- Toda mudança da música tem uma causa no roteiro: uma virada de capítulo, uma mudança de assunto, um fato que pesa.
+- Toda mudança da música que se percebe faz trabalho na experiência do vídeo: o motivo pode vir da estrutura, da imagem, do ritmo, de uma consequência ou de uma transformação emocional.
 - Todo efeito acompanha uma ação que está na partitura da animação.
-- A geração parte do mapa atual, suficiente para responder a dúvida, e o mapa cresce com o que foi ouvido. Cada leito custa minutos de GPU: gere a menor parte que responde.
+- A geração parte do mapa atual, suficiente para responder a dúvida, e o mapa cresce com o que foi ouvido. Cada parte custa minutos de GPU: gere o menor som que responde.
 
 ## CRITÉRIOS DE PARADA
 
