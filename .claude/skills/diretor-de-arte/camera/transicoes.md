@@ -21,7 +21,7 @@ O que continua, o que muda e quanto se sente a passagem entre dois planos?
 
 **Fronteiras.** O ponto da passagem que carrega o sentido cai na causa, e quem decide quando é `sincronia`. Quando a ponte é a câmera, o que se exige aqui é que o espectador sinta ter percorrido o mesmo lugar, em vez de ser teletransportado; como a câmera se comporta é de `movimento`. Se nenhuma passagem liga os dois planos sem quebrar o entendimento, o conflito volta a `planos`: a transição não reabre a decupagem por gosto de efeito.
 
-**O que o repositório fixa.** O registro de cada plano leva uma de quatro entradas: corte, câmera, transformação ou varredura (`planos`). Elas nomeiam famílias e não fecham o repertório: a passagem é julgada pelo que o espectador percebe, e a que não cabe em nenhuma das quatro é descrita na partitura.
+**O que o repositório fixa.** O registro de cada plano leva a entrada dele, em texto livre (`planos`). Corte, câmera, transformação e varredura são os nomes de costume: nomeiam famílias e não fecham o repertório. A passagem é julgada pelo que o espectador percebe, e a que não cabe em nenhum dos quatro é dita com as palavras dela.
 
 **Repertório.** Parte-se da relação entre os dois planos; a técnica é uma saída possível, e os números são o que a referência costuma usar:
 

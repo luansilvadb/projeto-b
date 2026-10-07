@@ -113,11 +113,11 @@ Movimento:
 
 ## ORDEM DE INJEÇÃO
 
-Injete o procedimento da etapa, depois a unidade de condução e as unidades do passo em curso com as suas dependências, na ordem da tabela:
+Injete o procedimento da etapa, depois a unidade de condução e as unidades do passo em curso com as suas dependências. A tabela diz o que ler para cada trabalho; não é uma fila em que o passo de cima precisa estar fechado:
 
 | Etapa | Passo | Unidades | Entrega |
 |---|---|---|---|
-| Decupagem | Conceito visual | `entrevista-imagem`, `elenco`, `cor` | ficha visual, aprovada pelo usuário |
+| Decupagem | Conceito visual | `entrevista-imagem`, `elenco`, `cor` | ficha visual: os compromissos do vídeo e o estado atual da solução |
 | | Decupagem | `entrevista-imagem`, `encenacao`, `planos`, `dado`, `critica-quadro` (lentes de encenação e de decupagem) | planos de cada cena, aprovados junto com o texto |
 | Animatic | Desenho | `entrevista-imagem`, `forma`, `personagem`, `cenario` | folhas de modelo e desenhos reutilizáveis |
 | | Quadro | `composicao`, `texto` | um quadro composto por plano |
@@ -134,7 +134,7 @@ Para tarefas parciais (redesenhar um personagem, refazer os planos de uma cena, 
 - Nenhuma imagem afirma o que a base de fatos não sustenta.
 - Toda mudança de estado tem uma causa visível na fala ou na cena.
 - Nenhum movimento muda o que a composição aprovada diz (o foco, a relação, o tamanho do assunto no plano) sem confirmação.
-- Um passo só começa com as decisões do passo anterior aprovadas.
+- Um passo começa quando há o bastante para produzir a evidência dele. Se a evidência pede outra decisão num passo anterior, volta-se a ele: mudar o sentido ou a identidade é do usuário, e refinar não (`entrevista-imagem`, `entrevista-movimento`).
 
 ## CRITÉRIOS DE PARADA
 

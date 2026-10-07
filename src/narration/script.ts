@@ -3,7 +3,6 @@ import { shotStartWords, type ShotCue } from "./shots";
 import { findNarrationProblems } from "./text";
 
 const SHOT_SCALES = ["wide", "medium", "close", "detail"] as const;
-const SHOT_ENTRIES = ["cut", "camera", "transform", "wipe"] as const;
 
 /** Um plano: uma composição que fica na tela enquanto um trecho da narração toca. */
 type ScriptShot = ShotCue & {
@@ -13,8 +12,12 @@ type ScriptShot = ShotCue & {
   readonly scale: (typeof SHOT_SCALES)[number];
   /** Paleta do plano, entre as da ficha visual do vídeo. */
   readonly palette: string;
-  /** Como a imagem anterior vira esta. */
-  readonly entry: (typeof SHOT_ENTRIES)[number];
+  /**
+   * Como a imagem anterior vira esta. Texto livre: nada no render lê o campo,
+   * e uma lista fechada recusava a passagem que ninguém tinha previsto. O
+   * costume é "cut", "camera", "transform" ou "wipe".
+   */
+  readonly entry: string;
 };
 
 type ScriptScene = {
@@ -177,10 +180,8 @@ const findShotProblems = (
   if (!isFilledString(shot.palette)) {
     problems.push(`${label}: falta "palette", a paleta do plano`);
   }
-  if (!isOneOf(SHOT_ENTRIES, shot.entry)) {
-    problems.push(
-      `${label}: "entry" precisa ser ${quoteOptions(SHOT_ENTRIES)}`,
-    );
+  if (!isFilledString(shot.entry)) {
+    problems.push(`${label}: falta "entry", como a imagem anterior vira esta`);
   }
   return problems;
 };

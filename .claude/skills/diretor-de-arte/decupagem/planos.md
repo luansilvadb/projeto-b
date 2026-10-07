@@ -17,7 +17,7 @@ Como dividir a cena em planos de modo que a imagem acompanhe a fala?
 - **Deixa.** Todo plano, menos o primeiro da cena, começa numa palavra da narração: aquela em que o espectador já precisa estar vendo a imagem nova. A palavra ocorre uma vez só na cena, ou o registro diz qual ocorrência.
 - **Registro.** Cada plano leva a deixa, a encenação (quem faz o quê e onde, o que muda lá dentro e o texto de tela), a escala, a paleta (o modo de cor e o matiz do fundo) e a entrada.
 - **Escala:** aberto (o lugar inteiro, o assunto pequeno), médio (a figura inteira ou da cintura para cima), close (o rosto, a mão, o objeto) ou detalhe (um olho, uma textura enchendo o quadro).
-- **Entrada:** corte (troca seca), câmera (o enquadramento muda dentro do mesmo cenário), transformação (a imagem anterior vira a nova) ou varredura (uma borda atravessa o quadro e revela a nova imagem).
+- **Entrada:** como a imagem anterior vira esta, em texto livre. O costume são quatro nomes: corte (troca seca), câmera (o enquadramento muda dentro do mesmo cenário), transformação (a imagem anterior vira a nova) e varredura (uma borda atravessa o quadro e revela a nova imagem). A passagem que não cabe neles é dita em poucas palavras.
 
 **Sinais de falha.** Cada um é uma pergunta sobre o trecho, e "está certo assim" é resposta válida, com o motivo: o sinal acusa, e quem decide é o que o trecho pede.
 

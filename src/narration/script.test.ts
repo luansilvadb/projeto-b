@@ -160,15 +160,13 @@ describe("parseScript, planos", () => {
 
   it("exige encenação, escala, paleta e entrada em cada plano", () => {
     const parse = () =>
-      parseShots([{ staging: " ", scale: "perto", entry: "fade" }]);
+      parseShots([{ staging: " ", scale: "perto", entry: " " }]);
     expect(parse).toThrowError(/cena 1 \(sun\), plano 1: falta "staging"/);
     expect(parse).toThrowError(
       /plano 1: "scale" precisa ser "wide", "medium", "close", "detail"/,
     );
     expect(parse).toThrowError(/plano 1: falta "palette"/);
-    expect(parse).toThrowError(
-      /plano 1: "entry" precisa ser "cut", "camera", "transform", "wipe"/,
-    );
+    expect(parse).toThrowError(/plano 1: falta "entry"/);
   });
 
   it("só o primeiro plano dispensa a deixa", () => {
