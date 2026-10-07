@@ -19,9 +19,10 @@ Com que critérios e medidas julgar os quadros?
    - A escala serve ao momento, a entrada diz quanto mudou, e o que volta, volta igual?
    - Cada sinal de falha de `planos` que aparece tem resposta no trecho?
 3. **Composição**
-   - Há um ponto focal, e só um?
-   - O assunto tem o tamanho que a escala pede?
-   - Em cinza e pequeno, o assunto ainda salta do fundo?
+   - O olho acha o que importa de primeira, e sabe para onde ir depois? Se há dois polos, lê-se o que os liga?
+   - O tamanho do assunto serve ao plano, e o vazio tem função, ou o assunto ficou tímido?
+   - Alguma sobreposição cria outra coisa? O plano se sustenta antes de as coisas entrarem?
+   - O teste do selo de `composicao` acusa algo? Confira no quadro antes de apontar.
 4. **Cor**
    - O assunto se separa do fundo, as superfícies vizinhas se separam entre si, e o maior contraste está no ponto focal?
    - O modo é o do lugar ou do sentido do plano, e a cor que significa algo continua significando? Cada troca de cor corresponde a algo que mudou?
