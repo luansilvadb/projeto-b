@@ -9,6 +9,16 @@ import { MOTION_SAMPLE_SECONDS, MotionSample } from "./design/MotionSample";
 import { FPS, HEIGHT, WIDTH } from "./format";
 import { Vignette } from "./vignette/Vignette";
 import { WhyWeSleep, whyWeSleepMetadata } from "./videos/why-we-sleep";
+import {
+  SavannaAnimation,
+  SavannaReference,
+} from "./studies/savanna-reference/SavannaReference";
+import {
+  RichSavannaAnimation,
+  RichSavannaReference,
+  NightSavannaAnimation,
+  NightSavannaReference,
+} from "./studies/savanna-reference/RichSavannaReference";
 
 // O id de cada composição é o nome da pasta do vídeo em src/videos/.
 // A duração vem da narração, calculada pelo calculateMetadata de cada vídeo.
@@ -29,11 +39,40 @@ export const RemotionRoot: React.FC = () => {
       />
       {/* Referência viva da direção de arte ativa em src/design/tokens.ts. */}
       <Folder name="design">
+        {/* Estudo independente de fidelidade ao quadro fornecido pelo usuário. */}
+        <Still
+          id="savanna-reference"
+          component={SavannaReference}
+          width={WIDTH}
+          height={HEIGHT}
+        />
+        <Composition
+          id="savanna-reference-animation"
+          component={SavannaAnimation}
+          width={WIDTH}
+          height={HEIGHT}
+          fps={FPS}
+          durationInFrames={8 * FPS}
+        />
         <Still
           id="identity-sheet"
           component={IdentitySheet}
           width={WIDTH}
           height={HEIGHT}
+        />
+        <Still
+          id="savanna-rich-reference"
+          component={RichSavannaReference}
+          width={WIDTH}
+          height={HEIGHT}
+        />
+        <Composition
+          id="savanna-rich-animation"
+          component={RichSavannaAnimation}
+          width={WIDTH}
+          height={HEIGHT}
+          fps={FPS}
+          durationInFrames={8 * FPS}
         />
         <Composition
           id="motion-sample"
@@ -42,6 +81,20 @@ export const RemotionRoot: React.FC = () => {
           height={HEIGHT}
           fps={FPS}
           durationInFrames={MOTION_SAMPLE_SECONDS * FPS}
+        />
+        <Still
+          id="savanna-night-reference"
+          component={NightSavannaReference}
+          width={WIDTH}
+          height={HEIGHT}
+        />
+        <Composition
+          id="savanna-night-animation"
+          component={NightSavannaAnimation}
+          width={WIDTH}
+          height={HEIGHT}
+          fps={FPS}
+          durationInFrames={8 * FPS}
         />
         {/* A folha de modelo da água-viva: todas as poses, para julgar o desenho. */}
         <Still

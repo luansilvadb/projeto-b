@@ -12,6 +12,8 @@ export type CameraState = {
 };
 
 const CameraContext = createContext<CameraState>({ x: 0, y: 0, zoom: 1 });
+/** A câmera compartilhada também pode transformar camadas vetoriais dentro de um SVG. */
+export const useCameraState = (): CameraState => useContext(CameraContext);
 
 type FramePoint = readonly [number, number];
 

@@ -8,6 +8,10 @@ Vídeos educativos de ciência em motion graphics feitos em código (Remotion 4,
 
 Leia o `README.md` antes de tocar em vídeo, etapa ou convenção: ele guarda a tabela das etapas (skill, procedimento, comando, resultado), o mapa das pastas e as convenções. Este arquivo não as repete.
 
+## Ponytail
+
+Ao escrever, alterar, revisar ou projetar código (e ao escolher dependências), aplique a skill `ponytail` no modo `full`: a solução mais simples que funciona, sem abstração especulativa, reaproveitando o que já existe no repositório, depois a stdlib, o recurso nativo e as dependências já instaladas, nesta ordem. Fica ativa em toda resposta até o usuário dizer "stop ponytail" ou "normal mode". Não vale para pesquisa, roteiro, narração e demais conteúdo dos vídeos, que não são código. A skill é global, em `~/.claude/skills/ponytail/`.
+
 ## Comandos
 
 `<vídeo>` é o nome da pasta em `src/videos/`, que é também o id da composição no Remotion e o primeiro argumento de todo script.
@@ -34,7 +38,6 @@ pnpm sound <vídeo> out/<vídeo>.som.mp3   # só o som (voz, trilha e efeitos), 
 
 - `pnpm critique <vídeo>` lê `out/<vídeo>.mp4`, então pede um `pnpm render` antes; com `animatic`, as medidas de movimento ainda não reprovam. Com `som`, separa o áudio em voz, música e efeitos na GPU e guarda a separação em `out/som/<nome>/`: apague a pasta para medir de novo um arquivo que mudou. O `pnpm sound` tem configuração própria (`remotion.sound.config.ts`), porque a de `remotion.config.ts` fixa o h264 e recusa uma saída em mp3.
 - `pnpm render` não dá o arquivo de entrega: `out/<vídeo>.final.mp4` sai do ffmpeg com `loudnorm`, no passo a passo de `.claude/skills/producao/etapas/corte-final.md`.
-
 - O Vitest só inclui `src/**/*.test.ts` e `scripts/**/*.test.ts`; sem isso rodaria os testes das ferramentas clonadas em `vendor/`.
 - Código mudou: `pnpm lint` e `pnpm test`. Etapa de vídeo mudou: o comando dela na tabela do `README.md`.
 - `pnpm setup:tools` baixa cerca de 20 GB de modelos; `pnpm narrate`, `pnpm music` e `pnpm render` usam a GPU e levam minutos. `pnpm sfx` é o único comando que depende de serviço externo (`FREESOUND_API_KEY` no `.env`).
@@ -66,7 +69,7 @@ Dentro da cena (veja `src/videos/why-we-sleep/scenes/ThirdOfLifeScene.tsx`):
 - O movimento usa as curvas de `timing.ts` (`ramp`, `settle`, `linear`, `drop`) e os primitivos de `src/components/` (`Place`, `Pop`, `SlowPush`, `Camera`, `Idle`, `SvgLayer`); os desenhos reutilizáveis ficam em `src/art/`, os de um vídeo só em `src/videos/<vídeo>/parts/`.
 - Nenhuma cor solta: as cores vêm de `src/videos/<vídeo>/palette.ts`; tamanhos de texto, formas e curvas, de `src/design/tokens.ts`.
 
-Um vídeo novo também entra em `src/Root.tsx` como `Composition` com o `calculateMetadata` dele; o formato (1920×1080, 30 fps) vem de `src/format.ts`. A pasta `design` do `Root.tsx` guarda as composições de conferência, que não são vídeos: `identity-sheet`, `motion-sample`, `agua-viva` (folha de modelo) e `vinheta` (a vinheta do canal, de `src/vignette/`). O `why-we-sleep` é o vídeo modelo.
+Um vídeo novo também entra em `src/Root.tsx` como `Composition` com o `calculateMetadata` dele; o formato (1920×1080, 30 fps) vem de `src/format.ts`. A pasta `design` do `Root.tsx` guarda as composições de conferência, que não são vídeos e não têm narração: a folha da identidade, a amostra de movimento, as folhas de modelo dos personagens, os pilotos de polimento, os estudos de `src/studies/` e a `vinheta` (a vinheta do canal, de `src/vignette/`). O `why-we-sleep` é o vídeo modelo.
 
 ### Scripts e ferramentas
 

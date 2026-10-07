@@ -43,11 +43,21 @@ import {
   Stamp,
   type Box,
 } from "../parts/Chalkboard";
-import { IdeaBackdrop } from "../parts/IdeaBackdrop";
 import { LifeTree } from "../parts/LifeTree";
 import { Tag } from "../parts/Tag";
-import { NEVER, Preluded } from "./MaybeBrainScene";
+import { NEVER } from "./MaybeBrainScene";
+import { OpeningArrival } from "../parts/OpeningPassage";
 
+
+/**
+ * A parede do laboratório, a mesma do corredor: é o fundo de todos os planos
+ * da cena, e por isso a troca de um para o outro não recolore o palco.
+ */
+const LabWall: React.FC = () => (
+  <AbsoluteFill
+    style={{ background: `linear-gradient(${lab.wall[0]}, ${lab.wall[1]})` }}
+  />
+);
 
 const CALENDAR = { x: 1380, y: 400, width: 440, height: 500 };
 const HEADER = 120;
@@ -348,7 +358,7 @@ const IntroShot: React.FC<IntroShotProps> = ({
       <ShotPush
         focus={INTRO_FOCUS}
         by={INTRO_PUSH}
-        backdrop={<IdeaBackdrop hue="peach" spot={[0.36, 0.5]} />}
+        backdrop={<LabWall />}
       >
         <WallCalendar
           years={DECADES[page]}
@@ -792,7 +802,7 @@ const QuoteShot: React.FC<QuoteShotProps> = ({
     <ShotPush
       focus={QUOTE_FOCUS}
       by={QUOTE_PUSH}
-      backdrop={<IdeaBackdrop hue="peach" spot={[0.6, 0.5]} />}
+      backdrop={<LabWall />}
     >
       {/*
         Nada daqui entra nem sai pela marcação do palco: ele e o quadro chegam
@@ -954,7 +964,7 @@ const VerdictShot: React.FC<VerdictShotProps> = ({
     <ShotPush
       focus={VERDICT_FOCUS}
       by={VERDICT_PUSH}
-      backdrop={<IdeaBackdrop hue="peach" spot={[0.5, 0.5]} />}
+      backdrop={<LabWall />}
     >
       {/* O que o plano das aspas deixou saindo: ele e o quadro pequeno, com a frase apagada. */}
       {away >= 1 ? null : (
@@ -1038,8 +1048,8 @@ const VerdictShot: React.FC<VerdictShotProps> = ({
 
 /**
  * O plano que abre a cena, antes de qualquer deixa: o último plano de
- * `third-of-life` o desenha com `Prelude`, e o pesquisador e o calendário já
- * crescem enquanto a savana desce.
+ * `third-of-life` o desenha com `OpeningPrelude`: o quadro inteiro chega
+ * por baixo enquanto a savana sobe, sem desmontar o pesquisador e o calendário.
  */
 export const BiggestMistakeOpening: React.FC = () => (
   <IntroShot nameAt={NEVER} decadesAt={NEVER} yearsAt={NEVER + 1} />
@@ -1062,13 +1072,13 @@ export const BiggestMistakeScene: React.FC<SceneProps> = ({ scene, shots }) => {
   return (
     <>
       <Shot range={shots[0]} name="o pesquisador e os 44 anos">
-        <Preluded>
+        <OpeningArrival>
           <IntroShot
             nameAt={cue(scene, "Réctchafen")}
             decadesAt={cue(scene, "quarenta")}
             yearsAt={cue(scene, "quatro")}
           />
-        </Preluded>
+        </OpeningArrival>
       </Shot>
       <Shot range={shots[1]} name="o laboratório do sono, em Chicago">
         <LabDoorShot

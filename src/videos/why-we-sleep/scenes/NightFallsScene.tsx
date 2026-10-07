@@ -9,13 +9,11 @@ import {
   useVideoConfig,
 } from "remotion";
 import { Antelope } from "../../../art/Antelope";
-import { taperPath } from "../../../art/shapes";
 import {
   Build,
   Camera,
   cameraBetween,
   framing,
-  Layer,
   useBuild,
   type CameraState,
 } from "../../../components/Camera";
@@ -37,8 +35,11 @@ import { typography } from "../../../design/tokens";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength, wipeClip, type Wipe } from "../../../video/Shot";
 import { antelope, antelopeNight, ink, savanna, sound } from "../palette";
-import { SAVANNA_GROUND_Y, Savanna, SavannaShadow } from "../parts/Savanna";
+import { SAVANNA_GROUND_Y, SavannaShadow } from "../parts/Savanna";
 import { polished } from "../polish";
+import { RichSavannaBackdrop } from "../../../studies/savanna-reference/RichSavannaReference";
+import { richPalette } from "../../../studies/savanna-reference/richPalette";
+import { nightPalette } from "../../../studies/savanna-reference/nightPalette";
 
 /**
  * O lugar do bloco 2: o pé de uma acácia, onde o bicho pequeno se deita, e a
@@ -101,105 +102,6 @@ type SavannaShotProps = {
   readonly children: React.ReactNode;
 };
 
-// A acácia do pé da qual ele dorme: a mesma de `Savanna` (x, copa e altura), repetida aqui para o luar acompanhá-la.
-const DEN_TREE = { x: 1500, width: 320, height: 280 };
-// O meio da base da copa: a silhueta de trás cresce a partir daqui, só para cima e para os lados.
-const CANOPY = {
-  x: DEN_TREE.x + 10,
-  y: SAVANNA_GROUND_Y - DEN_TREE.height + 66,
-};
-const canopyPath = () => {
-  const { x, width } = DEN_TREE;
-  const top = SAVANNA_GROUND_Y - DEN_TREE.height;
-  return `M${x - width / 2},${top + 50} C${x - width * 0.3},${top - 30} ${x + width * 0.35},${top - 40} ${x + width / 2 + 20},${top + 40} C${x + width * 0.2},${top + 70} ${x - width * 0.2},${top + 70} ${x - width / 2},${top + 50} Z`;
-};
-
-/**
- * O luar na acácia. De noite a copa tem quase a cor do céu e sumia: atrás
- * dela vai a mesma silhueta um tom acima, maior, e outra na cor da lua,
- * deslocada para o lado de onde a luz vem, que sobra como borda. Fica na
- * profundidade das árvores, dentro do céu, que não se move: é o único jeito
- * de chegar atrás da copa sem mexer no cenário.
- */
-const Moonlight: React.FC = () => (
-  <Layer depth={0.6}>
-    <SvgLayer>
-      <path
-        d={canopyPath()}
-        fill={savanna.night.far}
-        transform={`translate(${CANOPY.x} ${CANOPY.y}) scale(1.12 1.4) translate(${-CANOPY.x} ${-CANOPY.y})`}
-      />
-      <path
-        d={canopyPath()}
-        fill={ink.moon}
-        opacity={0.8}
-        transform="translate(-5 -6)"
-      />
-    </SvgLayer>
-  </Layer>
-);
-
-// A profundidade das árvores no cenário (`Savanna`), e a altura da beira do chão sob a acácia, no plano do assunto.
-const TREE_DEPTH = 0.6;
-const TRUNK_FOOT = SAVANNA_GROUND_Y - 48;
-
-type TrunkLightProps = {
-  readonly camera: CameraState;
-};
-
-/**
- * O luar no tronco. O tronco fica sobre as colinas, e por isso a borda dele
- * não cabe atrás do céu, como a da copa: sem ela, o tronco se confundia com o
- * capim da moita e a copa virava um arco solto. Aqui o tronco é redesenhado
- * com a borda na cor da lua, como em `third-of-life`, antes da moita e do
- * bicho. Vai no plano do assunto, e por isso desfaz a diferença de parallax
- * até a profundidade das árvores: fica exatamente sobre o tronco do cenário.
- */
-const TrunkLight: React.FC<TrunkLightProps> = ({ camera }) => {
-  const near = camera.zoom;
-  const far = 1 + (camera.zoom - 1) * TREE_DEPTH;
-  const { x, height } = DEN_TREE;
-  const trunk = taperPath(
-    [x, SAVANNA_GROUND_Y - 30],
-    [x + 10, SAVANNA_GROUND_Y - height * 0.6],
-    [x + 24, SAVANNA_GROUND_Y - height + 30],
-    26,
-    12,
-  );
-  return (
-    // O chão do cenário esconde o pé do tronco; aqui, por cima do chão, ele é cortado na mesma altura.
-    <AbsoluteFill style={{ clipPath: `inset(0 0 ${1080 - TRUNK_FOOT}px 0)` }}>
-      <AbsoluteFill
-        style={{
-          translate: `${((1 - TREE_DEPTH) * camera.x) / near}px ${((1 - TREE_DEPTH) * camera.y) / near}px`,
-          scale: `${far / near}`,
-        }}
-      >
-        <SvgLayer>
-          {/* A borda para na base da copa: por cima dela, riscava a silhueta. */}
-          <clipPath id="trunk-light">
-            <rect
-              x={x - 200}
-              y={SAVANNA_GROUND_Y - height + 62}
-              width={400}
-              height={height}
-            />
-          </clipPath>
-          <g clipPath="url(#trunk-light)">
-            <path
-              d={trunk}
-              fill={ink.moon}
-              opacity={0.6}
-              transform="translate(-5 0)"
-            />
-          </g>
-          <path d={trunk} fill={savanna.night.trees} />
-        </SvgLayer>
-      </AbsoluteFill>
-    </AbsoluteFill>
-  );
-};
-
 /**
  * Um plano na savana: a câmera, o cenário em camadas e a granulação. De noite,
  * a árvore ganha o luar.
@@ -230,15 +132,9 @@ export const SavannaShot: React.FC<SavannaShotProps> = ({
         {/* Dentro daqui o quadro é o do vídeo: é o relógio do cenário. */}
         <Sequence from={-clock} layout="none">
           <Camera {...camera}>
-            <Savanna
-              finish={polished()}
-              daylight={daylight}
-              orb={orb}
-              sky={daylight < 0.25 ? <Moonlight /> : undefined}
-            >
-              {daylight < 0.25 ? <TrunkLight camera={camera} /> : null}
+            <RichSavannaBackdrop daylight={daylight} orb={orb}>
               {children}
-            </Savanna>
+            </RichSavannaBackdrop>
           </Camera>
         </Sequence>
       </Build>
@@ -454,9 +350,25 @@ const NOD = { buckle: 0.16, head: -38, lid: 0.66 };
 const lightOf = (key: "grass" | "trees", daylight: number) =>
   interpolateColors(
     daylight,
-    [0, 0.5, 1],
-    [savanna.night[key], savanna.dusk[key], savanna.day[key]],
+    [0, 0.5],
+    [
+      key === "trees" ? nightPalette.grass.dark : nightPalette.grass.mid,
+      key === "trees" ? richPalette.grass.dark : richPalette.grass.mid,
+    ],
   );
+
+// As folhas terminam em ponta, como as do cenário de referência. Curvas
+// paralelas não deixam o tubo do desenho anterior ler como um cabo no close.
+const thicketBlade = (
+  base: readonly [number, number],
+  middle: readonly [number, number],
+  tip: readonly [number, number],
+  width: number,
+) => {
+  const [x, y] = base;
+  const height = y - tip[1];
+  return `M${x - width / 2} ${y} C${middle[0] - width * 0.4} ${middle[1]} ${tip[0] - width * 0.1} ${tip[1] + height * 0.14} ${tip[0]} ${tip[1]} C${tip[0] + width * 0.1} ${tip[1] + height * 0.14} ${middle[0] + width * 0.4} ${middle[1]} ${x + width / 2} ${y} Z`;
+};
 
 // As folhas da moita: x da base, altura e inclinação; as de trás e as da frente.
 const BACK_BLADES = [
@@ -516,7 +428,7 @@ export const Thicket: React.FC<ThicketProps> = ({
         {BACK_BLADES.map(([x, height, lean], index) => (
           <path
             key={x}
-            d={taperPath(
+            d={thicketBlade(
               [THICKET.x + x, THICKET.y],
               [THICKET.x + x - lean / 2, THICKET.y - height * 0.55],
               [
@@ -524,9 +436,16 @@ export const Thicket: React.FC<ThicketProps> = ({
                 THICKET.y - height,
               ],
               17,
-              4,
             )}
-            fill={lightOf("trees", daylight)}
+            fill={
+              index % 4 === 1
+                ? interpolateColors(
+                    daylight,
+                    [0, 0.5],
+                    [nightPalette.grass.gold, richPalette.grass.gold],
+                  )
+                : lightOf("trees", daylight)
+            }
           />
         ))}
       </SvgLayer>
@@ -535,7 +454,7 @@ export const Thicket: React.FC<ThicketProps> = ({
         {FRONT_BLADES.map(([x, height, lean], index) => (
           <path
             key={x}
-            d={taperPath(
+            d={thicketBlade(
               [THICKET.x + x, THICKET.y + 26],
               [THICKET.x + x - lean / 2, THICKET.y + 26 - height * 0.55],
               [
@@ -543,9 +462,16 @@ export const Thicket: React.FC<ThicketProps> = ({
                 THICKET.y + 26 - height,
               ],
               19,
-              4,
             )}
-            fill={lightOf("grass", daylight)}
+            fill={
+              index % 3 === 1
+                ? interpolateColors(
+                    daylight,
+                    [0, 0.5],
+                    [nightPalette.grass.orange, richPalette.grass.orange],
+                  )
+                : lightOf("grass", daylight)
+            }
           />
         ))}
       </SvgLayer>

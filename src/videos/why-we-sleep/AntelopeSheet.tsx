@@ -2,7 +2,7 @@ import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { Antelope, type AntelopeColors } from "../../art/Antelope";
 import { Label } from "../../components/Label";
 import { Place } from "../../components/Place";
-import { antelope, ink, savanna } from "./palette";
+import { antelope, antelopeNight, ink, savanna } from "./palette";
 
 type AntelopePose = Omit<
   React.ComponentProps<typeof Antelope>,
@@ -18,7 +18,7 @@ const POSES: readonly { label: string; pose: AntelopePose }[] = [
   { label: "dormindo", pose: { rest: 1, droop: 1, lid: 1, ear: 0 } },
 ];
 const COLUMN = 384;
-const WIDTH = 330;
+const WIDTH = 280;
 // A silhueta: a figura inteira numa cor só, para a construção ser julgada sem cor nem rosto.
 const SILHOUETTE = Object.fromEntries(
   Object.keys(antelope).map((key) => [key, ink.dark]),
@@ -26,18 +26,18 @@ const SILHOUETTE = Object.fromEntries(
 
 /**
  * Folha do antílope, para a etapa da silhueta (unidade `forma`, Construção):
- * em cima o do animatic, embaixo o de traço gordo. No quadro 0, numa cor só;
- * no 1, pintados.
+ * o mesmo modelo de dia e de noite em todas as poses. No quadro 0, numa cor
+ * só; no 1, as duas condições de luz, sem trocar a anatomia.
  */
 export const AntelopeSheet: React.FC = () => {
-  const colors = useCurrentFrame() === 0 ? SILHOUETTE : antelope;
+  const silhouette = useCurrentFrame() === 0;
   return (
     <AbsoluteFill
       style={{
         background: `linear-gradient(${savanna.day.sky[0]}, ${savanna.day.sky[1]})`,
       }}
     >
-      {[false, true].map((finish, row) =>
+      {[antelope, antelopeNight].map((colors, row) =>
         POSES.map(({ label, pose }, column) => (
           <div key={`${row}-${label}`}>
             <Place
@@ -47,8 +47,7 @@ export const AntelopeSheet: React.FC = () => {
             >
               <Antelope
                 width={WIDTH}
-                colors={colors}
-                finish={finish}
+                colors={silhouette ? SILHOUETTE : colors}
                 {...pose}
               />
             </Place>
@@ -62,7 +61,7 @@ export const AntelopeSheet: React.FC = () => {
           </div>
         )),
       )}
-      {["antes", "depois"].map((label, row) => (
+      {["dia", "noite"].map((label, row) => (
         <Place key={label} x={120} y={46 + row * 500}>
           <Label size="note" color={ink.dark} tag={ink.paper}>
             {label}

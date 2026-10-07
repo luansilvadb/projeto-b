@@ -125,6 +125,7 @@ const MusicBed: React.FC<MusicBedProps> = ({
         from={envelope.from}
         durationInFrames={Math.max(length, 1)}
         layout="none"
+        hidden
       >
         <Audio
           src={staticFile(part.file)}
@@ -253,7 +254,6 @@ export const NarratedVideo: React.FC<Props> = ({
                           src={staticFile(sentence.file)}
                           from={sentence.from}
                           premountFor={fps}
-                          hidden
                         />
                       ))}
                 </Series.Sequence>

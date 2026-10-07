@@ -581,24 +581,36 @@ export const ink = {
 
 /** O antílope, a presa do capítulo "o que o sono custa": ferrugem, para saltar do chão de areia da savana. */
 export const antelope: AntelopeColors = {
-  body: "#C75116",
-  shade: "#9E3411",
-  belly: "#FFECCA",
-  band: "#3A0E2E",
+  body: "#E96516",
+  shade: "#C94B16",
+  light: "#F77917",
+  deep: "#9D3015",
+  belly: "#FFE6C2",
+  bellyShade: "#F1BD9F",
+  rim: "#FFC239",
+  hornRim: "#CF601D",
+  horn: "#260D32",
+  band: "#250D30",
   earInside: "#F29873",
   eye: "#FFFFFF",
-  pupil: "#1B1F3C",
+  pupil: "#120C19",
 };
 
-/** O antílope repintado para a savana de noite: lilás sob a lua, com a barriga ainda clara. */
+/** O mesmo pelo quente sob a lua, com sombras ameixa e luz azul na borda. */
 export const antelopeNight: AntelopeColors = {
-  body: "#7055C8",
-  shade: "#4F35A6",
-  belly: "#C3B9F6",
-  band: "#0A0340",
+  body: "#A6515A",
+  shade: "#773D61",
+  light: "#CB726B",
+  deep: "#583258",
+  belly: "#FFE3DC",
+  bellyShade: "#CEB3D4",
+  rim: "#C1C8FF",
+  hornRim: "#7D9BEA",
+  horn: "#020624",
+  band: "#0B0829",
   earInside: "#A576D6",
   eye: "#F4F1FF",
-  pupil: "#120E30",
+  pupil: "#0B0716",
 };
 
 /**

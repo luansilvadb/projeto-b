@@ -40,6 +40,10 @@ O gancho e o capítulo 1 foram animados primeiro, criticados duas vezes e aceito
 
 Desvios da letra aceitos no piloto: o bicho entra pela direita em `night-falls` 1, em 2,2 s; `sleep-debt` 1 não tem câmera fechando; a poda de `time-to-fix` 1 termina por cima do começo da linha do tempo; `biggest-mistake` 3 para 4 é uma troca com o quadro-negro grande entrando pela direita, e não um recuo; "dorme mais tempo" é o sol andando no céu; a vinheta sai por uma janela redonda que encolhe até o centro.
 
+## Revisão das passagens da abertura — 2026-10-06
+
+Pedido do usuário: animar as trocas, principalmente o começo, que está seco em relação ao restante. Ajuste das duas primeiras passagens: pessoa → savana na deixa “Durante” (3,0 s), e savana → pesquisador no início de `biggest-mistake` (10,27 s). Cada passagem dura 0,8 s, começando 0,4 s antes da deixa e assentando 0,4 s depois. O quadro anterior sobe e o seguinte vem de baixo, com a mesma curva de peso e a borda compartilhada; cenário e elenco permanecem inteiros durante a viagem. A entrada do pesquisador continua o primeiro quadro desenhado no fim da savana. Isso substitui a subida calculada pelas medidas da savana antiga e impede a duplicação da pessoa e a faixa preta na saída do cenário. Enquadramentos finais, deixas e narração preservados. Prévia de revisão em `out/transicoes/abertura-depois.mp4`; aceite deste ajuste ainda pendente.
+
 ## Som
 
 A música, os níveis, os silêncios e os efeitos saíram desta partitura em 2026-10-05 e ficam em `sound.md`, da skill `diretor-de-som`. As linhas "Som:" de cada plano, abaixo, são as marcas da época em que a animação foi escrita: valem como registro do que acontece na imagem, e quem decide o que soa é o mapa de som.
