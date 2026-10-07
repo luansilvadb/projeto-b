@@ -108,7 +108,6 @@ Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), inje
 - Nenhuma afirmação factual sem fonte chega ao roteiro final.
 - Um trabalho começa quando há o bastante para produzir uma evidência válida, e o que o artefato mostra volta à decisão anterior: um gancho tentado pode mostrar que a promessa é difusa; uma amostra de narração, que a estrutura está montada demais; a decupagem, que a frase não se encena. O que tranca são as dependências reais: o fato só entra no texto depois de estar em `research.md`, toda cena tem `shots` válidos antes de `pnpm narrate`, e mudar o que o usuário já decidiu volta a ele (`entrevista`).
 - Gerar voz é caro e fixa o tempo de tudo que é animado sobre ela: é gerada quando o texto e os `shots` de que ela depende estão estáveis o bastante para justificar esse custo. Isso não torna o texto imutável: a frase que precisa mudar depois muda, e paga o custo dela.
-- Onde uma unidade ainda fala em aprovação, em "1ª aprovação" ou em `approvals.md` como registro, valem estes limites: os `approvals.md` que existem são histórico legado, nada é escrito neles nem lido deles, e a decisão do usuário mora em `script.md`.
 - Das referências usa-se o mecanismo (padrão, molde, movimento); as frases, os exemplos, as metáforas e os bordões ficam com elas.
 - O exemplo de uma unidade é exemplo de forma: cada afirmação dele precisa estar na base de fatos antes de entrar num roteiro.
 

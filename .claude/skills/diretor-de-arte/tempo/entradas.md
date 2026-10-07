@@ -8,7 +8,7 @@ O que faz um elemento aparecer, mudar ou sair de modo que se entenda de onde vei
 **O caminho serve quando:**
 
 - **Lê-se a origem.** Surgir ali, chegar de fora, ser revelado e já estar no lugar são quatro afirmações diferentes. O que já estava quando a câmera chega não entra.
-- **O fim diz como a coisa terminou**: assentou, bateu, continuou ou foi interrompida. O estado final é o do quadro aprovado, e fica à vista.
+- **O fim diz como a coisa terminou**: assentou, bateu, continuou ou foi interrompida. O estado final é o do quadro composto, e fica à vista.
 - **A técnica não dá à coisa uma matéria que ela não tem.** Defeito conhecido: o objeto sólido que entra só por opacidade parece fantasma. A opacidade é a entrada certa do que é assim por natureza (luz, atmosfera, lembrança, o que é revelado).
 - **Quando é a mesma coisa mudando, ela continua reconhecível.** A pergunta que decide a técnica: o espectador precisa ver o caminho entre os dois estados, ou só perceber que o estado mudou? Se o caminho importa, a coisa vira a outra à vista. Se a mudança é ruptura, piada, ou um antes e depois a comparar, ela pode trocar numa batida, desde que se leia como intenção e não como erro.
 - **A curva tem a natureza que a cena afirma** (peso, impacto, constância, elasticidade, queda, precisão de máquina) e não transforma a ação em outra: a curva errada muda quanto tempo a ação parece durar.
@@ -51,7 +51,7 @@ Defeito conhecido: a chegada rápida numa porta, num braço ou numa câmera encu
 
 ## DEPENDÊNCIAS
 - sincronia: fornece quando cada mudança acontece e a relação de tempo entre elas.
-- composicao: fornece o estado final de cada elemento, no quadro aprovado.
+- composicao: fornece o estado final de cada elemento, no quadro composto.
 - texto: fornece a função e o vínculo de cada texto.
 
 ## LIMITES

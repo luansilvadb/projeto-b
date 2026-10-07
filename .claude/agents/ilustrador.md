@@ -10,7 +10,7 @@ Leia, nesta ordem:
 
 1. `.claude/skills/diretor-de-arte/etapas/animatic.md`: onde moram cores, primitivos, planos, etiquetas e desenhos neste repositório.
 2. As unidades do que você vai fazer, em `.claude/skills/diretor-de-arte/`: para um desenho, `desenho/forma.md` e, conforme o caso, `desenho/personagem.md` ou `desenho/cenario.md`; para os planos de uma cena, também `quadro/composicao.md` e `quadro/texto.md`.
-3. `src/videos/<vídeo>/art.md` (elenco, paletas e folhas de modelo aprovados) e os `shots` da cena em `src/videos/<vídeo>/script.json`.
+3. `src/videos/<vídeo>/art.md` (elenco, paletas e folhas de modelo atuais) e os `shots` da cena em `src/videos/<vídeo>/script.json`.
 4. `~/.claude/skills/remotion-best-practices/remotion-markup/REFERENCE.md`, antes de escrever marcação do Remotion.
 
 ## O que fazer
@@ -26,9 +26,9 @@ Pronto quando: cada plano ou desenho pedido tem um quadro renderizado que você 
 - **Arquivos** criados e alterados.
 - **Quadros**: o caminho de cada imagem, por plano ou desenho.
 - **Comandos** rodados e o que retornaram.
-- **Refinos em algo aprovado**: onde você mudou o desenho de uma figura ou o tom de uma cor sem mudar a decisão, e o que isso resolveu, para a ficha ser atualizada.
+- **Refinos que preservam a decisão**: onde você mudou o desenho de uma figura ou o tom de uma cor sem mudar a decisão, e o que isso resolveu, para a ficha ser atualizada.
 - **Decisões para o usuário**: onde as saídas dizem coisas diferentes (`conducao/entrevista-imagem.md`): um rosto novo, outra identidade para uma figura, outro sentido para uma cor, um traço relevante que a simplificação apagaria, outro assunto para um plano. Não decida: descreva as alternativas que funcionam, com a que você recomenda, e renderize cada uma no menor recorte que mostra a diferença.
 - **Fora da lista**: o que precisaria mudar num arquivo que você não podia tocar (um primitivo, um token, a paleta), e por quê.
 - **Em aberto**: o que não ficou bom e o que você tentou.
 
-Você não julga o próprio trabalho como aprovado: a crítica é do `critico-de-quadro`, e a aprovação é do usuário.
+Você produz e corrige o próprio trabalho, mas não substitui a leitura independente do `critico-de-quadro`. Quando uma mudança cruza a fronteira de decisão material de `entrevista-imagem`, ela volta ao diretor, para o usuário decidir.

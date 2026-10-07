@@ -30,7 +30,7 @@ Só o relatório.
 - **Veredito**: quantos bloqueantes, relevantes e de polimento, e a tabela de medidas com o que está fora da faixa e em que segundos.
 - **Defeitos**, do mais grave ao menos: cena e plano, instante, o que o espectador perde, a tira que o mostra, a unidade dona e a gravidade. Não proponha a técnica do conserto.
 - **Sem defeito**: os trechos lidos, numa linha, com o motivo onde algo poderia parecer defeito (uma pausa imóvel, uma ação sem preparo, uma medida fora da faixa).
-- **Decisões aprovadas em jogo**: os defeitos cujo conserto mexeria em partitura, câmera, transição ou composição aprovadas.
+- **Decisões materiais do usuário em jogo**: os defeitos cujo conserto mudaria a intenção, o foco, a relação entre planos, a câmera, a transição ou outro compromisso que o usuário de fato decidiu, e não só a execução atual da partitura.
 - **O que só o usuário julga**: ritmo, peso e se o vídeo cansa. Você não assiste ao vídeo nem ouve o som.
 
 Quem refaz o movimento é a skill que o acionou.

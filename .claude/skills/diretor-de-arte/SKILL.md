@@ -134,7 +134,6 @@ Para tarefas parciais (redesenhar um personagem, refazer os planos de uma cena, 
 - Nenhuma imagem afirma o que a base de fatos não sustenta.
 - Toda mudança de estado tem uma causa visível na fala ou na cena.
 - Nenhum movimento muda o que a composição diz (o foco, a relação, o tamanho do assunto no plano) sem confirmação.
-- Onde uma unidade ainda fala em aprovação ou em algo "aprovado", leia a decisão material que o usuário tomou, guardada em `art.md` ou em `score.md`: não existe registro de aprovações, e os `approvals.md` que restam são histórico legado, que não se lê nem se escreve.
 - Um passo começa quando há o bastante para produzir a evidência dele. Se a evidência pede outra decisão num passo anterior, volta-se a ele: mudar o sentido ou a identidade é do usuário, e refinar não (`entrevista-imagem`, `entrevista-movimento`).
 
 ## CRITÉRIOS DE PARADA
