@@ -40,7 +40,7 @@ O que o ouvinte perde neste trecho, qual é a menor causa que explica a perda, e
 - **Procedência** (`procedencia`), quando um fato surpreendente soa inventado. A fala diz como se soube, e a nota visual pede o selo? Quando a frase soa mais segura do que parece razoável, a dúvida vai ao `checador`: o grau de certeza é de `checagem`.
 - **Imagem** (`indicacao-visual`), quando a fala descreve o que o plano já entrega, aponta para algo que a encenação não mostra, ou o bloco não tem o que pôr na tela. Composição, desenho, continuidade entre planos e plano longo são da skill `diretor-de-arte`: vão a ela sem julgamento.
 
-**Texto montado.** É o defeito que as medidas não pegam, e ele é percebido antes de ser contado. A quinta versão do `why-we-sleep` passou em todas e foi recusada como texto de IA: tratava cada achado como uma unidade fechada, mudava de assunto antes que algum elemento ganhasse continuidade e usava frases de efeito para fabricar uma importância que a sequência ainda não tinha construído. Quando a leitura dá essa sensação, as perguntas são de `fio`: a ideia teve tempo de assentar antes de outra disputar espaço? O veredito foi ganho pelo que veio antes, ou a frase é maior que a prova e pede uma emoção que os fatos não deram? Quem volta no vídeo tem nome e detalhe? O que foi plantado foi cobrado? Os números de `fio` (as 150 palavras por ideia e entre frases de efeito) ajudam a localizar onde, e não decidem: a ideia simples que assenta em 110 palavras é sem defeito, e a de 220 que mistura três afirmações é fila.
+**Texto montado.** É o defeito que as medidas não pegam, e ele é percebido antes de ser contado. A quinta versão do `why-we-sleep` passou em todas e foi recusada como texto de IA: tratava cada achado como uma unidade fechada, mudava de assunto antes que algum elemento ganhasse continuidade e usava frases de efeito para fabricar uma importância que a sequência ainda não tinha construído. Quando a leitura dá essa sensação, as perguntas são de `fio`: a ideia teve tempo de assentar antes de outra disputar espaço? O veredito foi ganho pelo que veio antes, ou a frase é maior que a prova e pede uma emoção que os fatos não deram? Quem ou o que volta continua reconhecível, e ganha algo na volta? O que foi plantado foi cobrado? Os sensores de `fio` (as 150 palavras por ideia e entre frases de efeito) ajudam a localizar onde, e não decidem: a ideia simples que assenta em 110 palavras é sem defeito, e a de 220 que mistura três afirmações é fila.
 
 As marcas que ajudam a achar a causa, e para onde cada uma aponta:
 
@@ -49,7 +49,7 @@ As marcas que ajudam a achar a causa, e para onde cada uma aponta:
 | frase de efeito depois de um fato só | a série de fatos antes dela, ou nenhuma frase de efeito |
 | revelação anunciada ("e o mais estranho nem é isso") | a coisa dita, na ordem em que aconteceu |
 | três itens em cadência a cada bloco | o item que importa, com o detalhe dele |
-| quem fez sem nome, ano nem lugar | o personagem de `fio`, com o que a base de fatos tem |
+| quem volta no vídeo sem nada que o distinga ("um rapaz") | o que o torna reconhecível, com o que a base de fatos tem (`fio`) |
 | adjetivo que diz o que sentir ("perturbador", "absurdo") | os dois fatos lado a lado |
 | palavra de texto traduzido ("certamente", "de fato", "possui") | a palavra da fala |
 | expressão figurada de enfeite ("um feito e tanto") | a coisa dita pelo nome |

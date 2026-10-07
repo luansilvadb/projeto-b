@@ -54,7 +54,7 @@ O número em algarismos, o símbolo e a sigla vão para a tela, descritos na enc
 
 Além das regras do validador:
 
-- O desenho (`escrita/explicacao`) e a ficha do fio (`escrita/fio`) vêm antes do roteiro inteiro. Um trecho curto pode ser escrito antes deles, para testá-los, e o que ele mostrar volta a eles. Antes do roteiro inteiro, uma amostra curta prova a maneira de contar e é mostrada ao usuário, com as decisões que ela pôs em jogo (`conducao/entrevista`); a estrutura e a ficha do fio seguem acompanhando o que o texto mostrar.
+- O desenho (`escrita/explicacao`) e o fio (`escrita/fio`) vêm antes do roteiro inteiro. Um trecho curto pode ser escrito antes deles, para testá-los, e o que ele mostrar volta a eles. Antes do roteiro inteiro, uma amostra curta prova a maneira de contar e é mostrada ao usuário, com as decisões que ela pôs em jogo (`conducao/entrevista`); a estrutura e o fio seguem acompanhando o que o texto mostrar.
 - As frases médias e encadeadas de `escrita/narracao` pesam em dobro aqui: o modelo de voz gera uma frase por vez, com pausa entre elas, e texto picotado em frases curtas sai monótono e mal-humorado.
 - A pontuação decide como a frase é falada; a tabela está na etapa `narracao` da skill `producao`.
 - A vírgula é uma pausa: o modelo de voz para em cada uma. Só ponha vírgula onde quem fala pararia. "E mesmo assim emagreciam", não "e, mesmo assim, emagreciam", que sai com duas pausas.

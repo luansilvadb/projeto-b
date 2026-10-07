@@ -48,5 +48,5 @@ O que cada um ensina, além da linha da tabela:
 - angulo: fornece a tese, a promessa e o recorte, de que o mecanismo nasce.
 
 ## LIMITES
-- A ordem e a dependência dos blocos são de `arco`; a continuidade no texto (refrão, personagem, promessa) é de `fio`; como um bloco explica, de `explicacao`.
+- A ordem e a dependência dos blocos são de `arco`; a continuidade no texto é de `fio`; como um bloco explica, de `explicacao`.
 - Forçar vinheta, mapa, duas respostas e capítulos porque o assunto "parece mistério" é usar o molde como receita.

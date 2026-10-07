@@ -49,7 +49,7 @@ Como fazer o texto explicar para quem assiste, em vez de relatar fatos?
 3. Liste o que o espectador precisa saber para esperar X. Isso é o bloco de mecanismo, e vem antes de qualquer evidência.
 4. Escolha os poucos elementos do vídeo (até quatro bichos, coisas ou personagens) e a ordem em que são medidos uns contra os outros.
 5. Para cada bloco, escreva em tópicos antes do texto: a cadeia ("A, então B, por isso C"), o "e daí?" que ele responde, a tradução de cada número e o veredito que o fecha.
-6. Monte a ficha do fio, conforme `fio`. Estes treze padrões dizem o que o texto explica; o fio diz como ele é contado, e um roteiro que cumpre só os treze soa montado.
+6. Veja o que fica vivo de um bloco para o seguinte, conforme `fio`. Estes treze padrões dizem o que o texto explica; o fio diz como ele é contado, e um roteiro que cumpre só os treze soa montado.
 7. Só então escreva as frases, conforme `narracao`.
 8. Rode `pnpm check-script` e leia o perfil. Medida fora da faixa manda voltar ao passo 2 ou 5, não trocar palavras.
 9. Leia o bloco pelas perguntas acima.

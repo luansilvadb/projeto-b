@@ -74,7 +74,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `estrutura/fechamento` | Como encerrar o vídeo de modo que quem assiste saia maior do que entrou, e querendo ver outro? |
 | `estrutura/chamada` | Como pedir a curtida e a inscrição sem desfazer o fechamento? |
 | `escrita/explicacao` | Como fazer o texto explicar para quem assiste, em vez de relatar fatos? |
-| `escrita/fio` | Como contar o vídeo de modo que cada trecho segure o seguinte, em vez de entregar uma fila de fatos bem-acabados? |
+| `escrita/fio` | O que faz uma sequência soar contada como uma coisa só, em vez de uma coleção de fatos bem escritos, e que mecanismos mantêm algo vivo de um trecho para o seguinte? |
 | `escrita/narracao` | Como escrever um texto feito para ser ouvido? |
 | `escrita/procedencia` | Como mostrar de onde vem cada fato, na fala e na tela, para o vídeo não parecer inventado? |
 | `escrita/analogias` | Como tornar escala e abstração compreensíveis e desenháveis? |
