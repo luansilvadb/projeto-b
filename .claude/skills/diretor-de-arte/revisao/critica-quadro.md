@@ -31,7 +31,7 @@ Com que critérios e medidas julgar os quadros?
    - O volume se lê, e a sombra é uma forma desenhada, que acompanha o volume?
    - O orçamento de `forma` acusa ícone ou excesso? Confira no recorte antes de apontar.
    - Registro e contenção, julgados num recorte em tamanho real (um quarto do quadro, sem reduzir) de cada personagem e do assunto de cada cenário: o desenho está no registro certo de `forma`? Aponte cada forma que, tirada, não faria falta em nenhum plano em que a peça aparece: leia esses planos no roteiro antes de apontar. Registro trocado é bloqueante; forma sobrando é relevante. A folha de quadros reduzidos não mostra nada disso.
-   - O personagem bate com a folha de modelo? Confira o estado do plano pelo nome que a ficha dá, item por item ("dormindo em pé: olho fechado, tromba caída, cabeça pendida" são três conferências). A expressão serve ao momento?
+   - O personagem bate com a folha de modelo? Confira o estado do plano pelo nome que a ficha dá, item por item ("dormindo em pé: olho fechado, tromba caída, cabeça pendida" são três conferências). A expressão e o olhar servem ao momento, e se leem no tamanho em que aparecem?
 6. **Cenário, profundidade e luz**
    - O fundo liso tem degradê, e trama só onde `cenario` a pede? O cenário tem três camadas ou mais?
    - Há sombra de contato no mundo e halo por dentro? A luz vem de um lado só?

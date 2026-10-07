@@ -5,71 +5,44 @@ Como desenhar e posar uma figura com rosto?
 
 **A quem se aplica.** Pessoas, bichos e tudo o que foi personificado no elenco (órgão, célula, objeto).
 
-**Proporção.** O corpo é simples e a cabeça manda:
+**Um personagem funciona quando:**
 
-- **Pessoa**: cabeça grande, de um quarto a um terço da altura. Tronco numa forma só. Braços e pernas em tubo de curva contínua, sem cotovelo ou joelho marcados. Mão em luva, de uma forma ou com três ou quatro dedos. Pé numa forma só.
-- **Mascote ou criatura**: o corpo é uma forma única (gota, feijão), e a cabeça é metade dela ou ela inteira. Pernas e braços em traço de ponta redonda, no peso que `forma` define, com o joelho dobrado e o pé desenhado; a perna de trás num matiz mais escuro.
-- **Personificação**: o corpo é a forma simplificada do próprio objeto, com olhos grandes na parte de cima e da frente; bracinhos em tubo só quando ela precisa operar algo.
-- **Bicho real**: silhueta fiel nos três traços que o identificam; o resto simplifica.
+- **A pose conta a cena** sem cor nem rosto: quem dorme pende, quem espera apoia o peso num lado. Uma figura só parada, de olho fechado, não dorme. O corpo se inclina inteiro, dos pés à cabeça: o tronco dobrado sobre pernas a prumo, com o rosto descansado, lê como coluna quebrada. Uma inclinação mora num lugar só, no desenho ou na cena; nos dois, elas se somam. Vem do piloto da pessoa e da elefanta. O teste: pinte a figura de uma cor só. A ação ainda se lê?
+- **O corpo e o rosto dizem a mesma coisa.** A expressão é o acordo entre a pose, o olhar, a pálpebra, a sobrancelha e a boca, diante do que acontece na cena. Rosto que muda sobre um corpo que não muda é máscara.
+- **A pose tem gesto.** Quando a cena pede vida, a figura não lê como boneco: há uma curva dos pés à cabeça, o peso está em algum lugar e um lado não espelha o outro. Rigidez e simetria ficam para a cena que as pede (o susto, a formalidade, o sentido).
+- **O olhar aponta para o que importa no quadro.** O espectador segue.
+- **O rosto sobrevive ao tamanho em que aparece.** O que carrega a expressão são os olhos e as pálpebras. Detalhe realista (dentes um a um, cílios, rugas, dedos, dobras de roupa) compete com ela e some no vídeo: entra só quando é o que identifica a figura.
+- **Quem volta é o mesmo.** Entre poses, estados e modos de cor, a figura continua reconhecível pelos traços da ficha (`elenco`). No bicho e na pessoa reais, esses traços são os de verdade: o resto simplifica, e simplificar não inventa anatomia nem proporção que mude o fato.
+- **O que passa na frente se lê.** Um braço da cor da roupa some quando cruza o tronco: ele leva uma sombra própria sobre o corpo. O que a figura segura na frente do corpo (placa, prancheta, caneca) cobre o braço e deixa só a mão por cima; o que ela abraça fica sob o braço.
+- **O figurante não disputa atenção** com o assunto do plano.
+- **O desenho permite as ações que o roteiro pede.** O que varia num personagem para ele atuar é a direção do olhar, a abertura da pálpebra, a boca, a inclinação da cabeça e do tronco, os braços e as pernas; como uma parte se move sozinha é de `forma`.
 
-**Rosto.** Os olhos carregam quase tudo:
+**Folha de modelo.** É a referência de constância: todo plano é conferido contra ela. Por isso cobre o que o vídeo de fato usa do personagem: as poses e as expressões que o roteiro pede, os estados da ficha, os modos de cor em que ele aparece e o tamanho dele ao lado de outro do elenco.
 
-- olhos grandes e simples, afastados cerca de um olho entre si, na metade de baixo da cabeça;
-- um ponto de brilho em cada olho, do mesmo lado;
-- a pálpebra é uma forma da cor da pele que corta o olho: é ela que muda a expressão;
-- sobrancelha em traço curto; boca em forma pequena que troca; bochecha em mancha mais saturada;
-- nariz mínimo ou nenhum; nada de dentes um a um, cílios ou rugas.
+**Repertório**, lido na referência. São pontos de partida, não medidas:
 
-No bicho real, o olho fica onde fica de verdade, com anel, pupila e brilho; a expressão vem da pálpebra, da inclinação do corpo e de orelhas, nadadeiras ou cauda.
+| Figura | Como costuma ser construída |
+|---|---|
+| Pessoa | cabeça grande, de um quarto a um terço da altura; tronco numa forma só; braços e pernas em tubo de curva contínua, sem cotovelo ou joelho marcados; mão em luva, de uma forma ou com três ou quatro dedos; pé numa forma só |
+| Mascote ou criatura | o corpo é uma forma única (gota, feijão), e a cabeça é metade dela ou ela inteira; pernas e braços em traço de ponta redonda, com o joelho dobrado e o pé desenhado; a perna de trás num matiz mais escuro |
+| Personificação | o corpo é a forma simplificada do próprio objeto, com olhos grandes na parte de cima e da frente; bracinhos em tubo só quando ela precisa operar algo |
+| Bicho real | o olho onde fica de verdade, com anel, pupila e brilho; a expressão vem da pálpebra, da inclinação do corpo e de orelhas, nadadeiras ou cauda |
+| Figurante | a mesma construção com menos formas: sem rosto ou com dois pontos, cores mais apagadas, ou silhueta de uma cor |
 
-**Expressões.** O mínimo de que um protagonista precisa:
+O rosto da referência: olhos grandes e simples, afastados cerca de um olho entre si, na metade de baixo da cabeça, com um ponto de brilho do mesmo lado em cada um; sobrancelha em traço curto; boca em forma pequena, que troca; bochecha em mancha mais saturada; nariz mínimo ou nenhum. A pálpebra é uma forma da cor da pele que corta o olho: é a peça que muda a expressão sem redesenhar o olho.
+
+Como as partes combinam em algumas expressões. São exemplos do acordo entre rosto e corpo, não um catálogo de onde escolher:
 
 | Expressão | Olhos e pálpebras | Sobrancelha | Boca | Corpo |
 |---|---|---|---|---|
-| Neutro | abertos | reta | traço curto | ereto |
 | Curioso | um mais aberto, olhar para o objeto | uma erguida | fechada, de lado | inclinado à frente |
 | Espanto | redondos, pálpebra some | altas | "o" pequeno | recua |
 | Dúvida | uma pálpebra a meio | uma baixa | torta | cabeça de lado |
-| Alegria | arcos para cima | altas | aberta, larga | braços soltos |
 | Esforço ou raiva | pálpebras em V | juntas, baixas | reta, apertada | tronco à frente |
 | Sono | pálpebras a meio ou fechadas | caídas | pequena | ombros caídos |
 | Medo | redondos, pupila pequena | altas e juntas | aberta, estreita | encolhe |
 
-**Pose.** O corpo diz a ação antes do rosto:
-
-- **A pose conta a cena** sem cor nem rosto: quem dorme pende, quem espera apoia o peso num lado. Uma figura só parada, de olho fechado, não dorme. O corpo e o rosto dizem a mesma coisa, e o corpo se inclina inteiro, dos pés à cabeça: o tronco dobrado sobre pernas a prumo, com o rosto descansado, lê como coluna quebrada. Uma inclinação mora num lugar só, no desenho ou na cena; nos dois, elas se somam. Vem do piloto da pessoa e da elefanta.
-- **Linha de ação**: uma curva só, dos pés à cabeça. Figura em pé e reta é boneco.
-- **Peso**: apoiado num pé; o quadril e os ombros inclinam em sentidos opostos.
-- **Assimetria**: os dois braços nunca fazem a mesma coisa.
-- **Silhueta da pose**: braços e objetos afastados do tronco, com vazio em volta. Pinte a figura de uma cor: a ação ainda se lê?
-- **Olhar**: aponta para o que importa no quadro. O espectador segue.
-- **Adereço**: um objeto ou uma peça de roupa define o papel (jaleco, capacete, mochila).
-
-**Figurantes.** A mesma construção com menos formas: sem rosto ou com dois pontos, cores mais apagadas, ou silhueta de uma cor.
-
-**Estrutura para animar.** Cada parte que se move é um grupo com o giro na articulação: cabeça, pupilas, pálpebras (abertura de 0 a 1), boca (formas que se trocam), braços, tronco, pernas. Os parâmetros têm nome.
-
-**Folha de modelo.** Antes de entrar em cena, o personagem é renderizado numa folha:
-
-1. pose neutra, de frente e de três quartos;
-2. de quatro a seis expressões da tabela;
-3. duas ou três poses de ação que o roteiro pede;
-4. ao lado de outro personagem do elenco, para fixar o tamanho relativo;
-5. pintado em cada modo de cor do vídeo.
-
-A folha aprovada é a referência de constância: todo plano é conferido contra ela.
-
-**Sobreposição.** O braço da frente tem a cor da roupa e some quando passa sobre o tronco; ele leva uma sombra própria sobre o corpo. O que a figura segura na frente do corpo (placa, prancheta, caneca) cobre o braço e deixa só a mão por cima; o que ela abraça fica sob o braço.
-
-**Erros que denunciam personagem fraco:** cápsula ou palito no lugar de corpo; cabeça pequena; olhos pequenos ou sem brilho; rosto sem pálpebra, preso numa expressão só; pose simétrica, com os braços colados; olhar para lugar nenhum; detalhe realista (dedos, nariz, dobras de roupa).
-
-**Procedimento:**
-
-1. Parta da ficha do personagem no elenco: silhueta, cores, traço distintivo, expressões.
-2. Construa o corpo conforme `forma` e o rosto conforme as regras acima.
-3. Monte a folha de modelo e renderize.
-4. Critique a imagem pela lista de erros.
-5. Leve a folha ao usuário, como parte da decisão de elenco.
+Quando a pose não se lê em silhueta: afaste braços e objetos do tronco, com vazio em volta.
 
 ## DEPENDÊNCIAS
 - elenco: fornece a ficha de cada personagem e decide o que ganha rosto.
@@ -77,10 +50,11 @@ A folha aprovada é a referência de constância: todo plano é conferido contra
 - cor: fornece as cores do personagem em cada modo.
 
 ## LIMITES
+- Quem aparece, que papel tem e o que ganha rosto pertencem a `elenco`.
+- A construção da geometria pertence a `forma`.
 - Atuação em movimento (antecipação, tempo das ações, piscadas) não é decidida aqui.
-- Rosto só entra onde o elenco decidiu.
 
 ## EXEMPLO
 > O lojista mal-humorado da analogia da loja.
 > Fraco: uma cápsula preta com dois riscos de braços.
-> Construído: corpo em feijão azul-escuro, cabeça um terço da altura; avental coral como adereço; braços cruzados em dois tubos sobrepostos, um ombro mais alto; pálpebras a meio em linha reta, sobrancelhas juntas, boca em traço curto caído; peso num pé só. A pose de braços cruzados se lê em silhueta.
+> Construído: corpo em feijão azul-escuro, de cabeça grande; avental coral como adereço; braços cruzados em dois tubos sobrepostos, um ombro mais alto; pálpebras a meio em linha reta, sobrancelhas juntas, boca em traço curto caído; peso num pé só. A pose de braços cruzados se lê em silhueta.
