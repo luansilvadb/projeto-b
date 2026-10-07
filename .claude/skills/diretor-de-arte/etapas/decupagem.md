@@ -1,10 +1,10 @@
 # Decupagem de um vídeo
 
-Acontece dentro da etapa de roteiro, acionada pela skill `diretor-criativo` de dois modos: com um trecho, antes do roteiro inteiro, para a prova do passo 1, quando o texto depende de uma imagem incerta; e com o texto completo e ainda não aprovado, quando todas as cenas recebem `shots`, que o roteiro precisa ter para a voz ser gerada. Aqui se descobre uma direção visual para o vídeo e se deixa o bastante para o animatic começar: a ficha visual, `src/videos/<vídeo>/art.md`, e os planos de cada cena, o campo `shots` de `src/videos/<vídeo>/script.json`.
+Entra de dois modos, quase sempre a pedido da skill `diretor-criativo`: com um trecho, mesmo antes de existir o roteiro inteiro, para a prova do passo 1, quando o texto depende de uma imagem incerta; e com o texto completo, quando todas as cenas recebem `shots`, que o `pnpm narrate` exige. O que ela precisa é o texto do trecho em jogo, e não o roteiro fechado. Aqui se descobre uma direção visual para o vídeo e se deixa o bastante para os planos serem desenhados: a ficha visual, `src/videos/<vídeo>/art.md`, e os planos de cada cena, o campo `shots` de `src/videos/<vídeo>/script.json`.
 
-É a única etapa em que a imagem ainda pode pedir outra frase sem custo: a narração não foi gravada. Mexer nos planos nunca regera áudio; mexer numa frase, depois da narração, sim.
+Enquanto a narração não foi gravada, a imagem pede outra frase sem custo. Mexer nos planos nunca regera áudio; mexer numa frase, depois da narração, regera o áudio dela e desloca os tempos seguintes: mais caro, e não proibido.
 
-A etapa não fecha a direção de arte. Escala de verdade, personagem no cenário, paleta na composição e texto no quadro só se resolvem no animatic: o que se decide aqui é o que cada trecho mostra e os compromissos que o vídeo inteiro precisa respeitar desde já.
+A decupagem não fecha a direção de arte. Escala de verdade, personagem no cenário, paleta na composição e texto no quadro só se resolvem no animatic: o que se decide aqui é o que cada trecho mostra e os compromissos que o vídeo inteiro precisa respeitar desde já.
 
 ## Passo 1: conceito visual
 
@@ -65,4 +65,4 @@ Devolva ao `diretor-criativo`:
 - as frases que a imagem pediu para mudar;
 - o que ainda é decisão do usuário, e as hipóteses que o animatic vai testar.
 
-Quem mostra o roteiro ao usuário e registra a **primeira aprovação** é ele. Ela fecha o que o texto e a imagem querem dizer e os compromissos visuais que já importam; a execução continua evoluindo. Se o animatic mostrar que um personagem, uma cor ou um plano não funciona, ele é revisto ali: o que só refina fica com o agente, e o que muda sentido ou identidade vai ao usuário (`entrevista-imagem`).
+Quem mostra o roteiro ao usuário é ele, dono do texto. O que o usuário decide ali é o que o texto e a imagem querem dizer e os compromissos visuais que já importam, que ficam em `art.md`; a execução continua evoluindo. Se o animatic mostrar que um personagem, uma cor ou um plano não funciona, ele é revisto ali: o que só refina fica com o agente, e o que muda sentido ou identidade vai ao usuário (`entrevista-imagem`).

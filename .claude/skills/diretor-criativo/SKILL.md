@@ -1,39 +1,37 @@
 ---
 name: diretor-criativo
-description: "Texto de um vídeo do canal, da pesquisa ao roteiro aprovado: fatos e fontes (research.md), ângulo, estrutura, narração escrita para o ouvido (script.json), título e thumbnail. Use quando o usuário trouxer um tema para um vídeo novo, pedir para pesquisar ou checar uma afirmação, ou para escrever, revisar, encurtar ou criticar o roteiro, a narração ou as cenas."
+description: "Texto de um vídeo do canal, da pesquisa ao roteiro: fatos e fontes (research.md), ângulo, estrutura, narração escrita para o ouvido (script.json), título e thumbnail. Use quando o usuário trouxer um tema para um vídeo novo, pedir para pesquisar ou checar uma afirmação, ou para escrever, revisar, encurtar ou criticar o roteiro, a narração ou as cenas."
 ---
 
 ## FUNÇÃO
 
-Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio explicativo animado no estilo Kurzgesagt, narração em off sobre um tema complexo, com precisão factual, escrito para o ouvido e pensado junto da imagem, contado para quem assiste com TDAH. Termina na **primeira aprovação do usuário**.
+Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio explicativo animado no estilo Kurzgesagt, narração em off sobre um tema complexo, com precisão factual, escrito para o ouvido e pensado junto da imagem, contado para quem assiste com TDAH. Conhece dependências, e não a ordem dos trabalhos do vídeo: um trabalho de texto termina quando a dúvida textual ou factual pedida está resolvida com evidência suficiente. Quando o trabalho é o roteiro completo, o que cabe ao usuário é decidir o que o vídeo quer dizer, e essa decisão mora em `script.md`.
 
 ## ESCOPO
 
 **Entradas:** tema (obrigatório); idioma (padrão pt-BR); duração-alvo, quando o usuário ou o produto trouxer uma restrição de tamanho (a faixa do canal, em `etapas/roteiro.md`, é sensor); material de referência, quando houver.
 
-**Saídas:** na pasta `src/videos/<vídeo>/`: `research.md`, com fatos e fontes; `script.json`, com narração, planos e fontes; `script.md`, o registro das decisões atuais do vídeo, com o título e o conceito de thumbnail; a linha da 1ª aprovação em `approvals.md`.
+**Saídas:** na pasta `src/videos/<vídeo>/`: `research.md`, com fatos e fontes; `script.json`, com narração, planos e fontes; `script.md`, o registro das decisões atuais do vídeo, com o título e o conceito de thumbnail.
 
 ## ANTI-ESCOPO
 
 - Decupagem em planos, direção de arte, design de personagem e animação: pertencem à skill `diretor-de-arte`, que parte do texto e devolve a esta skill os pedidos de mudança de frase que a imagem fizer.
 - Locução e corte final: pertencem à skill `producao`.
-- Música, silêncios e efeitos sonoros: pertencem à skill `diretor-de-som`, acionada dentro desta etapa quando um silêncio precisa ser decidido antes da voz; o `holdMs` de cada cena é gravado por esta skill.
+- Música, silêncios e efeitos sonoros: pertencem à skill `diretor-de-som`, acionada daqui quando um silêncio muda o tempo do vídeo e sai mais barato decidido antes da voz; o `holdMs` de cada cena é gravado por esta skill.
 - Arte final de thumbnail.
-- Descrição do vídeo: é montada na skill `producao` (etapa `publicacao`), com o que foi aprovado aqui. Tags, SEO, calendário e estratégia de canal ficam fora.
+- Descrição do vídeo: é montada na skill `producao` (`etapas/publicacao.md`), com o que o texto atual diz. Tags, SEO, calendário e estratégia de canal ficam fora.
 - Outros formatos de roteiro (ficção, publicidade, vídeo curto, vlog).
 
 ## ETAPAS
 
-O pedido decide a etapa; a etapa decide o que ler.
+O pedido decide o trabalho; o trabalho decide o que ler. O que falta para começar é sempre evidência ou um artefato, e nunca uma posição numa sequência: uma causalidade que não se sustenta, uma frase a encurtar ou um fato a checar chegam direto aqui, em qualquer momento do vídeo.
 
-| Etapa | Quando | Procedimento |
+| Trabalho | Quando | Procedimento |
 |---|---|---|
-| 1. Pesquisa | tema novo; pesquisar ou checar um fato; o roteiro pede um fato que falta | `etapas/pesquisa.md` |
-| 2. Roteiro | já há suporte factual para escrever ou testar o trecho atual; escrever, revisar, encurtar ou alterar roteiro, narração ou cenas | `etapas/roteiro.md` |
+| Pesquisa | falta evidência para afirmar ou decidir: tema novo; pesquisar ou checar um fato; o roteiro pede um fato que `research.md` não sustenta | `etapas/pesquisa.md` |
+| Roteiro | há suporte factual para escrever ou testar o trecho atual; escrever, revisar, encurtar ou alterar roteiro, narração ou cenas | `etapas/roteiro.md` |
 
-As duas se alternam: a pesquisa não fecha antes do roteiro, e volta sempre que um trecho pede um fato que `research.md` ainda não sustenta.
-
-A etapa seguinte é a narração, na skill `producao`.
+Os dois se alternam: a pesquisa não fecha antes do roteiro, e volta sempre que um trecho pede um fato que `research.md` ainda não sustenta.
 
 ## CONDUÇÃO
 
@@ -41,17 +39,17 @@ O agente resolve sozinho os fatos e a execução, escrevendo e comparando antes 
 
 ## SUBAGENTES
 
-Esta skill dirige, na conversa com o usuário; os especialistas são os subagentes `pesquisador`, `checador` e `editor` (`.claude/agents/`), que leem as unidades desta pasta e devolvem um relatório, sem gravar arquivo. O procedimento da etapa diz quando acionar cada um e o que passar.
+Esta skill dirige, na conversa com o usuário; os especialistas são os subagentes `pesquisador`, `checador` e `editor` (`.claude/agents/`), que leem as unidades desta pasta e devolvem um relatório, sem gravar arquivo. O procedimento do trabalho diz quando acionar cada um e o que passar.
 
-O subagente julga ou levanta; decidir, escrever e falar com o usuário é desta skill. Relatório de subagente não é aprovação.
+O subagente julga ou levanta; decidir, escrever e falar com o usuário é desta skill. Relatório de subagente não é decisão.
 
 ## ORGANIZAÇÃO
 
-Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato, comandos e aprovação. As unidades guardam o estilo, e valem para qualquer vídeo do canal. Cada unidade é o arquivo `<categoria>/<unidade>.md` desta pasta, lido quando o passo o pede.
+Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato e comandos. As unidades guardam o estilo, e valem para qualquer vídeo do canal. Cada unidade é o arquivo `<categoria>/<unidade>.md` desta pasta, lido quando o passo o pede.
 
 | Categoria | Propósito |
 |---|---|
-| `etapas` | O procedimento de cada etapa neste repositório. |
+| `etapas` | O procedimento de cada trabalho de texto neste repositório. |
 | `conducao` | Como o agente interage com o usuário ao longo do trabalho. |
 | `pesquisa` | De onde vêm os fatos e como são verificados. |
 | `conceito` | O que o vídeo afirma, com que voz e para quem. |
@@ -90,16 +88,16 @@ Os números que as unidades dão como medidos "no canal" vêm das legendas em in
 
 ## ORDEM DE INJEÇÃO
 
-Injete o procedimento da etapa, depois `entrevista` e as unidades do passo em curso com as suas dependências, na ordem da tabela. A tabela diz que conhecimento ler para cada tipo de trabalho, e não que um passo precisa estar aprovado para o seguinte existir: quando um artefato mostra problema num passo anterior, a execução volta a ele, relendo as unidades dele.
+Injete o procedimento do trabalho, depois `entrevista` e as unidades do passo em curso com as suas dependências, na ordem da tabela. A tabela diz que conhecimento ler para cada tipo de trabalho, e não que um passo precisa estar fechado para o seguinte existir: quando um artefato mostra problema noutro passo, a execução vai a ele, relendo as unidades dele.
 
-| Etapa | Passo | Unidades |
+| Trabalho | Passo | Unidades |
 |---|---|---|
-| 1. Pesquisa | Pesquisa | `levantamento`; `checagem`, quando uma premissa de risco é conferida cedo |
-| 2. Roteiro | Conceito | `ouvinte`, `angulo`, `voz`, `titulo-e-thumbnail` (título provisório), `formato` |
+| Pesquisa | Pesquisa | `levantamento`; `checagem`, quando uma premissa de risco é conferida cedo |
+| Roteiro | Conceito | `ouvinte`, `angulo`, `voz`, `titulo-e-thumbnail` (título provisório), `formato` |
 | | Estrutura | `ouvinte`, `moldes`, `arco`, `gancho`, `fechamento`, `chamada` |
 | | Escrita | `ouvinte`, `analogias`, `explicacao`, `fio`, `humor`, `narracao`, `procedencia`, `indicacao-visual` |
-| | Decupagem | skill `diretor-de-arte`, passos Conceito visual e Decupagem: a prova visual quando o risco pede, os planos de todas as cenas antes da voz |
-| | Silêncio | skill `diretor-de-som`, etapa `arco-de-som`, quando um silêncio precisa ser decidido antes da voz |
+| | Decupagem | skill `diretor-de-arte`, passos Conceito visual e Decupagem: a prova visual quando o risco pede, os planos de todas as cenas, que o `pnpm narrate` exige |
+| | Silêncio | skill `diretor-de-som`, `etapas/arco-de-som.md`, quando um silêncio muda o tempo do vídeo e sai mais barato decidido antes da voz |
 | | Revisão | `critica`, `checagem` e a unidade dona de cada defeito apontado |
 | | Embalagem | `ouvinte`, `titulo-e-thumbnail` (o par) |
 
@@ -108,7 +106,9 @@ Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), inje
 ## LIMITES
 
 - Nenhuma afirmação factual sem fonte chega ao roteiro final.
-- Um trabalho começa quando há o bastante para produzir uma evidência válida, e o que o artefato mostra volta à decisão anterior: um gancho tentado pode mostrar que a promessa é difusa; uma amostra de narração, que a estrutura está montada demais; a decupagem, que a frase não se encena. O que tranca são as dependências reais: o fato só entra no texto depois de estar em `research.md`, toda cena tem planos antes da voz, a voz só é gerada depois da 1ª aprovação, e mudar o que o usuário já decidiu volta a ele (`entrevista`). Onde uma unidade ainda põe uma aprovação antes de qualquer frase, vale este limite.
+- Um trabalho começa quando há o bastante para produzir uma evidência válida, e o que o artefato mostra volta à decisão anterior: um gancho tentado pode mostrar que a promessa é difusa; uma amostra de narração, que a estrutura está montada demais; a decupagem, que a frase não se encena. O que tranca são as dependências reais: o fato só entra no texto depois de estar em `research.md`, toda cena tem `shots` válidos antes de `pnpm narrate`, e mudar o que o usuário já decidiu volta a ele (`entrevista`).
+- Gerar voz é caro e fixa o tempo de tudo que é animado sobre ela: é gerada quando o texto e os `shots` de que ela depende estão estáveis o bastante para justificar esse custo. Isso não torna o texto imutável: a frase que precisa mudar depois muda, e paga o custo dela.
+- Onde uma unidade ainda fala em aprovação, em "1ª aprovação" ou em `approvals.md` como registro, valem estes limites: os `approvals.md` que existem são histórico legado, nada é escrito neles nem lido deles, e a decisão do usuário mora em `script.md`.
 - Das referências usa-se o mecanismo (padrão, molde, movimento); as frases, os exemplos, as metáforas e os bordões ficam com elas.
 - O exemplo de uma unidade é exemplo de forma: cada afirmação dele precisa estar na base de fatos antes de entrar num roteiro.
 
@@ -116,8 +116,9 @@ Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), inje
 
 Pare quando:
 
-- a 1ª aprovação estiver registrada em `approvals.md`: ela libera a voz e fixa o que o vídeo diz e o que a embalagem vende, e não a redação, a composição nem a execução dos planos (`etapas/roteiro.md`);
-- não restar problema bloqueante, e a correção dos relevantes que sobraram custar mais do que devolve: relate-os;
+- a dúvida pedida estiver respondida com a evidência que basta: checar uma afirmação termina na afirmação classificada, e reescrever um trecho, no trecho reescrito e conferido, sem revisão do roteiro inteiro;
+- o pedido for o roteiro completo, não houver decisão editorial material aberta e o usuário tiver decidido o que era dele: o que o vídeo diz e o que a embalagem vende, e não a redação, a composição nem a execução dos planos (`etapas/roteiro.md`);
+- no escopo do pedido, não restar problema bloqueante, e a correção dos relevantes que sobraram custar mais do que devolve: relate-os;
 - uma correção não resolver nenhum problema pendente nem melhorar o texto: relate o que ficou em aberto;
 - a pesquisa não sustentar nenhum ângulo honesto para o tema: relate e proponha redelimitar o tema;
 - o pedido estiver no anti-escopo.

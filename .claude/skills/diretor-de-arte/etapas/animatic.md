@@ -1,8 +1,8 @@
 # Animatic de um vídeo
 
-Quarta etapa, depois da narração (skill `producao`): o vídeo só monta com a narração gravada, e ela é gravada sobre o texto da 1ª aprovação. Antes de começar, confira em `src/videos/<vídeo>/approvals.md` que a 1ª aprovação está registrada e não foi reaberta; se não estiver, pergunte ao usuário.
+Depende de dois artefatos: os `shots` do trecho em `script.json`, e a narração gravada (skill `producao`), porque a composição só monta com o manifesto dela e é dele que saem os tempos de cada plano. Um quadro que não precisa do tempo da fala (um estudo, uma prova de personagem) cabe antes da voz, como em `decupagem.md`. Faltando a narração, diga que ela falta: gerá-la é da skill `producao`.
 
-O animatic é a forma barata de saber se a imagem conta a explicação: cada plano desenhado e composto (o que aparece, onde, com que texto) tocando sobre a narração, sem acabamento de movimento. Ele responde, antes de se gastar tempo animando: o assunto se acha? personagem, cenário, texto e dado convivem? a escala funciona no tamanho final? parece acontecimento ou slide? a identidade aguenta ser repetida? O acabamento é só o que essas perguntas pedem. Termina na **segunda aprovação do usuário**.
+O animatic é a forma barata de saber se a imagem conta a explicação: cada plano desenhado e composto (o que aparece, onde, com que texto) tocando sobre a narração, sem acabamento de movimento. Ele responde, antes de se gastar tempo animando: o assunto se acha? personagem, cenário, texto e dado convivem? a escala funciona no tamanho final? parece acontecimento ou slide? a identidade aguenta ser repetida? O acabamento é só o que essas perguntas pedem. Uma cena ou um trecho termina quando a dúvida visual dele está resolvida.
 
 O caminho é construir, olhar, aprender e expandir: primeiro o menor trecho que responde à maior dúvida, e só depois o resto do vídeo.
 
@@ -16,10 +16,9 @@ Use `src/videos/why-we-sleep/` como modelo.
 src/videos/<vídeo>/
   research.md       pesquisa (skill diretor-criativo)
   art.md            ficha visual: elenco, paletas e a forma das analogias (passo Conceito visual)
-  script.json       roteiro aprovado, com os planos de cada cena (skill diretor-criativo)
+  script.json       roteiro, com os planos de cada cena (skill diretor-criativo)
   script.md         registro da direção criativa: decisões do texto, sem narração (skill diretor-criativo)
-  approvals.md      as aprovações do usuário, uma linha cada
-  score.md          partitura da animação (etapa animacao)
+  score.md          partitura da animação (etapas/animacao.md)
   palette.ts        as cores do vídeo
   index.tsx         liga cada "id" de cena ao componente e exporta a composição
   scenes/           um arquivo por cena
@@ -50,9 +49,9 @@ Depois que o trecho funciona, veja o que nele vale repetir (o personagem, a cons
 - **A atenção vai para a novidade.** A cena que repete personagem, lugar, paleta e linguagem já provados sai depressa. A que traz um registro, uma analogia, um protagonista, um tipo de dado ou uma virada de paleta novos é renderizada e olhada cedo, como o primeiro trecho.
 - **Em volume, quem desenha e compõe é o subagente `ilustrador`**, um disparo por cena ou por desenho. Passe a pasta do vídeo, o que fazer e a lista dos arquivos que ele pode tocar; a pasta, o `index.tsx`, a paleta e o registro em `src/Root.tsx` são criados por você. Paralelize quando as listas não se cruzam, uma cena não depende da decisão da outra e a direção já passou por um render: disparar dezenas de cenas sobre uma hipótese multiplica o erro dela.
 - **Uma solução boa num plano não é copiada para trinta cenas de imediato.** Primeiro ela funciona no plano, no tamanho final, e faz sentido como padrão.
-- **O que sai melhor que o previsto fica.** A composição diferente da decupada que preserva o foco e o sentido é adotada, e o plano em `script.json` e a ficha acompanham. O que muda sentido ou identidade vai ao usuário (`entrevista-imagem`); o que pede outra frase, ao `diretor-criativo`. A decupagem entregou uma hipótese para construir: revê-la aqui é o trabalho da etapa.
+- **O que sai melhor que o previsto fica.** A composição diferente da decupada que preserva o foco e o sentido é adotada, e o plano em `script.json` e a ficha acompanham. O que muda sentido ou identidade vai ao usuário (`entrevista-imagem`); o que pede outra frase, ao `diretor-criativo`. A decupagem entregou uma hipótese para construir: revê-la aqui é parte do trabalho.
 - **Pare um plano quando ele responde à pergunta dele.** Não se continua porque ainda há detalhe possível ou porque a referência tem mais textura.
-- **Movimento não salva quadro fraco.** No animatic, entradas simples pela deixa da narração (`Appear`) bastam; atuação, câmera, efeito e transição final são da etapa `animacao`. O plano que não se sustenta parado tem defeito de quadro ou de encenação, e é ali que se conserta.
+- **Movimento não salva quadro fraco.** No animatic, entradas simples pela deixa da narração (`Appear`) bastam; atuação, câmera, efeito e transição final são de `etapas/animacao.md`. O plano que não se sustenta parado tem defeito de quadro ou de encenação, e é ali que se conserta.
 
 **Construção antes do acabamento.** Acabamento não conserta construção (`forma`, provado no piloto). Por isso a figura viva nova, a criatura complexa, a pose de que a cena depende e o desenho que já falhou na forma passam primeiro pela silhueta numa cor só, na pose da cena, antes da pintura; havendo dúvida nela, quem julga é o `critico-de-quadro`. A moeda, o fundo e a forma abstrata, que se reconhecem sem depender de pose, vão direto.
 
@@ -93,11 +92,11 @@ Todo quadro que serve de base a uma decisão foi aberto e visto, e nenhum lote g
 
 O subagente `critico-de-quadro`, que não desenhou nada, entra onde a cegueira de quem fez custa caro: depois do primeiro trecho, quando chega uma família visual nova, diante de uma dúvida que não cede, antes de uma decisão que vai ao usuário e na revisão do animatic inteiro. O ajuste pequeno que você mesmo viu e sabe consertar é feito e conferido por você. Passe a ele o nome da pasta do vídeo, o caminho dos quadros e, na revisão do conjunto, a tabela do `pnpm critique`. Ele julga; quem decide e redesenha é você: refaça os bloqueantes, e os relevantes salvo custo desproporcional; o conserto que muda uma decisão tomada (quem a figura é, o que uma cor significa, a relação que a analogia afirma, o assunto de um plano) vai antes ao usuário, e o que só refina o desenho, não (`entrevista-imagem`); quando o refino muda o desenho de um personagem, atualize a ficha e a folha de modelo. Renderize de novo só os quadros mexidos, confira o defeito que motivou a mudança e acione o subagente de novo só com os planos alterados. Se uma rodada não resolver nenhum defeito, pare e relate o que ficou em aberto.
 
-Pronto para a aprovação quando: o vídeo inteiro tem imagem, não se conhece defeito que impeça o entendimento, a identidade e as relações que importam estão coerentes de ponta a ponta, as decisões que eram do usuário foram tomadas, e o que resta é refino que não redefine a imagem. Não se exige acabamento final, folha de tudo, medida dentro da faixa nem polimento zerado.
+O conjunto está pronto para ir ao usuário quando: o vídeo inteiro tem imagem, não se conhece defeito que impeça o entendimento, a identidade e as relações que importam estão coerentes de ponta a ponta, as decisões que eram do usuário foram tomadas, e o que resta é refino que não redefine a imagem. Não se exige acabamento final, folha de tudo, medida dentro da faixa nem polimento zerado.
 
-## Segunda aprovação
+## O conjunto diante do usuário
 
-Deixe disponível o material inteiro: os quadros de todos os planos, em ordem, o caminho do MP4 e, para ele assistir e navegar ao vivo, o `pnpm dev`, que abre o Remotion Studio.
+Só quando o trabalho é o animatic inteiro: o ajuste de uma cena não passa por aqui. Deixe disponível o material inteiro: os quadros de todos os planos, em ordem, o caminho do MP4 e, para ele assistir e navegar ao vivo, o `pnpm dev`, que abre o Remotion Studio.
 
 Chame a atenção dele só para o que pede olhar:
 
@@ -106,4 +105,4 @@ Chame a atenção dele só para o que pede olhar:
 - as medidas fora da faixa que levantaram dúvida;
 - o que ainda não está ali (movimento, trilha) e o que só ele pode julgar (gosto e identidade).
 
-Peça a aprovação explicitamente e, com o "sim" dele, registre a 2ª aprovação em `approvals.md` (formato nas convenções do `README.md`). Ela confirma que a imagem conta a história certa, que a identidade e os compromissos estão certos e que os quadros importantes funcionam. Não congela posição, enquadramento fino nem a execução do movimento: o refino que preserva a intenção continua na animação (`entrevista-imagem`, `entrevista-movimento`). Mudar a imagem é barato agora e caro depois de animar.
+O que cabe a ele é dizer se a imagem conta a história certa, se a identidade e os compromissos estão certos e se os quadros importantes funcionam. O que ele decidir entra em `art.md`, como compromisso, e em nenhum outro registro. A resposta não congela posição, enquadramento fino nem a execução do movimento: o refino que preserva a intenção continua (`entrevista-imagem`, `entrevista-movimento`). Mudar a imagem é barato antes de animar e caro depois; é custo, e não proibição.

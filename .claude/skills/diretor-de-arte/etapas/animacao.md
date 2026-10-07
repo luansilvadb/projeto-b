@@ -1,6 +1,6 @@
 # Animação das cenas
 
-Quinta etapa, depois do animatic aprovado: a 2ª aprovação está em `src/videos/<vídeo>/approvals.md`, sem reabertura; se não estiver, pergunte ao usuário. O animatic já resolveu o que aparece, quem é cada figura, a composição e o texto. Aqui se descobre e se executa o tempo dessa imagem: quando cada mudança acontece, como o corpo conta a ação, o que fica parado, para onde o olho vai, como os planos se ligam, onde a ênfase ajuda e que ritmo o vídeo ganha em movimento.
+Dá tempo a uma imagem que já existe. Depende de duas coisas concretas: a composição do trecho estável o bastante para testar a hipótese de movimento (o que aparece, quem é cada figura, o texto de tela), e o tempo real da fala, em `public/videos/<vídeo>/narration.json`, quando o movimento depende dela. Uma cena pode ser animada sem que os outros planos do vídeo estejam compostos; a que ainda não tem composição que se sustente parada volta ao quadro (`etapas/animatic.md`), porque movimento não salva quadro fraco. Aqui se descobre e se executa o tempo dessa imagem: quando cada mudança acontece, como o corpo conta a ação, o que fica parado, para onde o olho vai, como os planos se ligam, onde a ênfase ajuda e que ritmo o vídeo ganha em movimento.
 
 O caminho é o do animatic: uma hipótese de movimento, um trecho inteiro, o render, o que se viu, e só então o resto do vídeo.
 
@@ -38,7 +38,7 @@ Depois que o trecho funciona, veja o que nele vale repetir, e com que alcance: a
 - **Em volume, quem anima é o subagente `motion-designer`**: um disparo por cena, com a pasta do vídeo, a cena, a partitura dela e a lista dos arquivos que ele pode tocar. Um primitivo novo em `src/components/` e a transição que atravessa duas cenas são feitos por você. Paralelize quando a linguagem já passou por um render, as cenas não dependem da mesma decisão em aberto e as listas não se cruzam: cinco agentes sobre a mesma hipótese de atuação multiplicam o erro dela.
 - **A ação vem antes da ênfase.** Primeiro ela funciona sem efeito; se uma propriedade continua fraca, `efeitos` oferece saída.
 - **A relação entre dois planos vem antes da técnica da passagem**, que pode ser achada no render.
-- **Um refino de composição cabe aqui.** A figura que se desloca um pouco para a câmera não cortá-la continua dizendo o que o quadro aprovado diz. O que muda o foco, a relação ou a identidade segue a fronteira de `entrevista-imagem`.
+- **Um refino de composição cabe aqui.** A figura que se desloca um pouco para a câmera não cortá-la continua dizendo o que o quadro dizia. O que muda o foco, a relação ou a identidade segue a fronteira de `entrevista-imagem`.
 - **Pare um movimento quando** a intenção se entende, a causa, o peso e o foco funcionam, o defeito que motivou o trabalho sumiu e nada em volta piorou. Não se continua por suavidade, por quadros diferentes, por parecer com a referência ou para usar o que o projeto tem.
 
 ## Onde está cada coisa no código
@@ -81,16 +81,14 @@ Renderize só as cenas que mudaram: um desenho de `src/art/` ou de `parts/` que 
 
 A crítica acontece no caminho, e não só no fim. O subagente `critico-de-movimento`, que não animou nada, entra onde a cegueira de quem fez custa caro: no primeiro trecho, que define a linguagem; quando chega uma atuação, uma câmera ou uma passagem nova; diante de um defeito que não cede; antes de uma decisão que vai ao usuário; e na revisão do vídeo inteiro. O ajuste de dois quadros que você viu e sabe consertar é feito e conferido por você. Passe a ele o nome da pasta do vídeo, o caminho do MP4, os planos a julgar e a partitura. Ele julga; quem decide e refaz é você: os bloqueantes são refeitos, e os relevantes enquanto o retorno compensa; o conserto que muda uma decisão tomada (o que acontece, o foco de um plano, a relação entre dois planos, o que a composição diz) vai antes ao usuário, e o que só refina a execução, não (`entrevista-movimento`). Renderize de novo só as cenas mexidas, confira o defeito que motivou a mudança e acione o subagente de novo só com os planos alterados. Se uma rodada não resolver nenhum defeito, pare e relate o que ficou em aberto.
 
-Pronta para o aceite quando: todo trecho que precisa de movimento o tem, não se conhece defeito que impeça o entendimento, o tempo, a atuação, a câmera e as passagens que importam funcionam em contexto, as decisões que eram do usuário foram tomadas, a partitura diz o que está na tela, e o que resta é polimento de retorno baixo. Não se exige medida dentro da faixa, movimento em todo plano, câmera ativa, efeito, quadros sempre diferentes nem uso de todos os primitivos.
+O conjunto está pronto para ir ao usuário quando: todo trecho que precisa de movimento o tem, não se conhece defeito que impeça o entendimento, o tempo, a atuação, a câmera e as passagens que importam funcionam em contexto, as decisões que eram do usuário foram tomadas, a partitura diz o que está na tela, e o que resta é polimento de retorno baixo. Não se exige medida dentro da faixa, movimento em todo plano, câmera ativa, efeito, quadros sempre diferentes nem uso de todos os primitivos.
 
-## Aceite da animação
+## O conjunto diante do usuário
 
-Peça ao usuário para assistir ao vídeo inteiro, porque ritmo, peso e cansaço só ele julga. Chame a atenção dele só para o que pede olhar:
+Só quando o trabalho é a animação do vídeo inteiro: uma cena animada termina na dúvida de movimento dela resolvida, sem passar por aqui. Peça ao usuário para assistir ao vídeo inteiro, porque ritmo, peso e cansaço só ele julga. Chame a atenção dele só para o que pede olhar:
 
 - as decisões novas e os trechos cuja leitura mudou em relação ao animatic;
 - os defeitos em aberto, cada um com a evidência dele;
 - as medidas fora da faixa que levantaram dúvida.
 
-O "sim" dele é o **aceite da animação**: registre-o em `src/videos/<vídeo>/approvals.md` (formato nas convenções do `README.md`), com cada medida fora da faixa que ele aceitou. O aceite confirma que o vídeo funciona em movimento, que o ritmo e o peso servem e que as decisões de atuação, câmera e passagem estão certas. Não congela quadro, tempo fino, amplitude nem técnica equivalente: o refino que preserva a intenção continua valendo (`entrevista-movimento`).
-
-A próxima etapa é o som, na skill `diretor-de-som`; depois, o corte final, na skill `producao`.
+O que cabe a ele é dizer se o vídeo funciona em movimento, se o ritmo e o peso servem e se as decisões de atuação, câmera e passagem estão certas. O que ele decidir sobre a intenção entra em `score.md`, e em nenhum outro registro. A medida fora da faixa que foi conferida no trecho e não mostrou defeito vai dita na entrega: é sensor, e não pendência que ele precise aceitar. A resposta não congela quadro, tempo fino, amplitude nem técnica equivalente: o refino que preserva a intenção continua valendo (`entrevista-movimento`).

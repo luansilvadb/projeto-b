@@ -1,6 +1,12 @@
 # Narração de um vídeo
 
-Terceira etapa, depois do roteiro aprovado (skill `diretor-criativo`): a 1ª aprovação está em `src/videos/<vídeo>/approvals.md`; se não estiver, pergunte ao usuário antes de gerar.
+O que a geração precisa:
+
+- `src/videos/<vídeo>/script.json` existe e passa no `pnpm check-script <vídeo>`;
+- toda cena tem `shots`: o tipo em `src/narration/script.ts` recusa a cena sem plano, e o `pnpm narrate` lê o roteiro por ele;
+- o texto está estável o bastante para o custo desta geração: minutos de GPU, e o tempo de tudo que for animado e sonorizado sobre ela.
+
+O terceiro item é juízo de custo, e não um estado guardado em algum lugar: não há campo nem registro que diga "estável". Se você sabe de uma decisão editorial aberta que pode trocar o texto inteiro, diga isso antes de gerar; ela é da skill `diretor-criativo` (`etapas/roteiro.md`, "Antes de gerar a voz do conjunto"). Fora isso, gere: a frase que mudar depois regera só ela.
 
 Antes da primeira geração de um vídeo, diga ao usuário que os pesos do OmniVoice são de uso não comercial (CC-BY-NC): monetizar um vídeo narrado com ele foge da licença, e trocar de modelo depois não muda os vídeos já publicados. Se o vídeo é para monetizar, seguir com esta voz é decisão dele, tomada antes de gerar.
 

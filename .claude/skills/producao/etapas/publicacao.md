@@ -1,15 +1,15 @@
 # Publicação de um vídeo
 
-Oitava etapa, depois da terceira aprovação, registrada em `src/videos/<vídeo>/approvals.md`; sem a linha dela, volte ao `corte-final`. O que sai daqui é `src/videos/<vídeo>/description.md`: o título final e a descrição que o usuário cola no YouTube.
+O que sai daqui é `src/videos/<vídeo>/description.md`: o título final e a descrição que o usuário cola no YouTube. Depende das fontes de onde ela é montada: `script.json`, `script.md` e `research.md` como estão agora, que precisam ser os do vídeo que vai ao ar. A descrição pode ser escrita antes de o arquivo final existir; se o texto mudar depois, ela é montada de novo. O acervo, no fim, é que precisa do arquivo final atual (`out/<vídeo>/<vídeo>.final.mp4`).
 
-Esta etapa monta, não escreve: toda frase vem do que já foi aprovado.
+Aqui se monta, não se escreve: toda frase vem do que o roteiro e a pesquisa já dizem.
 
 ## De onde vem cada parte
 
 | Parte | Fonte |
 |---|---|
-| Título | `title` de `script.json`. Se a embalagem ainda tem uma escolha aberta com o usuário, ela se fecha na skill `diretor-criativo` (`embalagem/titulo-e-thumbnail`), antes desta etapa. |
-| Abertura | Duas linhas, as únicas visíveis antes de "mostrar mais": dão uma razão fiel para assistir, tirada do gancho aprovado, coerente com a embalagem e com o compromisso do vídeo. |
+| Título | `title` de `script.json`. Se a embalagem ainda tem uma escolha aberta com o usuário, ela é da skill `diretor-criativo` (`embalagem/titulo-e-thumbnail`): a descrição usa o título que resultar. |
+| Abertura | Duas linhas, as únicas visíveis antes de "mostrar mais": dão uma razão fiel para assistir, tirada do gancho do roteiro, coerente com a embalagem e com o compromisso do vídeo. |
 | Fontes | As de `research.md` que alguma cena cita no campo `sources` de `script.json`, com instituição ou autor, título e link, na ordem e com o número de `research.md`. |
 | Simplificações | A seção `Simplificações` de `script.md` e os pontos em aberto de `research.md` que o vídeo toca, uma linha cada. |
 | Créditos | Narração com voz sintética clonada; trilha original gerada com ACE-Step; efeitos sonoros do Freesound (CC0). |

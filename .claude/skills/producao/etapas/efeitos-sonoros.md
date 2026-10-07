@@ -1,6 +1,6 @@
 # Efeitos sonoros de um vídeo
 
-Parte da sexta etapa, o som. Roda quando a skill `diretor-de-som` entrega a lista dos usos que faltam no catálogo: cada item diz o que acontece na imagem (uma porta que desce, uma moeda que cai). Onde o som toca, em que nível e por quê é decisão de lá (`diretor-de-som/efeitos/dose`); aqui se acha o som.
+Roda quando a skill `diretor-de-som` entrega a lista dos usos que faltam no catálogo: cada item diz o que acontece na imagem (uma porta que desce, uma moeda que cai). Onde o som toca, em que nível e por quê é decisão de lá (`diretor-de-som/efeitos/dose`); aqui se acha o som.
 
 ## O catálogo
 
@@ -23,7 +23,7 @@ Busque pelo que acontece ("metal shutter rolling down"). Se os resultados não s
 
 Descarte pelo que se lê (`diretor-de-som/efeitos/escolha`): outro acontecimento, fala ou música no nome ou na descrição, duração que não se relaciona com a ação. A nota e os downloads só ordenam o que ouvir primeiro. O agente não ouve os que sobram: leve ao usuário o menor conjunto que resolve a dúvida, com a ação ("a porta de enrolar desce"), e pergunte se soa como ela. Um candidato único basta; vários, só quando a comparação ajuda. O link serve ao que é do som sozinho; o que depende do vídeo (o tamanho diante do desenho, a disputa com a voz) pede o candidato baixado e montado no menor trecho, em `out/rascunho/`.
 
-A resposta é o ouvido que faltava para dizer que arquivo realiza o uso, e não uma aprovação: não vai a `approvals.md`. Com ela, cole no catálogo a linha que o `pnpm sfx <id>` imprime, trocando `<uso>` pelo nome do uso, e apague o arquivo baixado que não entrou. Se nenhum candidato realiza o uso depois de buscas diferentes, ele fica pendente: não entra o menos ruim.
+A resposta é classificação auditiva, e não decisão: o ouvido que faltava para dizer que arquivo realiza o uso. Com ela, cole no catálogo a linha que o `pnpm sfx <id>` imprime, trocando `<uso>` pelo nome do uso, e apague o arquivo baixado que não entrou. Se nenhum candidato realiza o uso depois de buscas diferentes, ele fica pendente: não entra o menos ruim.
 
 Pronto quando: cada uso da lista tem no catálogo um som que o usuário ouviu como a ação, ou foi devolvido como pendente, e `pnpm lint` passa. Devolva à skill `diretor-de-som` o `name` de cada um.
 

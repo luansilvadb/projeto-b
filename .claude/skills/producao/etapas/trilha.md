@@ -1,6 +1,6 @@
 # Trilha de um vídeo
 
-Parte da sexta etapa, o som. O campo `music` do roteiro é a hipótese atual da skill `diretor-de-som` (`diretor-de-som/etapas/som.md`), e pode chegar parcial: um leito só, sem momentos. Aqui se gera o que foi pedido, se mede e se entrega o arquivo. Ler as medidas, mudar a hipótese e conversar com o usuário sobre o som continua sendo de lá.
+Recebe a hipótese atual de `music`, que a skill `diretor-de-som` escreve no roteiro (`diretor-de-som/etapas/som.md`), e os tempos de que ela depende: a duração de cada cena na narração gravada. A hipótese pode chegar parcial: um leito só, sem momentos. Aqui se gera o que foi pedido, se mede e se entrega o arquivo. Ler as medidas, mudar a hipótese e conversar com o usuário sobre o som continua sendo de lá.
 
 ## Gerar
 

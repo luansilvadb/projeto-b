@@ -5,11 +5,11 @@ description: "Voz e arquivo final de um vídeo do canal, e a operação das ferr
 
 ## FUNÇÃO
 
-Opera as ferramentas que transformam o roteiro e as cenas aprovados em som e em arquivo. O arquivo passa pela **terceira aprovação do usuário**.
+Opera as ferramentas sobre os artefatos atuais que cada comando exige: gera a voz, roda a trilha, baixa efeitos, renderiza e monta o arquivo. É quem executa e cuida das ferramentas, e não quem decide o que vem antes ou depois: a pergunta de cada trabalho é se o que o comando consome existe e corresponde ao estado atual.
 
 ## ESCOPO
 
-**Entradas:** `script.json` aprovado (skill `diretor-criativo`); para o corte final, as cenas animadas e aprovadas (skill `diretor-de-arte`).
+**Entradas:** o que o comando pedido consome, e só isso. Para a narração, um `script.json` válido, com `shots` em toda cena (skill `diretor-criativo`); para a trilha, o campo `music` e a narração gravada; para os efeitos, a lista de usos (skill `diretor-de-som`); para um render, as cenas pedidas como estão agora (skill `diretor-de-arte`); para a montagem, as cenas, a narração e o som atuais; para a descrição, `script.json`, `script.md` e `research.md`.
 
 **Saídas:** `public/videos/<vídeo>/` com a narração, o tempo de cada palavra e a trilha; `out/<vídeo>/<vídeo>.final.mp4`; `src/videos/<vídeo>/description.md`.
 
@@ -23,15 +23,17 @@ Opera as ferramentas que transformam o roteiro e as cenas aprovados em som e em 
 
 ## ETAPAS
 
-O pedido decide a etapa. Cada etapa tem um procedimento só, lido inteiro; esta skill não tem unidades de estilo.
+O pedido decide o trabalho. Cada trabalho tem um procedimento só, lido inteiro; esta skill não tem unidades de estilo. A tabela não é ordem: cada linha começa quando existe o que o comando dela consome.
 
-| Etapa | Quando | Procedimento |
+| Trabalho | Quando | Procedimento |
 |---|---|---|
-| 3. Narração | roteiro aprovado ou alterado; palavra mal pronunciada; troca da amostra de voz; render que acusa narração ausente ou desatualizada | `etapas/narracao.md` |
-| 6. Som: trilha | a skill `diretor-de-som` pede a trilha, ou uma parte dela de novo; narração que mudou de duração | `etapas/trilha.md` |
-| 6. Som: efeitos | a skill `diretor-de-som` entrega usos que faltam no catálogo | `etapas/efeitos-sonoros.md` |
-| 7. Corte final | render final, exportar, finalizar; saber se o vídeo está pronto para publicar | `etapas/corte-final.md` |
-| 8. Publicação | vídeo aprovado no corte final; escrever ou refazer a descrição | `etapas/publicacao.md` |
+| Narração | gerar a voz de um roteiro válido, ou de novo depois de uma frase alterada; palavra mal pronunciada; troca da amostra de voz; render que acusa narração ausente ou desatualizada | `etapas/narracao.md` |
+| Trilha | a skill `diretor-de-som` pede a trilha, ou uma parte dela de novo; narração que mudou de duração | `etapas/trilha.md` |
+| Efeitos sonoros | a skill `diretor-de-som` entrega usos que faltam no catálogo | `etapas/efeitos-sonoros.md` |
+| Montagem e arquivo final | montar, exportar ou normalizar o vídeo; conferir o arquivo de entrega | `etapas/corte-final.md` |
+| Descrição e publicação | escrever ou refazer a descrição; guardar no acervo o que foi ao ar | `etapas/publicacao.md` |
+
+Renderizar cenas avulsas (`pnpm scene <vídeo> <id>`), só o som (`pnpm sound`) ou quadros (`pnpm stills`) é rodar o comando sobre o que existe agora, sem procedimento próprio: os comandos estão no `CLAUDE.md`.
 
 A narração tem dois arquivos de apoio, lidos só na seção do caso:
 
@@ -49,7 +51,8 @@ A narração tem dois arquivos de apoio, lidos só na seção do caso:
 
 Pare quando:
 
-- a etapa pedida entregou o que o procedimento dela promete, com os avisos do comando resolvidos ou aceitos pelo usuário;
-- uma frase pede reescrita: devolva à skill `diretor-criativo`; a trilha pede outra descrição, outro nível ou outro efeito: devolva à skill `diretor-de-som`;
-- o corte final tem pendência que só o usuário resolve: relate e espere, sem contorná-la;
+- o trabalho pedido entregou o que o procedimento dele promete, com os avisos do comando resolvidos ou conferidos pelo usuário;
+- faltar o artefato que o comando consome, ou ele não corresponder ao estado atual: diga qual é e de quem é, sem contorná-lo;
+- a mudança pedida for de outro artefato: a frase que pede reescrita é da skill `diretor-criativo`; a imagem ou o movimento, da `diretor-de-arte`; a trilha que pede outra descrição, outro nível ou outro efeito, da `diretor-de-som`;
+- restar algo que só o usuário julga ou decide (o ouvido, a licença da voz, publicar): relate e espere;
 - o pedido estiver no anti-escopo.
