@@ -96,7 +96,7 @@ Movimento:
 | `atuacao/pausa-viva` | O que se move quando nada acontece? |
 | `atuacao/acao` | Como uma figura ou criatura atua uma ação? |
 | `camera/movimento` | Quando e como a câmera se move dentro de um plano? |
-| `camera/transicoes` | Como executar cada tipo de entrada entre planos? |
+| `camera/transicoes` | O que continua, o que muda e quanto se sente a passagem entre dois planos? |
 | `enfase/efeitos` | Que recursos fazem um movimento ser sentido, e quando usá-los? |
 | `revisao/critica-movimento` | Como julgar o movimento, com medidas e quadros consecutivos? |
 

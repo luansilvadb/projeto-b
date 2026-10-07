@@ -31,8 +31,10 @@ Como julgar o movimento, com medidas e quadros consecutivos?
    - Quem vê a ação reage, e reage depois dela?
 5. **Câmera e transições**
    - O movimento de câmera tem motivo, e o espectador sabe o que acompanhar até a chegada? A orientação se mantém, e nada do que o plano ainda precisa se perde?
-   - A ponte da transição é contínua? Algo pulou de lugar entre os planos?
-   - O texto esperou a imagem assentar?
+   - Na transição, lê-se de onde se saiu, aonde se chegou e o que liga os dois? O que devia continuar ficou reconhecível, e o que rompeu, rompeu de propósito?
+   - A ponte é a mesma do começo ao fim? Algo pulou sem querer de posição, escala, forma ou orientação?
+   - A intensidade e a duração têm o tamanho da mudança? A chegada se lê, e o texto continua preso ao que nomeia?
+   - O nome da técnica, a faixa de duração e a direção da borda não reprovam por si: reprova o que se perdeu na passagem.
 6. **Ênfase**
    - Todo recurso acompanha uma ação? Há mais de dois por plano?
 7. **Fidelidade à composição**
