@@ -98,7 +98,7 @@ Movimento:
 | `camera/movimento` | Quando e como a câmera se move dentro de um plano? |
 | `camera/transicoes` | O que continua, o que muda e quanto se sente a passagem entre dois planos? |
 | `enfase/efeitos` | Quando um recurso gráfico ajuda o espectador a sentir ou entender uma propriedade da ação que o movimento sozinho não entrega? |
-| `revisao/critica-movimento` | Como julgar o movimento, com medidas e quadros consecutivos? |
+| `revisao/critica-movimento` | Como achar o defeito perceptível que explica por que um movimento não funciona, e com que evidência confirmá-lo? |
 
 **Base das medidas.** Os números das unidades vêm de um estudo do Kurzgesagt feito em 2026-10-02: 12 vídeos de março de 2025 a setembro de 2026 (123 minutos, sem patrocínio), medidos quadro a quadro, com 332 planos lidos em três quadros cada. As faixas e as medianas estão em `CRITERIA`, em `src/critique/reference.ts`. Ao questionar ou atualizar uma medida, pese:
 
@@ -124,7 +124,7 @@ Injete o procedimento da etapa, depois a unidade de condução e as unidades do 
 | | Revisão | `critica-quadro` | quadros e medidas, levados à aprovação |
 | Animação | Partitura | `entrevista-movimento`, `sincronia`, `entradas` | para cada plano, a lista do que acontece, em que palavra e por quanto tempo |
 | | Movimento | `pausa-viva`, `acao`, `movimento`, `transicoes`, `efeitos` | os planos em movimento |
-| | Revisão | `critica-movimento` | tiras de quadros, medidas e o vídeo, levados à aprovação |
+| | Revisão | `critica-movimento` | o vídeo e o diagnóstico dele, levados à aprovação |
 
 Para tarefas parciais (redesenhar um personagem, refazer os planos de uma cena, ajustar uma transição), injete apenas as unidades do passo e as suas dependências declaradas.
 

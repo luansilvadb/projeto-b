@@ -1,86 +1,65 @@
 ## PERGUNTA
-Como julgar o movimento, com medidas e quadros consecutivos?
+Como achar o defeito perceptível que explica por que um movimento não funciona, e com que evidência confirmá-lo?
 
 ## RESPOSTA
 
-**Quando aplicar.** Sobre cada plano assim que ele se move, e sobre o trecho inteiro antes de levá-lo ao usuário.
+**Princípio.** A crítica olha como espectador que vê o vídeo uma vez, e procura o defeito mais simples que explica o que não funcionou. A ordem é percepção, hipótese, evidência: primeiro algo incomoda ou não se entende, depois se nomeia o que o espectador perdeu, e só então se busca a menor evidência que confirma. Instrumento nenhum é rodado para provar que tudo foi conferido.
 
-**Postura.** A crítica olha como espectador que vê o vídeo uma vez. Julga o movimento em sequência, nunca um quadro só nem o código. Sobre o trecho inteiro, as medidas, as tiras e as passadas (passos 1 a 3 do procedimento, a partir do vídeo já renderizado) são de quem não animou; renderizar e refazer (passos 4 a 6), de quem dirige.
+**O que a crítica garante:**
 
-**Como ver.** Movimento não aparece num quadro. Dois instrumentos:
+- **O defeito é nomeado antes de qualquer conserto.** "A trajetória se perde nos últimos quadros antes da batida", e não "falta rastro". A saída é da unidade dona.
+- **"Sem defeito" é uma conclusão.** Uma ação sem preparo cujo susto funciona, uma pausa imóvel que lê como intenção, uma medida fora da faixa num trecho que funciona: nenhum defeito, com o motivo em uma linha. Técnica ausente, contagem, faixa de duração e medida não são defeito por si; defeito é o que o espectador entende errado, deixa de entender ou deixa de sentir.
+- **A causa vem antes do sintoma.** Não se afina o efeito de uma ação que não se entende, a duração de um brilho numa transição que quebra, nem a periferia de um plano em que a câmera perdeu o assunto.
+- **Julga-se na menor escala que guarda o contexto**: a curva, no plano; a transição, nos dois planos; o ritmo, no trecho; o cansaço, no vídeo.
+- **A evidência responde a uma dúvida.** Gera-se a menor que confirma ou derruba a hipótese, cobrindo a causa, a mudança e a consequência: às vezes meio segundo, às vezes quatro.
+- **A correção se confirma no defeito.** Ela está certa quando o resultado novo resolve o que a motivou, sem estragar o que está em volta. Não se recomeça a crítica inteira por causa dela.
+- **A crítica para quando não resta defeito que justifique outra mudança.** Faixa não atingida e polimento de retorno baixo não seguram o trecho.
 
-1. **Tira de quadros consecutivos**: um trecho de 2 a 6 s a 8 ou 10 quadros por segundo, lado a lado, com o tempo em cada quadro. É nela que se vê como uma ação começa, acontece e termina, se algo pulou de lugar, se um elemento entrou antes da palavra, se algo travou.
-2. **O vídeo**, para o que a tira não mostra: ritmo, peso, se o olho acompanha.
+**Instrumentos**, do que manda ao que só explica:
 
-**Passadas, nesta ordem.** Um problema de nível superior invalida o polimento dos níveis abaixo.
+1. **O vídeo renderizado** é a evidência principal: ritmo, peso, causa, atenção, continuidade, cansaço e estranheza só existem nele. O que funciona no vídeo não reprova porque um instrumento parece estranho. O agente não assiste ao vídeo: lê-o em quadros consecutivos, e por isso a primeira leitura dele é uma tira esparsa do trecho inteiro, que faz as vezes do vídeo. Ritmo, peso e se o vídeo cansa ficam para o usuário.
+2. **A tira densa** (8 a 10 quadros por segundo, lado a lado, com o tempo em cada quadro) localiza o que o olho não segura: um salto, uma entrada adiantada, uma troca de estado, uma ponte que quebra, algo que travou. É feita onde há dúvida.
+3. **As medidas** do `pnpm critique` localizam o que está espalhado: o trecho parado demais, o que não para de se mexer. A coleta é barata e pode ser de rotina; a interpretação é só do que saiu da faixa ou de quando se procura onde um problema de ritmo começa.
+4. **O código**, por último, e só para achar a causa técnica de um defeito já visto. Nenhum movimento é julgado pelo código.
 
-1. **Sincronia**
-   - Cada mudança tem causa à vista e chega com ela, sem parecer atrasada nem adiantada?
-   - O que entra junto é um acontecimento só, e o que são dois se distingue?
-   - O trecho sem novidade tem função, e a última informação teve tempo de ser percebida?
-2. **Entradas e estados**
-   - Entende-se se cada coisa surgiu, chegou de fora, foi revelada ou já estava? O estado final fica claro, e a técnica dá à coisa a matéria que ela tem?
-   - Quando é a mesma coisa mudando, ela continua reconhecível? A troca numa batida lê como intenção ou como erro?
-   - A curva tem a natureza do movimento? O que entra junto ou em cascata lê como um acontecimento ou como sequência, conforme a intenção?
-   - Alguma entrada ou saída escondeu o que ainda precisava ser visto?
-   - Sobra, máscara, opacidade, cascata, faixa de duração e saída inversa não reprovam por si: reprova o que não se entendeu.
-3. **Pausa viva**
-   - O trecho sem novidade parece intencional, e o estado sustentado continua legível? A imobilidade, onde existe, lê como escolha ou como animação que travou?
-   - Move-se o que continuaria acontecendo naquele estado? Há movimento decorativo sem causa no corpo ou no meio (vento, partícula, halo que respira)?
-   - Algum movimento residual disputa com o foco, ou virou uma ação nova, que seria de `acao`? O que é independente se move como cópia, sem causa comum?
-   - Quadros iguais, câmera parada, personagem que não pisca, vizinhos que se movem juntos por uma causa comum e pouca área em movimento não reprovam por si: reprova o quadro que parece morto por acidente. Julgue no vídeo, e não pela diferença entre dois quadros.
-4. **Atuação**
-   - Entende-se o que a figura fez e com que intenção? O preparo, a execução e a consequência estão lá quando fazem falta?
-   - O corpo participa da ação, ou a figura só desliza? A duração e o fim têm a força e o peso que a ação afirma?
-   - Pose e expressão dizem a mesma coisa? A pose nova se lê em silhueta?
-   - A reação parece causada pelo que foi percebido? A criatura atua com o corpo que tem, e a deformação a deixa reconhecível?
-   - Falta de preparo, de sobra ou de assentamento, reação que começa junto, uma expressão só e medida fora da faixa não reprovam por si: reprova o que não se entendeu.
-5. **Câmera e transições**
-   - O movimento de câmera tem motivo, e o espectador sabe o que acompanhar até a chegada? A orientação se mantém, e nada do que o plano ainda precisa se perde?
-   - Na transição, lê-se de onde se saiu, aonde se chegou e o que liga os dois? O que devia continuar ficou reconhecível, e o que rompeu, rompeu de propósito?
-   - A ponte é a mesma do começo ao fim? Algo pulou sem querer de posição, escala, forma ou orientação?
-   - A intensidade e a duração têm o tamanho da mudança? A chegada se lê, e o texto continua preso ao que nomeia?
-   - O nome da técnica, a faixa de duração e a direção da borda não reprovam por si: reprova o que se perdeu na passagem.
-6. **Ênfase**
-   - Cada recurso reforça uma propriedade real da ação, e sabe-se dizer qual (velocidade, caminho, contato, energia, um estado)? Sem ele, a ação ainda se entende?
-   - Forma, direção, tamanho e duração são os do fenômeno? O recurso muda o que a coisa parece ser (fantasma, luz própria, borracha)?
-   - Ele disputa com o foco? Há recursos que repetem a mesma ênfase, ou algum que é só decoração, sem causa?
-   - Número de recursos no plano ou na ação, ação rápida sem recurso, contagem de cópias ou de riscos e faixa de duração não reprovam por si: reprova o recurso que não acrescenta ou que engana.
-7. **Fidelidade à composição**
-   - O movimento devolveu cada plano ao quadro aprovado? O que mudou foi confirmado?
+**Lentes.** Cada uma serve a um tipo de sinal, com as perguntas e a unidade dona do critério. Usa-se a do defeito percebido; plano sem figura não passa pela de atuação, e plano sem recurso não passa pela de ênfase.
+
+- **Causa** (`sincronia`), quando algo parece cedo, tarde ou sem motivo. Cada mudança tem causa à vista e chega com ela? O que entra junto é um acontecimento só, e o que são dois se distingue? O trecho sem novidade tem função, e a última informação teve tempo de ser percebida?
+- **Estado** (`entradas`), quando algo surge errado, pula ou deixa de ser reconhecido. Entende-se se a coisa surgiu, chegou de fora, foi revelada ou já estava? O estado final fica claro, e a técnica dá à coisa a matéria que ela tem? A mesma coisa mudando continua reconhecível, e a troca numa batida lê como intenção? A curva tem a natureza do movimento? Alguma entrada ou saída escondeu o que ainda precisava ser visto?
+- **Repouso** (`pausa-viva`), quando o quadro parece travado ou agitado sem motivo. O trecho sem novidade parece escolha? Move-se só o que continuaria acontecendo naquele estado? Algum movimento residual disputa com o foco, virou ação nova, ou repete o vizinho sem causa comum?
+- **Atuação** (`acao`), quando intenção, corpo, peso ou reação não se leem. Entende-se o que a figura fez e por quê, com o preparo, a execução e a consequência que fazem falta? O corpo participa, ou a figura só desliza? A duração e o fim têm a força que a ação afirma? Pose e expressão dizem a mesma coisa? A reação parece causada pelo que foi percebido, e a criatura atua com o corpo que tem?
+- **Câmera** (`movimento`), quando a atenção ou a orientação se perdem. O movimento tem motivo, e sabe-se o que acompanhar até a chegada? A orientação se mantém, e nada do que o plano ainda precisa sai do quadro?
+- **Passagem** (`transicoes`), quando a troca de plano confunde. Lê-se de onde se saiu, aonde se chegou e o que liga os dois? A ponte é a mesma do começo ao fim, ou algo pulou sem querer de posição, escala, forma ou orientação? A intensidade tem o tamanho da mudança, e a chegada se lê?
+- **Ênfase** (`efeitos`), quando um recurso distrai, engana ou parece gratuito. Sabe-se que propriedade da ação ele reforça, e sem ele a ação ainda se entende? A forma e o tamanho são os do fenômeno? Ele muda o que a coisa parece ser, disputa com o foco ou repete outro?
+- **Quadro no tempo** (`composicao`, `texto`), quando o que se lia parado deixa de se ler em movimento. Os estados importantes de cada plano continuam cumprindo a composição? O texto continua legível e preso ao que nomeia enquanto a câmera ou o objeto se movem? O quadro parado, em si, é de `critica-quadro`.
+
+**Gravidade**, pelo que o espectador perde:
+
+- **Bloqueante**: ele entende algo errado, ou deixa de entender o que o plano precisava dizer. A causa invertida, a ação que não se lê, a ponte quebrada, o contato que não houve, a coisa que deixa de ser reconhecida, a animação que travou.
+- **Relevante**: a leitura principal está certa, mas o peso, o foco, a matéria ou a intenção ficam enfraquecidos.
+- **Polimento**: o sentido e a sensação já funcionam; é ajuste fino.
+
+O que uma unidade marca como proposta não reprova (`critica-quadro`).
 
 **Medidas.** As de `critica-quadro` e mais três, que só valem com o vídeo em movimento: tempo com a tela quase parada (menos de 1% do quadro muda entre quadros vizinhos), tempo com mais de 10% do quadro em movimento e tempo até 40% do quadro ser outro. As faixas são as de `CRITERIA` em `src/critique/reference.ts`, impressas pelo `pnpm critique`.
 
-As medidas são tiradas a 320 por 180 pixels, 10 quadros por segundo: enxergam movimento de câmera e de objetos grandes, e pausa viva só quando ela desloca bordas (respiração de 2% da altura, bobina de 9 px, luz que tremula um quarto, moldura que balança); degradê que se move e partícula de 3 px ficam abaixo delas. Um vídeo pode estar vivo e ainda ficar fora da faixa na segunda medida se nada grande se move; aí a questão é de atuação e de câmera motivada (recuo quando entra mais um item, aproximação para reação, deslize para seguir quem anda), não de pausa viva. As faixas vêm de vídeos inteiros: um trecho calmo (o gancho, uma explicação) pode ficar abaixo da segunda medida sem que o vídeo inteiro fique; nele, a medida orienta e as passadas decidem.
+- **Medida não é qualidade.** Ela diz onde olhar, com a autoridade que `critica-quadro` lhe dá, e não se o vídeo passou. Acusa o vídeo congelado; um vídeo que treme o tempo todo passa em todas e cansa. Fora da faixa, volta-se ao trecho no vídeo: havendo defeito, ele é nomeado pela lente dele; não havendo, a medida vai ao relatório com o motivo.
+- **O que elas enxergam.** São tiradas a 320 por 180 pixels, a 10 quadros por segundo: veem a câmera e os objetos grandes, e o movimento residual só quando desloca bordas (respiração de 2% da altura, bobina de 9 px, luz que tremula um quarto, moldura que balança). Degradê que se move e partícula de 3 px ficam abaixo delas.
+- **O trecho calmo.** As faixas vêm de vídeos inteiros: um gancho ou uma explicação pode ficar abaixo de "mais de 10% em movimento" sem que o vídeo inteiro fique. Quando falta movimento grande e isso é defeito, a lente é a de atuação ou a de câmera, não a de repouso.
+- **O mapa segundo a segundo** da fração de quadros quase parados e em movimento grande diz em que plano a medida saiu da faixa, e onde um cansaço sem defeito local se concentra. É por ele que se volta ao vídeo no trecho certo.
 
-Além do total, um **mapa segundo a segundo** da fração de quadros quase parados e em movimento grande diz em que plano o problema está; é por ele que se corrige o plano, e não o vídeo inteiro.
-
-**Medida não é qualidade.** Elas acusam o vídeo congelado. Um vídeo que treme o tempo todo passa em todas e cansa. As passadas mandam, e a medida fora da faixa tem a autoridade que `critica-quadro` lhe dá: diz onde olhar. Vá ao mapa segundo a segundo, às tiras e ao vídeo daquele trecho e classifique o defeito que se vê, pela passada dele; sem defeito, a medida vai ao relatório com o motivo.
-
-**Classificação dos problemas:**
-
-- **Bloqueante**: mudança sem causa, ou tão longe dela que a relação se perde; mudança de estado em que a coisa deixa de ser reconhecida, ou troca seca que lê como erro; animação que travou (uma ação ou um ciclo que devia continuar e congelou); ação que não se entende, corpo que contradiz a ação, reação que parece vir antes da causa; ponte de transição quebrada; recurso que faz entender algo falso (contato que não houve, direção errada) ou encobre o que precisava ser visto. Refazer é obrigatório.
-- **Relevante**: curva dura (uma ação que termina em um décimo do tempo escrito), sobra demais, ação que se entende mas não tem o peso ou a força que afirma, sequência que lê como um acontecimento só (ou o contrário), câmera que perde o foco, movimento residual sem causa ou que disputa o foco, recurso decorativo, redundante ou que muda o que a coisa parece ser. Refazer, salvo custo desproporcional; o que ficar, relatar com o mapa segundo a segundo.
-- **Polimento**: ajuste fino de tempo, amplitude ou fase, e da quantidade de traços de um recurso. Aplicar se não mexer em nada aprovado.
-
-**Procedimento:**
-
-1. Renderize o trecho e tire as medidas, com o mapa segundo a segundo.
-2. Para cada plano, renderize uma tira cobrindo cada mudança de estado (da deixa menos 0,3 s até 0,8 s depois) e uma tira de 2 s de pausa; nas transições entre cenas, a tira atravessa o corte.
-3. Faça as sete passadas. Registre cada problema com plano, instante, critério violado e classificação.
-4. Refaça os bloqueantes e os relevantes que não alteram decisões aprovadas.
-5. Leve ao usuário, como decisão, toda mudança em partitura, câmera ou transição aprovadas.
-6. Renderize de novo e repita. Se uma rodada não resolver nenhum problema, pare e relate o que ficou em aberto.
-
-**Entrega ao usuário.** O vídeo com a narração, as tiras das transições e das ações principais, a tabela de medidas, os problemas em aberto e o que só ele pode julgar: ritmo, peso e se o vídeo cansa.
+**O relatório** tem o tamanho do diagnóstico. Sem defeito, uma linha por trecho julgado, com o motivo onde algo poderia parecer defeito. Cada defeito leva o plano e o instante, o que o espectador perde, a evidência mínima que o mostra, a unidade dona e a gravidade, e diz quando o conserto mexeria numa decisão já aprovada. Medida e mapa acompanham só o problema que eles localizaram. O que ninguém além do usuário julga (ritmo, peso, cansaço) vai dito como tal.
 
 ## DEPENDÊNCIAS
-- sincronia, entradas, pausa-viva, acao, movimento, transicoes, efeitos: fornecem os critérios de cada passada.
-- critica-quadro: fornece as medidas de imagem e a autoridade de toda medida.
+- sincronia, entradas, pausa-viva, acao, movimento, transicoes, efeitos: fornecem os critérios de cada lente.
+- composicao, texto: fornecem o que o quadro precisa cumprir enquanto se move.
+- critica-quadro: fornece as medidas de imagem, a autoridade de toda medida e a regra das propostas.
 
 ## LIMITES
-- Não julgar por gosto: todo problema aponta um critério violado.
-- Não julgar composição, desenho ou cor: pertencem a `critica-quadro`.
+- Não julgar por gosto: todo defeito diz o que o espectador perde e aponta a unidade dona.
+- O quadro parado (composição, desenho, cor) pertence a `critica-quadro`; aqui entra só o que deixa de funcionar no tempo.
+- O que refazer, o que levar ao usuário e quando renderizar de novo pertencem à etapa (`etapas/animacao`) e a `entrevista-movimento`.
 
 ## EXEMPLO
-> Plano 3, "a lagoa escurece", 1,2 s — critério: origem da entrada (o contador "39" aparece inteiro, sem chegada, no quadro em que a varredura termina, e lê como erro). Classificação: bloqueante. Ação: o contador surge e assenta depois de a borda sair pelo chão; não altera nada aprovado.
+> Plano 3, "a lagoa escurece", 1,2 s. O que se perde: o contador "39" aparece inteiro, sem chegada, no quadro em que a borda termina, e lê como erro de montagem. Evidência: tira de 1 s em volta da borda. Dono: `entradas`. Gravidade: bloqueante. Não mexe em nada aprovado.
+> Plano 5, "ela para", 2,4 s. A tela quase parada sobe a 60% no mapa. No trecho, a água-viva deixa de pulsar e a lagoa fica imóvel com ela: a parada é o que a fala afirma. Sem defeito.
