@@ -3,50 +3,44 @@ Quando e como a câmera se move dentro de um plano?
 
 ## RESPOSTA
 
-**O que a referência faz.** A câmera reage ao conteúdo: recua quando algo cresce e sai do quadro (a última barra de um gráfico), aproxima para a reação de um rosto, corta para mais perto no meio de um plano sem trocar de cenário, chicoteia com borrão quando a ação muda de lugar, e troca o foco (desfoque) para levar a atenção de um elemento a outro. Nos planos sem motivo, ela desliza ou aproxima devagar, o plano inteiro, e as camadas de fundo andam menos que o assunto.
+**O movimento de câmera serve quando:**
 
-**Movimentos e motivos:**
+- **Ele muda o que o espectador percebe.** A câmera se move porque algo cresce, se desloca ou reage, porque a atenção precisa ir a outro lugar ou porque o espaço precisa ser entendido. Quando nada disso acontece, a câmera parada é a solução: movimento não conserta um plano sem ação nem uma composição fraca.
+- **O espectador não se perde no caminho.** Durante o movimento ele sabe o que acompanhar, inclusive quando a intenção é levar a atenção de uma coisa a outra.
+- **A chegada serve ao novo estado da cena.** O enquadramento final é uma composição (`composicao`), com o que precisa caber dentro da margem segura.
+- **A orientação se mantém**: quem está de que lado, e para onde cada coisa vai. Cruzar o eixo de uma ação só quando a travessia acontece à vista ou a desorientação é o que se quer.
+- **Nada do que o plano ainda precisa se perde.** Algo sai do quadro quando sair é a ação, não por acidente da câmera.
+- **A amplitude e a velocidade têm o tamanho da mudança.** A câmera não disputa a atenção com a ação que deveria ser vista, e movimentos não se somam sem uma intenção que os una.
+- **O lugar continua o mesmo lugar.** Entre dois enquadramentos do mesmo espaço a geometria é a mesma, e quando a câmera atravessa um espaço com profundidade as camadas respondem a ela (`cenario`).
+- **O texto continua preso ao que nomeia** durante o movimento.
 
-| Movimento | Motivo | Dura |
-|---|---|---|
-| Aproximação lenta | o plano inteiro, sem motivo: a vida do quadro | o plano; de 3% a 6% |
-| Aproximação para reação | um rosto ou detalhe que vai reagir | 0,4 a 0,8 s; de 20% a 60% |
-| Recuo | algo cresce, entra mais um item numa série, a cena se abre | 0,6 a 1,2 s; o que for preciso para caber |
-| Deslize | seguir quem anda ou nada; passar de um item ao seguinte numa fila | a velocidade de quem é seguido |
-| Corte para mais perto | a mesma cena, de repente mais perto, para uma batida nova da fala | instantâneo; é um corte, não um movimento |
-| Chicote | a atenção muda de lugar com violência | 0,2 a 0,3 s, com borrão |
-| Troca de foco | levar o olho de um plano de profundidade a outro | 0,5 a 0,8 s |
+**O que é decisão do usuário.** O movimento que troca a escala aprovada do plano (um médio que vira close) vai a ele, por `entrevista-movimento`.
 
-**Percurso.** Quando a decupagem pede um cenário só, percorrido de estação em estação, a câmera segue um personagem-guia: ele anda, ela acompanha; ele para numa estação, ela assenta ali pelo tempo da oração e segue quando ele segue. O enquadramento muda no caminho (perto no túnel, aberto na batalha), e o recuo final revela onde tudo aquilo ficava. O que encerra o percurso entra de fora do quadro, em outra escala. Num trecho de referência de 27 s não há corte nenhum até essa entrada.
+**Repertório.** Parte-se do que o movimento precisa fazer; a técnica é uma saída possível, e os números são o que a referência costuma usar:
 
-**Curvas.** A câmera acelera e desacelera como um corpo com peso: nunca começa ou para de uma vez, salvo o chicote. A aproximação lenta é tão lenta que só se nota comparando o começo com o fim do plano.
-
-**Parallax.** O cenário é feito de camadas a distâncias diferentes, e cada uma responde ao movimento da câmera conforme a distância: o fundo quase não se move, o assunto acompanha a câmera, a moldura de primeiro plano se move mais que o assunto. É isso que faz um deslize parecer um lugar e não uma pintura.
-
-**Enquadramento é câmera.** O mesmo cenário serve ao plano aberto, ao médio e ao close: a câmera se aproxima e desloca; nada é redesenhado. Por isso o close de uma transição por câmera é a continuação do aberto, e o espectador sente que está no mesmo lugar.
-
-**Limites do movimento:**
-
-- Um movimento por plano, além da aproximação lenta. No percurso, um movimento por estação.
-- A câmera não cruza o eixo de uma ação: quem anda para a direita continua indo para a direita depois do corte.
-- Nada importante sai do quadro por causa da câmera; recuo e deslize são calculados para o que precisa caber.
-- Texto não se move com a câmera: etiqueta e número ficam fixos no quadro, presos ao que nomeiam por uma linha que se estica.
-
-**Procedimento:**
-
-1. Leia a partitura: há algo que cresce, se desloca, ou reage? Esse é o motivo do movimento.
-2. Sem motivo, defina a aproximação lenta: de 3% a 6%, da composição aprovada para um pouco mais perto do ponto focal.
-3. Com motivo, escolha o movimento pela tabela e o instante pela deixa.
-4. Calcule o enquadramento final para o que precisa caber, com a margem segura.
-5. Renderize o primeiro quadro, o último e dois do meio: o ponto focal continua sendo o ponto focal nos quatro?
+| O que se quer | Uma saída | Costuma | De onde vem |
+|---|---|---|---|
+| Dar importância a uma reação ou a um detalhe | aproximação | 0,4 a 0,8 s; de 20% a 60% | referência |
+| Revelar o contexto, ou acomodar o que cresce (a última barra de um gráfico, mais um item numa série) | recuo. Também resolvem: reorganizar a composição, ou um corte | 0,6 a 1,2 s; o que for preciso para caber | referência |
+| Manter a relação com quem se desloca, ou passar de um item ao seguinte numa fila | deslize. Deixar a figura atravessar o quadro parado também comunica distância e direção | a velocidade de quem é seguido | referência |
+| Uma mudança brusca de atenção ou de lugar | chicote, com borrão, que deixa claro onde se chegou | 0,2 a 0,3 s | referência |
+| Levar o olho de um plano de profundidade a outro, sem mexer no quadro | troca de foco | 0,5 a 0,8 s | referência |
+| Uma batida nova da fala, na mesma cena | corte para mais perto. É um corte, e pertence a `transicoes` | instantâneo | referência |
+| O plano de fundo liso lê como imagem parada | deriva lenta, tão lenta que só se nota comparando o começo com o fim, terminando no quadro composto | de 3% a 6% ao longo do plano | referência; aceita pelo usuário no piloto do vídeo do sono |
+| Várias partes de um mesmo espaço ou processo | percurso contínuo: a câmera segue um personagem-guia, assenta em cada estação pelo tempo da fala e segue quando ele segue; o enquadramento muda no caminho (perto no túnel, aberto na batalha), o recuo final revela onde tudo ficava, e o que encerra entra de fora do quadro, em outra escala | sem corte até essa entrada | um trecho de 27 s da referência |
+| O mesmo lugar em aberto, médio e close | reenquadrar o mesmo cenário em vez de redesenhar: o close é a continuação do aberto, e o espectador sente que não saiu do lugar | | referência |
+| Que o deslize pareça um lugar, e não uma pintura | parallax: o fundo quase não se move, o assunto acompanha a câmera, a moldura de primeiro plano se move mais que ele | | referência |
+| Que curva dar | com peso: a câmera acelera e desacelera, sem começar nem parar de uma vez; o chicote é a exceção | | referência; adotada no vídeo do sono |
+| Texto num plano em que a câmera se move | fixo no quadro, preso ao que nomeia por uma linha que se estica. Também servem: preso ao objeto, ou fora de cena durante o movimento | | não registrada |
 
 ## DEPENDÊNCIAS
-- sincronia: fornece a deixa que motiva o movimento.
+- sincronia: fornece quando o movimento começa e em que deixa chega.
+- composicao: fornece o quadro de chegada e a margem segura.
+- cenario: fornece as camadas que respondem à câmera.
 - entradas: fornece as curvas.
 
 ## LIMITES
-- Movimento que troca a escala aprovada do plano (um médio que vira close) é decisão do usuário (`entrevista-movimento`).
 - A transição entre dois planos pertence a `transicoes`, mesmo quando é feita pela câmera.
 
 ## EXEMPLO
-> Plano aberto da lagoa, 3,3 s: aproximação lenta de 4% em direção à água-viva. Quando o peixe entra pela direita, a câmera não o segue: ele é que vem até o assunto. Na deixa "pulsa" nada muda na câmera; a transição para o close do sino, no plano seguinte, é que a leva até lá.
+> Plano aberto da lagoa, 3,3 s. Quando o peixe entra pela direita, a câmera não o segue: ele é que vem até o assunto. Na deixa "pulsa" nada muda na câmera; a transição para o close do sino, no plano seguinte, é que a leva até lá.

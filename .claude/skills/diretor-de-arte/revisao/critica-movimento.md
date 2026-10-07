@@ -30,7 +30,7 @@ Como julgar o movimento, com medidas e quadros consecutivos?
    - A pose nova se lê em silhueta? A expressão mudou antes, durante e depois?
    - Quem vê a ação reage, e reage depois dela?
 5. **Câmera e transições**
-   - O ponto focal continua sendo o ponto focal durante o movimento?
+   - O movimento de câmera tem motivo, e o espectador sabe o que acompanhar até a chegada? A orientação se mantém, e nada do que o plano ainda precisa se perde?
    - A ponte da transição é contínua? Algo pulou de lugar entre os planos?
    - O texto esperou a imagem assentar?
 6. **Ênfase**

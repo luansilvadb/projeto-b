@@ -21,7 +21,7 @@ Os primitivos valem para todo vídeo e moram em `src/`. O que a tabela cita em `
 | Entrada com sobra (`entradas`) | `Pop` e `popScale`/`popOpacity` (`src/components/Pop.tsx`) |
 | Curvas (`entradas`, `acao`) | `ramp` (peso: câmera, porta, maré), `settle` (chega e assenta), `linear` (sombra, moeda no ar), `drop` (queda) e `mix`, em `src/components/timing.ts` |
 | Pausa viva (`pausa-viva`) | `wave`, `phaseOf`, `breath`, `blink` em `src/components/Idle.tsx`; `Drifters` para partículas; `Person blink`, `Fish tail/blink`, `Cassiopea pulse/sway` |
-| Câmera (`movimento`) | `framing`, `cameraBetween`, `Camera` e `Layer` (`src/components/Camera.tsx`); `SlowPush` para a aproximação lenta de um plano sem motivo; enquadramentos de um cenário num arquivo só (exemplo: `parts/lagoonCameras.ts`, `LAB` em `parts/Laboratory.tsx`) |
+| Câmera (`movimento`) | `framing`, `cameraBetween`, `Camera` e `Layer` (`src/components/Camera.tsx`); `SlowPush` para a deriva lenta; enquadramentos de um cenário num arquivo só (exemplo: `parts/lagoonCameras.ts`, `LAB` em `parts/Laboratory.tsx`) |
 | Transições (`transicoes`) | corte: dois `Shot`; câmera: `cameraBetween` do enquadramento anterior nos primeiros 0,5 a 1 s do plano novo; varredura: `wipe` no plano novo e `hold` no anterior (`Shot`); transformação: o objeto-ponte desenhado nos dois planos (o quadro que encolhe até virar painel, a luz que cresce e vira fundo) |
 | Entre cenas | cada cena é uma `Sequence` sem sobreposição: a transição contínua para a primeira imagem de uma cena começa nela, com a imagem anterior redesenhada (exemplo: `nightfall` de `parts/LagoonShot.tsx`, `ShrinkingLab` com `<Sequence from={-n}>` da cena anterior) |
 
