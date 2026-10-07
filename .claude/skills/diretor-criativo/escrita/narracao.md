@@ -17,7 +17,7 @@ Como escrever um texto feito para ser ouvido?
 
 - Frase declarativa, com o sujeito dito pelo nome e repetido quando volta. O que amarra uma frase à outra é a ordem dos fatos e o sujeito em comum; conectivo entra onde há causa ou virada de verdade.
 - Palavra que a fala usa: "dá" e não "resulta em", "tem" e não "possui", "todo mundo" e não "a totalidade". "Pra", "pro" e "tá" entram onde a forma inteira soaria dura.
-- A passagem é dita, em tom de narrador, e leva a posição de `ouvinte`, o que ficou decidido e o que falta: "isso explica quem é quem; falta explicar como".
+- A passagem é dita em tom de narrador. Quando a virada pede orientação (`ouvinte`), ela diz o que ficou decidido e o que falta: "isso explica quem é quem; falta explicar como".
 - A ideia difícil pode ser dita duas vezes, a segunda depois de "ou seja" ou "em outras palavras", com a consequência para quem assiste.
 - "Você" aparece onde quem assiste entra na história, conforme `voz`; "a gente" e a fala do espectador ("aí você pensa:") ficam para os trechos que argumentam com ele, conforme `fio`.
 - Gíria e interjeição ("tipo", "putz", "pô") ficam fora, pela regra de `humor`.
@@ -59,10 +59,10 @@ Como escrever um texto feito para ser ouvido?
 2. Releia cada bloco em voz alta mentalmente: onde faltaria ar ou a língua tropeçaria, reescreva.
 3. Passe cada frase pelo teste do registro. A que o narrador não diria é reescrita como seria dita.
 4. Corte a frase de efeito que não foi ganha, conforme `fio`. O fato seco, o detalhe do personagem e a retomada ficam: são eles que dão tempo ao ouvido.
-5. Confira o bloco contra a ficha de voz, a ficha do fio e as regras de `ouvinte`.
+5. Confira o bloco contra a ficha de voz, a ficha do fio e o que `ouvinte` pede do trecho.
 
 ## DEPENDÊNCIAS
-- ouvinte: fornece para quem o texto é escrito e as regras de entrada direta, posição, redizer e forma literal.
+- ouvinte: fornece para quem o texto é escrito e o que ele precisa de cada trecho.
 - explicacao: fornece o assunto de cada bloco, a cadeia de causas e o dispositivo do vídeo; a frase só é escrita depois deles.
 - fio: fornece o refrão, os vereditos, os personagens, as promessas e os casos que as frases realizam.
 - humor: fornece a regra que deixa a gíria de fora.

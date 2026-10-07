@@ -55,7 +55,7 @@ Como fazer o texto explicar para quem assiste, em vez de relatar fatos?
 9. Leia o bloco pelas perguntas acima.
 
 ## DEPENDÊNCIAS
-- ouvinte: torna regra o veredito do padrão 10 (ganho por bloco) e o mapa e a recapitulação do padrão 12 (mapa e posição).
+- ouvinte: fornece as necessidades a que o veredito do padrão 10 e o mapa e a recapitulação do padrão 12 atendem: progresso que se percebe e caminho acompanhável.
 - moldes: fornece o molde do vídeo e a estrutura dele.
 - angulo: fornece a tese; aqui ela é reformulada como expectativa e quebra.
 - analogias: fornece a construção da metáfora; aqui ela pode virar o dispositivo do vídeo inteiro.

@@ -65,7 +65,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `conducao/entrevista` | Quando o agente escreve, compara e escolhe sozinho, e quando duas alternativas válidas fariam vídeos diferentes o bastante para o usuário decidir? |
 | `pesquisa/levantamento` | Como pesquisar o tema e selecionar fontes confiáveis? |
 | `pesquisa/checagem` | Como verificar cada afirmação factual e tratar incerteza e simplificação? |
-| `conceito/ouvinte` | Para quem o texto do vídeo é escrito, e o que isso exige de cada trecho? |
+| `conceito/ouvinte` | O que o texto precisa fazer para que quem ouve uma vez não tenha de guardar contexto demais, adivinhar relações nem esperar muito para saber por que continuar? |
 | `conceito/angulo` | Qual é o ângulo, a tese e a promessa que justificam o vídeo? |
 | `conceito/voz` | Como definir a voz do projeto a partir dos mecanismos do estilo? |
 | `estrutura/moldes` | Que molde o tema pede, e que estrutura ele dá ao vídeo? |

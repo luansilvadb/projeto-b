@@ -24,13 +24,13 @@ O **fio** é o que o espectador segura do primeiro ao último minuto. Quatro mec
 
 - De três a cinco voltas no vídeo. Cada volta diz mais do que a anterior.
 
-**4. Promessa plantada e cobrada.** O narrador marca algo que vai importar ("e essa distinção é importante"; "esse 'em teoria' volta") e, minutos depois, cobra pelo nome, redizendo o que plantou, conforme `ouvinte`. A cobrança traz o que o espectador não tinha quando a promessa foi plantada.
+**4. Promessa plantada e cobrada.** O narrador marca algo que vai importar ("e essa distinção é importante"; "esse 'em teoria' volta") e, minutos depois, cobra pelo nome, devolvendo do que plantou o bastante para se reconhecer, conforme `ouvinte`. A cobrança traz o que o espectador não tinha quando a promessa foi plantada.
 
 - De uma a três por vídeo, com um a dez minutos entre plantar e cobrar. Toda promessa plantada é cobrada.
 
 ### Quando o trecho conta o que alguém fez
 
-**5. Personagem com detalhe.** Quem volta no vídeo ganha nome, ano, lugar e um detalhe pequeno de que o argumento não precisa: "nesse tempo ele abatia cinco cabeças de gado por dia"; "ficou seis meses preso e emagreceu vinte quilos". Vale para pessoa, bicho e instituição ("essa é a hora de apresentar outro personagem"). É o detalhe que faz o texto parecer apurado, e ele entra como uma oração da frase que carrega o fato, conforme `ouvinte`. "Um grupo de pesquisadores" e "um rapaz" são ninguém.
+**5. Personagem com detalhe.** Quem volta no vídeo ganha nome, ano, lugar e um detalhe pequeno de que o argumento não precisa: "nesse tempo ele abatia cinco cabeças de gado por dia"; "ficou seis meses preso e emagreceu vinte quilos". Vale para pessoa, bicho e instituição ("essa é a hora de apresentar outro personagem"). É o detalhe que faz o texto parecer apurado, e ele entra sem tirar o fio do lugar, em geral como uma oração da frase que carrega o fato, conforme `ouvinte`. "Um grupo de pesquisadores" e "um rapaz" são ninguém.
 
 - Até quatro personagens, conforme os poucos elementos de `explicacao`. Cada um com ao menos um detalhe da base de fatos.
 - A história é contada na ordem em que aconteceu, com o sujeito repetido pelo nome.
@@ -65,7 +65,7 @@ O **fio** é o que o espectador segura do primeiro ao último minuto. Quatro mec
 7. Preencha a ficha do fio. As frases são escritas conforme `narracao`.
 
 ## DEPENDÊNCIAS
-- ouvinte: fornece a regra de redizer, que a cobrança da promessa cumpre, e a do desvio dentro da frase, que o detalhe cumpre.
+- ouvinte: fornece o que uma retomada precisa devolver, na cobrança da promessa, e quanto o detalhe pode desviar.
 - arco: fornece os blocos, a cadeia de perguntas e o orçamento de palavras.
 - explicacao: fornece a tensão e os poucos elementos; o fio é construído sobre eles.
 - moldes: fornece o molde.

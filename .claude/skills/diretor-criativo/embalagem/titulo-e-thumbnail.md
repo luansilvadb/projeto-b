@@ -20,7 +20,7 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 - compreensível para quem nunca ouviu falar do tema;
 - cerca de 45 caracteres e 8 palavras ou menos (medianas do canal: 43 caracteres e 8 palavras; 37 e 7 nos vídeos recentes);
 - abre a lacuna sem entregar a resposta;
-- literal, com medida contável e hesitação com lastro, conforme `ouvinte`; a única figura é a analogia central do vídeo;
+- sem figura que se confunda com fato, com a magnitude dimensionada quando o título depende dela e hesitação com lastro, conforme `ouvinte`;
 - todo superlativo ou afirmação passa por `checagem`;
 - o vídeo cumpre exatamente o que o título anuncia.
 
@@ -46,7 +46,7 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 4. Fique com o par que cumpre melhor os critérios. Quando restam pares que vendem promessas diferentes, a escolha é do usuário (`entrevista`), com recomendação.
 
 ## DEPENDÊNCIAS
-- ouvinte: fornece as regras de forma literal, medida contável e hesitação com lastro.
+- ouvinte: fornece o que se pede de figura, magnitude e hesitação.
 - angulo: fornece a promessa e a tese que título e thumbnail condensam.
 - gancho: fornece a lacuna e a imagem de abertura com que devem ser coerentes.
 - analogias: fornece a analogia central, fonte preferencial da imagem.

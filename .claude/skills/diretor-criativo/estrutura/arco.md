@@ -26,7 +26,7 @@ Como organizar o vídeo em blocos, do gancho ao fechamento?
 | Mecanismo e consequência | como funciona, o que isso causa, o que se pode fazer | saúde, comportamento, temas sociais |
 | Construção do ideal | monta-se algo passo a passo, cada escolha com seu custo | "o melhor possível", comparações com o real |
 
-**Capítulos.** Agrupe os blocos em três a cinco capítulos com título exibido na tela. O título tem atitude e abre curiosidade ("O espaço odeia você"), não descreve o conteúdo ("Riscos da viagem"). Cada capítulo fecha uma pergunta grande e termina puxando o seguinte. Os capítulos são as partes do mapa de `ouvinte`.
+**Capítulos.** Agrupe os blocos em três a cinco capítulos com título exibido na tela. O título tem atitude e abre curiosidade ("O espaço odeia você"), não descreve o conteúdo ("Riscos da viagem"). Cada capítulo fecha uma pergunta grande e termina puxando o seguinte. Os capítulos são um dos jeitos de dar a quem assiste a forma do caminho (`ouvinte`).
 
 **Procedimento:**
 
@@ -50,7 +50,7 @@ Como organizar o vídeo em blocos, do gancho ao fechamento?
 - **Tudo serve à tese**: bloco que não aproxima o espectador da tese sai, por melhor que seja.
 
 ## DEPENDÊNCIAS
-- ouvinte: fornece o mapa e a posição, que os capítulos sustentam.
+- ouvinte: fornece a necessidade de orientação, a que os capítulos atendem.
 - angulo: fornece tese, promessa e recorte.
 - levantamento: fornece os fatos distribuídos entre os blocos.
 
