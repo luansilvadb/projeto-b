@@ -37,10 +37,10 @@ pnpm check-script <vídeo>
 
 Ele recusa plano sem deixa ou com deixa que não está na narração, estima a duração de cada plano e marca os longos. A marca é um sinal de falha de `planos`: responda a ele olhando o trecho.
 
-Depois faça as passadas 1 e 2 de `critica-quadro` sobre os planos escritos, lendo só a coluna da encenação, sem a narração. Aqui não há subagente: ainda não existe imagem para um crítico abrir.
+Depois leia os planos escritos pelas lentes de encenação e de decupagem de `critica-quadro`: só a coluna da encenação, sem a narração. Aqui não há subagente: ainda não existe imagem para um crítico abrir.
 
-Pronto quando: o comando passa, todo plano marcado tem a resposta ao sinal (a mudança escrita na encenação dele, ou o motivo de estar certo assim, dito na entrega), e as duas passadas não acham bloqueante.
+Pronto quando: o comando passa, todo plano marcado tem a resposta ao sinal (a mudança escrita na encenação dele, ou o motivo de estar certo assim, dito na entrega), e a leitura não acha bloqueante.
 
 ## Entrega
 
-Devolva ao `diretor-criativo` os planos de cada cena, o tempo médio por plano que o comando imprime, as frases que a imagem pediu para mudar e o que ficou em aberto nas duas passadas. Quem mostra o roteiro ao usuário e registra a 1ª aprovação é ele.
+Devolva ao `diretor-criativo` os planos de cada cena, o tempo médio por plano que o comando imprime, as frases que a imagem pediu para mudar e o que ficou em aberto na leitura. Quem mostra o roteiro ao usuário e registra a 1ª aprovação é ele.

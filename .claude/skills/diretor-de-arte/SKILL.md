@@ -84,7 +84,7 @@ Imagem:
 | `desenho/cenario` | Como construir o fundo e a profundidade? |
 | `quadro/composicao` | Como arrumar o quadro para o olho achar o assunto? |
 | `quadro/texto` | Que texto entra na tela, e preso a quê? |
-| `revisao/critica-quadro` | Com que critérios e medidas julgar os quadros? |
+| `revisao/critica-quadro` | Como achar o defeito visual que explica por que um quadro não funciona, e com que evidência confirmá-lo? |
 
 Movimento:
 
@@ -118,10 +118,10 @@ Injete o procedimento da etapa, depois a unidade de condução e as unidades do 
 | Etapa | Passo | Unidades | Entrega |
 |---|---|---|---|
 | Decupagem | Conceito visual | `entrevista-imagem`, `elenco`, `cor` | ficha visual, aprovada pelo usuário |
-| | Decupagem | `entrevista-imagem`, `encenacao`, `planos`, `dado`, `critica-quadro` (passadas 1 e 2) | planos de cada cena, aprovados junto com o texto |
+| | Decupagem | `entrevista-imagem`, `encenacao`, `planos`, `dado`, `critica-quadro` (lentes de encenação e de decupagem) | planos de cada cena, aprovados junto com o texto |
 | Animatic | Desenho | `entrevista-imagem`, `forma`, `personagem`, `cenario` | folhas de modelo e desenhos reutilizáveis |
 | | Quadro | `composicao`, `texto` | um quadro composto por plano |
-| | Revisão | `critica-quadro` | quadros e medidas, levados à aprovação |
+| | Revisão | `critica-quadro` | os quadros e o diagnóstico deles, levados à aprovação |
 | Animação | Partitura | `entrevista-movimento`, `sincronia`, `entradas` | para cada plano, a lista do que acontece, em que palavra e por quanto tempo |
 | | Movimento | `pausa-viva`, `acao`, `movimento`, `transicoes`, `efeitos` | os planos em movimento |
 | | Revisão | `critica-movimento` | o vídeo e o diagnóstico dele, levados à aprovação |

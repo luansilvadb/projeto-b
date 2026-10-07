@@ -30,7 +30,7 @@ A duração de cada cena vem da narração: não escreva durações fixas. Use `
 
 ## Compor as cenas
 
-Quem desenha e compõe em volume é o subagente `ilustrador`: um disparo por desenho reutilizável (personagem, objeto, cenário) e, com os desenhos prontos, um por cena. Um desenho novo ou refeito passa duas vezes por ele, porque acabamento não conserta construção (`forma`): primeiro a silhueta numa cor só, na pose da cena, que o `critico-de-quadro` julga; a pintura só depois de ela passar. O desenho de um personagem é entregue na folha de modelo dele (`personagem`), uma composição na pasta `design` do `src/Root.tsx`: ela passa pela passada 5 de `critica-quadro` e vai ao usuário, como parte da decisão de elenco. Passe a pasta do vídeo, o que fazer e a lista dos arquivos que ele pode tocar. Primeiro crie você a pasta, o `index.tsx`, a paleta e o registro em `src/Root.tsx`. As regras abaixo valem para ele e para o que você ajustar à mão.
+Quem desenha e compõe em volume é o subagente `ilustrador`: um disparo por desenho reutilizável (personagem, objeto, cenário) e, com os desenhos prontos, um por cena. Um desenho novo ou refeito passa duas vezes por ele, porque acabamento não conserta construção (`forma`): primeiro a silhueta numa cor só, na pose da cena, que o `critico-de-quadro` julga; a pintura só depois de ela passar. O desenho de um personagem é entregue na folha de modelo dele (`personagem`), uma composição na pasta `design` do `src/Root.tsx`: ela passa pela lente de desenho de `critica-quadro` e vai ao usuário, como parte da decisão de elenco. Passe a pasta do vídeo, o que fazer e a lista dos arquivos que ele pode tocar. Primeiro crie você a pasta, o `index.tsx`, a paleta e o registro em `src/Root.tsx`. As regras abaixo valem para ele e para o que você ajustar à mão.
 
 Siga os planos de cada cena (`shots` em `script.json`). Cada plano é uma composição própria: enquadramento, lugar e paleta. A imagem troca na deixa do plano (`cueFrame(scene, "<cue>")`), e não só no fim da cena. Um plano não é a composição anterior com uma etiqueta a mais.
 
@@ -61,7 +61,7 @@ pnpm critique <vídeo> animatic   # medidas do render contra os vídeos de refer
 
 Enquanto desenha, abra cada imagem gerada e corrija o que vir: nenhum quadro vai adiante sem ter sido aberto. Para ver um momento específico, passe os quadros: `pnpm stills <vídeo> 30 120`.
 
-Com os quadros de todos os planos renderizados, acione o subagente `critico-de-quadro`, que não desenhou nada e faz as passadas da unidade `critica-quadro`. Passe o nome da pasta do vídeo, o caminho dos quadros e a tabela do `pnpm critique`. Ele julga; quem decide e redesenha é você, pelos passos 4 a 6 do procedimento de `critica-quadro`, acionando-o de novo só com os planos alterados.
+Com os quadros de todos os planos renderizados, acione o subagente `critico-de-quadro`, que não desenhou nada e faz o diagnóstico da unidade `critica-quadro`. Passe o nome da pasta do vídeo, o caminho dos quadros e a tabela do `pnpm critique`. Ele julga; quem decide e redesenha é você: refaça os bloqueantes, e os relevantes salvo custo desproporcional; o conserto que mexe em elenco, paleta, analogia ou plano aprovados vai antes ao usuário (`entrevista-imagem`). Renderize de novo só os quadros mexidos, confira o defeito que motivou a mudança e acione o subagente de novo só com os planos alterados. Se uma rodada não resolver nenhum defeito, pare e relate o que ficou em aberto.
 
 ## Segunda aprovação
 
@@ -69,7 +69,7 @@ Entregue ao usuário:
 
 - os quadros de todos os planos, em ordem, e o caminho do MP4;
 - a tabela de medidas do `pnpm critique`;
-- os problemas que ficaram em aberto na crítica;
+- os defeitos que ficaram em aberto na crítica, cada um com a evidência dele;
 - o que ainda não está ali (movimento, trilha) e o que só ele pode julgar (gosto e identidade).
 
 Para ele assistir e navegar pelo vídeo ao vivo, `pnpm dev` abre o Remotion Studio.
