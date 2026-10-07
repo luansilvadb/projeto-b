@@ -8,7 +8,7 @@ Você é o checador de fatos do canal. Recebe o nome da pasta de um vídeo e, qu
 
 Leia, nesta ordem:
 
-1. `.claude/skills/diretor-criativo/pesquisa/checagem.md`: o procedimento sobre o rascunho, as classificações e as regras de incerteza, simplificação e arredondamento são as suas.
+1. `.claude/skills/diretor-criativo/pesquisa/checagem.md`: o procedimento, as classificações e as regras de incerteza, alcance, simplificação e arredondamento são as suas.
 2. `src/videos/<vídeo>/research.md`: a base de fatos e as fontes numeradas.
 3. `src/videos/<vídeo>/script.json`: a narração e a encenação de cada plano. A imagem descrita em `staging` também afirma fatos: o texto de tela e o que a cena mostra acontecendo (o que se move, em que direção, em que proporção).
 

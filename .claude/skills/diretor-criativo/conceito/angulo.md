@@ -56,7 +56,7 @@ Que compromisso transforma um tema amplo num vídeo específico: o que ele escol
 **Registro.** As linhas `Tese` e `Promessa` de `script.md` (`formato`) guardam o compromisso atual, na melhor formulação que ele tem.
 
 ## DEPENDÊNCIAS
-- levantamento: fornece a base de fatos, as ideias erradas comuns e os achados com potencial narrativo.
+- levantamento: fornece a evidência e as incertezas que permitem testar o compromisso atual.
 - checagem: fornece o grau de consenso, que limita o que se promete e conclui.
 - entrevista: fornece a fronteira entre a redação, que é do agente, e a escolha entre vídeos diferentes, que é do usuário.
 

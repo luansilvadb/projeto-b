@@ -29,7 +29,9 @@ O pedido decide a etapa; a etapa decide o que ler.
 | Etapa | Quando | Procedimento |
 |---|---|---|
 | 1. Pesquisa | tema novo; pesquisar ou checar um fato; o roteiro pede um fato que falta | `etapas/pesquisa.md` |
-| 2. Roteiro | pesquisa pronta; escrever, revisar, encurtar ou alterar roteiro, narração ou cenas | `etapas/roteiro.md` |
+| 2. Roteiro | já há suporte factual para escrever ou testar o trecho atual; escrever, revisar, encurtar ou alterar roteiro, narração ou cenas | `etapas/roteiro.md` |
+
+As duas se alternam: a pesquisa não fecha antes do roteiro, e volta sempre que um trecho pede um fato que `research.md` ainda não sustenta.
 
 A etapa seguinte é a narração, na skill `producao`.
 
@@ -63,8 +65,8 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | Unidade | Pergunta |
 |---|---|
 | `conducao/entrevista` | Quando o agente escreve, compara e escolhe sozinho, e quando duas alternativas válidas fariam vídeos diferentes o bastante para o usuário decidir? |
-| `pesquisa/levantamento` | Como pesquisar o tema e selecionar fontes confiáveis? |
-| `pesquisa/checagem` | Como verificar cada afirmação factual e tratar incerteza e simplificação? |
+| `pesquisa/levantamento` | Que evidência é preciso encontrar para afirmar ou decidir isto com honestidade, e que fonte é adequada para ela? |
+| `pesquisa/checagem` | A afirmação que o vídeo faz de fato, na fala, na tela ou na encenação, é sustentada pela evidência na força com que é dita, e que limite não pode sumir quando ela é simplificada? |
 | `conceito/ouvinte` | O que o texto precisa fazer para que quem ouve uma vez não tenha de guardar contexto demais, adivinhar relações nem esperar muito para saber por que continuar? |
 | `conceito/angulo` | Que compromisso transforma um tema amplo num vídeo específico: o que ele escolhe perseguir, o que vai tornar compreensível e que expectativa honesta cria em quem decide acompanhá-lo? |
 | `conceito/voz` | Quem é o narrador do canal diante do assunto e de quem assiste, e que diferenças entre um vídeo e outro mudam de fato essa identidade? |
@@ -92,7 +94,7 @@ Injete o procedimento da etapa, depois `entrevista` e as unidades do passo em cu
 
 | Etapa | Passo | Unidades |
 |---|---|---|
-| 1. Pesquisa | Pesquisa | `levantamento`, `checagem` |
+| 1. Pesquisa | Pesquisa | `levantamento`; `checagem`, quando uma premissa de risco é conferida cedo |
 | 2. Roteiro | Conceito | `ouvinte`, `angulo`, `voz`, `titulo-e-thumbnail` (título provisório), `formato` |
 | | Estrutura | `ouvinte`, `moldes`, `arco`, `gancho`, `fechamento`, `chamada` |
 | | Escrita | `ouvinte`, `analogias`, `explicacao`, `fio`, `humor`, `narracao`, `procedencia`, `indicacao-visual` |
