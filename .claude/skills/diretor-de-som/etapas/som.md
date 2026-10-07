@@ -58,11 +58,11 @@ Os campos de `script.json`; o tipo e as regras estão em `src/narration/script.t
 - `levels`: o nível vale da cena `from` até a mudança seguinte; para voltar, escreva a volta (`"level": "leito"`).
 - `sfx`: o efeito toca na palavra `cue` (com `occurrence` quando ela se repete), ou no começo do plano `shot` (contado de 1), ou no começo da cena; `cue` e `shot` não convivem. `offsetMs`, inteiro, desloca da âncora ao acontecimento real, e vem da partitura da ação (`dose`), e não de um valor padrão. O `-133` do exemplo é um caso: as cenas adiantam a imagem em 4 quadros em relação à palavra (`CUE_LEAD_FRAMES`), e o movimento disparado no instante da deixa começa 133 ms antes dela. Sem `level`, vale `normal`. `name` é um uso do catálogo (`src/audio/sfx.ts`).
 
-Um acontecimento cujo instante só existe no código da cena (o fim de uma queda, o terceiro de três jatos) é ancorada no plano ou na palavra mais próxima, com o `offsetMs` medido na partitura.
+Um acontecimento cujo instante só existe no código da cena (o fim de uma queda, o terceiro de três jatos) é ancorado no plano ou na palavra mais próxima, com o `offsetMs` medido na partitura.
 
 ## Sons que faltam
 
-Unidade `escolha`. O uso que o catálogo já tem é usado, sem consulta, e nenhum uso novo nasce para aumentar a quantidade de efeitos. Entregue à skill `producao` (`etapas/efeitos-sonoros.md`) a lista dos que faltam, com a ação de cada um; ela busca, filtra, leva os candidatos ao ouvido do usuário e devolve o `name`. Um efeito sem som no catálogo fica fora de `sfx` e anotado em `sound.md` como pendente.
+Unidade `escolha`. O catálogo guarda o arquivo que hoje realiza cada uso. O uso que ele já tem é reutilizado, sem consulta, e nenhum uso novo nasce para aumentar a quantidade de efeitos. Entregue à skill `producao` (`etapas/efeitos-sonoros.md`) a lista dos que faltam, com a ação de cada um; ela busca, filtra, leva ao ouvido do usuário o candidato ou os candidatos que sobram e devolve o `name`. Um efeito sem som no catálogo fica fora de `sfx` e anotado em `sound.md` como pendente.
 
 ## O conjunto
 

@@ -38,7 +38,7 @@ No som, o que o agente resolve sozinho, o que pede só o ouvido do usuário e o 
 
 Três dúvidas, três instantes; o roteiro não audita cada linha do mapa.
 
-**O som do catálogo.** Para um uso novo, os candidatos que passam nos critérios (`escolha`) vão ao usuário porque só ele ouve qual soa como a ação. É classificação de ouvido: o resultado é "este arquivo realiza o uso", e o catálogo o guarda para todo vídeo seguinte. O uso que já existe é reutilizado sem consulta; volta ao usuário se o som falha no contexto, ou se o que está em jogo é a linguagem de efeitos do canal (discreta ou cartunesca), que é decisão.
+**O som do catálogo.** Para um uso novo, o candidato ou os candidatos que sobram (`escolha`) vão ao usuário porque só ele ouve se soam como a ação. É classificação de ouvido: o resultado é "este arquivo realiza o uso", e o catálogo o guarda para todo vídeo seguinte. O uso que já existe é reutilizado sem consulta; volta ao usuário se o som falha no contexto, ou se o que está em jogo é a linguagem de efeitos do canal (discreta ou cartunesca), que é decisão.
 
 **O aceite do som** é a única aprovação da etapa, pedida sobre o conjunto. Fixa o que o usuário aceitou ouvir: a identidade percebida, a relação entre música e voz, a densidade, os momentos que carregam sentido, a experiência do todo. A semente, a descrição, o andamento, o tom, o arquivo, o dB e as linhas do mapa continuam melhorando. Antes de mexer em som aceito: a mudança preserva o que ele aceitou ouvir? Se preserva (a costura sem salto, a semente que realiza melhor, o efeito alinhado), corrija e confira o trecho afetado, sem reabrir o aceite. Se muda a identidade, a emoção, o ritmo ou a presença, volta a ele.
 

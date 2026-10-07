@@ -64,7 +64,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, campos, 
 | `mixagem/niveis` | Quando a mesma música precisa ficar mais perto ou mais longe da voz, e qual preset realiza isso? |
 | `mixagem/silencio` | Quando a música some, e quando o roteiro abre espaço para ela? |
 | `efeitos/dose` | Que acontecimento da imagem ganha um efeito, com que presença e em que instante? |
-| `efeitos/escolha` | Que som serve a uma ação, e como ele entra no catálogo? |
+| `efeitos/escolha` | Como descobrir o som que realiza um uso, e reaproveitá-lo quando o uso volta? |
 | `revisao/critica-som` | Com que medidas e passadas julgar o som de um render? |
 
 **Base das medidas.** Os números das unidades vêm de um estudo de som do Kurzgesagt feito em 2026-10-05: os mesmos 12 vídeos do estudo visual (123 minutos, sem patrocínio), separados em voz, música e efeitos e medidos camada a camada. As faixas estão em `CRITERIA`, em `src/critique/sound.ts`; o relatório, com as calibrações e os testes do ACE-Step, em `out/referencias/kurzgesagt/som/ESTUDO.md` (fora do git: `tools/sound/` refaz as medidas). Ao questionar ou atualizar uma medida, pese:
@@ -82,7 +82,7 @@ Injete o procedimento da etapa, depois `entrevista-som` e as unidades do passo e
 |---|---|---|---|
 | Arco de som antecipado | Dúvida | `silencio`; `leito` só se a dúvida é de continuidade da música | o `holdMs` pedido ao roteiro e o compromisso em `sound.md`, quando houver; sem aprovação própria |
 | 6. Som | Mapa | `leito`, `descricao`, `momentos`, `niveis`, `silencio`, `dose`: as da camada em que o mapa cresce | a hipótese atual de música, mixagem e efeitos em `sound.md` e nos campos `music` e `sfx`, ampliada conforme o som gerado funciona |
-| | Sons | `escolha` | todo uso do mapa com um som no catálogo |
+| | Sons | `escolha` | cada uso do mapa com um som no catálogo, ou dito como pendente |
 | | Revisão | `critica-som` | medidas, relatório e roteiro de escuta do conjunto, levados ao aceite |
 
 Para tarefas parciais (trocar a música de um trecho, acrescentar um efeito, baixar a trilha), injete apenas as unidades do passo e as suas dependências declaradas.
