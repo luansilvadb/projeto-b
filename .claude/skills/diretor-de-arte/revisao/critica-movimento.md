@@ -40,16 +40,16 @@ Como julgar o movimento, com medidas e quadros consecutivos?
 
 **Medidas.** As de `critica-quadro` e mais três, que só valem com o vídeo em movimento: tempo com a tela quase parada (menos de 1% do quadro muda entre quadros vizinhos), tempo com mais de 10% do quadro em movimento e tempo até 40% do quadro ser outro. As faixas são as de `CRITERIA` em `src/critique/reference.ts`, impressas pelo `pnpm critique`.
 
-As medidas são tiradas a 320 por 180 pixels, 10 quadros por segundo: enxergam movimento de câmera e de objetos grandes, e pausa viva só quando ela desloca bordas (respiração de 2% da altura, bobina de 9 px, luz que tremula um quarto, moldura que balança); degradê que se move e partícula de 3 px ficam abaixo delas. Um vídeo pode estar vivo e ainda reprovar na segunda medida se nada grande se move; aí a questão é de atuação e de câmera motivada (recuo quando entra mais um item, aproximação para reação, deslize para seguir quem anda), não de pausa viva. As faixas vêm de vídeos inteiros: um trecho calmo (o gancho, uma explicação) pode ficar abaixo da segunda medida sem que o vídeo inteiro fique; nele, a medida orienta e as passadas decidem.
+As medidas são tiradas a 320 por 180 pixels, 10 quadros por segundo: enxergam movimento de câmera e de objetos grandes, e pausa viva só quando ela desloca bordas (respiração de 2% da altura, bobina de 9 px, luz que tremula um quarto, moldura que balança); degradê que se move e partícula de 3 px ficam abaixo delas. Um vídeo pode estar vivo e ainda ficar fora da faixa na segunda medida se nada grande se move; aí a questão é de atuação e de câmera motivada (recuo quando entra mais um item, aproximação para reação, deslize para seguir quem anda), não de pausa viva. As faixas vêm de vídeos inteiros: um trecho calmo (o gancho, uma explicação) pode ficar abaixo da segunda medida sem que o vídeo inteiro fique; nele, a medida orienta e as passadas decidem.
 
 Além do total, um **mapa segundo a segundo** da fração de quadros quase parados e em movimento grande diz em que plano o problema está; é por ele que se corrige o plano, e não o vídeo inteiro.
 
-**Medida não é qualidade.** Elas acusam o vídeo congelado. Um vídeo que treme o tempo todo passa em todas e cansa. As passadas mandam.
+**Medida não é qualidade.** Elas acusam o vídeo congelado. Um vídeo que treme o tempo todo passa em todas e cansa. As passadas mandam, e a medida fora da faixa tem a autoridade que `critica-quadro` lhe dá: diz onde olhar. Vá ao mapa segundo a segundo, às tiras e ao vídeo daquele trecho e classifique o defeito que se vê, pela passada dele; sem defeito, a medida vai ao relatório com o motivo.
 
 **Classificação dos problemas:**
 
-- **Bloqueante**: mudança fora da deixa; estado trocando em corte; quadros iguais numa tira; ação sem os três tempos; ponte de transição quebrada; medida fora da faixa no vídeo inteiro. Refazer é obrigatório.
-- **Relevante**: curva dura (uma ação que termina em um décimo do tempo escrito), sobra demais, família em uníssono, câmera que perde o foco, recurso solto, medida fora da faixa num trecho. Refazer, salvo custo desproporcional; o que ficar, relatar com o mapa segundo a segundo.
+- **Bloqueante**: mudança fora da deixa; estado trocando em corte; quadros iguais numa tira; ação sem os três tempos; ponte de transição quebrada. Refazer é obrigatório.
+- **Relevante**: curva dura (uma ação que termina em um décimo do tempo escrito), sobra demais, família em uníssono, câmera que perde o foco, recurso solto. Refazer, salvo custo desproporcional; o que ficar, relatar com o mapa segundo a segundo.
 - **Polimento**: ajuste fino de tempo, amplitude ou fase. Aplicar se não mexer em nada aprovado.
 
 **Procedimento:**
@@ -65,6 +65,7 @@ Além do total, um **mapa segundo a segundo** da fração de quadros quase parad
 
 ## DEPENDÊNCIAS
 - sincronia, entradas, pausa-viva, acao, movimento, transicoes, efeitos: fornecem os critérios de cada passada.
+- critica-quadro: fornece as medidas de imagem e a autoridade de toda medida.
 
 ## LIMITES
 - Não julgar por gosto: todo problema aponta um critério violado.

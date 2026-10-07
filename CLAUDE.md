@@ -38,7 +38,7 @@ pnpm render <vídeo> out/<vídeo>/<vídeo>.mp4   # o vídeo inteiro de uma vez, 
 pnpm sound <vídeo> out/<vídeo>/<vídeo>.som.mp3   # só o som (voz, trilha e efeitos), em minutos
 ```
 
-- `pnpm critique <vídeo>` lê `out/<vídeo>/<vídeo>.mp4`, então pede um `pnpm join` (ou um `pnpm render`) antes; com `animatic`, as medidas de movimento ainda não reprovam. Com `som`, separa o áudio em voz, música e efeitos na GPU e guarda a separação em `som/<nome>/`, ao lado do arquivo medido: apague a pasta para medir de novo um arquivo que mudou. O `pnpm sound` tem configuração própria (`remotion.sound.config.ts`), porque a de `remotion.config.ts` fixa o h264 e recusa uma saída em mp3.
+- `pnpm critique <vídeo>` lê `out/<vídeo>/<vídeo>.mp4`, então pede um `pnpm join` (ou um `pnpm render`) antes; com `animatic`, as medidas de movimento ainda não valem. Medida fora da faixa não é erro do comando: ele só falha quando não consegue medir. Com `som`, separa o áudio em voz, música e efeitos na GPU e guarda a separação em `som/<nome>/`, ao lado do arquivo medido: apague a pasta para medir de novo um arquivo que mudou. O `pnpm sound` tem configuração própria (`remotion.sound.config.ts`), porque a de `remotion.config.ts` fixa o h264 e recusa uma saída em mp3.
 - `pnpm render` não dá o arquivo de entrega: `out/<vídeo>/<vídeo>.final.mp4` sai do ffmpeg com `loudnorm`, no passo a passo de `.claude/skills/producao/etapas/corte-final.md`.
 - O Vitest só inclui `src/**/*.test.ts` e `scripts/**/*.test.ts`; sem isso rodaria os testes das ferramentas clonadas em `vendor/`.
 - Código mudou: `pnpm lint` e `pnpm test`. Etapa de vídeo mudou: o comando dela na tabela do `README.md`.

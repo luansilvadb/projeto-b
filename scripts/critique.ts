@@ -1,6 +1,6 @@
 // Mede o render de um vídeo e compara com a faixa dos vídeos de referência:
 //   pnpm critique <vídeo>             mede out/<vídeo>/<vídeo>.mp4, já animado
-//   pnpm critique <vídeo> animatic    as medidas de movimento ainda não reprovam
+//   pnpm critique <vídeo> animatic    as medidas de movimento ainda não valem
 //   pnpm critique <arquivo.mp4>       mede um arquivo qualquer, para recalibrar as faixas
 //   pnpm critique <vídeo ou arquivo> som   mede o som em vez da imagem
 //
@@ -72,7 +72,9 @@ const main = async () => {
   const stage: Stage = stageName === "animatic" ? "animatic" : "final";
 
   // Um nome de pasta de vídeo vale pelo render dele; qualquer outra coisa é um arquivo.
-  const file = /\.[a-z0-9]+$/i.test(target) ? target : `out/${target}/${target}.mp4`;
+  const file = /\.[a-z0-9]+$/i.test(target)
+    ? target
+    : `out/${target}/${target}.mp4`;
   if (!existsSync(file)) {
     throw new Error(
       `Não existe ${file}. Renderize antes: pnpm render ${target} ${file}`,
@@ -91,13 +93,14 @@ const main = async () => {
     );
   }
 
-  const out = verdicts.filter((verdict) => verdict.status === "out");
-  if (out.length > 0) {
-    throw new Error(
-      `\n${out.length} medida(s) fora da faixa dos vídeos de referência.`,
-    );
-  }
-  console.log("\nNenhuma medida fora da faixa dos vídeos de referência.");
+  // A faixa é o que os vídeos de referência fazem, não uma exigência do
+  // projeto: sair dela não é erro do comando, que só falha quando não mede.
+  const out = verdicts.filter((verdict) => verdict.status === "out").length;
+  console.log(
+    out > 0
+      ? `\n${out} medida(s) fora da faixa dos vídeos de referência: cada uma diz onde conferir, não que há defeito.`
+      : "\nNenhuma medida fora da faixa dos vídeos de referência.",
+  );
 };
 
 main().catch(exitWithError);

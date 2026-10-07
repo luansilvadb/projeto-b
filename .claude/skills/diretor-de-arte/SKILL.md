@@ -140,8 +140,8 @@ Para tarefas parciais (redesenhar um personagem, refazer os planos de uma cena, 
 
 Pare quando:
 
-- os quadros de todos os planos (animatic) ou todos os planos em movimento e dentro das medidas (animação) estiverem aprovados pelo usuário;
-- a crítica da etapa não encontrar problema bloqueante nem relevante e as medidas estiverem dentro da faixa;
+- os quadros de todos os planos (animatic) ou todos os planos em movimento (animação) estiverem aprovados pelo usuário;
+- a crítica da etapa não encontrar problema bloqueante nem relevante, e cada medida fora da faixa da referência tiver sido conferida no trecho: sem defeito visível, ela segue no relatório e não segura a etapa;
 - uma rodada de crítica não resolver nenhum problema pendente: relate o que ficou em aberto;
 - um desenho ou um movimento não ficar legível depois de três rodadas de render e correção: relate e proponha uma encenação ou uma ação mais simples;
 - o pedido estiver no anti-escopo.
