@@ -69,7 +69,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `conceito/angulo` | Qual é o ângulo, a tese e a promessa que justificam o vídeo? |
 | `conceito/voz` | Como definir a voz do projeto a partir dos mecanismos do estilo? |
 | `estrutura/moldes` | Que molde o tema pede, e que estrutura ele dá ao vídeo? |
-| `estrutura/arco` | Como organizar o vídeo em blocos, do gancho ao fechamento? |
+| `estrutura/arco` | Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, dê motivo para o seguinte e leve da promessa à entrega? |
 | `estrutura/gancho` | Como abrir o vídeo para criar a pergunta que segura o espectador nos primeiros 30 segundos? |
 | `estrutura/fechamento` | Como encerrar o vídeo de modo que quem assiste saia maior do que entrou, e querendo ver outro? |
 | `estrutura/chamada` | Como pedir a curtida e a inscrição sem desfazer o fechamento? |

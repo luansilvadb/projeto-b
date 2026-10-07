@@ -33,4 +33,4 @@ Pronto quando: o molde está escolhido e registrado em `script.md`, com o modo c
 - angulo: fornece o tema recortado e a tese, de que o molde é escolhido.
 
 ## LIMITES
-- O molde decide como quem assiste entra e o que carrega o vídeo; a distribuição em blocos, com função e orçamento, é de `arco`.
+- O molde decide como quem assiste entra e o que carrega o vídeo; a progressão em blocos é de `arco`.

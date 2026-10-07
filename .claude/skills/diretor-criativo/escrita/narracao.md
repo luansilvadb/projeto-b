@@ -55,7 +55,7 @@ Como escrever um texto feito para ser ouvido?
 
 **Procedimento:**
 
-1. Escreva bloco a bloco, respeitando função e orçamento de palavras definidos na estrutura.
+1. Escreva bloco a bloco, a partir do que cada um faz na estrutura. A estimativa de palavras orienta, e o texto a corrige.
 2. Releia cada bloco em voz alta mentalmente: onde faltaria ar ou a língua tropeçaria, reescreva.
 3. Passe cada frase pelo teste do registro. A que o narrador não diria é reescrita como seria dita.
 4. Corte a frase de efeito que não foi ganha, conforme `fio`. O fato seco, o detalhe do personagem e a retomada ficam: são eles que dão tempo ao ouvido.
@@ -66,7 +66,7 @@ Como escrever um texto feito para ser ouvido?
 - explicacao: fornece o assunto de cada bloco, a cadeia de causas e o dispositivo do vídeo; a frase só é escrita depois deles.
 - fio: fornece o refrão, os vereditos, os personagens, as promessas e os casos que as frases realizam.
 - humor: fornece a regra que deixa a gíria de fora.
-- arco: fornece função, cadeia de perguntas e orçamento de cada bloco.
+- arco: fornece o que cada bloco faz, o que o liga ao seguinte e a estimativa de tamanho.
 - voz: fornece a ficha de voz que a narração deve respeitar.
 
 ## LIMITES

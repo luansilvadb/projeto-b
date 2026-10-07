@@ -19,7 +19,7 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 - Promessa: <uma pergunta>
 - Idioma: <idioma>
 - Duração-alvo: <minutos>
-- Molde: <o de `moldes`> / Forma de arco: <a de `arco`>
+- Molde: <o de `moldes`> / Forma de arco: <a de `arco`, quando nomeá-la ajuda>
 - Tensão: era de esperar <X>, e no entanto <Y>
 - Mapa: <como quem assiste percebe o caminho (`ouvinte`): as partes, na ordem, quando são ditas, e o que o vídeo promete para o fim>
 - Fechamento: <a sensação e a moral de `fechamento`, e o trecho do gancho a que a última frase responde>
@@ -33,7 +33,7 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 
 | Bloco | Capítulo | Função | Pergunta que responde → que abre | Nota visual | Cenas |
 |---|---|---|---|---|---|
-| <n> | <título exibido na tela> | <fase do arco> | <pergunta> → <pergunta> | <a de `indicacao-visual`> | `<id>`, `<id>` |
+| <n> | <título exibido na tela> | <o que o bloco faz; os nomes de fase de `arco` servem> | <pergunta> → <pergunta, ou o que leva ao bloco seguinte> | <a de `indicacao-visual`> | `<id>`, `<id>` |
 
 ## Fio
 <a ficha do fio de `fio`>

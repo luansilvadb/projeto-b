@@ -1,13 +1,38 @@
 ## PERGUNTA
-Como organizar o vídeo em blocos, do gancho ao fechamento?
+Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, dê motivo para o seguinte e leve da promessa à entrega, sem blocos que poderiam trocar de lugar?
 
 ## RESPOSTA
 
-**Bloco.** Unidade mínima da estrutura: uma ideia, uma função, um assunto visual dominante (um personagem, um lugar ou uma metáfora). Se um bloco precisa de dois assuntos dominantes, são dois blocos. Assunto dominante não é imagem única: na tela, cada oração do bloco ganha o seu plano, e essa divisão é feita depois, pela skill `diretor-de-arte`.
+**Princípio.** A estrutura é dependência, e não uma sequência de nomes: o bloco seguinte só funciona porque o anterior aconteceu. Ela é julgada pelo que muda em quem ouve, e não por preencher fases.
 
-**Esqueleto do estilo:**
+**Bloco.** A unidade da estrutura: um trecho que produz uma mudança reconhecível no que o ouvinte sabe, espera ou pergunta. Dois trechos que fazem a mesma mudança são um bloco; um trecho com duas mudanças independentes provavelmente são dois. A imagem pode sugerir a divisão (um bloco costuma ter um assunto visual dominante), mas quem divide em planos é a skill `diretor-de-arte`.
 
-| Fase | Função | Parcela aproximada |
+**O que precisa funcionar:**
+
+- **Cada bloco muda o estado.** Depois dele, quem ouve sabe, espera ou pergunta algo que não sabia, esperava ou perguntava antes: outro conhecimento, outra expectativa, outra escala, outro risco, outra leitura do que já viu. O bloco que não muda nada é candidato a corte, fusão ou outro lugar.
+- **O seguinte é necessário agora.** Cada bloco deixa uma razão reconhecível para o próximo existir: uma pergunta, uma consequência, uma contradição, um perigo, uma tentativa, uma comparação ainda pela metade. A dependência pode ser causal, lógica, temporal, de contraste, de expectativa e quebra, de problema e tentativa.
+- **A progressão se percebe.** O vídeo avança, e o jeito de avançar é do material: aprofundar, seguir a causa, mudar de escala, seguir o tempo, descartar hipóteses, reduzir opções, mudar de perspectiva, acumular custo, construir, desmontar.
+- **Nada antes da hora.** Um conceito, um termo, um personagem ou um dado aparece quando algo no texto já pede por ele, e o ouvinte tem base para recebê-lo.
+- **As ideias novas não disputam.** Um bloco não põe várias ideias novas e independentes para competir antes de uma assentar. Duas cabem quando uma explica a outra ou são partes de uma relação só; uma pode ser demais, se é abstrata e chega sem base. O termo técnico é apresentado uma vez e reutilizado igual.
+- **O motivo para continuar se renova** antes que a direção atual se esgote: uma pergunta nova, uma consequência, uma revelação, uma resposta parcial, uma mudança de escala.
+- **O que foi dito tem tempo de assentar.** Densidade contínua demais atropela o que acabou de chegar.
+- **A mudança de sentido tem espaço.** Quando o que se viu passa a significar outra coisa, a estrutura dá a quem ouve o tempo de perceber. Pode ser uma virada grande, várias pequenas ou uma mudança gradual.
+- **A promessa é do tamanho da entrega.** O vídeo não promete um escopo maior do que cumpre, e não gasta tudo antes do fim: sobra espaço para ele terminar de fato (`fechamento`).
+- **Todo bloco participa do percurso** que permite a promessa ser entregue. Contexto, contraste, preparação, ressalva e personagem participam sem mencionar a tese. O teste é o que o caminho perde sem o bloco.
+
+**Três testes**, para achar a lista disfarçada de arco:
+
+- **Permutação.** Troque dois blocos de lugar. Se o entendimento não muda, há pouca dependência entre eles. Não é defeito por si, e é o melhor sinal de módulos independentes.
+- **Remoção.** Tire o bloco: o que deixa de funcionar? Falta uma causa, um contraste, a base de uma consequência, o sentido de um personagem, o fecho da promessa. "Perdemos um fato interessante" é resposta de sobra.
+- **Necessidade do próximo.** Depois de cada bloco: por que o ouvinte precisa do seguinte agora? A resposta não precisa ser uma pergunta, e precisa existir.
+
+**A estrutura é hipótese.** Ela acompanha a melhor explicação que o texto consegue realizar: um gancho escrito pode mostrar outra ordem, o fio pode fundir dois blocos, a crítica pode mostrar que uma progressão não existe. Um trecho representativo testa uma estrutura antes de ela ser expandida (o mecanismo e a quebra, dois degraus de uma escalada, uma hipótese e a consequência dela); quando testar é de `etapas/roteiro`. A estrutura que dá a mesma experiência é refinada pelo agente; entre duas válidas que dão experiências diferentes, a escolha é do usuário (`entrevista`).
+
+**Repertório.** Formas e recursos que ajudam a reconhecer e a construir a progressão que o material pede. Servem ao material: nomear a forma pode vir depois de um trecho escrito, e um vídeo pode misturar duas.
+
+*Fases recorrentes no estilo*, com a parcela observada na referência. São vocabulário para dizer o que um bloco faz, e não um esqueleto a preencher: um vídeo pode abrir já no mecanismo, ser quase todo uma história ou não ter escalada.
+
+| Fase | Função | Parcela observada |
 |---|---|---|
 | Gancho | abrir a pergunta e fazer a promessa | até 5% |
 | Fundamento | dar o mínimo necessário para acompanhar | 15–20% |
@@ -15,7 +40,7 @@ Como organizar o vídeo em blocos, do gancho ao fechamento?
 | Virada | o ponto em que o tema muda de sentido ou revela sua consequência | 10–15% |
 | Fechamento | devolver o tema ao espectador | 10–15% |
 
-**Formas de arco.** O esqueleto se realiza em uma destas formas recorrentes no estilo; escolha uma antes de distribuir os blocos:
+*Formas de arco:*
 
 | Forma | Como avança | Serve para |
 |---|---|---|
@@ -26,37 +51,36 @@ Como organizar o vídeo em blocos, do gancho ao fechamento?
 | Mecanismo e consequência | como funciona, o que isso causa, o que se pode fazer | saúde, comportamento, temas sociais |
 | Construção do ideal | monta-se algo passo a passo, cada escolha com seu custo | "o melhor possível", comparações com o real |
 
-**Capítulos.** Agrupe os blocos em três a cinco capítulos com título exibido na tela. O título tem atitude e abre curiosidade ("O espaço odeia você"), não descreve o conteúdo ("Riscos da viagem"). Cada capítulo fecha uma pergunta grande e termina puxando o seguinte. Os capítulos são um dos jeitos de dar a quem assiste a forma do caminho (`ouvinte`).
+*Recursos*, cada um com o problema que resolve:
 
-**Procedimento:**
+- **Cadeia de perguntas**, para achar a dependência: liste as perguntas que o espectador fará, na ordem em que surgem, e faça cada bloco responder a uma e abrir a próxima. É a técnica mais forte para ligar blocos; a consequência que nasce sozinha do bloco anterior dispensa a pergunta, e pergunta posta em todo bloco por hábito soa artificial.
+- **Capítulos**, quando o percurso tem mudanças grandes que o ouvinte precisa perceber (`ouvinte`). Cada um fecha uma questão grande e puxa o seguinte. O título na tela tem atitude e abre curiosidade ("O espaço odeia você"), em vez de descrever o conteúdo ("Riscos da viagem"). Um experimento mental curto numa sequência causal só, ou uma história em ordem, se orienta sem eles.
+- **Degraus crescentes**, quando o arco é de escalada: cada degrau acrescenta uma dimensão (escala, risco, estranheza), e o que repete o patamar anterior é estagnação.
+- **Falsa vitória**, para renovar o motivo de continuar: uma conclusão provisória parece resolver o problema, e a consequência seguinte mostra que ele era maior ou outro. É o recurso de reengajamento mais usado no estilo. Vale quando nasce da lógica do tema, e não fabricada para segurar atenção.
+- **Respiro**, quando a densidade atropela: humor, imagem, um caso concreto, uma recapitulação de uma frase, um silêncio, um trecho de narrativa simples.
+- **Escopo declarado**, quando o tema é amplo ou polêmico e a promessa poderia parecer maior que o vídeo: um bloco curto depois do gancho diz o que o vídeo não trata e que aspecto escolheu. O título e a promessa já delimitados, ou uma ressalva no gancho, fazem o mesmo.
 
-1. Converta a duração-alvo em orçamento de palavras. Referência medida no canal, em inglês: mediana de 160 palavras por minuto (167 nos vídeos recentes). Para pt-BR use cerca de 150 como estimativa, até cronometrar uma locução real do projeto.
-2. Liste as perguntas que o espectador fará, na ordem em que surgem. Essa cadeia é a espinha da estrutura: cada bloco responde a uma pergunta e abre a próxima.
-3. Escolha a forma de arco e distribua as perguntas nas fases do esqueleto.
-4. Agrupe os blocos em capítulos e dê título a cada um.
-5. Para cada bloco, registre: número, capítulo, título de trabalho, função, a pergunta que responde, a pergunta que abre, os itens da base de fatos que usa e o orçamento de palavras.
-6. Marque onde ficam a analogia central, as falsas vitórias e a virada.
-7. Quando duas estruturas válidas dão a quem assiste experiências diferentes, a escolha é do usuário (`entrevista`). No resto, siga: a estrutura acompanha o que o texto mostrar.
+**Estimativa de palavras.** A duração-alvo vira uma estimativa de palavras, para dimensionar o escopo e notar desequilíbrio. Referência medida no canal, em inglês: mediana de 160 palavras por minuto (167 nos vídeos recentes). Para pt-BR, cerca de 150, até haver uma locução real do projeto cronometrada, que passa a valer. A estimativa por bloco é ponto de partida: o texto escrito a corrige, e ela não justifica encher um bloco nem cortar o que ele precisa.
 
-**Regras de progressão:**
+**Registro.** Na tabela de estrutura de `script.md` (`formato`), o que ajuda de cada bloco: o que ele faz, a pergunta ou a tensão que carrega, o que o liga ao seguinte, os fatos que usa e o tamanho estimado. Os nomes das fases servem para dizer a função, e uma descrição livre também.
 
-- **Nada antes da hora**: um conceito só aparece quando o espectador já precisa dele.
-- **Um conceito novo por bloco**: termo técnico é apresentado uma vez, com nome e explicação, e depois reutilizado igual.
-- **Degraus crescentes**: na escalada, cada bloco aumenta escala, risco ou estranheza; bloco que repete o patamar anterior é corte.
-- **Respiro**: depois de dois ou três blocos densos, um bloco leve (humor, imagem, recapitulação de uma frase).
-- **Reengajamento**: a cada um ou dois minutos, uma nova pergunta ou reviravolta explícita ("mas isso cria um problema").
-- **Falsa vitória**: o texto declara o problema resolvido e, na frase seguinte, revela o obstáculo maior. É o recurso de reengajamento mais usado no estilo; uma a três por vídeo, sempre no fim de um bloco.
-- **Escopo declarado**: logo após o gancho, um bloco curto pode dizer o que o vídeo não vai tratar e qual aspecto escolheu. Obrigatório quando o tema é amplo ou polêmico.
-- **Tudo serve à tese**: bloco que não aproxima o espectador da tese sai, por melhor que seja.
+**Sensores.** Medidas da referência. Servem para localizar desequilíbrio (abertura longa demais, corpo sem desenvolvimento, virada que chega tarde, fim sem espaço), e não aprovam nem reprovam uma estrutura.
+
+- As parcelas das fases, na tabela acima.
+- De três a cinco capítulos (`ouvinte`).
+- Um respiro depois de dois ou três blocos densos.
+- Um reengajamento a cada um ou dois minutos.
+- De uma a três falsas vitórias por vídeo, no fim de um bloco.
 
 ## DEPENDÊNCIAS
-- ouvinte: fornece a necessidade de orientação, a que os capítulos atendem.
+- ouvinte: fornece o caminho acompanhável, o progresso que se percebe e a carga que cabe no fluxo, que a estrutura realiza.
 - angulo: fornece tese, promessa e recorte.
 - levantamento: fornece os fatos distribuídos entre os blocos.
 
 ## LIMITES
-- Aqui se define a função de gancho e fechamento na estrutura; a redação deles pertence a `gancho` e `fechamento`.
-- As parcelas são referência, não regra; a cadeia de perguntas manda.
+- Como um bloco explica é de `explicacao`; a continuidade entre os trechos é de `fio`; a redação do gancho e do fechamento, de `gancho` e `fechamento`.
+- Se uma estrutura perde o ouvinte, e com que gravidade, é de `critica`.
 
 ## EXEMPLO
-> Bloco 4 — "O ponto sem volta". Função: escalada. Responde: por que nada escapa? Abre: então o que acontece com quem entra? Fatos: velocidade de escape, horizonte de eventos. Orçamento: 140 palavras.
+> Bloco 4, "O ponto sem volta". Faz: mostra por que nada escapa (escalada). Leva ao seguinte: então o que acontece com quem entra? Fatos: velocidade de escape, horizonte de eventos. Cerca de 140 palavras.
+> Teste de remoção num bloco sobre o maior buraco negro conhecido: sem ele, nada do que vem depois fica sem base. É um fato excelente e não muda o que se entende nem o que se espera: candidato a corte.

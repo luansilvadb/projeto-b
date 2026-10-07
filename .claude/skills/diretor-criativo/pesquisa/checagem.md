@@ -29,7 +29,7 @@ Dizer "não sabemos" é permitido e fortalece a credibilidade do resto.
 **Como dizer isso na narração.** O estilo declara seus limites em voz alta, em três momentos:
 
 - **Antes da explicação simplificada**, em uma frase: "os detalhes são complicados, mas em resumo...". O aviso vem antes, não depois.
-- **Ao delimitar o escopo**, logo após o gancho, conforme `arco`.
+- **Ao delimitar o escopo**, quando o vídeo o declara, conforme `arco`.
 - **Ao limitar o alcance da conclusão**: "para ficar claro: isso não é a cura de...". Obrigatório em temas de saúde, junto com a indicação de procurar um profissional.
 
 Uma ou duas marcas por vídeo bastam (mediana de uma no canal); aviso em todo bloco soa como insegurança.

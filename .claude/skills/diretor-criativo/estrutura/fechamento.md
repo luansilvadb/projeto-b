@@ -11,7 +11,7 @@ Como encerrar o vídeo de modo que quem assiste saia maior do que entrou, e quer
 
 **A abertura planta o fim.** A última frase responde a algo dito no gancho: a ideia-tema (uma palavra que volta, como "continuidade"), uma promessa ("mais fácil do que se pensa") ou uma provocação. O que o gancho abriu, a última frase fecha com outro sentido.
 
-**Espaço.** O fechamento leva a parcela que `arco` reserva, inteira: nas duas referências, cerca de 210 palavras, de 12% a 15% do vídeo. Um fecho de três ou quatro frases é uma frase de efeito, e nela a sensação não se forma.
+**Espaço.** O fechamento usa o espaço que `arco` guarda para ele: nas duas referências, cerca de 210 palavras, de 12% a 15% do vídeo. Um fecho de três ou quatro frases é uma frase de efeito, e nela a sensação não se forma.
 
 **Cinco movimentos, nesta ordem:**
 
@@ -40,7 +40,7 @@ Quando a base de fatos não autoriza esperança, a virada é a clareza: nomear o
 
 1. Nomeie a sensação em uma linha: com o que quem assiste sai, sobre si mesmo? Pronto quando a linha serve de primeira oração da chamada ("Se quiser continuar...").
 2. Escreva a moral numa frase e marque no gancho aquilo a que a última frase vai responder. Pronto quando o trecho do gancho está citado; se ele não existe, o pedido volta a `gancho`.
-3. Escreva dois fechamentos inteiros, com tipos de virada distintos. Pronto quando cada um tem os cinco movimentos, cada movimento tem a sua frase e o total cabe na parcela de `arco`.
+3. Escreva dois fechamentos inteiros, com tipos de virada distintos. Pronto quando cada um tem os cinco movimentos, cada movimento tem a sua frase e o total cabe no espaço guardado em `arco`.
 4. Aplique os testes a cada um. Pronto quando cada teste tem a frase que o cumpre, citada.
 5. Fique com o que passa melhor nos testes. Quando os dois passam e deixam sensações ou morais diferentes, a escolha é do usuário (`entrevista`), cada um com a sensação e a moral ditas em uma linha.
 
