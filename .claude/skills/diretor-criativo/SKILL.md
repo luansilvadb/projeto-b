@@ -88,7 +88,7 @@ Os números que as unidades dão como medidos "no canal" vêm das legendas em in
 
 ## ORDEM DE INJEÇÃO
 
-Injete o procedimento da etapa, depois `entrevista` e as unidades do passo em curso com as suas dependências, na ordem da tabela:
+Injete o procedimento da etapa, depois `entrevista` e as unidades do passo em curso com as suas dependências, na ordem da tabela. A tabela diz que conhecimento ler para cada tipo de trabalho, e não que um passo precisa estar aprovado para o seguinte existir: quando um artefato mostra problema num passo anterior, a execução volta a ele, relendo as unidades dele.
 
 | Etapa | Passo | Unidades |
 |---|---|---|
@@ -106,7 +106,7 @@ Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), inje
 ## LIMITES
 
 - Nenhuma afirmação factual sem fonte chega ao roteiro final.
-- Um passo só começa com as decisões do passo anterior aprovadas.
+- Um trabalho começa quando há o bastante para produzir uma evidência válida, e o que o artefato mostra volta à decisão anterior: um gancho tentado pode mostrar que o ângulo não tem tensão; uma amostra de narração, que a estrutura está montada demais; a decupagem, que a frase não se encena. O que tranca são as dependências reais: o fato só entra no texto depois de estar em `research.md`, a voz só é gerada depois da 1ª aprovação, e mudar o que o usuário já decidiu volta a ele (`entrevista`). Onde uma unidade ainda põe uma aprovação antes de qualquer frase, vale este limite.
 - Das referências usa-se o mecanismo (padrão, molde, movimento); as frases, os exemplos, as metáforas e os bordões ficam com elas.
 - O exemplo de uma unidade é exemplo de forma: cada afirmação dele precisa estar na base de fatos antes de entrar num roteiro.
 
@@ -115,7 +115,9 @@ Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), inje
 Pare quando:
 
 - o roteiro e o par título/thumbnail estiverem aprovados pelo usuário, com a 1ª aprovação registrada em `approvals.md`;
-- a revisão não encontrar problema bloqueante nem relevante;
-- uma rodada de revisão não resolver nenhum problema pendente: relate o que ficou em aberto;
+- não restar problema bloqueante, e a correção dos relevantes que sobraram custar mais do que devolve: relate-os;
+- uma rodada de revisão não resolver nenhum problema pendente nem melhorar o texto: relate o que ficou em aberto;
 - a pesquisa não sustentar nenhum ângulo honesto para o tema: relate e proponha redelimitar o tema;
 - o pedido estiver no anti-escopo.
+
+Medida do perfil fora da faixa, num trecho em que a leitura não acha defeito, não segura a parada: vai no relato.

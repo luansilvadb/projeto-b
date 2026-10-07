@@ -54,7 +54,7 @@ O número em algarismos, o símbolo e a sigla vão para a tela, descritos na enc
 
 Além das regras do validador:
 
-- Antes de qualquer frase vêm o desenho (`escrita/explicacao`) e a ficha do fio (`escrita/fio`), na ordem de injeção do `SKILL.md`. O usuário aprova a estrutura, a ficha do fio e uma amostra de um minuto antes do roteiro inteiro.
+- O desenho (`escrita/explicacao`) e a ficha do fio (`escrita/fio`) vêm antes do roteiro inteiro. Um trecho curto pode ser escrito antes deles, para testá-los, e o que ele mostrar volta a eles. O usuário aprova a estrutura, a ficha do fio e uma amostra de um minuto antes do roteiro inteiro.
 - As frases médias e encadeadas de `escrita/narracao` pesam em dobro aqui: o modelo de voz gera uma frase por vez, com pausa entre elas, e texto picotado em frases curtas sai monótono e mal-humorado.
 - A pontuação decide como a frase é falada; a tabela está na etapa `narracao` da skill `producao`.
 - A vírgula é uma pausa: o modelo de voz para em cada uma. Só ponha vírgula onde quem fala pararia. "E mesmo assim emagreciam", não "e, mesmo assim, emagreciam", que sai com duas pausas.
@@ -67,7 +67,7 @@ Uma cena é um trecho da narração, de uma a três frases, que o áudio trata c
 
 ## Planos
 
-Um plano é uma composição: o que fica na tela enquanto um trecho da cena é falado. Os planos vêm da skill `diretor-de-arte`: com o texto escrito e antes da aprovação, acione-a na etapa de decupagem (`etapas/decupagem.md`, na pasta dela), que decide elenco e paletas com o usuário, grava a ficha visual em `art.md` e devolve os planos de cada cena. Os campos de `shots` e os valores que o validador aceita estão lá, no passo 2.
+Um plano é uma composição: o que fica na tela enquanto um trecho da cena é falado. Os planos vêm da skill `diretor-de-arte`: com o texto escrito e antes da aprovação, acione-a na etapa de decupagem (`etapas/decupagem.md`, na pasta dela). Ela descobre a direção visual que basta para o animatic começar, leva ao usuário só o que a `entrevista-imagem` dela define como decisão, grava a ficha visual em `art.md` e devolve os planos de cada cena, os compromissos visuais assumidos, as frases que a imagem pediu para mudar e as hipóteses que o animatic vai testar. Os campos de `shots` e o que o validador aceita em cada um estão lá, no passo 2: `entry` é texto, e `cut` e `camera`, no exemplo acima, são o costume.
 
 ## Validar
 
@@ -75,7 +75,11 @@ Um plano é uma composição: o que fica na tela enquanto um trecho da cena é f
 pnpm check-script <vídeo>
 ```
 
-Confere todas as regras, lista os problemas de uma vez e estima a duração de cada cena, de cada plano e do vídeo. No fim imprime o **perfil da narração** contra os vídeos de referência. Medida FORA: volte à unidade `escrita/explicacao`. Não gere a voz com o perfil fora da faixa sem o usuário saber. O alvo do canal é de 6 a 10 minutos. Ele também aponta os planos longos, tratados na decupagem conforme a unidade `planos` da skill `diretor-de-arte`. Por fim confere `script.md` contra o roteiro e falha se alguma cena estiver fora da tabela de estrutura, em dois blocos ou fora de ordem; sem `script.md`, só avisa. Corrija até passar antes de mostrar ao usuário.
+O comando dá dois tipos de resposta, com autoridades diferentes.
+
+**Erro**, o que ele recusa: as regras do formato e da narração (`src/narration/script.ts`), listadas de uma vez, e `script.md` contra o roteiro, quando alguma cena está fora da tabela de estrutura, em dois blocos ou fora de ordem (sem `script.md`, só avisa). Corrija até passar antes de mostrar ao usuário.
+
+**Sinal**, o que ele só imprime: a duração estimada de cada cena, de cada plano e do vídeo (o alvo do canal é de 6 a 10 minutos), os planos longos, tratados na decupagem conforme a unidade `planos` da skill `diretor-de-arte`, e o **perfil da narração** contra os vídeos de referência. Medida FORA diz onde olhar e não reprova o texto: leia o trecho pelas perguntas de `escrita/explicacao`. O defeito que a leitura confirma é corrigido, no desenho do bloco e não trocando palavras; sem defeito, o texto segue, e a medida vai no relato da primeira aprovação, para o usuário saber dela antes de a voz ser gerada.
 
 ## Checagem e crítica independentes
 
