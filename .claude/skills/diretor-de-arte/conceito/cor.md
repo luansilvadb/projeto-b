@@ -45,7 +45,7 @@ O que define o modo é o que ele separa, não a claridade: o mundo de noite é e
 
 ## DEPENDÊNCIAS
 - elenco: fornece as figuras, cujas cores precisam funcionar em todos os modos.
-- entrevista-imagem: define que as paletas são decisão do usuário.
+- entrevista-imagem: define o que, numa paleta, é decisão do usuário (os modos e o que as cores significam) e o que é refino.
 
 ## LIMITES
 - Sombra, brilho e borda de luz como forma pertencem a `forma`; luz de cenário, a `cenario`.

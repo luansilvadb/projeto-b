@@ -35,9 +35,9 @@ Movimento que pede outra composição devolve o plano ao passo Quadro.
 
 ## CONDUÇÃO
 
-A skill opera em modo entrevista: o agente resolve sozinho o que é fato ou execução e leva ao usuário só o que é decisão, acionando a skill `grilling`. `entrevista-imagem` define as decisões de imagem, tomadas diante de imagem renderizada; `entrevista-movimento`, as de movimento, tomadas diante de vídeo renderizado.
+A skill opera em modo entrevista: o agente resolve sozinho o que é fato ou execução e leva ao usuário só o que é decisão, com a profundidade que ela pede: a entrevista da skill `grilling` fica para a que é ambígua ou mexe na identidade. `entrevista-imagem` define as decisões de imagem, tomadas diante de imagem renderizada; `entrevista-movimento`, as de movimento, tomadas diante de vídeo renderizado.
 
-Se a escolha contradiz algo aprovado, a base de fatos ou um limite medido, diga isso antes de seguir. Cada decisão é registrada; o **plano acordado** é a soma das decisões registradas: qualquer mudança numa dessas decisões, ainda que pareça melhoria, exige confirmação explícita. Refinar a execução sem mudar a decisão não exige: no movimento, a fronteira é a de `entrevista-movimento`.
+Se a escolha contradiz algo aprovado, a base de fatos ou um limite medido, diga isso antes de seguir. Cada decisão é registrada; o **plano acordado** é a soma das decisões registradas: qualquer mudança numa dessas decisões, ainda que pareça melhoria, exige confirmação explícita. Refinar a execução sem mudar a decisão não exige: a fronteira é a de `entrevista-imagem` e a de `entrevista-movimento`.
 
 ## SUBAGENTES
 
@@ -73,7 +73,7 @@ Imagem:
 
 | Unidade | Pergunta |
 |---|---|
-| `conducao/entrevista-imagem` | Que decisões visuais vão ao usuário, e quais o agente resolve sozinho? |
+| `conducao/entrevista-imagem` | Quando uma escolha visual é do agente, e quando ela muda sentido, identidade ou compromisso o bastante para ser do usuário? |
 | `conceito/elenco` | Quem conduz o vídeo na tela, e o que ganha rosto? |
 | `conceito/cor` | Que paletas o vídeo usa, e quando troca de uma para outra? |
 | `decupagem/encenacao` | Como transformar uma afirmação em algo que acontece na tela? |

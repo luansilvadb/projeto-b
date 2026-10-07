@@ -15,7 +15,7 @@ Leia, nesta ordem:
 
 ## O que fazer
 
-Desenhe ou componha só o que foi pedido, só nos arquivos da lista. O que está aprovado (elenco, paleta, encenação, escala e entrada de cada plano) é dado: você executa. Da referência usa-se o método; nenhum desenho de outro canal é copiado.
+Desenhe ou componha só o que foi pedido, só nos arquivos da lista. O que está decidido é dado: quem é cada figura, o que cada cor significa, o que cada plano encena e para onde ele leva o olho. Dentro disso a execução é sua: construção, posição, tamanho, detalhe e tom. Da referência usa-se o método; nenhum desenho de outro canal é copiado.
 
 Um desenho novo ou refeito chega em dois disparos (`etapas/animatic.md`, Compor as cenas): no da silhueta, renderize-a numa cor só, na pose da cena, devolva o quadro e pare. Todo desenho é julgado pela imagem: renderize o quadro (`pnpm stills <vídeo> <quadros>`), abra com Read, corrija e repita. Rode `pnpm lint` antes de entregar. Entradas simples pela deixa bastam; movimento é de outra etapa.
 
@@ -26,7 +26,8 @@ Pronto quando: cada plano ou desenho pedido tem um quadro renderizado que você 
 - **Arquivos** criados e alterados.
 - **Quadros**: o caminho de cada imagem, por plano ou desenho.
 - **Comandos** rodados e o que retornaram.
-- **Decisões para o usuário**: onde o pedido exigia escolher elenco, paleta, simplificação que sacrifica precisão ou mudança em algo aprovado. Não decida: descreva as alternativas e, quando der, renderize cada uma.
+- **Refinos em algo aprovado**: onde você mudou o desenho de uma figura ou o tom de uma cor sem mudar a decisão, e o que isso resolveu, para a ficha ser atualizada.
+- **Decisões para o usuário**: onde as saídas dizem coisas diferentes (`conducao/entrevista-imagem.md`): um rosto novo, outra identidade para uma figura, outro sentido para uma cor, um traço relevante que a simplificação apagaria, outro assunto para um plano. Não decida: descreva as alternativas que funcionam, com a que você recomenda, e renderize cada uma no menor recorte que mostra a diferença.
 - **Fora da lista**: o que precisaria mudar num arquivo que você não podia tocar (um primitivo, um token, a paleta), e por quê.
 - **Em aberto**: o que não ficou bom e o que você tentou.
 

@@ -44,7 +44,7 @@ Um ponto de partida que costuma bastar: um protagonista, uma personificação po
 **Medidas da referência** (evidência: situam e não reprovam por si). 71% dos planos lidos têm uma figura com rosto ou olhos, e em 48% um personagem é o assunto do plano. A parcela varia com o tema: de 33% num vídeo sobre árvores a 100% num vídeo sobre o cérebro; passa de 60% quando o tema tem gente ou bicho, e fica de 30% a 50% quando é planta, paisagem ou espaço. Dois sinais: quase nenhuma figura num vídeo cujo argumento depende de alguém viver ou sentir; ou rosto em tudo, que pede conferir se a personificação está afirmando intenção sem necessidade.
 
 ## DEPENDÊNCIAS
-- entrevista-imagem: define que o elenco e o rosto de bicho sem olhos são decisões do usuário, e onde ficam registrados.
+- entrevista-imagem: define o que, no elenco, é decisão do usuário (quem conduz o vídeo e o que ganha rosto) e onde fica registrado.
 
 ## LIMITES
 - O desenho, a pose, a expressão e a folha de modelo pertencem a `personagem`; a construção, a `forma`; as cores de cada figura, a `cor`.
