@@ -39,10 +39,10 @@ Com que critérios e medidas julgar os quadros?
    - Cada coisa do ambiente tem um serviço, e o lugar que volta é o mesmo?
    - O que emite luz parece fonte de luz, e o que é muitos se lê como massa, com um foco?
 7. **Texto**
-   - Um texto novo por vez, cada um preso ao que nomeia?
-   - Conte os textos à vista em cada plano. Mais de cinco é relevante.
-   - Alguma frase da narração foi parar na tela?
-   - Todo plano que afirma um fato vindo de um estudo tem o selo da fonte no canto?
+   - Cada texto tem função e dono à vista, e o que chega junto se associa sem esforço?
+   - Dá para ler no tamanho e no tempo em que aparece, sem cobrir o que precisa ser visto? Conte os textos à vista em cada plano: mais de cinco é relevante (`ouvinte`).
+   - Alguma frase da narração foi parar na tela, ou o texto carrega sozinho o que devia estar encenado?
+   - A fonte e a ressalva de escopo estão à vista enquanto a afirmação vale?
 8. **Fidelidade**
    - A imagem afirma algo que a base de fatos não sustenta?
    - Cada número na tela bate com a fonte?

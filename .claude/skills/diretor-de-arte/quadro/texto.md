@@ -3,65 +3,50 @@ Que texto entra na tela, e preso a quê?
 
 ## RESPOSTA
 
-**O que a referência faz.** Tem texto em 42% dos planos lidos (de 20% a 67%, conforme o vídeo). Quase sempre é pouco e está preso a alguma coisa: uma etiqueta ligada ao objeto, um número saindo de uma régua, um balão saindo de uma boca. Texto solto, sozinho no quadro, é quase só a cartela de capítulo.
+**Um texto serve quando:**
 
-**Tipos:**
+- **Ele acrescenta, e a imagem encena.** O texto dá o nome, a precisão, a unidade, a fonte, o escopo, uma fala curta ou um som. A ação, a relação e a quantidade continuam desenhadas: o plano que só se entende lendo o que deveria estar acontecendo volta para `encenacao`. Não volta o que é escrito por natureza: um nome, um número exato, uma palavra, uma citação curta.
+- **A tela não repete a narração.** Frase da narração, inteira ou resumida, parágrafo e lista de tópicos são legenda do que a imagem deixou de mostrar.
+- **Cada texto tem dono à vista.** É inequívoco a que ele se refere, por proximidade, alinhamento, um conector ou por estar escrito na própria coisa. O conector não cria outra leitura nem cobre o que precisa ser visto, como um rosto.
+- **O que chega junto se associa sem esforço.** O espectador liga cada informação nova ao seu referente sem ter de escolher entre várias. Duas chegam juntas quando a relação entre elas é o que se quer mostrar; fora isso, cada uma entra na sua palavra.
+- **Dá para ler**, no tamanho, no contraste e no tempo em que aparece, numa tela de celular. O fundo sob o texto é estável, e a cor de um texto solto responde ao que está atrás dele: uma cor fixa para o vídeo inteiro some na primeira vez que o fundo troca.
+- **O texto não toma o quadro.** É tão curto quanto a função permite e não cobre o ponto focal, a não ser quando ele mesmo é o ponto focal (um número, uma palavra, uma cartela). Se não cabe sem desmontar a composição, é a solução que muda.
+- **Nenhum fato nasce numa etiqueta.** Nome, número e fonte batem com a base de fatos, e a fonte e a ressalva de escopo ficam à vista enquanto a afirmação a que pertencem vale.
+- **O texto do mundo parece do mundo**: está na placa, na tela ou no rótulo como estaria de verdade, e não esconde ali a explicação que o plano devia mostrar.
 
-| Tipo | O que é | Regras |
+**O que o canal e o repositório fixam:**
+
+- **A letra.** Uma família só, com os tamanhos de `src/design/tokens.ts`; o menor deles, o do selo, é o piso de leitura em celular.
+- **Até cinco textos à vista**, o limite de `ouvinte`. O esquema que pede mais é agrupado, e cortar item é decisão do usuário.
+- **A margem segura** de `composicao`.
+- **A tela escreve como se escreve.** O que a narração soletra para a voz vira a grafia de verdade: "dê-ene-á" é "DNA". Nome científico vai em itálico, sob o nome comum.
+
+**Repertório**, pela função que o texto cumpre. São formas que já serviram; outra que cumpra a função também serve:
+
+| Função | Uma forma | Observação |
 |---|---|---|
-| Etiqueta de nome | pílula de cor sólida com texto claro, ligada ao objeto por linha fina e ponto. Proposta: sobre fundo liso, o nome em letra clara sobre um sublinhado fino, que dobra e segue até o objeto, com a medida do item embaixo, menor e mais apagada | uma a três palavras; aparece quando a narração nomeia a coisa pela primeira vez; sai com o plano |
-| Número | o valor, preso ao que mede por colchete, régua ou seta, ou escrito num objeto da cena | a forma do número vem de `dado` |
-| Balão | fala ou pensamento curtíssimo de um personagem | até cinco palavras; humor ou reação; nunca informação de que o vídeo depende. O balão da testemunha pode trazer, em até duas linhas, a ressalva que a narração não diz |
-| Onomatopeia | o som da ação desenhado: letras grossas em arco ou inclinadas, de cor quente com contorno, saindo de quem faz o som | uma palavra; só som (riso, mordida, ronco, batida), nunca informação; sai com a ação |
-| Texto do mundo | placa, tela, rótulo, cartaz dentro da cena | faz parte do desenho; pode carregar a piada |
-| Cartela de capítulo | o título do capítulo, vindo do roteiro; quando o roteiro anuncia um mapa ("pergunta 1 de 3", "solução 2"), a cartela traz o número, a pergunta e a marca de progresso | desenhada com elementos do tema; fica o tempo de ser lida |
-| Selo | ressalva de escopo, fonte de um dado, data | pequeno, no canto; fica enquanto vale. Todo plano que afirma um fato vindo de um estudo leva o selo da fonte, com autor e ano, como a nota visual pede |
+| Nomear | etiqueta: pílula de cor sólida com texto claro, ligada ao objeto por linha fina e ponto, do lado livre do quadro | costuma entrar quando a narração nomeia a coisa pela primeira vez |
+| Nomear, sobre fundo liso | **sublinhado** (proposta): o nome em letra clara sobre um sublinhado fino, que dobra e segue até o objeto, com a medida do item embaixo, menor e mais apagada | um vídeo de espaço |
+| Quantificar | o valor preso ao que mede por colchete, régua ou seta, ou escrito num objeto da cena | qual número e em que forma é de `dado` |
+| Listar | as etiquetas entram uma a uma, cada qual na sua palavra, e se acumulam no quadro | um vídeo sobre gordura, adotado pelo usuário |
+| Dar fala ou pensamento | balão curto, de humor ou de reação. O da testemunha pode trazer a ressalva que a narração não diz | não carrega informação de que o vídeo depende, a não ser quando a fala é o próprio conteúdo |
+| Fazer ouvir | onomatopeia: letras grossas em arco ou inclinadas, de cor quente com contorno, saindo de quem faz o som | só som (riso, mordida, ronco, batida); o mesmo vídeo sobre gordura |
+| Pertencer à cena | placa, tela, rótulo, cartaz | pode carregar a piada |
+| Orientar | cartela de capítulo, desenhada com elementos do tema; quando o roteiro anuncia um mapa ("pergunta 1 de 3"), traz o número, a pergunta e a marca de progresso | a estrutura vem do roteiro: o texto não a cria |
+| Dar fonte, escopo ou data | selo pequeno no canto, com autor e ano, que fica enquanto vale | num trecho que segue no mesmo estudo, um selo que permanece basta |
 
-**O que nunca entra:**
-
-- frase da narração, inteira ou resumida;
-- parágrafo ou lista de tópicos;
-- duas etiquetas entrando no mesmo instante;
-- texto como único conteúdo do plano, fora a cartela.
-
-**Quantidade.** Um texto novo por vez. Numa lista, as etiquetas entram uma a uma, cada qual na sua palavra, e se acumulam no quadro, até cinco à vista, conforme `ouvinte`; o esquema que pede mais é agrupado, e cortar item é decisão do usuário. Se um plano só se entende lendo, ele volta para `encenacao`.
-
-**Posição:**
-
-- perto do que nomeia, do lado livre do quadro;
-- ligado por linha curta, que não cruza outra linha nem passa por cima de um rosto;
-- dentro da margem segura;
-- nunca sobre o ponto focal.
-
-**Legibilidade:**
-
-- uma família de letra só, arredondada e de peso forte;
-- texto sempre sobre pílula ou área lisa; sobre cenário detalhado, só na pílula;
-- contraste alto entre o texto e a pílula;
-- a cor do número solto depende do que está atrás dele: claro sobre fundo escuro, escuro sobre fundo claro. Uma cor fixa para o vídeo inteiro some na primeira vez que o fundo troca;
-- caixa normal; tudo em maiúsculas só na cartela e na onomatopeia;
-- tamanho: na referência a pílula tem de 3% a 5% da altura do quadro. O texto precisa ser lido numa tela de celular; o mínimo é o que o projeto define. Proposta: teto de 4% para a etiqueta e de 5% para o número em destaque, porque etiqueta maior disputa o quadro com o desenho;
-- tempo: fica na tela pelo menos um segundo mais um terço de segundo por palavra.
-
-**Forma do conteúdo.** O que a narração soletra a tela escreve como se escreve: "dê-ene-á" vira "DNA". Nome científico vai em itálico, sob o nome comum.
-
-**Procedimento:**
-
-1. Percorra os planos e liste o texto que cada encenação pede.
-2. Classifique cada um num dos tipos. O que não cabe em nenhum, corte.
-3. Aplique o teste da encenação: sem o texto, o plano ainda diz o que afirma? Se não, refaça a encenação antes de escrever a etiqueta.
-4. Posicione cada texto e ligue-o ao que nomeia.
-5. Confira que todo número e todo nome próprio batem com a base de fatos.
+**Medidas e heurísticas** (evidência e pontos de partida: situam e não reprovam por si). Na referência há texto em 42% dos planos lidos, de 20% a 67% conforme o vídeo; quase sempre é pouco e preso a alguma coisa, e texto solto é quase só a cartela. A etiqueta tem de uma a três palavras, o balão até cinco, em até duas linhas, e a onomatopeia uma. A pílula mede de 3% a 5% da altura do quadro. Tempo de leitura, como ponto de partida: um segundo mais um terço de segundo por palavra, mais quando a palavra é rara ou há o que comparar. Proposta, do mesmo vídeo de espaço: teto de 4% da altura para a etiqueta e de 5% para o número em destaque, porque etiqueta maior disputa o quadro com o desenho.
 
 ## DEPENDÊNCIAS
 - planos: fornece a encenação de cada plano, onde o texto de tela é anotado.
 - dado: fornece os números e a forma como são mostrados.
-- composicao: fornece o ponto focal e os vazios do quadro.
+- composicao: fornece o ponto focal, os vazios do quadro e a margem segura.
 - ouvinte (skill `diretor-criativo`, `conceito/ouvinte`): fornece o limite de cinco itens à vista.
 
 ## LIMITES
 - A entrada e a saída do texto em movimento não são decididas aqui.
-- O conteúdo factual vem da pesquisa e do roteiro; nenhum fato novo nasce numa etiqueta.
+- O conteúdo factual vem da pesquisa e do roteiro.
+- Qual número, com que unidade e em que relação pertence a `dado`.
 
 ## EXEMPLO
 > Plano: a planta primitiva diante da paisagem.
