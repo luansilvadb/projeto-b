@@ -97,7 +97,7 @@ Movimento:
 | `atuacao/acao` | O que faz uma ação parecer intencional, legível e fisicamente coerente para aquele personagem ou criatura? |
 | `camera/movimento` | Quando e como a câmera se move dentro de um plano? |
 | `camera/transicoes` | O que continua, o que muda e quanto se sente a passagem entre dois planos? |
-| `enfase/efeitos` | Que recursos fazem um movimento ser sentido, e quando usá-los? |
+| `enfase/efeitos` | Quando um recurso gráfico ajuda o espectador a sentir ou entender uma propriedade da ação que o movimento sozinho não entrega? |
 | `revisao/critica-movimento` | Como julgar o movimento, com medidas e quadros consecutivos? |
 
 **Base das medidas.** Os números das unidades vêm de um estudo do Kurzgesagt feito em 2026-10-02: 12 vídeos de março de 2025 a setembro de 2026 (123 minutos, sem patrocínio), medidos quadro a quadro, com 332 planos lidos em três quadros cada. As faixas e as medianas estão em `CRITERIA`, em `src/critique/reference.ts`. Ao questionar ou atualizar uma medida, pese:

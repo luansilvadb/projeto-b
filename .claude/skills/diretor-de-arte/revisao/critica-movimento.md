@@ -42,7 +42,10 @@ Como julgar o movimento, com medidas e quadros consecutivos?
    - A intensidade e a duração têm o tamanho da mudança? A chegada se lê, e o texto continua preso ao que nomeia?
    - O nome da técnica, a faixa de duração e a direção da borda não reprovam por si: reprova o que se perdeu na passagem.
 6. **Ênfase**
-   - Todo recurso acompanha uma ação? Há mais de dois por plano?
+   - Cada recurso reforça uma propriedade real da ação, e sabe-se dizer qual (velocidade, caminho, contato, energia, um estado)? Sem ele, a ação ainda se entende?
+   - Forma, direção, tamanho e duração são os do fenômeno? O recurso muda o que a coisa parece ser (fantasma, luz própria, borracha)?
+   - Ele disputa com o foco? Há recursos que repetem a mesma ênfase, ou algum que é só decoração, sem causa?
+   - Número de recursos no plano ou na ação, ação rápida sem recurso, contagem de cópias ou de riscos e faixa de duração não reprovam por si: reprova o recurso que não acrescenta ou que engana.
 7. **Fidelidade à composição**
    - O movimento devolveu cada plano ao quadro aprovado? O que mudou foi confirmado?
 
@@ -56,9 +59,9 @@ Além do total, um **mapa segundo a segundo** da fração de quadros quase parad
 
 **Classificação dos problemas:**
 
-- **Bloqueante**: mudança sem causa, ou tão longe dela que a relação se perde; mudança de estado em que a coisa deixa de ser reconhecida, ou troca seca que lê como erro; animação que travou (uma ação ou um ciclo que devia continuar e congelou); ação que não se entende, corpo que contradiz a ação, reação que parece vir antes da causa; ponte de transição quebrada. Refazer é obrigatório.
-- **Relevante**: curva dura (uma ação que termina em um décimo do tempo escrito), sobra demais, ação que se entende mas não tem o peso ou a força que afirma, sequência que lê como um acontecimento só (ou o contrário), câmera que perde o foco, movimento residual sem causa ou que disputa o foco, recurso solto. Refazer, salvo custo desproporcional; o que ficar, relatar com o mapa segundo a segundo.
-- **Polimento**: ajuste fino de tempo, amplitude ou fase. Aplicar se não mexer em nada aprovado.
+- **Bloqueante**: mudança sem causa, ou tão longe dela que a relação se perde; mudança de estado em que a coisa deixa de ser reconhecida, ou troca seca que lê como erro; animação que travou (uma ação ou um ciclo que devia continuar e congelou); ação que não se entende, corpo que contradiz a ação, reação que parece vir antes da causa; ponte de transição quebrada; recurso que faz entender algo falso (contato que não houve, direção errada) ou encobre o que precisava ser visto. Refazer é obrigatório.
+- **Relevante**: curva dura (uma ação que termina em um décimo do tempo escrito), sobra demais, ação que se entende mas não tem o peso ou a força que afirma, sequência que lê como um acontecimento só (ou o contrário), câmera que perde o foco, movimento residual sem causa ou que disputa o foco, recurso decorativo, redundante ou que muda o que a coisa parece ser. Refazer, salvo custo desproporcional; o que ficar, relatar com o mapa segundo a segundo.
+- **Polimento**: ajuste fino de tempo, amplitude ou fase, e da quantidade de traços de um recurso. Aplicar se não mexer em nada aprovado.
 
 **Procedimento:**
 
