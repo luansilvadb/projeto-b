@@ -18,7 +18,7 @@ A afirmação que o vídeo faz de fato, na fala, na tela ou na encenação, é s
 **A linguagem não é mais forte que a evidência.** É para isto que o grau de consenso serve, e não para etiquetar todo fato trivial:
 
 - *estabelecido*: afirmação direta;
-- *majoritário com ressalvas*: afirmação com a ressalva dita em uma frase;
+- *majoritário com ressalvas*: afirmação que preserva a ressalva que muda a compreensão;
 - *em disputa*: apresentar como disputa, sem escolher lado pela plateia;
 - *especulativo*: marcar como especulação.
 

@@ -5,7 +5,7 @@ Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, d
 
 **Princípio.** A estrutura é dependência, e não uma sequência de nomes: o bloco seguinte só funciona porque o anterior aconteceu. Ela é julgada pelo que muda em quem ouve, e não por preencher fases.
 
-**Bloco.** A unidade da estrutura: um trecho que produz uma mudança reconhecível no que o ouvinte sabe, espera ou pergunta. Dois trechos que fazem a mesma mudança são um bloco; um trecho com duas mudanças independentes provavelmente são dois. A imagem pode sugerir a divisão (um bloco costuma ter um assunto visual dominante), mas quem divide em planos é a skill `diretor-de-arte`.
+**Bloco.** A unidade da estrutura: um trecho que produz uma mudança reconhecível no que o ouvinte sabe, espera ou pergunta. Dois trechos que fazem a mesma mudança são um bloco; um trecho com duas mudanças independentes provavelmente são dois. Uma mudança visual real pode revelar uma fronteira, mas o que define o bloco é o que muda em quem ouve; quem divide em planos é a skill `diretor-de-arte`.
 
 **O que precisa funcionar:**
 
@@ -34,11 +34,11 @@ Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, d
 
 | Fase | Função | Parcela observada |
 |---|---|---|
-| Gancho | abrir a pergunta e fazer a promessa | até 5% |
+| Gancho | tornar cedo perceptíveis a razão para continuar e o que o vídeo vai entregar | até 5% |
 | Fundamento | dar o mínimo necessário para acompanhar | 15–20% |
 | Escalada | aprofundar em degraus, cada um maior ou mais estranho que o anterior | 40–50% |
 | Virada | o ponto em que o tema muda de sentido ou revela sua consequência | 10–15% |
-| Fechamento | devolver o tema ao espectador | 10–15% |
+| Fechamento | entregar, transformar ou delimitar a promessa e deixar o vídeo parar | 10–15% |
 
 *Formas de arco:*
 
@@ -53,7 +53,7 @@ Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, d
 
 *Recursos*, cada um com o problema que resolve:
 
-- **Cadeia de perguntas**, para achar a dependência: liste as perguntas que o espectador fará, na ordem em que surgem, e faça cada bloco responder a uma e abrir a próxima. É a técnica mais forte para ligar blocos; a consequência que nasce sozinha do bloco anterior dispensa a pergunta, e pergunta posta em todo bloco por hábito soa artificial.
+- **Cadeia de perguntas**, para achar a dependência: liste as perguntas que o espectador fará, na ordem em que surgem, e faça cada bloco responder a uma e abrir a próxima. É uma técnica entre outras: a consequência que nasce sozinha do bloco anterior dispensa a pergunta, e pergunta posta em todo bloco por hábito soa artificial.
 - **Capítulos**, quando o percurso tem mudanças grandes que o ouvinte precisa perceber (`ouvinte`). Cada um fecha uma questão grande e puxa o seguinte. O título na tela tem atitude e abre curiosidade ("O espaço odeia você"), em vez de descrever o conteúdo ("Riscos da viagem"). Um experimento mental curto numa sequência causal só, ou uma história em ordem, se orienta sem eles.
 - **Degraus crescentes**, quando o arco é de escalada: cada degrau acrescenta uma dimensão (escala, risco, estranheza), e o que repete o patamar anterior é estagnação.
 - **Falsa vitória**, para renovar o motivo de continuar: uma conclusão provisória parece resolver o problema, e a consequência seguinte mostra que ele era maior ou outro. É o recurso de reengajamento mais usado no estilo. Vale quando nasce da lógica do tema, e não fabricada para segurar atenção.

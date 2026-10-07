@@ -41,7 +41,7 @@ Siga `src/videos/why-we-sleep/script.json`. O tipo e as regras estão em `src/na
   "scenes": [
     {
       "id": "sun",
-      "narration": "Exatamente o que é falado. Em uma a três frases.",
+      "narration": "Exatamente o que é falado.",
       "shots": [
         {
           "staging": "Quem faz o quê, e onde. O texto de tela, se houver.",
@@ -88,7 +88,7 @@ Além das regras do validador:
 
 ## Cenas e silêncio
 
-Uma cena é um trecho da narração, de uma a três frases, que o áudio trata como um bloco: uma frase nunca se divide entre duas cenas. A cena não é a unidade da imagem. Quem troca a imagem é o plano.
+Uma cena é um trecho da narração que o áudio trata como um bloco e que ganha um componente, com as frases que pertencem ao mesmo momento: uma frase nunca se divide entre duas cenas. A cena não é a unidade da imagem. Quem troca a imagem é o plano.
 
 Uma cena pode pedir silêncio depois da fala com `holdMs` (até 8000): a imagem segue sem narração, só com a trilha. É assim que se faz a vinheta do título depois do gancho. Do som, é isto que o texto pode precisar antes da voz, porque muda a linha do tempo; timbre, leitos e desenho da música não seguram a aprovação do texto.
 

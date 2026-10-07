@@ -5,7 +5,7 @@ O que precisa acontecer no fim para que a promessa do vídeo soe entregue, o que
 
 **O defeito que esta unidade evita.** Um vídeo pode explicar tudo, responder à pergunta, dizer o último fato e ainda assim só acabar. O defeito oposto é o remendo: um resumo do roteiro, a tese repetida, uma moral anexada, uma frase bonita que o corpo não ganhou.
 
-**Fechamento** é a entrega que só funciona porque o vídeo aconteceu. O fim não acrescenta importância ao corpo: revela a que o corpo construiu. A pergunta de partida: o que agora pode ser entregue porque o percurso aconteceu? Uma resposta, uma consequência, uma mudança de perspectiva, uma possibilidade, um limite, uma imagem, uma incerteza bem delimitada, uma leitura nova do começo, a ação que o vídeo prometeu.
+**Fechamento** é a entrega que só funciona porque o vídeo aconteceu. O fim não acrescenta importância ao corpo: revela a importância que o corpo construiu. A pergunta de partida: o que agora pode ser entregue porque o percurso aconteceu? Uma resposta, uma consequência, uma mudança de perspectiva, uma possibilidade, um limite, uma imagem, uma incerteza bem delimitada, uma leitura nova do começo, a ação que o vídeo prometeu.
 
 É uma função, e não necessariamente um bloco: quando a última consequência do corpo responde à promessa e tem ritmo de parada, não há fechamento separado a escrever.
 

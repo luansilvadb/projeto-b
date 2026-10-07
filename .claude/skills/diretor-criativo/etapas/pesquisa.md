@@ -2,7 +2,7 @@
 
 O que sai daqui é `src/videos/<vídeo>/research.md`: os fatos que o roteiro pode usar, cada um ligado a uma fonte numerada. O diferencial do canal é estar certo, e o usuário aprova o roteiro podendo conferir essas fontes, então um fato sem fonte vale menos que nenhum fato.
 
-É a primeira etapa, e não uma fase que fecha. `research.md` nasce pequeno (o foco de partida, quatro fatos, duas fontes e um ponto em aberto já são um começo) e cresce enquanto o roteiro é escrito. Não existe "pesquisa pronta" nem aprovação da pesquisa: a evidência é usada quando sustenta a próxima afirmação ou decisão (`pesquisa/levantamento`), e o gate formal continua sendo a 1ª aprovação, em `etapas/roteiro.md`.
+É a primeira etapa, e não uma fase que fecha. `research.md` nasce pequeno (o foco de partida e poucos fatos com fonte já são um começo) e cresce enquanto o roteiro é escrito. Não existe "pesquisa pronta" nem aprovação da pesquisa: a evidência é usada quando sustenta a próxima afirmação ou decisão (`pesquisa/levantamento`), e o gate formal continua sendo a 1ª aprovação, em `etapas/roteiro.md`.
 
 ## Como trabalhar
 

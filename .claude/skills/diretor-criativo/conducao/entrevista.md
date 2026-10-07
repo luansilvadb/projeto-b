@@ -3,12 +3,12 @@ Quando o agente explora, escreve, compara e escolhe sozinho, e quando duas alter
 
 ## RESPOSTA
 
-**Princípio.** As unidades de texto dizem o que precisa funcionar e oferecem repertório. Entre variações que realizam a mesma intenção, o agente escreve, critica e escolhe. Entre alternativas válidas que fariam vídeos diferentes, quem escolhe é o usuário. O teste, diante de duas versões que funcionam: quem assiste sairia com a mesma ideia, atrás da mesma pergunta, tendo ouvido o mesmo narrador?
+**Princípio.** As unidades de texto dizem o que precisa funcionar e oferecem repertório. Entre variações que realizam a mesma intenção, o agente escreve, critica e escolhe. Entre alternativas válidas que fariam vídeos diferentes, quem escolhe é o usuário. O teste, diante de duas versões que funcionam: quem assiste sairia com o mesmo entendimento, tendo acompanhado essencialmente o mesmo percurso e ouvido o mesmo narrador?
 
 **Três tipos de pergunta**, e só um vai ao usuário:
 
 - **Fato** não é opção. O que a pesquisa ou a `checagem` resolvem é conferido e cumprido, e o que a fonte não resolve aparece no texto como incerteza. Nunca se oferece como preferência o certo contra o errado, a fonte forte contra a não verificada, a promessa cumprida contra a isca, o claro contra o confuso ou a analogia fiel contra a enganosa.
-- **Dúvida de execução** não é pergunta de produto. Escrever é barato: havendo nas unidades critério para comparar duas versões, escreve-se e compara-se antes de perguntar. Qual gancho abre melhor a mesma pergunta, se o bloco aguenta ficar mais curto, que palavra o narrador diria: o texto responde.
+- **Dúvida de execução** não é pergunta de produto. Escrever é barato: havendo nas unidades critério para comparar duas versões, escreve-se e compara-se antes de perguntar. Qual gancho realiza melhor a mesma promessa, se o bloco aguenta ficar mais curto, que palavra o narrador diria: o texto responde.
 - **Decisão** é a escolha entre alternativas que funcionam e não fazem o mesmo vídeo.
 
 **O agente resolve sozinho** o que pode variar sem mudar o que o vídeo afirma, o que promete ou quem o narra:
@@ -19,8 +19,8 @@ Quando o agente explora, escreve, compara e escolhe sozinho, e quando duas alter
 - a analogia de um trecho: posta, tirada ou trocada por outra que afirma a mesma relação;
 - a voz dentro da identidade decidida: o tamanho da frase, o conectivo, quanto repetir, onde cabe a leveza;
 - a simplificação que um especialista leria como a mesma afirmação;
-- o corte do fato que não serve à tese;
-- a duração que decorre do conteúdo: o alvo do canal é hipótese, e a tese que se esgota antes dele dá um vídeo mais curto;
+- o corte do fato cuja retirada não prejudica a entrega nem o percurso;
+- a duração que decorre do conteúdo: a faixa do canal é sensor, e o compromisso que se entrega antes dela dá um vídeo mais curto;
 - todo defeito da crítica cujo conserto preserva a decisão.
 
 **Vai ao usuário** quando alternativas válidas:
@@ -35,7 +35,7 @@ Quando o agente explora, escreve, compara e escolhe sozinho, e quando duas alter
 - **fixam algo para o canal**: o que a chamada pede e com que intensidade, um traço de voz que passa a valer para os próximos vídeos.
 - **contrariam a intenção de uma decisão já tomada**, ou mudam o escopo, a profundidade ou o custo dela: a duração que obriga a cortar parte do que foi prometido, a mudança que desfaz o trabalho de arte, de som ou de voz.
 
-**Entrada e padrão não são pergunta.** O tema e o idioma que o usuário pediu são dados. Sem pedido, valem pt-BR e o alvo de duração do canal (`etapas/roteiro.md`), sem nova aprovação a cada vídeo. Quando a pesquisa só sustenta um recorte forte, ele é recomendado e seguido; a pergunta aparece quando há motivo para sair do padrão ou quando sobram recortes que fazem vídeos diferentes.
+**Entrada e padrão não são pergunta.** O tema e o idioma que o usuário pediu são dados. Sem pedido, o idioma é pt-BR, sem nova aprovação a cada vídeo, e não há duração-alvo: a duração decorre do conteúdo, e a faixa do canal é sensor (`etapas/roteiro.md`). Quando a pesquisa só sustenta um recorte forte, ele é recomendado e seguido; a pergunta aparece quando há motivo para sair do padrão ou quando sobram recortes que fazem vídeos diferentes.
 
 **Aprovação fixa o que o vídeo quer dizer, não a formulação daquele momento.** Ficam fixos a tese, a promessa, o recorte, a identidade do narrador, a experiência que a estrutura dá, a relação afirmada pela analogia que estrutura o vídeo, quando há, e o que a embalagem vende. A frase, a ordem local, a contagem de palavras, a duração exata e o título de trabalho continuam melhorando, aprovados ou não. A pergunta, antes de mexer em algo aprovado: a nova versão preserva o que foi decidido? Se preserva, reescreva, critique e atualize o registro. Se muda, volta ao usuário. Tirar uma frase de efeito que não foi ganha é refino; o bloco que passa a defender outra causa é decisão.
 
@@ -72,4 +72,4 @@ A conversa termina quando o compromisso está claro, a troca foi escolhida e há
 > B) "O maior buraco negro conhecido caberia entre o Sol e a estrela mais próxima? A escala é o assunto."
 > Recomendo A: corrige uma ideia errada comum e sustenta o vídeo inteiro. Custo: exige explicar espaço-tempo cedo. Com B, o vídeo vira uma escada de tamanhos, mais fácil de acompanhar e sem a correção.
 >
-> Fica com o agente: o gancho aprovado gasta oitenta palavras até chegar à pergunta. A versão de quarenta abre a mesma pergunta e passa nos mesmos testes: ela entra, e o registro é atualizado.
+> Fica com o agente: o gancho atual gasta oitenta palavras até chegar à pergunta. A versão de quarenta abre a mesma pergunta e passa nos mesmos testes: ela entra, e o registro é atualizado.

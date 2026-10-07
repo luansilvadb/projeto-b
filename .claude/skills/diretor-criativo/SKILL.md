@@ -108,7 +108,7 @@ Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), inje
 ## LIMITES
 
 - Nenhuma afirmação factual sem fonte chega ao roteiro final.
-- Um trabalho começa quando há o bastante para produzir uma evidência válida, e o que o artefato mostra volta à decisão anterior: um gancho tentado pode mostrar que o ângulo não tem tensão; uma amostra de narração, que a estrutura está montada demais; a decupagem, que a frase não se encena. O que tranca são as dependências reais: o fato só entra no texto depois de estar em `research.md`, toda cena tem planos antes da voz, a voz só é gerada depois da 1ª aprovação, e mudar o que o usuário já decidiu volta a ele (`entrevista`). Onde uma unidade ainda põe uma aprovação antes de qualquer frase, vale este limite.
+- Um trabalho começa quando há o bastante para produzir uma evidência válida, e o que o artefato mostra volta à decisão anterior: um gancho tentado pode mostrar que a promessa é difusa; uma amostra de narração, que a estrutura está montada demais; a decupagem, que a frase não se encena. O que tranca são as dependências reais: o fato só entra no texto depois de estar em `research.md`, toda cena tem planos antes da voz, a voz só é gerada depois da 1ª aprovação, e mudar o que o usuário já decidiu volta a ele (`entrevista`). Onde uma unidade ainda põe uma aprovação antes de qualquer frase, vale este limite.
 - Das referências usa-se o mecanismo (padrão, molde, movimento); as frases, os exemplos, as metáforas e os bordões ficam com elas.
 - O exemplo de uma unidade é exemplo de forma: cada afirmação dele precisa estar na base de fatos antes de entrar num roteiro.
 

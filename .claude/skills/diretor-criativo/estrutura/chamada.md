@@ -15,7 +15,7 @@ Como fazer o único pedido do vídeo depois que a entrega terminou, sem transfor
 - **É verdadeira.** O benefício dito é consequência razoável do gesto, e a chamada só promete um próximo vídeo que existe ou está decidido.
 - **Dura o que o pedido precisa.** Uma frase pode bastar.
 
-**Estável por escolha.** Aqui a consistência é virtude: a chamada tem função conhecida e secundária, e o objetivo é tirar o pedido do caminho do vídeo. A formulação que funcionou é reusada, e não reinventada a cada roteiro. Ela muda quando a padrão entra de modo abrupto depois deste fim, contraria o tom dele, ou quando há um próximo vídeo decidido a citar.
+**Estável por escolha.** Aqui a consistência é virtude: a chamada tem função conhecida e secundária, e o objetivo é tirar o pedido do caminho do vídeo. A formulação que funcionou é reusada, e não reinventada a cada roteiro. Ela muda quando o padrão entra de modo abrupto depois deste fim, contraria o tom dele, ou quando há um próximo vídeo decidido a citar.
 
 **Repertório.** Só o pedido é indispensável. O resto fica quando faz trabalho, e o teste de cada um é tirá-lo: se a chamada só ficou mais curta, ele sai.
 

@@ -29,7 +29,7 @@ Que decisões atuais do texto precisam ficar registradas para outra etapa não t
 
 **Mecânica da tabela**, a única parte rígida, conferida pelo `pnpm check-script` (`src/narration/direction.ts`): a seção se chama `## Estrutura`; a primeira linha da tabela é o cabeçalho; os `id` das cenas ficam entre crases na última coluna; toda cena de `script.json` aparece em exatamente um bloco, na ordem do roteiro. As outras colunas não têm requisito mecânico, e o `script.md` escrito com colunas antigas continua válido: muda quando a produção voltar a ele.
 
-**Formato.** Fixos são o título, as três primeiras linhas do cabeçalho e, havendo cenas, a tabela. Todo o resto aparece só quando a decisão existe: linha ou seção vazia não se escreve.
+**Formato.** No estado completo, o que a crítica integral lê, a base é o título, as três primeiras linhas do cabeçalho e a tabela; durante as provas o arquivo pode ainda não ter todos, e nenhum é preenchido antes de a decisão existir. Todo o resto aparece só quando a decisão existe: linha ou seção vazia não se escreve.
 
 ```markdown
 # <título de trabalho>
