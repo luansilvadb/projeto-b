@@ -4,7 +4,7 @@ Sexta etapa, depois da animação aceita: o aceite da animação está em `src/v
 
 O estado do som fica em dois lugares: `src/videos/<vídeo>/sound.md`, o mapa de som com a intenção e o porquê de cada escolha, e os campos `music` e `sfx` de `script.json`, que as ferramentas leem. Os dois guardam a hipótese atual e mudam juntos; o anterior é o git. Quem roda as ferramentas é a skill `producao` (`etapas/trilha.md` e `etapas/efeitos-sonoros.md`).
 
-A única aprovação da etapa é o aceite, no fim. Até lá o som cresce por risco (`entrevista-som`): o mapa só o bastante para gerar, o menor som que responde a maior dúvida, a medida, o conserto, o ouvido do usuário onde a medida não alcança, e então a camada seguinte.
+A única aprovação da etapa é o aceite, no fim. Até lá o som cresce por risco (`entrevista-som`): o mapa só o bastante para gerar, o menor som que responde a maior dúvida, a medida, o conserto do que ficou provado, o ouvido do usuário para o que só ele percebe, e então a camada seguinte.
 
 ## O ciclo
 
@@ -13,8 +13,8 @@ Parta dos compromissos que houver na seção "Arco" de `sound.md` (pode ser uma 
 1. **A maior incerteza.** O que, se estiver errado, joga fora o resto? Num vídeo novo costuma ser a identidade da trilha: se o leito pertence ao vídeo.
 2. **O mapa que basta.** Escreva em `sound.md` e em `script.json` só o que essa dúvida pede (`leito`, `descricao`). Para a identidade, o leito sozinho: o `caption` que basta para gerar e, de `bpm` e `keyScale`, só o que a hipótese precisa, sem momentos, níveis nem efeitos. Num vídeo que não cabe numa parte, também as trocas (`parts`), que o comando exige: cada uma numa cena em que a costura se defende, e o som gerado pode mudá-la de lugar.
 3. **O menor som.** Peça à skill `producao` só o que a dúvida pede: a trilha ainda sem momentos (`pnpm music <vídeo>`; o leito sozinho se ouve em `public/videos/<vídeo>/music.wav`), mais tarde uma parte só (`pnpm music <vídeo> <semente> <parte>`, com as outras já geradas) e, quando a dúvida é contra a voz, o som do vídeo.
-4. **Medir e consertar.** O que a medida, o comando ou o `pnpm check-script` acusam é consertado antes de qualquer escuta, sem pergunta.
-5. **O ouvido, se for preciso.** Sobrando uma dúvida que só o ouvido resolve e que pesa sobre o que vem depois, leve o arquivo, o instante e a pergunta. A resposta é evidência: não vai a `approvals.md`.
+4. **Medir e consertar.** O que o contrato e o estado provam como defeito (o `pnpm check-script` recusa, o comando falha, `sound.md` e `script.json` divergem, a parte não cobre o trecho dela) é consertado antes de qualquer escuta, sem pergunta. A medida fora da referência abre uma investigação, e não cria conserto sozinha (`critica-som`).
+5. **O ouvido, se for preciso.** Sobrando uma dúvida que só o ouvido resolve e que pesa sobre o que vem depois, leve o arquivo, o instante e a pergunta. A resposta é evidência: não vai a `approvals.md`. O sinal que o estado explica e de que nada depende fecha sem pergunta.
 6. **Crescer.** O que funcionou fica, e o mapa ganha a camada seguinte, se o som a pedir: o momento na região em que o leito gerado não realiza o que o vídeo precisa (pode não haver nenhum), os níveis só nas regiões em que a presença do leito gerado está errada (pode não haver nenhum), os efeitos só nos acontecimentos em que a consequência sonora faz trabalho (podem ser poucos, ou nenhum) (`momentos`, `niveis`, `silencio`, `dose`). Volte ao passo 1.
 
 A ordem das camadas é dependência: os momentos são refeitos sobre o leito, e os efeitos são julgados contra a música. Um efeito ou um silêncio que seja a maior incerteza pode ser testado antes. Duas versões que passam e fazem cenas diferentes vão ao usuário em A e B, em `out/rascunho/`; a escolhida entra no mapa.
@@ -78,10 +78,16 @@ pnpm sound <vídeo> out/<vídeo>/<vídeo>.som.mp3
 pnpm critique out/<vídeo>/<vídeo>.som.mp3 som
 ```
 
-Leia você mesmo a tabela e o mapa segundo a segundo (`out/<vídeo>/som/<vídeo>.som/medidas.json`) e depois acione o subagente `critico-de-som`, que não escreveu o mapa. Passe o nome da pasta do vídeo e o caminho do arquivo de som. Ele julga; quem decide e refaz é você, pelos passos 4 a 6 do procedimento de `critica-som`. Uma faixa ou um momento ruim é gerado de novo sozinho, com outra semente: `pnpm music <vídeo> <semente> <parte>`.
+Leia você mesmo a tabela e, onde ela levantar uma pergunta, as séries segundo a segundo (`out/<vídeo>/som/<vídeo>.som/medidas.json`); depois acione o subagente `critico-de-som`, que não escreveu o mapa. Passe o nome da pasta do vídeo, o caminho do arquivo de som e o que o usuário já disse ter ouvido. Ele diagnostica de forma independente e não ouve; você interpreta o relatório, escolhe a hipótese e refaz pela unidade dona.
 
-Depois entregue ao usuário o arquivo de som, as medidas e o roteiro de escuta (`entrevista-som`): as dúvidas de ouvido que sobraram e a pergunta do todo. O "sim" dele é o **aceite do som**: registre-o em `approvals.md` (formato nas convenções do `README.md`), com cada medida fora da faixa que ele aceitou e cada efeito pendente.
+- **Defeito técnico confirmado**: conserte, sem pergunta. Uma parte ou um momento que não realizou o estado é gerado de novo sozinho, com outra semente (`pnpm music <vídeo> <semente> <parte>`); se duas sementes falharem pelo mesmo motivo, muda a descrição ou o desenho do mapa.
+- **Dúvida de ouvido**: vai ao roteiro de escuta se pesa. A gravidade e o conserto vêm com a resposta.
+- **Sem defeito**: segue. A medida fica no relatório.
 
-Depois do aceite, a correção que preserva o que ele aceitou ouvir entra e é medida de novo no trecho, sem outra linha; a que muda a experiência volta a ele (`entrevista-som`).
+Depois de um conserto, confira só a evidência que mostrou o defeito, no trecho alterado e no que depende dele. A revisão do som inteiro é a que antecede o aceite.
+
+Depois entregue ao usuário o arquivo de som e o roteiro de escuta (`entrevista-som`): as dúvidas que só o ouvido fecha, as decisões em aberto e a pergunta do todo. As medidas vão junto como contexto, e o roteiro não nasce de cada uma que saiu da referência. O "sim" dele é o **aceite do som**: registre-o em `approvals.md` (formato nas convenções do `README.md`), com o que ele aceitou ouvir, as decisões de experiência que tomou e cada efeito pendente. Medida fora da referência não entra na linha como exceção aceita: é diagnóstico, e fica no relatório. Um número só entra quando ele mesmo foi a decisão.
+
+Depois do aceite, a correção que preserva o que ele aceitou ouvir entra e é conferida no trecho, sem outra linha; a que muda a experiência volta a ele (`entrevista-som`).
 
 A próxima etapa é o corte final, na skill `producao`.

@@ -32,13 +32,13 @@ O pedido decide a etapa; a etapa decide o que ler.
 
 ## CONDUÇÃO
 
-O agente produz e testa a implementação: projeta, gera, mede e itera. O agente não ouve, e por isso usa o usuário como **ouvido** onde a medida não alcança, com o arquivo, o instante e a pergunta; a resposta é evidência, e não aprovação. Leva ao usuário como decisão só as alternativas válidas que mudariam a experiência, em som. `entrevista-som` separa as três coisas.
+O agente produz e testa a implementação: projeta, gera, mede e itera. O agente não ouve, e por isso usa o usuário como **ouvido** para o que é de percepção, com o arquivo, o instante e a pergunta; a resposta é evidência, e não aprovação. Leva ao usuário como decisão só as alternativas válidas que mudariam a experiência, em som. `entrevista-som` separa as três coisas.
 
 `sound.md` guarda a intenção e a implementação atuais e acompanha a melhor solução; o anterior é o git. Fica protegido como compromisso só o que o usuário decidiu, e a única aprovação da etapa é o aceite do som.
 
 ## SUBAGENTES
 
-Esta skill dirige, na conversa com o usuário. Quem julga o som pronto é o subagente `critico-de-som` (`.claude/agents/`), que não escreveu o mapa: mede o render, confere-o contra o mapa e devolve um relatório. Relatório de subagente não é aprovação.
+Esta skill dirige, na conversa com o usuário. Quem diagnostica o som pronto é o subagente `critico-de-som` (`.claude/agents/`), que não escreveu o mapa e também não ouve: mede o render, confere o estado, investiga os sinais e devolve os defeitos técnicos e as dúvidas de ouvido. Relatório de subagente não é aprovação.
 
 ## ORGANIZAÇÃO
 
@@ -51,7 +51,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, campos, 
 | `trilha` | O que a música é, como é pedida e onde muda. |
 | `mixagem` | Quanto a música se ouve, e onde ela some. |
 | `efeitos` | Que ações ganham som, e que som. |
-| `revisao` | Como o som pronto é julgado e refeito. |
+| `revisao` | Como o som pronto é diagnosticado. |
 
 ## ÍNDICE DE UNIDADES
 
@@ -65,11 +65,11 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, campos, 
 | `mixagem/silencio` | Quando a música some, e quando o roteiro abre espaço para ela? |
 | `efeitos/dose` | Que acontecimento da imagem ganha um efeito, com que presença e em que instante? |
 | `efeitos/escolha` | Como descobrir o som que realiza um uso, e reaproveitá-lo quando o uso volta? |
-| `revisao/critica-som` | Com que medidas e passadas julgar o som de um render? |
+| `revisao/critica-som` | Como distinguir, no som de um render, o defeito técnico, o sinal de medida e a dúvida que só o ouvido resolve? |
 
 **Base das medidas.** Os números das unidades vêm de um estudo de som do Kurzgesagt feito em 2026-10-05: os mesmos 12 vídeos do estudo visual (123 minutos, sem patrocínio), separados em voz, música e efeitos e medidos camada a camada. As faixas estão em `CRITERIA`, em `src/critique/sound.ts`; o relatório, com as calibrações e os testes do ACE-Step, em `out/referencias/kurzgesagt/som/ESTUDO.md` (fora do git: `tools/sound/` refaz as medidas). Ao questionar ou atualizar uma medida, pese:
 
-- É um canal só: as faixas dizem onde esse som vive, não o que é certo em geral.
+- É um canal só: as faixas dizem onde esse som vive, não o que é certo em geral. Toda medida é sensor, e `out` na saída do comando quer dizer "fora da faixa configurada", e nada além disso (`critica-som`).
 - A separação erra: a contagem de efeitos tem um piso de 2 por minuto, e a medida de nível é corrigida por uma reta de calibração.
 - Nada do que as unidades dizem sobre caráter, emoção ou tema foi medido: é direção, e quem a confirma é o ouvido do usuário.
 - O que o ACE-Step entrega foi testado numa RTX 2060 SUPER com o modelo turbo. Outro modelo ou outra placa pedem os testes de novo.
@@ -83,13 +83,13 @@ Injete o procedimento da etapa, depois `entrevista-som` e as unidades do passo e
 | Arco de som antecipado | Dúvida | `silencio`; `leito` só se a dúvida é de continuidade da música | o `holdMs` pedido ao roteiro e o compromisso em `sound.md`, quando houver; sem aprovação própria |
 | 6. Som | Mapa | `leito`, `descricao`, `momentos`, `niveis`, `silencio`, `dose`: as da camada em que o mapa cresce | a hipótese atual de música, mixagem e efeitos em `sound.md` e nos campos `music` e `sfx`, ampliada conforme o som gerado funciona |
 | | Sons | `escolha` | cada uso do mapa com um som no catálogo, ou dito como pendente |
-| | Revisão | `critica-som` | medidas, relatório e roteiro de escuta do conjunto, levados ao aceite |
+| | Revisão | `critica-som` | relatório (defeitos, dúvidas de ouvido, sem defeito, sensores) e roteiro de escuta do conjunto, levados ao aceite |
 
 Para tarefas parciais (trocar a música de um trecho, acrescentar um efeito, baixar a trilha), injete apenas as unidades do passo e as suas dependências declaradas.
 
 ## LIMITES
 
-- O agente não ouve. Nenhum som é dado como bom por medida: a medida acusa defeito, e o caráter, a emoção e o aceite são do ouvido do usuário.
+- O agente não ouve. A medida localiza o risco e, junto do estado, pode provar alguns defeitos técnicos; a percepção vem do ouvido do usuário, e o caráter, a emoção e o aceite são dele. Nenhum número sozinho dá um som como bom ou ruim.
 - Toda mudança da música que se percebe faz trabalho na experiência do vídeo: o motivo pode vir da estrutura, da imagem, do ritmo, de uma consequência ou de uma transformação emocional.
 - Todo efeito tem um acontecimento perceptível, sustentado pela animação e pela partitura; nem todo acontecimento ganha efeito.
 - A geração parte do mapa atual, suficiente para responder a dúvida, e o mapa cresce com o que foi ouvido. Cada parte custa minutos de GPU: gere o menor som que responde.
@@ -99,7 +99,7 @@ Para tarefas parciais (trocar a música de um trecho, acrescentar um efeito, bai
 Pare quando:
 
 - o som estiver aceito pelo usuário, com a linha em `approvals.md`;
-- a crítica não encontrar problema bloqueante nem relevante e as medidas estiverem na faixa, ou fora dela por decisão registrada ou, nas que são sensores (nível e efeitos), depois de investigadas;
+- não houver defeito técnico pendente nem perda relevante confirmada cujo conserto compense, e cada sinal fora da referência tiver sido investigado até virar defeito, dúvida de ouvido ou "sem defeito": a medida fora não segura a etapa por si;
 - duas gerações seguidas do mesmo trecho falharem no ouvido do usuário pelo mesmo motivo: relate o que foi pedido, o que foi medido e o que ele ouviu, e mude a hipótese (outra descrição, outro desenho do mapa) em vez de tentar outra semente;
 - o mapa pedir um `holdMs` ou outra frase: devolva à skill `diretor-criativo`;
 - o pedido estiver no anti-escopo.

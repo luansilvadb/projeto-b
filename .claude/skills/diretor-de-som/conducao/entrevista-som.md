@@ -13,14 +13,14 @@ No som, o que o agente resolve sozinho, o que pede só o ouvido do usuário e o 
 
 **O teste**, diante de duas versões sonoras que funcionam (o de `conducao/entrevista`, na pasta da skill `diretor-criativo`): quem assiste viveria essencialmente a mesma cena, com o mesmo peso, o mesmo ritmo e a mesma leitura? Se sim, é execução. A pergunta ao usuário é sempre sobre a experiência, nunca sobre o parâmetro: urgência ou contemplação, e não 92 ou 98 BPM; clínico ou caloroso, e não o nome do instrumento ou do tom. O silêncio de fala (`holdMs`) passa pelo mesmo teste, julgado no trecho do texto ou no animatic, nunca em dois números de milissegundos (`etapas/arco-de-som.md`).
 
-**Defeito não é opção.** O que a medida ou o runtime acusam (a música cobre a fala, a faixa morre antes da troca, o momento não cabe, o efeito cai no instante errado, o mapa pede uma ação que a partitura não tem) é consertado sem pergunta. Só há A e B quando os dois passam: se um tem buraco, cobre a voz ou contraria uma decisão que o canal já tomou (ciência para adulto, sem timbre de brinquedo), o outro segue sozinho. Decisão anterior é entrada, e não volta a ser perguntada a cada vídeo.
+**Defeito técnico provado não é opção.** O que o contrato, o estado ou o arquivo demonstram (o mapa que não valida, o arquivo que falta, a parte que não cobre o trecho que deveria, o momento que não cabe, o efeito programado longe do instante que a partitura dá, o mapa que pede uma ação que a partitura não tem) é consertado sem pergunta. Um salto de 10 dB, o timbre, a densidade ou o nível fora da referência não são defeito sem interpretação (`critica-som`). Só há A e B quando os dois passam: se um tem buraco comprovado, perde a fala no ouvido do usuário ou contraria uma decisão que o canal já tomou (ciência para adulto, sem timbre de brinquedo), o outro segue sozinho. Decisão anterior é entrada, e não volta a ser perguntada a cada vídeo.
 
-**A medida elimina, não prova gosto.** Entre duas gerações, a que tem buraco de 8 s ou salto de 10 dB sai, e a outra fica como a melhor hipótese técnica; "musicalmente melhor", só o ouvido diz. O agente relata o que mediu e o que a descrição pediu, e o que falta ouvir: "a densidade caiu 30%; falta confirmar se soa triste ou só vazio".
+**A medida elimina quando prova falha de realização; no resto, localiza.** Não prova gosto nem perda percebida. Entre duas gerações, a que tem um buraco de 8 s que o arquivo confirma sai, e a outra fica como a melhor hipótese técnica; a que tem um salto de 10 dB ganha um instante a ouvir. "Musicalmente melhor", só o ouvido diz. O agente relata o que mediu e o que a descrição pediu, e o que falta ouvir: "a densidade caiu 30%; falta confirmar se soa triste ou só vazio".
 
 **Artefato antes da pergunta.** A descrição é hipótese de geração: serve ao modelo, que a realiza de modo imprevisível, e ninguém escolhe por ela uma música que ainda não existe. Minutos de GPU se desfazem; uma rodada do usuário sobre abstrações que só o som prova custa mais e dá falsa certeza.
 
 - **O menor som que responde a dúvida**: a identidade, num leito sem momentos nem efeitos; a mudança local, naquele momento; o efeito novo, nos candidatos daquele uso; a costura, no trecho em volta dela.
-- **Uma hipótese forte primeiro.** Gere, meça, conserte o que a medida acusa e peça o ouvido só para o que ela não vê. Se funciona, siga.
+- **Uma hipótese forte primeiro.** Gere, meça, conserte o que ficou provado e peça o ouvido só para a dúvida de percepção que pesa. Se funciona, siga.
 - **A e B quando a primeira hipótese revelou uma troca real**: duas direções que passam e que, lado a lado, fazem cenas diferentes. Chegam como arquivos do mesmo trecho, com a diferença dita em uma frase de experiência e a recomendação.
 - **O que faz duas ideias é a experiência ouvida**, e não o texto. Duas sementes, ou duas descrições com outras palavras, podem ser a mesma intenção: uma segue como hipótese atual e é julgada no contexto do vídeo, sem votação.
 - **Perguntar antes de gerar** cabe quando as duas intenções pedem trilhas inteiras diferentes, o trabalho descartado seria grande e a diferença já se diz em termos concretos. "Cada leito custa alguns minutos" não basta.
@@ -29,10 +29,10 @@ No som, o que o agente resolve sozinho, o que pede só o ouvido do usuário e o 
 
 **Percepção, hipótese, artefato.** O usuário nomeia o que percebeu ("está infantil"); o agente diagnostica depois (o registro, a articulação, a melodia, o timbre), muda a menor coisa, gera o menor trecho, mede, e volta ao ouvido só se a questão ainda é de ouvido. A pergunta não traz a solução ("quer tirar o piano?") nem pede ao usuário o instrumento, o tom ou a mixagem: quem traduz "quero que pese mais" é o agente. O detalhe técnico que ele dá por conta própria ("sem bateria") é entrada, usada sem nova entrevista.
 
-**Roteiro de escuta.** Todo pedido de escuta leva o arquivo e os instantes, cada um com uma pergunta de sim ou não sobre o que se percebe. Chega depois da crítica e dos consertos: o usuário ouve a melhor hipótese disponível, e não procura o buraco, o efeito ausente ou o nível fora que a ferramenta já acusa. Pode chegar cedo, sobre um leito só, quando uma dúvida de identidade invalidaria o resto. Entram nele:
+**Roteiro de escuta.** Todo pedido de escuta leva o arquivo e os instantes, cada um com uma pergunta de sim ou não sobre o que se percebe. Chega depois da crítica e dos consertos: o usuário ouve a melhor hipótese disponível, e não procura o buraco, o efeito ausente ou a divergência que o estado já prova, nem audita as medidas que saíram da referência. Pode chegar cedo, sobre um leito só, quando uma dúvida de identidade invalidaria o resto. Entram nele:
 
 - as dúvidas de ouvido ainda abertas (o caráter, a unidade, a naturalidade, se uma transição chama atenção, se o som é do tamanho do desenho);
-- os pontos que a crítica marcou e cuja gravidade depende do ouvido, com a medida ao lado;
+- as dúvidas de ouvido que a crítica localizou e que pesam, com o sinal ao lado; o sinal explicado não vira pergunta;
 - as decisões de verdade em aberto, em A e B;
 - no som inteiro, uma pergunta para o todo.
 
@@ -40,7 +40,7 @@ Três dúvidas, três instantes; o roteiro não audita cada linha do mapa.
 
 **O som do catálogo.** Para um uso novo, o candidato ou os candidatos que sobram (`escolha`) vão ao usuário porque só ele ouve se soam como a ação. É classificação de ouvido: o resultado é "este arquivo realiza o uso", e o catálogo o guarda para todo vídeo seguinte. O uso que já existe é reutilizado sem consulta; volta ao usuário se o som falha no contexto, ou se o que está em jogo é a linguagem de efeitos do canal (discreta ou cartunesca), que é decisão.
 
-**O aceite do som** é a única aprovação da etapa, pedida sobre o conjunto. Fixa o que o usuário aceitou ouvir: a identidade percebida, a relação entre música e voz, a densidade, os momentos que carregam sentido, a experiência do todo. A semente, a descrição, o andamento, o tom, o arquivo, o dB e as linhas do mapa continuam melhorando. Antes de mexer em som aceito: a mudança preserva o que ele aceitou ouvir? Se preserva (a costura sem salto, a semente que realiza melhor, o efeito alinhado), corrija e confira o trecho afetado, sem reabrir o aceite. Se muda a identidade, a emoção, o ritmo ou a presença, volta a ele.
+**O aceite do som** é a única aprovação da etapa, pedida sobre o conjunto. Fixa o que o usuário aceitou ouvir: a identidade percebida, a relação entre música e voz, a densidade, os momentos que carregam sentido, a experiência do todo. Ele aceita a experiência, e não um número: a medida fora da referência não vira exceção aprovada. A semente, a descrição, o andamento, o tom, o arquivo, o dB e as linhas do mapa continuam melhorando. Antes de mexer em som aceito: a mudança preserva o que ele aceitou ouvir? Se preserva (a costura sem salto, a semente que realiza melhor, o efeito alinhado), corrija e confira o trecho afetado, sem reabrir o aceite. Se muda a identidade, a emoção, o ritmo ou a presença, volta a ele.
 
 **Registro.** `sound.md` guarda a intenção e a implementação atuais e acompanha a melhor solução; fica protegido como compromisso só o que o usuário decidiu. A observação de ouvido e a resposta a uma sondagem não vão a `approvals.md`, que recebe o aceite. Descrição e semente tentadas e recusadas são do git.
 
@@ -52,7 +52,7 @@ Três dúvidas, três instantes; o roteiro não audita cada linha do mapa.
 - Não pedir o aceite sem o roteiro de escuta do conjunto.
 
 ## EXEMPLO
-> **Execução.** A semente 1 do leito B morre 9 s antes da troca; a 2, não. Segue a 2, sem pergunta. O momento de `rats-result` pedia rarefação e saiu 3 dB mais alto e mais cheio: é gerado de novo.
+> **Execução.** A semente 1 do leito B morre 9 s antes da troca; a 2, não. Segue a 2, sem pergunta. O momento de `rats-result` pedia rarefação e mede 3 dB acima do leito em volta: é sinal, e vira um instante do roteiro de escuta ("a música rarefaz aqui, ou cresce?").
 >
 > **Evidência auditiva**, sobre o primeiro leito, antes dos momentos e dos efeitos:
 > `public/videos/why-we-sleep/music.wav`, de 0:40 a 1:10 — soa como documentário para adulto, ou como desenho infantil?

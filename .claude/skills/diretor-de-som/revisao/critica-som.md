@@ -1,76 +1,95 @@
 ## PERGUNTA
-Com que medidas e passadas julgar o som de um render?
+Como distinguir, no som de um render, o defeito técnico, o sinal de medida e a dúvida que só o ouvido resolve?
 
 ## RESPOSTA
 
-**Quando aplicar.** Sobre o som do vídeo inteiro, depois de gerado e mixado, antes de levá-lo ao usuário; e de novo, só nos trechos alterados, depois de cada conserto.
+**Quando aplicar.** Sobre o som do vídeo inteiro, depois de gerado e mixado, antes do aceite; depois de um conserto, só no trecho alterado e no contexto de que ele depende.
 
-**Postura.** A crítica não ouve. Ela mede, confere o som contra o mapa e aponta onde o ouvido do usuário precisa ir. As medidas e as passadas (passos 1 a 3 do procedimento) são de quem não escreveu o mapa; decidir e refazer (passos 4 a 6), de quem dirige.
+**Princípio.** A crítica não ouve, e por isso não transforma uma medida numa percepção. **Medida localiza; contrato prova; ouvido percebe.** Ela prova o que se prova sem ouvido, usa as medidas para localizar uma dúvida e, quando o usuário já disse o que ouviu, trabalha na ordem percepção, hipótese, evidência. **Sem perda demonstrada, não há defeito.**
 
-**Os instrumentos:**
+**Três saídas**, e só a primeira é defeito sem o ouvido:
 
-1. **As medidas do vídeo** (`pnpm critique <vídeo> som`): o som é separado em voz, música e efeitos e cada camada é medida contra a faixa da referência.
-2. **O mapa segundo a segundo**, gravado junto: a distância da música à voz em cada segundo, onde há fala, onde a música muda de seção, onde o volume vira, onde há efeito.
-3. **O mapa de som** do vídeo (`sound.md`) e os campos `music` e `sfx` do roteiro, com os instantes da narração.
+- **Defeito técnico confirmado.** O que se demonstra sem julgamento auditivo: `sound.md` e `script.json` dizem estados diferentes (um nível, um efeito, uma troca); o `pnpm check-script` recusa o roteiro; o efeito está programado longe do instante que a partitura dá ao acontecimento; o arquivo de um uso pedido não existe; uma parte termina antes do trecho que deveria cobrir, e a ausência se vê no arquivo da trilha ou no render, e não só numa faixa de referência; há ausência de música comprovada onde nada no estado atual pede silêncio; o runtime não realizou o que realiza de forma determinística. É consertado sem voto do usuário.
+- **Sinal.** Uma medida ou uma diferença que diz "vale investigar aqui": 0,41 oitava de variação de timbre, 8 ou 18 dB entre música e voz, 12 viradas por minuto, poucos ou muitos efeitos, um salto de 7 dB numa borda, um momento em que o detector não acha mudança de seção, o tempo sem música acima da referência. Sinal não tem gravidade.
+- **Dúvida de ouvido.** A resposta que falta é uma percepção: a troca parece outra música? a fala ficou difícil? a música desapareceu? a borda chama atenção? o efeito é do tamanho da ação? a sequência parece vazia? Vai ao roteiro de escuta só quando pesa.
 
-**Medidas.** As faixas são as de `CRITERIA`, em `src/critique/sound.ts`.
+**O que a crítica garante:**
 
-| Medida | Faixa | Fora da faixa quer dizer |
+- **Nenhuma percepção é fingida.** Quem não ouviu não escreve "soa como playlist", "a música cobre a fala", "a borda tem tranco", "o efeito pesa", "faltou materialidade", "ficou triste". Escreve o que mediu e o que falta ouvir: "8 dB, abaixo da referência: levanta a dúvida sobre a fala; a crítica não sabe se há disputa"; "18 dB: a música está mais afastada que a referência; se o trabalho dela ali depende de presença, ouvir se ela desaparece". A percepção que o usuário já deu é dado, e não é perguntada de novo.
+- **"Sem defeito" é uma conclusão**, e leva o motivo quando havia sinal. Timbre a 0,45 numa transformação que o usuário ouve como desenvolvimento; `recuo` a 17 dB, que é o preset pedido; poucos efeitos num trecho em que nenhuma ação perdeu consequência; 7 dB numa borda que não se nota; um momento sutil que o detector não vê e o ouvido reconhece; 5% sem música em silêncios deliberados que funcionam. Faixa, contagem, heurística e técnica ausente não reprovam.
+- **Medida na faixa não salva.** Timbre a 0,25 e o usuário ouve outra música; música a 13 dB e ele perde palavras; 9 efeitos por minuto e tudo soa clique sem dono; 3 dB numa borda e ele ouve o tranco; 0,5% sem música e há um buraco de 2 s numa costura: defeito.
+- **O mapa é hipótese, não especificação.** `sound.md` diz que experiência se tentava realizar, e não cobra seção detectada, queda de tantos por cento nem timbre. O som que realiza a intenção por outro mecanismo não tem defeito, e o mapa é que acompanha o produto. O que se cobra do mapa é coerência: ele e `script.json` guardam a mesma hipótese atual.
+- **A causa vem antes do sintoma.** Não se afina o nível de um leito errado nem o instante de um efeito cujo uso está errado. A crítica procura a menor causa que explica a perda ou a dúvida.
+- **Uma pergunta resolve uma dúvida que pesa.** Antes de escrevê-la: o estado ou o arquivo já explicam o sinal? A mudança foi deliberada? Outra série fecha a dúvida? O trecho já foi ouvido nesse contexto? Algo adiante depende da resposta? Sinal explicado e sem perda plausível fecha em "sem defeito": o usuário não audita sete medidas.
+- **A crítica diagnostica, não conserta.** Nomeia a perda ou a dúvida, a hipótese, a evidência e a unidade dona. Semente, descrição, decibel, instrumento e efeito a acrescentar são de quem dirige. No defeito técnico, diz a causa ("a âncora do efeito aponta para outro acontecimento").
+- **A correção se confirma no defeito.** Repete-se só a evidência que o mostrou, no trecho e no que depende dele (refeita a parte B, a costura dela), sem reabrir as outras lentes.
+- **A crítica termina** quando não há defeito técnico demonstrado nem hipótese que pese ainda sem a evidência de que precisa, e cada sinal restante está explicado ou virou pergunta de ouvido. Não quando as medidas passam.
+
+**Instrumentos**, pelo que cada um pode afirmar:
+
+1. **O estado e o contrato** provam: `sound.md`, os campos `music` e `sfx` do roteiro, o `pnpm check-script`, as linhas "Som:" da partitura, os arquivos da trilha e do catálogo. É por aqui que a crítica começa.
+2. **As medidas do vídeo** (`pnpm critique <vídeo> som`) localizam: o som é separado em voz, música e efeitos, e cada camada é comparada com a referência.
+3. **As séries segundo a segundo**, gravadas junto, dizem onde: a distância da música à voz, a fala, as mudanças de seção, as viradas de volume, os efeitos. São lidas quando há uma pergunta, no trecho dela; nenhuma linha do mapa precisa de um número que a confirme.
+4. **O ouvido do usuário** percebe, e é o único que fecha o que é de percepção.
+
+**Sensores.** Todas as medidas são sensores, e não só as de nível e de efeitos. As referências são as de `CRITERIA`, em `src/critique/sound.ts`; `out` na saída do comando quer dizer "fora da faixa configurada", e nada além disso.
+
+| Medida | Referência | Pode ajudar a localizar |
 |---|---|---|
-| Música abaixo da voz, sob a fala | 9 a 15 dB | acima: a música virou massa; abaixo: disputa com a fala |
-| Do trecho mais presente ao mais recuado | até 9,6 dB | a música abre e abafa |
-| Tempo sem música | até 2,4% | buracos: silêncios demais, ou faixas que morrem nas pontas |
-| Viradas de volume por minuto | até 1,1 | o mesmo, visto no tempo |
-| Variação de timbre ao longo do vídeo | até 0,32 oitava | possível quebra de identidade: achar a fronteira e levá-la ao ouvido |
-| Efeitos que se ouvem, por minuto | 4,4 ou mais | sensor: pode haver acontecimentos sem consequência sonora (`dose`) |
-| Pico do efeito abaixo da voz | 11,5 a 14,7 dB | sensor: pode haver efeitos que somem, ou que disputam com a voz (`dose`) |
+| Música abaixo da voz, sob a fala | 9 a 15 dB | uma dúvida sobre a fala (abaixo) ou sobre a presença da música (acima) |
+| Do trecho mais presente ao mais recuado | até 9,6 dB | regiões em que a automação pode chamar atenção |
+| Tempo sem música | até 2,4% | ausências e costuras a conferir contra o estado |
+| Viradas de volume por minuto | até 1,1 | modulação frequente a investigar |
+| Variação de timbre ao longo do vídeo | até 0,32 oitava | a fronteira de identidade a ouvir |
+| Efeitos que se ouvem, por minuto | 4,4 a 12,3 (o comando só marca abaixo) | acontecimentos sem consequência sonora, ou efeitos acumulados, a comparar com a imagem |
+| Pico do efeito abaixo da voz | 11,5 a 14,7 dB | o efeito que pode sumir ou disputar com a voz |
 
-O que as medidas não veem: a contagem de efeitos tem um piso de 2 por minuto, de música e voz que vazam na separação, e por isso localiza uma região, e não conta os efeitos que existem; a variação de timbre sobe quando um silêncio longo entra na conta e quando a música se transforma por um motivo, e pode ficar na faixa numa trilha que o ouvido acha desconexa; nenhuma delas distingue música boa de ruim.
+O que pesa ao ler um sensor:
 
-**Passadas, nesta ordem.** Um problema de nível superior invalida o polimento dos níveis abaixo.
+- **A referência não é a especificação do projeto.** São 12 vídeos de um canal: os valores dizem onde aquele som vive.
+- **A separação erra.** A contagem de efeitos tem um piso falso de cerca de 2 por minuto, de música e voz que vazam, e por isso localiza uma região, e não conta os efeitos que existem. A medida de nível é corrigida por uma reta de calibração.
+- **O timbre** sobe quando um silêncio longo entra na conta e quando a música se transforma por um motivo, e pode ficar na referência numa trilha que o ouvido acha desconexa.
+- **O nível local** não prova que o runtime ignorou um preset: o preset é aplicado de forma determinística, e a densidade da música e o erro da separação mexem no número. Com o roteiro certo, a distância que não bate com a esperada é sensor; só vira falha de realização com outra evidência técnica. `recuo`, `forte` e `leve` ficam fora das referências por projeto (`niveis`, `dose`).
+- **O salto numa borda.** Mudanças acima de uns 6 dB merecem inspeção, porque já produziram costuras que se notam. O ouvido é que fecha.
+- **O total sem música** não diz se os silêncios são deliberados, se a separação falhou ou se há buraco: diz que vale conferir os trechos contra o estado.
 
-1. **Unidade**
-   - A variação de timbre está na faixa? Se não, em que troca ou em que momento o centro do espectro salta?
-   - Nessa fronteira, o mapa pede uma transformação, e as descrições dos dois lados guardam algum sinal em comum? A resposta diz o que perguntar ao ouvido, e não reprova: a fronteira vai ao roteiro de escuta (`leito`).
-2. **Continuidade**
-   - Cada trecho sem música do mapa segundo a segundo é um silêncio que o mapa de som pede?
-   - A música está no corpo dos dois lados de cada troca de leito, ou morre antes e demora a chegar depois?
-3. **O mapa cumprido**
-   - Cada momento começa e termina na cena que o mapa diz? O trecho mostra nas medidas a mudança que o mapa tentou produzir (seção, densidade, timbre, volume)? A falta dela pode ser um momento que não se realizou, ou uma mudança sutil que a medida não vê: se a medida não basta, marque o instante para a escuta (`momentos`).
-   - Há salto de volume de mais de 6 dB em alguma borda de momento?
-   - Cada nível que não é `leito` aparece na distância à voz daquele trecho?
-4. **Nível**
-   - Onde a distância sai da referência ou muda muito? Nesses trechos, a fala continua fácil e a música continua fazendo o trabalho dela? A medida localiza a escuta e não reprova sozinha: as faixas de nível são sensores, e `recuo` fica fora dos 9 a 15 dB por projeto (`niveis`). Investigue; se a gravidade depender da percepção e a dúvida pesar, marque o instante para o roteiro de escuta.
-5. **Efeitos** (`dose`)
-   - A densidade está muito distante da referência, ou concentrada numa região? Isso corresponde ao que acontece na imagem, ou sugere acontecimentos sem consequência sonora, ou efeitos acumulados sem dono? A contagem é sensor, com piso falso de 2 por minuto: não há piso, teto nem cota por capítulo ou por plano, e nenhum efeito é pedido para subir o número.
-   - Cada efeito do roteiro aparece no mapa segundo a segundo, no instante do acontecimento dele? Algum contradiz uma quietude deliberada, ou acrescenta atividade sem função? Silêncio de música e `recuo` não bastam para chamar um trecho de quieto.
-   - Há acontecimento na partitura da animação cuja percepção perde peso, materialidade ou causalidade sem efeito? Impacto é pista, e não obrigação.
-   - O pico de algum efeito sugere que ele some ou disputa com a voz? `forte` e `leve` ficam fora dos 11,5 a 14,7 dB por projeto, e a quantidade de `forte` não reprova.
-6. **Causa**
-   - Cada momento, silêncio e mudança de nível tem o porquê escrito no mapa de som, e o porquê é um trabalho que se percebe no vídeo (narração, imagem, ritmo, estrutura)?
+**Quando uma medida ajuda a provar.** Só junto do estado: ela aponta o intervalo, e o arquivo da trilha, o render ou o roteiro mostram que o que o estado atual pede não aconteceu. A música ausente por 8 s onde o mapa pede 6 de silêncio e a parte seguinte entra a −40 dB é falha de realização; o mesmo número sem essa conferência é sinal.
 
-**Classificação:**
+**Lentes.** Cada uma serve a um tipo de sinal ou de percepção, com a pergunta e a unidade dona. Usa-se a que explica o que há para investigar: vídeo sem efeitos, sem sinal e sem intenção ali não passa pela de efeitos.
 
-- **Bloqueante**: o usuário ouve a trilha como músicas desconexas, sem que a ruptura seja deliberada (a medida aponta a fronteira, e quem diz é o ouvido); há buraco que o mapa não pede; a música cobre a fala.
-- **Relevante**: medida fora da faixa sem decisão registrada, salvo as de nível e as de efeitos, que são sensores e pedem investigação; momento ou nível que não aparece no som, nem na medida nem na escuta; salto numa borda; efeito sem dono, fora do instante do acontecimento ou que muda a leitura da imagem; região em que os acontecimentos perdem materialidade por falta de efeito.
-- **Polimento**: o resto.
+- **Estado**, quando o mapa, o roteiro e o render podem não dizer a mesma coisa. Cada nível, parte, silêncio, momento e efeito de `sound.md` está em `script.json`, e o contrário? O contrato fecha? O que existe sem intenção escrita é sinal de estado desatualizado, e não se audita cada linha por isso.
+- **Identidade** (`leito`, `descricao`), quando o timbre varia muito, há troca de parte, as descrições dos dois lados têm pouco em comum, ou o usuário diz "outra música". A transformação ainda parece da mesma trilha, ou parece substituição arbitrária? A fronteira e as descrições são a evidência; a resposta é do ouvido.
+- **Continuidade e ausência** (`leito`, `silencio`), quando há música ausente, uma parte que morre cedo, uma entrada que demora, ou o usuário nota um buraco. Primeiro o que se prova: o estado pede silêncio ali? O arquivo cobre o trecho? Com a falha comprovada, defeito técnico. Sem ela, a pergunta é de ouvido: a ausência faz trabalho, ou parece falha?
+- **Momento** (`momentos`), quando o detector mostra pouca mudança ou mudança demais, a borda tem salto, ou o usuário diz "ficou igual" ou "virou outra música". O estado local que o momento precisava produzir aconteceu, e voltou integrado ao leito? Há evidência de que ele não realizou a intenção? Detector que não vê é sinal.
+- **Presença** (`niveis`), quando a distância sai da referência ou varia muito, ou o usuário perde a fala, deixa de ouvir a música ou a ouve bombear. A relação entre fala e música funciona naquele trecho? Não "está entre 9 e 15?".
+- **Efeitos** (`dose`, `escolha`), quando a densidade ou o pico são extremos, um efeito está fora da âncora, ou o usuário ouve massa ou uma ação muda. Cada efeito tem dono e acrescenta consequência sem disputar? O instante sai da partitura e é técnico; o tamanho e a falta são de ouvido. Não há piso, teto nem cota.
 
-**Procedimento:**
+**Gravidade**, pela perda, e só depois de ela estar demonstrada:
 
-1. Tire as medidas e leia o mapa segundo a segundo.
-2. Faça as passadas, na ordem, com o mapa de som ao lado.
-3. Para cada problema: o instante, a medida que o mostra, o critério violado, a classificação.
-4. Conserte os bloqueantes e os relevantes: outra semente só para a faixa ou o momento em causa; outra descrição se duas sementes falharem.
-5. Meça de novo.
-6. Monte o roteiro de escuta (`entrevista-som`) com os instantes que sobraram e os que só o ouvido julga.
+- **Bloqueante**: perde-se algo indispensável. A fala deixa de ser entendida; o áudio esperado some por falha técnica; a identidade quebra a ponto de o vídeo parecer montagem de músicas; um efeito muda a leitura de uma ação crucial; mapa e roteiro divergem numa decisão indispensável.
+- **Relevante**: o vídeo se entende, e perde identidade, peso, naturalidade, continuidade, materialidade, presença ou clareza.
+- **Polimento**: o som já funciona; é ajuste local.
+
+O defeito técnico recebe gravidade sem ouvido, pelo trabalho que o mapa dava àquele trecho. A dúvida ainda não ouvida não recebe: "salto de 8 dB na borda de `rats-result`; se o ouvido perceber tranco, dono `momentos`", e a gravidade vem com a resposta.
+
+**O relatório** tem o tamanho do diagnóstico.
+
+- **Defeitos confirmados**: o trecho ou o instante, o que se perde, a hipótese de causa, a evidência mínima, a unidade dona, a gravidade, e se o conserto mexeria na identidade, na emoção, na presença, na leitura ou no ritmo que o usuário decidiu. A mudança técnica equivalente não reabre decisão.
+- **Dúvidas de ouvido**: o trecho, o sinal que a localizou, por que a resposta importa, a pergunta de sim ou não sobre o que se percebe, a unidade provável se confirmar.
+- **Sem defeito**: os sinais investigados que não provaram perda, cada um com o motivo. Com tudo coerente, uma linha: "mapa e `script.json` sem divergência encontrada".
+- **Sensores**: a tabela com o valor e a referência, como diagnóstico coletado, e não como aprovado ou reprovado.
 
 ## DEPENDÊNCIAS
-- leito, descricao, momentos, niveis, silencio, dose: fornecem os critérios das passadas.
-- entrevista-som: fornece o formato do roteiro de escuta.
+- leito, descricao, momentos, niveis, silencio, dose, escolha: fornecem a pergunta de cada lente e são as donas dos consertos.
+- entrevista-som: fornece o formato do roteiro de escuta e o que volta ao usuário.
 
 ## LIMITES
-- Medida na faixa não é som bom: é som sem os defeitos que a medida conhece.
-- Uma medida fora da faixa por decisão do usuário (um segundo silêncio, uma trilha mais baixa) é registrada no aceite, e não consertada.
+- O que refazer, com que semente ou descrição, e o que levar ao usuário pertencem à etapa (`etapas/som`) e a `entrevista-som`.
+- Medida fora da referência num som que funciona fica no relatório: não é exceção a aprovar nem compromisso do produto.
 
 ## EXEMPLO
-> **Relevante, continuidade.** De 6:44 a 6:52 a música está ausente (8 s). O mapa pede silêncio de 6:39 a 6:50; os 2 s a mais são o leito B, que entra a −40 dB e leva 10 s para chegar ao corpo. Critério: a faixa está no corpo desde o primeiro segundo. Conserto: gerar o leito B de novo; o corte das pontas não achou o corpo.
+> **Defeito técnico, continuidade.** De 6:44 a 6:52 não há música (8 s). O mapa pede silêncio de 6:39 a 6:50; nos 2 s a mais, o arquivo do leito B entra a −40 dB e leva 10 s para chegar ao corpo. Perde-se a retomada depois do silêncio, que o mapa dá como a virada do vídeo. Dono: `leito`. Relevante. Não mexe em nada decidido.
+>
+> **Dúvida de ouvido.** 4:25 a 4:32: a variação de timbre (0,47) se concentra na troca de 4:28. A troca é deliberada e as duas descrições guardam o mesmo conjunto; a crítica não sabe se soa como ruptura, e o resto da trilha depende disso. Parece desenvolvimento da mesma música, ou começo de outra? Se outra: `leito`.
+>
+> **Sem defeito.** `recuo` mede 17 dB de 5:02 a 5:27: é o preset pedido, e mapa e roteiro concordam. Efeitos a 3,1 por minuto: a partitura não tem acontecimento sem som nas regiões vazias.
