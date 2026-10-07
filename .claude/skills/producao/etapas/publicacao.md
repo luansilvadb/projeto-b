@@ -42,4 +42,8 @@ Uma frase que não está em nenhuma dessas fontes é texto novo: peça-a à skil
 - Todo link é o de `research.md`, sem alteração.
 - O título é o de `script.json`, e a abertura não afirma nada além do roteiro.
 
+## Acervo
+
+Com o vídeo no ar, copie para `acervo/<vídeo>/` o que foi publicado: `out/<vídeo>/<vídeo>.final.mp4`, a pasta `public/videos/<vídeo>/` (a narração e a trilha), a thumbnail e um PNG de cada folha de modelo dos personagens (`pnpm exec remotion still <folha> acervo/<vídeo>/<folha>.png`). A pasta é escrita uma vez e não é sobrescrita: é a única cópia do que foi ao ar que não depende de gerar de novo.
+
 Pronto quando: as três conferências passam e o usuário leu a descrição. Entregue o caminho do arquivo e lembre-o de que a marcação de conteúdo sintético no YouTube é dele (os avisos estão em `corte-final.md`).

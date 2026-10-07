@@ -17,7 +17,7 @@ import { cue, mix, ramp, clamp01, clamp } from "../../../components/timing";
 import { WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
-import { elephant, ink, jellyfish, lab } from "../palette";
+import { elephant, elephantFinish, ink, jellyfish, lab } from "../palette";
 import { CLIPBOARD, Clipboard, HELD_CLIPBOARD } from "../parts/Clipboard";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import { Glove, TANK_CENTER } from "../parts/Laboratory";
@@ -32,7 +32,6 @@ import { Sooner, flash, useCastScale } from "./MaybeBrainScene";
 import { billSway } from "./SkipANightScene";
 import { Drift } from "./SleepDebtScene";
 import { grown } from "../../../components/Pop";
-import { elephantPolish } from "../polish";
 
 // De onde a câmera vem: o fim da aproximação lenta de `jellyfish-debt` 3.
 const LAB_BEFORE = framing([TANK_CENTER, 600], 1.05, [TANK_CENTER, 600]);
@@ -365,7 +364,7 @@ const VacantShot: React.FC<VacantShotProps> = ({ landAt, blinkAt, clock }) => {
               <Elephant
                 width={ELEPHANT.width}
                 colors={elephant}
-                finish={elephantPolish()}
+                finish={elephantFinish}
                 lid={1}
                 droop={1}
                 ear={0.1 + 0.06 * wave(seconds, 4.5, 0.2)}

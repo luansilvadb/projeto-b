@@ -2,7 +2,7 @@
 //   pnpm stills <vídeo>            um quadro de cada plano
 //   pnpm stills <vídeo> 30 120     os quadros indicados
 //
-// As imagens saem em out/stills/<vídeo>/.
+// As imagens saem em out/<vídeo>/stills/.
 
 import { renderFrames } from "./lib/tools";
 import { exitWithError, shotSampleFrames, slugFromArgs } from "./lib/videos";
@@ -15,7 +15,7 @@ const main = async () => {
   }
 
   const frames = requested.length > 0 ? requested : shotSampleFrames(slug);
-  const output = `out/stills/${slug}`;
+  const output = `out/${slug}/stills`;
   await renderFrames(slug, frames, output);
 
   console.log(`\nQuadros ${frames.join(", ")} em ${output}/`);

@@ -10,7 +10,6 @@ import {
   signs,
   sound,
 } from "../palette";
-import { polished } from "../polish";
 import { mix } from "../../../components/timing";
 
 /**
@@ -211,7 +210,7 @@ export const Bed: React.FC<BedProps> = ({
       <Person
         height={SLEEPER.height}
         colors={colors}
-        finish={polished()}
+        finish
         expression={EXPRESSION[state]}
         blink={blink}
         frontArm={armBetween(LYING_ARMS.front, STANDING_ARMS.front, standing)}

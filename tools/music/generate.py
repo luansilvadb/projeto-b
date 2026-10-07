@@ -85,7 +85,7 @@ def main() -> None:
             # aprovada por outra: "restrained suspense, low felt piano" virava
             # "aggressive ostinato, timpani rolls and cymbal crashes", e
             # "underwater pads" ganhava bateria eletrônica e flauta (testes de
-            # 2026-10-05, em out/som/testes/).
+            # 2026-10-05, em out/ferramentas/som/testes/).
             use_cot_caption=False,
             **task,
         )

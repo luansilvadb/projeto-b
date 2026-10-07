@@ -21,7 +21,6 @@ import {
   elephantFinish,
   elephantNightFinish,
 } from "../palette";
-import { elephantPolish, polished } from "../polish";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "./Savanna";
 import { Tag } from "./Tag";
 
@@ -88,20 +87,18 @@ const elephantAt = (daylight: number): ElephantColors =>
 
 const FINISH_KEYS = Object.keys(elephantFinish) as (keyof ElephantFinish)[];
 
-/** O acabamento da elefanta entre a noite e o dia, só no piloto do polimento. */
-const finishAt = (daylight: number): ElephantFinish | undefined =>
-  polished()
-    ? (Object.fromEntries(
-        FINISH_KEYS.map((key) => [
-          key,
-          interpolateColors(
-            Math.min(1, Math.max(0, daylight)),
-            [0, 1],
-            [elephantNightFinish[key], elephantFinish[key]],
-          ),
-        ]),
-      ) as ElephantFinish)
-    : undefined;
+/** O acabamento da elefanta entre a noite e o dia. */
+const finishAt = (daylight: number): ElephantFinish =>
+  Object.fromEntries(
+    FINISH_KEYS.map((key) => [
+      key,
+      interpolateColors(
+        Math.min(1, Math.max(0, daylight)),
+        [0, 1],
+        [elephantNightFinish[key], elephantFinish[key]],
+      ),
+    ]),
+  ) as ElephantFinish;
 
 export type HerdMember = {
   /** Onde ela pisa: x no quadro, e y a partir do chão da savana (negativo é mais longe). */
@@ -304,7 +301,7 @@ export const SleepingElephant: React.FC<SleepingElephantProps> = ({
     <Elephant
       width={width}
       colors={elephant}
-      finish={elephantPolish()}
+      finish={elephantFinish}
       lid={1}
       droop={1}
       trunk={0}

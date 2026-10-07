@@ -59,6 +59,17 @@ export const shotSampleFrames = (slug: string): number[] => {
   );
 };
 
+/** As cenas do vídeo no tempo dele: o `id`, o primeiro quadro e quantos quadros cada uma dura. */
+export const sceneTimelines = (slug: string) => {
+  const narration = readNarration(slug);
+  assertManifestMatchesScript(readScript(slug), narration, slug);
+  return buildTimeline(narration, FPS).scenes;
+};
+
+/** Onde fica o render de uma cena: sempre o mesmo arquivo, sobrescrito a cada render. */
+export const sceneFile = (slug: string, id: string) =>
+  `out/${slug}/cenas/${id}.mp4`;
+
 /** Encerra o script com a mensagem do erro, sem o rastro de pilha. */
 export const exitWithError = (error: unknown): never => {
   console.error(error instanceof Error ? error.message : error);

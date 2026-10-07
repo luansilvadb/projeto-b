@@ -41,6 +41,7 @@ import {
   lab,
   person,
   researcher,
+  elephantFinish,
 } from "../palette";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import {
@@ -56,7 +57,6 @@ import { RESEARCHER, TankShot } from "../parts/TankShot";
 import { ROW_HUE, rowLife } from "./FivePartsScene";
 import { JellyfishOpening } from "./JellyfishScene";
 import { Drift, Grow, driftZoom, drifted } from "./SleepDebtScene";
-import { elephantPolish, polished } from "../polish";
 
 /**
  * O elenco de um plano entra antes da marcação de sempre: quem abre o plano
@@ -660,7 +660,7 @@ const SuspectsShot: React.FC<SuspectsShotProps> = ({
               <Elephant
                 width={ELEPHANT.width}
                 colors={elephant}
-                finish={elephantPolish()}
+                finish={elephantFinish}
                 lid={blink(seconds, "suspect-elephant")}
                 trunk={0.2 + 0.12 * looking + 0.03 * wave(seconds, 3.7)}
                 ear={0.4 + 0.12 * wave(seconds, 2.9)}
@@ -683,7 +683,7 @@ const SuspectsShot: React.FC<SuspectsShotProps> = ({
                 <Person
                   height={YOU.height}
                   colors={person}
-                  finish={polished()}
+                  finish
                   expression={frame >= lookAt + 2 ? "surprised" : "curious"}
                   blink={Math.max(
                     blink(seconds, "you"),

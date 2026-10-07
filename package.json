@@ -16,6 +16,8 @@
     "stills": "tsx scripts/stills.ts",
     "critique": "tsx scripts/critique.ts",
     "render": "remotion render",
+    "scene": "tsx scripts/scene.ts",
+    "join": "tsx scripts/join.ts",
     "sound": "remotion render --config=remotion.sound.config.ts",
     "setup:tools": "tsx scripts/setup-tools.ts"
   },

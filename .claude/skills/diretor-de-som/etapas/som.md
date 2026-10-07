@@ -53,16 +53,16 @@ Unidade `escolha`. Entregue à skill `producao` (`etapas/efeitos-sonoros.md`) a 
 Peça à skill `producao` a trilha (`pnpm music <vídeo>`) e o som do vídeo sem a imagem, que sai em minutos:
 
 ```bash
-pnpm sound <vídeo> out/<vídeo>.som.mp3
+pnpm sound <vídeo> out/<vídeo>/<vídeo>.som.mp3
 ```
 
 ## Passo 5: revisão (`revisao/critica-som`)
 
 ```bash
-pnpm critique out/<vídeo>.som.mp3 som
+pnpm critique out/<vídeo>/<vídeo>.som.mp3 som
 ```
 
-Leia você mesmo a tabela e o mapa segundo a segundo (`out/som/<vídeo>.som/medidas.json`) e depois acione o subagente `critico-de-som`, que não escreveu o mapa. Passe o nome da pasta do vídeo e o caminho do arquivo de som. Ele julga; quem decide e refaz é você, pelos passos 4 a 6 do procedimento de `critica-som`. Uma faixa ou um momento ruim é gerado de novo sozinho, com outra semente: `pnpm music <vídeo> <semente> <parte>`.
+Leia você mesmo a tabela e o mapa segundo a segundo (`out/<vídeo>/som/<vídeo>.som/medidas.json`) e depois acione o subagente `critico-de-som`, que não escreveu o mapa. Passe o nome da pasta do vídeo e o caminho do arquivo de som. Ele julga; quem decide e refaz é você, pelos passos 4 a 6 do procedimento de `critica-som`. Uma faixa ou um momento ruim é gerado de novo sozinho, com outra semente: `pnpm music <vídeo> <semente> <parte>`.
 
 Depois entregue ao usuário o arquivo de som, as medidas e o roteiro de escuta (`entrevista-som`). O "sim" dele é o **aceite do som**: registre-o em `approvals.md` (formato nas convenções do `README.md`), com cada medida fora da faixa que ele aceitou e cada efeito pendente.
 

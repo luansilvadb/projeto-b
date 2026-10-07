@@ -18,3 +18,6 @@ voice
 # Ambientes Python criados pelo uv.
 .venv
 __pycache__
+
+# O que foi publicado: arquivos grandes, copiados uma vez na publicação.
+acervo

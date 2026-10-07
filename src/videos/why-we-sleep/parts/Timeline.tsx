@@ -20,12 +20,12 @@ import {
   jellyfish,
   lagoon,
   personInPajamas,
+  elephantFinish,
 } from "../palette";
 import { Bed } from "./Bed";
 import { PULSES_ASLEEP, pulseCycles, pulseShape, steady } from "./pulse";
 import { Tag } from "./Tag";
 import { VacantSign } from "./VacantSign";
-import { elephantPolish, polished } from "../polish";
 
 /** A linha do tempo no quadro: a altura dela, de onde sai (o passado) e onde a seta termina (hoje). */
 export const TIMELINE = { y: 700, from: 180, to: 1400 };
@@ -402,7 +402,7 @@ export const Timeline: React.FC<TimelineProps> = ({
       >
         <Pop at={enter(0)} origin="bottom">
           <Antelope
-            finish={polished()}
+            finish
             width={SLEEPER_WIDTH.antelope}
             colors={antelope}
             rest={1}
@@ -424,7 +424,7 @@ export const Timeline: React.FC<TimelineProps> = ({
           <Elephant
             width={SLEEPER_WIDTH.elephant}
             colors={elephant}
-            finish={elephantPolish()}
+            finish={elephantFinish}
             lid={1}
             droop={1}
             ear={0.1}

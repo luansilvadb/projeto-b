@@ -38,7 +38,7 @@ Que decisões de som vão ao usuário, e como chegam a quem ouve?
 - Não pedir o aceite sem o roteiro de escuta.
 
 ## EXEMPLO
-> Roteiro de escuta de `out/why-we-sleep.som.mp3`:
+> Roteiro de escuta de `out/why-we-sleep/why-we-sleep.som.mp3`:
 > 0:36 — o tema se abre na pergunta: a música cresce, ou só fica mais alta?
 > 4:28 — entra o laboratório: a mudança tem tranco?
 > 5:02 a 5:27 — a morte dos ratos, em `recuo`: a música pesa, ou some?

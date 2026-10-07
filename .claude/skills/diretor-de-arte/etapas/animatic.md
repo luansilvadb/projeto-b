@@ -54,8 +54,8 @@ No animatic, entradas simples pela deixa da narração (`Appear`) já bastam. Mo
 
 ```bash
 pnpm lint                        # tipos e regras do Remotion
-pnpm stills <vídeo>              # um quadro de cada plano em out/stills/<vídeo>/
-pnpm render <vídeo>              # out/<vídeo>.mp4
+pnpm stills <vídeo>              # um quadro de cada plano em out/<vídeo>/stills/
+pnpm render <vídeo> out/<vídeo>/<vídeo>.mp4
 pnpm critique <vídeo> animatic   # medidas do render contra os vídeos de referência
 ```
 

@@ -6,7 +6,7 @@ Acontece dentro da etapa de roteiro, acionada pela skill `diretor-criativo` com 
 
 ## Passo 1: conceito visual
 
-Unidades `entrevista-imagem`, `elenco` e `cor`. Parta de `script.md` (a analogia central e a nota visual de cada bloco) e de `research.md` (como as coisas são de verdade). Elenco e paletas são decisões do usuário, uma por vez, diante de imagem renderizada; as alternativas vão para `out/conceito/<vídeo>/`, numeradas na ordem em que foram mostradas.
+Unidades `entrevista-imagem`, `elenco` e `cor`. Parta de `script.md` (a analogia central e a nota visual de cada bloco) e de `research.md` (como as coisas são de verdade). Elenco e paletas são decisões do usuário, uma por vez, diante de imagem renderizada; as alternativas vão para `out/<vídeo>/conceito/`, numeradas na ordem em que foram mostradas.
 
 Grave cada decisão em `art.md`, com a data e o arquivo da comparação que a sustentou; `src/videos/why-we-sleep/art.md` é o modelo.
 

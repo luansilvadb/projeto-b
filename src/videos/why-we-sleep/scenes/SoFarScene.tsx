@@ -32,6 +32,7 @@ import {
   lab,
   lagoon,
   stopwatch,
+  elephantFinish,
 } from "../palette";
 import { Bed } from "../parts/Bed";
 import { IdeaBackdrop } from "../parts/IdeaBackdrop";
@@ -45,7 +46,6 @@ import { LAST_MAP_LEAD, LastMapPrelude } from "./ButWhatScene";
 import { ROW_HUE, rowLife } from "./FivePartsScene";
 import { Grow } from "./SleepDebtScene";
 import { grown } from "../../../components/Pop";
-import { elephantPolish } from "../polish";
 
 /**
  * O resumo dos três jeitos de escapar. No primeiro plano, a fila dos ícones
@@ -316,7 +316,7 @@ const ElephantMemory: React.FC<ElephantMemoryProps> = ({
           <Elephant
             width={410}
             colors={elephant}
-            finish={elephantPolish()}
+            finish={elephantFinish}
             lid={1}
             droop={1}
             trunk={0}

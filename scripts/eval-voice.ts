@@ -5,7 +5,7 @@
 // as configurações, e cada geração recebe a nota de naturalidade do UTMOS, as
 // medidas de altura e de entonação e a conferência do Whisper.
 //
-// O resultado de cada configuração fica em out/eval-voice/ e é reaproveitado
+// O resultado de cada configuração fica em out/ferramentas/eval-voice/ e é reaproveitado
 // enquanto a configuração, a amostra e as frases não mudarem.
 
 import {
@@ -38,7 +38,7 @@ import {
   type VoiceModel,
 } from "./lib/voice";
 
-const FOLDER = "out/eval-voice";
+const FOLDER = "out/ferramentas/eval-voice";
 
 // A revisão fixa impede que a régua mude entre uma avaliação e outra.
 const UTMOS = {

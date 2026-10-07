@@ -29,7 +29,6 @@ import {
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength, type Wipe } from "../../../video/Shot";
 import { ink, person, personInPajamas, savanna } from "../palette";
-import { polished } from "../polish";
 import { Bed } from "../parts/Bed";
 import {
   DAY_STRIP,
@@ -500,7 +499,7 @@ const ThreeDaysShot: React.FC<ThreeDaysShotProps> = ({
               <Person
                 height={WALKING.height}
                 colors={person}
-                finish={polished()}
+                finish
                 expression={face}
                 blink={Math.max(blink(seconds, "you"), lids)}
                 stride={{

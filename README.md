@@ -34,14 +34,14 @@ Cada etapa pertence a uma skill do Claude Code em `.claude/skills/`, que guarda 
 | 4. Animatic    | `diretor-de-arte`  | `etapas/animatic.md`     | `pnpm stills <vídeo>`           | planos desenhados e a **2ª aprovação**             |
 | 5. Animação    | `diretor-de-arte`  | `etapas/animacao.md`     | `pnpm critique <vídeo>`         | planos animados, medidos contra a referência       |
 | 6. Som         | `diretor-de-som`   | `etapas/som.md`          | `pnpm music <vídeo> [semente]`  | trilha original, efeitos e o aceite do som         |
-| 7. Corte final | `producao`         | `etapas/corte-final.md`  | `pnpm render <vídeo>`           | `out/<vídeo>.final.mp4` e a **3ª aprovação**       |
+| 7. Corte final | `producao`         | `etapas/corte-final.md`  | `pnpm join <vídeo>`             | `out/<vídeo>/<vídeo>.final.mp4` e a **3ª aprovação**   |
 | 8. Publicação  | `producao`         | `etapas/publicacao.md`   |                                 | `description.md`, com título e fontes              |
 
 `<vídeo>` é o nome da pasta em `src/videos/`. O vídeo `why-we-sleep` serve de modelo.
 
 São quatro skills, uma por dono de entrega: `diretor-criativo` (o texto: pesquisa, ângulo, estrutura e roteiro), `diretor-de-arte` (a imagem e o movimento: elenco, paletas, a divisão de cada cena em planos, desenho, composição e animação), `diretor-de-som` (tudo que se ouve além da voz: a música, os níveis, os silêncios e os efeitos sonoros) e `producao` (a voz e o arquivo final: narração, a operação das ferramentas de som, corte final e a descrição de publicação). Em cada uma, `SKILL.md` leva do pedido à etapa; os arquivos de `etapas/` dizem como rodar a etapa neste repositório; as unidades, nas outras pastas, guardam o conhecimento do estilo. O roteiro é a etapa que cruza skills: antes da 1ª aprovação, o `diretor-criativo` aciona o `diretor-de-arte` para os planos (`etapas/decupagem.md`) e o `diretor-de-som` para o arco de som (`etapas/arco-de-som.md`), de onde saem os silêncios que o som pede ao texto. As skills dirigem na conversa; os especialistas que levantam, executam e julgam são subagentes em `.claude/agents/`, acionados por elas e sem o contexto de quem fez o trabalho: `pesquisador`, `checador` e `editor` (do `diretor-criativo`; o `checador` volta no corte final, acionado pela `producao`), `ilustrador`, `motion-designer`, `critico-de-quadro` e `critico-de-movimento` (do `diretor-de-arte`), `critico-de-som` (do `diretor-de-som`). A skill `remotion-best-practices` vem do Remotion, é atualizada com ele e fica fora do repositório, em `~/.claude/skills/` (global do Claude Code).
 
-Outros comandos: `pnpm dev` abre o Remotion Studio, `pnpm lint` checa tipos e estilo, `pnpm test` roda os testes do código e das ferramentas Python, `pnpm critique <vídeo>` mede o render (movimento, área com desenho e cor) contra a faixa de 12 vídeos de referência, e com `som` no fim mede o som (nível, continuidade e unidade da música, e quantidade de efeitos) contra a faixa dos mesmos 12, `pnpm eval:voice` compara a configuração da voz com variações dela em 16 frases fixas (naturalidade, entonação, altura, cortes e erros de pronúncia), `pnpm sound <vídeo> out/<vídeo>.som.mp3` renderiza só o som do vídeo, `pnpm sfx "<busca>"` lista efeitos sonoros CC0 do Freesound e `pnpm sfx <id>` baixa o escolhido.
+Outros comandos: `pnpm dev` abre o Remotion Studio, `pnpm lint` checa tipos e estilo, `pnpm test` roda os testes do código e das ferramentas Python, `pnpm critique <vídeo>` mede o render (movimento, área com desenho e cor) contra a faixa de 12 vídeos de referência, e com `som` no fim mede o som (nível, continuidade e unidade da música, e quantidade de efeitos) contra a faixa dos mesmos 12, `pnpm eval:voice` compara a configuração da voz com variações dela em 16 frases fixas (naturalidade, entonação, altura, cortes e erros de pronúncia), `pnpm scene <vídeo> <id>` renderiza só uma cena, `pnpm join <vídeo>` monta o vídeo inteiro com as cenas já renderizadas e o som, `pnpm sound <vídeo> out/<vídeo>/<vídeo>.som.mp3` renderiza só o som do vídeo, `pnpm sfx "<busca>"` lista efeitos sonoros CC0 do Freesound e `pnpm sfx <id>` baixa o escolhido.
 
 ## Onde fica cada coisa
 
@@ -60,7 +60,25 @@ public/fonts/        fontes das direções de arte (OFL)
 public/sfx/          efeitos sonoros do Freesound (CC0)
 ```
 
-Ficam fora do git: `public/videos/` (narração e trilha geradas), `vendor/` (ferramentas clonadas), `voice/` (amostras de voz) e `out/` (renders).
+Ficam fora do git: `public/videos/` (narração e trilha geradas), `vendor/` (ferramentas clonadas), `voice/` (amostras de voz), `out/` e `acervo/`.
+
+`out/` é a bancada: tudo nela pode ser gerado de novo, cada arquivo tem um lugar e é sobrescrito a cada vez.
+
+```
+out/<vídeo>/               tudo de um vídeo
+  <vídeo>.mp4              o vídeo inteiro (pnpm join), o som (.som.mp3) e o de entrega (.final.mp4)
+  cenas/<id>.mp4           cada cena como está agora (pnpm scene)
+  stills/                  um quadro por plano (pnpm stills)
+  tiras/                   as tiras de quadros da crítica de movimento
+  conceito/                as imagens das decisões de arte
+  som/                     a separação e as medidas do som (pnpm critique ... som)
+  trilha/                  as trilhas geradas e comparadas
+out/referencias/           os estudos dos vídeos de referência, de todo vídeo
+out/ferramentas/           avaliação da voz e testes da trilha, de nenhum vídeo
+out/rascunho/              o que não tem lugar acima; pode ser apagada inteira
+```
+
+`acervo/<vídeo>/` guarda o que foi ao ar, copiado uma vez na publicação e nunca sobrescrito: o vídeo de entrega, a narração, a trilha, a thumbnail e as folhas de modelo dos personagens.
 
 ## Convenções
 

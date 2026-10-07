@@ -23,10 +23,10 @@ Se a narração for regerada com outra voz ou mudar de duração, rode `pnpm mus
 O som do vídeo sem a imagem (voz, trilha e efeitos já mixados) sai em minutos:
 
 ```bash
-pnpm sound <vídeo> out/<vídeo>.som.mp3
+pnpm sound <vídeo> out/<vídeo>/<vídeo>.som.mp3
 ```
 
-Entregue o caminho à skill `diretor-de-som`, que mede (`pnpm critique out/<vídeo>.som.mp3 som`), aciona o crítico e leva o som ao usuário com o roteiro de escuta.
+Entregue o caminho à skill `diretor-de-som`, que mede (`pnpm critique out/<vídeo>/<vídeo>.som.mp3 som`), aciona o crítico e leva o som ao usuário com o roteiro de escuta.
 
 Pronto quando: `music.json` existe, o som do vídeo foi renderizado e o caminho foi entregue.
 

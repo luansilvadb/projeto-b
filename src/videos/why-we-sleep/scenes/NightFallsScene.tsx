@@ -36,7 +36,6 @@ import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength, wipeClip, type Wipe } from "../../../video/Shot";
 import { antelope, antelopeNight, ink, savanna, sound } from "../palette";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "../parts/Savanna";
-import { polished } from "../polish";
 import { RichSavannaBackdrop } from "../../../studies/savanna-reference/RichSavannaReference";
 import { richPalette } from "../../../studies/savanna-reference/richPalette";
 import { nightPalette } from "../../../studies/savanna-reference/nightPalette";
@@ -300,7 +299,7 @@ export const Critter: React.FC<CritterProps> = ({
         }}
       >
         <Antelope
-          finish={polished()}
+          finish
           width={DEN.width}
           colors={daylight > 0.25 ? antelope : antelopeNight}
           rest={Math.max(rest, NOD.buckle * nod)}

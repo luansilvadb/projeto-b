@@ -15,8 +15,8 @@ Leia, nesta ordem:
 ## O que fazer
 
 1. Tire as medidas: `pnpm critique out/<arquivo>.mp4`, com o mapa segundo a segundo.
-2. Para cada plano, monte as tiras que `critica-movimento` pede (cada mudança de estado, uma pausa de 2 s e cada transição, atravessando o corte) em `out/tiras/<vídeo>/`:
-   `ffmpeg -y -ss <s> -t <dur> -i <mp4> -vf "fps=8,scale=320:180,tile=6x5" -frames:v 1 out/tiras/<vídeo>/<cena>-<plano>-<s>.png`
+2. Para cada plano, monte as tiras que `critica-movimento` pede (cada mudança de estado, uma pausa de 2 s e cada transição, atravessando o corte) em `out/<vídeo>/tiras/`:
+   `ffmpeg -y -ss <s> -t <dur> -i <mp4> -vf "fps=8,scale=320:180,tile=6x5" -frames:v 1 out/<vídeo>/tiras/<cena>-<plano>-<s>.png`
 3. Abra cada tira com Read e faça as passadas, na ordem; não leia `scenes/`.
 
 Não renderize: `pnpm render` é de quem o acionou. As tiras são o único arquivo que você grava.

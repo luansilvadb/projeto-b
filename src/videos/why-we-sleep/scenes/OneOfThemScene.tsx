@@ -28,7 +28,7 @@ import {
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { markFor } from "../../../video/stage";
-import { elephant, idea, jellyfish, person, personInPajamas } from "../palette";
+import { elephant, elephantFinish, idea, jellyfish, person, personInPajamas } from "../palette";
 import { Bed, BED_SIZE } from "../parts/Bed";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import {
@@ -40,7 +40,6 @@ import {
 import { NEVER, Preluded, flash, useCastScale } from "./MaybeBrainScene";
 import { Drift, Grow } from "./SleepDebtScene";
 import { SHOP_RISE, ShopPrelude } from "./StillUnknownScene";
-import { elephantPolish, polished } from "../polish";
 
 type Hue = keyof typeof idea;
 type Point = readonly [number, number];
@@ -211,7 +210,7 @@ const Trio: React.FC<TrioProps> = ({
         <Elephant
           width={layout.elephant.width}
           colors={elephant}
-          finish={elephantPolish()}
+          finish={elephantFinish}
           lid={Math.max(asleep, blink(seconds, "trio-elephant"))}
           droop={beast.droop ?? 0}
           trunk={beast.trunk ?? 0}
@@ -577,7 +576,7 @@ const Among: React.FC<AmongProps> = ({
                 <Person
                   height={layout.person.height}
                   colors={person}
-                  finish={polished()}
+                  finish
                   expression={expression}
                   blink={Math.max(
                     at < rubAt ? blink(seconds, "you") : 0,

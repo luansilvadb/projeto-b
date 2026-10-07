@@ -11,7 +11,7 @@ Opera as ferramentas que transformam o roteiro e as cenas aprovados em som e em 
 
 **Entradas:** `script.json` aprovado (skill `diretor-criativo`); para o corte final, as cenas animadas e aprovadas (skill `diretor-de-arte`).
 
-**Saídas:** `public/videos/<vídeo>/` com a narração, o tempo de cada palavra e a trilha; `out/<vídeo>.final.mp4`; `src/videos/<vídeo>/description.md`.
+**Saídas:** `public/videos/<vídeo>/` com a narração, o tempo de cada palavra e a trilha; `out/<vídeo>/<vídeo>.final.mp4`; `src/videos/<vídeo>/description.md`.
 
 ## ANTI-ESCOPO
 

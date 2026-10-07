@@ -1,5 +1,5 @@
 // Mede o render de um vídeo e compara com a faixa dos vídeos de referência:
-//   pnpm critique <vídeo>             mede out/<vídeo>.mp4, já animado
+//   pnpm critique <vídeo>             mede out/<vídeo>/<vídeo>.mp4, já animado
 //   pnpm critique <vídeo> animatic    as medidas de movimento ainda não reprovam
 //   pnpm critique <arquivo.mp4>       mede um arquivo qualquer, para recalibrar as faixas
 //   pnpm critique <vídeo ou arquivo> som   mede o som em vez da imagem
@@ -23,12 +23,12 @@ const SOUND_TOOLS = "tools/sound";
 
 /**
  * Separa o som do arquivo em voz, música e efeitos e mede cada camada. A
- * separação fica em out/som/<nome>/ e é reaproveitada: apague a pasta para
+ * separação fica em som/<nome>/, ao lado do arquivo, e é reaproveitada: apague a pasta para
  * medir de novo um arquivo que mudou.
  */
 const measureSound = async (file: string): Promise<SoundMeasures> => {
   const name = path.parse(file).name;
-  const folder = `out/som/${name}`;
+  const folder = `${path.dirname(file)}/som/${name}`;
   const python = (script: string, ...args: string[]) =>
     run(
       "uv",
@@ -72,10 +72,10 @@ const main = async () => {
   const stage: Stage = stageName === "animatic" ? "animatic" : "final";
 
   // Um nome de pasta de vídeo vale pelo render dele; qualquer outra coisa é um arquivo.
-  const file = /\.[a-z0-9]+$/i.test(target) ? target : `out/${target}.mp4`;
+  const file = /\.[a-z0-9]+$/i.test(target) ? target : `out/${target}/${target}.mp4`;
   if (!existsSync(file)) {
     throw new Error(
-      `Não existe ${file}. Renderize antes: pnpm render ${target}`,
+      `Não existe ${file}. Renderize antes: pnpm render ${target} ${file}`,
     );
   }
 

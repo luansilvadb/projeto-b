@@ -6,7 +6,7 @@ Leia a skill `remotion-best-practices` (regras de `remotion-markup`) antes de es
 
 ## Passo 1: partitura
 
-Antes do código, a partitura de cada plano (`tempo/sincronia`): o que entra, muda ou sai, em que palavra e por quanto tempo. Os tempos das palavras vêm de `public/videos/<vídeo>/narration.json`; `scripts/check-script.ts` mostra a duração de cada plano. Registre a partitura em `src/videos/<vídeo>/score.md`, uma seção por cena (o `id` dela) e um item por plano, e siga por ela. Ela vai para o git: é o que o usuário aprova, o que o `motion-designer` recebe e o que o `critico-de-movimento` confere. As imagens e os vídeos de comparação das decisões continuam em `out/conceito/<vídeo>/`.
+Antes do código, a partitura de cada plano (`tempo/sincronia`): o que entra, muda ou sai, em que palavra e por quanto tempo. Os tempos das palavras vêm de `public/videos/<vídeo>/narration.json`; `scripts/check-script.ts` mostra a duração de cada plano. Registre a partitura em `src/videos/<vídeo>/score.md`, uma seção por cena (o `id` dela) e um item por plano, e siga por ela. Ela vai para o git: é o que o usuário aprova, o que o `motion-designer` recebe e o que o `critico-de-movimento` confere. As imagens e os vídeos de comparação das decisões continuam em `out/<vídeo>/conceito/`.
 
 ## Passo 2: movimento, com os primitivos do projeto
 
@@ -38,11 +38,13 @@ Nenhuma cena toca som. Os efeitos são da skill `diretor-de-som`, que os declara
 ```bash
 pnpm lint
 pnpm test
-pnpm render <vídeo>              # ou uma composição de prévia com as cenas do trecho
-pnpm critique <vídeo>            # ou pnpm critique out/<arquivo>.mp4
+pnpm scene <vídeo> <id> [id...]  # só as cenas mexidas, em out/<vídeo>/cenas/<id>.mp4
+pnpm critique out/<vídeo>/cenas/<id>.mp4
+pnpm join <vídeo>                # o vídeo inteiro, das cenas já renderizadas e do som
+pnpm critique <vídeo>
 ```
 
-Renderize o vídeo e leia as tiras de quadros consecutivos que `critica-movimento` pede; `ffmpeg -ss <s> -t <dur> -i out/<vídeo>.mp4 -vf "fps=8,scale=320:180,tile=6x5" -frames:v 1 tira.png` monta uma. Com uma medida do `pnpm critique` fora da faixa, o mapa segundo a segundo e o conserto de cada medida estão na seção Medidas da mesma unidade.
+Renderize só as cenas que mudaram: um desenho de `src/art/` ou de `parts/` que mudou pede todas as cenas que o usam, e uma frase da narração que mudou pede a cena dela (o `pnpm join` acusa as que ficaram com a duração antiga). Renderize e leia as tiras de quadros consecutivos que `critica-movimento` pede; `ffmpeg -ss <s> -t <dur> -i out/<vídeo>/cenas/<id>.mp4 -vf "fps=8,scale=320:180,tile=6x5" -frames:v 1 tira.png` monta uma. Com uma medida do `pnpm critique` fora da faixa, o mapa segundo a segundo e o conserto de cada medida estão na seção Medidas da mesma unidade.
 
 Com o trecho renderizado e as suas próprias tiras lidas, acione o subagente `critico-de-movimento`, que não animou nada e faz as passadas de `critica-movimento`. Passe o nome da pasta do vídeo, o caminho do MP4, os planos a julgar e a partitura. Ele julga; quem decide e refaz é você, pelos passos 4 a 6 do procedimento de `critica-movimento`, acionando-o de novo só com os planos alterados.
 

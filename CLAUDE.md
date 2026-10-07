@@ -29,15 +29,17 @@ uv run --project tools/sound pytest tools/music -q   # os de tools/music rodam n
 pnpm check-script <vídeo>     # valida script.json
 pnpm narrate <vídeo>          # gera a narração (frases já geradas vêm do cache)
 pnpm voice <vídeo>            # estúdio de voz: escolher tomadas de ouvido
-pnpm stills <vídeo> [quadros] # PNGs em out/stills/<vídeo>/; sem quadros, um por plano
+pnpm stills <vídeo> [quadros] # PNGs em out/<vídeo>/stills/; sem quadros, um por plano
 pnpm critique <vídeo|arquivo> [animatic|som]   # mede o render (ou o som dele) contra a faixa dos vídeos de referência
 pnpm music <vídeo> [semente]  # trilha
-pnpm render <vídeo>           # out/<vídeo>.mp4
-pnpm sound <vídeo> out/<vídeo>.som.mp3   # só o som (voz, trilha e efeitos), em minutos
+pnpm scene <vídeo> <id> [id...]   # renderiza só essas cenas, em out/<vídeo>/cenas/<id>.mp4
+pnpm join <vídeo>             # o vídeo inteiro, das cenas já renderizadas e do som: out/<vídeo>/<vídeo>.mp4
+pnpm render <vídeo> out/<vídeo>/<vídeo>.mp4   # o vídeo inteiro de uma vez, em cerca de meia hora
+pnpm sound <vídeo> out/<vídeo>/<vídeo>.som.mp3   # só o som (voz, trilha e efeitos), em minutos
 ```
 
-- `pnpm critique <vídeo>` lê `out/<vídeo>.mp4`, então pede um `pnpm render` antes; com `animatic`, as medidas de movimento ainda não reprovam. Com `som`, separa o áudio em voz, música e efeitos na GPU e guarda a separação em `out/som/<nome>/`: apague a pasta para medir de novo um arquivo que mudou. O `pnpm sound` tem configuração própria (`remotion.sound.config.ts`), porque a de `remotion.config.ts` fixa o h264 e recusa uma saída em mp3.
-- `pnpm render` não dá o arquivo de entrega: `out/<vídeo>.final.mp4` sai do ffmpeg com `loudnorm`, no passo a passo de `.claude/skills/producao/etapas/corte-final.md`.
+- `pnpm critique <vídeo>` lê `out/<vídeo>/<vídeo>.mp4`, então pede um `pnpm join` (ou um `pnpm render`) antes; com `animatic`, as medidas de movimento ainda não reprovam. Com `som`, separa o áudio em voz, música e efeitos na GPU e guarda a separação em `som/<nome>/`, ao lado do arquivo medido: apague a pasta para medir de novo um arquivo que mudou. O `pnpm sound` tem configuração própria (`remotion.sound.config.ts`), porque a de `remotion.config.ts` fixa o h264 e recusa uma saída em mp3.
+- `pnpm render` não dá o arquivo de entrega: `out/<vídeo>/<vídeo>.final.mp4` sai do ffmpeg com `loudnorm`, no passo a passo de `.claude/skills/producao/etapas/corte-final.md`.
 - O Vitest só inclui `src/**/*.test.ts` e `scripts/**/*.test.ts`; sem isso rodaria os testes das ferramentas clonadas em `vendor/`.
 - Código mudou: `pnpm lint` e `pnpm test`. Etapa de vídeo mudou: o comando dela na tabela do `README.md`.
 - `pnpm setup:tools` baixa cerca de 20 GB de modelos; `pnpm narrate`, `pnpm music` e `pnpm render` usam a GPU e levam minutos. `pnpm sfx` é o único comando que depende de serviço externo (`FREESOUND_API_KEY` no `.env`).
@@ -86,5 +88,14 @@ O processo de produção mora em `.claude/skills/`, uma skill por dono de entreg
 - Nomes de arquivos, código e chaves do roteiro em inglês. Comentários, documentação, conteúdo dos vídeos e skills em português do Brasil.
 - Os comentários do código explicam o porquê (a decisão, o workaround), com densidade alta; siga o padrão dos arquivos vizinhos.
 - As decisões do usuário ficam na pasta do vídeo, no git: `script.md`, `art.md`, `score.md`, `sound.md`, `approvals.md` e `voice.json` (as tomadas escolhidas de ouvido no `pnpm voice`, que valem acima da escolha automática do `pnpm narrate`). Uma linha de `approvals.md` só é escrita depois do "sim" do usuário na conversa, e nunca é apagada (formato no `README.md`).
-- Fora do git: `public/videos/` (narração e trilha), `vendor/`, `voice/` (amostras de voz, dado pessoal), `out/` (renders). Tudo em `out/` e `public/videos/` pode ser gerado de novo.
+- Fora do git: `public/videos/` (narração e trilha), `vendor/`, `voice/` (amostras de voz, dado pessoal), `out/` (a bancada: renders e conferências) e `acervo/` (o que foi publicado). Tudo em `out/` e `public/videos/` pode ser gerado de novo.
 - Comportamento mudou: os testes e a documentação dele (README, `etapas/`) mudam junto.
+
+## Como um ajuste é feito
+
+Valem para as quatro direções, em toda conversa.
+
+- **No lugar.** Um ajuste edita o arquivo da cena ou do desenho, e o "antes" é o git. Nada de versão ao lado atrás de uma chave, nem de composição paralela para depois ligar cena a cena: isso só cabe a um desenho que ainda não existe em cena nenhuma. O ajuste é visto com `pnpm scene <vídeo> <id>`, que leva segundos por cena, e o vídeo inteiro sai de `pnpm join`.
+- **Um endereço por arquivo.** O que um comando grava em `out/` tem lugar fixo e é sobrescrito (o mapa está no `README.md`). O que não tem lugar (comparação lado a lado, script avulso, teste) vai para `out/rascunho/`, que pode ser apagada inteira a qualquer hora.
+- **Linha de parada.** A régua de uma cena é o trecho do mesmo vídeo que o usuário já aceitou (sem ele, o último vídeo publicado), não o canal de referência: a referência ensina método e não reprova cena. Depois de duas recusas do usuário na mesma cena, diga que a linha chegou e proponha aceitar a terceira entrega com ressalva: o defeito entra na linha do aceite em `approvals.md` e vira lição candidata. Não vale para o que quebra o entendimento (imagem que contradiz a narração, texto ilegível, erro de fato), que é consertado sempre.
+- **Retrospectiva.** Quando o usuário aceita algo que antes recusou, a diferença entre a primeira entrega e a aceita é uma lição. Pergunte em uma linha, na língua do produto (o que se vê ou se ouve, nunca o texto da skill), se ela vale para os próximos vídeos. Com o "sim": se a unidade dona do assunto já dizia aquilo, reescreva o trecho que não foi seguido; se não dizia, acrescente a lição marcada como **proposta**. A proposta pode ser usada, e a crítica não reprova por ela; vira regra quando um produto feito por ela é aceito de primeira, e sai quando é recusado. Uma lição por commit, para poder ser desfeita sozinha. O que foi aceito de primeira não gera pergunta.

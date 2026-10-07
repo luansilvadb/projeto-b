@@ -36,7 +36,6 @@ import {
   type HerdStride,
 } from "../parts/Herd";
 import { Savanna, SAVANNA_GROUND_Y } from "../parts/Savanna";
-import { polished } from "../polish";
 import { Sweep } from "./NightFallsScene";
 import { Grow } from "./SleepDebtScene";
 
@@ -85,7 +84,7 @@ export const SavannaStage: React.FC<SavannaStageProps> = ({
         {/* Dentro daqui o quadro é o do vídeo: é o relógio do cenário. */}
         <Sequence from={-clock} layout="none">
           <Camera {...camera}>
-            <Savanna daylight={daylight} orb={orb} finish={polished()}>
+            <Savanna daylight={daylight} orb={orb} finish>
               {children}
             </Savanna>
           </Camera>
@@ -410,7 +409,7 @@ const RESTLESS_FRAMES = 12;
 const trunkTip = (trunk: number): readonly [number, number] => {
   const { x, y, width } = MATRIARCHS.left;
   const scale = width / 520;
-  const [tipX, tipY] = trunkTipAt(trunk, 0, polished());
+  const [tipX, tipY] = trunkTipAt(trunk, 0, true);
   return [x - scale * tipX, SAVANNA_GROUND_Y + y + scale * tipY];
 };
 
