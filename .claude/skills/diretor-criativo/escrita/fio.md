@@ -68,7 +68,7 @@ O **fio** é o que o espectador segura do primeiro ao último minuto. Quatro mec
 - ouvinte: fornece o que uma retomada precisa devolver, na cobrança da promessa, e quanto o detalhe pode desviar.
 - arco: fornece os blocos, o que liga um ao seguinte e a estimativa de palavras.
 - explicacao: fornece a tensão e os poucos elementos; o fio é construído sobre eles.
-- moldes: fornece o molde.
+- moldes: fornece o repertório do que pode carregar o vídeo.
 - checagem: confere o detalhe de cada personagem, as contas do caso corrente e o que cada concessão afirma.
 
 ## LIMITES

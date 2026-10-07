@@ -44,7 +44,7 @@ Como fazer o texto explicar para quem assiste, em vez de relatar fatos?
 
 **Procedimento:**
 
-1. Escolha o molde, conforme `moldes`.
+1. Veja o que carrega o vídeo, conforme `moldes`.
 2. Escreva a tensão em uma frase, no formato "era de esperar X, e no entanto Y". É o assunto do vídeo; o tema pesquisado é a explicação.
 3. Liste o que o espectador precisa saber para esperar X. Isso é o bloco de mecanismo, e vem antes de qualquer evidência.
 4. Escolha os poucos elementos do vídeo (até quatro bichos, coisas ou personagens) e a ordem em que são medidos uns contra os outros.
@@ -56,7 +56,7 @@ Como fazer o texto explicar para quem assiste, em vez de relatar fatos?
 
 ## DEPENDÊNCIAS
 - ouvinte: fornece as necessidades a que o veredito do padrão 10 e o mapa e a recapitulação do padrão 12 atendem: progresso que se percebe e caminho acompanhável.
-- moldes: fornece o molde do vídeo e a estrutura dele.
+- moldes: fornece o repertório do que pode carregar o vídeo.
 - angulo: fornece a tese; aqui ela é reformulada como expectativa e quebra.
 - analogias: fornece a construção da metáfora; aqui ela pode virar o dispositivo do vídeo inteiro.
 
