@@ -10,7 +10,7 @@ Transforma um domínio, projeto ou codebase em um workflow acionável e suas uni
 ## FLUXO
 
 1. Defina objetivo, escopo, anti-escopo, entradas, saídas, regras, exceções e restrições.
-2. Gere as perguntas que o agente deve responder para realizar o objetivo.
+2. Gere as perguntas que o agente deve responder para realizar o objetivo. Vira unidade só o *delta* (`poda`).
 3. Compare com as unidades existentes; marque lacunas, redundâncias e conteúdo fora do escopo. Atualize, consolide ou remova unidades; redundância e conteúdo fora do escopo ainda sem solução são ajustes pendentes.
 4. Para cada lacuna, defina ou reutilize a categoria adequada e crie uma unidade.
 5. Valide cada unidade e repita os passos 2 a 5 até a PARADA.

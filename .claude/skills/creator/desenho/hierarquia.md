@@ -19,7 +19,7 @@ Empurre de menos e o topo incha; empurre demais e você esconde o que o agente d
 
 **Inchaço** é o modo de falha deste degrau: um documento longo demais, mesmo com cada linha viva e única. A atenção se dilui pelo excesso, e cada linha a mais é uma linha a manter relevante. A cura é a escada e a `divisao`.
 
-**No workflow:** `SKILL.md` ocupa os degraus 1 e 2 (os passos e os ponteiros do índice); cada unidade é referência divulgada, degrau 3.
+**No workflow:** `SKILL.md` ocupa os degraus 1 e 2 (os passos e os ponteiros do índice); cada unidade é referência divulgada, degrau 3. A ordem de injeção de um passo lista só o que todo ramo dele precisa; a unidade que responde a um problema entra pelo ponteiro, quando o problema aparece.
 
 ## DEPENDÊNCIAS
 - ponteiros: o ponteiro de contexto e o ramo.
