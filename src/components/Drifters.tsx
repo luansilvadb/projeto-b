@@ -23,8 +23,8 @@ const SIDEWAYS = 8;
 const wrap = (value: number, size: number) => ((value % size) + size) % size;
 
 /**
- * Partículas em suspensão, derivando devagar: poeira no ar, plâncton na água.
- * Preenchem o fundo para nenhum quadro ficar totalmente parado.
+ * Partículas em suspensão, derivando devagar, para o meio que as tem: plâncton
+ * na água, grãos no tecido. No ar do mundo leem como sujeira.
  */
 export const Drifters: React.FC<DriftersProps> = ({
   count = 46,

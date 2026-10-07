@@ -2,7 +2,8 @@ import { random } from "remotion";
 
 /**
  * A pausa viva: o movimento de quem não está agindo. Os ciclos recebem o
- * tempo em segundos e uma fase, para vizinhos nunca se moverem juntos.
+ * tempo em segundos e uma fase, para o que é independente não se mover como
+ * cópia do vizinho.
  */
 
 /** Onda de -1 a 1 com o período pedido; `phase` desloca o começo do ciclo. */

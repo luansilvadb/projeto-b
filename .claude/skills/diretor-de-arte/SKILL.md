@@ -122,7 +122,7 @@ Injete o procedimento da etapa, depois a unidade de condução e as unidades do 
 | Animatic | Desenho | `entrevista-imagem`, `forma`, `personagem`, `cenario` | os desenhos que o vídeo usa, e a folha de modelo de quem volta |
 | | Quadro | `composicao`, `texto` | um quadro composto por plano |
 | | Revisão | `critica-quadro` | os quadros e o diagnóstico deles, levados à aprovação |
-| Animação | Partitura | `entrevista-movimento`, `sincronia`, `entradas` | para cada plano, a lista do que acontece, em que palavra e por quanto tempo |
+| Animação | Partitura | `entrevista-movimento`, `sincronia`, `entradas` | o que acontece em cada plano, com que causa e com que intenção; os tempos entram depois do render |
 | | Movimento | `pausa-viva`, `acao`, `movimento`, `transicoes`, `efeitos` | os planos em movimento |
 | | Revisão | `critica-movimento` | o vídeo e o diagnóstico dele, levados à aprovação |
 
