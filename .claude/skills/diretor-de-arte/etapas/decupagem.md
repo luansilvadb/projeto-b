@@ -14,7 +14,7 @@ Pronto quando: `art.md` tem o elenco, com a ficha de cada personagem, as paletas
 
 ## Passo 2: planos
 
-Unidades `encenacao`, `planos` e `dado`. Para cada cena de `script.json`, encene cada oração e divida a cena em planos. Cada plano de `shots` leva o que a unidade `planos` registra, nos campos e valores que o validador aceita:
+Unidades `encenacao`, `planos` e `dado`. Para cada cena de `script.json`, encene o que a narração afirma e divida a cena em planos. Cada plano de `shots` leva o que a unidade `planos` registra, nos campos e valores que o validador aceita:
 
 | Campo | O que é | Valores |
 |---|---|---|

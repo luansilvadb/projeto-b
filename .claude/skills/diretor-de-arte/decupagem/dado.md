@@ -57,7 +57,7 @@ Como mostrar número, escala e comparação sem virar slide?
 5. Aplique o teste.
 
 ## DEPENDÊNCIAS
-- encenacao: fornece a escada em que o dado é o último degrau.
+- encenacao: fornece o critério do slide e o repertório de que o dado faz parte.
 - elenco: fornece quem opera ou reage ao dado.
 
 ## LIMITES

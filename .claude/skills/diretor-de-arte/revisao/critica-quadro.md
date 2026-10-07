@@ -11,8 +11,8 @@ Com que critérios e medidas julgar os quadros?
 
 1. **Encenação**
    - Sem som e sem etiqueta, o plano diz o que a oração afirma?
-   - O plano é acontecimento, metáfora ou personificação, ou é um esquema com rótulos?
-   - Os diagramas passam de 37% dos planos? Na referência vão de 3% a 37%.
+   - O meio vem do que se afirma: o acontecimento se vê acontecer, e o esquema ou o dado está onde a relação ou a quantidade é o assunto?
+   - Os diagramas passam de 37% dos planos, o teto da referência? Confira se o vídeo está explicando por slide.
    - Há uma figura com olhos na parcela de planos que o tema pede?
 2. **Decupagem**
    - A imagem responde quando a ideia, a ação ou o foco mudam, e toda troca de composição tem um motivo na fala?
