@@ -40,7 +40,7 @@ O que as medidas não veem: a contagem de efeitos tem um piso de 2 por minuto, d
    - Há salto de volume de mais de 6 dB em alguma borda de momento?
    - Cada nível que não é `leito` aparece na distância à voz daquele trecho?
 4. **Nível**
-   - A distância mediana está na faixa? Há trecho de fala com a música a menos de 9 dB?
+   - Onde a distância sai da referência ou muda muito? Nesses trechos, a fala continua fácil e a música continua fazendo o trabalho dela? A medida localiza a escuta e não reprova sozinha: as faixas de nível são sensores, e `recuo` fica fora dos 9 a 15 dB por projeto (`niveis`). Marque o instante para o roteiro de escuta.
 5. **Efeitos**
    - A contagem por minuto está na faixa, capítulo a capítulo?
    - Cada efeito do roteiro aparece no mapa segundo a segundo, no instante dele? Algum caiu num trecho quieto?

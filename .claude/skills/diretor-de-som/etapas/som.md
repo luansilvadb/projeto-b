@@ -15,7 +15,7 @@ Parta dos compromissos que houver na seção "Arco" de `sound.md` (pode ser uma 
 3. **O menor som.** Peça à skill `producao` só o que a dúvida pede: a trilha ainda sem momentos (`pnpm music <vídeo>`; o leito sozinho se ouve em `public/videos/<vídeo>/music.wav`), mais tarde uma parte só (`pnpm music <vídeo> <semente> <parte>`, com as outras já geradas) e, quando a dúvida é contra a voz, o som do vídeo.
 4. **Medir e consertar.** O que a medida, o comando ou o `pnpm check-script` acusam é consertado antes de qualquer escuta, sem pergunta.
 5. **O ouvido, se for preciso.** Sobrando uma dúvida que só o ouvido resolve e que pesa sobre o que vem depois, leve o arquivo, o instante e a pergunta. A resposta é evidência: não vai a `approvals.md`.
-6. **Crescer.** O que funcionou fica, e o mapa ganha a camada seguinte, se o som a pedir: o momento na região em que o leito gerado não realiza o que o vídeo precisa (pode não haver nenhum), os níveis onde a fala ou a imagem pedem, os efeitos (`momentos`, `niveis`, `silencio`, `dose`). Volte ao passo 1.
+6. **Crescer.** O que funcionou fica, e o mapa ganha a camada seguinte, se o som a pedir: o momento na região em que o leito gerado não realiza o que o vídeo precisa (pode não haver nenhum), os níveis só nas regiões em que a presença do leito gerado está errada (pode não haver nenhum), os efeitos (`momentos`, `niveis`, `silencio`, `dose`). Volte ao passo 1.
 
 A ordem das camadas é dependência: os momentos são refeitos sobre o leito, e os efeitos são julgados contra a música. Um efeito ou um silêncio que seja a maior incerteza pode ser testado antes. Duas versões que passam e fazem cenas diferentes vão ao usuário em A e B, em `out/rascunho/`; a escolhida entra no mapa.
 
