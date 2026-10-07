@@ -3,54 +3,53 @@ Que paletas o vídeo usa, e quando troca de uma para outra?
 
 ## RESPOSTA
 
-**O que a referência faz.** Um quadro tem em média 4,4 cores, e a cor dominante ocupa cerca de metade dele. O fundo é claro em 42% do tempo, médio em 16% e escuro em 39%. A cor dominante troca 11 vezes por minuto. No vídeo inteiro, a família de cor mais comum fica com 26% das cores vivas: nenhum vídeo é de uma cor só. As faixas dessas três medidas são as que o `pnpm critique` confere.
+**A cor serve quando:**
 
-**Paleta de plano.** Quatro papéis:
+- **O assunto se separa do fundo**, em valor e em matiz, e o maior contraste do quadro fica no ponto focal.
+- **Superfícies vizinhas continuam separáveis.** Quando duas áreas grandes que se tocam (a água e a areia, o chão e a parede) ficam na mesma cor, o quadro vira uma cor só, por mais colorido que seja o assunto: foi a lagoa de noite, com água e areia índigo, que caiu a 2,1 cores por quadro. O que as separa pode ser o matiz, o valor, a saturação, a luz ou a borda.
+- **A cor que significa continua significando.** A cor ligada a um conceito (o perigo, um dos lados de uma disputa) vale enquanto o sentido é o mesmo; quando ele muda, a mudança de cor acontece à vista, para o espectador acompanhar.
+- **Toda troca de cor diz que algo mudou**: o lugar, o estado, a ideia ou o foco. Troca sem motivo é ruído, e uma ideia nova pode manter o fundo quando a continuidade vale mais.
+- **Sombra e luz têm cor.** Saem da paleta e da luz da cena. Preto ou branco por cima, em transparência, lê como véu colado no desenho.
+- **Quem volta é reconhecido pela cor.** Cada figura do elenco tem as suas, registradas, e elas funcionam em todo modo em que a figura aparece.
+- **Toda cor vem das paletas registradas.** Cor escrita solta num desenho quebra a constância no plano seguinte.
 
-| Papel | O que é |
-|---|---|
-| Fundo | uma cor e suas vizinhas em degradê; a maior área do quadro |
-| Assunto | uma ou duas cores que se destacam do fundo em valor e em matiz |
-| Acento | uma cor pequena e saturada, no ponto para onde o olho deve ir |
-| Neutros | claro e escuro para olhos, texto e brilho |
-
-**Modo.** Uma paleta com significado: diz ao espectador onde ele está. A referência alterna dois grandes modos:
+**Modo.** Uma paleta com significado: um conjunto de cores que volta e diz ao espectador onde ele está, em que estado ou em que camada da explicação. Ele o aprende cedo, e o modo só troca quando o lugar ou o sentido troca. Os dois que a referência alterna, e que o canal já usou:
 
 - **Mundo**: o que se vê de fora. Fundo claro, pastel saturado, luz do dia.
 - **Por dentro**: o mecanismo, o microscópico, o pensamento. Fundo escuro em índigo ou roxo, formas em cor de néon, coisas que brilham.
 
-Cada vídeo define de dois a quatro modos. O espectador os aprende no primeiro minuto, e o modo só troca quando o lugar ou o sentido troca.
+O que define o modo é o que ele separa, não a claridade: o mundo de noite é escuro, e o assunto pode pedir outros modos (a analogia, o dado, o sonho).
 
-**Regras:**
+**Identidade do canal.** A cor é saturada e tem matiz nos dois extremos: o escuro é azul profundo, índigo ou roxo, e o claro é pastel (ciano, amarelo quente, menta, rosa). Preto, cinza e branco puros ficam para o assunto que os pede, como o espaço. Um tema grave não troca essa linguagem por cor lavada.
 
-1. **Fundo escuro tem cor.** Azul profundo, índigo ou roxo: escuro, mas com o matiz visível. Na referência, 69% dos fundos escuros são azuis ou azul-violeta; preto e cinza aparecem quase só num vídeo sobre o espaço.
-2. **Fundo claro é pastel saturado**: ciano, amarelo quente, menta, rosa. Branco puro quase não aparece.
-3. **De quatro a cinco cores por quadro**: o fundo, duas ou três no assunto, um acento. Menos de três é monocromático; mais de seis vira ruído.
-4. **O assunto se separa do fundo** por valor (claro sobre escuro ou o contrário) e por matiz distante. O maior contraste do quadro fica no ponto focal.
-5. **A cor do fundo troca a cada ideia.** Dentro do mesmo modo, planos vizinhos mudam o matiz do fundo; a troca de cor avisa "ponto novo" como um corte avisaria.
-6. **Sombra e luz têm matiz.** A sombra é o tom base mais escuro e puxado para o frio (azul, roxo); a luz, mais clara e puxada para o quente. Nunca preto ou branco por cima em transparência.
-7. **Cada personagem tem as suas cores** e as mantém dentro de um modo. Quando o modo troca, ele é repintado na paleta do modo (versão néon, silhueta de uma cor).
-8. **Cor com significado não muda.** A cor ligada a um conceito (o perigo, um dos lados de uma disputa) vale para o vídeo inteiro. Quando o conceito cresce na fala, a cor dele cresce em área: começa como acento e chega a ser o fundo.
-9. **Tema grave** mantém a saturação. O peso vem do fundo escuro, da silhueta e do vermelho, nunca de cor lavada.
-10. **Chão e fundo não dividem o matiz.** Onde há chão (areia, calçada, piso), ele fica numa família de cor diferente da do fundo atrás dele. Com os dois no mesmo matiz o quadro vira uma cor só, por mais colorido que seja o assunto: foi o caso da lagoa de noite com água e areia índigo, que caiu a 2,1 cores por quadro.
+**Papéis da cor num plano.** Um vocabulário para ler o quadro, não uma cota a preencher:
 
-**Procedimento:**
+| Papel | O que é |
+|---|---|
+| Fundo | uma cor e suas vizinhas em degradê; a maior área do quadro |
+| Assunto | o que se destaca do fundo em valor e em matiz |
+| Acento | uma cor pequena e saturada, no ponto para onde o olho deve ir |
+| Neutros | claro e escuro para olhos, texto e brilho |
 
-1. Liste os lugares do roteiro (o mundo, por dentro, a analogia, o dado) e dê um modo a cada um.
-2. Para cada modo, escolha o matiz do fundo e derive o resto: degradê do fundo, cores do assunto, acento, cor de texto e de etiqueta.
-3. Percorra os blocos e atribua a cada um o modo e o matiz do fundo. Blocos vizinhos precisam diferir.
-4. Confira o conjunto: nenhuma família de cor domina o vídeo, e claro e escuro se alternam.
-5. Renderize uma faixa com os fundos na ordem do vídeo e o protagonista pintado em cada modo.
-6. Leve a faixa ao usuário, como decisão, e registre as paletas na ficha visual.
+**Técnicas que já serviram**, cada uma para um problema. São possibilidades:
 
-**Onde as cores moram.** Toda cor usada num desenho vem das paletas registradas. Cor escrita solta num desenho quebra a constância no plano seguinte.
+| Problema | Uma saída | De onde vem |
+|---|---|---|
+| O espectador precisa notar que a ideia mudou, sem corte | dentro do mesmo modo, o fundo muda de matiz: a troca avisa "ponto novo" | não registrada |
+| Um conceito cresce na fala | a cor dele cresce em área: começa como acento e chega a ser o fundo | um vídeo sobre gordura, adotado pelo usuário |
+| Tema grave | o peso vem do fundo escuro, da silhueta e do vermelho, com a saturação mantida | o mesmo vídeo |
+| Dar cor à sombra e à luz | a sombra é o tom base mais escuro, puxado para o frio (azul, roxo); a luz, mais clara e puxada para o quente | não registrada |
+| A figura entra noutro modo | repintada na paleta dele: a versão néon, a silhueta de uma cor | não registrada |
+
+**Medidas da referência** (evidência: situam e não reprovam por si; as faixas são as do `pnpm critique`). Um quadro tem em média 4,4 cores, e a dominante ocupa cerca de metade dele. O fundo é claro em 42% do tempo, médio em 16% e escuro em 39%; 69% dos fundos escuros são azuis ou azul-violeta. A cor dominante troca 11 vezes por minuto. No vídeo inteiro, a família de cor mais comum fica com 26% das cores vivas. Como ler: poucas cores num quadro pedem conferir se o assunto se separa e se duas superfícies colapsaram; muitas, se ainda há um foco; uma família dominando o vídeo, se os lugares e as ideias estão se distinguindo.
 
 ## DEPENDÊNCIAS
-- elenco: fornece os personagens, cujas cores próprias precisam funcionar em todos os modos.
+- elenco: fornece as figuras, cujas cores precisam funcionar em todos os modos.
 - entrevista-imagem: define que as paletas são decisão do usuário.
 
 ## LIMITES
 - Sombra, brilho e borda de luz como forma pertencem a `forma`; luz de cenário, a `cenario`.
+- Se a figura continua reconhecível entre modos é conferido em `personagem`.
 
 ## EXEMPLO
 > Vídeo sobre por que dormimos, três modos:

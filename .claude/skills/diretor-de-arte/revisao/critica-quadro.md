@@ -23,9 +23,9 @@ Com que critérios e medidas julgar os quadros?
    - O assunto tem o tamanho que a escala pede?
    - Em cinza e pequeno, o assunto ainda salta do fundo?
 4. **Cor**
-   - O plano está no modo certo? Tem de quatro a cinco cores?
-   - O fundo troca de matiz entre ideias vizinhas?
-   - O escuro tem cor? O maior contraste está no ponto focal?
+   - O assunto se separa do fundo, as superfícies vizinhas se separam entre si, e o maior contraste está no ponto focal?
+   - O modo é o do lugar ou do sentido do plano, e a cor que significa algo continua significando? Cada troca de cor corresponde a algo que mudou?
+   - Sombra e luz têm cor, sem preto nem branco transparente por cima?
 5. **Desenho**
    - Construção, julgada na silhueta numa cor só, antes de qualquer outro item desta passada: os quatro itens de `forma` estão lá (junção em curva, membro nasce de massa, o que se repete não é cópia, a linha de cima tem acontecimentos), e a pose conta a cena, como `personagem` pede? Silhueta reprovada é bloqueante, e o resto da passada espera por ela.
    - O volume se lê, e a sombra é uma forma desenhada, que acompanha o volume?
