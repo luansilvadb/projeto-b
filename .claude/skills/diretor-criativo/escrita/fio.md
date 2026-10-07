@@ -13,7 +13,7 @@ O **fio** é o que o espectador segura do primeiro ao último minuto. Quatro mec
 
 **1. Demora.** Cada ideia nova fica na tela e na fala até assentar: o caso concreto, a regra geral e a consequência para quem assiste, antes de a próxima entrar.
 
-- Orçamento: ao menos 150 palavras por ideia nova. Um vídeo de oito minutos carrega de seis a oito ideias. As que sobram na pesquisa são corte, e o corte é decisão do usuário.
+- Orçamento: ao menos 150 palavras por ideia nova. Um vídeo de oito minutos carrega de seis a oito ideias. As que sobram na pesquisa são corte (`entrevista` diz quando ele é do usuário).
 
 **2. Veredito ganho.** A frase de efeito é a leitura do narrador sobre a prova que ele acabou de mostrar. Primeiro vem o fato seco, em série e sem adjetivo (quem, quando, quanto, o que fez); depois, uma frase só. "Dezessete reuniões, três dias de intervalo, trinta bilhões na conta de luz. Uma mera coincidência." A mesma frase, depois de um fato só, é enfeite.
 
@@ -43,7 +43,7 @@ O **fio** é o que o espectador segura do primeiro ao último minuto. Quatro mec
 
 **8. Saída concedida.** O bloco abre com a saída que o espectador tentaria ali, dá a ela o que ela tem de verdadeiro ("e é verdade"; "existe, sim, um caso em que funciona") e a segue até onde ela fecha. Uma depois da outra, as saídas são o caminho do vídeo.
 
-**Ficha do fio.** Escrita antes de qualquer frase e levada ao usuário junto com a estrutura:
+**Ficha do fio.** O estado do fio: orienta as frases e acompanha o que o texto mostrar:
 
 ```markdown
 - Refrão: <a frase, a moldura ou a palavra>, e o que cada volta acrescenta
@@ -56,13 +56,13 @@ O **fio** é o que o espectador segura do primeiro ao último minuto. Quatro mec
 
 **Procedimento:**
 
-1. Conte as ideias novas do arco e divida o orçamento de palavras por elas. Pronto quando toda ideia tem 150 palavras ou mais, ou o corte das que sobram foi levado ao usuário.
+1. Conte as ideias novas do arco e divida o orçamento de palavras por elas. Pronto quando toda ideia tem 150 palavras ou mais, ou as que sobram foram cortadas.
 2. Escreva o refrão. Pronto quando cada volta está presa a um bloco e diz mais do que a anterior.
 3. Para cada bloco, liste os fatos secos que ele mostra e, só depois, o veredito. Pronto quando todo veredito tem a sua série escrita antes dele.
 4. Escolha os personagens e, na base de fatos, o detalhe de cada um. Pronto quando ninguém que volta no vídeo está sem nome e sem detalhe.
 5. Marque as promessas. Pronto quando cada uma tem o bloco em que é plantada, o bloco em que é cobrada e o que a cobrança acrescenta.
 6. Nos blocos que argumentam, escolha o caso corrente e a saída que abre cada um. Pronto quando toda ideia desses blocos entra por um caso.
-7. Preencha a ficha do fio e leve-a ao usuário, com a estrutura. Só depois escreva as frases, conforme `narracao`.
+7. Preencha a ficha do fio. As frases são escritas conforme `narracao`.
 
 ## DEPENDÊNCIAS
 - ouvinte: fornece a regra de redizer, que a cobrança da promessa cumpre, e a do desvio dentro da frase, que o detalhe cumpre.

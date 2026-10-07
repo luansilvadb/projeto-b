@@ -39,10 +39,10 @@ Quando a base de fatos não autoriza esperança, a virada é a clareza: nomear o
 **Procedimento:**
 
 1. Nomeie a sensação em uma linha: com o que quem assiste sai, sobre si mesmo? Pronto quando a linha serve de primeira oração da chamada ("Se quiser continuar...").
-2. Escreva a moral numa frase e marque no gancho aquilo a que a última frase vai responder. Pronto quando o trecho do gancho está citado; se ele não existe, o pedido volta a `gancho`, e a mudança de um gancho aprovado é decisão do usuário.
+2. Escreva a moral numa frase e marque no gancho aquilo a que a última frase vai responder. Pronto quando o trecho do gancho está citado; se ele não existe, o pedido volta a `gancho`.
 3. Escreva dois fechamentos inteiros, com tipos de virada distintos. Pronto quando cada um tem os cinco movimentos, cada movimento tem a sua frase e o total cabe na parcela de `arco`.
 4. Aplique os testes a cada um. Pronto quando cada teste tem a frase que o cumpre, citada.
-5. Leve os dois ao usuário, cada um com a sensação e a moral ditas em uma linha.
+5. Fique com o que passa melhor nos testes. Quando os dois passam e deixam sensações ou morais diferentes, a escolha é do usuário (`entrevista`), cada um com a sensação e a moral ditas em uma linha.
 
 **Testes:**
 

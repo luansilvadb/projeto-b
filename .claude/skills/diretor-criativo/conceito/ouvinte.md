@@ -24,7 +24,7 @@ Para quem o texto do vídeo é escrito, e o que isso exige de cada trecho?
 3. **Posição.** Na virada de cada capítulo, uma frase diz o que ficou decidido e o que falta ("essa era a primeira das três"). É a passagem de `narracao`, com esse conteúdo.
 4. **Redizer.** O que volta depois de 150 palavras ou mais volta inteiro: o termo com a explicação numa oração, o personagem com o nome e o que fez, a promessa com aquilo que foi plantado. O narrador marca que algo volta ("essa distinção volta"); guardar é trabalho dele.
 5. **Um passo por frase.** O processo é contado um passo por frase, na ordem em que acontece. Com quatro passos ou mais, o narrador diz antes quantos são.
-6. **Até cinco.** Toda lista dita ou mostrada tem até cinco itens: as partes do mapa, os passos, a enumeração de uma frase, os itens do texto de tela. O que passa disso é agrupado; cortar itens é decisão do usuário.
+6. **Até cinco.** Toda lista dita ou mostrada tem até cinco itens: as partes do mapa, os passos, a enumeração de uma frase, os itens do texto de tela. O que passa disso é agrupado; o corte que muda o que o vídeo afirma é decisão do usuário (`entrevista`).
 7. **Medida contável.** A duração e a quantidade de que o argumento depende são ditas numa unidade que se conta ("onze dias", "duas horas por noite") ou numa comparação. "Muito tempo" e "bastante" servem ao que o argumento não usa.
 8. **Ganho por bloco.** Todo bloco fecha com o veredito de `explicacao` (padrão 10), dito como aquilo que quem assiste agora sabe. O bloco que abre uma pergunta fecha outra antes.
 9. **Desvio dentro da frase.** O detalhe de personagem e o humor entram como uma oração da frase que carrega o fato (decisão do usuário em 2026-10-04). O segundo assunto espera o bloco dele.

@@ -28,7 +28,7 @@ Como tornar escala e abstração compreensíveis e desenháveis?
 4. Elimine as que falham em qualquer critério.
 5. Declare onde a analogia quebra. Se a quebra induz a erro, diga isso na narração em uma frase ("claro, anticorpos não pensam") ou troque a analogia.
 
-**Analogia central.** A que sustenta a tese e é retomada ao longo do vídeo como metáfora condutora: apresentada cedo, desenvolvida em vários blocos e usada de novo no fechamento (uma escada para etapas, uma orquestra para hormônios, um quarto de roupa suja para informação). É escolhida com o usuário, usada com consistência e nunca misturada com outra para explicar a mesma coisa. Cada retomada acrescenta uma propriedade nova; repetir a mesma imagem sem avançar é enfeite.
+**Analogia central.** A que sustenta a tese e é retomada ao longo do vídeo como metáfora condutora: apresentada cedo, desenvolvida em vários blocos e usada de novo no fechamento (uma escada para etapas, uma orquestra para hormônios, um quarto de roupa suja para informação). A relação que ela afirma é decisão do usuário quando há mais de uma válida (`entrevista`); é usada com consistência e nunca misturada com outra para explicar a mesma coisa. Cada retomada acrescenta uma propriedade nova; repetir a mesma imagem sem avançar é enfeite.
 
 **Entrada marcada.** Analogia de mecanismo é anunciada como analogia ("dá para imaginar assim"), para que o espectador não a tome por descrição literal.
 

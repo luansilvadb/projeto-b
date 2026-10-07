@@ -27,7 +27,7 @@ A pergunta fecha o gancho; raramente o abre. No canal, só 15% dos vídeos come�
 
 1. Escreva ao menos três ganchos em padrões diferentes, todos para a mesma promessa.
 2. Submeta cada um aos testes abaixo.
-3. Leve os aprovados ao usuário com recomendação.
+3. Fique com o que passa melhor nos testes. Vai ao usuário a escolha entre ganchos que mudam a promessa ou o modo como quem assiste entra (`entrevista`).
 
 **Testes:**
 

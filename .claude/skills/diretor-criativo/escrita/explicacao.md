@@ -63,7 +63,7 @@ Como fazer o texto explicar para quem assiste, em vez de relatar fatos?
 ## LIMITES
 - Não inventar experiência do espectador que a base de fatos contradiz.
 - O mecanismo, a expectativa e a comparação que traduz um número são afirmações: precisam estar na base de fatos, ou sair de uma conta feita com números que estão nela. Se a base não sustenta o bloco de mecanismo, a pesquisa volta antes do roteiro.
-- Cortar bichos e fatos da pesquisa para ficar com poucos elementos é uma decisão do usuário.
+- Cortar bichos e fatos da pesquisa para ficar com poucos elementos é decisão do usuário quando o corte muda o que o vídeo afirma ou promete (`entrevista`).
 - Opinião e humor são do narrador sobre o assunto, nunca sobre quem assiste.
 
 ## EXEMPLO

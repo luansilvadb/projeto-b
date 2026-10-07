@@ -14,7 +14,7 @@ Como definir a voz do projeto a partir dos mecanismos do estilo?
 7. **Segunda pessoa**: o espectador é colocado dentro da situação ("você", "seu corpo", "imagine que"). No canal, "você" e variações são cerca de 1 em cada 100 palavras, e quase 2 nos vídeos recentes. A taxa do vídeo inteiro engana: "você" só no gancho e no fecho deixa o miolo frio. Quem assiste entra em todo bloco, como "você", como "nós" ou com o corpo dele de medida.
 8. **Autor visível**: quem escreve aparece como "nós", admite sua posição, seu interesse pessoal no tema e a dificuldade de fazer o vídeo quando isso ajuda o espectador a calibrar a confiança. Opinião é dita como opinião.
 
-**Variáveis por projeto.** Decididas com o usuário e registradas na ficha de voz:
+**Variáveis por projeto.** Registradas na ficha de voz; a posição que muda a identidade do narrador é decisão do usuário (`entrevista`):
 
 | Variável | Polos |
 |---|---|
@@ -29,8 +29,8 @@ Como definir a voz do projeto a partir dos mecanismos do estilo?
 
 1. A partir da tese, proponha uma posição em cada variável e justifique pela natureza do tema (extinção pede peso; um "e se" absurdo pede ludicidade).
 2. Escreva um parágrafo de amostra de 60 a 80 palavras nessa voz, sobre o próprio tema.
-3. Escreva um segundo parágrafo com uma variável deslocada, para dar contraste real à escolha.
-4. Leve as duas amostras ao usuário; a aprovada vira a referência de voz do projeto.
+3. Onde outra posição também serve ao tema e muda a identidade do narrador, escreva um segundo parágrafo com ela.
+4. Havendo os dois, a escolha é do usuário (`entrevista`). O parágrafo que fica é a referência de voz do projeto.
 
 **Ficha de voz.** Posição em cada variável, o parágrafo de referência, de três a cinco regras de "soa assim / não soa assim" extraídas dele e, para cada bloco do arco, por onde quem assiste entra.
 

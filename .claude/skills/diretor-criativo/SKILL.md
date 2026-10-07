@@ -11,7 +11,7 @@ Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio exp
 
 **Entradas:** tema (obrigatório); idioma (padrão pt-BR); duração-alvo (o alvo do canal está em `etapas/roteiro.md`); material de referência, quando houver.
 
-**Saídas:** na pasta `src/videos/<vídeo>/`: `research.md`, com fatos e fontes; `script.json`, com narração, planos e fontes; `script.md`, o registro das decisões aprovadas, com os pares de título e conceito de thumbnail; a linha da 1ª aprovação em `approvals.md`.
+**Saídas:** na pasta `src/videos/<vídeo>/`: `research.md`, com fatos e fontes; `script.json`, com narração, planos e fontes; `script.md`, o registro das decisões atuais do vídeo, com os pares de título e conceito de thumbnail; a linha da 1ª aprovação em `approvals.md`.
 
 ## ANTI-ESCOPO
 
@@ -35,7 +35,7 @@ A etapa seguinte é a narração, na skill `producao`.
 
 ## CONDUÇÃO
 
-A skill opera em modo entrevista: o agente resolve os fatos por conta própria e leva ao usuário apenas decisões, acionando a skill `grilling`; `entrevista` lista as decisões.
+O agente resolve sozinho os fatos e a execução, escrevendo e comparando antes de perguntar, e leva ao usuário a escolha entre alternativas válidas que fariam vídeos diferentes. `entrevista` dá o critério e diz quando cabe a skill `grilling`.
 
 ## SUBAGENTES
 
@@ -62,7 +62,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 
 | Unidade | Pergunta |
 |---|---|
-| `conducao/entrevista` | Que decisões criativas vão ao usuário, e quais o agente resolve sozinho? |
+| `conducao/entrevista` | Quando o agente escreve, compara e escolhe sozinho, e quando duas alternativas válidas fariam vídeos diferentes o bastante para o usuário decidir? |
 | `pesquisa/levantamento` | Como pesquisar o tema e selecionar fontes confiáveis? |
 | `pesquisa/checagem` | Como verificar cada afirmação factual e tratar incerteza e simplificação? |
 | `conceito/ouvinte` | Para quem o texto do vídeo é escrito, e o que isso exige de cada trecho? |

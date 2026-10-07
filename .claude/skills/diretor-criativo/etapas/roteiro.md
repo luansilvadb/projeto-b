@@ -2,7 +2,7 @@
 
 Segunda etapa, depois de `pesquisa`. O roteiro é o arquivo `src/videos/<vídeo>/script.json`, a fonte de tudo que vem depois: a narração é gerada a partir dele, cada cena ganha um componente, a duração do vídeo sai da fala e cada plano diz o que aparece na tela. Termina na **primeira aprovação do usuário**, que cobre o texto e os planos juntos.
 
-Ao lado dele fica `src/videos/<vídeo>/script.md`, o registro das decisões aprovadas (`escrita/formato`).
+Ao lado dele fica `src/videos/<vídeo>/script.md`, o registro das decisões atuais do vídeo (`escrita/formato`).
 
 ## Formato
 
@@ -54,7 +54,7 @@ O número em algarismos, o símbolo e a sigla vão para a tela, descritos na enc
 
 Além das regras do validador:
 
-- O desenho (`escrita/explicacao`) e a ficha do fio (`escrita/fio`) vêm antes do roteiro inteiro. Um trecho curto pode ser escrito antes deles, para testá-los, e o que ele mostrar volta a eles. O usuário aprova a estrutura, a ficha do fio e uma amostra de um minuto antes do roteiro inteiro.
+- O desenho (`escrita/explicacao`) e a ficha do fio (`escrita/fio`) vêm antes do roteiro inteiro. Um trecho curto pode ser escrito antes deles, para testá-los, e o que ele mostrar volta a eles. Antes do roteiro inteiro, uma amostra curta prova a maneira de contar e é mostrada ao usuário, com as decisões que ela pôs em jogo (`conducao/entrevista`); a estrutura e a ficha do fio seguem acompanhando o que o texto mostrar.
 - As frases médias e encadeadas de `escrita/narracao` pesam em dobro aqui: o modelo de voz gera uma frase por vez, com pausa entre elas, e texto picotado em frases curtas sai monótono e mal-humorado.
 - A pontuação decide como a frase é falada; a tabela está na etapa `narracao` da skill `producao`.
 - A vírgula é uma pausa: o modelo de voz para em cada uma. Só ponha vírgula onde quem fala pararia. "E mesmo assim emagreciam", não "e, mesmo assim, emagreciam", que sai com duas pausas.
@@ -96,4 +96,4 @@ Junto com o roteiro, entregue o total do `checador`, as simplificações que ele
 
 Mostre o roteiro em formato de leitura, não o JSON: para cada cena, a narração, os planos (deixa, encenação, escala, paleta e entrada) e as fontes, com o título e o link de cada uma, tirados de `research.md`. Informe a duração estimada, o tempo médio de cada plano e aponte qualquer simplificação ou ponto incerto.
 
-Peça a aprovação explicitamente e só siga para a narração (skill `producao`) depois dela. Com o "sim" do usuário, registre a 1ª aprovação em `src/videos/<vídeo>/approvals.md` (o formato está nas convenções do `README.md`). Mudar o roteiro depois custa caro: cada frase alterada regera áudio, e cada plano alterado refaz desenho; se mudar, registre a reabertura no mesmo arquivo.
+Peça a aprovação explicitamente e só siga para a narração (skill `producao`) depois dela. Com o "sim" do usuário, registre a 1ª aprovação em `src/videos/<vídeo>/approvals.md` (o formato está nas convenções do `README.md`). A aprovação fixa o que o vídeo diz, não a frase (`conducao/entrevista`): a reescrita que preserva a decisão segue sem nova aprovação, passa de novo pelo `checador` e é relatada ao usuário. Depois da narração ela custa: cada frase alterada regera áudio, e cada plano alterado refaz desenho. A mudança de decisão volta ao usuário e é registrada como reabertura no mesmo arquivo.

@@ -36,7 +36,7 @@ Como organizar o vídeo em blocos, do gancho ao fechamento?
 4. Agrupe os blocos em capítulos e dê título a cada um.
 5. Para cada bloco, registre: número, capítulo, título de trabalho, função, a pergunta que responde, a pergunta que abre, os itens da base de fatos que usa e o orçamento de palavras.
 6. Marque onde ficam a analogia central, as falsas vitórias e a virada.
-7. Leve a estrutura ao usuário antes de escrever qualquer narração.
+7. Quando duas estruturas válidas dão a quem assiste experiências diferentes, a escolha é do usuário (`entrevista`). No resto, siga: a estrutura acompanha o que o texto mostrar.
 
 **Regras de progressão:**
 

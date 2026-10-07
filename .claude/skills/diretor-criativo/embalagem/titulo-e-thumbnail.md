@@ -43,7 +43,7 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 1. Gere ao menos cinco títulos em padrões diferentes.
 2. Para os três melhores, escreva um conceito de thumbnail em duas ou três linhas.
 3. Verifique cada par contra os critérios e contra a promessa aprovada.
-4. Leve os pares ao usuário com recomendação.
+4. Fique com o par que cumpre melhor os critérios. Quando restam pares que vendem promessas diferentes, a escolha é do usuário (`entrevista`), com recomendação.
 
 ## DEPENDÊNCIAS
 - ouvinte: fornece as regras de forma literal, medida contável e hesitação com lastro.

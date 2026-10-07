@@ -24,7 +24,7 @@ Como verificar cada afirmação factual e tratar incerteza e simplificação?
 
 Dizer "não sabemos" é permitido e fortalece a credibilidade do resto.
 
-**Simplificação.** É aceitável quando um especialista diria "incompleto, mas não errado". É inaceitável quando leva o espectador a uma conclusão falsa. Toda simplificação que troque precisão por clareza é registrada na lista de fontes com o que foi omitido e vai ao usuário como decisão.
+**Simplificação.** É aceitável quando um especialista diria "incompleto, mas não errado". É inaceitável quando leva o espectador a uma conclusão falsa. Toda simplificação que troque precisão por clareza é registrada na lista de fontes com o que foi omitido; `entrevista` diz quando ela é decisão do usuário.
 
 **Como dizer isso na narração.** O estilo declara seus limites em voz alta, em três momentos:
 

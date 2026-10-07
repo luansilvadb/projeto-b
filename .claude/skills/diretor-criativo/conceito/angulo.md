@@ -25,7 +25,7 @@ Qual é o ângulo, a tese e a promessa que justificam o vídeo?
 
 1. Gere ao menos três ângulos distintos, cada um com tese e promessa redigidas.
 2. Submeta cada um aos testes abaixo e descarte os que falham.
-3. Leve os sobreviventes ao usuário com recomendação.
+3. Siga com o que sobrar. Sobrando mais de um, e fazendo eles vídeos diferentes, a escolha é do usuário (`entrevista`).
 
 **Testes:**
 
@@ -42,7 +42,7 @@ Qual é o ângulo, a tese e a promessa que justificam o vídeo?
 - levantamento: fornece a base de fatos, as ideias erradas comuns e os achados com potencial narrativo.
 
 ## LIMITES
-- Não definir estrutura nem redigir trechos de narração aqui.
+- A estrutura e a narração têm unidades próprias; o trecho escrito para testar um ângulo segue as delas.
 - Promessa que o conteúdo não cumpre é isca, e reprova o ângulo.
 
 ## EXEMPLO
