@@ -40,9 +40,9 @@ Três dúvidas, três instantes; o roteiro não audita cada linha do mapa.
 
 **O som do catálogo.** Para um uso novo, o candidato ou os candidatos que sobram (`escolha`) vão ao usuário porque só ele ouve se soam como a ação. É classificação de ouvido: o resultado é "este arquivo realiza o uso", e o catálogo o guarda para todo vídeo seguinte. O uso que já existe é reutilizado sem consulta; volta ao usuário se o som falha no contexto, ou se o que está em jogo é a linguagem de efeitos do canal (discreta ou cartunesca), que é decisão.
 
-**O aceite do som** é a única aprovação da etapa, pedida sobre o conjunto. Fixa o que o usuário aceitou ouvir: a identidade percebida, a relação entre música e voz, a densidade, os momentos que carregam sentido, a experiência do todo. Ele aceita a experiência, e não um número: a medida fora da referência não vira exceção aprovada. A semente, a descrição, o andamento, o tom, o arquivo, o dB e as linhas do mapa continuam melhorando. Antes de mexer em som aceito: a mudança preserva o que ele aceitou ouvir? Se preserva (a costura sem salto, a semente que realiza melhor, o efeito alinhado), corrija e confira o trecho afetado, sem reabrir o aceite. Se muda a identidade, a emoção, o ritmo ou a presença, volta a ele.
+**O aceite do som** é pedido sobre o conjunto sonoro, quando o trabalho é o conjunto. Fixa o que o usuário aceitou ouvir: a identidade percebida, a relação entre música e voz, a densidade, os momentos que carregam sentido, a experiência do todo. Ele aceita a experiência, e não um número: a medida fora da referência não vira exceção aprovada. A semente, a descrição, o andamento, o tom, o arquivo, o dB e as linhas do mapa continuam melhorando. Antes de mexer em som aceito: a mudança preserva o que ele aceitou ouvir? Se preserva (a costura sem salto, a semente que realiza melhor, o efeito alinhado), corrija e confira o trecho afetado, sem reabrir o aceite. Se muda a identidade, a emoção, o ritmo ou a presença, volta a ele.
 
-**Registro.** `sound.md` guarda a intenção e a implementação atuais e acompanha a melhor solução; fica protegido como compromisso só o que o usuário decidiu. A observação de ouvido e a resposta a uma sondagem não vão a `approvals.md`, que recebe o aceite. Descrição e semente tentadas e recusadas são do git.
+**Registro.** `sound.md` guarda a intenção e a implementação atuais e acompanha a melhor solução; fica protegido como compromisso só o que o usuário decidiu. A observação de ouvido e a resposta a uma sondagem são evidência, e não aceite. Descrição e semente tentadas e recusadas são do git.
 
 **A skill `grilling`** é exceção: cabe à decisão que atravessa o vídeo ou o canal e que um som curto não materializa (a identidade musical do canal, a política de efeitos, a intenção afetiva ambígua de um vídeo inteiro). Andamento, uma troca, um efeito, uma semente ou um momento se resolvem gerando e ouvindo.
 
@@ -56,7 +56,7 @@ Três dúvidas, três instantes; o roteiro não audita cada linha do mapa.
 >
 > **Evidência auditiva**, sobre o primeiro leito, antes dos momentos e dos efeitos:
 > `public/videos/why-we-sleep/music.wav`, de 0:40 a 1:10 — soa como documentário para adulto, ou como desenho infantil?
-> "Infantil": a hipótese é o registro agudo da melodia; outra descrição, outro leito, a mesma pergunta. "Agora não": o mapa cresce a partir dele, sem linha em `approvals.md`.
+> "Infantil": a hipótese é o registro agudo da melodia; outra descrição, outro leito, a mesma pergunta. "Agora não": o mapa cresce a partir dele; foi evidência auditiva, e não aceite.
 >
 > **Decisão**, em `so-far`, com as duas versões medidas e sem defeito:
 > A) `out/rascunho/so-far-a.mp3`: a resposta dita sem música. Chega como choque.
