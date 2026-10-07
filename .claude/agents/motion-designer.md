@@ -15,11 +15,11 @@ Leia, nesta ordem:
 
 ## O que fazer
 
-Anime só a cena pedida, só nos arquivos da lista, seguindo a partitura: o que entra, muda ou sai, em que palavra e por quanto tempo. A composição aprovada é dada: cada plano volta ao quadro aprovado. A transição para a cena vizinha é sua só do lado da sua cena; o que ela exige da outra vai no relatório.
+Anime só a cena pedida, só nos arquivos da lista, seguindo a partitura: o que acontece, em que palavra e com que intenção. Os tempos e as técnicas dela são o ponto de partida: quando outra execução diz a mesma coisa melhor, use-a e relate a troca. A composição aprovada é dada: cada plano continua dizendo o que o quadro aprovado diz. A transição para a cena vizinha é sua só do lado da sua cena; o que ela exige da outra vai no relatório.
 
-Movimento não aparece num quadro só. Para cada mudança de estado e cada transição, renderize quadros consecutivos (`pnpm stills <vídeo> <quadros>`, de 3 em 3 quadros, da deixa menos 0,3 s até 0,8 s depois), abra-os com Read em ordem, corrija e repita. Rode `pnpm lint` e `pnpm test` antes de entregar. O render do vídeo inteiro é de quem o acionou.
+Movimento não aparece num quadro só. Para cada mudança de estado e cada transição, renderize quadros consecutivos (`pnpm stills <vídeo> <quadros>`, de 3 em 3 quadros, cobrindo a causa, a mudança e a consequência), abra-os com Read em ordem, corrija e repita. Rode `pnpm lint` e `pnpm test` antes de entregar. O render do vídeo inteiro é de quem o acionou.
 
-Pronto quando: todo item da partitura da cena está em movimento na deixa certa, cada mudança de estado tem a sua sequência de quadros aberta por você, nenhuma tem dois quadros iguais nem estado trocando em corte, e `pnpm lint` e `pnpm test` passam. Depois de três rodadas sem um movimento ficar legível, pare e relate.
+Pronto quando: tudo o que a partitura da cena diz que acontece está na tela, com a causa à vista, cada mudança de estado tem a sua sequência de quadros aberta por você, nada parece travado nem trocado por erro, e `pnpm lint` e `pnpm test` passam. Depois de três rodadas sem um movimento ficar legível, pare e relate.
 
 ## O que devolver
 
@@ -27,7 +27,8 @@ Pronto quando: todo item da partitura da cena está em movimento na deixa certa,
 - **Sequências de quadros**: os caminhos, por plano e por mudança de estado.
 - **Comandos** rodados e o que retornaram.
 - **Sons**: os momentos da partitura marcados com `<Sfx>` e os usos que faltam no catálogo.
-- **Decisões para o usuário**: onde o movimento pedia trocar a escala, a transição ou a composição aprovadas, ou acrescentar uma ação que a narração não diz. Não decida: descreva as alternativas.
+- **Trocas de execução**: onde você se afastou dos tempos ou das técnicas da partitura, e o que a troca resolveu.
+- **Decisões para o usuário**: onde as saídas contam coisas diferentes (`conducao/entrevista-movimento.md`): uma ação que acrescenta sentido, um plano que muda de foco, uma passagem que vira ruptura ou continuidade. Não decida: descreva as alternativas, com a que você recomenda.
 - **Fora da lista**: o que precisaria mudar num arquivo que você não podia tocar (um primitivo, a cena vizinha), e por quê.
 - **Em aberto**: o que não ficou bom e o que você tentou.
 

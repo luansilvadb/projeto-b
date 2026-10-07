@@ -14,7 +14,7 @@ Quando e como a câmera se move dentro de um plano?
 - **O lugar continua o mesmo lugar.** Entre dois enquadramentos do mesmo espaço a geometria é a mesma, e quando a câmera atravessa um espaço com profundidade as camadas respondem a ela (`cenario`).
 - **O texto continua preso ao que nomeia** durante o movimento.
 
-**O que é decisão do usuário.** O movimento que troca a escala aprovada do plano (um médio que vira close) vai a ele, por `entrevista-movimento`.
+**O que é decisão do usuário.** O movimento que muda o que o plano dá como foco ou importância (um médio que vira close e faz de um detalhe o assunto) vai a ele, por `entrevista-movimento`. Corrigir o enquadramento preservando a função do plano, não.
 
 **Repertório.** Parte-se do que o movimento precisa fazer; a técnica é uma saída possível, e os números são o que a referência costuma usar:
 

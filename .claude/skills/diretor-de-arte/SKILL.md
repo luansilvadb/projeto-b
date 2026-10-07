@@ -37,7 +37,7 @@ Movimento que pede outra composição devolve o plano ao passo Quadro.
 
 A skill opera em modo entrevista: o agente resolve sozinho o que é fato ou execução e leva ao usuário só o que é decisão, acionando a skill `grilling`. `entrevista-imagem` define as decisões de imagem, tomadas diante de imagem renderizada; `entrevista-movimento`, as de movimento, tomadas diante de vídeo renderizado.
 
-Se a escolha contradiz algo aprovado, a base de fatos ou um limite medido, diga isso antes de seguir. Cada decisão é registrada; o **plano acordado** é a soma das decisões registradas: qualquer mudança fora dele, ainda que pareça melhoria, exige confirmação explícita.
+Se a escolha contradiz algo aprovado, a base de fatos ou um limite medido, diga isso antes de seguir. Cada decisão é registrada; o **plano acordado** é a soma das decisões registradas: qualquer mudança numa dessas decisões, ainda que pareça melhoria, exige confirmação explícita. Refinar a execução sem mudar a decisão não exige: no movimento, a fronteira é a de `entrevista-movimento`.
 
 ## SUBAGENTES
 
@@ -90,7 +90,7 @@ Movimento:
 
 | Unidade | Pergunta |
 |---|---|
-| `conducao/entrevista-movimento` | Que decisões de movimento vão ao usuário, e quais o agente resolve sozinho? |
+| `conducao/entrevista-movimento` | Quando uma decisão de movimento é do agente, e quando ela muda intenção, sentido ou compromisso o bastante para ser do usuário? |
 | `tempo/sincronia` | Quando cada coisa acontece em relação à narração? |
 | `tempo/entradas` | O que faz um elemento aparecer, mudar ou sair de modo que se entenda de onde veio, o que mudou e em que estado terminou? |
 | `atuacao/pausa-viva` | Quando nada novo acontece, o que faz o quadro continuar parecendo intencional e coerente com o estado da cena? |
@@ -133,7 +133,7 @@ Para tarefas parciais (redesenhar um personagem, refazer os planos de uma cena, 
 - Nenhum desenho e nenhum movimento é julgado pelo código: o desenho, só pela imagem renderizada; o movimento, só pela imagem em sequência.
 - Nenhuma imagem afirma o que a base de fatos não sustenta.
 - Toda mudança de estado tem uma causa visível na fala ou na cena.
-- Nenhum movimento muda a composição aprovada sem confirmação.
+- Nenhum movimento muda o que a composição aprovada diz (o foco, a relação, o tamanho do assunto no plano) sem confirmação.
 - Um passo só começa com as decisões do passo anterior aprovadas.
 
 ## CRITÉRIOS DE PARADA

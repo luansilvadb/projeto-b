@@ -59,7 +59,7 @@ Outra ponte (um casamento de cor, algo que passa na frente e cobre a troca, um c
 - entradas: fornece como entra o que a passagem acrescenta.
 
 ## LIMITES
-- Trocar a entrada registrada na decupagem, ou a leitura dos dois planos (ruptura onde havia continuidade, ou o contrário), é decisão do usuário (`entrevista-movimento`).
+- Mudar a leitura dos dois planos (ruptura onde havia continuidade, ou o contrário) é decisão do usuário (`entrevista-movimento`). Trocar de técnica mantendo a mesma relação não é, e a entrada registrada acompanha a troca.
 
 ## EXEMPLO
 > Do close do sino de dia para a lagoa de noite. Continua: o lugar (a mesma geometria, com os anéis e a água-viva no mesmo ponto dos dois lados). Muda: a luz. A ponte é o lugar, e por isso a borda desce do alto, de onde vem a noite, em 0,3 s a partir de "Quando", e nada além da pintura se mexe. O contador "39" não é parte do anoitecer: entra depois de a borda sair pelo chão.
