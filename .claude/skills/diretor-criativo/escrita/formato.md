@@ -23,7 +23,7 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 - Tensão: <a contradição ou a pergunta que dá direção ao vídeo, quando registrá-la ajuda; "era de esperar X, e no entanto Y" é um jeito de dizê-la>
 - Mapa: <como quem assiste percebe o caminho (`ouvinte`): as partes, na ordem, quando são ditas, e o que o vídeo promete para o fim>
 - Fechamento: <o que o vídeo entrega no fim e, quando há, o que ele retoma ou transforma (`fechamento`)>
-- Analogia central: <a analogia e os blocos em que volta>
+- Analogia condutora: <quando uma analogia atravessa blocos: o que representa o quê, e onde volta (`analogias`)>
 - Elementos: <os poucos que o vídeo usa; o que saiu da pesquisa>
 
 ## Voz
@@ -60,7 +60,7 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 **Procedimento:**
 
 1. Crie `script.md` com o cabeçalho quando houver um ângulo de trabalho. Pronto quando tese, promessa, idioma e duração-alvo estão escritos.
-2. Acrescente cada decisão no passo em que ela é tomada: voz, estrutura, fio, analogia central. Pronto quando toda decisão já tomada tem a sua linha, e a tomada com o usuário leva a data e o porquê (`entrevista`).
+2. Acrescente cada decisão no passo em que ela é tomada: voz, estrutura, fio, analogia condutora, as que houver. Pronto quando toda decisão já tomada tem a sua linha, e a tomada com o usuário leva a data e o porquê (`entrevista`).
 3. Com `script.json` escrito, preencha a coluna Cenas. Pronto quando todo `id` do roteiro aparece em exatamente um bloco, na ordem do roteiro: é o que o `pnpm check-script` confere, lendo os `id` entre crases da última coluna.
 4. A cada reescrita que troque uma decisão, substitua a linha dela pelo estado atual, na mesma rodada.
 

@@ -5,7 +5,7 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 
 **Princípio.** Título e thumbnail são a promessa em sua forma mais curta. Eles abrem a mesma lacuna que o gancho, e o vídeo precisa fechá-la. Os dois trabalham juntos: um não repete o que o outro já diz.
 
-**Quando fazer.** Uma primeira versão, só de títulos, logo após o ângulo aprovado, para testar se a promessa se sustenta em poucas palavras; a versão final, com thumbnail, depois do roteiro revisado, quando gancho e analogia central já existem.
+**Quando fazer.** Uma primeira versão, só de títulos, logo após o ângulo aprovado, para testar se a promessa se sustenta em poucas palavras; a versão final, com thumbnail, depois do roteiro revisado, quando o gancho e as imagens e relações dominantes do vídeo já existem.
 
 **Título — padrões que combinam com o estilo:**
 
@@ -13,7 +13,7 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 2. **"E se"**: "E se a Lua desaparecesse?"
 3. **Afirmação contraintuitiva**: "Você nunca tocou em nada"
 4. **Superlativo verificável**: "A coisa mais mortal do universo"
-5. **Tema + tensão**: "Sistema imunológico: a guerra dentro de você" (quando a guerra é a analogia central)
+5. **Tema + tensão**: "Sistema imunológico: a guerra dentro de você" (quando a guerra é a analogia que conduz o vídeo)
 
 **Critérios do título:**
 
@@ -34,7 +34,7 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 
 **Critérios do thumbnail:**
 
-- deriva da analogia central ou da imagem dominante do gancho;
+- deriva de uma imagem, relação ou tensão que é mesmo central no vídeo: do gancho, de um personagem, do mecanismo, de uma consequência, de uma analogia;
 - funciona sem o título e ganha sentido novo com ele;
 - não mostra nada que o vídeo não mostre.
 
@@ -49,7 +49,7 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 - ouvinte: fornece o que se pede de figura, magnitude e hesitação.
 - angulo: fornece a promessa e a tese que título e thumbnail condensam.
 - gancho: fornece a lacuna e a imagem de abertura com que devem ser coerentes.
-- analogias: fornece a analogia central, fonte preferencial da imagem.
+- analogias: fornece a analogia condutora, quando há, uma das fontes da imagem.
 
 ## LIMITES
 - Entrega conceito de thumbnail em texto; composição, paleta e arte final estão fora do escopo.

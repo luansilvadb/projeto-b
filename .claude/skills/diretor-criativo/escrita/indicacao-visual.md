@@ -15,7 +15,7 @@ O que a nota visual de cada bloco deve dizer, e o que não deve?
 
 - **Mostrar o que a narração não precisa dizer**: se a imagem carrega um detalhe, a frase correspondente pode ser cortada da narração.
 - **Um assunto dominante por bloco**: se a nota pede dois, confira em `arco` se o bloco faz duas mudanças. O assunto é um só, mas as imagens são várias: a nota não precisa caber num quadro, porque cada oração do bloco vira um plano na decupagem.
-- **Continuidade**: objetos e metáforas reaparecem iguais; a analogia central mantém a mesma forma visual do começo ao fim.
+- **Continuidade**: objetos e metáforas reaparecem iguais. Quando uma analogia volta, a mesma coisa continua representando a mesma coisa, e a troca de correspondência se percebe.
 - **Escala visível**: toda comparação de tamanho mostra os dois termos no mesmo quadro ou num único movimento contínuo.
 - **Abstração ganha corpo**: processo invisível recebe um representante concreto e constante.
 - **Texto na tela**: apenas números-chave, nomes de conceitos apresentados, títulos de capítulo e o selo da fonte; nunca frases da narração.

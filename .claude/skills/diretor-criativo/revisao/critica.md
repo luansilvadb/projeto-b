@@ -22,7 +22,7 @@ O que o ouvinte perde neste trecho, qual é a menor causa que explica a perda, e
 **Instrumentos**, do que manda ao que só explica:
 
 1. **O texto**, lido de ponta a ponta como será ouvido. O que funciona nele não reprova porque um instrumento parece estranho.
-2. **`script.md`** diz o que o vídeo quer dizer agora: a tese, a promessa, a identidade do narrador, a estrutura, a analogia central. Serve para saber se o texto diz isso, e não para cobrar fidelidade literal: a formulação melhor que preserva a decisão é sem defeito, e o registro é que se atualiza.
+2. **`script.md`** diz o que o vídeo quer dizer agora: a tese, a promessa, a identidade do narrador, a estrutura e, quando há, a analogia que atravessa o vídeo. Serve para saber se o texto diz isso, e não para cobrar fidelidade literal: a formulação melhor que preserva a decisão é sem defeito, e o registro é que se atualiza.
 3. **As contagens** localizam a causa de algo já percebido: as palavras de cada ideia, quando o texto parece trocar de assunto depressa; a distância até uma retomada, quando um nome volta e não se sabe mais quem é; a lista das frases de efeito com o que veio antes de cada uma, quando o texto parece montado.
 4. **O perfil do `pnpm check-script`** dá pistas quando o texto soa picotado, formal ou sem ninguém dentro. Só se comenta a medida que confirmou uma percepção ou levou a um defeito. Fora da faixa num texto que funciona, ela não vira problema.
 5. **`research.md`**, por último, e só para saber se o conserto de um defeito tem material na pesquisa.

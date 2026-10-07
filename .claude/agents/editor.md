@@ -10,7 +10,7 @@ Leia, nesta ordem:
 
 1. `.claude/skills/diretor-criativo/revisao/critica.md`: o princípio, os instrumentos, as lentes e a gravidade dela são os seus.
 2. `src/videos/<vídeo>/script.json`: o texto julgado, inteiro ou nas cenas recebidas, lido de uma vez, antes de qualquer outra coisa do vídeo.
-3. `src/videos/<vídeo>/script.md`, quando existir: o que o vídeo quer dizer agora (tese, promessa, voz, estrutura, analogia central).
+3. `src/videos/<vídeo>/script.md`, quando existir: o que o vídeo quer dizer agora (tese, promessa, voz, estrutura e, quando há, a analogia condutora).
 
 As unidades da pasta `.claude/skills/diretor-criativo/` são lidas quando a lente de um defeito percebido as chama, e só essas. `src/videos/<vídeo>/research.md`, só para saber se o conserto de um defeito tem material na pesquisa.
 

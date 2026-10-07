@@ -77,7 +77,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `escrita/fio` | O que faz uma sequência soar contada como uma coisa só, em vez de uma coleção de fatos bem escritos, e que mecanismos mantêm algo vivo de um trecho para o seguinte? |
 | `escrita/narracao` | O que uma frase precisa fazer para ser entendida, soar natural e se ligar à seguinte quando é ouvida uma vez? |
 | `escrita/procedencia` | Quando a origem de uma afirmação precisa ficar perceptível para quem assiste saber por que acreditar nela, e qual é a menor evidência de origem que resolve isso? |
-| `escrita/analogias` | Como tornar escala e abstração compreensíveis e desenháveis? |
+| `escrita/analogias` | Quando uma relação conhecida ajuda a compreender outra, e o que precisa continuar verdadeiro para a analogia ensinar em vez de distorcer? |
 | `escrita/humor` | Quando o humor acrescenta algo ao vídeo sem disputar com o entendimento, distorcer a verdade ou diminuir o peso do que está sendo contado? |
 | `escrita/indicacao-visual` | O que a nota visual de cada bloco deve dizer, e o que não deve? |
 | `escrita/formato` | Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas do roteiro? |
