@@ -3,58 +3,35 @@ Como mostrar número, escala e comparação sem virar slide?
 
 ## RESPOSTA
 
-**O que a referência faz.** Diagrama e dado são 20% dos planos lidos. Quase metade deles (29 de 66) tem um personagem dentro, e o gráfico puro é raro e breve: num trecho de 48 segundos de um vídeo de economia havia um só, e ele durou 4 segundos.
+**Um dado serve quando:**
 
-**Ordem de preferência.** Use a primeira forma que servir:
+- **A relação se vê.** O que o número quer dizer no trecho (quanto é, quanto maior, que parte, para onde vai) está desenhado, e a etiqueta acrescenta a precisão. Quando o que importa é a relação, cubra a etiqueta: ela ainda se lê. Quando é o valor exato que precisa ser lido, ele está preso a algo que se vê pulsar, encher, andar ou medir.
+- **Quem é comparado está na mesma régua.** Mesma linha de base, mesma escala e mesma forma dos dois lados, no mesmo quadro ou em planos vizinhos, para que a única diferença à vista seja a do dado.
+- **Cada número tem dono.** O espectador sabe a que cada número pertence e qual acabou de chegar.
+- **O desenho não mente.** A proporção desenhada é a real: um terço mede um terço, e eixo cortado que exagera a diferença não entra. Confira fazendo a conta do desenho. A incerteza do dado também se desenha (uma faixa no lugar do ponto, ou "cerca de"), e a ressalva de escopo ("em camundongos") fica à vista enquanto vale, no selo de `texto`.
+- **O número é o do roteiro.** A narração fala por extenso e a tela mostra algarismo e unidade ("58 por minuto", "0,3 m", "18%"), com o mesmo arredondamento da narração. Todo número mostrado tem fonte na base de fatos.
 
-1. **Quantidade encenada.** O número vira coisa que se conta ou tamanho que se vê dentro da cena: uma pilha, uma fila, pulsos, um padrão enchendo o quadro, um objeto conhecido ao lado.
-2. **Medida presa ao objeto.** Uma régua ou um colchete sai do que é medido e termina numa etiqueta com o valor.
-3. **Comparação alinhada.** Os itens ficam lado a lado sobre a mesma linha de base e entram um a um; quando o maior não cabe, a câmera recua e os anteriores encolhem. Uma figura humana no começo da fila dá a escala.
-   **Palco-régua** (proposta). Quando a comparação atravessa o vídeo, ela tem um palco só, sempre igual (o mesmo fundo, a mesma trama, o mesmo ângulo), e um objeto-medida que acompanha cada item e muda de tamanho com ele (um cubo do tamanho do item anterior, uma pessoa). Os nomes dos itens já vistos ficam na tela, encolhendo em fila. O item seguinte invade antes de ser apresentado: a borda dele entra cortada pelo canto do quadro, e só então a câmera recua e o nome aparece. No fechamento, a fila inteira é refeita num recuo só, do primeiro ao último, em 10 a 15 segundos.
-4. **Gráfico.** Só quando a forma da curva ou das barras é a própria mensagem (uma distribuição, uma tendência).
-5. **Contador solto.** Último recurso, e sempre ligado a algo que se vê pulsar, encher ou andar.
+**Repertório.** São famílias de representação, sem ordem entre elas: a forma vem do que precisa ser entendido.
 
-**Regras do gráfico:**
+- **Quantidade encenada.** O número vira coisa que se conta ou tamanho que se vê dentro da cena: uma pilha, uma fila, pulsos, um padrão enchendo o quadro, um objeto conhecido ao lado.
+- **Medida presa ao objeto.** Uma régua ou um colchete sai do que é medido e termina numa etiqueta com o valor.
+- **Comparação alinhada.** Os itens lado a lado, entrando um a um; quando o maior não cabe, a câmera recua e os anteriores encolhem. Uma figura humana no começo da fila dá a escala.
+- **Gráfico.** Quando a forma da curva ou das barras é a própria mensagem: uma distribuição, uma tendência.
+- **Contador.** O número que corre. Solto, é um algarismo sem relação nenhuma à vista: o que o prende é a coisa que ele conta.
+- **Palco-régua** (proposta). Uma comparação que atravessa o vídeo num palco só, sempre igual (o mesmo fundo, a mesma trama, o mesmo ângulo), com um objeto-medida que acompanha cada item e muda de tamanho com ele (um cubo do tamanho do item anterior, uma pessoa). Os nomes dos itens já vistos ficam na tela, encolhendo em fila. O item seguinte invade antes de ser apresentado: a borda dele entra cortada pelo canto do quadro, e só então a câmera recua e o nome aparece. No vídeo de onde vem, o fechamento refaz a fila inteira num recuo só, em 10 a 15 segundos.
 
-- um gráfico por vez, com até seis barras ou duas linhas;
-- título curto, eixos reduzidos ao mínimo, valores sobre as barras;
-- a barra que importa em cor de acento, as outras em tom neutro;
-- as barras crescem em cascata, com o número contando junto;
-- a fonte do dado num selo pequeno, no canto;
-- dura o tempo de uma oração e devolve a tela à cena.
+**Técnicas que já serviram**, cada uma para um problema. São possibilidades:
 
-**Regras de todo número na tela:**
-
-- **Um número novo por vez.** A comparação põe os dois lados no mesmo quadro, cada número preso ao seu lado.
-- **Algarismo e unidade.** A narração fala por extenso; a tela mostra "58 por minuto", "0,3 m", "18%".
-- **O mesmo arredondamento da narração.**
-- **Proporção desenhada na proporção real.** Um terço mede um terço; eixo cortado que exagera a diferença não entra.
-- **Todo número mostrado tem fonte** na base de fatos.
-
-**Formas que voltam:**
-
-| O que mostrar | Forma |
+| Problema | Uma saída |
 |---|---|
-| Parte de um todo | o todo como coisa concreta (um dia, uma vida, um grupo) com a parte destacada |
-| O mesmo dado em vários casos | a mesma forma repetida, uma por caso, alinhadas |
+| Parte de um todo | o todo como coisa concreta (um dia, uma vida, um grupo), com a parte destacada |
 | Passagem do tempo | uma linha que algo percorre; as épocas são lugares |
-| Antes e depois | a mesma cena duas vezes, lado a lado |
-| Estudo contra estudo | as duas versões lado a lado, cada uma com o ano, e uma interrogação entre elas |
-| Faixa de incerteza | uma faixa no lugar do ponto, ou o valor com "cerca de" |
-| Escopo do dado ("em camundongos") | um selo pequeno que fica na tela enquanto a ressalva vale |
-| Vários números da mesma medida em sequência | uma barra por item, entrando na palavra e ficando na tela enquanto as próximas entram; a mesma forma e o mesmo material do começo ao fim do vídeo |
+| Vários números da mesma medida, um depois do outro | uma barra por item, que entra na palavra e fica enquanto as próximas entram, com a mesma forma e o mesmo material do começo ao fim do vídeo |
 | A mesma coisa medida de outro jeito (hoje, na história, por pessoa) | a mesma linguagem de barras sobre outra cor de fundo, uma cor por medida |
-| O mesmo objeto em duas condições | a mesma régua nos dois planos, para a diferença de tamanho saltar |
+| O dado ficou sozinho no quadro | alguém da cena conta, mede, empilha ou reage |
+| O gráfico pesa | um por vez, poucos elementos, a série que importa em cor de acento e as outras neutras, os eixos reduzidos ao que a leitura pede |
 
-**Teste.** Cubra a etiqueta: a relação de tamanho ainda se lê? Se o plano só funciona lendo o número, falta a quantidade desenhada.
-
-**Procedimento:**
-
-1. Liste os números e comparações do bloco, com a fonte de cada um.
-2. Para cada um, escolha a forma mais alta da ordem de preferência.
-3. Confira a proporção fazendo a conta do desenho.
-4. Decida quem está na cena com o dado: quem conta, mede, empilha ou reage.
-5. Aplique o teste.
+**Medidas da referência** (evidência: situam e não reprovam por si). Diagrama e dado são 20% dos planos lidos, e quase metade deles (29 de 66) tem um personagem dentro. O gráfico puro é raro e breve: num trecho de 48 segundos de um vídeo de economia havia um só, e ele durou 4 segundos.
 
 ## DEPENDÊNCIAS
 - encenacao: fornece o critério do slide e o repertório de que o dado faz parte.
@@ -62,9 +39,10 @@ Como mostrar número, escala e comparação sem virar slide?
 
 ## LIMITES
 - Fatos e contas vêm da pesquisa e do roteiro; nenhum número novo nasce aqui.
-- A aparência das etiquetas pertence a `texto`.
+- Se o trecho pede um dado ou outro meio é decisão de `encenacao`; esta unidade vale quando número, quantidade, escala ou proporção é o assunto.
+- A aparência das etiquetas e do selo pertence a `texto`.
 
 ## EXEMPLO
 > NARRAÇÃO: "Você passa cerca de um terço da vida assim."
-> Slide: uma barra de 24 horas com um terço escurecido e o rótulo "1/3".
-> Encenado: três versões da mesma pessoa lado a lado: uma trabalha, uma come, a terceira dorme. A que dorme ganha a etiqueta "1/3 da vida". A proporção se lê sem a etiqueta.
+> Slide: o algarismo "1/3" grande no centro, ao lado de um ícone de cama.
+> Com a relação à vista: três versões da mesma pessoa lado a lado: uma trabalha, uma come, a terceira dorme. A que dorme ganha a etiqueta "1/3 da vida". A proporção se lê sem a etiqueta.

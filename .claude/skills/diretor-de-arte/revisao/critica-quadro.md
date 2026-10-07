@@ -44,6 +44,7 @@ Com que critérios e medidas julgar os quadros?
 8. **Fidelidade**
    - A imagem afirma algo que a base de fatos não sustenta?
    - Cada número na tela bate com a fonte?
+   - A proporção desenhada é a real, e quem é comparado está na mesma régua?
 
 **Medidas.** Tiradas do vídeo renderizado por `pnpm critique` e comparadas com a faixa dos 12 vídeos de referência. As faixas estão num lugar só, `CRITERIA` em `src/critique/reference.ts`, e saem na tabela do comando:
 
