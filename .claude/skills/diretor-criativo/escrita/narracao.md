@@ -36,7 +36,7 @@ O narrador conta em off: é alguém que apurou a história e a conta com calma, 
 - "Pra", "pro" e "tá" entram onde a forma inteira soaria dura, e não para provar que o texto é falado.
 - "Você" aparece onde quem assiste entra na história, conforme `voz`; "a gente" e a fala do espectador ("aí você pensa:") ficam para os trechos que argumentam com ele, conforme `fio`.
 - A ideia difícil pode ser dita duas vezes, a segunda depois de "ou seja" ou "em outras palavras", com a consequência para quem assiste.
-- Gíria e interjeição ("tipo", "putz", "pô") ficam fora, pela regra de `humor`.
+- Gíria e interjeição ("tipo", "putz", "pô") ficam fora, pela decisão registrada em `voz`.
 
 ### A ferramenta de voz
 
@@ -70,7 +70,7 @@ Medidas das referências. Respondem "onde vale ouvir de novo?", quando o texto s
 - explicacao: fornece a relação que cada bloco torna compreensível, com a base e a consequência dela, que a frase realiza.
 - fio: fornece o que fica vivo entre os trechos, que a frase reconhece e leva adiante.
 - voz: fornece quem narra.
-- humor: fornece a regra que deixa a gíria de fora.
+- humor: fornece quando uma escolha cômica merece o espaço.
 - arco: fornece o que cada bloco faz e o que o liga ao seguinte.
 
 ## LIMITES
