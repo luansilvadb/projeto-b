@@ -1,36 +1,43 @@
 ## PERGUNTA
-Como pedir a curtida e a inscrição sem desfazer o fechamento?
+Como fazer o único pedido do vídeo depois que a entrega terminou, sem transformar o fechamento em argumento de venda nem criar uma segunda conclusão?
 
 ## RESPOSTA
 
-**Função.** A chamada converte em gesto o interesse de quem ficou até o fim: curtir e se inscrever (decisão do usuário em 2026-10-04: todo vídeo do canal termina com ela). A base é a chamada dos dois vídeos de `fechamento`.
+**Compromisso do canal.** Todo vídeo termina com uma chamada, que pede para curtir e se inscrever (decisão do usuário em 2026-10-04). É o único momento de pedido do vídeo (`ouvinte`): curtir e se inscrever vão juntos, uma vez, no fim. Isso não se pergunta de novo a cada vídeo.
 
-**Lugar.** Uma cena própria, a última do roteiro, depois da última frase do fechamento e de um silêncio (`holdMs`, cerca de um segundo). Na estrutura de `script.md` ela é o último bloco, "(chamada)".
+**O que precisa funcionar:**
 
-**Quatro partes, nesta ordem:**
+- **O vídeo já terminou quando o pedido começa.** A chamada não completa a tese, não traz fato novo, não acrescenta moral nem resolve o que o fechamento deixou por resolver: se uma frase dela é indispensável à entrega, é do `fechamento`. E o pedido não atropela a última frase do vídeo.
+- **Fica claro de imediato o que se pede**, sem várias instruções, escolhas ou explicação de plataforma. Quem assiste acabou de concluir o vídeo.
+- **O pedido não usa o fim do vídeo como alavanca.** "Se isso fez você valorizar a vida, deixe o seu like" transforma o fechamento em venda. Um corte limpo, em que se percebe que o vídeo acabou e agora vem o pedido, respeita mais o fim do que uma ponte forçada.
+- **Pede, e não cobra.** Sem culpa ("não custa nada", "se você chegou até aqui"), sem urgência fabricada, sem suspense reaberto sobre um próximo vídeo.
+- **É o mesmo narrador** (`voz`), e não um locutor de anúncio. A frase se ouve como as outras (`narracao`).
+- **É verdadeira.** O benefício dito é consequência razoável do gesto, e a chamada só promete um próximo vídeo que existe ou está decidido.
+- **Dura o que o pedido precisa.** Uma frase pode bastar.
 
-1. **Ponte**: a primeira oração ainda é do vídeo. Ela parte do estado em que o fim do vídeo deixou quem assiste (uma sensação, uma pergunta, uma curiosidade) e só então chega ao canal ("Se quiser continuar admirando este mundo...", "Se quiser continuar explorando as maravilhas do universo..."). É a única parte que muda de um vídeo para outro.
-2. **Pedido**: curtir e se inscrever, numa frase, na voz do canal ("nós").
-3. **Motivo**: o que quem assiste ganha com isso, que é o próximo vídeo; ou o que o gesto faz pelo canal, dito com simplicidade.
-4. **Agradecimento**: a última coisa que se ouve.
+**Estável por escolha.** Aqui a consistência é virtude: a chamada tem função conhecida e secundária, e o objetivo é tirar o pedido do caminho do vídeo. A formulação que funcionou é reusada, e não reinventada a cada roteiro. Ela muda quando a padrão entra de modo abrupto depois deste fim, contraria o tom dele, ou quando há um próximo vídeo decidido a citar.
 
-**Tom.** O pedido é uma oferta: quem só assistiu já ajudou, e a chamada pode dizer isso.
+**Repertório.** Só o pedido é indispensável. O resto fica quando faz trabalho, e o teste de cada um é tirá-lo: se a chamada só ficou mais curta, ele sai.
 
-**Tamanho.** De duas a quatro frases, até uns quinze segundos. É estimativa, a calibrar com o usuário no primeiro vídeo; a da referência tem 127 palavras porque apresenta produtos.
+- **Ponte**: uma primeira oração que parte de onde o vídeo deixou quem assiste e chega ao canal ("Se quiser continuar explorando perguntas assim..."). Serve quando o fim deixa uma curiosidade leve que a comporta.
+- **Motivo**: o que o gesto faz, dito com simplicidade (acompanhar os próximos vídeos, ajudar o canal a continuar).
+- **Agradecimento**: "obrigado por assistir", quando combina com a voz e não alonga.
+- **"Nós"**, quando tem dono claro ("isso ajuda a gente a continuar"). O pedido direto, sem primeira pessoa, vale igual.
 
-**Procedimento:**
+Na referência, os dois vídeos de `fechamento` fazem ponte, pedido, motivo e agradecimento, nessa ordem; a chamada deles tem 127 palavras porque também apresenta produtos, e por isso não serve de medida para a do canal.
 
-1. Escreva a ponte a partir do que o fim do vídeo deixou. Pronto quando a oração não serviria a nenhum outro vídeo.
-2. Escreva o pedido, o motivo e o agradecimento. Pronto quando cada parte tem a sua frase e a chamada cabe no tamanho.
-3. O que a chamada pede, e com que intensidade, é compromisso do canal: decidido com o usuário uma vez (`entrevista`), vale para os vídeos seguintes. A redação se ajusta a cada vídeo.
+**No repositório.** A chamada é a última cena do roteiro, e é uma cena própria porque é a cena anterior que leva o silêncio (`holdMs`) que deixa o fim assentar; a duração dele é da skill `diretor-de-som`. Na tabela de estrutura de `script.md`, por convenção, ela é o último bloco, "(chamada)".
+
+**Quando volta ao usuário** (`entrevista`): quando muda o que se pede (comentar, compartilhar), quantos pedidos há, a intensidade, ou entra apoio financeiro, produto, patrocínio ou a promessa fixa de um próximo vídeo. A redação, a ponte, o motivo, o agradecimento e o tamanho são do agente.
 
 ## DEPENDÊNCIAS
-- ouvinte: fornece a regra de um pedido só: a chamada é o único gesto que o vídeo pede.
-- fechamento: fornece a entrega final, de que a ponte parte.
-- narracao: fornece o registro do narrador em off, que não diz "eu".
-- formato: fornece o registro do bloco em `script.md`.
+- ouvinte: fornece o princípio de um pedido só.
+- fechamento: fornece o fim do vídeo, depois do qual a chamada começa.
+- voz, narracao: fornecem quem fala e como a frase soa.
 
 ## LIMITES
-- A chamada só promete um próximo vídeo que existe ou está decidido.
 - Botões, setas e animação de inscrição pertencem à skill `diretor-de-arte`.
 - Patrocínio, loja e apoio financeiro ficam fora até o usuário decidir que o canal os tem.
+
+## EXEMPLO
+> "Se gostou do vídeo, curta e se inscreva para acompanhar os próximos. Obrigado por assistir."

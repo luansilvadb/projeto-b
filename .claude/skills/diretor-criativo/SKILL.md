@@ -72,7 +72,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `estrutura/arco` | Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, dê motivo para o seguinte e leve da promessa à entrega? |
 | `estrutura/gancho` | O que a abertura precisa deixar claro para que quem assiste queira continuar e saiba, cedo o bastante, o que o vídeo vai entregar? |
 | `estrutura/fechamento` | O que precisa acontecer no fim para que a promessa soe entregue, o que foi construído ganhe o seu sentido final e o vídeo possa parar? |
-| `estrutura/chamada` | Como pedir a curtida e a inscrição sem desfazer o fechamento? |
+| `estrutura/chamada` | Como fazer o único pedido do vídeo depois que a entrega terminou, sem transformar o fechamento em argumento de venda? |
 | `escrita/explicacao` | O que faz um fato mudar o entendimento de quem assiste, em vez de ser só mais uma informação verdadeira? |
 | `escrita/fio` | O que faz uma sequência soar contada como uma coisa só, em vez de uma coleção de fatos bem escritos, e que mecanismos mantêm algo vivo de um trecho para o seguinte? |
 | `escrita/narracao` | O que uma frase precisa fazer para ser entendida, soar natural e se ligar à seguinte quando é ouvida uma vez? |
