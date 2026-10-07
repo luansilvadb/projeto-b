@@ -27,7 +27,7 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 - Elementos: <os poucos que o vídeo usa; o que saiu da pesquisa>
 
 ## Voz
-<a ficha de voz de `voz`>
+<o registro de `voz`: só o que este vídeo ajusta em relação à voz do canal>
 
 ## Estrutura
 
@@ -52,7 +52,7 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 ```
 
 - O gancho é um bloco sem capítulo. O bloco sem fala traz a cena com `holdMs` e a nota visual.
-- `Fio`, `Simplificações`, `Contas` e `Grafias de pronúncia` só aparecem quando houver itens.
+- `Voz`, `Fio`, `Simplificações`, `Contas` e `Grafias de pronúncia` só aparecem quando houver itens.
 - O porquê de uma decisão (o que ela evita, a troca aceita, a ressalva) fica na linha dela quando ajuda a reescrita seguinte a não repetir o erro. O que a decisão era antes fica no git.
 
 **Lista de fontes.** É o nome que as unidades dão a três lugares: as fontes numeradas de `research.md`, o campo `sources` de cada cena em `script.json` e as seções `Simplificações` e `Contas` daqui. A situação de cada afirmação (verificada, simplificada) vem do relatório de `checagem`, e não é copiada.

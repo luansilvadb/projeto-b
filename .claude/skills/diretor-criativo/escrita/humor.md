@@ -35,18 +35,18 @@ Quando e como usar humor seco e alívio cômico sem minar a credibilidade?
 - **Curto**: em geral uma oração, com a volta ao fio logo em seguida, conforme `ouvinte`. Piada explicada é piada cortada.
 - **Removível**: tirando a piada, o raciocínio continua inteiro.
 - **Factual por baixo**: o exagero cômico não pode ser confundido com afirmação; em caso de dúvida, o bloco passa por `checagem`.
-- **Dose da ficha de voz**: a frequência segue a variável "dose de humor" do projeto.
+- **Dose**: a que o tema e o ajuste de voz do vídeo comportam (`voz`).
 - **Sem data de validade**: nada de meme, gíria passageira ou referência a notícia recente. Os vídeos recentes do canal usam gíria de internet; este workflow não segue esse traço, por decisão do usuário, porque envelhece rápido.
 
 **Teste.** Leia o bloco sem a piada. Se ficou melhor ou igual, ela sai.
 
 ## DEPENDÊNCIAS
 - ouvinte: fornece quanto um desvio pode durar.
-- voz: fornece a dose de humor e o peso emocional definidos para o projeto.
+- voz: fornece quanto de leveza o vídeo comporta.
 
 ## LIMITES
 - Sem sarcasmo dirigido ao espectador ou a quem acredita na ideia errada que o vídeo corrige.
-- Sem humor em temas em que a ficha de voz marcou peso grave e humor raro, exceto como respiro pontual aprovado.
+- Onde o ajuste de voz do vídeo marcou gravidade, o humor é no máximo um respiro pontual.
 
 ## EXEMPLO
 > "A essa altura a temperatura passa de dez milhões de graus, o que estraga um pouco o passeio."
