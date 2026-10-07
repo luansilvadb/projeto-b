@@ -1,6 +1,6 @@
 # Pesquisa: por que a gente dorme?
 
-Ideia central: dormir é perigoso e caro, e mesmo assim nenhum animal estudado abriu mão disso; a ciência tem várias respostas parciais para o porquê e nenhuma definitiva.
+Foco de partida: dormir é perigoso e caro, e mesmo assim nenhum animal estudado abriu mão disso; a ciência tem várias respostas parciais para o porquê e nenhuma definitiva.
 
 Grau de consenso de cada fato, entre parênteses: estabelecido, majoritário com ressalvas, em disputa ou especulativo.
 

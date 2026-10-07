@@ -66,7 +66,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `pesquisa/levantamento` | Como pesquisar o tema e selecionar fontes confiáveis? |
 | `pesquisa/checagem` | Como verificar cada afirmação factual e tratar incerteza e simplificação? |
 | `conceito/ouvinte` | O que o texto precisa fazer para que quem ouve uma vez não tenha de guardar contexto demais, adivinhar relações nem esperar muito para saber por que continuar? |
-| `conceito/angulo` | Qual é o ângulo, a tese e a promessa que justificam o vídeo? |
+| `conceito/angulo` | Que compromisso transforma um tema amplo num vídeo específico: o que ele escolhe perseguir, o que vai tornar compreensível e que expectativa honesta cria em quem decide acompanhá-lo? |
 | `conceito/voz` | Quem é o narrador do canal diante do assunto e de quem assiste, e que diferenças entre um vídeo e outro mudam de fato essa identidade? |
 | `estrutura/moldes` | Que mecanismos recorrentes podem carregar um vídeo e pôr quem assiste dentro dele, e quando um deles ajuda a reconhecer o que o material pede? |
 | `estrutura/arco` | Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, dê motivo para o seguinte e leve da promessa à entrega? |

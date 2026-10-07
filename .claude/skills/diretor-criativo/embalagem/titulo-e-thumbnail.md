@@ -3,9 +3,9 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 
 ## RESPOSTA
 
-**Princípio.** Título e thumbnail são a promessa em sua forma mais curta. Eles abrem a mesma lacuna que o gancho, e o vídeo precisa fechá-la. Os dois trabalham juntos: um não repete o que o outro já diz.
+**Princípio.** Título e thumbnail são a promessa em sua forma mais curta. Eles tornam perceptível a mesma razão para clicar que o gancho torna perceptível para continuar, e o vídeo a entrega. Os dois trabalham juntos: um não repete o que o outro já diz.
 
-**Quando fazer.** Uma primeira versão, só de títulos, logo após o ângulo aprovado, para testar se a promessa se sustenta em poucas palavras; a versão final, com thumbnail, depois do roteiro revisado, quando o gancho e as imagens e relações dominantes do vídeo já existem.
+**Quando fazer.** Uma primeira versão, só de títulos, quando já existe uma promessa de trabalho para testar: se ela não se diz com honestidade em poucas palavras, o compromisso pode estar difuso, e isso volta a `angulo`; a versão final, com thumbnail, depois do roteiro revisado, quando o gancho e as imagens e relações dominantes do vídeo já existem.
 
 **Título — padrões que combinam com o estilo:**
 
@@ -19,7 +19,7 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 
 - compreensível para quem nunca ouviu falar do tema;
 - cerca de 45 caracteres e 8 palavras ou menos (medianas do canal: 43 caracteres e 8 palavras; 37 e 7 nos vídeos recentes);
-- abre a lacuna sem entregar a resposta;
+- cria uma expectativa que o vídeo cumpre, sem gastar a experiência dele: pode revelar a conclusão geral e vender o como;
 - sem figura que se confunda com fato, com a magnitude dimensionada quando o título depende dela e hesitação com lastro, conforme `ouvinte`;
 - todo superlativo ou afirmação passa por `checagem`;
 - o vídeo cumpre exatamente o que o título anuncia.
@@ -48,7 +48,7 @@ Como derivar título e conceito de thumbnail da promessa do vídeo?
 ## DEPENDÊNCIAS
 - ouvinte: fornece o que se pede de figura, magnitude e hesitação.
 - angulo: fornece a promessa e a tese que título e thumbnail condensam.
-- gancho: fornece a lacuna e a imagem de abertura com que devem ser coerentes.
+- gancho: fornece a razão para continuar e a imagem de abertura com que devem ser coerentes.
 - analogias: fornece a analogia condutora, quando há, uma das fontes da imagem.
 
 ## LIMITES

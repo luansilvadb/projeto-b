@@ -20,7 +20,7 @@ Cada necessidade abaixo é o que precisa funcionar. As técnicas são repertóri
 **2. A relevância chega cedo.** O ouvinte descobre logo por que este trecho merece atenção: uma curiosidade, uma consequência, uma ação, um personagem, um contraste. O trecho pode abrir por um caso, uma imagem ou um detalhe, desde que chegue ao ponto em seguida. O defeito é fazer esperar sem saber o que se está ganhando.
 
 - A frase que só anuncia ("agora vamos ver", "e o mais estranho nem é isso") dá lugar à coisa anunciada.
-- Chegar logo é dizer o assunto, e não a tese: a pergunta do gancho continua aberta até o vídeo respondê-la.
+- Chegar logo é tornar perceptíveis o assunto e a razão para acompanhá-lo, e não entregar a conclusão: a promessa pode estar aberta como pergunta, ou conhecida como resultado cujo mecanismo ainda será construído (`gancho`).
 - A razão para continuar pode ser "você", "nós", o corpo de quem assiste como medida, uma pergunta humana ou alguém que se acompanha. Vários blocos seguindo uma missão espacial, com o que está em jogo claro, têm essa razão sem o pronome; "e você..." posto em todo bloco para cumprir presença soa falso.
 
 **3. O caminho é acompanhável.** Quando o percurso é longo ou complexo o bastante para alguém se perder, o ouvinte percebe a forma dele; e numa mudança importante, não perde a relação entre o que acabou de aprender e o que vem agora. Um vídeo curto que segue uma pergunta só, ou uma história em ordem, já é o próprio mapa.

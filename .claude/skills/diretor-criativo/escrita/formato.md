@@ -15,8 +15,8 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 ```markdown
 # <título de trabalho>
 
-- Tese: <uma frase>
-- Promessa: <uma pergunta>
+- Tese: <o entendimento principal que o vídeo pretende estabelecer (`angulo`)>
+- Promessa: <o que o vídeo se compromete a entregar; o que fica de fora, quando é uma fronteira que tentaria voltar>
 - Idioma: <idioma>
 - Duração-alvo: <minutos>
 - Molde / Forma de arco: <os de `moldes` e de `arco`, quando nomeá-los ajuda>
@@ -76,6 +76,6 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 
 | Bloco | Capítulo | Função | Pergunta que responde → que abre | Nota visual | Cenas |
 |---|---|---|---|---|---|
-| 1 | (gancho) | gancho | — → por que ninguém parou de dormir? | Água-viva pulsando no fundo; o contador cai de 58 para 39 quando escurece. | `jellyfish-pulse`, `thirty-nine`, `no-brain` |
-| 2 | Uma péssima ideia | fundamento | o que o sono custa? → alguém escapou? | A loja que baixa a porta toda noite; volta até o bloco 10. | `sleep-cost`, `shop-closes` |
+| 1 | (gancho) | gancho | — → por que ninguém parou de dormir? | — | `jellyfish-pulse`, `thirty-nine`, `no-brain` |
+| 2 | Uma péssima ideia | fundamento | o que o sono custa? → alguém escapou? | A loja fechada é o corpo dormindo, e continua sendo quando volta, até o bloco 10. | `sleep-cost`, `shop-closes` |
 ```

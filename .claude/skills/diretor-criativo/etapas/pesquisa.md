@@ -5,8 +5,8 @@ Primeira etapa da produção. O que sai daqui é `src/videos/<vídeo>/research.m
 ## Como trabalhar
 
 1. Combine com o usuário o nome da pasta do vídeo: inglês, minúsculas e hifens (`sunlight-travel-time`).
-2. Defina a ideia central em uma frase: o que a pessoa deve entender ao fim do vídeo. Ela decide o que entra e o que fica de fora.
-3. Liste as perguntas do tema (passos 1 e 2 de `pesquisa/levantamento`) e acione um subagente `pesquisador` por pergunta, em paralelo, passando a pergunta, a ideia central e o caminho de `research.md`, quando ele já existir. Para um fato avulso que o roteiro pediu, pesquise você mesmo, por `levantamento`.
+2. Defina o foco de partida: o tema, a pergunta inicial e o contexto que o usuário trouxe, o bastante para orientar a busca. Ele é hipótese, e não a tese nem o ângulo do vídeo (`conceito/angulo`): não descarta um fato por não servir a uma conclusão que ainda não foi testada, e a pesquisa pode mudar o recorte.
+3. Liste as perguntas do tema (passos 1 e 2 de `pesquisa/levantamento`) e acione um subagente `pesquisador` por pergunta, em paralelo, passando a pergunta, o foco de partida e o caminho de `research.md`, quando ele já existir. Para um fato avulso que o roteiro pediu, pesquise você mesmo, por `levantamento`.
 4. Antes de gravar um fato, cobre de cada relatório: a fonte aberta, com a frase ou o número conferido nela (resultado de busca resumido não é a fonte; página que não abriu é dita na entrada da fonte); a conta de cada número derivado, para quem revisa conseguir refazê-la; a expectativa que cada fato surpreendente quebra e o termo de comparação de cada número. O que vier como *não verificado* entra em "Pontos em aberto", nunca em "Fatos".
 5. Registre o que é incerto ou disputado, e o que é uma simplificação aceitável. O roteiro decide como falar disso; a pesquisa não esconde.
 
@@ -17,7 +17,7 @@ Siga `src/videos/why-we-sleep/research.md`:
 ```markdown
 # Pesquisa: <pergunta ou tema do vídeo>
 
-Ideia central: <uma frase>
+Foco de partida: <o que orientou a busca; não é a tese do vídeo>
 
 ## Fatos
 
@@ -37,4 +37,4 @@ Os números das fontes são referenciados pelo campo `sources` de cada cena do r
 
 ## O que não fazer nesta etapa
 
-Não escreva narração nem descreva cenas. Separar pesquisa de roteiro evita que uma frase bonita arraste um fato fraco para dentro do vídeo. Quando a pesquisa estiver pronta, mostre ao usuário a ideia central, os fatos mais fortes e os pontos em aberto, e siga para a etapa `roteiro`.
+Não escreva narração nem descreva cenas. Separar pesquisa de roteiro evita que uma frase bonita arraste um fato fraco para dentro do vídeo. Quando a pesquisa estiver pronta, mostre ao usuário os fatos mais fortes, os pontos em aberto e o que a base sustenta ou deixou de sustentar em relação ao foco de partida, inclusive quando ela aponta para outra pergunta, e siga para a etapa `roteiro`.
