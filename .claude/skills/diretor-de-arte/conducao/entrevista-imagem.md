@@ -25,7 +25,7 @@ Quando uma escolha visual é do agente, e quando ela muda sentido, identidade ou
 
 - **faz a imagem afirmar outra coisa.** Dar rosto é afirmar intenção e emoção; um mecanismo que vira personagem, uma abstração que vira objeto, mostrar alguém sofrendo ou só o processo, a composição que troca o protagonista, o símbolo que acrescenta uma emoção.
 - **define quem conduz o vídeo e o que ganha rosto**: o protagonista, a figura que volta, quem representa uma coisa sem corpo, quem carrega o vínculo com o espectador.
-- **define a forma da analogia central**: o que representa o quê, e que relação ela afirma (o processo como máquina ou como criatura). Como essa forma é desenhada é do agente.
+- **define a forma da analogia condutora**, quando o vídeo tem uma: o que representa o quê, e que relação ela afirma (o processo como máquina ou como criatura). Como essa forma é desenhada é do agente.
 - **define o que as cores significam**: os modos do vídeo, a regra de troca entre eles, a cor que passa a querer dizer algo. A aprovação fixa os papéis e o sentido, não o valor de cada cor.
 - **sacrifica um traço que importa.** Simplificar sem mudar a afirmação é do agente. Quando a simplificação faz sumir algo cientificamente relevante e as duas saídas são defensáveis (a fiel emociona menos, a expressiva arrisca falsear), a troca é explícita e do usuário, e fica registrada como simplificação. A que faz a imagem afirmar algo falso não é levada: é corrigida.
 - **muda o que um bloco mostra como ideia principal**: a sequência de causas, o foco, a relação entre os conceitos.

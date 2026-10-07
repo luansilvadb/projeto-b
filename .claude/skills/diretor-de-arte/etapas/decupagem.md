@@ -8,7 +8,7 @@ A etapa não fecha a direção de arte. Escala de verdade, personagem no cenári
 
 ## Passo 1: conceito visual
 
-Unidades `entrevista-imagem`, `elenco` e `cor`. Parta de `script.md` (a analogia central e a nota visual de cada bloco) e de `research.md` (como as coisas são de verdade).
+Unidades `entrevista-imagem`, `elenco` e `cor`. Parta de `script.md` (as decisões atuais do vídeo, com a analogia condutora e as notas visuais que houver) e de `research.md` (como as coisas são de verdade).
 
 Elenco, cor, analogia e planos se descobrem juntos, e um corrige o outro: uma encenação pode mostrar que o protagonista não funciona, um personagem pode pedir outro modo de cor, e uma figura pode nem precisar existir. Avance com o bastante para testar, e volte quando a imagem mostrar coisa melhor.
 
@@ -18,12 +18,12 @@ Não se produz variação de personagem, paleta alternativa ou folha de modelo s
 
 `art.md` guarda o estado atual, com `src/videos/why-we-sleep/art.md` como modelo. Duas autoridades moram nela:
 
-- **Compromisso**: o que o vídeo inteiro precisa manter. Quem conduz e o que ganhou rosto, o que cada modo de cor significa e quando troca, a relação que a analogia central afirma, as simplificações aceitas. Uma decisão tomada com o usuário leva a data e o porquê.
+- **Compromisso**: o que o vídeo inteiro precisa manter. Quem conduz e o que ganhou rosto, o que cada modo de cor significa e quando troca, a relação que a analogia condutora afirma, quando há uma, as simplificações aceitas. Uma decisão tomada com o usuário leva a data e o porquê.
 - **Estado da solução**: o tom de cada cor, o desenho ainda não visto no tamanho final, o detalhe do cenário, os figurantes. Evolui no animatic sem nova pergunta.
 
 As alternativas recusadas não ficam na ficha: o histórico é o git.
 
-Pronto quando: `art.md` diz quem conduz o vídeo, o que as cores significam e que forma a analogia central tem, as decisões que eram do usuário foram tomadas por ele, e o que ficou em aberto é dúvida de execução.
+Pronto quando: `art.md` diz quem conduz o vídeo, o que as cores significam e que forma a analogia condutora tem, quando há uma, as decisões que eram do usuário foram tomadas por ele, e o que ficou em aberto é dúvida de execução.
 
 ## Passo 2: planos
 

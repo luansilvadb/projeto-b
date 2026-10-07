@@ -36,7 +36,7 @@ A duração de cada cena vem da narração: não escreva durações fixas. Use `
 
 Quando há uma dúvida visual que pesa, comece por um trecho que atravessa tudo de uma vez: a narração, o personagem ou o assunto, o cenário, a composição, o texto, a paleta e, se for o caso, o dado ou a analogia. O que se quer saber é se o conjunto funciona. Personagem, cenário e texto testados cada um por si só se encontram no plano 30.
 
-- **Escolha pelo risco, não pela ordem**: a primeira aparição do protagonista, a analogia central, o dado principal, o ambiente mais difícil, a cena que define o registro, o trecho que já deu dúvida na decupagem. Se o gancho cobre isso, é ele.
+- **Escolha pelo risco, não pela ordem**: a primeira aparição do protagonista, a analogia condutora, se houver, o dado principal, o ambiente mais difícil, a cena que define o registro, o trecho que já deu dúvida na decupagem. Se o gancho cobre isso, é ele.
 - **Do menor tamanho que contém a dúvida inteira**: um plano, dois ou três, uma cena curta.
 - **Renderize cedo.** Com esse trecho de pé, renderize e abra, antes de existirem os outros personagens, cenários e cenas.
 - **Conserte ali antes de multiplicar.** Leia o trecho por `critica-quadro`, com as lentes que a dúvida chama, e acione o `critico-de-quadro` sobre ele.

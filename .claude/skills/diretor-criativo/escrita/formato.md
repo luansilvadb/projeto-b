@@ -33,7 +33,7 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 
 | Bloco | Capítulo | Função | Pergunta que responde → que abre | Nota visual | Cenas |
 |---|---|---|---|---|---|
-| <n> | <título exibido na tela> | <o que o bloco faz; os nomes de fase de `arco` servem> | <pergunta> → <pergunta, ou o que leva ao bloco seguinte> | <a de `indicacao-visual`> | `<id>`, `<id>` |
+| <n> | <título exibido na tela> | <o que o bloco faz; os nomes de fase de `arco` servem> | <pergunta> → <pergunta, ou o que leva ao bloco seguinte> | <o delta de `indicacao-visual`, ou —> | `<id>`, `<id>` |
 
 ## Fio
 <o registro de `fio`: o que carrega o texto, as voltas que importam e as dívidas abertas>
@@ -52,7 +52,7 @@ Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas
 ```
 
 - O gancho é um bloco sem capítulo. O bloco sem fala traz a cena com `holdMs` e a nota visual.
-- `Voz`, `Fio`, `Simplificações`, `Contas` e `Grafias de pronúncia` só aparecem quando houver itens.
+- `Voz`, `Fio`, `Simplificações`, `Contas` e `Grafias de pronúncia` só aparecem quando houver itens. No cabeçalho, `Molde / Forma de arco`, `Tensão` e `Analogia condutora` também.
 - O porquê de uma decisão (o que ela evita, a troca aceita, a ressalva) fica na linha dela quando ajuda a reescrita seguinte a não repetir o erro. O que a decisão era antes fica no git.
 
 **Lista de fontes.** É o nome que as unidades dão a três lugares: as fontes numeradas de `research.md`, o campo `sources` de cada cena em `script.json` e as seções `Simplificações` e `Contas` daqui. A situação de cada afirmação (verificada, simplificada) vem do relatório de `checagem`, e não é copiada.

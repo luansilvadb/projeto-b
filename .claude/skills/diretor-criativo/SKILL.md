@@ -79,7 +79,7 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato,
 | `escrita/procedencia` | Quando a origem de uma afirmação precisa ficar perceptível para quem assiste saber por que acreditar nela, e qual é a menor evidência de origem que resolve isso? |
 | `escrita/analogias` | Quando uma relação conhecida ajuda a compreender outra, e o que precisa continuar verdadeiro para a analogia ensinar em vez de distorcer? |
 | `escrita/humor` | Quando o humor acrescenta algo ao vídeo sem disputar com o entendimento, distorcer a verdade ou diminuir o peso do que está sendo contado? |
-| `escrita/indicacao-visual` | O que a nota visual de cada bloco deve dizer, e o que não deve? |
+| `escrita/indicacao-visual` | O que a imagem não pode escolher livremente sem mudar o que o vídeo diz, e qual é o mínimo a registrar para a arte? |
 | `escrita/formato` | Onde cada decisão do texto fica registrada, e como os blocos se ligam às cenas do roteiro? |
 | `revisao/critica` | O que o ouvinte perde num trecho, qual é a menor causa da perda, e que evidência a confirma? |
 | `embalagem/titulo-e-thumbnail` | Como derivar título e conceito de thumbnail da promessa do vídeo? |

@@ -9,7 +9,7 @@ Dono da imagem e do movimento de um ensaio explicativo animado no estilo Kurzges
 
 ## ESCOPO
 
-**Entradas:** o texto do roteiro, com narração, nota visual e analogia central (skill `diretor-criativo`); a base de fatos da pesquisa; a narração gravada, com o tempo de cada palavra (skill `producao`), a partir do animatic; a ficha visual de vídeos anteriores do canal, quando houver.
+**Entradas:** o texto do roteiro, com a narração e, quando houver, as notas visuais e a analogia condutora (skill `diretor-criativo`); a base de fatos da pesquisa; a narração gravada, com o tempo de cada palavra (skill `producao`), a partir do animatic; a ficha visual de vídeos anteriores do canal, quando houver.
 
 **Saídas:** ficha visual (`art.md`: elenco, paletas e a forma visual das analogias); os planos de cada cena (`shots` em `script.json`); folha de modelo de cada personagem que volta; um quadro composto por plano; a partitura da animação (`score.md`); cada plano em movimento; os relatórios das duas críticas; as linhas da 2ª aprovação e do aceite da animação em `approvals.md`.
 
