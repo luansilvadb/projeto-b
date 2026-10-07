@@ -19,7 +19,7 @@ O que a nota visual de cada bloco deve dizer, e o que não deve?
 - **Escala visível**: toda comparação de tamanho mostra os dois termos no mesmo quadro ou num único movimento contínuo.
 - **Abstração ganha corpo**: processo invisível recebe um representante concreto e constante.
 - **Texto na tela**: apenas números-chave, nomes de conceitos apresentados, títulos de capítulo e o selo da fonte; nunca frases da narração.
-- **Selo da fonte**: o bloco que afirma um fato vindo de um estudo pede o selo, com autor e ano, conforme `procedencia`.
+- **Origem na tela**: quando `procedencia` pede a origem visível, a nota diz que fonte precisa ser identificável, e durante qual afirmação.
 - **Cartela de capítulo**: o título exibido na tela vem do cabeçalho de capítulo do roteiro; a nota do primeiro bloco não o repete, só indica como a cartela entra se isso importar para a imagem.
 - **Narração que aponta**: quando o texto se refere à imagem ("esta faixa aqui", "seja lá o que for isso"), a nota diz exatamente o que está sendo apontado. Sem essa nota, a frase não se sustenta.
 - **Percurso**: quando o bloco conta como algo funciona em lugares vizinhos (dentro e fora, antes e depois, quem está e quem chega), a narração é ordenada pelo caminho e a nota pede um cenário só, que a câmera percorre sem cortar, com a estação de cada oração. A virada do texto ("mas", "até que") cai numa passagem do cenário (a saída do ninho, a borda do mapa), e o que chega de fora entra pelo lado de fora do quadro. Lido num trecho de 27 s sobre formigas: dentro do ninho em "muito cooperativas", a saída do túnel no "mas", a batalha no capim em "guerras cruéis", o recuo em "por todos os lados" e uma bota entrando no quadro em "até os humanos aparecerem". Um corte só, no fim.
