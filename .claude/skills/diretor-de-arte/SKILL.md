@@ -92,7 +92,7 @@ Movimento:
 |---|---|
 | `conducao/entrevista-movimento` | Que decisões de movimento vão ao usuário, e quais o agente resolve sozinho? |
 | `tempo/sincronia` | Quando cada coisa acontece em relação à narração? |
-| `tempo/entradas` | Como um elemento entra, muda de estado e sai? |
+| `tempo/entradas` | O que faz um elemento aparecer, mudar ou sair de modo que se entenda de onde veio, o que mudou e em que estado terminou? |
 | `atuacao/pausa-viva` | O que se move quando nada acontece? |
 | `atuacao/acao` | Como uma figura ou criatura atua uma ação? |
 | `camera/movimento` | Quando e como a câmera se move dentro de um plano? |

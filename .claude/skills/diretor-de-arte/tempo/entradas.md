@@ -1,44 +1,62 @@
 ## PERGUNTA
-Como um elemento entra, muda de estado e sai?
+O que faz um elemento aparecer, mudar ou sair de modo que se entenda de onde veio, o que mudou e em que estado terminou?
 
 ## RESPOSTA
 
-**O que a referência faz.** Um elemento entra crescendo um pouco além do tamanho final e volta, em 0,25 a 0,35 s. Texto entra por máscara ou por espaçamento que fecha, não por opacidade. Vários elementos entram em fila, 0,3 a 1 s entre si. Um estado vira outro por transformação contínua, não por troca seca: a etiqueta estoura maior e assenta; a forma passa por uma silhueta clara de 4 quadros antes de virar outra; a barra cresce em cascata com o número contando junto.
+**Princípio.** Entrar, mudar de estado e sair são caminhos entre dois estados do mesmo plano, e o caminho afirma algo sobre a coisa. O teste, para qualquer um deles: o espectador sabe dizer de onde ela veio, o que mudou nela e como ficou?
 
-**Entradas:**
+**O caminho serve quando:**
 
-| Elemento | Entra |
+- **Lê-se a origem.** Surgir ali, chegar de fora, ser revelado e já estar no lugar são quatro afirmações diferentes. O que já estava quando a câmera chega não entra.
+- **O fim diz como a coisa terminou**: assentou, bateu, continuou ou foi interrompida. O estado final é o do quadro aprovado, e fica à vista.
+- **A técnica não dá à coisa uma matéria que ela não tem.** Defeito conhecido: o objeto sólido que entra só por opacidade parece fantasma. A opacidade é a entrada certa do que é assim por natureza (luz, atmosfera, lembrança, o que é revelado).
+- **Quando é a mesma coisa mudando, ela continua reconhecível.** A pergunta que decide a técnica: o espectador precisa ver o caminho entre os dois estados, ou só perceber que o estado mudou? Se o caminho importa, a coisa vira a outra à vista. Se a mudança é ruptura, piada, ou um antes e depois a comparar, ela pode trocar numa batida, desde que se leia como intenção e não como erro.
+- **A curva tem a natureza que a cena afirma** (peso, impacto, constância, elasticidade, queda, precisão de máquina) e não transforma a ação em outra: a curva errada muda quanto tempo a ação parece durar.
+- **O tempo entre os elementos diz se são um ou vários** (`sincronia`). Juntos, são um acontecimento; em cascata, uma sequência, uma contagem, uma progressão ou o percurso do olho. Ser vários não é motivo para escalonar. O conjunto chega a tempo de a fala se apoiar nele.
+- **Nada esconde o que ainda precisa ser visto**: a entrada não cobre, e a saída não leva.
+- **A saída diz que a coisa deixou o estado atual**, sem roubar a atenção do que passa a importar.
+- **O texto entra reforçando a função dele, sem atrasar a leitura** nem soltar-se do que nomeia (`texto`). O que precisa ser lido já não espera uma animação de letras.
+
+**Repertório.** Parte-se do que acontece com a coisa; a técnica é uma saída possível, e os números são o que a referência costuma usar:
+
+| O que acontece | Uma saída | Costuma | De onde vem |
+|---|---|---|---|
+| Um objeto surge no lugar | cresce de 0,6 do tamanho, passa a 1,06 e volta a 1, com a opacidade acompanhando só os primeiros quadros. Também servem: desacelerar sem ultrapassar, esticar e achatar, ou só aparecer, quando a cena pede secura | 0,25 a 0,35 s | referência; aceita no piloto do vídeo do sono, junto com "nada que tem forma entra só por opacidade" |
+| Uma etiqueta, um selo ou um número aparece | estoura de 0,7 a 1,08 e assenta; a linha que a prende desenha-se do objeto para ela, junto, com a ponta primeiro | 0,25 s | referência |
+| Uma figura chega de fora | entra pelo movimento que a ação pede, a partir de fora do quadro | o tempo de uma travessia | referência |
+| Algo nasce de uma causa (partícula, bolha, faísca) | nasce pequeno onde a causa está e cresce enquanto se afasta | | referência |
+| Um texto de cartela aparece | as letras em sequência, por máscara que abre ou por espaçamento largo que fecha. Também servem: escala, escrita à vista, opacidade, vir junto com o objeto | 0,35 s por linha | referência, onde texto quase não entra por opacidade |
+| Um ambiente muda dentro do plano | acende, escurece, alaga ou se constrói parte a parte | 0,8 a 1,5 s | referência |
+| A mesma coisa muda de estado | cor e tamanho interpolam; a forma passa por um estado intermediário que o olho reconhece (a contração do sino, a porta a meio) | 0,4 a 1,2 s; o quadro inteiro escurecer leva mais que um olho fechar | referência; no piloto do vídeo do sono, de andamento contido, nada troca de estado num quadro |
+| Uma forma vira outra, e a passagem direta ficaria ambígua | uma silhueta clara de 4 quadros entre as duas | | referência; sem plano nosso aceito |
+| Uma quantidade cresce | a barra cresce em cascata, com o número contando junto | | referência |
+| Vários entram como sequência (os três selos, os cinco bichos, as moedas) | cascata, na ordem em que a fala ou o olho os percorre | 0,1 a 0,3 s entre si; numa fila que a fala acompanha, de 0,3 a 1 s | referência |
+| Os dois lados de uma tela dividida | existem desde a divisão, apagados, e cada um acende na sua palavra | | piloto do vídeo do sono |
+| Algo sai | o caminho inverso ao da entrada, mais rápido. Também servem: ser empurrado pelo que entra, ser coberto, atravessar a borda, virar outra coisa, ficar e perder importância, ou ir com a transição | 0,2 s | referência, onde pouca coisa sai antes de o plano acabar |
+
+Os tempos situam e não reprovam. Pesam o tamanho do que muda, a complexidade, a importância, a energia da cena e a distância entre os dois estados. Quando o que ficou acumulado passa a poluir o quadro, quem julga é `composicao`.
+
+**Curvas**, pela natureza do movimento. O nome de cada uma no código está em `etapas/animacao`:
+
+| O movimento | A curva |
 |---|---|
-| Objeto ou figura que já estava no lugar quando a câmera chega | já está lá; não entra |
-| Objeto que surge | cresce de 0,6 ao tamanho, passa de 1,06 e volta a 1, em 0,3 s; a opacidade acompanha só os primeiros quadros |
-| Figura que chega | anda, nada ou voa para dentro do quadro, a partir de fora dele, no tempo de uma travessia |
-| Etiqueta, selo ou número | estoura de 0,7 a 1,08 e assenta, em 0,25 s; a linha que a prende desenha-se do objeto para ela, junto |
-| Texto de cartela | as letras entram em sequência, por máscara que abre ou por espaçamento largo que fecha, em 0,35 s por linha |
-| Cenário inteiro (a cena nova) | pela transição do plano, nunca por entrada de elemento |
-| Partícula, bolha, faísca | nasce pequena onde a causa está e cresce enquanto se afasta |
+| Surge e assenta | com sobra: passa do ponto e volta |
+| Chega e para (o peixe que freia, o puxão de uma vez) | chegada rápida, a que cumpre nove décimos do caminho no primeiro décimo do tempo |
+| Tem peso (porta, braço, câmera, maré) | acelera e desacelera: a duração escrita é a duração vista |
+| Tem velocidade constante por natureza (ponteiro, esteira, sombra que passa) | linear |
+| Cai | acelera |
+| Para seco, bate e volta, oscila ou atravessa sem assentar | a que termina como a coisa termina: a desaceleração é o fim mais comum, não o único |
 
-**Curvas.** Toda entrada e todo assentamento usam uma curva que desacelera ao chegar; a curva com sobra, para o que surge; a linear só para o que tem velocidade constante por natureza (ponteiro, esteira, sombra que passa); a que acelera, só para a queda. A curva de chegada rápida (a que cumpre nove décimos do caminho no primeiro décimo do tempo) serve a quem chega e para, como o peixe que freia ou o puxão de uma vez; usada numa porta, num braço ou numa câmera, ela encurta a ação para um décimo da duração escrita e o resto vira rastejo. O que tem peso acelera e desacelera: a duração da tabela é a duração vista.
-
-**Mudança de estado.** O elemento não some e volta diferente: ele vira o outro à vista. Cor interpola; tamanho interpola; forma passa por um estado intermediário legível (a silhueta clara, a contração do sino, a porta a meio). A mudança dura de 0,4 a 1,2 s, conforme o tamanho do que muda; o quadro inteiro escurecer leva mais que um olho fechar.
-
-**Escalonamento.** Elementos de uma mesma família (os três selos, os cinco bichos, as moedas) entram em sequência, de 0,1 a 0,3 s entre si, na ordem em que a fala ou o olho os percorre. O último entra antes de a fala passar ao próximo assunto.
-
-**Saídas.** Pouca coisa sai; a maior parte fica até o plano acabar ou até a transição levar tudo. O que sai, sai pelo caminho inverso ao da entrada, mais rápido (0,2 s), ou é empurrado para fora pelo que entra.
-
-**Procedimento:**
-
-1. Para cada mudança da partitura, escolha a entrada pela tabela.
-2. Defina o estado inicial (de onde vem, tamanho, opacidade) e o final, já conhecido do quadro aprovado.
-3. Escolha a curva: com sobra para o que surge, de chegada rápida para o que chega e para, com peso para o que se desloca, linear só com motivo.
-4. Escalone o que é família.
-5. Renderize cinco quadros em volta da deixa e confira: o elemento começa a entrar antes da palavra e está inteiro 0,3 s depois dela?
+Defeito conhecido: a chegada rápida numa porta, num braço ou numa câmera encurta a ação para um décimo da duração escrita, e o resto vira rastejo. Numa entrada, ela pôs o elemento no tamanho já no primeiro quadro, e a entrada leu como só opacidade.
 
 ## DEPENDÊNCIAS
-- sincronia: fornece a deixa, a ordem e a duração de cada mudança.
+- sincronia: fornece quando cada mudança acontece e a relação de tempo entre elas.
+- composicao: fornece o estado final de cada elemento, no quadro aprovado.
+- texto: fornece a função e o vínculo de cada texto.
 
 ## LIMITES
-- Não usar opacidade como única entrada de nada que tenha forma: ela faz o elemento parecer fantasma.
-- A execução das entradas entre planos pertence a `transicoes`.
+- Como a figura atua ao chegar (andar, nadar, voar) pertence a `acao`.
+- A troca do quadro inteiro entre dois planos pertence a `transicoes`. Dentro do plano, um ambiente que acende, cresce ou é revelado é daqui.
 
 ## EXEMPLO
-> O contador "58 pulsos por minuto": o número cresce de 0,6 a 1,06 e volta, em 9 quadros, a partir de 4 quadros antes de "Cinquenta"; a etiqueta estoura 8 quadros depois do número; a linha se desenha do sino até a etiqueta nos mesmos 8 quadros, com a ponta redonda aparecendo primeiro.
+> O contador "58 pulsos por minuto". Origem: surge ali, sobre o sino que ele conta. O número cresce de 0,6 a 1,06 e volta, em 9 quadros, em "Cinquenta"; a etiqueta estoura 8 quadros depois, porque é uma segunda informação; a linha se desenha do sino até a etiqueta nos mesmos 8 quadros, com a ponta redonda primeiro, porque as duas são um acontecimento só. Estado final: o número assentado, preso ao sino.

@@ -19,9 +19,11 @@ Como julgar o movimento, com medidas e quadros consecutivos?
    - O que entra junto é um acontecimento só, e o que são dois se distingue?
    - O trecho sem novidade tem função, e a última informação teve tempo de ser percebida?
 2. **Entradas e estados**
-   - O que surge tem sobra e assenta? Texto entra por máscara ou espaçamento?
-   - Algum estado troca em corte seco dentro do plano?
-   - A família entra escalonada?
+   - Entende-se se cada coisa surgiu, chegou de fora, foi revelada ou já estava? O estado final fica claro, e a técnica dá à coisa a matéria que ela tem?
+   - Quando é a mesma coisa mudando, ela continua reconhecível? A troca numa batida lê como intenção ou como erro?
+   - A curva tem a natureza do movimento? O que entra junto ou em cascata lê como um acontecimento ou como sequência, conforme a intenção?
+   - Alguma entrada ou saída escondeu o que ainda precisava ser visto?
+   - Sobra, máscara, opacidade, cascata, faixa de duração e saída inversa não reprovam por si: reprova o que não se entendeu.
 3. **Pausa viva**
    - Há dois quadros iguais em qualquer tira?
    - Os ciclos estão fora de fase entre vizinhos?
@@ -50,8 +52,8 @@ Além do total, um **mapa segundo a segundo** da fração de quadros quase parad
 
 **Classificação dos problemas:**
 
-- **Bloqueante**: mudança sem causa, ou tão longe dela que a relação se perde; estado trocando em corte; quadros iguais numa tira; ação sem os três tempos; ponte de transição quebrada. Refazer é obrigatório.
-- **Relevante**: curva dura (uma ação que termina em um décimo do tempo escrito), sobra demais, família em uníssono, câmera que perde o foco, recurso solto. Refazer, salvo custo desproporcional; o que ficar, relatar com o mapa segundo a segundo.
+- **Bloqueante**: mudança sem causa, ou tão longe dela que a relação se perde; mudança de estado em que a coisa deixa de ser reconhecida, ou troca seca que lê como erro; quadros iguais numa tira; ação sem os três tempos; ponte de transição quebrada. Refazer é obrigatório.
+- **Relevante**: curva dura (uma ação que termina em um décimo do tempo escrito), sobra demais, sequência que lê como um acontecimento só (ou o contrário), câmera que perde o foco, recurso solto. Refazer, salvo custo desproporcional; o que ficar, relatar com o mapa segundo a segundo.
 - **Polimento**: ajuste fino de tempo, amplitude ou fase. Aplicar se não mexer em nada aprovado.
 
 **Procedimento:**
@@ -74,4 +76,4 @@ Além do total, um **mapa segundo a segundo** da fração de quadros quase parad
 - Não julgar composição, desenho ou cor: pertencem a `critica-quadro`.
 
 ## EXEMPLO
-> Plano 3, "a lagoa escurece", 1,2 s — critério: estado em corte (o contador "39" aparece inteiro no quadro em que a varredura termina). Classificação: bloqueante. Ação: o contador entra com sobra 0,3 s depois de a borda sair pelo chão; não altera nada aprovado.
+> Plano 3, "a lagoa escurece", 1,2 s — critério: origem da entrada (o contador "39" aparece inteiro, sem chegada, no quadro em que a varredura termina, e lê como erro). Classificação: bloqueante. Ação: o contador surge e assenta depois de a borda sair pelo chão; não altera nada aprovado.
