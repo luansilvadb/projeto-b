@@ -28,14 +28,14 @@ Com que critérios e medidas julgar os quadros?
    - O escuro tem cor? O maior contraste está no ponto focal?
 5. **Desenho**
    - Construção, julgada na silhueta numa cor só, antes de qualquer outro item desta passada: os cinco itens de `forma` estão lá (a pose conta a cena, junção em curva, membro nasce de massa, o que se repete não é cópia, a linha de cima tem acontecimentos)? Silhueta reprovada é bloqueante, e o resto da passada espera por ela.
-   - Cada parte tem base, sombra e, onde cabe, brilho?
-   - O assunto tem formas na faixa do orçamento?
-   - Registro e contenção, julgados num recorte em tamanho real (um quarto do quadro, sem reduzir) de cada personagem e do assunto de cada cenário: o desenho está no registro certo de `forma`? Aponte cada forma que, tirada, não faria falta em nenhum plano em que a peça aparece: leia esses planos no roteiro antes de apontar. Registro trocado é bloqueante; três ou mais formas sobrando é relevante. A folha de quadros reduzidos não mostra nada disso.
+   - O volume se lê, e a sombra é uma forma desenhada, que acompanha o volume?
+   - O orçamento de `forma` acusa ícone ou excesso? Confira no recorte antes de apontar.
+   - Registro e contenção, julgados num recorte em tamanho real (um quarto do quadro, sem reduzir) de cada personagem e do assunto de cada cenário: o desenho está no registro certo de `forma`? Aponte cada forma que, tirada, não faria falta em nenhum plano em que a peça aparece: leia esses planos no roteiro antes de apontar. Registro trocado é bloqueante; forma sobrando é relevante. A folha de quadros reduzidos não mostra nada disso.
    - O personagem bate com a folha de modelo? Confira o estado do plano pelo nome que a ficha dá, item por item ("dormindo em pé: olho fechado, tromba caída, cabeça pendida" são três conferências). A expressão serve ao momento?
 6. **Cenário, profundidade e luz**
    - O fundo liso tem degradê, e trama só onde `cenario` a pede? O cenário tem três camadas ou mais?
    - Há sombra de contato no mundo e halo por dentro? A luz vem de um lado só?
-   - No que emite luz e por dentro: há centro claro, aros e halo, e a área grande tem superfície viva?
+   - O que emite luz parece fonte de luz, e o que é muitos se lê como massa, com um foco?
 7. **Texto**
    - Um texto novo por vez, cada um preso ao que nomeia?
    - Conte os textos à vista em cada plano. Mais de cinco é relevante.

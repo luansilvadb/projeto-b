@@ -72,7 +72,7 @@ A folha aprovada é a referência de constância: todo plano é conferido contra
 
 ## DEPENDÊNCIAS
 - elenco: fornece a ficha de cada personagem e decide o que ganha rosto.
-- forma: fornece o método de construção e o orçamento de formas.
+- forma: fornece a construção e o orçamento de formas.
 - cor: fornece as cores do personagem em cada modo.
 
 ## LIMITES
