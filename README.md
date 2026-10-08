@@ -68,33 +68,28 @@ Se a criação for recusada, corrija a permissão de links e repita a criação 
 
 `.agents/` é a fonte canônica do conhecimento local: `skills/` guarda os workflows e suas unidades, `agents/` guarda as oito definições de especialistas e `commands/opsx/` guarda os seis comandos do Claude. As instruções compartilhadas ficam em `AGENTS.md` na raiz. Edite os destinos canônicos; `.claude` e `CLAUDE.md` são apenas os links de compatibilidade descritos acima.
 
-As 12 skills locais são `creator`, `diretor-criativo`, `diretor-de-arte`, `diretor-de-som`, `grilling`, `producao`, `openspec-apply-change`, `openspec-archive-change`, `openspec-explore`, `openspec-propose`, `openspec-sync-specs` e `openspec-update-change`.
+As dez skills locais são `diretor-criativo`, `diretor-de-arte`, `diretor-de-som`, `producao`, `openspec-apply-change`, `openspec-archive-change`, `openspec-explore`, `openspec-propose`, `openspec-sync-specs` e `openspec-update-change`. A `creator` e a `grilling` ficam na instalação global compartilhada.
 
 O Codex descobre as skills em `.agents/skills/` e lê `AGENTS.md`; o Claude Code acessa o mesmo conteúdo pelos links. As definições Markdown de especialistas e os comandos `/opsx:*` mantêm o formato do Claude: centralizá-los não os registra automaticamente como subagentes ou comandos nativos do Codex. Skills globais externas, como `ponytail` e `remotion-best-practices`, continuam em suas instalações fora do projeto. Depois da migração, abra novas sessões para carregar o novo inventário.
 
 ### Conhecimento global compartilhado
 
-A instalação pessoal é separada do repositório: `~/.agents/skills/<nome>/` é a fonte física das skills globais compartilhadas. O Codex as descobre nesse diretório; o Claude Code acessa cada uma por um link simbólico relativo em `~/.claude/skills/<nome>`, com destino `../../.agents/skills/<nome>`. No PowerShell, o destino aparece com barras invertidas, equivalentes às barras desses caminhos.
+A instalação pessoal é separada do repositório: `~/.agents/skills/` é a fonte física das skills globais compartilhadas. O Codex as descobre nesse diretório; a própria pasta `~/.claude/skills/` é um link simbólico para essa fonte. Adicionar, alterar ou remover uma skill na fonte se reflete automaticamente no caminho do Claude.
 
-As dez skills pessoais compartilhadas são `find-skills`, `skill-creator`, `grilling`, `ponytail`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help`, `ponytail-review` e `remotion-best-practices`. Elas continuam externas ao projeto; o conteúdo técnico da skill de Remotion é mantido pela origem, não editado à mão. A `grilling` global pessoal está em `.agents/skills`, sem outra instalação pessoal em `.codex/skills/grilling`.
+As 11 skills pessoais compartilhadas são `creator`, `find-skills`, `skill-creator`, `grilling`, `ponytail`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help`, `ponytail-review` e `remotion-best-practices`. Elas continuam externas ao projeto; o conteúdo técnico da skill de Remotion é mantido pela origem, não editado à mão. A `grilling` global pessoal está em `.agents/skills`, sem outra instalação pessoal em `.codex/skills/grilling`.
 
-As pastas globais `.claude`, `.codex` e suas raízes de skills continuam físicas. Cada aplicativo mantém sua própria `skills/synced`, inclusive as versões específicas de navegador e computador; plugins, skills de sistema, ChatCut, lixeiras e metadados dos instaladores ficam nos caminhos gerenciados pelo aplicativo. As versões locais e gerenciadas podem ter o mesmo nome de uma skill pessoal: elas não são fundidas por esta organização.
+As pastas globais `.claude` e `.codex` continuam físicas; o link é a pasta `.claude/skills`. Ela compartilha toda a árvore de `.agents/skills`, incluindo `synced`. As skills sincronizadas continuam mantidas pelos aplicativos; plugins, skills de sistema e ChatCut ficam nos caminhos gerenciados pelo aplicativo. As versões locais e gerenciadas podem ter o mesmo nome de uma skill pessoal.
 
-Edite a fonte em `~/.agents/skills/`. Para instalar uma skill pessoal nova, coloque ali o diretório completo e crie somente o link individual correspondente no Claude. Não substitua uma entrada existente antes de comparar e preservar seu conteúdo. Depois de atualizar por um instalador, confira se ele preservou os links ou recriou uma cópia física; reconcilie a cópia antes de restabelecer o link. Os scripts de avaliação de `skill-creator` ainda dependem de `claude -p`, mesmo quando a skill é consultada pelo Codex.
+Edite a fonte em `~/.agents/skills/`. Para instalar uma skill pessoal nova, coloque ali o diretório completo; não crie links individuais nem substitua o link da pasta por uma pasta comum. Não substitua uma entrada existente antes de comparar e preservar seu conteúdo. Depois de atualizar por um instalador, confira se ele preservou o link da pasta; preserve e revise qualquer cópia física antes de restabelecer o link. Os scripts de avaliação de `skill-creator` ainda dependem de `claude -p`, mesmo quando a skill é consultada pelo Codex.
 
-Para conferir os links pessoais no Windows:
+Para conferir o link da pasta no Windows:
 
 ```powershell
-$personalSkills = @('find-skills', 'skill-creator', 'grilling', 'ponytail',
-    'ponytail-audit', 'ponytail-debt', 'ponytail-gain', 'ponytail-help',
-    'ponytail-review', 'remotion-best-practices')
-$skillLinks = $personalSkills | ForEach-Object {
-    Join-Path $env:USERPROFILE ".claude/skills/$_"
-}
-Get-Item -Force -LiteralPath $skillLinks | Select-Object Name,LinkType,Target
+Get-Item -Force -LiteralPath (Join-Path $env:USERPROFILE '.claude/skills') |
+    Select-Object FullName,LinkType,Target
 ```
 
-Cada entrada deve mostrar `SymbolicLink` para `../../.agents/skills/<nome>`, nunca uma segunda pasta mantida. Links globais exigem a mesma permissão do Windows explicada acima, mas não dependem de uma configuração do Git.
+O resultado deve mostrar `SymbolicLink` com destino na pasta `~/.agents/skills/`. Links globais exigem a mesma permissão do Windows explicada acima, mas não dependem de uma configuração do Git.
 
 As instruções globais têm uma única fonte regular em `~/.agents/AGENTS.md`, separada do `AGENTS.md` deste repositório:
 
