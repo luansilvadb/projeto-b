@@ -46,6 +46,17 @@ Pedido do usuário: animar as trocas, principalmente o começo, que está seco e
 
 **Recusada em 2026-10-07.** O usuário viu a passagem pessoa → savana no vídeo e a apontou como "sem motion graphics": dois quadros inteiros empurrados, com a borda reta entre eles. As duas trocas voltaram ao palco comum do vídeo (`OpeningPassage` saiu do código): o que está solto encolhe no ponto, o céu da savana toma a cor no lugar e as camadas dela sobem. A causa da faixa preta que a passagem contornava era o céu do cenário em camadas, que descia junto com as camadas e acabava no horizonte; agora ele é fundo (não desce) e vai até a base do quadro, e isso vale para toda entrada e saída da savana (`night-falls` 1, `sleep-debt` 2, `elephants` 1, `elephant-awake` 2, `elephant-verdict` 1 e 3).
 
+## Revisão de todas as trocas de plano — 2026-10-07
+
+Pedido do usuário, depois de recusar a passagem da abertura: rever as 118 trocas. Três leituras do `critico-de-movimento` (evidências em `out/rascunho/trocas/`) acharam 75 que cumprem o palco único. Decisões do usuário diante do resultado, que valem acima das entradas de cada plano abaixo:
+
+- **Varreduras: saem todas.** Nenhuma troca usa mais a borda reta que cobre o quadro (`Sweep`, `wipe`). Onde a luz muda no mesmo lugar (a noite que cai, o dia que nasce), ela muda no lugar, de forma contínua, com o cenário no palco; onde o enquadramento muda, é a câmera que vai de um ao outro. Vale para `night-falls` 2, `skip-a-night` 2, `elephants` 4, `two-hours` 1, `elephant-awake` 1, `jellyfish-night` 1 e `jellyfish-debt` 3.
+- **Círculos: só a lente do sonho fica** (`stockroom-night` 2 e 3), porque é um objeto da cena. O ícone da porta que cresce em `but-what` 2 e o cérebro que abre em `stockroom` 2 passam ao palco comum.
+- **`rats-result`: a câmera recua em vez de deslizar de lado.** Os dois ratos ficam no lugar, o disco encolhe sob eles e o terceiro cresce ao lado; depois os três viram parte da fila.
+- **Alcance:** consertar tudo o que a revisão apontou, com o polimento.
+
+O que não é decisão, e sim a regra já aceita sendo cumprida: o que é comum a dois planos fica na tela (a água-viva, o tanque, a bancada, a parede do laboratório, os ratos, a dupla de 1924, os três da loja); um cenário entra e sai em camadas, e não como uma chapa que incha; nenhuma troca deixa a tela vazia nem mostra o mesmo elenco duas vezes.
+
 ## Som
 
 A música, os níveis, os silêncios e os efeitos saíram desta partitura em 2026-10-05 e ficam em `sound.md`, da skill `diretor-de-som`. As linhas "Som:" de cada plano, abaixo, são as marcas da época em que a animação foi escrita: valem como registro do que acontece na imagem, e quem decide o que soa é o mapa de som.
