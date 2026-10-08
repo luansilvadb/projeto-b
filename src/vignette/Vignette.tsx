@@ -44,23 +44,25 @@ const WINDOW_CLOSED = 0.6;
 // A janela some quando já é pequena, para o ponto do próprio mundo tomar o lugar dela.
 const WINDOW_FADE = [1, 1.9] as const;
 // O tempo da vinheta, em frações dela: o círculo que a abre, a pausa em cada
-// mundo, o recuo de um mundo ao seguinte, e o planeta assentando como símbolo.
+// mundo, o recuo de um mundo ao seguinte e o planeta assentando atrás do logo.
 const IRIS = 0.05;
 const FIRST_HOLD = 0.07;
 const LEG = 0.2;
 const SETTLE = 0.14;
 
 type VignetteProps = {
-  /** O nome do canal, debaixo do símbolo. O canal ainda não tem nome: sem ele, fica só o símbolo. */
+  /** Nome que assina a vinheta; pode ser vazio para mostrar só o planeta. */
   readonly channel?: string;
 };
 
 /**
  * A vinheta inteira. Abre num círculo sobre o que estiver por baixo (o último
- * plano do gancho) e termina com o símbolo parado. Dura o trecho em que for
+ * plano do gancho) e termina com o logo parado. Dura o trecho em que for
  * posta (um `Sequence`) e não tem fala.
  */
-export const Vignette: React.FC<VignetteProps> = ({ channel }) => {
+export const Vignette: React.FC<VignetteProps> = ({
+  channel = "VIDA EXPLICADA",
+}) => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
   const seconds = frame / fps;

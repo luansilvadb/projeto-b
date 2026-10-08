@@ -68,7 +68,7 @@ export type MusicSpec = {
  * poucos e próximos de propósito: a distância de cada um à voz está em
  * `MUSIC_MIX` (src/audio/ducking.ts).
  */
-export const MUSIC_LEVELS = ["presente", "leito", "recuo"] as const;
+const MUSIC_LEVELS = ["presente", "leito", "recuo"] as const;
 export type MusicLevel = (typeof MUSIC_LEVELS)[number];
 
 /** Um momento da trilha: do começo da cena `from` ao fim da cena `to` (ou da própria `from`). */

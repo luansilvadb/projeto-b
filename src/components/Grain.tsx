@@ -1,15 +1,11 @@
 import { useId } from "react";
 import { AbsoluteFill } from "remotion";
 
-type GrainProps = {
-  readonly opacity?: number;
-};
-
 /** Granulação sobre o quadro inteiro, para o vetor chapado não parecer estéril. */
-export const Grain: React.FC<GrainProps> = ({ opacity = 0.14 }) => {
+export const Grain: React.FC = () => {
   const filterId = useId();
   return (
-    <AbsoluteFill style={{ mixBlendMode: "overlay", opacity }}>
+    <AbsoluteFill style={{ mixBlendMode: "overlay", opacity: 0.14 }}>
       <svg width="100%" height="100%">
         <filter id={filterId}>
           <feTurbulence

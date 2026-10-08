@@ -18,17 +18,12 @@ const FALL = 58;
 // Onde as mãos pousam no tampo, em unidades da figura em pé.
 const HANDS = { front: [-176, -268], back: [64, -268] } as const;
 const MUG = { x: 236, y: TABLE.top };
-// O rosto da pessoa: os olhos, e a inclinação da cabeça em cada expressão (os mesmos valores de art/Person).
-const EYE = { gap: 42, radius: 27, y: -462 };
-const HEAD_TILT = { sleepy: -9, asleep: 12 } as const;
 
 type CoffeeTableProps = {
   /** Quem está sentado: as cores da pessoa (a pessoa "você", Gardner, um freguês). */
   readonly colors: PersonColors;
   /** Quão caído está: 0, sentado e sonolento; 1, a cabeça pousada na mesa, ao lado da xícara, dormindo. */
   readonly slump?: number;
-  /** As olheiras, de 0 a 1. */
-  readonly tired?: number;
   /** Altura que a pessoa teria em pé, em pixels do quadro: dá o tamanho de tudo. */
   readonly height?: number;
   /** O matiz do fundo liso: dá a cor da cadeira e da sombra de contato. */
@@ -64,7 +59,7 @@ const seenByBody = (point: Point, degrees: number): Point => {
 };
 
 /**
- * A pessoa sentada à mesa do café, de olheiras. O ponto de referência é o chão
+ * A pessoa sentada à mesa do café. O ponto de referência é o chão
  * sob a cadeira: ponha com `<Place x y>` (a peça não tem tamanho próprio).
  * A mesa cobre o corpo da cintura para baixo; as canelas e os sapatos
  * aparecem por baixo do tampo.
@@ -72,7 +67,6 @@ const seenByBody = (point: Point, degrees: number): Point => {
 export const CoffeeTable: React.FC<CoffeeTableProps> = ({
   colors,
   slump = 0,
-  tired = 1,
   height = 620,
   hue,
   seconds = 0,
@@ -85,7 +79,6 @@ export const CoffeeTable: React.FC<CoffeeTableProps> = ({
   const u = height / UNIT;
   const fall = FALL * slump;
   const asleep = dozing ?? slump > 0.6;
-  const tilt = asleep ? HEAD_TILT.asleep : HEAD_TILT.sleepy;
   // Tudo o que é desenhado em SVG usa as unidades da figura, com a origem no chão.
   const box = { x: -620, y: -700, width: 1240, height: 760 };
   const svg = {
@@ -163,36 +156,6 @@ export const CoffeeTable: React.FC<CoffeeTableProps> = ({
               backArm={{ hand: seenByBody(HANDS.back, fall), bend: 40 }}
             />
           </div>
-          {/* As olheiras: a pessoa não as tem no desenho dela; ficam por cima, com a mesma inclinação da cabeça. */}
-          {tired > 0 ? (
-            <svg
-              width={400 * u}
-              height={height}
-              viewBox="-200 -650 400 650"
-              style={{
-                position: "absolute",
-                left: -200 * u,
-                top: -height,
-                overflow: "visible",
-              }}
-            >
-              <g
-                transform={`rotate(2.5 0 -180) rotate(${tilt} 0 -390)`}
-                opacity={tired}
-              >
-                {[-1, 1].map((side) => (
-                  <path
-                    key={side}
-                    d={`M${side * EYE.gap - 26},${EYE.y + EYE.radius - 2} Q${side * EYE.gap},${EYE.y + EYE.radius + 30} ${side * EYE.gap + 26},${EYE.y + EYE.radius - 2} Q${side * EYE.gap},${EYE.y + EYE.radius + 12} ${side * EYE.gap - 26},${EYE.y + EYE.radius - 2} Z`}
-                    fill={colors.skinShade}
-                    stroke={colors.skinShade}
-                    strokeWidth={4}
-                    strokeLinejoin="round"
-                  />
-                ))}
-              </g>
-            </svg>
-          ) : null}
         </div>
       </div>
 

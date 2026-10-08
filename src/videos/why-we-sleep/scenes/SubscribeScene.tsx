@@ -1,21 +1,22 @@
 import { useId } from "react";
-import { useCurrentFrame, useVideoConfig } from "remotion";
+import { interpolateColors, useCurrentFrame, useVideoConfig } from "remotion";
 import { FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { wave } from "../../../components/Idle";
+import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { cue, mix, ramp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot } from "../../../video/Shot";
 import { Globe } from "../../../vignette/PlanetWorld";
-import { idea, ink } from "../palette";
+import { idea, ink, youtube } from "../palette";
 import { IdeaBackdrop } from "../parts/IdeaBackdrop";
 import { Sooner } from "./MaybeBrainScene";
 import { SleepingTrio, TRIO_PUSH, trioBed, WIDE } from "./OneOfThemScene";
 import { Drift } from "./SleepDebtScene";
 import { SLEEPER_AT_HANDOVER } from "./TonightScene";
-import { popScale } from "../../../components/Pop";
+import { popOpacity, popScale } from "../../../components/Pop";
 
 // O plano dos três abre um pouco mais perto e recua até o quadro composto em "nós".
 const TRIO_CLOSER = 0.07;
@@ -301,11 +302,123 @@ const Planet: React.FC<PlanetProps> = ({
 type PlanetShotProps = PlanetProps & {
   /** O plano passa a cena ao seguinte: quando ele chega, é ele quem desenha o planeta. */
   readonly handsOver?: boolean;
+  /** O botão de inscrição só entra depois que os quadros voltam ao planeta. */
+  readonly showCTA?: boolean;
+};
+
+const BUTTON = { x: 960, y: 920, width: 480, height: 96 };
+const CLICK_POINT = { x: 800, y: BUTTON.y };
+
+/** A chamada fica abaixo do globo e muda de estado no clique, sincronizado a “Obrigado”. */
+const SubscribeCTA: React.FC<{ readonly clickAt: number }> = ({ clickAt }) => {
+  const frame = useCurrentFrame();
+  const enterAt = clickAt - 30;
+  const cursorAt = clickAt - 22;
+  const pressed = ramp(frame, clickAt, 2) * (1 - ramp(frame, clickAt + 2, 5));
+  const buttonColor = interpolateColors(
+    frame,
+    [clickAt, clickAt + 8],
+    [youtube.subscribe, ink.paper],
+  );
+  const labelColor = interpolateColors(
+    frame,
+    [clickAt, clickAt + 8],
+    [ink.paper, ink.dark],
+  );
+  const moving = ramp(frame, cursorAt, clickAt - cursorAt);
+  const cursorX = mix(1015, CLICK_POINT.x + 21, moving);
+  const cursorY = mix(1016, CLICK_POINT.y + 29, moving);
+
+  return (
+    <>
+      <Place
+        x={BUTTON.x}
+        y={BUTTON.y}
+        style={{
+          opacity: popOpacity(frame, enterAt, 12),
+          scale: `${popScale(frame, enterAt, 13, 0.72, 1.04) * (1 - pressed * 0.06)}`,
+        }}
+      >
+        <div
+          style={{
+            width: BUTTON.width,
+            height: BUTTON.height,
+            boxSizing: "border-box",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 20,
+            borderRadius: 24,
+            border: `4px solid ${frame < clickAt + 8 ? ink.tagEdge : idea.lilac.contact}`,
+            backgroundColor: buttonColor,
+            boxShadow: `0 ${mix(10, 4, pressed)}px 0 ${idea.lilac.contact}`,
+          }}
+        >
+          <svg width={42} height={34} viewBox="0 0 42 34" aria-hidden="true">
+            {frame < clickAt + 4 ? (
+              <>
+                <rect x={1} y={4} width={40} height={26} rx={8} fill={ink.paper} />
+                <path d="M17 10v14l12-7z" fill={youtube.subscribe} />
+              </>
+            ) : (
+              <>
+                <circle cx={21} cy={17} r={14} fill="none" stroke={ink.dark} strokeWidth={3} />
+                <path d="m14 17 5 5 10-11" fill="none" stroke={ink.dark} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
+              </>
+            )}
+          </svg>
+          <Label size="note" color={labelColor}>
+            {frame < clickAt + 4 ? "Inscreva-se" : "Inscrito"}
+          </Label>
+        </div>
+      </Place>
+      {frame >= clickAt && frame < clickAt + 9 ? (
+        <Place
+          x={CLICK_POINT.x}
+          y={CLICK_POINT.y}
+          style={{ opacity: 1 - ramp(frame, clickAt, 9) }}
+        >
+          <svg width={64} height={64} viewBox="0 0 64 64" aria-hidden="true">
+            <circle
+              cx={32}
+              cy={32}
+              r={mix(5, 30, ramp(frame, clickAt, 8))}
+              fill="none"
+              stroke={ink.paper}
+              strokeWidth={4}
+            />
+          </svg>
+        </Place>
+      ) : null}
+      {frame >= cursorAt && frame < clickAt + 14 ? (
+        <Place
+          x={cursorX}
+          y={cursorY}
+          style={{
+            opacity:
+              popOpacity(frame, cursorAt, 7) * (1 - ramp(frame, clickAt + 5, 8)),
+            scale: `${1 - pressed * 0.08}`,
+          }}
+        >
+          <svg width={54} height={66} viewBox="0 0 54 66" aria-hidden="true">
+            <path
+              d="M5 4v43l12-11 11 22 11-5-11-22h18z"
+              fill={ink.paper}
+              stroke={ink.dark}
+              strokeWidth={4}
+              strokeLinejoin="round"
+            />
+          </svg>
+        </Place>
+      ) : null}
+    </>
+  );
 };
 
 /** Um plano do planeta, sobre fundo liso: nada aqui entra nem sai pela marcação do palco. */
 const PlanetShot: React.FC<PlanetShotProps> = ({
   handsOver = false,
+  showCTA = false,
   ...planet
 }) => {
   const stage = useStage();
@@ -317,6 +430,11 @@ const PlanetShot: React.FC<PlanetShotProps> = ({
             <Planet {...planet} />
           </Stay>
         )}
+        {showCTA ? (
+          <Stay>
+            <SubscribeCTA clickAt={planet.turnAt - planet.from} />
+          </Stay>
+        ) : null}
       </FlatStage>
       <Grain />
     </>
@@ -347,8 +465,8 @@ export const SubscribeScene: React.FC<SceneProps> = ({ scene, shots }) => {
       <Shot range={shots[2]} name="os próximos vídeos saem dele">
         <PlanetShot from={shots[2].from} handsOver {...cues} />
       </Shot>
-      <Shot range={shots[3]} name="o planeta fica sozinho">
-        <PlanetShot from={shots[3].from} {...cues} />
+      <Shot range={shots[3]} name="o planeta fica com o botão de inscrição">
+        <PlanetShot from={shots[3].from} showCTA {...cues} />
       </Shot>
     </>
   );

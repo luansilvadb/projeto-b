@@ -61,19 +61,28 @@ import { Drift, Grow, driftZoom, drifted } from "./SleepDebtScene";
  * O elenco de um plano entra antes da marcação de sempre: quem abre o plano
  * precisa estar no lugar quando a primeira palavra dele soa, e a marcação só o
  * põe lá meio segundo depois. Serve às cenas do capítulo da água-viva.
+ *
+ * `backdrop` apressa o fundo: ele toma a cor em `backdrop` quadros. `late`
+ * atrasa a saída: quem sai ainda encolhe quando o plano seguinte chega.
  */
-export const Sooner: React.FC<{ by: number; children: React.ReactNode }> = ({
-  by,
-  children,
-}) => {
+export const Sooner: React.FC<{
+  by?: number;
+  backdrop?: number;
+  late?: number;
+  children: React.ReactNode;
+}> = ({ by = 0, backdrop, late = 0, children }) => {
   const stage = useStage();
   const sooner = useMemo(
     () => ({
       ...stage,
-      enter: (delay = 0, frames?: number) =>
-        stage.enter(Math.max(0, delay - by), frames),
+      // Sem argumentos, quem pergunta é o fundo do plano; com eles, o elenco.
+      enter: (delay?: number, frames?: number) =>
+        delay === undefined && frames === undefined
+          ? stage.enter(0, backdrop)
+          : stage.enter(Math.max(0, (delay ?? 0) - by), frames),
+      leave: (delay = 0) => stage.leave(delay + late),
     }),
-    [stage, by],
+    [stage, by, backdrop, late],
   );
   return (
     <StageContext.Provider value={sooner}>{children}</StageContext.Provider>

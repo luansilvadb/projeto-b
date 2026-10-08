@@ -54,6 +54,7 @@ import {
 } from "../parts/Chalkboard";
 import { LifeTree } from "../parts/LifeTree";
 import { Tag } from "../parts/Tag";
+import { Sooner } from "./MaybeBrainScene";
 
 /**
  * A parede do laboratório, a mesma do corredor: é o fundo de todos os planos
@@ -222,29 +223,6 @@ const WithItsTag: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   );
   return (
     <StageContext.Provider value={early}>{children}</StageContext.Provider>
-  );
-};
-
-/**
- * Adianta a entrada no palco de quem está dentro, em quadros: o elenco de um
- * plano precisa estar no lugar quando a primeira palavra dele soa, e a
- * marcação de sempre só o põe lá meio segundo depois.
- */
-const Sooner: React.FC<{ by: number; children: React.ReactNode }> = ({
-  by,
-  children,
-}) => {
-  const stage = useStage();
-  const sooner = useMemo(
-    () => ({
-      ...stage,
-      enter: (delay = 0, frames?: number) =>
-        stage.enter(Math.max(0, delay - by), frames),
-    }),
-    [stage, by],
-  );
-  return (
-    <StageContext.Provider value={sooner}>{children}</StageContext.Provider>
   );
 };
 

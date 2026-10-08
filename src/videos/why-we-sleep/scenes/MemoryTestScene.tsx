@@ -29,7 +29,7 @@ import { Drift, driftZoom, undrifted } from "./SleepDebtScene";
  * plano precisa estar no lugar quando a primeira palavra dele soa. A saída
  * continua a do palco.
  */
-export const Hasten: React.FC<{
+const Hasten: React.FC<{
   frames: number;
   /** Quantos quadros o cenário espera antes de subir: o fundo toma a cor primeiro. */
   delay?: number;

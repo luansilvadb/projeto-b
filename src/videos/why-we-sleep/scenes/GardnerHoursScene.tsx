@@ -83,7 +83,7 @@ type VigilProps = Timing & {
 /**
  * O que há no quarto durante a vigília: o contador de horas sobe ao lado dele,
  * passa do "260 h" do cartaz e para em "264 h"; o calendário vira para janeiro
- * de 1964; as olheiras crescem. Vai dentro do cenário do quarto.
+ * de 1964; as pálpebras pesam conforme as horas passam. Vai dentro do cenário do quarto.
  */
 const Vigil: React.FC<VigilProps> = ({
   at,
@@ -187,7 +187,6 @@ const Vigil: React.FC<VigilProps> = ({
         breath={breath(seconds, "gardner", {
           amplitude: mix(0.02, 0.028, counted),
         })}
-        tired={0.4 * ramp(at, 4, 16) + 0.6 * counted}
       />
       <HourCounter
         {...COUNTER}
@@ -352,7 +351,6 @@ const TablesShot: React.FC<TablesShotProps> = ({
                           (0.5 + 0.5 * wave(own, 2.3 + 0.13 * index))
                       }
                       asleep={asleep}
-                      tired={0.3 + (0.7 * index) / (MORNINGS - 1)}
                       seconds={own}
                       blink={Math.max(
                         blink(own, `morning-${index}`),

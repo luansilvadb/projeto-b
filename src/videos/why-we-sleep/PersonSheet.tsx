@@ -8,6 +8,7 @@ type PersonPose = Omit<
   React.ComponentProps<typeof Person>,
   "height" | "colors"
 >;
+type FaceStudy = Pick<PersonPose, "expression" | "look" | "blink">;
 
 // As poses que o roteiro pede da pessoa: é nelas que a silhueta precisa contar a cena.
 const poses = (box: string): readonly { label: string; pose: PersonPose }[] => [
@@ -57,8 +58,34 @@ const poses = (box: string): readonly { label: string; pose: PersonPose }[] => [
     },
   },
 ];
+const faceStudies: readonly (readonly { label: string; pose: FaceStudy }[])[] = [
+  [
+    { label: "neutro", pose: { expression: "neutral" } },
+    { label: "curioso", pose: { expression: "curious" } },
+    { label: "dúvida", pose: { expression: "puzzled" } },
+  ],
+  [
+    { label: "espanto", pose: { expression: "surprised" } },
+    { label: "sono", pose: { expression: "sleepy" } },
+    { label: "bocejo", pose: { expression: "yawning" } },
+  ],
+  [
+    { label: "dormindo", pose: { expression: "asleep" } },
+    { label: "lendo", pose: { expression: "reading" } },
+    {
+      label: "olhar dirigido",
+      pose: { expression: "curious", look: [0.85, -0.1] },
+    },
+  ],
+  [0, 0.5, 1].map((blink) => ({
+    label: blink === 0 ? "olhar aberto" : blink === 1 ? "piscada fechada" : "piscada",
+    pose: { expression: "curious" as const, look: [0.85, -0.1] as const, blink },
+  })),
+];
 const COLUMN = 360;
 const HEIGHT = 520;
+const FACE_COLUMN = 640;
+const FACE_HEIGHT = 1300;
 // A silhueta: a figura inteira numa cor só, para a construção ser julgada sem cor nem rosto.
 const SILHOUETTE = Object.fromEntries(
   Object.keys(person).map((key) => [key, ink.dark]),
@@ -69,8 +96,43 @@ const SILHOUETTE = Object.fromEntries(
  * roteiro pede. No quadro 0, numa cor só; no 1, pintada.
  */
 export const PersonSheet: React.FC = () => {
-  const silhouette = useCurrentFrame() === 0;
+  const frame = useCurrentFrame();
+  const silhouette = frame === 0;
   const sheet = poses(silhouette ? ink.dark : person.shoe);
+  const faceStudy = faceStudies[frame - 2];
+  if (faceStudy) {
+    return (
+      <AbsoluteFill
+        style={{
+          background: `linear-gradient(${idea.peach.top}, ${idea.peach.bottom})`,
+        }}
+      >
+        {faceStudy.map(({ label, pose }, column) => (
+          <div key={label}>
+            <div
+              style={{
+                position: "absolute",
+                left: column * FACE_COLUMN,
+                top: 0,
+                width: FACE_COLUMN,
+                height: 570,
+                overflow: "hidden",
+              }}
+            >
+              <Place x={FACE_COLUMN / 2} y={FACE_HEIGHT} anchor="bottom">
+                <Person height={FACE_HEIGHT} colors={person} {...pose} />
+              </Place>
+            </div>
+            <Place x={column * FACE_COLUMN + FACE_COLUMN / 2} y={620}>
+              <Label size="note" color={ink.dark} tag={ink.paper}>
+                {label}
+              </Label>
+            </Place>
+          </div>
+        ))}
+      </AbsoluteFill>
+    );
+  }
   return (
     <AbsoluteFill
       style={{

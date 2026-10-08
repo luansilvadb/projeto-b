@@ -131,4 +131,10 @@ export const space = {
   hull: "#F2F5FA",
   mark: "#5EE6DA",
   text: "#FFFFFF",
+  logo: {
+    white: ["#FFFFFF", "#EAF6FF", "#BCD9EB"],
+    gold: ["#FFF42E", "#FFD21E", "#FF8D00"],
+    outline: "#06183F",
+    extrusion: "#0E3B82",
+  },
 } as const;

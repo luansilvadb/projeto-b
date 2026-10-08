@@ -4,9 +4,10 @@ import { taperPath, type Point } from "./shapes";
 export type PersonColors = {
   readonly skin: string;
   readonly skinShade: string;
+  /** Tom da sombra sob a franja; pode igualar a pele para deixar a testa sem faixa. */
+  readonly foreheadShade: string;
   /** A pálpebra: um tom entre a pele e a sombra dela. */
   readonly lid: string;
-  readonly blush: string;
   readonly hair: string;
   readonly hairLight: string;
   readonly top: string;
@@ -62,6 +63,8 @@ type PersonProps = {
   readonly height: number;
   readonly colors: PersonColors;
   readonly expression?: Expression;
+  /** Para onde as pupilas olham, de -1 a 1 em cada eixo; sem valor, vale a expressão. */
+  readonly look?: Point;
   /** O braço do lado de quem olha: fica na frente do corpo. */
   readonly frontArm?: Arm;
   /** O braço do outro lado: fica atrás do tronco. */
@@ -109,6 +112,13 @@ const RELAXED: { front: Required<Arm>; back: Required<Arm> } = {
   back: { hand: [134, -252], bend: 28 },
 };
 const EYE = { gap: 42, radius: 27, y: -462 };
+export const PERSON_MOUTH_Y = EYE.y + EYE.radius * 1.85;
+export const PERSON_CHEEK = {
+  x: EYE.gap + EYE.radius * 1.1,
+  y: EYE.y + EYE.radius * 1.25,
+  rx: EYE.radius * 0.85,
+  ry: EYE.radius * 0.52,
+} as const;
 // A passada, nas unidades do desenho: quanto cada pé avança e recua, quanto
 // sobe no ar, quanto o corpo sobe ao passar sobre o pé de apoio, quanto as
 // mãos balançam e quantos graus a ponta do pé no ar desce.
@@ -305,7 +315,7 @@ const FACES: Record<Expression, Face> = {
     look: [0, 0.55],
     pupil: 13,
     brows: [6, -2, -2, 6],
-    mouth: "small",
+    mouth: "smile",
     tilt: -9,
     slump: 10,
   },
@@ -339,6 +349,22 @@ const FACES: Record<Expression, Face> = {
   },
 };
 
+/**
+ * A inclinação da cabeça e o quanto ela afunda no pescoço em cada expressão:
+ * é o que quem desenha o olhar e as marcas de estado precisa para acompanhar
+ * o desenho. Quem boceja pende 11°, e quem
+ * dorme desaba além da tabela: pende 20° e afunda 24.
+ */
+export const facePose = (expression: Expression) => ({
+  tilt:
+    expression === "asleep"
+      ? 20
+      : expression === "yawning"
+        ? -11
+        : FACES[expression].tilt,
+  sunk: expression === "asleep" ? 24 : 0,
+});
+
 /** A pálpebra desce da posição da expressão até fechar; no fim da descida o olho vira um traço. */
 const blinking = (face: Face, blink: number): Face =>
   blink <= 0
@@ -368,7 +394,12 @@ const handCenter = (from: Point, hand: Point): Point => {
   return [hand[0] + (dx / length) * 14, hand[1] + (dy / length) * 14];
 };
 
-const eyes = (face: Face, colors: PersonColors, clipId: string) =>
+const eyes = (
+  face: Face,
+  colors: PersonColors,
+  clipId: string,
+  look?: Point,
+) =>
   [-1, 1].map((side) => {
     const x = side * EYE.gap;
     const { radius, y } = EYE;
@@ -380,18 +411,8 @@ const eyes = (face: Face, colors: PersonColors, clipId: string) =>
         x2={x + radius * 0.75}
         y2={y - radius - 16 + brows[1]}
         stroke={colors.hair}
-        strokeWidth={8}
+        strokeWidth={9}
         strokeLinecap="round"
-      />
-    );
-    const blush = (
-      <ellipse
-        cx={x + side * radius * 1.1}
-        cy={y + radius * 1.25}
-        rx={radius * 0.72}
-        ry={radius * 0.42}
-        fill={colors.blush}
-        opacity={0.55}
       />
     );
     if (face.closed) {
@@ -405,13 +426,14 @@ const eyes = (face: Face, colors: PersonColors, clipId: string) =>
             strokeLinecap="round"
           />
           {brow}
-          {blush}
         </g>
       );
     }
 
-    const pupilX = x + face.look[0] * radius * 0.36;
-    const pupilY = y + face.look[1] * radius * 0.36;
+    const direction = look ?? face.look;
+    const travel = look === undefined ? radius * 0.36 : radius - face.pupil;
+    const pupilX = x + direction[0] * travel;
+    const pupilY = y + direction[1] * travel;
     const lidEdge = y - radius + 2 * radius * face.lid;
     return (
       <g key={side}>
@@ -435,13 +457,12 @@ const eyes = (face: Face, colors: PersonColors, clipId: string) =>
           ) : null}
         </g>
         {brow}
-        {blush}
       </g>
     );
   });
 
 const mouth = (shape: Face["mouth"], color: string) => {
-  const y = EYE.y + EYE.radius * 1.85;
+  const y = PERSON_MOUTH_Y;
   const stroke = {
     fill: "none",
     stroke: color,
@@ -488,6 +509,7 @@ export const Person: React.FC<PersonProps> = ({
   height,
   colors,
   expression = "neutral",
+  look,
   frontArm,
   backArm,
   apron,
@@ -511,13 +533,14 @@ export const Person: React.FC<PersonProps> = ({
     swing: paced.swing * BUILT.swing,
   };
   const posture = blinking(FACES[expression], blink);
+  const pose = facePose(expression);
   // Quem boceja enche o peito: os ombros sobem e a cabeça vai para trás.
   // E quem dorme em pé desaba: os ombros caem e a cabeça pende mais.
   const face =
     expression === "yawning"
-      ? { ...posture, slump: -10, tilt: -11 }
+      ? { ...posture, slump: -10, tilt: pose.tilt }
       : expression === "asleep"
-        ? { ...posture, slump: 24, tilt: 20 }
+        ? { ...posture, slump: 24, tilt: pose.tilt }
         : posture;
   const scale = height / VIEW.height;
   const posedFront = { ...RELAXED.front, ...frontArm };
@@ -553,7 +576,7 @@ export const Person: React.FC<PersonProps> = ({
   // Quando o tronco pende para um lado, o quadril vai para o outro: dos pés à cabeça, a figura faz um C.
   const hipShift = -ownLean * 2.4;
   // Quem dorme em pé afunda a cabeça nos ombros, até o queixo cobrir o pescoço.
-  const sunk = expression === "asleep" ? 24 : 0;
+  const sunk = pose.sunk;
   const arm = { front: [54, 34], back: [52, 36] };
 
   return (
@@ -703,10 +726,10 @@ export const Person: React.FC<PersonProps> = ({
           <circle cx={-106} cy={-466} r={19} fill={colors.skinShade} />
           <circle cx={106} cy={-466} r={19} fill={colors.skin} />
           <ellipse cy={-480} rx={108} ry={102} fill={colors.skin} />
-          {/* A sombra da franja na testa e o cabelo numa forma só, com uma faixa de brilho. */}
+          {/* A sombra sob a franja dá volume à testa; o cabelo é uma forma só, com uma faixa de brilho. */}
           <path
             d="M-104,-498 C-70,-520 -34,-512 -8,-524 C24,-538 70,-530 104,-498 C96,-486 60,-508 22,-506 C-12,-504 -30,-490 -56,-494 C-78,-498 -92,-492 -104,-498 Z"
-            fill={colors.skinShade}
+            fill={colors.foreheadShade}
           />
           <path
             d="M-112,-484 C-118,-566 -64,-600 2,-598 C72,-596 120,-560 112,-482 C100,-516 66,-538 24,-536 C-6,-534 -26,-518 -52,-522 C-82,-526 -100,-508 -112,-484 Z"
@@ -761,7 +784,23 @@ export const Person: React.FC<PersonProps> = ({
             </>
           ) : (
             <>
-              {eyes(face, colors, id)}
+              {eyes(face, colors, id, look)}
+              {/* O nariz pequeno dá volume à expressão sem contorno ou textura. */}
+              <ellipse
+                cy={EYE.y + 34}
+                rx={11}
+                ry={7}
+                fill={colors.skinShade}
+                opacity={0.72}
+              />
+              <ellipse
+                cx={-3}
+                cy={EYE.y + 32}
+                rx={3}
+                ry={2}
+                fill={colors.skin}
+                opacity={0.65}
+              />
               {mouth(face.mouth, colors.mouth)}
             </>
           )}

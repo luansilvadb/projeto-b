@@ -147,8 +147,8 @@ export const fish = { day: fishDay, night: fishNight } as const;
 export const person: PersonColors = {
   skin: "#F0B48A",
   skinShade: "#D9946B",
+  foreheadShade: "#D9946B",
   lid: "#E2A078",
-  blush: "#F24B38",
   hair: "#17324D",
   hairLight: "#2C5A82",
   top: "#0EADD6",
@@ -201,6 +201,7 @@ export const researcher: PersonColors = {
   ...person,
   skin: "#C98B66",
   skinShade: "#A9704F",
+  foreheadShade: "#A9704F",
   lid: "#B97B58",
   hair: "#5A3A5E",
   hairLight: "#7C5682",
@@ -218,6 +219,7 @@ export const researcher: PersonColors = {
 /** O pesquisador do sono diante do quadro-negro: jaleco, cabelo grisalho e óculos. */
 export const sleepResearcher: PersonColors = {
   ...person,
+  foreheadShade: person.skin,
   hair: "#9AA3BC",
   hairLight: "#C9CFE0",
   top: "#F4F8FB",
@@ -455,6 +457,7 @@ export const customer: PersonColors = {
   ...person,
   skin: "#C98B66",
   skinShade: "#A9704F",
+  foreheadShade: "#A9704F",
   lid: "#B97B58",
   hair: "#7A2E2A",
   hairLight: "#A8504A",
@@ -588,6 +591,9 @@ export const ink = {
   /** O brilho ciano do que acende no escuro. */
   glow: "#5CDDF0",
 } as const;
+
+/** O vermelho de chamada do botão de inscrição no fim do vídeo. */
+export const youtube = { subscribe: "#FF0033" } as const;
 
 /** O antílope, a presa do capítulo "o que o sono custa": ferrugem, para saltar do chão de areia da savana. */
 export const antelope: AntelopeColors = {

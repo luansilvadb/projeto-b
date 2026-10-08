@@ -108,12 +108,11 @@ type SubjectProps = {
   readonly blink?: number;
   readonly lean?: number;
   readonly breath?: number;
-  readonly tired?: number;
   /** A boca de quem se irrita. */
   readonly frown?: boolean;
 };
 
-/** Gardner depois de onze dias: de pé, de olheiras, numa das poses dos sintomas. */
+/** Gardner depois de onze dias: de pé, com pálpebras pesadas e uma das poses dos sintomas. */
 const Subject: React.FC<SubjectProps> = ({
   x,
   y,
@@ -124,7 +123,6 @@ const Subject: React.FC<SubjectProps> = ({
   blink: lids = 0,
   lean = 0,
   breath: body = 1,
-  tired = 1,
   frown,
 }) => {
   const arm = (side: "front" | "back") =>
@@ -148,7 +146,6 @@ const Subject: React.FC<SubjectProps> = ({
       blink={lids}
       lean={lean}
       breath={body}
-      tired={tired}
       frontArm={arm("front")}
       backArm={arm("back")}
       flush={flush}
@@ -477,8 +474,6 @@ const CrashShot: React.FC<CrashShotProps> = ({ lieAt, hoursAt, clock }) => {
                 blink={Math.max(tiredBlink(seconds), swap.lid)}
                 lean={(tiredSway(seconds) * 0.3 + 3.5) * (1 - calm)}
                 breath={mix(tiredBreath(seconds) * 1.03, 1, calm)}
-                // As olheiras somem com a distância: a cama o desenha sem elas.
-                tired={1 - ramp(frame, 0, TO_BED.frames - 2)}
               />
             </Stay>
           ) : null}

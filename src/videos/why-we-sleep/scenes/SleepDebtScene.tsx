@@ -349,7 +349,6 @@ const PayingShot: React.FC<PayingShotProps> = ({
           nod={drowsyNod(seconds) * (1 - ramp(frame, fallAt + 2, 0.27 * fps))}
           rest={drop(frame, fallAt, FALL.seconds * fps)}
           asleep={ramp(frame, fallAt - 3, 0.2 * fps)}
-          tired={1}
           lean={lean}
           squash={impact * (1 + deeper)}
           deep={ramp(frame, deepAt, 1.2 * fps)}
@@ -428,7 +427,7 @@ type MorningShotProps = {
   readonly clock: number;
 };
 
-/** A manhã depois da noite em claro: a pessoa, de olheiras, deixa a cabeça cair ao lado da xícara. */
+/** A manhã depois da noite em claro: com as pálpebras pesadas, a pessoa deixa a cabeça cair ao lado da xícara. */
 const MorningShot: React.FC<MorningShotProps> = ({ dropAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();

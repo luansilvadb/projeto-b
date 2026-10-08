@@ -236,7 +236,7 @@ type ShotClock = {
 export const HERDS_RISE = { lead: 16, frames: 26 };
 
 /** Quanto do cenário já subiu, de 0 a 1, no quadro `at` do plano que o abre (negativo antes de ele chegar). */
-export const risenAt = (at: number): number =>
+const risenAt = (at: number): number =>
   interpolate(
     at,
     [-HERDS_RISE.lead, HERDS_RISE.frames - HERDS_RISE.lead],

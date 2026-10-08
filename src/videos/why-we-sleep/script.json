@@ -222,7 +222,7 @@
         },
         {
           "cue": "Você",
-          "staging": "A pessoa na mesa do café, de olheiras, deixa a cabeça cair ao lado da xícara. A mesma conta aparece ao lado dela, carimbada.",
+          "staging": "A pessoa na mesa do café, com as pálpebras pesadas, deixa a cabeça cair ao lado da xícara. A mesma conta aparece ao lado dela, carimbada.",
           "scale": "medium",
           "palette": "ideia",
           "entry": "cut"
@@ -1122,7 +1122,7 @@
         },
         {
           "cue": "só",
-          "staging": "Os quadros se recolhem, e o planeta fica sozinho no centro, sobre fundo liso.",
+          "staging": "Os quadros se recolhem, o planeta volta ao centro e, abaixo dele, surge um botão vermelho “Inscreva-se” que muda para “Inscrito” ao clique.",
           "scale": "wide",
           "palette": "ideia",
           "entry": "camera"

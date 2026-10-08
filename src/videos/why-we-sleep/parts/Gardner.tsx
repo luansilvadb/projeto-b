@@ -8,6 +8,9 @@ import {
 } from "remotion";
 import {
   Person,
+  PERSON_CHEEK,
+  PERSON_MOUTH_Y,
+  facePose,
   type Expression,
   type PersonColors,
   type Stride,
@@ -76,6 +79,7 @@ const friends: readonly [PersonColors, PersonColors] = [
     ...person,
     skin: researcher.skin,
     skinShade: researcher.skinShade,
+    foreheadShade: researcher.skinShade,
     lid: researcher.lid,
     hand: researcher.skin,
     handShade: researcher.skinShade,
@@ -96,114 +100,7 @@ const friends: readonly [PersonColors, PersonColors] = [
  */
 const dement: PersonColors = sleepResearcher;
 
-// Os olhos da pessoa e a inclinação da cabeça em cada expressão: os mesmos valores de art/Person.
-const EYE = { gap: 42, radius: 27, y: -462 };
-const HEAD_TILT: Record<Expression, number> = {
-  neutral: 0,
-  curious: 7,
-  puzzled: -8,
-  surprised: 0,
-  sleepy: -9,
-  yawning: -6,
-  asleep: 12,
-  reading: -6,
-};
-
 type Arm = { readonly hand: Point; readonly bend?: number };
-
-// Quanto a pálpebra de cada expressão cobre o olho, e a pupila de quem se espanta: os mesmos valores de art/Person.
-const LIDS: Record<Expression, number> = {
-  neutral: 0.1,
-  curious: 0,
-  puzzled: 0.25,
-  surprised: 0,
-  sleepy: 0.58,
-  yawning: 0.8,
-  asleep: 1,
-  reading: 0.45,
-};
-const pupilOf = (expression: Expression) =>
-  expression === "surprised" ? 9 : 13;
-
-type GazeProps = {
-  readonly height: number;
-  readonly colors: PersonColors;
-  readonly expression: Expression;
-  /** Para onde os olhos vão, de -1 a 1 em cada eixo. */
-  readonly toward: Point;
-  /** A piscada, de 0 a 1: a mesma que a pessoa recebe. */
-  readonly blink?: number;
-};
-
-/**
- * O olhar para um ponto do quadro: os olhos da pessoa redesenhados por cima
- * dos dela, com a pupila encostada na borda do lado para onde ela olha. O
- * desenho da pessoa só desvia a pupila um pouco, e de longe os três pareciam
- * olhar para a câmera. A pálpebra é a da expressão, e desce com a piscada;
- * com o olho fechado, quem aparece é o traço da pessoa, por baixo.
- */
-const Gaze: React.FC<GazeProps> = ({
-  height,
-  colors,
-  expression,
-  toward,
-  blink = 0,
-}) => {
-  const id = useId();
-  if (blink > 0.9 || expression === "asleep") {
-    return null;
-  }
-  const lid = LIDS[expression] + (1 - LIDS[expression]) * blink;
-  const pupil = pupilOf(expression);
-  return (
-    <svg
-      width={(400 * height) / 650}
-      height={height}
-      viewBox="-200 -650 400 650"
-      style={{ position: "absolute", left: 0, top: 0 }}
-      overflow="visible"
-    >
-      <g
-        transform={`rotate(2.5 0 -180) rotate(${HEAD_TILT[expression]} 0 -390)`}
-      >
-        {[-1, 1].map((side) => {
-          const center = side * EYE.gap;
-          const x = center + toward[0] * (26 - pupil);
-          const y = EYE.y + toward[1] * (26 - pupil);
-          const edge = EYE.y - EYE.radius + 2 * EYE.radius * lid;
-          return (
-            <g key={side}>
-              <clipPath id={`${id}-${side}`}>
-                <circle cx={center} cy={EYE.y} r={EYE.radius + 0.5} />
-              </clipPath>
-              <circle
-                cx={center}
-                cy={EYE.y}
-                r={EYE.radius + 0.5}
-                fill={colors.eye}
-              />
-              <g clipPath={`url(#${id}-${side})`}>
-                <circle cx={x} cy={y} r={pupil} fill={colors.pupil} />
-                <circle
-                  cx={x - pupil * 0.4}
-                  cy={y - pupil * 0.45}
-                  r={pupil * 0.36}
-                  fill={colors.eye}
-                />
-                {lid > 0 ? (
-                  <path
-                    d={`M${center - EYE.radius - 2},${EYE.y - EYE.radius - 2} L${center + EYE.radius + 2},${EYE.y - EYE.radius - 2} L${center + EYE.radius + 2},${edge} Q${center},${edge + 6} ${center - EYE.radius - 2},${edge} Z`}
-                    fill={colors.lid}
-                  />
-                ) : null}
-              </g>
-            </g>
-          );
-        })}
-      </g>
-    </svg>
-  );
-};
 
 /** Um tom que sobe ao rosto: o verde de quem enjoa, o vermelho de quem se irrita. */
 export type Flush = { readonly color: string; readonly amount: number };
@@ -212,32 +109,31 @@ type FaceMarksProps = {
   readonly height: number;
   readonly colors: PersonColors;
   readonly expression: Expression;
-  readonly tired: number;
   readonly flush?: Flush;
   readonly frown?: boolean;
 };
 
 // A boca da pessoa, nas unidades do desenho dela (art/Person).
-const MOUTH_Y = EYE.y + EYE.radius * 1.85;
+const MOUTH_Y = PERSON_MOUTH_Y;
 
 /**
  * O que o desenho da pessoa não tem e fica por cima do rosto, com a inclinação
- * da cabeça: as olheiras, o tom que sobe às bochechas e a boca virada para
- * baixo de quem se irrita (que cobre a da expressão).
+ * da cabeça: o tom que sobe às bochechas e a boca virada para baixo de quem se
+ * irrita (que cobre a da expressão).
  */
 const FaceMarks: React.FC<FaceMarksProps> = ({
   height,
   colors,
   expression,
-  tired,
   flush,
   frown = false,
 }) => {
   const id = useId();
   const flushed = flush !== undefined && flush.amount > 0;
-  if (tired <= 0 && !flushed && !frown) {
+  if (!flushed && !frown) {
     return null;
   }
+  const pose = facePose(expression);
   return (
     <svg
       width={(400 * height) / 650}
@@ -247,15 +143,15 @@ const FaceMarks: React.FC<FaceMarksProps> = ({
       overflow="visible"
     >
       <g
-        transform={`rotate(2.5 0 -180) rotate(${HEAD_TILT[expression]} 0 -390)`}
+        transform={`rotate(2.5 0 -180) translate(0 ${pose.sunk}) rotate(${pose.tilt} 0 -390)`}
       >
         {frown ? (
           <>
             <rect
-              x={-22}
-              y={MOUTH_Y - 12}
-              width={62}
-              height={30}
+              x={-32}
+              y={MOUTH_Y - 8}
+              width={64}
+              height={34}
               rx={12}
               fill={colors.skin}
             />
@@ -271,34 +167,33 @@ const FaceMarks: React.FC<FaceMarksProps> = ({
         {flushed ? (
           // Abaixo dos olhos, dentro do contorno do rosto, sem borda: o tom se desfaz para os lados.
           <>
-            <defs>
-              <radialGradient id={id}>
-                <stop offset={0.35} stopColor={flush.color} stopOpacity={1} />
-                <stop offset={1} stopColor={flush.color} stopOpacity={0} />
-              </radialGradient>
-            </defs>
-            <ellipse
-              cy={-416}
-              rx={104}
-              ry={46}
-              fill={`url(#${id})`}
-              opacity={flush.amount}
-            />
-          </>
-        ) : null}
-        {tired > 0 ? (
-          <g opacity={tired}>
             {[-1, 1].map((side) => (
-              <path
-                key={side}
-                d={`M${side * EYE.gap - 26},${EYE.y + EYE.radius - 2} Q${side * EYE.gap},${EYE.y + EYE.radius + 30} ${side * EYE.gap + 26},${EYE.y + EYE.radius - 2} Q${side * EYE.gap},${EYE.y + EYE.radius + 12} ${side * EYE.gap - 26},${EYE.y + EYE.radius - 2} Z`}
-                fill={colors.skinShade}
-                stroke={colors.skinShade}
-                strokeWidth={4}
-                strokeLinejoin="round"
-              />
+              <g key={side}>
+                <defs>
+                  <radialGradient id={`${id}-${side}`}>
+                    <stop
+                      offset={0.3}
+                      stopColor={flush.color}
+                      stopOpacity={1}
+                    />
+                    <stop
+                      offset={1}
+                      stopColor={flush.color}
+                      stopOpacity={0}
+                    />
+                  </radialGradient>
+                </defs>
+                <ellipse
+                  cx={side * PERSON_CHEEK.x}
+                  cy={PERSON_CHEEK.y}
+                  rx={PERSON_CHEEK.rx}
+                  ry={PERSON_CHEEK.ry}
+                  fill={`url(#${id}-${side})`}
+                  opacity={flush.amount}
+                />
+              </g>
             ))}
-          </g>
+          </>
         ) : null}
       </g>
     </svg>
@@ -311,8 +206,6 @@ type GardnerProps = {
   readonly y: number;
   readonly height: number;
   readonly expression?: Expression;
-  /** As olheiras, de 0 a 1: crescem com as horas sem dormir. */
-  readonly tired?: number;
   /** Virado para a esquerda. */
   readonly flip?: boolean;
   /** Para onde ele olha, de -1 a 1 em cada eixo; sem valor, o olhar é o da expressão. */
@@ -352,7 +245,6 @@ export const Gardner: React.FC<GardnerProps> = ({
   y,
   height,
   expression = "neutral",
-  tired = 0,
   flip = false,
   gaze,
   frontArm,
@@ -388,25 +280,16 @@ export const Gardner: React.FC<GardnerProps> = ({
             height={height}
             colors={gardner}
             expression={expression}
+            look={gaze}
             frontArm={frontArm}
             backArm={backArm}
             blink={blink}
             stride={stride}
           />
-          {gaze ? (
-            <Gaze
-              height={height}
-              colors={gardner}
-              expression={expression}
-              toward={gaze}
-              blink={blink}
-            />
-          ) : null}
           <FaceMarks
             height={height}
             colors={gardner}
             expression={expression}
-            tired={tired}
             flush={flush}
             frown={frown}
           />
@@ -523,19 +406,11 @@ export const Friend: React.FC<FriendProps> = ({
             height={height}
             colors={friends[which]}
             expression={expression}
+            look={gaze}
             blink={blink}
             frontArm={pointing === "left" ? raised : frontArm}
             backArm={pointing === "right" ? raised : backArm}
           />
-          {gaze ? (
-            <Gaze
-              height={height}
-              colors={friends[which]}
-              expression={expression}
-              toward={gaze}
-              blink={blink}
-            />
-          ) : null}
           {pointing && finger > 0 ? (
             // O dedo esticado: a mão da pessoa é um círculo, e sem ele o braço erguido lê como aceno.
             <svg

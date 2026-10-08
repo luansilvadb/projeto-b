@@ -1,11 +1,16 @@
-import { AbsoluteFill } from "remotion";
-import { Label } from "../components/Label";
-import { Place } from "../components/Place";
+import { loadFont } from "@remotion/fonts";
+import { AbsoluteFill, staticFile } from "remotion";
 import { StarField } from "../components/StarField";
 import { SvgLayer } from "../components/SvgLayer";
 import { space } from "./palette";
 import { blob, pick, type WorldProps } from "./shapes";
 import { mix } from "../components/timing";
+
+loadFont({
+  family: "Lilita One",
+  url: staticFile("fonts/lilitaone-latin-normal.ttf"),
+  weight: "400",
+});
 
 // O globo é desenhado com raio 300 e posto no tamanho pedido.
 const GLOBE = 300;
@@ -129,11 +134,11 @@ export const Globe: React.FC<GlobeProps> = ({ x, y, radius, seconds }) => (
   </g>
 );
 
-// Onde o planeta está enquanto é um mundo, e onde assenta quando vira o símbolo do canal.
+// Onde o planeta está enquanto é um mundo, e onde assenta atrás do nome do canal.
 const AS_WORLD = { x: 1020, y: 560, radius: 310 };
-/** Onde o símbolo assenta: mais acima quando o nome do canal vai embaixo dele; sozinho, no centro e maior. */
+/** O planeta permanece grande quando o letreiro atravessa a frente dele. */
 const symbolAt = (channel?: string) =>
-  channel ? { x: 960, y: 420, radius: 170 } : { x: 960, y: 540, radius: 230 };
+  channel ? { x: 960, y: 540, radius: 360 } : { x: 960, y: 540, radius: 230 };
 /** Onde a costa marcada no planeta cai no quadro, enquanto ele é um mundo. */
 export const COAST_MARK = [
   AS_WORLD.x + (MARK[0] * AS_WORLD.radius) / GLOBE,
@@ -143,7 +148,7 @@ export const COAST_MARK = [
 type PlanetWorldProps = WorldProps & {
   /** Quanto o planeta já virou o símbolo do canal, de 0 a 1: o resto do espaço se afasta e o nome entra. */
   readonly settled?: number;
-  /** O nome do canal, que assina a vinheta debaixo do planeta. O canal ainda não tem nome: sem ele, fica só o símbolo. */
+  /** O nome do canal, que assina a vinheta sobre o planeta. */
   readonly channel?: string;
 };
 
@@ -151,8 +156,7 @@ type PlanetWorldProps = WorldProps & {
 /**
  * O quarto mundo da vinheta, e o fecho dela: o planeta no espaço, com o sol de
  * um lado, a lua do outro, nebulosas ao fundo e um satélite passando. No fim,
- * tudo em volta se afasta e o planeta assenta no centro, como símbolo do
- * canal, com o nome embaixo.
+ * tudo em volta se afasta e o planeta assenta atrás do letreiro do canal.
  */
 export const PlanetWorld: React.FC<PlanetWorldProps> = ({
   seconds,
@@ -225,7 +229,7 @@ export const PlanetWorld: React.FC<PlanetWorldProps> = ({
       </g>
       {/* O satélite: o corpo, as duas placas e a antena. Segue a órbita dele e sai do quadro. */}
       <g
-        transform={`translate(${470 + 60 * seconds - 900 * settled} ${700 - 26 * seconds + 500 * settled}) rotate(-24)`}
+        transform={`translate(${470 + 60 * seconds - 1120 * settled} ${700 - 26 * seconds + 500 * settled}) rotate(-24)`}
       >
         <rect
           x={-120}
@@ -249,11 +253,65 @@ export const PlanetWorld: React.FC<PlanetWorldProps> = ({
       </g>
     </SvgLayer>
     {channel ? (
-      <Place x={960} y={760} style={{ opacity: Math.max(0, settled * 2 - 1) }}>
-        <Label size="headline" color={space.text}>
-          {channel}
-        </Label>
-      </Place>
+      <SvgLayer>
+        <defs>
+          <linearGradient id="vignette-logo-white" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={space.logo.white[0]} />
+            <stop offset="42%" stopColor={space.logo.white[1]} />
+            <stop offset="50%" stopColor={space.logo.white[2]} />
+            <stop offset="56%" stopColor={space.logo.white[1]} />
+            <stop offset="100%" stopColor={space.logo.white[0]} />
+          </linearGradient>
+          <linearGradient id="vignette-logo-gold" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={space.logo.gold[0]} />
+            <stop offset="44%" stopColor={space.logo.gold[1]} />
+            <stop offset="100%" stopColor={space.logo.gold[2]} />
+          </linearGradient>
+        </defs>
+        <g
+          opacity={Math.max(0, settled * 2 - 1)}
+          transform="rotate(-2 960 540)"
+          textAnchor="middle"
+          fontFamily="Lilita One"
+          fontWeight={400}
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          letterSpacing={-4}
+        >
+          {channel.split(/\s+/).map((word, index) => (
+            <g key={`${word}-${index}`} fontSize={index === 0 ? 260 : 220}>
+              <text
+                x={960}
+                y={535 + index * 190 + 24}
+                fill={space.logo.outline}
+                stroke={space.logo.outline}
+                strokeWidth={20}
+              >
+                {word}
+              </text>
+              <text
+                x={960}
+                y={535 + index * 190 + 12}
+                fill={space.logo.extrusion}
+                stroke={space.logo.outline}
+                strokeWidth={16}
+              >
+                {word}
+              </text>
+              <text
+                x={960}
+                y={535 + index * 190}
+                fill={`url(#vignette-logo-${index === 0 ? "white" : "gold"})`}
+                stroke={space.logo.outline}
+                strokeWidth={14}
+                paintOrder="stroke"
+              >
+                {word}
+              </text>
+            </g>
+          ))}
+        </g>
+      </SvgLayer>
     ) : null}
   </AbsoluteFill>
 );

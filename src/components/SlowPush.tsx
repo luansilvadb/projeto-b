@@ -8,11 +8,6 @@ type SlowPushProps = {
   readonly focus: readonly [number, number];
   /** Quanto a câmera se aproxima do começo ao fim do plano, em fração. */
   readonly by?: number;
-  /**
-   * A aproximação com que o plano começa. Serve ao plano que continua o
-   * enquadramento do anterior: ele parte de onde o outro parou, sem salto.
-   */
-  readonly from?: number;
   /** O que fica parado atrás, fora da câmera: um fundo liso ou em degradê. */
   readonly backdrop?: React.ReactNode;
   readonly children: React.ReactNode;
@@ -26,7 +21,6 @@ type SlowPushProps = {
 export const SlowPush: React.FC<SlowPushProps> = ({
   focus,
   by = 0.04,
-  from = 1,
   backdrop,
   children,
 }) => {
@@ -35,8 +29,8 @@ export const SlowPush: React.FC<SlowPushProps> = ({
   // esticada pelos quadros da passagem, e a aproximação pularia na troca.
   const durationInFrames = useShotLength();
   const camera = cameraBetween(
-    framing(focus, from, focus),
-    framing(focus, from + by, focus),
+    framing(focus, 1, focus),
+    framing(focus, 1 + by, focus),
     frame / durationInFrames,
   );
 

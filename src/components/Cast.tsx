@@ -56,8 +56,6 @@ type CastProps = {
   readonly order?: number;
   /** O ponto do qual o elemento cresce e para o qual encolhe, em pixels do quadro. */
   readonly origin: readonly [number, number];
-  /** Para onde ele vai enquanto sai, em pixels. */
-  readonly drift?: readonly [number, number];
   readonly children: React.ReactNode;
 };
 
@@ -66,20 +64,13 @@ type CastProps = {
  * do palco em volta de um ponto dele. O que é posto com `Place` já faz isso
  * sozinho nos planos de fundo liso.
  */
-export const Cast: React.FC<CastProps> = ({
-  order = 0,
-  origin,
-  drift = [0, 0],
-  children,
-}) => {
+export const Cast: React.FC<CastProps> = ({ order = 0, origin, children }) => {
   const stage = useStage();
   const mark = markFor("prop", 0, order);
-  const left = stage.leave(mark.leaveAt);
   return (
     <AbsoluteFill
       style={{
         transformOrigin: `${origin[0]}px ${origin[1]}px`,
-        translate: `${drift[0] * left}px ${drift[1] * left}px`,
         scale: `${castScale(stage, mark)}`,
       }}
     >

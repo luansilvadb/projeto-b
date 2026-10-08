@@ -16,7 +16,7 @@ export type AntelopeColors = {
   readonly hornRim?: string;
   readonly horn?: string;
 };
-export type AntelopeProps = Omit<AntelopePose, "earAngle"> & {
+type AntelopeProps = Omit<AntelopePose, "earAngle"> & {
   readonly width: number;
   readonly colors: AntelopeColors;
   readonly ear?: number;

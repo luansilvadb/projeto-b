@@ -129,7 +129,7 @@ export const RemotionRoot: React.FC = () => {
           width={WIDTH}
           height={HEIGHT}
           fps={FPS}
-          durationInFrames={2}
+          durationInFrames={6}
         />
         {/* A folha do antílope: as poses em silhueta numa cor só (quadro 0) e pintadas (1). */}
         <Composition

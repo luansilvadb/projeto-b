@@ -220,7 +220,7 @@ A fala abre no jeito novo, sem dizer que o anterior acabou: quem diz é o X na f
 
 ## gardner-hours
 
-- **Plano 1, close, câmera (6,1 s).** 0,0: a câmera fecha em Gardner e no contador (0,6 s). 0,9 "ficou": o contador corre de 236 para 264 (3,0 s, constante), e as olheiras dele crescem junto. 4,1 "quatro": ao passar de 260 o visor fica coral e dá um pulo. O calendário vira de dezembro para janeiro em 2,0. Som: nenhum.
+- **Plano 1, close, câmera (6,1 s).** 0,0: a câmera fecha em Gardner e no contador (0,6 s). 0,9 "ficou": o contador corre de 236 para 264 (3,0 s, constante), e as pálpebras dele pesam junto. 4,1 "quatro": ao passar de 260 o visor fica coral e dá um pulo. O calendário vira de dezembro para janeiro em 2,0. Som: nenhum.
 - **Plano 2, aberto, transformação (6,1 s).** 0,0: o quarto encolhe e some no fundo menta (0,5 s). 0,1 "onze": as onze mesas entram uma a uma, da esquerda para a direita e de cima para baixo (0,15 s entre elas), cada uma com ele mais caído. 4,4 "uma": na última, a cabeça encosta na mesa. Vivo: o vapor de cada xícara. Som: nenhum.
 
 ## gardner-sleeps
@@ -295,6 +295,6 @@ A fala abre no jeito novo, sem dizer que o anterior acabou: quem diz é o X na f
 ## subscribe
 
 - **Plano 1, aberto, corte (5,0 s).** 0,0: os três dormindo, lado a lado. Vivo: respiram em fases diferentes. 2,3 "nós": a câmera recua um pouco (1,0 s). Som: nenhum.
-- **Plano 2, médio, câmera (2,6 s).** 0,0: os três encolhem e o planeta da vinheta entra e assenta no centro (0,6 s). 0,1 "curta": ele gira devagar. Som: nenhum.
+- **Plano 2, médio, câmera (2,6 s).** 0,0: os três encolhem e o planeta da vinheta entra e assenta no centro (0,6 s). 0,1 "curta": as nuvens passam devagar. Som: nenhum.
 - **Plano 3, médio, câmera (3,4 s).** 0,1 "assim": os cartões saem do planeta um a um e crescem na direção de quem assiste (0,3 s entre eles). Som: nenhum.
-- **Plano 4, aberto, câmera (4,2 s).** 0,1 "só": os cartões se recolhem (0,2 s cada, na ordem inversa). 2,0 "Obrigado": o planeta fica sozinho e dá uma volta lenta até o fim. Som: nenhum.
+- **Plano 4, aberto, câmera (3,0 s).** 0,1 "só": os cartões se recolhem (0,2 s cada, na ordem inversa). Depois que somem, o botão "Inscreva-se" sobe abaixo do planeta; o cursor vem de baixo e clica em 1,9 s, junto de "Obrigado", e o botão muda para "Inscrito". O planeta volta ao centro; as nuvens continuam passando devagar até o fim. Som: nenhum.

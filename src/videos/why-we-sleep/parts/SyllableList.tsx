@@ -60,11 +60,17 @@ export const SUBJECTS: readonly [PersonColors, PersonColors] = [
  * (que são de Rechtschaffen) e sem luvas (que são da pesquisadora do tanque).
  */
 export const EXPERIMENTERS: readonly [PersonColors, PersonColors] = [
-  { ...sleepResearcher, hair: customer.hair, hairLight: customer.hairLight },
+  {
+    ...sleepResearcher,
+    foreheadShade: sleepResearcher.skinShade,
+    hair: customer.hair,
+    hairLight: customer.hairLight,
+  },
   {
     ...sleepResearcher,
     skin: researcher.skin,
     skinShade: researcher.skinShade,
+    foreheadShade: researcher.skinShade,
     lid: researcher.lid,
     hand: researcher.skin,
     handShade: researcher.skinShade,
@@ -392,14 +398,6 @@ export const ProfileHead: React.FC<ProfileHeadProps> = ({
       <path
         d="M-140,-10 C-176,6 -182,34 -160,42 C-150,46 -140,44 -134,40 Z"
         fill={colors.skin}
-      />
-      <ellipse
-        cx={-70}
-        cy={62}
-        rx={30}
-        ry={18}
-        fill={colors.blush}
-        opacity={0.55}
       />
       <circle cx={62} cy={22} r={30} fill={colors.skinShade} />
       <circle cx={58} cy={22} r={15} fill={colors.skin} />

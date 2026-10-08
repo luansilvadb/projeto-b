@@ -177,7 +177,7 @@ type OwingShotProps = ShotClock & {
   readonly jerkAt: number;
 };
 
-/** Amanhece: de olheiras, ele cochila em pé, e a conta de "sono devido" se escreve ao lado. */
+/** Amanhece: com as pálpebras pesadas, ele cochila em pé, e a conta de "sono devido" se escreve ao lado. */
 const OwingShot: React.FC<OwingShotProps> = ({
   oweAt,
   doneAt,

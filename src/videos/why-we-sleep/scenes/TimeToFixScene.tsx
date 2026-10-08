@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import {
   AbsoluteFill,
   Easing,
@@ -9,7 +8,6 @@ import {
 import { Build, Camera, framing, Layer } from "../../../components/Camera";
 import {
   FlatStage,
-  StageContext,
   Stay,
   Troupe,
   useStage,
@@ -43,6 +41,7 @@ import {
   treeMorphed,
   treeTones,
 } from "./BiggestMistakeScene";
+import { Sooner } from "./MaybeBrainScene";
 
 const TREE = PRUNED_TREE;
 const TREE_HEIGHT = TREE.width * 0.72;
@@ -81,34 +80,6 @@ const LEFTOVER = {
   tree: [5, 15],
   until: 16,
 } as const;
-
-/**
- * Adianta a entrada no palco de quem está dentro, em quadros, e apressa o fundo: ele toma a cor em
- * `backdrop` quadros. `late` atrasa a saída: quem sai ainda encolhe quando o plano seguinte chega.
- */
-const Sooner: React.FC<{
-  by?: number;
-  backdrop?: number;
-  late?: number;
-  children: React.ReactNode;
-}> = ({ by = 0, backdrop, late = 0, children }) => {
-  const stage = useStage();
-  const sooner = useMemo(
-    () => ({
-      ...stage,
-      // Sem argumentos, quem pergunta é o fundo do plano; com eles, o elenco.
-      enter: (delay?: number, frames?: number) =>
-        delay === undefined && frames === undefined
-          ? stage.enter(0, backdrop)
-          : stage.enter(Math.max(0, (delay ?? 0) - by), frames),
-      leave: (delay = 0) => stage.leave(delay + late),
-    }),
-    [stage, by, backdrop, late],
-  );
-  return (
-    <StageContext.Provider value={sooner}>{children}</StageContext.Provider>
-  );
-};
 
 type ScissorsProps = {
   readonly x: number;

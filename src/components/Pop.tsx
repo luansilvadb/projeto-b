@@ -49,7 +49,6 @@ type PopProps = {
   readonly from?: number;
   /** Quanto passa do tamanho final antes de assentar. */
   readonly overshoot?: number;
-  readonly seconds?: number;
   /** De onde o elemento cresce: do centro, ou dos pés para quem está em pé. */
   readonly origin?: "center" | "bottom";
   readonly children: React.ReactNode;
@@ -60,13 +59,12 @@ export const Pop: React.FC<PopProps> = ({
   at,
   from = 0.6,
   overshoot = 1.06,
-  seconds = POP_SECONDS,
   origin = "center",
   children,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const frames = seconds * fps;
+  const frames = POP_SECONDS * fps;
 
   return (
     <div
