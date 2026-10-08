@@ -403,6 +403,7 @@ const CalendarShot: React.FC<CalendarShotProps> = ({
         {...LEFT}
         y={ROOM.floor}
         which={0}
+        backArm={TUCKED}
         enter={friendsAt}
         gaze={[0, 0]}
         blink={blink(seconds, BOYS[0])}
@@ -420,6 +421,7 @@ const CalendarShot: React.FC<CalendarShotProps> = ({
       <Gardner
         id={BOYS[1]}
         {...middle}
+        backArm={TUCKED}
         gaze={eyes}
         blink={blink(seconds, "gardner")}
         breath={breath(seconds, "gardner")}
@@ -474,12 +476,19 @@ const PosterShot: React.FC<PosterShotProps> = ({ posterAt, clock }) => {
     >
       <Bedroom hue={HUE} on={HUE} posterAt={posterAt} seconds={seconds} />
       <BoyShadows middle={MIDDLE} />
-      <Friend {...LEFT} y={ROOM.floor} which={0} {...turned[0]} />
+      <Friend
+        {...LEFT}
+        y={ROOM.floor}
+        which={0}
+        backArm={TUCKED}
+        {...turned[0]}
+      />
       <Friend {...RIGHT} y={ROOM.floor} which={1} {...turned[2]} />
       <Gardner
         id={BOYS[1]}
         {...MIDDLE}
         y={ROOM.floor}
+        backArm={TUCKED}
         {...turned[1]}
         lean={shifting(seconds)}
         // "17 anos" sai quando a câmera parte para o cartaz.
@@ -494,13 +503,16 @@ const PosterShot: React.FC<PosterShotProps> = ({ posterAt, clock }) => {
 
 // A moeda: o amigo de verde ergue a mão (aviso), joga, e ela sobe girando por cima de Gardner e cai
 // entre ele e o outro amigo, onde quica uma vez e deita. Tempos em quadros do plano.
+// Lado a lado, o braço de trás de cada um fica junto do corpo: solto, a mão encostava na do vizinho e os três pareciam de mãos dadas.
+const TUCKED = { hand: [112, -226], bend: 22 } as const;
 const TOSS = {
   shown: 1,
   at: 6,
   frames: 24,
   apex: 150,
-  land: [706, 938] as const,
-  rest: [722, 938] as const,
+  // Mais à frente no chão que os pés: na linha deles, o sapato cobria a moeda.
+  land: [706, 956] as const,
+  rest: [722, 956] as const,
   bounce: { frames: 6, height: 34 },
   // No ar ela dá duas voltas; deitada no chão, fica quase de perfil.
   flat: 1.2,

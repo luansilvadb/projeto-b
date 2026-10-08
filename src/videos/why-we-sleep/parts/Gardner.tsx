@@ -644,7 +644,8 @@ export const Dement: React.FC<DementProps> = ({
         blink={blink}
         stride={stride}
         frontArm={{ hand: [-128, -250], bend: 30 }}
-        backArm={{ hand: [18 + 16 * note, -300 + 9 * note], bend: 52 }}
+        // O braço que anota fica solto ao lado, com a mão à vista: atrás do tronco, lia como coto.
+        backArm={{ hand: [130 - 12 * note, -256 - 12 * note], bend: 30 }}
       />
     </Place>
     {nameAt === undefined ? null : (

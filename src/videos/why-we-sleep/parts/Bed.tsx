@@ -210,7 +210,6 @@ export const Bed: React.FC<BedProps> = ({
       <Person
         height={SLEEPER.height}
         colors={colors}
-        finish
         expression={EXPRESSION[state]}
         blink={blink}
         frontArm={armBetween(LYING_ARMS.front, STANDING_ARMS.front, standing)}

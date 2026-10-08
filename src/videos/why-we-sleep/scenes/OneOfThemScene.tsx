@@ -575,7 +575,6 @@ const Among: React.FC<AmongProps> = ({
                 <Person
                   height={layout.person.height}
                   colors={person}
-                  finish
                   expression={expression}
                   blink={Math.max(
                     at < rubAt ? blink(seconds, "you") : 0,

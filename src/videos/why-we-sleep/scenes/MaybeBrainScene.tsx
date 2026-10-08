@@ -681,7 +681,6 @@ const SuspectsShot: React.FC<SuspectsShotProps> = ({
                 <Person
                   height={YOU.height}
                   colors={person}
-                  finish
                   expression={frame >= lookAt + 2 ? "surprised" : "curious"}
                   blink={Math.max(
                     blink(seconds, "you"),

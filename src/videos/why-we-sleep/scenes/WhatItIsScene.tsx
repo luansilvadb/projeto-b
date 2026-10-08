@@ -97,7 +97,6 @@ const LitShot: React.FC<LitShotProps> = ({ litAt, lookAt }) => {
           <Person
             height={STANDING.height}
             colors={person}
-            finish
             // O rosto troca com a pálpebra fechada.
             expression={frame >= lookAt + LID_FRAMES ? "curious" : "neutral"}
             blink={Math.max(

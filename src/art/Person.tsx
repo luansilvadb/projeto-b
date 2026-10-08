@@ -90,17 +90,9 @@ type PersonProps = {
    */
   readonly stride?: Stride;
   /**
-   * A construção nova (unidade `forma` da direção de arte): o tronco em feijão
-   * que inclina, o pescoço, o quadril de onde as pernas nascem afinando, os
-   * sapatos com direção e a passada aberta. A cabeça, o rosto e os ombros
-   * ficam onde estão, porque outras peças desenham por cima deles. Sem ela, a
-   * pessoa é a do animatic aprovado.
-   */
-  readonly finish?: boolean;
-  /**
    * Quanto o tronco e a cabeça pendem sobre o quadril, em graus, para a
    * direita de quem olha: é o corpo inteiro que conta o sono, o peso de uma
-   * caixa ou o bocejo, e não só a cabeça. Vale na construção nova.
+   * caixa ou o bocejo, e não só a cabeça.
    */
   readonly lean?: number;
 };
@@ -109,10 +101,12 @@ type PersonProps = {
 const VIEW = { width: 400, height: 650 };
 const FRONT_SHOULDER: Point = [-70, -346];
 const BACK_SHOULDER: Point = [72, -338];
-// Em pé e à vontade: um braço solto, o outro com a mão na cintura.
+// Em pé e à vontade, os dois braços soltos (a mão na cintura fica para quando
+// for a ação). O de trás fica afastado do tronco, com um vazio entre os dois
+// (colado nele, o braço some na silhueta), e mais alto e dobrado que o da frente.
 const RELAXED: { front: Required<Arm>; back: Required<Arm> } = {
   front: { hand: [-136, -214], bend: 26 },
-  back: { hand: [100, -214], bend: 73 },
+  back: { hand: [134, -252], bend: 28 },
 };
 const EYE = { gap: 42, radius: 27, y: -462 };
 // A passada, nas unidades do desenho: quanto cada pé avança e recua, quanto
@@ -120,18 +114,9 @@ const EYE = { gap: 42, radius: 27, y: -462 };
 // mãos balançam e quantos graus a ponta do pé no ar desce.
 const GAIT = { reach: 34, lift: 40, bob: 14, swing: 30, toe: 16 };
 const HIP_Y = -196;
-// Os dois pés em repouso: onde a perna termina e a caixa do sapato.
-const LEGS = {
-  back: { hip: 44, knee: [60, -112], ankle: [70, -34], shoe: [36, 80] },
-  front: { hip: -40, knee: [-42, -110], ankle: [-42, -34], shoe: [-88, 78] },
-} as const;
-
-// A construção nova: o braço de trás solto ao lado do corpo (a mão na cintura
-// fica para quando for a ação), a perna de apoio sob a cabeça e a outra aberta,
-// cada sapato apontando para o seu lado, e a passada e o balanço maiores.
+// A perna de apoio fica sob a cabeça e a outra aberta, cada sapato apontando
+// para o seu lado; a passada e o balanço dos braços são largos.
 const BUILT = {
-  // Afastado do tronco, com um vazio entre os dois (colado nele, o braço some na silhueta), e mais alto e dobrado que o da frente.
-  back: { hand: [134, -252], bend: 28 } as Required<Arm>,
   // `long` é o comprimento do sapato: o do pé de apoio é mais curto, para os dois não serem espelho um do outro.
   legs: {
     back: { hip: 46, knee: [68, -116], ankle: [86, -36], toe: 1, long: 56 },
@@ -178,47 +163,30 @@ const walking = (stride: Stride | undefined) => {
   };
 };
 
-/** A perna de um lado, do quadril (que sobe com o corpo) ao tornozelo, e o sapato dela. */
-const leg = (
-  side: (typeof LEGS)[keyof typeof LEGS],
-  step: Step,
-  bob: number,
-  fill: string,
-  shoeFill: string,
-) => {
-  const rise = GAIT.lift * step.lifted;
-  const ankle: Point = [side.ankle[0] + step.forward, side.ankle[1] - rise];
-  // O joelho acompanha o pé e dobra para a frente quando o pé sai do chão.
-  const knee: Point = [
-    side.knee[0] + step.forward * 0.55 + 16 * step.lifted,
-    side.knee[1] - bob * 0.5 - rise * 0.55,
-  ];
-  const moved = step.forward !== 0 || rise !== 0;
-  return (
-    <>
-      <path
-        d={taperPath([side.hip, HIP_Y - bob], knee, ankle, 60, 46)}
-        fill={fill}
-      />
-      <rect
-        x={side.shoe[0]}
-        y={-38}
-        width={side.shoe[1]}
-        height={38}
-        rx={19}
-        fill={shoeFill}
-        transform={
-          moved
-            ? `translate(${step.forward} ${-rise}) rotate(${GAIT.toe * step.lifted} ${side.ankle[0]} -34)`
-            : undefined
-        }
-      />
-    </>
-  );
-};
+/**
+ * O sapato em cunha: o calcanhar sob o tornozelo (`at`, no chão) e a ponta para
+ * o lado `toe`, com `long` de comprimento. Quem desenha as pernas à parte (a
+ * pessoa sentada à mesa) calça o mesmo sapato.
+ */
+export const Shoe: React.FC<{
+  readonly at: Point;
+  readonly toe: number;
+  readonly long: number;
+  readonly fill: string;
+  readonly transform?: string;
+}> = ({ at: [x, y], toe, long, fill, transform }) => (
+  <path
+    d={`M${x - toe * 26},${y} L${x + toe * long},${y} C${x + toe * (long + 22)},${y} ${x + toe * (long + 20)},${y - 26} ${x + toe * (long - 4)},${y - 30} C${x + toe * (long - 20)},${y - 33} ${x + toe * 28},${y - 46} ${x + toe * 22},${y - 46} L${x - toe * 26},${y - 46} Z`}
+    fill={fill}
+    stroke={fill}
+    strokeWidth={10}
+    strokeLinejoin="round"
+    transform={transform}
+  />
+);
 
 /**
- * A perna da construção nova: larga no quadril, afinando até o tornozelo, com
+ * A perna: larga no quadril, afinando até o tornozelo, com
  * o sapato em cunha (o calcanhar sob o tornozelo, a ponta para o lado `toe`).
  */
 const builtLeg = (
@@ -262,12 +230,11 @@ const builtLeg = (
         )}
         fill={fill}
       />
-      <path
-        d={`M${x - toe * 26},${y} L${x + toe * long},${y} C${x + toe * (long + 22)},${y} ${x + toe * (long + 20)},${y - 26} ${x + toe * (long - 4)},${y - 30} C${x + toe * (long - 20)},${y - 33} ${x + toe * 28},${y - 46} ${x + toe * 22},${y - 46} L${x - toe * 26},${y - 46} Z`}
+      <Shoe
+        at={[x, y]}
+        toe={toe}
+        long={long}
         fill={shoeFill}
-        stroke={shoeFill}
-        strokeWidth={10}
-        strokeLinejoin="round"
         transform={
           rise !== 0
             ? `rotate(${GAIT.toe * step.lifted * toe} ${x} ${y - 36})`
@@ -532,33 +499,29 @@ export const Person: React.FC<PersonProps> = ({
   grumpy = false,
   glasses,
   stride,
-  finish = false,
   lean: ownLean = 0,
 }) => {
   const id = useId();
   const paced = walking(stride);
-  // Na construção nova a passada abre mais e os braços balançam mais.
-  const gait = finish
-    ? {
-        ...paced,
-        front: { ...paced.front, forward: paced.front.forward * BUILT.reach },
-        back: { ...paced.back, forward: paced.back.forward * BUILT.reach },
-        swing: paced.swing * BUILT.swing,
-      }
-    : paced;
+  // A passada abre mais e os braços balançam mais que o ciclo de base.
+  const gait = {
+    ...paced,
+    front: { ...paced.front, forward: paced.front.forward * BUILT.reach },
+    back: { ...paced.back, forward: paced.back.forward * BUILT.reach },
+    swing: paced.swing * BUILT.swing,
+  };
   const posture = blinking(FACES[expression], blink);
-  // Na construção nova, quem boceja enche o peito: os ombros sobem e a cabeça vai para trás.
+  // Quem boceja enche o peito: os ombros sobem e a cabeça vai para trás.
   // E quem dorme em pé desaba: os ombros caem e a cabeça pende mais.
-  const face = !finish
-    ? posture
-    : expression === "yawning"
+  const face =
+    expression === "yawning"
       ? { ...posture, slump: -10, tilt: -11 }
       : expression === "asleep"
         ? { ...posture, slump: 24, tilt: 20 }
         : posture;
   const scale = height / VIEW.height;
   const posedFront = { ...RELAXED.front, ...frontArm };
-  const posedBack = { ...(finish ? BUILT.back : RELAXED.back), ...backArm };
+  const posedBack = { ...RELAXED.back, ...backArm };
   // Andando, as mãos balançam em arco: vão e vêm, e sobem um pouco nas pontas.
   const swung = (arm: Required<Arm>, by: number): Required<Arm> =>
     by === 0
@@ -580,23 +543,18 @@ export const Person: React.FC<PersonProps> = ({
   const frontHand = handCenter(frontElbow, front.hand);
   const backHand = handCenter(backElbow, back.hand);
   const shoulderY = -380 + face.slump;
-  // O tronco: o trapézio do animatic, ou o feijão da construção nova, de
-  // ombros caídos e redondos, mais largo no quadril e de barra em curva.
-  const torso = finish
-    ? `M-78,${shoulderY + 40} C-82,${shoulderY + 16} -52,${shoulderY + 10} 0,${shoulderY + 10} C52,${shoulderY + 10} 82,${shoulderY + 16} 78,${shoulderY + 40} C84,-300 94,-252 96,-216 C98,-190 82,-176 0,-176 C-82,-176 -98,-190 -96,-216 C-94,-252 -84,-300 -78,${shoulderY + 40} Z`
-    : `M-82,${shoulderY + 28} Q-84,${shoulderY + 2} -56,${shoulderY} L56,${shoulderY} Q84,${shoulderY + 2} 82,${shoulderY + 28} L98,-190 Q100,-164 74,-164 L-74,-164 Q-100,-164 -98,-190 Z`;
+  // O tronco em feijão: ombros caídos e redondos, mais largo no quadril e de barra em curva.
+  const torso = `M-78,${shoulderY + 40} C-82,${shoulderY + 16} -52,${shoulderY + 10} 0,${shoulderY + 10} C52,${shoulderY + 10} 82,${shoulderY + 16} 78,${shoulderY + 40} C84,-300 94,-252 96,-216 C98,-190 82,-176 0,-176 C-82,-176 -98,-190 -96,-216 C-94,-252 -84,-300 -78,${shoulderY + 40} Z`;
   // Parada ou andando, a figura pende um pouco sobre o quadril.
   const walked = stride === undefined ? 0 : (stride.gait ?? 1);
   // Andar não inclina o tronco por conta própria: dobrado sobre pernas a prumo, com o rosto descansado, ele lê
   // como coluna quebrada. Quem inclina o corpo de quem anda é a cena, a figura inteira, quando há cansaço para contar.
-  const lean = 2.5 + (finish ? ownLean : 0);
+  const lean = 2.5 + ownLean;
   // Quando o tronco pende para um lado, o quadril vai para o outro: dos pés à cabeça, a figura faz um C.
-  const hipShift = finish ? -ownLean * 2.4 : 0;
+  const hipShift = -ownLean * 2.4;
   // Quem dorme em pé afunda a cabeça nos ombros, até o queixo cobrir o pescoço.
-  const sunk = finish && expression === "asleep" ? 24 : 0;
-  const arm = finish
-    ? { front: [54, 34], back: [52, 36] }
-    : { front: [46, 34], back: [46, 36] };
+  const sunk = expression === "asleep" ? 24 : 0;
+  const arm = { front: [54, 34], back: [52, 36] };
 
   return (
     <svg
@@ -612,50 +570,35 @@ export const Person: React.FC<PersonProps> = ({
       </defs>
 
       {/* O peso fica numa perna; a outra abre um pouco. */}
-      {finish ? (
-        <>
-          {/* Andando, os dois sapatos apontam para onde ela vai. */}
-          {builtLeg(
-            BUILT.legs.back,
-            gait.back,
-            gait.bob,
-            colors.pantsShade,
-            colors.shoeShade,
-            1,
-            74,
-            hipShift,
-            walked,
-          )}
-          {builtLeg(
-            BUILT.legs.front,
-            gait.front,
-            gait.bob,
-            colors.pants,
-            colors.shoe,
-            walked > 0 ? 1 : -1,
-            84,
-            hipShift,
-            walked,
-          )}
-          {/* O quadril: a massa de onde as duas pernas nascem, sob a barra do tronco. */}
-          <path
-            transform={`translate(${hipShift} ${-gait.bob})`}
-            d="M-82,-236 C-98,-204 -96,-150 -46,-144 Q4,-182 54,-144 C98,-150 100,-204 84,-236 Z"
-            fill={colors.pants}
-          />
-        </>
-      ) : (
-        <>
-          {leg(
-            LEGS.back,
-            gait.back,
-            gait.bob,
-            colors.pantsShade,
-            colors.shoeShade,
-          )}
-          {leg(LEGS.front, gait.front, gait.bob, colors.pants, colors.shoe)}
-        </>
+      {/* Andando, os dois sapatos apontam para onde ela vai. */}
+      {builtLeg(
+        BUILT.legs.back,
+        gait.back,
+        gait.bob,
+        colors.pantsShade,
+        colors.shoeShade,
+        1,
+        74,
+        hipShift,
+        walked,
       )}
+      {builtLeg(
+        BUILT.legs.front,
+        gait.front,
+        gait.bob,
+        colors.pants,
+        colors.shoe,
+        walked > 0 ? 1 : -1,
+        84,
+        hipShift,
+        walked,
+      )}
+      {/* O quadril: a massa de onde as duas pernas nascem, sob a barra do tronco. */}
+      <path
+        transform={`translate(${hipShift} ${-gait.bob})`}
+        d="M-82,-236 C-98,-204 -96,-150 -46,-144 Q4,-182 54,-144 C98,-150 100,-204 84,-236 Z"
+        fill={colors.pants}
+      />
 
       {/* O tronco inclina um pouco sobre o quadril, para a figura não ficar dura. */}
       <g
@@ -665,14 +608,12 @@ export const Person: React.FC<PersonProps> = ({
             : `translate(${hipShift} ${-gait.bob}) rotate(${lean} 0 -180)`
         }
       >
-        {finish ? (
-          <circle
-            cx={backShoulder[0]}
-            cy={backShoulder[1]}
-            r={arm.back[0] / 2}
-            fill={colors.topShade}
-          />
-        ) : null}
+        <circle
+          cx={backShoulder[0]}
+          cy={backShoulder[1]}
+          r={arm.back[0] / 2}
+          fill={colors.topShade}
+        />
         <path
           d={taperPath(
             backShoulder,
@@ -689,22 +630,11 @@ export const Person: React.FC<PersonProps> = ({
           r={22}
           fill={colors.handShade}
         />
-        {finish ? (
-          // O pescoço abre em curva até os ombros: a cabeça deixa de encostar no tronco num ponto só.
-          <path
-            d={`M-36,-404 C-36,${shoulderY} -44,${shoulderY + 10} -58,${shoulderY + 14} L58,${shoulderY + 14} C44,${shoulderY + 10} 36,${shoulderY} 36,-404 Z`}
-            fill={colors.skinShade}
-          />
-        ) : (
-          <rect
-            x={-24}
-            y={-404}
-            width={48}
-            height={40}
-            rx={12}
-            fill={colors.skinShade}
-          />
-        )}
+        {/* O pescoço abre em curva até os ombros: a cabeça deixa de encostar no tronco num ponto só. */}
+        <path
+          d={`M-36,-404 C-36,${shoulderY} -44,${shoulderY + 10} -58,${shoulderY + 14} L58,${shoulderY + 14} C44,${shoulderY + 10} 36,${shoulderY} 36,-404 Z`}
+          fill={colors.skinShade}
+        />
 
         <path d={torso} fill={colors.top} />
         <g clipPath={`url(#${id}-torso)`}>

@@ -1,4 +1,4 @@
-import { Person, type PersonColors } from "../../../art/Person";
+import { Person, Shoe, type PersonColors } from "../../../art/Person";
 import { taperPath, type Point } from "../../../art/shapes";
 import { wave } from "../../../components/Idle";
 import { idea, ink, lab } from "../palette";
@@ -202,26 +202,12 @@ export const CoffeeTable: React.FC<CoffeeTableProps> = ({
           d={taperPath([44, TABLE.top + 20], [52, -120], [56, -34], 58, 44)}
           fill={colors.pantsShade}
         />
-        <rect
-          x={22}
-          y={-38}
-          width={80}
-          height={38}
-          rx={19}
-          fill={colors.shoeShade}
-        />
+        <Shoe at={[56, 0]} toe={1} long={56} fill={colors.shoeShade} />
         <path
           d={taperPath([-44, TABLE.top + 20], [-50, -120], [-52, -34], 58, 44)}
           fill={colors.pants}
         />
-        <rect
-          x={-100}
-          y={-38}
-          width={80}
-          height={38}
-          rx={19}
-          fill={colors.shoe}
-        />
+        <Shoe at={[-52, 0]} toe={-1} long={42} fill={colors.shoe} />
         {[-1, 1].map((side) => (
           <path
             key={side}

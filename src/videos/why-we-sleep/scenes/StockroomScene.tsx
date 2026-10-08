@@ -280,6 +280,9 @@ const HeadShot: React.FC<HeadShotProps> = ({ brainAt, clock, until }) => {
 };
 
 /** Os fregueses: a construção da pessoa com rosto de dois pontos; o segundo, de cabelo grisalho e blusa amarela; o terceiro, de roxo. */
+// O braço de trás recolhido, de quem está encostado em outra pessoa.
+const TUCKED = { hand: [112, -226], bend: 22 } as const;
+
 export const SHOPPERS: readonly PersonColors[] = [
   customer,
   {
@@ -964,6 +967,8 @@ const BusyView: React.FC<BusyViewProps> = ({
             colors={SHOPPERS[1]}
             plainFace
             stride={arriving.stride}
+            // Na fila, o braço de trás fica junto do corpo: solto, a mão encostava na do freguês da frente.
+            backArm={TUCKED}
           />
         </Place>
       </AbsoluteFill>

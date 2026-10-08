@@ -6,7 +6,7 @@ import { apron, idea, ink, person } from "./palette";
 
 type PersonPose = Omit<
   React.ComponentProps<typeof Person>,
-  "height" | "colors" | "finish"
+  "height" | "colors"
 >;
 
 // As poses que o roteiro pede da pessoa: é nelas que a silhueta precisa contar a cena.
@@ -58,16 +58,15 @@ const poses = (box: string): readonly { label: string; pose: PersonPose }[] => [
   },
 ];
 const COLUMN = 360;
-const HEIGHT = 440;
+const HEIGHT = 520;
 // A silhueta: a figura inteira numa cor só, para a construção ser julgada sem cor nem rosto.
 const SILHOUETTE = Object.fromEntries(
   Object.keys(person).map((key) => [key, ink.dark]),
 ) as PersonColors;
 
 /**
- * Folha da pessoa, para a etapa da silhueta (unidade `forma`, Construção): em
- * cima a do animatic aprovado, embaixo a construção nova. No quadro 0, numa
- * cor só; no 1, pintadas.
+ * Folha de modelo da pessoa (unidade `forma`, Construção), nas poses que o
+ * roteiro pede. No quadro 0, numa cor só; no 1, pintada.
  */
 export const PersonSheet: React.FC = () => {
   const silhouette = useCurrentFrame() === 0;
@@ -78,41 +77,25 @@ export const PersonSheet: React.FC = () => {
         background: `linear-gradient(${idea.peach.top}, ${idea.peach.bottom})`,
       }}
     >
-      {[false, true].map((finish, row) =>
-        sheet.map(({ label, pose }, column) => (
-          <div key={`${row}-${label}`}>
-            <Place
-              x={COLUMN * (column + 0.5)}
-              y={480 + row * 510}
-              anchor="bottom"
-            >
-              <Person
-                height={HEIGHT}
-                colors={silhouette ? SILHOUETTE : person}
-                finish={finish}
-                {...pose}
-                // Em silhueta a caixa e o avental também são uma cor só.
-                apron={
-                  pose.apron && silhouette ? [ink.dark, ink.dark] : pose.apron
-                }
-              />
-            </Place>
-            {row === 1 ? (
-              <Place x={COLUMN * (column + 0.5)} y={1038}>
-                <Label size="note" color={ink.dark} tag={ink.paper}>
-                  {label}
-                </Label>
-              </Place>
-            ) : null}
-          </div>
-        )),
-      )}
-      {["antes", "depois"].map((label, row) => (
-        <Place key={label} x={120} y={46 + row * 520}>
-          <Label size="note" color={ink.dark} tag={ink.paper}>
-            {label}
-          </Label>
-        </Place>
+      {sheet.map(({ label, pose }, column) => (
+        <div key={label}>
+          <Place x={COLUMN * (column + 0.5)} y={820} anchor="bottom">
+            <Person
+              height={HEIGHT}
+              colors={silhouette ? SILHOUETTE : person}
+              {...pose}
+              // Em silhueta a caixa e o avental também são uma cor só.
+              apron={
+                pose.apron && silhouette ? [ink.dark, ink.dark] : pose.apron
+              }
+            />
+          </Place>
+          <Place x={COLUMN * (column + 0.5)} y={930}>
+            <Label size="note" color={ink.dark} tag={ink.paper}>
+              {label}
+            </Label>
+          </Place>
+        </div>
       ))}
     </AbsoluteFill>
   );
