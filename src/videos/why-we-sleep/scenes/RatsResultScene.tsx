@@ -26,7 +26,7 @@ import {
 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
-import { ink, lab, researcher, signs, sound } from "../palette";
+import { ink, lab, researcher, signs, sound, tags } from "../palette";
 import { Calendar } from "../parts/Calendar";
 import { BENCH_Y } from "../parts/Laboratory";
 import {
@@ -44,6 +44,7 @@ import { Tag } from "../parts/Tag";
 import { Prelude } from "./MaybeBrainScene";
 import { EXAM_LEAD, UnknownCauseOpening } from "./UnknownCauseScene";
 import {
+  DISC_LABEL,
   DISC_LANDING,
   DISC_MEDIUM_END,
   DiscLeaving,
@@ -93,7 +94,10 @@ const GROOM_UP = 15;
 const GROOM = { after: 6, rise: 6, rub: 20, down: 7 };
 // O aparelho sai de baixo dos dois em 0,5 s; a etiqueta do disco se recolhe antes, e o terceiro rato cresce
 // quando os dois já estão quase na bancada. Em quadros do plano.
-const LAND = { frames: 15, label: 7, third: 9 };
+const LAND = { frames: 15, third: 9 };
+// A etiqueta "comparação" é a do disco e continua sobre quem ela já nomeava, o que cochila: onde o centro
+// dela fica na bancada, a partir dos pés dele. Acima e à esquerda do ronco, com a linha até a cabeça dele.
+const LABEL = { dx: -110, dy: -226 };
 // A respiração e a pausa viva de cada um: os dois primeiros continuam as do disco, sem salto.
 const BREATH_SEEDS = ["disc-rat-0", "disc-rat-1", "control-2"] as const;
 const IDLE_SEEDS = ["disc-0", "disc-1", "control-2"] as const;
@@ -234,8 +238,7 @@ type ControlsMarksProps = {
   readonly seconds: number;
   /** De 0 (o ronco onde estava no disco) a 1 (sobre quem cochila na bancada). Por padrão, 1. */
   readonly landed?: number;
-  /** Quadros do plano em que a etiqueta e o visto de "saudáveis" entram; sem valores, já estão lá. */
-  readonly tagAt?: number;
+  /** Quadro do plano em que o visto de "saudáveis" entra; sem valor, já está lá. */
   readonly wellAt?: number;
   /** Quanto os três já saíram, de 0 a 1: encolhem no próprio ponto. */
   readonly gone?: number;
@@ -245,7 +248,6 @@ type ControlsMarksProps = {
 const ControlsMarks: React.FC<ControlsMarksProps> = ({
   seconds,
   landed = 1,
-  tagAt = ALREADY_SHOWN,
   wellAt = ALREADY_SHOWN,
   gone = 0,
 }) => {
@@ -254,6 +256,23 @@ const ControlsMarks: React.FC<ControlsMarksProps> = ({
   const frames = POP_SECONDS * fps;
   const napper = rowRatSpot(1, CONTROLS);
   const left = 1 - gone;
+  // A etiqueta, do lugar dela no disco ao da bancada; `sized` é quanto ela e a linha encolhem no cenário para
+  // ficar do mesmo tamanho no quadro, com a câmera mais perto.
+  const sized = mix(1, 1 / ON_CONTROLS.zoom / DISC_LABEL.scale, landed);
+  const head = [napper.x - 20, napper.y - CONTROLS.width * 0.5 + 6] as const;
+  const root = [
+    mix(DISC_LABEL.root[0], head[0], landed),
+    mix(DISC_LABEL.root[1], head[1], landed),
+  ] as const;
+  const tag = [
+    mix(DISC_LABEL.tag[0], napper.x + LABEL.dx, landed),
+    mix(DISC_LABEL.tag[1], napper.y + LABEL.dy, landed),
+  ] as const;
+  // No disco a linha chega pela esquerda da etiqueta; na bancada, pela direita, que é onde o rato está.
+  const tip = [
+    tag[0] + mix(-30, 22, landed) * sized,
+    tag[1] + 30 * sized,
+  ] as const;
   // A letra do ronco, do tamanho deste plano; no disco ela era menor.
   const snoreSize = 96;
 
@@ -281,16 +300,31 @@ const ControlsMarks: React.FC<ControlsMarksProps> = ({
           ZZZ
         </Onomatopoeia>
       </Place>
+      {/* A etiqueta do disco, com a linha: desce com o rato que ela nomeia e fica sobre ele. Saindo, a linha se
+          recolhe para dentro dela. */}
+      <SvgLayer>
+        <path
+          d={`M${mix(root[0], tip[0], gone)},${mix(root[1], tip[1], gone)} L${tip[0]},${tip[1]}`}
+          stroke={tags.mint.fill}
+          // Sem comprimento, a ponta redonda da linha ainda seria um ponto: a grossura sai com ela.
+          strokeWidth={DISC_LABEL.stroke * sized * Math.min(1, left * 4)}
+          strokeLinecap="round"
+        />
+        <circle
+          cx={mix(root[0], tip[0], gone)}
+          cy={mix(root[1], tip[1], gone)}
+          r={DISC_LABEL.dot * sized * left}
+          fill={tags.mint.fill}
+        />
+      </SvgLayer>
       <Place
-        x={rowRatSpot(0, CONTROLS).x}
-        y={CONTROLS.y - CONTROLS.width * 0.5 - 56 / NEAR}
-        style={{ scale: `${left / ON_CONTROLS.zoom}` }}
+        x={tag[0]}
+        y={tag[1]}
+        style={{ scale: `${left * DISC_LABEL.scale * sized}` }}
       >
-        <Pop at={tagAt}>
-          <Tag size="note" on="mint">
-            comparação
-          </Tag>
-        </Pop>
+        <Tag size="note" on="mint">
+          comparação
+        </Tag>
       </Place>
       {/* O visto: saudáveis. A mesma marca verde dos ícones vencidos da fila; o risco se desenha depois de o selo assentar. */}
       {frame >= wellAt && left > 0 ? (
@@ -633,18 +667,9 @@ const ControlsShot: React.FC<ControlsShotProps> = ({ videoClock, wellAt }) => {
         ramp(frame, 0, arrive),
       )}
     >
-      <DiscLeaving
-        videoClock={videoClock}
-        leaving={{ disc: 1 - landed, label: drop(frame, 0, LAND.label) }}
-      />
+      <DiscLeaving videoClock={videoClock} leaving={1 - landed} />
       <Trio rats={rats} />
-      <ControlsMarks
-        seconds={seconds}
-        landed={landed}
-        // A etiqueta dos três entra com a câmera chegando, depois de a do disco sair.
-        tagAt={arrive - 5}
-        wellAt={well}
-      />
+      <ControlsMarks seconds={seconds} landed={landed} wellAt={well} />
     </Bench>
   );
 };

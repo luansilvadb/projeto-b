@@ -225,7 +225,7 @@ const ROOM_FOCUS = [960, 600] as const;
 // fora do quadro: subindo junto, os pesquisadores ficavam em cima do toldo e contra o céu da noite, e os
 // dois lugares pareciam um só. A fala começa aos 0,4 s.
 const WALL_FRAMES = 6;
-const ROOM_RISE = { after: 1, frames: 13 };
+const ROOM_RISE = { after: 0, frames: 10 };
 // O calendário na parede, entre os dois pesquisadores.
 const YEAR = { x: 960, y: 231, width: 306 };
 // A mão de quem entrega, nas unidades do desenho da pessoa: com a folha junto ao peito, e com o braço estendido.

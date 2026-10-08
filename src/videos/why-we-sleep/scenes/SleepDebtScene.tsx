@@ -11,7 +11,15 @@ import { blink, wave } from "../../../components/Idle";
 import { Onomatopoeia } from "../../../components/Onomatopoeia";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, drop, linear, mix, ramp, clamp01, clamp } from "../../../components/timing";
+import {
+  cue,
+  drop,
+  linear,
+  mix,
+  ramp,
+  clamp01,
+  clamp,
+} from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { person, daylightTones, sound } from "../palette";
@@ -181,9 +189,12 @@ const TABLE = { x: 800, y: 1010, height: 700 };
 export const TABLE_BILL = { x: 1500, y: 190, scale: 1.15 };
 // O ponto para o qual o plano da mesa deriva: o rosto de quem está sentado.
 const TABLE_FOCUS = [820, 560] as const;
-// A pessoa entra crescendo nos últimos quadros do plano da savana, enquanto o
-// cenário desce: na primeira palavra do plano dela, já está sentada.
-const SEATED_BEFORE_FRAMES = 14;
+// A pessoa e a mesa entram crescendo só no fim da descida da savana, quando a
+// árvore e o bicho já saíram do quadro: antes disso o café acontecia na savana,
+// com o elenco de dois lugares no mesmo quadro. O crescimento começa estes
+// quadros antes da troca e termina já no plano dela, que o continua do mesmo
+// ponto; até lá quem segura a tela é a conta, comum aos dois planos.
+const SEATED_BEFORE_FRAMES = 3;
 // A conta vai do lado do bicho para o lado da mesa num movimento só, por cima
 // da cabeça de quem está sentado, sem sair do quadro: em vez de subir além da
 // borda, o papel se afasta (encolhe) no alto do arco, e é pequeno que o pé
@@ -388,7 +399,7 @@ const PayingShot: React.FC<PayingShotProps> = ({
           </Place>
         </Stay>
       )}
-      {/* Quem está à mesa do plano seguinte entra aqui, enquanto a savana desce: a fala dele já a encontra sentada. */}
+      {/* Quem está à mesa do plano seguinte começa a crescer aqui, no fim da descida da savana; o plano dela termina a entrada. */}
       {frame >= seatAt && !stage.handedOver ? (
         <Stay>
           <Drift focus={TABLE_FOCUS} zoom={1 - DRIFT}>
@@ -478,19 +489,21 @@ const MorningShot: React.FC<MorningShotProps> = ({ dropAt, clock }) => {
             </Place>
           </Stay>
         )}
-        {/* Ela já estava sentada quando o plano chegou: não entra de novo; sai com ele. */}
+        {/* Ela já vinha crescendo quando o plano chegou: termina de crescer do mesmo ponto, sem entrar de novo; sai com ele. */}
         <Stay only="entering">
           <Drift focus={TABLE_FOCUS}>
             <Place x={TABLE.x} y={TABLE.y}>
-              <Seated
-                slump={slump}
-                // As pálpebras descem antes; o rosto de quem dorme só entra com o olho já
-                // fechado, no quadro em que a cabeça bate no tampo.
-                asleep={frame >= knockAt}
-                lids={ramp(frame, dropAt + 2, HEAD.lids)}
-                mugShake={rattle}
-                seconds={seconds}
-              />
+              <Grow at={-SEATED_BEFORE_FRAMES}>
+                <Seated
+                  slump={slump}
+                  // As pálpebras descem antes; o rosto de quem dorme só entra com o olho já
+                  // fechado, no quadro em que a cabeça bate no tampo.
+                  asleep={frame >= knockAt}
+                  lids={ramp(frame, dropAt + 2, HEAD.lids)}
+                  mugShake={rattle}
+                  seconds={seconds}
+                />
+              </Grow>
             </Place>
           </Drift>
         </Stay>

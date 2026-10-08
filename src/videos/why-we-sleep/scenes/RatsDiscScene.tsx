@@ -57,6 +57,20 @@ export const SNORE = {
   bob: (seconds: number) => 5 * wave(seconds, 4.2, 0.3),
 };
 
+/**
+ * A etiqueta "comparação" de quem cochila no disco: o centro dela, de onde a
+ * linha sai (a cabeça do rato) e onde chega, a escala no cenário e a grossura
+ * da linha e da ponta. `rats-result` a continua daqui, sobre o mesmo rato.
+ */
+export const DISC_LABEL = {
+  tag: [CONTROL.x + 90, CONTROL.top - 130],
+  root: [CONTROL.x - 20, CONTROL.top + 6],
+  tip: [CONTROL.x + 60, CONTROL.top - 100],
+  scale: 1 / MEDIUM.zoom,
+  stroke: 6,
+  dot: 9,
+} as const;
+
 // Em quantos quadros a bancada sobe ao palco, na entrada da cena.
 const BENCH_IN_FRAMES = 27;
 
@@ -278,10 +292,10 @@ type DiscSetProps = {
   readonly labelled?: boolean;
   /**
    * O aparelho saindo, em `rats-result`: quanto do disco e da bandeja resta,
-   * de 1 a 0 (encolhem sobre a bancada), e quanto a etiqueta já saiu, de 0 a
-   * 1. Os dois ratos e o ronco ficam, e quem os desenha é a cena de lá.
+   * de 1 a 0 (encolhem sobre a bancada). Os dois ratos, a etiqueta e o ronco
+   * ficam, e quem os desenha é a cena de lá.
    */
-  readonly leaving?: { readonly disc: number; readonly label: number };
+  readonly leaving?: number;
 };
 
 type DiscShotProps = DiscSetProps & {
@@ -302,14 +316,8 @@ const DiscSet: React.FC<DiscSetProps> = ({
   const { fps } = useVideoConfig();
   const at = clock + frame;
   const state = discState(at, fps, cues, (videoClock + frame) / fps);
-  const tag = { x: CONTROL.x + 90, y: CONTROL.top - 130 };
+  const { tag, root, tip } = DISC_LABEL;
   const line = ramp(at, cues.tagAt, 8);
-  const labelLeft = 1 - (leaving?.label ?? 0);
-  // A linha vai do rato à etiqueta; saindo, ela se recolhe para dentro da etiqueta.
-  const root = [CONTROL.x - 20, CONTROL.top + 6] as const;
-  const tip = [tag.x - 30, tag.y + 30] as const;
-  const along = (t: number) =>
-    `${mix(root[0], tip[0], t)},${mix(root[1], tip[1], t)}`;
   const spots = [discRatSpot(0, DISC_AT), CONTROL] as const;
 
   return (
@@ -336,7 +344,7 @@ const DiscSet: React.FC<DiscSetProps> = ({
           position: "absolute",
           inset: 0,
           transformOrigin: `${DISC_AT.x}px ${DISC_LANDING}px`,
-          scale: `${leaving?.disc ?? 1}`,
+          scale: `${leaving ?? 1}`,
         }}
       >
         <RatDisc
@@ -355,31 +363,27 @@ const DiscSet: React.FC<DiscSetProps> = ({
           close
         />
       </div>
-      {labelled && labelLeft > 0 ? (
+      {labelled && leaving === undefined ? (
         <>
           {/* A linha sai do rato e vai até a etiqueta, com a ponta redonda primeiro. */}
           {line > 0 ? (
             <SvgLayer>
               <path
-                d={`M${along(1 - labelLeft)} L${along(line)}`}
+                d={`M${root[0]},${root[1]} L${mix(root[0], tip[0], line)},${mix(root[1], tip[1], line)}`}
                 stroke={tags.mint.fill}
-                strokeWidth={6}
+                strokeWidth={DISC_LABEL.stroke}
                 strokeLinecap="round"
               />
               <circle
-                cx={mix(root[0], tip[0], 1 - labelLeft)}
-                cy={mix(root[1], tip[1], 1 - labelLeft)}
-                r={9 * Math.min(1, line * 3) * labelLeft}
+                cx={root[0]}
+                cy={root[1]}
+                r={DISC_LABEL.dot * Math.min(1, line * 3)}
                 fill={tags.mint.fill}
               />
             </SvgLayer>
           ) : null}
           {/* A etiqueta está no cenário: desfaz a aproximação da câmera para ficar no tamanho de etiqueta. */}
-          <Place
-            x={tag.x}
-            y={tag.y}
-            style={{ scale: `${labelLeft / MEDIUM.zoom}` }}
-          >
+          <Place x={tag[0]} y={tag[1]} style={{ scale: `${DISC_LABEL.scale}` }}>
             <Pop at={cues.tagAt - clock + 4}>
               <Tag size="note" on="mint">
                 comparação
@@ -387,28 +391,26 @@ const DiscSet: React.FC<DiscSetProps> = ({
             </Pop>
           </Place>
           {/* O ronco sobe e desce devagar, com a respiração de quem dorme. */}
-          {leaving ? null : (
-            <Place
-              x={SNORE.x}
-              y={SNORE.y}
-              style={{
-                scale: `${SNORE.scale}`,
-                translate: `-50% calc(-50% + ${SNORE.bob(state.seconds)}px)`,
-                rotate: `${2 * wave(state.seconds, 3.1)}deg`,
-              }}
+          <Place
+            x={SNORE.x}
+            y={SNORE.y}
+            style={{
+              scale: `${SNORE.scale}`,
+              translate: `-50% calc(-50% + ${SNORE.bob(state.seconds)}px)`,
+              rotate: `${2 * wave(state.seconds, 3.1)}deg`,
+            }}
+          >
+            <Onomatopoeia
+              at={cues.napAt - clock + 6}
+              size={SNORE.size}
+              color={sound.warm}
+              edge={sound.edge}
+              tilt={12}
+              fade={0.22}
             >
-              <Onomatopoeia
-                at={cues.napAt - clock + 6}
-                size={SNORE.size}
-                color={sound.warm}
-                edge={sound.edge}
-                tilt={12}
-                fade={0.22}
-              >
-                ZZZ
-              </Onomatopoeia>
-            </Place>
-          )}
+              ZZZ
+            </Onomatopoeia>
+          </Place>
         </>
       ) : null}
     </>
@@ -435,7 +437,7 @@ const AFTER: Cues = {
  */
 export const DiscLeaving: React.FC<{
   videoClock: number;
-  leaving: NonNullable<DiscSetProps["leaving"]>;
+  leaving: number;
 }> = ({ videoClock, leaving }) => {
   const frame = useCurrentFrame();
   return (
@@ -443,7 +445,6 @@ export const DiscLeaving: React.FC<{
       cues={AFTER}
       clock={-frame}
       videoClock={videoClock}
-      labelled
       leaving={leaving}
     />
   );

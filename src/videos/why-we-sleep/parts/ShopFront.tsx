@@ -13,6 +13,7 @@ import { Grain } from "../../../components/Grain";
 import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
+import { clamp01 } from "../../../components/timing";
 import { shop, street } from "../palette";
 import { ShopStreet, StreetShadow } from "./ShopStreet";
 
@@ -121,7 +122,11 @@ export const ShopFront: React.FC<ShopFrontProps> = ({
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const { risen } = useBuild();
   const seconds = (clock + frame) / fps;
+  // Com a loja de pé antes da rua, a sombra e o clarão dela no chão só crescem quando a calçada
+  // chega: sem chão, eram uma elipse solta no céu, embaixo da loja.
+  const landed = standing ? clamp01(risen) ** 4 : 1;
   const night = daylight === undefined ? time === "night" : daylight < 0.5;
   const gapY = FRONT_OPENING.y + FRONT_OPENING.height - 14;
   // Quem passa entra por uma ponta da fresta e sai pela outra, a velocidade constante.
@@ -150,7 +155,7 @@ export const ShopFront: React.FC<ShopFrontProps> = ({
               time={night ? "night" : "day"}
               x={FRONT.x}
               y={FRONT.ground + 8}
-              width={FRONT.width}
+              width={FRONT.width * landed}
             />
           </SvgLayer>
           <Upright on={standing}>
@@ -186,8 +191,8 @@ export const ShopFront: React.FC<ShopFrontProps> = ({
                       FRONT_OPENING.width * 0.25 * flicker * wave(seconds, 2.3)
                     }
                     cy={FRONT.ground + 30}
-                    rx={FRONT_OPENING.width * 0.42}
-                    ry={34}
+                    rx={FRONT_OPENING.width * 0.42 * landed}
+                    ry={34 * landed}
                     fill={shop.night.lamp}
                     opacity={0.3 + 0.12 * flicker * wave(seconds, 0.7)}
                   />

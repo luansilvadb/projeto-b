@@ -55,6 +55,11 @@ type SavannaStageProps = {
    * subida (ela começa antes de ele chegar); sem valor, o palco conduz.
    */
   readonly risen?: number;
+  /**
+   * Com `risen`, quanto o céu já tomou a cor; sem valor, acompanha a subida.
+   * É 1 para o plano que conduz a própria saída: o céu fica, e só as camadas descem.
+   */
+  readonly lit?: number;
   /** Sem a granulação: para quem desenha o cenário por baixo de outro plano. */
   readonly bare?: boolean;
   readonly children: React.ReactNode;
@@ -74,11 +79,13 @@ export const SavannaStage: React.FC<SavannaStageProps> = ({
   orb,
   clock,
   risen,
+  lit,
   bare = false,
   children,
 }) => {
   const stage = useBuild();
-  const build = risen === undefined ? stage : { ...stage, lit: risen, risen };
+  const build =
+    risen === undefined ? stage : { ...stage, lit: lit ?? risen, risen };
   return (
     <AbsoluteFill>
       <Build {...build} takeover={1}>

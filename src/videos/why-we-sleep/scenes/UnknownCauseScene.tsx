@@ -8,7 +8,7 @@ import {
 } from "remotion";
 import { Person } from "../../../art/Person";
 import { Build, Camera, Layer, useBuild } from "../../../components/Camera";
-import { StageContext, Stay, useStage } from "../../../components/Cast";
+import { StageContext, Stay, Troupe, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
@@ -53,7 +53,7 @@ const BLANK = { grow: 0.05, frames: 10, gap: 13 };
 const ENTER = { him: 0, sheet: 3, frames: 11 };
 // Ele e a prancheta saem estes quadros depois da marcação do palco: a balança só cresce quando o plano dela
 // chega, e a parede, que fica, passaria esse tempo sozinha.
-const LEAVE_LATE = 5;
+const LEAVE_LATE = 2;
 /** Quantos quadros antes da cena ele começa a entrar, desenhado pelo último plano de `rats-result`. */
 export const EXAM_LEAD = 8;
 // Ele reage à interrogação um instante depois de ela entrar, e leva estes quadros para levar a mão à cabeça.
@@ -82,6 +82,8 @@ const ExamShot: React.FC<ExamShotProps> = ({
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const stage = useStage();
+  // Quantos quadros faltam para o plano da balança, em negativo: é o quadro dele.
+  const ahead = frame - useShotLength();
   const late = useMemo(
     () => ({
       ...stage,
@@ -184,6 +186,12 @@ const ExamShot: React.FC<ExamShotProps> = ({
           <Grain />
         </SlowPush>
       </StageContext.Provider>
+      {/* A balança do plano seguinte já cresce aqui, nos últimos quadros: não é elenco deste plano, e não sai com ele. */}
+      {ahead >= ARRIVE.balanceAt && ahead < 0 ? (
+        <Troupe cast={false}>
+          <EmptyBalance frame={ahead} />
+        </Troupe>
+      ) : null}
     </AbsoluteFill>
   );
 };
@@ -234,7 +242,24 @@ const WEIGH = { from: 1.025, to: 1.06, slide: 1.8 };
 const LEAVE = { before: 16, frames: 11, sink: 1300 };
 // A entrada: a parede já está no palco, do plano da prancheta. A bancada sobe por baixo, e a balança cresce
 // no próprio ponto, em volta do eixo: em quantos quadros.
-const ARRIVE = { bench: 12, balanceAt: 0, balance: 13 };
+// A balança começa a crescer antes da troca, sobre a parede do plano da prancheta, que a desenha nesses
+// quadros (`BalanceAhead`): a parede não fica sozinha entre a prancheta que some e a balança que chega.
+const ARRIVE = { bench: 12, balanceAt: -4, balance: 13 };
+
+/** A balança vazia num quadro do plano dela (negativo, antes de ele chegar): cresce em volta do eixo e treme de leve. */
+const EmptyBalance: React.FC<{ frame: number }> = ({ frame }) => {
+  const { fps } = useVideoConfig();
+  return (
+    <AbsoluteFill
+      style={{
+        transformOrigin: `${SCALE.x}px ${SCALE.y - BALANCE.height / 2}px`,
+        scale: `${grown(frame, ARRIVE.balanceAt, ARRIVE.balance)}`,
+      }}
+    >
+      <Balance {...SCALE} tilt={SWING.idle * wave(frame / fps, 3.4)} />
+    </AbsoluteFill>
+  );
+};
 
 /** A inclinação da balança num quadro do plano: vazia, treme; com o rato, pende para ele; com os dois, vai e volta sem assentar. */
 const balanceTilt = (

@@ -400,8 +400,11 @@ const NapShot: React.FC<NapShotProps> = ({
  * O plano que abre a cena, antes de qualquer deixa: o último plano de
  * `jellyfish-platform` o desenha com `Prelude`, e o tanque já cresce enquanto a cama encolhe. `clock` é o quadro do vídeo em que a cena começa.
  */
-/** Quantos quadros antes da cena o tanque começa a crescer: antes disso a cama ainda ocupa o lugar dele. */
-export const BILL_LEAD = 4;
+/**
+ * Quantos quadros antes da cena o tanque começa a crescer. Dois, e não mais: o ponto dele fica sob o pé da
+ * cama, que encolhe para o meio dela, e antes disso os dois se cruzavam (a cama parecia virar tanque).
+ */
+export const BILL_LEAD = 2;
 
 export const JellyfishDebtOpening: React.FC<{ clock: number }> = ({
   clock,

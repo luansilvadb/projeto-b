@@ -34,7 +34,7 @@ import {
 } from "../parts/SleepBill";
 import { OUR_HOURS, RULER, rulerX, SleepBar } from "../parts/SleepRuler";
 import { glance, swapUnderLid } from "./AwakeRecordScene";
-import { Sooner, flash, shake } from "./MaybeBrainScene";
+import { flash, shake } from "./MaybeBrainScene";
 import { RECAP_LEAD, RecapPrelude } from "./SoFarScene";
 import { billSway } from "./SkipANightScene";
 import { Drift, driftZoom, undrifted } from "./SleepDebtScene";
@@ -398,18 +398,19 @@ const BareRuler: React.FC<BareRulerProps> = ({ y, color }) => (
   </SvgLayer>
 );
 
-// Ele vai do lugar em que estava até a frente da cama, que se monta em volta: em quadros.
-const TO_BED = { frames: 14, calm: 10 };
+// Ele vai do lugar em que estava até a frente da cama, que se monta em volta: em quadros. `stand` é o quadro
+// em que a cama passa a desenhá-lo, de pé diante dela: ela já está inteira no lugar.
+const TO_BED = { frames: 12, calm: 10, stand: 16 };
 // Deitar: balança para a frente (aviso), tomba de costas no colchão, e o cobertor sobe. Em quadros.
 const LIE = { notBefore: 19, warn: 4, fall: 11, cover: 9, sway: 6 };
 // O relógio dá a volta e passa dela em 1,2 s, a velocidade constante; a barra dele cresce junto.
 const AROUND_SECONDS = 1.2;
 // A barra "8 h" pisca duas vezes.
 const BLINK = { frames: 8, gap: 9 };
-// A cama abre o plano: entra sem esperar a marcação do elenco.
-const BED_SOONER = 4;
-// De onde a cama cresce, a partir do chão dela, em pixels do quadro: à direita dele e à altura do peito, longe do rosto.
-const BED_FROM = { x: 165, y: 190 };
+// De onde a cama cresce, a partir do chão dela, em pixels do quadro: bem à direita dele e à altura do peito.
+// Ela entra na marcação dos objetos de cena, quatro quadros depois de ele dar o passo: adiantada, chegava
+// ao lugar com ele ainda parado, e a cabeceira passava atrás da cabeça dele.
+const BED_FROM = { x: 240, y: 190 };
 
 type CrashShotProps = {
   /** Quadros do plano em que ele se deita, em que o relógio começa a correr e em que a barra "8 h" pisca. */
@@ -440,7 +441,7 @@ const CrashShot: React.FC<CrashShotProps> = ({
   const spot = beside(BED_HIGH);
   const swap = swapUnderLid(frame, 2, 6);
   // Daqui em diante quem o desenha é a cama, de pé diante dela, no mesmo ponto e na mesma pose.
-  const standAt = TO_BED.frames + 2;
+  const standAt = TO_BED.stand;
   const fallAt = lieAt + LIE.warn;
   const landAt = fallAt + LIE.fall;
   const lying = frame >= landAt;
@@ -463,8 +464,8 @@ const CrashShot: React.FC<CrashShotProps> = ({
           {/* A cama continua no plano seguinte, que passa a desenhá-la: entra com este e não sai. */}
           {stage.handedOver ? null : (
             <Stay only="leaving">
-              <Sooner by={BED_SOONER}>
-                {/* A cama cresce de um ponto ao lado dele, abaixo do lugar dela, e sobe até lá: do meio dela, saía de trás da cabeça dele. */}
+              <>
+                {/* A cama cresce de um ponto ao lado dele, abaixo do lugar dela, e sobe até lá com ele já a caminho: chega por trás do tronco, e não da cabeça. */}
                 <Cast origin={[BED_HIGH.x + BED_FROM.x, BED_HIGH.y + BED_FROM.y]}>
                   <Bed
                     {...BED_HIGH}
@@ -485,7 +486,7 @@ const CrashShot: React.FC<CrashShotProps> = ({
                     snoreAt={landAt + 4}
                   />
                 </Cast>
-              </Sooner>
+              </>
             </Stay>
           )}
           <SleepClock {...CLOCK} hours={SLEPT_HOURS * slept} />

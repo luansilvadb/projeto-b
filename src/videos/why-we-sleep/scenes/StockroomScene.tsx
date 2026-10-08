@@ -66,7 +66,7 @@ import {
 } from "../parts/SyllableList";
 import { seen } from "./ButWhatScene";
 import { flash, NEVER, Preluded, shake, Sooner } from "./MaybeBrainScene";
-import { centeredAt, Hasten } from "./MemoryTestScene";
+import { centeredAt } from "./MemoryTestScene";
 
 /** O cérebro da comparação: cheio, na cor quente das etiquetas, com as dobras num tom abaixo. */
 const SHOP_BRAIN = { fill: ink.tag, line: ink.tagEdge };
@@ -427,9 +427,15 @@ const TURN = {
 // O plano começa um pouco mais aberto e deriva até o quadro composto.
 const OPEN_START = framing([960, 560], 0.95);
 // Na troca para dentro da loja a rua desce com a fachada, a partir do corte: em quantos quadros.
-const STREET_OUT = 10;
+const STREET_OUT = 8;
 /** Em quantos quadros os três da porta vão da calçada ao lugar deles no balcão, e a loja de dentro sobe. */
 const PASSAGE = 20;
+// A parede de dentro só toma a cor com a rua já fora do quadro: por cima dela, a rua parecia apagar
+// em vez de descer. Até lá a estante e o chão sobem opacos, sobre o céu da rua. Em quadros.
+const WALL = { at: 7, frames: 10 };
+// A freguesa de roxo se vira para o balcão logo que parte, em poucos quadros que não caem no meio da
+// virada (de perfil ela não tem largura, e sumia por um quadro).
+const TURN_AROUND = { at: 3, frames: 3 };
 
 /** A câmera do plano da rua, quadro a quadro: no fim dele, e depois, é o quadro composto. */
 const streetCamera = (frame: number, length: number): CameraState =>
@@ -767,6 +773,8 @@ type BusyViewProps = {
   readonly seconds: number;
   /** Os três que vêm da calçada ainda estão a caminho: quem os desenha é a passagem, por cima da loja. */
   readonly arriving?: boolean;
+  /** Quanto do véu das prateleiras já entrou, de 0 a 1: ele chega com a parede, de que é feito. Por padrão, inteiro. */
+  readonly veil?: number;
 };
 
 /** Dentro da loja, de dia: a lojista atende um freguês atrás do outro, e as caixas se empilham na entrada. */
@@ -777,6 +785,7 @@ const BusyView: React.FC<BusyViewProps> = ({
   crateAt,
   seconds,
   arriving: onTheWay = false,
+  veil = 1,
 }) => {
   // A primeira freguesa (de roxo) recebe a mercadoria, vira-se e sai pela porta.
   const firstGot = serveAt + HAND_OVER.reach;
@@ -865,7 +874,7 @@ const BusyView: React.FC<BusyViewProps> = ({
   return (
     <ShopInside time="day">
       <ShelfGoods />
-      <ShelfVeil />
+      {veil > 0 ? <ShelfVeil amount={veil} /> : null}
       <Pile
         count={at >= crateAt ? PILE.length : PILE.length - 1}
         falling={
@@ -997,6 +1006,8 @@ type PassingProps = {
   readonly moved: number;
   /** A câmera da loja de dentro neste quadro: diz onde o lugar de cada um cai na tela. */
   readonly camera: CameraState;
+  /** Para que lado a freguesa de roxo está virada, de -1 (como andava na calçada) a 1 (para o balcão). */
+  readonly facing: number;
   readonly seconds: number;
 };
 
@@ -1006,7 +1017,12 @@ type PassingProps = {
  * calçada até o lugar deles no balcão, mudando de tamanho no caminho, por cima
  * da rua que desce e da loja que sobe. Chegam na pose em que `BusyView` os recebe.
  */
-const Passing: React.FC<PassingProps> = ({ moved, camera, seconds }) => {
+const Passing: React.FC<PassingProps> = ({
+  moved,
+  camera,
+  facing,
+  seconds,
+}) => {
   /** O pé e a altura de quem vai de um lugar da calçada a um lugar do chão da loja. */
   const path = (
     from: { readonly x: number; readonly y: number; readonly height: number },
@@ -1049,6 +1065,26 @@ const Passing: React.FC<PassingProps> = ({ moved, camera, seconds }) => {
           }}
         />
       </Place>
+      {/* A freguesa de roxo se vira para o balcão e passa por trás da lojista, até o outro lado dela. */}
+      <Place
+        x={0}
+        y={0}
+        anchor="bottom"
+        style={{
+          translate: at(walker.x, walker.y),
+          scale: `${facing} ${mix(breath(seconds, "walker-1"), breath(seconds, "queue-first"), moved)}`,
+        }}
+      >
+        <Person
+          height={walker.height}
+          colors={SHOPPERS[2]}
+          plainFace
+          backArm={{
+            hand: [mix(134, 150, moved), mix(-252, -310, moved)],
+            bend: mix(28, 20, moved),
+          }}
+        />
+      </Place>
       <AbsoluteFill
         style={{ translate: `${keeper.x}px ${keeper.y - FLOOR_Y - 10}px` }}
       >
@@ -1065,26 +1101,6 @@ const Passing: React.FC<PassingProps> = ({ moved, camera, seconds }) => {
           )}
         />
       </AbsoluteFill>
-      {/* A freguesa de roxo passa pela frente da lojista e se vira para o balcão, do outro lado dela. */}
-      <Place
-        x={0}
-        y={0}
-        anchor="bottom"
-        style={{
-          translate: at(walker.x, walker.y),
-          scale: `${mix(-1, 1, ramp(moved, 0.25, 0.5))} ${mix(breath(seconds, "walker-1"), breath(seconds, "queue-first"), moved)}`,
-        }}
-      >
-        <Person
-          height={walker.height}
-          colors={SHOPPERS[2]}
-          plainFace
-          backArm={{
-            hand: [mix(134, 150, moved), mix(-252, -310, moved)],
-            bend: mix(28, 20, moved),
-          }}
-        />
-      </Place>
     </Stay>
   );
 };
@@ -1109,26 +1125,36 @@ const BusyShot: React.FC<BusyShotProps> = ({ clock, ...cues }) => {
     linear(frame, ENTER_FRAMES, length - ENTER_FRAMES),
   );
   const passing = frame < PASSAGE;
+  const built = useBuild();
+  const stage = useStage();
+  const wall = linear(frame, WALL.at, WALL.frames);
 
   return (
     <AbsoluteFill>
-      {/* A loja sobe no tempo da passagem: quando os três chegam, o chão deles está no lugar. */}
-      <Hasten frames={PASSAGE - 2}>
+      {/* A passagem é contada daqui: a loja sobe no tempo dela (quando os três chegam, o chão deles está
+          no lugar) e a parede espera a rua sair. Depois vale o palco, que tira a loja de cena. */}
+      <Build
+        {...built}
+        lit={wall}
+        risen={built.lit < 1 ? stage.enter(0, PASSAGE - 2) : built.risen}
+      >
         <Camera {...camera}>
           <Layer depth={1}>
             <BusyView
               at={frame}
               seconds={seconds}
               arriving={passing}
+              veil={wall}
               {...cues}
             />
           </Layer>
         </Camera>
-      </Hasten>
+      </Build>
       {passing ? (
         <Passing
           moved={ramp(frame, 0, PASSAGE)}
           camera={camera}
+          facing={mix(-1, 1, linear(frame, TURN_AROUND.at, TURN_AROUND.frames))}
           seconds={seconds}
         />
       ) : null}

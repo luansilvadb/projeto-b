@@ -13,7 +13,6 @@ import { popOpacity, popScale, POP_SECONDS } from "../../../components/Pop";
 import { SlowPush } from "../../../components/SlowPush";
 import { SvgLayer } from "../../../components/SvgLayer";
 import {
-  ALREADY_SHOWN,
   cue,
   linear,
   ramp,
@@ -40,6 +39,8 @@ import { billSway } from "./SkipANightScene";
 
 // A pessoa e a barra já estão no lugar quando "Mas agora" soa.
 const LIT_SOONER = 20;
+// O quadro do plano em que a barra chega ao terço escuro: a etiqueta "um terço" entra nele.
+const THIRD_TAG_AT = 9;
 // O terço se acende em 0,5 s; as estrelas e a lua estouram logo depois, uma a uma, em mais 0,6 s.
 const LIT = { seconds: 0.5, skyAfter: 0.2, skySeconds: 0.6 };
 // Em quantos quadros a pálpebra fecha antes de o rosto trocar, e abre depois.
@@ -75,7 +76,8 @@ const LitShot: React.FC<LitShotProps> = ({ litAt, lookAt }) => {
           lit={ramp(frame, litAt, LIT.seconds * fps)}
           sky={linear(frame, litAt + LIT.skyAfter * fps, LIT.skySeconds * fps)}
           twinkle={seconds}
-          thirdAt={ALREADY_SHOWN}
+          // A etiqueta entra quando a barra, que se desenha, chega à ponta escura que ela nomeia.
+          thirdAt={THIRD_TAG_AT}
         />
         <SvgLayer>
           <IdeaShadow

@@ -294,7 +294,9 @@ const CORNER = { x: 430, y: 230, scale: 0.7 };
 const BED_SOONER = 30;
 // A cama começa a crescer antes de o plano chegar, desenhada pelo plano anterior: quantos quadros antes, e
 // quanto a marcação dela se adianta para isso (a de um objeto de cena começa 4 quadros depois da troca).
-const BED_AHEAD = 8;
+// Três, e não mais: antes disso a borda do tanque que desce ainda passa pelo lugar dela, e a pessoa aparecia
+// dormindo dentro da água.
+const BED_AHEAD = 3;
 const BED_EARLY = BED_AHEAD + 4;
 
 type SleeperBedProps = {

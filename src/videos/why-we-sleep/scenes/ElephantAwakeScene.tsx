@@ -1,6 +1,7 @@
-import { useId } from "react";
+import { useId, useMemo } from "react";
 import {
   AbsoluteFill,
+  Easing,
   interpolate,
   interpolateColors,
   useCurrentFrame,
@@ -12,7 +13,13 @@ import {
   type PersonColors,
 } from "../../../art/Person";
 import { cameraBetween } from "../../../components/Camera";
-import { Cast, FlatStage, Stay, useStage } from "../../../components/Cast";
+import {
+  Cast,
+  FlatStage,
+  StageContext,
+  Stay,
+  useStage,
+} from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
@@ -42,8 +49,8 @@ import {
 } from "../parts/Herd";
 import { IdeaBackdrop } from "../parts/IdeaBackdrop";
 import { Tag } from "../parts/Tag";
-import { HERDS_RISE, SavannaStage } from "./ElephantsScene";
-import { PairPrelude } from "./ElephantVerdictScene";
+import { SavannaStage } from "./ElephantsScene";
+import { PAIR_RISE, PairPrelude } from "./ElephantVerdictScene";
 import { Drift, DRIFT } from "./SleepDebtScene";
 import { QUARTER_END } from "./TwoHoursScene";
 
@@ -76,6 +83,15 @@ const TRAIL = { x: 560, y: 300, width: 800, height: 88 };
 const HOURS_TAG = { x: 960, y: TRAIL.y + TRAIL.height + 76 };
 // A faixa entra crescendo quando a câmera chega.
 const TRAIL_IN = { at: 20, frames: 12 };
+// A saída do plano, em quadros antes da troca, uma coisa de cada vez: a etiqueta e a faixa de dois
+// dias encolhem no ponto; a savana desce com a elefanta; e só com ela já abaixo do lugar da faixa
+// de três dias é que essa cresce, e depois a cama. Nunca há duas faixas na tela.
+const LEAVE = { tag: 31, trail: 29, shrink: 9, savanna: 26, tail: 3 };
+// Enquanto sai, a segunda noite acaba: o tempo corre até o amanhecer do terceiro dia (a lua se
+// põe, o céu esquenta). É sobre esse céu, e não sobre a noite, que o fundo do plano seguinte toma
+// a cor: noite com pêssego dava um cinza-pardo. `twilight` 1 é a medida que ainda dá noite cheia
+// no ponto em que as 46 horas param.
+const LAST_DAWN = { before: 22, frames: 24, twilight: 1 };
 
 type PassedDaysProps = {
   /** Quanto das duas voltas já passou, de 0 a 1. */
@@ -204,7 +220,7 @@ const BED_X = stripX(BEDTIME);
 const BED_FOCUS = [BED_X, 520] as const;
 // A faixa de três dias e a cama entram nos últimos quadros do plano da savana, enquanto o cenário desce:
 // na primeira palavra do plano delas, já estão no lugar. Em quadros: quando começam e quanto cada uma leva.
-const STRIP_BEFORE = { frames: 16, strip: 11, bed: 5, bedFrames: 10 };
+const STRIP_BEFORE = { frames: 11, strip: 10, bed: 3, bedFrames: 8 };
 
 // As etiquetas dos dias ainda não entraram: cada uma estoura na fala, no plano seguinte.
 const NOT_YET = 1e6;
@@ -246,10 +262,25 @@ const AwakeShot: React.FC<AwakeShotProps> = ({ hoursAt, clock }) => {
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
   const passing = linear(frame, 0, length);
-  const cycles = mix(SPAN.from, SPAN.cycles, passing);
+  const counted = mix(SPAN.from, SPAN.cycles, passing);
+  const cycles =
+    counted +
+    (2 - SPAN.cycles) *
+      ramp(frame, length - LAST_DAWN.before, LAST_DAWN.frames);
   const daylight = daylightAt(
     cycles,
-    cycles < FIRST_DAWN.until ? FIRST_DAWN.twilight : undefined,
+    cycles < FIRST_DAWN.until
+      ? FIRST_DAWN.twilight
+      : cycles > SPAN.cycles
+        ? LAST_DAWN.twilight
+        : undefined,
+  );
+  // A savana desce devagar e acelera, com a elefanta em cima; o céu fica.
+  const sunk = interpolate(
+    frame,
+    [length - LEAVE.savanna, length + LEAVE.tail],
+    [0, 1],
+    { ...clamp, easing: Easing.in(Easing.cubic) },
   );
   const walked = WALK.speed * frame;
   const stage = useStage();
@@ -273,6 +304,8 @@ const AwakeShot: React.FC<AwakeShotProps> = ({ hoursAt, clock }) => {
         daylight={daylight}
         orb={orbAt(cycles)}
         clock={clock}
+        risen={1 - sunk}
+        lit={1}
       >
         <Herd
           members={[
@@ -321,19 +354,26 @@ const AwakeShot: React.FC<AwakeShotProps> = ({ hoursAt, clock }) => {
           </Drift>
         </Stay>
       ) : null}
-      {/* A faixa e o número não entram com o plano: nascem quando a câmera chega. Saem encolhendo, com ele. */}
-      <Stay only="entering">
+      {/* A faixa e o número não entram com o plano: nascem quando a câmera chega. Saem encolhendo no
+          ponto, na marcação do próprio plano: antes de a faixa de três dias aparecer. */}
+      <Stay>
         {frame >= TRAIL_IN.at ? (
           <AbsoluteFill
             style={{
               transformOrigin: `${TRAIL.x + TRAIL.width / 2}px ${TRAIL.y + TRAIL.height / 2}px`,
-              scale: `${grown(frame, TRAIL_IN.at, TRAIL_IN.frames)}`,
+              scale: `${grown(frame, TRAIL_IN.at, TRAIL_IN.frames) * (1 - drop(frame, length - LEAVE.trail, LEAVE.shrink))}`,
             }}
           >
-            <PassedDays passed={Math.max(0, cycles) / 2} />
+            <PassedDays passed={Math.max(0, counted) / 2} />
           </AbsoluteFill>
         ) : null}
-        <Place x={HOURS_TAG.x} y={HOURS_TAG.y}>
+        <Place
+          x={HOURS_TAG.x}
+          y={HOURS_TAG.y}
+          style={{
+            scale: `${1 - drop(frame, length - LEAVE.tag, LEAVE.shrink)}`,
+          }}
+        >
           <Pop at={hoursAt}>
             {/* A etiqueta tem a cor do céu sob ela: passa da de dia à de noite junto com a luz. */}
             <div style={{ position: "relative" }}>
@@ -417,6 +457,15 @@ const ThreeDaysShot: React.FC<ThreeDaysShotProps> = ({
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const stage = useStage();
+  // A marcação de saída do elenco, adiantada: dentro de `Stay`, quem sai é este palco.
+  const early = useMemo(
+    () => ({
+      ...stage,
+      enter: () => 1,
+      leave: (delay = 0) => stage.leave(delay - PAIR_RISE.lead + 4),
+    }),
+    [stage],
+  );
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
   // Ela atravessa a faixa a velocidade constante, que a faixa é o tempo, e só freia diante da cama.
@@ -478,36 +527,39 @@ const ThreeDaysShot: React.FC<ThreeDaysShotProps> = ({
     <AbsoluteFill>
       <FlatStage backdrop={<IdeaBackdrop hue="peach" spot={[0.5, 0.45]} />}>
         {/* A savana da cena seguinte já sobe por baixo da faixa e da cama, que encolhem: a troca não deixa a tela só com o fundo. */}
-        {frame >= length - HERDS_RISE.lead && !stage.handedOver ? (
+        {frame >= length - PAIR_RISE.lead && !stage.handedOver ? (
           <PairPrelude until={length - frame} clock={clock} />
         ) : null}
         <Drift focus={BED_FOCUS}>
-          {/* A faixa e a cama já estavam no palco, entraram no fim do plano anterior: não entram de novo; saem com este. */}
+          {/* A faixa e a cama já estavam no palco, entraram no fim do plano anterior: não entram de novo; saem
+              com este, uns quadros antes da marcação do palco, para a savana só apontar com elas já fora. */}
           <Stay only="entering">
-            <DayStrip
-              names={["segunda", "terça", "quarta"]}
-              namedAt={[mondayAt, reaches(36), wednesdayAt]}
-              awake={hour > WOKE ? [WOKE, hour] : undefined}
-              on="peach"
-            />
-            <Cast origin={[BED_X, STRIP_TOP - 80]}>
-              <WaitingBed
-                bed={{
-                  // De pijama, como em todo plano de cama: a roupa de dia vira o pijama enquanto ela se deita.
-                  colors: dressed(ramp(frame, fallAt, LIE.fall)),
-                  occupied: arrived,
-                  standing,
-                  lean,
-                  // O rosto de quem dorme entra com o olho já fechado.
-                  state: frame >= fallAt + LIE.fall / 2 ? "asleep" : "waking",
-                  blink: ramp(frame, arriveAt, LIE.warn),
-                  cover: ramp(frame, landAt - 2, LIE.cover),
-                  breath: lying
-                    ? 1 - sink + 0.035 * wave(seconds, 4.4, 0.2)
-                    : 1,
-                }}
+            <StageContext.Provider value={early}>
+              <DayStrip
+                names={["segunda", "terça", "quarta"]}
+                namedAt={[mondayAt, reaches(36), wednesdayAt]}
+                awake={hour > WOKE ? [WOKE, hour] : undefined}
+                on="peach"
               />
-            </Cast>
+              <Cast origin={[BED_X, STRIP_TOP - 80]}>
+                <WaitingBed
+                  bed={{
+                    // De pijama, como em todo plano de cama: a roupa de dia vira o pijama enquanto ela se deita.
+                    colors: dressed(ramp(frame, fallAt, LIE.fall)),
+                    occupied: arrived,
+                    standing,
+                    lean,
+                    // O rosto de quem dorme entra com o olho já fechado.
+                    state: frame >= fallAt + LIE.fall / 2 ? "asleep" : "waking",
+                    blink: ramp(frame, arriveAt, LIE.warn),
+                    cover: ramp(frame, landAt - 2, LIE.cover),
+                    breath: lying
+                      ? 1 - sink + 0.035 * wave(seconds, 4.4, 0.2)
+                      : 1,
+                  }}
+                />
+              </Cast>
+            </StageContext.Provider>
           </Stay>
           {arrived ? null : (
             // Ela vem de fora do quadro, andando: não entra crescendo.

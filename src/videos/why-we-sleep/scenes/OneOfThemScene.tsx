@@ -274,7 +274,7 @@ const Leaving: React.FC<LeavingProps> = ({ origin, children }) => {
 
 // Os três saem estes quadros antes da marcação do palco: a rua da loja sobe em seguida, e eles ainda
 // encolhiam em cima do toldo e dos prédios dela.
-const TRIO_OUT_SOONER = 6;
+const TRIO_OUT_SOONER = 4;
 
 /** O elenco que está aqui sai `by` quadros antes da marcação do palco. */
 const LeavingSooner: React.FC<{ by: number; children: React.ReactNode }> = ({

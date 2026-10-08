@@ -20,8 +20,10 @@ import { Shot, useShotLength } from "../../../video/Shot";
 import { idea, ink } from "../palette";
 import {
   braked,
+  daylightAt,
   Herd,
   herdPhase,
+  orbAt,
   SleepingElephant,
   type HerdMember,
   type HerdStride,
@@ -31,7 +33,7 @@ import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import { ELEPHANT_HOURS } from "../parts/SleepRuler";
 import { Tag } from "../parts/Tag";
 import { VacantSign } from "../parts/VacantSign";
-import { onScreen, risenAt, SavannaStage } from "./ElephantsScene";
+import { onScreen, SavannaStage } from "./ElephantsScene";
 import { BRAIN_MAP_LEAD, BrainMapPrelude } from "./MaybeBrainScene";
 import { Drift, DRIFT, Grow, undrifted } from "./SleepDebtScene";
 
@@ -48,6 +50,17 @@ const FIRST = 1;
 // quando o plano aberto acaba é percorrido na freada do seguinte (`least` é o mínimo que ela tem).
 const WALK = { from: 260, speed: 2, least: 8 };
 const MOON = 0.36;
+/**
+ * A savana começa a subir antes de o plano aberto chegar, sob o plano anterior:
+ * `lead` quadros antes, quando a cama e a faixa dele já encolheram. Sobe em
+ * `frames` quadros.
+ */
+export const PAIR_RISE = { lead: 10, frames: 26 };
+// Ela entra no entardecer e anoitece no lugar: o tempo corre do pôr do sol até a lua chegar ao
+// lugar dela, subindo, em `frames` quadros a contar do começo da subida. Sobre o pêssego do plano
+// anterior o céu que toma a cor é o quente, e não o da noite, que dava um cinza-pardo. `twilight`
+// é a medida que dá noite cheia com a lua quase no lugar.
+const NIGHTFALL = { frames: 30, twilight: 0.6 };
 const WIDE = framing([960, 540], 1);
 // O plano aberto deriva devagar para as duas, e termina no quadro composto.
 const PAIR_SPOT = [960, 800] as const;
@@ -69,6 +82,8 @@ type PairProps = {
   /** Quanto falta andar, em pixels, e a passada; paradas, nada. */
   readonly ahead?: number;
   readonly stride?: HerdStride;
+  /** 1 é dia, 0 é noite; sem valor, noite. */
+  readonly daylight?: number;
   /** A tromba de cada uma, quando a cena a conduz, e quanto cada uma dorme. */
   readonly trunk?: readonly (number | undefined)[];
   readonly asleep?: readonly [number, number];
@@ -80,6 +95,7 @@ const Pair: React.FC<PairProps> = ({
   alone = false,
   ahead = 0,
   stride,
+  daylight = 0,
   trunk,
   asleep = [0, 0],
   seconds,
@@ -89,7 +105,7 @@ const Pair: React.FC<PairProps> = ({
     <Herd
       // A de trás é a primeira da lista: sozinha, fica com os valores dela.
       members={alone ? PAIR.slice(0, FIRST) : PAIR}
-      daylight={0}
+      daylight={daylight}
       stride={stride}
       trunk={trunk}
       asleep={asleep}
@@ -186,6 +202,13 @@ const WidePair: React.FC<WidePairProps> = ({ at, length, bare, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const walked = WALK.speed * at;
+  // Meia volta é o pôr do sol; a lua nasce ali e sobe até o lugar dela.
+  const cycles = mix(
+    0.5,
+    0.5 + MOON / 2,
+    ramp(at, -PAIR_RISE.lead, NIGHTFALL.frames),
+  );
+  const daylight = daylightAt(cycles, NIGHTFALL.twilight);
 
   return (
     <SavannaStage
@@ -194,14 +217,20 @@ const WidePair: React.FC<WidePairProps> = ({ at, length, bare, clock }) => {
         WIDE,
         length === undefined ? 0 : linear(at, 0, length),
       )}
-      daylight={0}
-      orb={MOON}
+      daylight={daylight}
+      orb={orbAt(cycles)}
       clock={clock}
       // A savana começa a subir antes de o plano chegar, como a das manadas.
-      risen={risenAt(at)}
+      risen={interpolate(
+        at,
+        [-PAIR_RISE.lead, PAIR_RISE.frames - PAIR_RISE.lead],
+        [0, 1],
+        { ...clamp, easing: Easing.out(Easing.cubic) },
+      )}
       bare={bare}
     >
       <Pair
+        daylight={daylight}
         ahead={WALK.from - walked}
         stride={{ along: walked, pace: 1 }}
         seconds={(clock + frame) / fps}
@@ -501,13 +530,7 @@ type SleeperProps = {
  * A elefanta dormindo em pé sobre o fundo liso, com a sombra dela. É a da
  * frente da savana, com a mesma respiração e a mesma orelha.
  */
-const Sleeper: React.FC<SleeperProps> = ({
-  x,
-  y,
-  width,
-  lit = 1,
-  seconds,
-}) => (
+const Sleeper: React.FC<SleeperProps> = ({ x, y, width, lit = 1, seconds }) => (
   <>
     <SvgLayer>
       <g opacity={lit}>
