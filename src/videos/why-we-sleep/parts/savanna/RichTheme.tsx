@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 import { interpolateColors } from "remotion";
+import { clamp01 } from "../../../../components/timing";
 import { savanna, type SavannaColors } from "../../palette";
 
 // Os horários compartilham a geometria. A paleta muda por contexto, sem um
@@ -53,7 +54,7 @@ const mixed = (values: readonly unknown[], daylight: number): unknown => {
  * horários devolve o próprio jogo.
  */
 export const savannaColorsAt = (daylight: number): SavannaColors => {
-  const at = Math.min(1, Math.max(0, daylight));
+  const at = clamp01(daylight);
   return at % 0.5 === 0 ? SETS[at * 2] : (mixed(SETS, at) as SavannaColors);
 };
 

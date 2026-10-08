@@ -25,7 +25,7 @@ import {
   useRichTheme,
 } from "./RichTheme";
 import { Layer, useCarriedNumber } from "../../../../components/Camera";
-import { mix } from "../../../../components/timing";
+import { clamp01, mix } from "../../../../components/timing";
 
 // As coordenadas acompanham a segunda referência. A reconstrução é vetorial:
 // cada plano de distância e cada parte móvel continuam editáveis no Remotion.
@@ -851,7 +851,7 @@ export const RichSavannaReference = ({
     <RichTheme.Provider
       value={{
         palette: savannaColorsAt(daylight),
-        moonlight: Math.min(1, Math.max(0, 1 - 2 * daylight)),
+        moonlight: clamp01(1 - 2 * daylight),
         cameraDriven,
         orb,
         uid,

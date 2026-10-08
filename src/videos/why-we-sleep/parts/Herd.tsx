@@ -9,7 +9,7 @@ import { blink, breath, phaseOf, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { ALREADY_SHOWN } from "../../../components/timing";
+import { ALREADY_SHOWN, clamp01 } from "../../../components/timing";
 import {
   elephant,
   elephantNight,
@@ -73,7 +73,7 @@ const elephantAt = (daylight: number): ElephantColors =>
     ELEPHANT_KEYS.map((key) => [
       key,
       interpolateColors(
-        Math.min(1, Math.max(0, daylight)),
+        clamp01(daylight),
         [0, 1],
         [elephantNight[key], elephant[key]],
       ),
