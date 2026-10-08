@@ -33,7 +33,7 @@ import {
   lagoon,
   person,
   researcher,
-  savanna,
+  daylightTones,
   sleepResearcher,
   stopwatch,
   stopwatchAlarm,
@@ -63,7 +63,7 @@ const friends: readonly [PersonColors, PersonColors] = [
   {
     ...person,
     hair: idea.peach.contact,
-    hairLight: savanna.day.far,
+    hairLight: daylightTones.day.far,
     top: goods.items[1],
     topShade: lagoon.day.grass[2],
     topLight: idea.mint.spot,

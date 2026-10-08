@@ -12,7 +12,7 @@ import { Layer, useBuild, useCarriedNumber } from "../../../components/Camera";
 import { Drifters } from "../../../components/Drifters";
 import { wave } from "../../../components/Idle";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { savanna, savannaFinish } from "../palette";
+import { daylightTones, savannaFinish } from "../palette";
 
 /** Onde as elefantas pisam no plano aberto. */
 export const SAVANNA_GROUND_Y = 880;
@@ -71,7 +71,7 @@ export const Savanna: React.FC<SavannaProps> = ({
   const daylight = useCarriedNumber("savanna-daylight", ownDaylight);
   const carriedOrb = useCarriedNumber("savanna-orb", ownOrb ?? 0);
   const orb = ownOrb === undefined ? undefined : carriedOrb;
-  const { day, dusk, night } = savanna;
+  const { day, dusk, night } = daylightTones;
   const color = (key: "sun" | "far" | "trees" | "grass") =>
     blend(day[key], dusk[key], night[key], daylight);
   const sky = [0, 1].map((index) =>
@@ -322,9 +322,9 @@ export const SavannaShadow: React.FC<ContactProps> = ({
     rx={width / 2}
     ry={width * 0.05}
     fill={blend(
-      savanna.day.contact,
-      savanna.dusk.contact,
-      savanna.night.contact,
+      daylightTones.day.contact,
+      daylightTones.dusk.contact,
+      daylightTones.night.contact,
       daylight,
     )}
     opacity={0.28}

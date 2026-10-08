@@ -1,5 +1,6 @@
 import { AntelopeDrawing } from "../../art/AntelopeDrawing";
-import { richPalette } from "./richPalette";
+import { antelopePaint } from "../../art/Antelope";
+import { antelope } from "../../videos/why-we-sleep/palette";
 import { createContext, useContext, type ReactNode } from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { blink, wave } from "../../components/Idle";
@@ -294,7 +295,7 @@ const Antelope = () => {
   return (
     <g transform="translate(1442 999) scale(1.18) translate(-1095 -823)">
       <AntelopeDrawing
-        colors={richPalette.animal}
+        colors={antelopePaint(antelope)}
         breathing={1 + 0.008 * wave(seconds, 3.8)}
         turn={-4 * attentive}
         lid={blink(seconds, "savanna-reference-antelope", {

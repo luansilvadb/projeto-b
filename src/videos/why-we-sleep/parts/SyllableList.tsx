@@ -15,7 +15,7 @@ import {
   personInPajamas,
   puzzle,
   researcher,
-  savanna,
+  daylightTones,
   signs,
   sleepResearcher,
   stopwatch,
@@ -498,7 +498,7 @@ export const StudyShelf: React.FC<StudyShelfProps> = ({
         y={y - height + BOARD}
         width={width - 40}
         height={Math.max(0, height - BOARD)}
-        fill={savanna.day.contact}
+        fill={daylightTones.day.contact}
       />
       {Array.from({ length: Math.ceil(shown) }, (_, row) => {
         // A prateleira que está subindo entra pelos livros, que crescem da tábua.
@@ -531,7 +531,7 @@ export const StudyShelf: React.FC<StudyShelfProps> = ({
                   y={base - BOARD - tall * 0.78}
                   width={thick - 4}
                   height={tall * 0.14}
-                  fill={savanna.day.sky[0]}
+                  fill={daylightTones.day.sky[0]}
                 />
               ) : null}
             </g>,
@@ -554,7 +554,7 @@ export const StudyShelf: React.FC<StudyShelfProps> = ({
               y={base - BOARD}
               width={width - 40}
               height={6}
-              fill={savanna.day.far}
+              fill={daylightTones.day.far}
             />
           </g>
         );

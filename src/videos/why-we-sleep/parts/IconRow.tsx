@@ -18,7 +18,7 @@ import {
   ink,
   inside,
   lagoon,
-  savanna,
+  daylightTones,
   shop,
   signs,
   street,
@@ -103,7 +103,7 @@ export type IconMotion = {
 
 // O disco de cada ícone aceso: escuro para o que acontece de noite, claro para o que é medida.
 const DISC: Record<IconKey, string> = {
-  eyes: savanna.night.sky[0],
+  eyes: daylightTones.night.sky[0],
   ruler: ink.paper,
   brain: inside.background[0],
   alarm: idea.peach.spot,
@@ -146,7 +146,7 @@ const eyesIcon = (paint: Paint, { sway, eyelid = 0 }: IconMotion) => {
             26,
             5,
           )}
-          fill={paint(savanna.night.ground[0])}
+          fill={paint(daylightTones.night.ground[0])}
         />
       ))}
       {[-30, 30].map((x) => (

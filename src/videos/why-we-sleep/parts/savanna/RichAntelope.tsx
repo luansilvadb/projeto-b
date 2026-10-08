@@ -1,13 +1,15 @@
-import { AntelopeDrawing } from "../../art/AntelopeDrawing";
-import { blink, wave } from "../../components/Idle";
-import { linear, ramp } from "../../components/timing";
-import { useStudyTime } from "./SavannaReference";
-import { useRichPalette } from "./RichTheme";
+import { AntelopeDrawing } from "../../../../art/AntelopeDrawing";
+import { blink, wave } from "../../../../components/Idle";
+import { linear, ramp } from "../../../../components/timing";
+import { useStudyTime } from "../../../../studies/savanna-reference/SavannaReference";
+import { antelopePaint } from "../../../../art/Antelope";
+import { antelope, antelopeNight } from "../../palette";
+import { useNight } from "./RichTheme";
 
 // O estudo usa a mesma folha de modelo das cenas narradas, com seu relógio
 // próprio. Os gestos do teste não substituem as deixas do roteiro do vídeo.
 export const RichAntelope = () => {
-  const colors = useRichPalette().animal;
+  const colors = antelopePaint(useNight() ? antelopeNight : antelope);
   const t = useStudyTime();
   const attentive = ramp(t, 1.5, 1.15) - ramp(t, 5.8, 1.3);
   return (

@@ -29,7 +29,7 @@ import { LifeBar, STANDING } from "../parts/LifeBar";
 import { LossBadge, PREY, Prey, type Loss } from "../parts/Prey";
 import { BiggestMistakeOpening } from "./BiggestMistakeScene";
 import { OpeningArrival, OpeningExit, OpeningPrelude } from "../parts/OpeningPassage";
-import { RichSavannaBackdrop } from "../../../studies/savanna-reference/RichSavannaReference";
+import { RichSavannaBackdrop } from "../parts/savanna/RichSavannaReference";
 
 type BarShotProps = {
   /** Quadro do plano em que o terço escurece e ganha nome. */

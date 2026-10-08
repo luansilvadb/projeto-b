@@ -18,7 +18,7 @@ import {
   RichSavannaReference,
   NightSavannaAnimation,
   NightSavannaReference,
-} from "./studies/savanna-reference/RichSavannaReference";
+} from "./videos/why-we-sleep/parts/savanna/RichSavannaReference";
 
 // O id de cada composição é o nome da pasta do vídeo em src/videos/.
 // A duração vem da narração, calculada pelo calculateMetadata de cada vídeo.

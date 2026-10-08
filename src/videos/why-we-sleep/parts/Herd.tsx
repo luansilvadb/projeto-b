@@ -15,7 +15,7 @@ import {
   elephantNight,
   idea,
   ink,
-  savanna,
+  daylightTones,
   type TagTone,
 } from "../palette";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "./Savanna";
@@ -236,7 +236,7 @@ export const Herd: React.FC<HerdProps> = ({
                   fill={interpolateColors(
                     daylight,
                     [0, 1],
-                    [savanna.night.far, savanna.day.sun],
+                    [daylightTones.night.far, daylightTones.day.sun],
                   )}
                   opacity={0.5 * stride.pace * (1 - t)}
                 />
@@ -371,7 +371,7 @@ export const DayStrip: React.FC<DayStripProps> = ({
             y={y}
             width={width}
             height={height}
-            fill={savanna.night.sky[0]}
+            fill={daylightTones.night.sky[0]}
           />
           {days.map((day) => (
             <rect
@@ -391,7 +391,7 @@ export const DayStrip: React.FC<DayStripProps> = ({
             cx={stripX(day * 24 + 12)}
             cy={middle}
             r={30}
-            fill={savanna.dusk.sun}
+            fill={daylightTones.dusk.sun}
           />
         ))}
         {/* A lua de cada meia-noite entre dois dias: uma crescente, com a sombra na cor da noite. */}
@@ -402,7 +402,7 @@ export const DayStrip: React.FC<DayStripProps> = ({
               cx={stripX(midnight) + 12}
               cy={middle - 8}
               r={22}
-              fill={savanna.night.sky[0]}
+              fill={daylightTones.night.sky[0]}
             />
           </g>
         ))}

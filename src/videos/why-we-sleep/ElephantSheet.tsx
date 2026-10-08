@@ -4,7 +4,7 @@ import { Camera, framing } from "../../components/Camera";
 import { Grain } from "../../components/Grain";
 import { Place } from "../../components/Place";
 import { SvgLayer } from "../../components/SvgLayer";
-import { elephant, elephantNight, savanna } from "./palette";
+import { elephant, elephantNight, daylightTones } from "./palette";
 import { Savanna, SAVANNA_GROUND_Y, SavannaShadow } from "./parts/Savanna";
 
 const ROWS = [
@@ -33,7 +33,7 @@ export const ElephantSheet: React.FC = () => {
             style={{
               top: row * ROW,
               height: ROW,
-              background: `linear-gradient(${savanna[time].sky[0]}, ${savanna[time].sky[1]})`,
+              background: `linear-gradient(${daylightTones[time].sky[0]}, ${daylightTones[time].sky[1]})`,
             }}
           >
             <Place x={960} y={ROW - 50} anchor="bottom">

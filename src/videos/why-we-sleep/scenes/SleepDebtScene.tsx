@@ -14,7 +14,7 @@ import { SvgLayer } from "../../../components/SvgLayer";
 import { cue, drop, linear, mix, ramp, clamp01, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
-import { person, savanna, sound } from "../palette";
+import { person, daylightTones, sound } from "../palette";
 import { CoffeeTable } from "../parts/CoffeeTable";
 import { IdeaBackdrop } from "../parts/IdeaBackdrop";
 import { SleepBill } from "../parts/SleepBill";
@@ -166,7 +166,7 @@ const Dust: React.FC<DustProps> = ({ t }) => {
             cx={DEN.x + side * (70 + (34 + 22 * index) * away)}
             cy={DEN.y - 4 - (8 + 14 * index) * away}
             r={3 + (9 - 2 * index) * away}
-            fill={savanna.day.sun}
+            fill={daylightTones.day.sun}
             opacity={0.75 * (1 - t)}
           />
         )),

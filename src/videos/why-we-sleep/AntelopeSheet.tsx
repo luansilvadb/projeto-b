@@ -2,7 +2,7 @@ import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { Antelope, type AntelopeColors } from "../../art/Antelope";
 import { Label } from "../../components/Label";
 import { Place } from "../../components/Place";
-import { antelope, antelopeNight, ink, savanna } from "./palette";
+import { antelope, antelopeNight, ink, daylightTones } from "./palette";
 
 type AntelopePose = Omit<
   React.ComponentProps<typeof Antelope>,
@@ -34,7 +34,7 @@ export const AntelopeSheet: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        background: `linear-gradient(${savanna.day.sky[0]}, ${savanna.day.sky[1]})`,
+        background: `linear-gradient(${daylightTones.day.sky[0]}, ${daylightTones.day.sky[1]})`,
       }}
     >
       {[antelope, antelopeNight].map((colors, row) =>

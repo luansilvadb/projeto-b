@@ -28,7 +28,7 @@ import {
 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength, type Wipe } from "../../../video/Shot";
-import { ink, person, personInPajamas, savanna } from "../palette";
+import { ink, person, personInPajamas, daylightTones } from "../palette";
 import { Bed } from "../parts/Bed";
 import {
   DAY_STRIP,
@@ -104,7 +104,7 @@ const PassedDays: React.FC<PassedDaysProps> = ({ passed }) => {
         width={width}
         height={height}
         rx={height / 2}
-        fill={savanna.night.contact}
+        fill={daylightTones.night.contact}
         opacity={0.3}
       />
       <g clipPath={`url(#${id}-strip)`}>
@@ -114,7 +114,7 @@ const PassedDays: React.FC<PassedDaysProps> = ({ passed }) => {
             y={y}
             width={width}
             height={height}
-            fill={savanna.night.sky[0]}
+            fill={daylightTones.night.sky[0]}
           />
           {[0, 2].map((day) => (
             <g key={day}>
@@ -129,7 +129,7 @@ const PassedDays: React.FC<PassedDaysProps> = ({ passed }) => {
                 cx={x + (day + 0.5) * part}
                 cy={middle}
                 r={26}
-                fill={savanna.dusk.sun}
+                fill={daylightTones.dusk.sun}
               />
             </g>
           ))}
@@ -145,7 +145,7 @@ const PassedDays: React.FC<PassedDaysProps> = ({ passed }) => {
                 cx={x + (night + 0.5) * part + 11}
                 cy={middle - 7}
                 r={20}
-                fill={savanna.night.sky[0]}
+                fill={daylightTones.night.sky[0]}
               />
             </g>
           ))}
@@ -499,7 +499,6 @@ const ThreeDaysShot: React.FC<ThreeDaysShotProps> = ({
               <Person
                 height={WALKING.height}
                 colors={person}
-                finish
                 expression={face}
                 blink={Math.max(blink(seconds, "you"), lids)}
                 stride={{

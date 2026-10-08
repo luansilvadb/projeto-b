@@ -16,7 +16,7 @@ import { SlowPush } from "../../../components/SlowPush";
 import { cue, drop, linear, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
-import { chalkboard, ink, savanna, sleepResearcher } from "../palette";
+import { chalkboard, ink, daylightTones, sleepResearcher } from "../palette";
 import { BALANCE, Balance, ExamSheet, panSpot } from "../parts/ExamSheet";
 import { BENCH_Y, LabWall } from "../parts/Laboratory";
 import { Rat, RatLab, ratIdle } from "../parts/Rats";
@@ -174,7 +174,7 @@ const NoSleep: React.FC = () => (
     <circle r={50} fill={ink.paper} />
     <path
       d="M10,-32 A32,32 0 1 0 32,10 A25,25 0 1 1 10,-32 Z"
-      fill={savanna.night.sky[0]}
+      fill={daylightTones.night.sky[0]}
     />
     <path
       d="M-34,34 L34,-34"

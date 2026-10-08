@@ -20,7 +20,7 @@ import {
   lab,
   lagoon,
   researcher,
-  savanna,
+  daylightTones,
   sky,
 } from "../palette";
 import { HeldClipboard, holdingClipboard } from "./Clipboard";
@@ -77,7 +77,7 @@ const LabWindow: React.FC<{ hour: Hour; clock: number }> = ({
   const halo = 0.5 + 0.5 * wave(seconds, 3.2);
   const { x, y, width, height } = WINDOW;
   const tones =
-    hour === "day" ? [sky.day.top, sky.day.bottom] : savanna.night.sky;
+    hour === "day" ? [sky.day.top, sky.day.bottom] : daylightTones.night.sky;
 
   return (
     <SvgLayer>

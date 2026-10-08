@@ -1,7 +1,9 @@
-import { wave } from "../../components/Idle";
-import { useStudyTime } from "./SavannaReference";
+import { wave } from "../../../../components/Idle";
+import { useStudyTime } from "../../../../studies/savanna-reference/SavannaReference";
 import { useRichTheme } from "./RichTheme";
-import { nightPalette as p, nightSkyPalette as s } from "./nightPalette";
+import { savanna, savannaNightSky as s } from "../../palette";
+
+const p = savanna.night;
 
 // Pontos fixos e tamanhos variados, sem gerar outra constelação a cada frame.
 const starPoints = [

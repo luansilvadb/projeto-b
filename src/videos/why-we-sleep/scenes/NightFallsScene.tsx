@@ -34,11 +34,16 @@ import {
 import { typography } from "../../../design/tokens";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength, wipeClip, type Wipe } from "../../../video/Shot";
-import { antelope, antelopeNight, ink, savanna, sound } from "../palette";
+import {
+  antelope,
+  antelopeNight,
+  daylightTones,
+  ink,
+  savanna,
+  sound,
+} from "../palette";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "../parts/Savanna";
-import { RichSavannaBackdrop } from "../../../studies/savanna-reference/RichSavannaReference";
-import { richPalette } from "../../../studies/savanna-reference/richPalette";
-import { nightPalette } from "../../../studies/savanna-reference/nightPalette";
+import { RichSavannaBackdrop } from "../parts/savanna/RichSavannaReference";
 
 /**
  * O lugar do bloco 2: o pé de uma acácia, onde o bicho pequeno se deita, e a
@@ -351,8 +356,8 @@ const lightOf = (key: "grass" | "trees", daylight: number) =>
     daylight,
     [0, 0.5],
     [
-      key === "trees" ? nightPalette.grass.dark : nightPalette.grass.mid,
-      key === "trees" ? richPalette.grass.dark : richPalette.grass.mid,
+      key === "trees" ? savanna.night.grass.dark : savanna.night.grass.mid,
+      key === "trees" ? savanna.dusk.grass.dark : savanna.dusk.grass.mid,
     ],
   );
 
@@ -441,7 +446,7 @@ export const Thicket: React.FC<ThicketProps> = ({
                 ? interpolateColors(
                     daylight,
                     [0, 0.5],
-                    [nightPalette.grass.gold, richPalette.grass.gold],
+                    [savanna.night.grass.gold, savanna.dusk.grass.gold],
                   )
                 : lightOf("trees", daylight)
             }
@@ -467,7 +472,7 @@ export const Thicket: React.FC<ThicketProps> = ({
                 ? interpolateColors(
                     daylight,
                     [0, 0.5],
-                    [nightPalette.grass.orange, richPalette.grass.orange],
+                    [savanna.night.grass.orange, savanna.dusk.grass.orange],
                   )
                 : lightOf("grass", daylight)
             }
@@ -502,7 +507,7 @@ export const Stalker: React.FC<StalkerProps> = ({
       {/* Só a cabeça e os ombros, agachados: o resto fica dentro do capim. */}
       <g
         transform={`translate(${x} ${y}) scale(0.5)`}
-        fill={savanna.night.contact}
+        fill={daylightTones.night.contact}
         opacity={shown * (0.7 + 0.3 * out)}
       >
         <path d="M-150,40 C-156,-90 -110,-190 -20,-200 C60,-196 150,-130 300,-110 C380,-100 420,-40 420,40 Z" />

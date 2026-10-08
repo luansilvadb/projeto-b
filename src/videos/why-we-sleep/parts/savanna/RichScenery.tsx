@@ -1,10 +1,13 @@
 import { useId, type ReactNode } from "react";
-import { wave } from "../../components/Idle";
-import { ramp } from "../../components/timing";
-import { GrassTuft, useStudyTime } from "./SavannaReference";
+import { wave } from "../../../../components/Idle";
+import { ramp } from "../../../../components/timing";
+import {
+  GrassTuft,
+  useStudyTime,
+} from "../../../../studies/savanna-reference/SavannaReference";
 import { useNight, useRichPalette, useRichTheme } from "./RichTheme";
-import { useBuild, useCameraState } from "../../components/Camera";
-import { nightSkyPalette } from "./nightPalette";
+import { useBuild, useCameraState } from "../../../../components/Camera";
+import { savannaNightSky } from "../../palette";
 
 export const RichLayer = ({
   depth,
@@ -93,7 +96,7 @@ export const CloudBank = ({
                 <path
                   d={`M${cx - radius} ${-height * 0.38} A${radius} ${height * 0.72} 0 0 1 ${cx} ${-height * 1.1}`}
                   fill="none"
-                  stroke={nightSkyPalette.cloudEdge}
+                  stroke={savannaNightSky.cloudEdge}
                   strokeWidth="1.7"
                   opacity=".7"
                 />

@@ -1,6 +1,10 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { wave } from "../../components/Idle";
-import { GrassTuft, TimeContext, useStudyTime } from "./SavannaReference";
+import { wave } from "../../../../components/Idle";
+import {
+  GrassTuft,
+  TimeContext,
+  useStudyTime,
+} from "../../../../studies/savanna-reference/SavannaReference";
 import { RichAntelope } from "./RichAntelope";
 import {
   Bush,
@@ -11,11 +15,10 @@ import {
   SmallTuft,
   TallGrass,
 } from "./RichScenery";
-import { richPalette } from "./richPalette";
-import { nightPalette } from "./nightPalette";
+import { savanna } from "../../palette";
 import { NightSky } from "./NightSky";
 import { RichTheme, useNight, useRichPalette } from "./RichTheme";
-import { Layer } from "../../components/Camera";
+import { Layer } from "../../../../components/Camera";
 
 // As coordenadas acompanham a segunda referência. A reconstrução é vetorial:
 // cada plano de distância e cada parte móvel continuam editáveis no Remotion.
@@ -94,11 +97,6 @@ const Paint = () => {
       <linearGradient id="rich-grass-orange" x2="0" y2="1">
         <stop stopColor={p.grass.orange} />
         <stop offset="1" stopColor={p.bush.rose} />
-      </linearGradient>
-      <linearGradient id="rich-animal-body" x1="0" y1=".15" x2=".35" y2="1">
-        <stop stopColor={p.animal.light} />
-        <stop offset=".35" stopColor={p.animal.body} />
-        <stop offset="1" stopColor={p.animal.shade} />
       </linearGradient>
     </defs>
   );
@@ -821,7 +819,7 @@ export const RichSavannaReference = ({
   return (
     <RichTheme.Provider
       value={{
-        palette: night ? nightPalette : richPalette,
+        palette: night ? savanna.night : savanna.dusk,
         night,
         cameraDriven,
         orb,

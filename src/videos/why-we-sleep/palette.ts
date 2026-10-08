@@ -476,8 +476,12 @@ export const coin = {
   shine: "#FFE783",
 } as const;
 
-/** A savana das elefantas: céu quente e chão ocre de dia; índigo com lua e chão roxo de noite. Proposta para o capítulo 2. */
-export const savanna = {
+/**
+ * Os tons da hora do dia fora do cenário da savana: a faixa de dias, as
+ * janelas, os ícones e as folhas de modelo, que nasceram das cores da primeira
+ * savana das elefantas e ficaram com elas. O cenário usa `savanna`, abaixo.
+ */
+export const daylightTones = {
   day: {
     sky: ["#FFD98A", "#FFA85C"],
     sun: "#FFF2BA",
@@ -705,4 +709,142 @@ export const sunset = {
   rock: "#5A2180",
   frame: ["#1F1352", "#33196C", "#C0382E"],
   shadow: "#8A2E5A",
+} as const;
+
+// O entardecer da savana em camadas: luz amarela à esquerda e sombras
+// violetas, da segunda imagem de referência do usuário (2026-10-06).
+const savannaDusk = {
+  sky: ["#4725ab", "#6a2a9e", "#a23386", "#de4857", "#fd8035", "#ffc836"],
+  sunshine: "#fff173",
+  sun: "#fce255",
+  sunEdge: "#ffe961",
+  sunOrange: "#ff9e37",
+  sunCoral: "#f65664",
+  sunHalo: "#dc3c83",
+  clouds: {
+    lemon: "#ffdf50",
+    gold: "#ffb135",
+    orange: "#ff8538",
+    coral: "#f35951",
+    rose: "#df3c6e",
+    purple: "#9e2c8a",
+    dark: "#742887",
+  },
+  hills: ["#cf477e", "#b23986", "#962b86", "#762776", "#6a236d"],
+  canopy: {
+    edge: "#ffc140",
+    light: "#812571",
+    mid: "#61155e",
+    dark: "#3c0e50",
+    deep: "#2f0c47",
+  },
+  trunk: "#3a0e4e",
+  distantTree: "#742575",
+  nearTree: "#622066",
+  ground: ["#ffab25", "#fca026", "#f57e22", "#e84e2c", "#c92e42"],
+  earth: {
+    bright: "#ffc035",
+    gold: "#ffac28",
+    orange: "#ed6b24",
+    coral: "#de5034",
+    red: "#ca343e",
+  },
+  grass: {
+    dark: "#4d104e",
+    shade: "#36104b",
+    mid: "#992965",
+    gold: "#ffb62d",
+    orange: "#f37928",
+  },
+  bush: {
+    dark: "#361045",
+    mid: "#64205c",
+    purple: "#8d235e",
+    rose: "#ae2d55",
+    coral: "#cf3b43",
+    orange: "#e45c25",
+  },
+  shadow: "#902947",
+  shadowDeep: "#722342",
+} as const;
+
+/** As cores de um horário da savana em camadas: todos os horários têm as mesmas chaves, e o cenário mistura um no outro. */
+export type SavannaColors = {
+  readonly [
+    Key in keyof typeof savannaDusk
+  ]: (typeof savannaDusk)[Key] extends readonly string[]
+    ? readonly string[]
+    : (typeof savannaDusk)[Key] extends string
+      ? string
+      : { readonly [Color in keyof (typeof savannaDusk)[Key]]: string };
+};
+
+// A noite: a lua ilumina as bordas em azul e as sombras são frias, como na
+// referência noturna do usuário.
+const savannaNight: SavannaColors = {
+  sky: ["#040859", "#08095b", "#0d1070", "#1f1d85", "#5b3ab2", "#9452cd"],
+  sunshine: "#e48fdf",
+  sun: "#fff2c7",
+  sunEdge: "#fff9df",
+  sunOrange: "#c5bded",
+  sunCoral: "#7973d9",
+  sunHalo: "#6457db",
+  clouds: {
+    lemon: "#dea0ee",
+    gold: "#af71e4",
+    orange: "#7951d9",
+    coral: "#6344c7",
+    rose: "#3e2db1",
+    purple: "#191570",
+    dark: "#0b084a",
+  },
+  hills: ["#342cab", "#272494", "#24218b", "#14146f", "#11135f"],
+  canopy: {
+    edge: "#90beff",
+    light: "#171674",
+    mid: "#0d0b57",
+    dark: "#040431",
+    deep: "#03032b",
+  },
+  trunk: "#03032b",
+  distantTree: "#101052",
+  nearTree: "#0d0d4b",
+  ground: ["#687ce5", "#5264d5", "#3947b2", "#262792", "#171473"],
+  earth: {
+    bright: "#93a0ff",
+    gold: "#6b81ed",
+    orange: "#3d4eb6",
+    coral: "#27288b",
+    red: "#171473",
+  },
+  grass: {
+    dark: "#08073d",
+    shade: "#05042d",
+    mid: "#302687",
+    gold: "#89a8fc",
+    orange: "#546ace",
+  },
+  bush: {
+    dark: "#05042e",
+    mid: "#151051",
+    purple: "#1e196b",
+    rose: "#272484",
+    coral: "#3c39a4",
+    orange: "#363ca1",
+  },
+  shadow: "#12134f",
+  shadowDeep: "#09093a",
+};
+
+/** A savana em camadas, do antílope e das elefantas: um jogo de cores por horário sobre o mesmo desenho. */
+export const savanna = { dusk: savannaDusk, night: savannaNight } as const;
+
+/** O que só existe no céu da noite da savana: estrelas, crateras e o halo da lua, e a borda acesa das nuvens. */
+export const savannaNightSky = {
+  stars: "#f9f4ff",
+  blueStars: "#749df5",
+  faintStars: "#596ace",
+  moonCrater: "#d8bda9",
+  moonGlow: "#fff4d3",
+  cloudEdge: "#cdacff",
 } as const;
