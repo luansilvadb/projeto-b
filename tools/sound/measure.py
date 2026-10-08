@@ -1,16 +1,12 @@
 """Mede o som de um vídeo já separado em voz, música e efeitos (separate.py).
 
 Uso: python measure.py <pasta com dialog.flac, music.flac e effect.flac> <saída.json>
-         [--ranges '[[início, fim], ...]'] [--cuts <planos.csv>]
 
 Os níveis são distâncias em dB abaixo da voz, como na mixagem do projeto
 (src/audio/ducking.ts): cada vídeo sai com um volume, e só a distância compara.
-`--ranges` restringe a medida aos trechos de conteúdo (sem patrocínio);
-`--cuts` é o CSV de planos do estudo de imagem, para medir o som nos cortes.
 """
 
 import argparse
-import csv
 import json
 import re
 import subprocess
@@ -85,13 +81,6 @@ def plain(value):
     return round(value, 2) if isinstance(value, float) else value
 
 
-def near(times: np.ndarray, events: np.ndarray, tolerance: float) -> float:
-    """Que parcela de `times` tem um evento a até `tolerance` segundos."""
-    if not len(times) or not len(events):
-        return 0.0
-    return float(np.mean([np.min(np.abs(events - t)) <= tolerance for t in times]))
-
-
 def section_boundaries(spectrum: np.ndarray) -> np.ndarray:
     """Os instantes em que o timbre e a harmonia da música passam a ser outros
     (novidade de Foote, com 12 s de cada lado)."""
@@ -133,8 +122,6 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("stems", type=Path)
     parser.add_argument("output", type=Path)
-    parser.add_argument("--ranges", type=json.loads, default=None)
-    parser.add_argument("--cuts", type=Path, default=None)
     args = parser.parse_args()
 
     voice_m, _ = loudness(args.stems / "dialog.flac")
@@ -145,10 +132,7 @@ def main() -> None:
         series[:frames] for series in (voice_m, music_m, music_s, effect_m)
     )
     seconds = np.arange(frames) / RATE
-    ranges = args.ranges or [[0.0, frames / RATE]]
-    content = np.zeros(frames, dtype=bool)
-    for start, end in ranges:
-        content |= (seconds >= start) & (seconds < end)
+    content = np.ones(frames, dtype=bool)
     minutes = content.sum() / RATE / 60
 
     voice = integrated(voice_m[content])
@@ -205,7 +189,7 @@ def main() -> None:
     chroma = librosa.feature.chroma_stft(S=power, sr=SAMPLE_RATE)
     boundaries = section_boundaries(spectrum)
     boundaries = boundaries[np.interp(boundaries, seconds, content.astype(float)) > 0.5]
-    section_lengths = np.diff(np.concatenate([[ranges[0][0]], boundaries, [ranges[-1][1]]]))
+    section_lengths = np.diff(np.concatenate([[0.0], boundaries, [frames / RATE]]))
 
     tempos, minor = [], []
     window = int(WINDOW_SECONDS * SAMPLE_RATE / HOP)
@@ -251,20 +235,6 @@ def main() -> None:
         "efeitos_durante_a_fala_pct": round(100 * float(np.mean(speaking[effect_peaks])), 0) if len(effect_peaks) else None,
         "tempo_com_efeito_pct": round(100 * ((effect_m > voice - EFFECT_BELOW_DB) & content).sum() / content.sum(), 1),
     }
-
-    if args.cuts:
-        with open(args.cuts, encoding="utf-8") as handle:
-            cuts = np.array([float(row["inicio"]) for row in csv.DictReader(handle)][1:])
-        effects = effect_peaks / RATE
-        turns = np.concatenate([boundaries, turn_peaks / RATE])
-        # O acaso: os mesmos cortes deslocados 7,3 s, onde não há corte nenhum.
-        result |= {
-            "cortes": len(cuts),
-            "cortes_com_efeito_pct": round(100 * near(cuts, effects, 0.3)),
-            "cortes_com_efeito_ao_acaso_pct": round(100 * near(cuts + 7.3, effects, 0.3)),
-            "cortes_com_virada_da_musica_pct": round(100 * near(cuts, turns, 1.5)),
-            "cortes_com_virada_ao_acaso_pct": round(100 * near(cuts + 7.3, turns, 1.5)),
-        }
 
     series = {
         "segundos_por_ponto": 1,
