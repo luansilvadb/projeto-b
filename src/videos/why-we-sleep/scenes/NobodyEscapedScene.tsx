@@ -12,13 +12,7 @@ import { Grain } from "../../../components/Grain";
 import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
-import {
-  ALREADY_SHOWN,
-  cue,
-  linear,
-  mix,
-  ramp,
-} from "../../../components/timing";
+import { cue, linear, mix, ramp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import {
@@ -26,7 +20,6 @@ import {
   markFor,
   SCENERY_EXIT_FRAMES,
 } from "../../../video/stage";
-import { ink } from "../palette";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import {
   Magnifier,
@@ -39,7 +32,6 @@ import {
   TIMELINE,
   TIMELINE_END,
   TIMELINE_FLOOR,
-  Timeline,
 } from "../parts/Timeline";
 import { VacantSign } from "../parts/VacantSign";
 import {
@@ -47,7 +39,6 @@ import {
   Early,
   NEVER,
   Prelude,
-  Sooner,
   useCastScale,
 } from "./MaybeBrainScene";
 import { AMONG_LEAD, OneOfThemOpening } from "./OneOfThemScene";
@@ -81,16 +72,6 @@ const LIGHT = { before: 0.3, seconds: 0.6 };
 /** A aproximação do plano da procura num quadro dele. */
 const searchZoom = (frame: number, length: number): number =>
   PUSH.from + (PUSH.by * frame) / length;
-
-/**
- * Onde o pedestal está na tela, e de que tamanho, quando o plano da procura
- * termina: o plano da linha do tempo o recebe dali e o leva até o fim da linha.
- */
-const SIGN_AT_HANDOVER = {
-  x: PUSH.focus[0] + (SEARCH_SIGN.x - PUSH.focus[0]) * (PUSH.from + PUSH.by),
-  y: PUSH.focus[1] + (SEARCH_SIGN.y - PUSH.focus[1]) * (PUSH.from + PUSH.by),
-  scale: SEARCH_SIGN.scale * (PUSH.from + PUSH.by),
-};
 
 type SearchPose = {
   /** Onde a lente está, a inclinação da lupa, e o brilho do foco de luz do pedestal. */
@@ -173,8 +154,6 @@ type SearchCastProps = SearchPose & {
   readonly length: number;
   /** Quantos quadros faltam para o plano começar, quando é a cena anterior quem desenha isto. */
   readonly until?: number;
-  /** Se o pedestal ainda é deste plano: o seguinte o recebe e passa a desenhá-lo. */
-  readonly sign?: boolean;
 };
 
 /**
@@ -185,7 +164,6 @@ const SearchCast: React.FC<SearchCastProps> = ({
   frame,
   length,
   until,
-  sign = true,
   lens,
   tilt,
   light,
@@ -207,19 +185,15 @@ const SearchCast: React.FC<SearchCastProps> = ({
         GLOBE_SOONER,
         <SearchGlobe lens={lens} tilt={tilt} seconds={frame / fps} />,
       )}
-      {/* O pedestal entra com o plano, mas não sai: o plano seguinte o leva para o fim da linha do tempo. */}
-      {sign
-        ? staged(
-            SIGN_SOONER,
-            <Stay only="leaving">
-              <Cast origin={[SEARCH_SIGN.x, SEARCH_SIGN.y]}>
-                <Stay>
-                  <VacantSign {...SEARCH_SIGN} light={light} />
-                </Stay>
-              </Cast>
-            </Stay>,
-          )
-        : null}
+      {/* O pedestal sai por último, depois do globo e da lupa: o lugar vazio é a última coisa do plano. */}
+      {staged(
+        SIGN_SOONER,
+        <Cast origin={[SEARCH_SIGN.x, SEARCH_SIGN.y]}>
+          <Stay>
+            <VacantSign {...SEARCH_SIGN} light={light} />
+          </Stay>
+        </Cast>,
+      )}
     </Drift>
   );
 };
@@ -261,49 +235,29 @@ const SearchEndsShot: React.FC<SearchEndsShotProps> = ({
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
-  const stage = useStage();
   const pose = searchPose(frame, fps, turnAt, stopAt, lightAt);
 
   return (
     <AbsoluteFill>
       <FlatStage backdrop={<IdeaBackdrop hue="mint" spot={[0.32, 0.5]} />}>
-        <SearchCast
-          frame={frame}
-          length={length}
-          {...pose}
-          sign={!stage.handedOver}
-        />
+        <SearchCast frame={frame} length={length} {...pose} />
       </FlatStage>
       <Grain />
     </AbsoluteFill>
   );
 };
 
-// A marca do sono, nas medidas da linha do tempo: onde fica e a altura do ícone.
-const SLEEP_MARK = { x: 240, icon: 130 };
-// O pedestal no fim da linha, pousado na areia.
-const END_SIGN = { x: TIMELINE_END.x, y: TIMELINE_FLOOR - 24, scale: 0.68 };
-// Em quantos quadros o pedestal vai do lugar em que a procura o deixou até o fim da linha.
-const SIGN_TRAVEL_FRAMES = 24;
-// A marca do sono, a água-viva e a linha estão no lugar na primeira palavra, que é "sono".
-const LINE_SOONER = 30;
-const LINE_SECONDS = 0.5;
-const BRACKET_SECONDS = 0.8;
-// A câmera do plano: desliza devagar para o fim da linha, até o pedestal
-// vazio. O plano abre deslocado `pan` pixels para o lado do passado; no
-// deslize a câmera também chega `closer` mais perto do pedestal, que é o que
-// faz dele o destino. Antes do deslize ela já anda um nada (`creep`), para o
-// plano não ficar preso.
-const SLIDE = { pan: 80, creep: 12, closer: 0.04 };
+// O fim da linha do tempo, na areia: o ponto em volta do qual a câmera dela se aproxima.
+const LINE_END = { x: TIMELINE_END.x, y: TIMELINE_FLOOR - 24 };
 // O fundo do mar anda junto com o que está pousado nele. Para a borda dele não
-// aparecer no deslize, é desenhado maior, em volta do pé do pedestal: assim a
-// areia sob o pedestal não sai do lugar.
+// aparecer no deslize, é desenhado maior, em volta do fim da linha: assim a
+// areia ali não sai do lugar.
 const FLOOR_OVERSCAN = 1.07;
 
 type SeaStageProps = {
   /** Quanto a câmera ainda está deslocada para o lado do passado, em pixels: o quadro inteiro anda junto. */
   readonly pan: number;
-  /** A aproximação da câmera, em volta do pé do pedestal. Por padrão, nenhuma. */
+  /** A aproximação da câmera, em volta do fim da linha. Por padrão, nenhuma. */
   readonly zoom?: number;
   readonly children: React.ReactNode;
 };
@@ -333,7 +287,7 @@ export const SeaStage: React.FC<SeaStageProps> = ({
         <Troupe cast={false}>
           <AbsoluteFill
             style={{
-              transformOrigin: `${END_SIGN.x}px ${END_SIGN.y}px`,
+              transformOrigin: `${LINE_END.x}px ${LINE_END.y}px`,
               translate: `${pan}px 0`,
               scale: `${FLOOR_OVERSCAN * zoom}`,
             }}
@@ -347,7 +301,7 @@ export const SeaStage: React.FC<SeaStageProps> = ({
     >
       <AbsoluteFill
         style={{
-          transformOrigin: `${END_SIGN.x}px ${END_SIGN.y}px`,
+          transformOrigin: `${LINE_END.x}px ${LINE_END.y}px`,
           translate: `${pan}px 0`,
           scale: `${zoom}`,
         }}
@@ -383,137 +337,25 @@ export const LineGroup: React.FC<LineGroupProps> = ({ from, children }) => {
   );
 };
 
-type EndOfLineShotProps = {
-  /** Quadros do plano em que a marca do sono pulsa, em que o colchete dos anos abre, e entre os quais a câmera desliza. */
-  readonly pulseAt: number;
-  readonly yearsAt: number;
-  readonly slideAt: number;
-  readonly stopAt: number;
-  /** Quantos quadros o pedestal já tinha no palco quando o plano começou. */
-  readonly signClock: number;
-};
-
-/** A linha do tempo inteira, da marca do sono até hoje; a câmera desliza até o fim dela, onde o pedestal ficou vazio. */
-const EndOfLineShot: React.FC<EndOfLineShotProps> = ({
-  pulseAt,
-  yearsAt,
-  slideAt,
-  stopAt,
-  signClock,
-}) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const seconds = frame / fps;
-  const slid = ramp(frame, slideAt, stopAt - slideAt);
-  const pan =
-    SLIDE.pan -
-    SLIDE.creep * linear(frame, 0, slideAt) -
-    (SLIDE.pan - SLIDE.creep) * slid;
-  const drawn = ramp(frame, 0, LINE_SECONDS * fps);
-  // O pedestal vem de onde a procura o deixou, encolhendo, até pousar no fim da linha.
-  const arrived = ramp(frame, 0, SIGN_TRAVEL_FRAMES);
-  const sign = {
-    x: mix(SIGN_AT_HANDOVER.x - SLIDE.pan, END_SIGN.x, arrived),
-    y: mix(SIGN_AT_HANDOVER.y, END_SIGN.y, arrived),
-    scale: mix(SIGN_AT_HANDOVER.scale, END_SIGN.scale, arrived),
-  };
-
-  return (
-    <AbsoluteFill>
-      <Sooner by={LINE_SOONER}>
-        <SeaStage pan={pan} zoom={1 + SLIDE.closer * slid}>
-          <>
-            {/* O pedestal já estava no palco: não entra; sai com o plano. */}
-            <Stay only="entering">
-              <Cast origin={[END_SIGN.x, END_SIGN.y]}>
-                <Stay>
-                  <VacantSign
-                    {...sign}
-                    // No caminho o foco baixa (grande, sobre o mar que escurece, ele viraria uma
-                    // parede de luz) e reacende ao pousar; depois respira: é a pausa viva do lugar vazio.
-                    light={
-                      (1 -
-                        0.65 * ramp(frame, 0, 6) * (1 - ramp(frame, 14, 14))) *
-                      (0.9 + 0.1 * wave(seconds, 3.3))
-                    }
-                    clock={signClock}
-                  />
-                </Stay>
-              </Cast>
-            </Stay>
-            <LineGroup from={SLEEP_MARK.x}>
-              <>
-                <Timeline
-                  floor={false}
-                  eased
-                  alive
-                  jellyfish
-                  drawn={drawn}
-                  arrow={ramp(frame, 0, 6)}
-                  sleepAt={ALREADY_SHOWN}
-                  brainAt={ALREADY_SHOWN}
-                  yearsAt={yearsAt}
-                  bracketSeconds={BRACKET_SECONDS}
-                />
-              </>
-              <SvgLayer>
-                {/* A marca do sono pulsa: dois anéis de luz saem da lua, um depois do outro. */}
-                {[0, 7].map((delay) => {
-                  const age = (frame - pulseAt - delay) / (0.6 * fps);
-                  return age > 0 && age < 1 ? (
-                    <circle
-                      key={delay}
-                      cx={SLEEP_MARK.x}
-                      cy={TIMELINE.y - SLEEP_MARK.icon}
-                      r={60 + 90 * (1 - (1 - age) ** 2)}
-                      fill="none"
-                      stroke={ink.moon}
-                      strokeWidth={10 * (1 - age)}
-                      opacity={1 - age}
-                    />
-                  ) : null;
-                })}
-              </SvgLayer>
-            </LineGroup>
-          </>
-        </SeaStage>
-      </Sooner>
-      <Grain />
-    </AbsoluteFill>
-  );
-};
-
 export const NobodyEscapedScene: React.FC<SceneProps> = ({ scene, shots }) => {
   const { fps } = useVideoConfig();
   const searchFrames = shots[0].to - shots[0].from;
   return (
-    <>
-      <Shot range={shots[0]} name="a procura termina sem ele">
-        <SearchEndsShot
-          turnAt={cue(scene, "procura")}
-          stopAt={cue(scene, "termina")}
-          // O foco sobe em "sem" e assenta meio segundo antes da troca.
-          lightAt={Math.min(
-            cue(scene, "sem"),
-            searchFrames - (LIGHT.seconds + 0.5) * fps,
-          )}
-        />
-      </Shot>
-      <Shot range={shots[1]} name="meio bilhão de anos, e o pedestal vazio">
-        <EndOfLineShot
-          // A marca pulsa quando já cresceu no lugar dela.
-          pulseAt={Math.max(10, cue(scene, "sono") - shots[1].from)}
-          yearsAt={cue(scene, "quinhentos") - shots[1].from}
-          slideAt={cue(scene, "nenhum") - shots[1].from}
-          stopAt={cue(scene, "parar") - shots[1].from}
-          signClock={searchFrames}
-        />
-        {/* A pessoa de `one-of-them` cresce aqui, por cima da linha do tempo que encolhe: a troca de cena não
-            deixa a tela só com o fundo do mar. */}
-        <Prelude lead={AMONG_LEAD}>
-          {(until) => <OneOfThemOpening until={until} />}
-        </Prelude>
-      </Shot>
-    </>
+    <Shot range={shots[0]} name="a procura termina sem ele">
+      <SearchEndsShot
+        turnAt={cue(scene, "procura")}
+        stopAt={cue(scene, "termina")}
+        // O foco sobe em "sem" e assenta meio segundo antes de o palco começar a sair.
+        lightAt={Math.min(
+          cue(scene, "sem"),
+          searchFrames - (LIGHT.seconds + 0.5) * fps,
+        )}
+      />
+      {/* A pessoa de `one-of-them` cresce aqui, no meio do palco, quando o globo e a lupa já saíram e o
+          pedestal encolhe: a troca de cena não deixa a tela só com o fundo. */}
+      <Prelude lead={AMONG_LEAD}>
+        {(until) => <OneOfThemOpening until={until} />}
+      </Prelude>
+    </Shot>
   );
 };

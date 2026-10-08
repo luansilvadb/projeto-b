@@ -125,7 +125,6 @@ const MusicBed: React.FC<MusicBedProps> = ({
         from={envelope.from}
         durationInFrames={Math.max(length, 1)}
         layout="none"
-        hidden
       >
         <Audio
           src={staticFile(part.file)}

@@ -23,11 +23,11 @@ Escrito depois do roteiro aprovado, e por isso sem pedir nada a ele.
 
 - **Timbres de base:** piano de feltro, sintetizador analógico quente, cordas. Em toda descrição: `felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental`.
 - **Andamento e tom:** 96 bpm; lá menor no leito A, dó maior (as mesmas notas) no leito B.
-- **Dois leitos**, porque o vídeo tem 9 min 32 s e um leito vai até 7 min 20 s. A troca fica na virada do vídeo, em `but-what` ("mas o que o sono faz?").
-  - **Leito A**, de 0:00 a 6:50: o tema curioso, que anda para a frente, enquanto o vídeo procura um animal que não dorme.
-  - **Leito B**, de 6:50 ao fim: o mesmo tema resolvido e quente, enquanto o vídeo diz para que o sono serve e fecha.
+- **Dois leitos**, porque o vídeo tem 9 min 09 s e um leito vai até 7 min 20 s. A troca fica na virada do vídeo, em `but-what` ("mas o que o sono faz?").
+  - **Leito A**, de 0:00 a 6:37: o tema curioso, que anda para a frente, enquanto o vídeo procura um animal que não dorme.
+  - **Leito B**, de 6:37 ao fim: o mesmo tema resolvido e quente, enquanto o vídeo diz para que o sono serve e fecha.
 - **Silêncio de música:** um, em `so-far`, da palavra "Para" ao fim da cena (7 s). A resposta do vídeo, "nenhum animal estudado até hoje conseguiu parar de dormir", é dita sem música, e o leito B entra em seguida, sem cruzar com o A.
-- **Silêncios de fala** (os `holdMs` que o roteiro já tinha): 6 s em `the-question`, onde a vinheta toca com a música em primeiro plano; 1,5 s em `tonight` e 1 s em cinco viradas de capítulo, curtos demais para a música subir, e ela passa por eles no nível em que está.
+- **Silêncios de fala** (os `holdMs` que o roteiro já tinha): 6 s em `the-question`, onde a vinheta toca com a música em primeiro plano; 1,5 s em `tonight`, 0,7 s em `nobody-escaped` e 1 s em cinco viradas de capítulo, curtos demais para a música subir, e ela passa por eles no nível em que está.
 
 ## Mapa
 
@@ -47,7 +47,7 @@ Escrito depois do roteiro aprovado, e por isso sem pedir nada a ele.
 | `jellyfish` a `jellyfish-debt` | 3:13 a 4:14 | o tema sem peso: pads lentos, sub-grave suave, piano ralo, sem percussão | a lagoa e o bicho sem cérebro |
 | `forced-awake` a `rats-disc` | 4:29 a 5:02 | o tema apertando: ostinato de cordas em staccato, piano grave, urgência contida | o laboratório e o disco que não deixa dormir |
 | `rats-result` a `unknown-cause` | 5:02 a 5:27 | o tema reduzido a uma nota grave segurada e a notas de piano espaçadas, sem pulso | os ratos morrem e ninguém acha a causa; o fato mais pesado do vídeo |
-| `what-it-is` a `tonight` | 8:41 a 9:17 | o tema desacelerado: piano sozinho em notas longas sobre um pad de cordas, sem pulso | o fechamento, até "que seja um bom sono" |
+| `what-it-is` a `tonight` | 8:21 a 8:54 | o tema desacelerado: piano sozinho em notas longas sobre um pad de cordas, sem pulso | o fechamento, até "que seja um bom sono" |
 
 O gancho não tem momento: um trecho refeito no segundo zero não tem música antes dele, e na primeira geração abriu o vídeo com 4 s de silêncio.
 
@@ -101,6 +101,12 @@ Ações da partitura que pedem som e não têm um no catálogo:
 | vários | a etiqueta ou o número que estoura | estouro curto, um som para a família (hoje a regra do canal é texto sem som; a referência não foi medida nisso) |
 
 O efeito dos olhos que acendem em `last-to-know` (um acento curto e agudo) também espera um som.
+
+## Depois da poda dos ecos (2026-10-08)
+
+A narração encurtou 23 s do capítulo de Gardner ao fim, e o vídeo passou a 9 min 09 s. O leito A é o mesmo arquivo do piloto, usado até 6:37; os momentos dele não mudaram de instante. O leito B foi gerado de novo (semente 1), com o momento do fechamento, porque `nobody-escaped` e `tonight` encurtaram antes dele. O silêncio de `so-far` continua indo de "Para" ao fim da cena (6,9 s).
+
+Medidas do som novo (`pnpm critique why-we-sleep som`): música 13,7 dB abaixo da voz; 9,3 dB do trecho mais presente ao mais recuado (era 7,3; a faixa vai a 9,6); 1,2% do tempo sem música; 1,0 virada de volume por minuto; variação de timbre de 0,19 oitava (era 0,27). As duas medidas de efeitos continuam fora da faixa, pelo mesmo motivo do piloto. O leito B novo ainda não foi ouvido pelo usuário.
 
 ## Crítica do piloto (2026-10-06)
 

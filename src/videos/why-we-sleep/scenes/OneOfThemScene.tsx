@@ -423,7 +423,7 @@ type AmongProps = Cues & {
   readonly until?: number;
 };
 
-/** Quantos quadros antes da cena ela começa a crescer, desenhada pelo último plano de `nobody-escaped`. */
+/** Quantos quadros antes da cena ela começa a crescer, desenhada pelo plano de `nobody-escaped`. */
 export const AMONG_LEAD = 6;
 
 /**
@@ -774,9 +774,9 @@ const BEFORE: Cues = {
 };
 
 /**
- * O plano que abre a cena, antes de qualquer deixa: o último plano de
- * `nobody-escaped` o desenha com `Prelude`, e ela já cresce enquanto a linha
- * do tempo encolhe. `until` é quantos quadros faltam para a cena.
+ * O plano que abre a cena, antes de qualquer deixa: o plano de
+ * `nobody-escaped` o desenha com `Prelude`, e ela já cresce no meio do palco
+ * enquanto o pedestal vazio encolhe. `until` é quantos quadros faltam para a cena.
  */
 export const OneOfThemOpening: React.FC<{ until: number }> = ({ until }) => (
   <AmongThemShot {...BEFORE} until={until} />
@@ -801,7 +801,7 @@ export const OneOfThemScene: React.FC<SceneProps> = ({ scene, shots }) => {
   };
   return (
     <>
-      <Shot range={shots[0]} name="um desses animais">
+      <Shot range={shots[0]} name="um dos animais dessa procura">
         <Preluded lead={AMONG_LEAD}>
           <AmongThemShot {...cues} />
         </Preluded>

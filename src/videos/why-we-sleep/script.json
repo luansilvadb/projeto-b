@@ -600,6 +600,7 @@
         }
       ],
       "sources": [
+        4,
         7,
         8,
         21
@@ -785,7 +786,7 @@
     },
     {
       "id": "gardner-sleeps",
-      "narration": "Acompanhado por um pesquisador do sono, Gárdner teve náusea, a memória começou a falhar, e ele ficou irritado. Quando enfim se deitou, dormiu catorze horas seguidas, bem mais que as suas oito. É a cobrança de novo, aquela regra de que quem perde sono compensa depois, agora em gente. Só que a conta ficou longe de ser paga hora por hora, catorze horas por onze noites. O sono perdido também se recupera como sono mais fundo.",
+      "narration": "Acompanhado por um pesquisador do sono, Gárdner teve náusea, a memória começou a falhar, e ele ficou irritado. Quando enfim se deitou, dormiu catorze horas seguidas, bem mais que as suas oito. É a cobrança de novo, agora em gente. Só que a conta ficou longe de ser paga hora por hora, catorze horas por onze noites. O sono perdido também se recupera como sono mais fundo.",
       "shots": [
         {
           "staging": "Ao lado do rapaz, um pesquisador de jaleco observa, com a prancheta, e leva a etiqueta \"William Dement\". Três balões acendem sobre o rapaz, um por item da fala: enjoo, um branco, raiva. Selo da fonte no canto: \"NPR, 2024\".",
@@ -831,7 +832,7 @@
     },
     {
       "id": "so-far",
-      "narration": "Os três jeitos de escapar falharam. Dormindo menos, a elefanta parou em duas horas. Sem cérebro, a água-viva dorme mesmo assim. E mantidos acordados à força, os ratos morreram ou quase, e Gárdner foi cobrado com catorze horas de sono. Para a pergunta do começo, a resposta é que nenhum animal estudado até hoje conseguiu parar de dormir.",
+      "narration": "Os três jeitos de escapar falharam. Dormir menos, viver sem cérebro, ficar acordado à força. Para a pergunta do começo, a resposta é que nenhum animal estudado até hoje conseguiu parar de dormir.",
       "shots": [
         {
           "staging": "No alto, a fila dos cinco ícones: o despertador \"3\" ganha um X.",
@@ -840,23 +841,9 @@
           "entry": "cut"
         },
         {
-          "cue": "Dormindo",
-          "staging": "Entra a moldura \"1\", cheia: a elefanta e a barra \"2 h\".",
-          "scale": "medium",
-          "palette": "ideia",
-          "entry": "camera"
-        },
-        {
-          "cue": "Sem",
-          "staging": "Entra a moldura \"2\", de perto: a água-viva dormindo no fundo.",
-          "scale": "close",
-          "palette": "ideia",
-          "entry": "camera"
-        },
-        {
-          "cue": "mantidos",
-          "staging": "Entra a moldura \"3\": os discos dos ratos, em silhueta, e o rapaz na cama com o relógio em \"14 h\".",
-          "scale": "medium",
+          "cue": "Dormir",
+          "staging": "As três molduras, lado a lado, acendem uma a uma, cada uma quando o jeito dela é dito: na \"1\", a elefanta e a barra \"2 h\"; na \"2\", a água-viva dormindo no fundo; na \"3\", o disco dos ratos, com o rato do teste em silhueta, e o rapaz na cama com o relógio em \"14 h\".",
+          "scale": "wide",
           "palette": "ideia",
           "entry": "camera"
         },
@@ -1041,30 +1028,23 @@
     },
     {
       "id": "nobody-escaped",
-      "narration": "A procura pelo animal que parou de dormir termina sem ele. O sono existe, provavelmente, há mais de quinhentos milhões de anos, e nenhum animal estudado até hoje conseguiu parar de dormir.",
+      "narration": "A procura pelo animal que parou de dormir termina sem ele.",
       "shots": [
         {
-          "staging": "O globo sob a lupa, como no gancho, e ao lado o pedestal \"acordado 24 h\", ainda vazio.",
+          "staging": "O globo sob a lupa, como no gancho, e ao lado o pedestal \"acordado 24 h\", ainda vazio. Selo da fonte no canto: \"Cirelli e Tononi, 2008\".",
           "scale": "medium",
           "palette": "ideia",
-          "entry": "cut"
-        },
-        {
-          "cue": "sono",
-          "staging": "A linha do tempo de meio bilhão de anos, inteira, em índigo, com o pedestal vazio no fim dela. Selos: \"Pappas, 2023\" e \"Cirelli e Tononi, 2008\".",
-          "scale": "wide",
-          "palette": "abissal",
           "entry": "cut"
         }
       ],
       "sources": [
-        20,
-        21
-      ]
+        20
+      ],
+      "holdMs": 700
     },
     {
       "id": "one-of-them",
-      "narration": "Nós somos um desses animais. Toda noite, cada um de nós larga o que está fazendo, se deita e faz o que a elefanta e a água-viva fazem.",
+      "narration": "Nós somos um dos animais dessa procura. Toda noite, cada um de nós larga o que está fazendo, se deita e faz o que a elefanta e a água-viva fazem.",
       "shots": [
         {
           "staging": "A pessoa do primeiro plano no centro, grande; a elefanta de um lado e a água-viva do outro, na mesma linha.",
@@ -1134,7 +1114,7 @@
     },
     {
       "id": "tonight",
-      "narration": "Álan Réctchafen, o pesquisador do começo, dizia que o sono, se não servisse a uma função vital, seria o maior erro que a evolução cometeu. Um erro desses algum animal teria abandonado, e tudo indica que o sono está longe de ser um erro. Hoje à noite, nós vamos dormir mais uma parte desse terço da vida. Que seja um bom sono.",
+      "narration": "Álan Réctchafen dizia que o sono, sem um papel vital, seria o maior erro que a evolução já cometeu. Um erro desses algum animal teria abandonado, e tudo indica que o sono está longe de ser um erro. Hoje à noite, nós vamos dormir mais uma parte desse terço da vida. Que seja um bom sono.",
       "shots": [
         {
           "staging": "O quadro-negro do gancho: a árvore da vida com todos os ramos de olhos fechados e o carimbo \"erro?\". Etiqueta: \"Allan Rechtschaffen\".",
@@ -1151,6 +1131,7 @@
         },
         {
           "cue": "Um",
+          "occurrence": 2,
           "staging": "O carimbo \"erro?\" perde a cor no quadro; a interrogação continua, pequena, ao lado da árvore.",
           "scale": "close",
           "palette": "ideia",

@@ -580,9 +580,11 @@ const CrashShot: React.FC<CrashShotProps> = ({
 
 // A conta se abre à esquerda da cama, sob a linha do bolso.
 const BILL = { x: 440, y: 190, scale: 1.3 };
-// A cama desce e cresce; a conta sai do bolso logo depois, e leva 0,9 s para chegar e se abrir.
+// A cama desce e cresce; a conta sai do bolso logo depois, e leva 0,7 s para chegar e se abrir. O plano
+// dura 2,2 s, e a fala já não diz a regra: saindo no quadro 8 e levando 0,9 s, a conta só abria em cima de
+// "agora", e o carimbo não tinha quadro parado para ser lido.
 const LOWER_FRAMES = 18;
-const OUT = { at: 8, seconds: 0.9 };
+const OUT = { at: 2, seconds: 0.7 };
 // Em "agora" a conta inclina na direção dele: o pé do papel vai para o lado da cama.
 const TOWARD = { degrees: -5, frames: 12 };
 // O ponto para o qual a cama deriva, e quanto.
@@ -613,6 +615,8 @@ const BillShot: React.FC<BillShotProps> = ({ stampAt, towardAt, clock }) => {
   const high = undrifted([BED_HIGH.x, BED_HIGH.y], BILL_FOCUS, zoom);
   const outFrames = OUT.seconds * fps;
   const out = ramp(frame, OUT.at, outFrames);
+  // O carimbo só pisca com a conta aberta: uma vez, para acabar antes de ela inclinar.
+  const stamped = flash(frame, Math.max(stampAt, OUT.at + outFrames), 8);
 
   return (
     <AbsoluteFill>
@@ -644,10 +648,7 @@ const BillShot: React.FC<BillShotProps> = ({ stampAt, towardAt, clock }) => {
                 ramp(frame, towardAt, TOWARD.frames),
               )}
               pocketTilt={2 * billSway(seconds)}
-              stamp={
-                1 -
-                0.25 * (flash(frame, stampAt, 8) + flash(frame, stampAt + 9, 8))
-              }
+              stamp={1 - 0.25 * stamped}
             />
           </Stay>
         )}
@@ -943,7 +944,7 @@ export const GardnerSleepsScene: React.FC<SceneProps> = ({ scene, shots }) => {
   const hoursAt = cue(scene, "catorze") - crash;
   const turn = shots[3].from;
   const deeper = shots[4].from;
-  const arrowAt = cue(scene, "sono", 4) - deeper;
+  const arrowAt = cue(scene, "sono", 3) - deeper;
   return (
     <>
       <Shot range={shots[0]} name="Dement observa; enjoo, um branco, raiva">
@@ -973,7 +974,7 @@ export const GardnerSleepsScene: React.FC<SceneProps> = ({ scene, shots }) => {
       </Shot>
       <Shot range={shots[2]} name="a conta sai do bolso, ao lado da cama">
         <BillShot
-          stampAt={cue(scene, "compensa") - shots[2].from}
+          stampAt={cue(scene, "novo") - shots[2].from}
           towardAt={cue(scene, "agora") - shots[2].from}
           clock={scene.from + shots[2].from}
         />
