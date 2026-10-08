@@ -47,11 +47,11 @@ const REACTION_DELAY_FRAMES = 3;
 // apontam embaixo, e o pêssego não fica vazio entre uma coisa e outra.
 const BAR_LEAVES_LATE = 3;
 
-/** Atrasa a saída do palco de quem está dentro. */
-const LeavingLater: React.FC<{ by: number; children: React.ReactNode }> = ({
-  by,
-  children,
-}) => {
+/** Atrasa a saída do palco de quem está dentro, em quadros. */
+export const LeavingLater: React.FC<{
+  by: number;
+  children: React.ReactNode;
+}> = ({ by, children }) => {
   const stage = useStage();
   const later = useMemo(
     () => ({ ...stage, leave: (delay = 0) => stage.leave(delay + by) }),

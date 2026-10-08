@@ -29,6 +29,7 @@ import {
   useCastScale,
 } from "./MaybeBrainScene";
 import { Drift } from "./SleepDebtScene";
+import { LeavingLater } from "./ThirdOfLifeScene";
 
 // O quadro do gancho, agora com ele ao lado: o quadro encolhe para dar lugar a quem disse a frase.
 const RECALL_BOARD: Box = { x: 770, y: 140, width: 1030, height: 720 };
@@ -48,6 +49,9 @@ const CLOSE_PUSH = 0.05;
 const TREMBLE = { degrees: 5, turns: 2, frames: 14 };
 // O carimbo perde a cor em 1,5 s.
 const FADE_SECONDS = 1.5;
+// O quadro-negro sai estes quadros depois da marcação: ainda encolhe quando a janela e a cama do
+// plano seguinte apontam. Na marcação ele sumia no quadro da troca, que ficava só com o fundo.
+const BOARD_LEAVES_LATE = 2;
 
 /** O quadro-negro a caminho do plano aberto para o de perto: é a câmera fechando no carimbo. */
 const boardAt = (closed: number): Box => ({
@@ -210,14 +214,18 @@ const StampShot: React.FC<StampShotProps> = ({
   return (
     <>
       <FlatStage backdrop={<IdeaBackdrop hue="peach" spot={[0.5, 0.5]} />}>
-        {stage.handedOver ? null : (
+        {/* No primeiro dos dois planos, o seguinte assume o desenho ao chegar. No último, o quadro
+            ainda termina de encolher por baixo do plano da cama. */}
+        {stage.handedOver && !last ? null : (
           <Drift focus={CLOSE_FOCUS} zoom={1 + (CLOSE_PUSH * 2 * at) / span}>
             {last ? (
               // O quadro já estava no palco: não entra. Sai encolhendo em volta do carimbo.
               <Stay only="entering">
-                <Cast origin={[stamp.x, stamp.y]}>
-                  <Stay>{board}</Stay>
-                </Cast>
+                <LeavingLater by={BOARD_LEAVES_LATE}>
+                  <Cast origin={[stamp.x, stamp.y]}>
+                    <Stay>{board}</Stay>
+                  </Cast>
+                </LeavingLater>
               </Stay>
             ) : (
               <Stay>
@@ -260,9 +268,9 @@ const STARS = [
 ] as const;
 // A lua espera no canto da janela, meio escondida pela moldura, e passa por ela devagar, a velocidade constante.
 const MOON = { from: 0.1, to: 0.72, y: 0.34 };
-// A cama e a janela já estão no lugar quando "Hoje à noite" soa, e começam a crescer enquanto o quadro-negro
-// ainda encolhe: com 14 quadros sobravam de 2 a 4 só com o fundo.
-const ASLEEP_SOONER = 18;
+// A cama e a janela já estão no lugar quando "Hoje à noite" soa: começam a crescer no primeiro
+// quadro do plano, e adiantar mais que isto não muda nada.
+const ASLEEP_SOONER = 14;
 
 /**
  * Onde a cama está na tela, e de que tamanho, quando o plano termina: a

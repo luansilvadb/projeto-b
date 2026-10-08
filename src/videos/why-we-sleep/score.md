@@ -296,8 +296,8 @@ A música, os níveis, os silêncios e os efeitos saíram desta partitura em 202
 
 - **Plano 1, aberto, corte (6,5 s).** 0,0: o quadro-negro do gancho, com a árvore e o carimbo. 0,7 "Réctchafen": a etiqueta de nome estoura. 3,1 "dizia": ele ergue o braço para o quadro (0,6 s). Vivo: ele respira. Som: nenhum.
 - **Plano 2, close, câmera (2,7 s).** 0,0: a câmera fecha no carimbo "erro?" (0,7 s). 0,8 "erro": ele treme uma vez. Som: nenhum.
-- **Plano 3, close, transformação (6,1 s).** 0,3 "erro": o carimbo perde a cor aos poucos (1,5 s) e a moldura fica tracejada. 2,0 "abandonado": os bichos da árvore continuam de olhos fechados. 4,6 "longe": a interrogação pequena estoura ao lado do tronco. Som: o carimbo em 0,3.
-- **Plano 4, médio, câmera (8,1 s, com 1,5 s de silêncio).** 0,0: o quadro-negro sai e a pessoa aparece na cama, com a janela e a noite (1,0 s). 1,6 "dormir": "ZZZ" sobe. 3,2 "terço": a lua passa devagar pela janela. 5,4 "sono": a aproximação lenta continua até o fim, sem nada novo. Vivo: o cobertor sobe e desce, as estrelas piscam. Som: nenhum.
+- **Plano 3, close, transformação (6,1 s).** 0,3 "erro": o carimbo perde a cor aos poucos (1,5 s) e a moldura fica tracejada. 2,0 "abandonado": os bichos da árvore continuam de olhos fechados. 4,6 "longe": a interrogação pequena estoura ao lado do tronco. Saída: o quadro-negro encolhe em volta do carimbo (0,3 s) e termina 2 quadros depois da troca, quando a janela e a cama já apontam. Som: o carimbo em 0,3.
+- **Plano 4, médio, câmera (8,1 s, com 1,5 s de silêncio).** 0,0: o fundo lilás toma a cor sobre o pêssego; a janela e a cama crescem do próprio ponto desde o primeiro quadro (0,4 s), com o quadro-negro ainda terminando de encolher: nenhum quadro fica só com o fundo. 1,6 "dormir": "ZZZ" sobe. 3,2 "terço": a lua passa devagar pela janela. 5,4 "sono": a aproximação lenta continua até o fim, sem nada novo. Vivo: o cobertor sobe e desce, as estrelas piscam. Som: nenhum.
 
 ## subscribe
 
