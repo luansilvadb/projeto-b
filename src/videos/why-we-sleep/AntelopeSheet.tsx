@@ -6,7 +6,7 @@ import { antelope, antelopeNight, ink, daylightTones } from "./palette";
 
 type AntelopePose = Omit<
   React.ComponentProps<typeof Antelope>,
-  "width" | "colors" | "finish"
+  "width" | "colors"
 >;
 
 // As poses que o roteiro pede do antílope: é nelas que a silhueta precisa contar a cena.

@@ -665,51 +665,6 @@ export const elephantNight: ElephantColors = {
   deep: "#4530AC",
 };
 
-/**
- * O acabamento da savana, do piloto do polimento: as copas num tom que se
- * distingue do céu. O sol e a lua ficam como no animatic: o halo em degraus
- * foi recusado pelo usuário. Os três jogos acompanham os de `savanna`.
- */
-export const savannaFinish = {
-  day: {
-    tree: "#A9460F",
-  },
-  dusk: {
-    tree: "#400F58",
-  },
-  night: {
-    tree: "#0E1E90",
-  },
-} as const;
-
-/**
- * O pôr do sol da savana, piloto de cenário rico (2026-10-06), a partir de uma
- * imagem de referência que o usuário indicou como a qualidade que quer: o
- * personagem continua simples e o lugar ganha camadas, todas sob a mesma luz.
- */
-export const sunset = {
-  /** O céu, do alto ao horizonte. */
-  sky: ["#3F27A8", "#7A2C9E", "#D9486A", "#FF7F32", "#FFC23C"],
-  sun: "#FFE84E",
-  /** Os anéis de luz em volta do sol, de fora para dentro. */
-  glow: ["#B23C9C", "#E4546A", "#FF8A34"],
-  /** As nuvens: o corpo, de longe para perto, e a borda que o sol acende. */
-  cloud: ["#C2478C", "#8E3496", "#5E2A94"],
-  cloudRim: ["#FFB03A", "#FF7A3C"],
-  /** As colinas, da mais distante à mais próxima. */
-  hills: ["#B14C92", "#8A3494", "#6A2890", "#4E2084"],
-  /** O chão: a faixa de luz junto ao horizonte, o meio e a frente na sombra. */
-  ground: ["#FFC43A", "#F58A2C", "#CC4A32"],
-  groundLight: "#FFDD5C",
-  groundShade: "#B03A3A",
-  tree: "#3B1A70",
-  treeFar: "#7A3092",
-  treeRim: "#E0703A",
-  grass: ["#E0502E", "#B5362F", "#7C2A78"],
-  rock: "#5A2180",
-  frame: ["#1F1352", "#33196C", "#C0382E"],
-  shadow: "#8A2E5A",
-} as const;
 
 // O entardecer da savana em camadas: luz amarela à esquerda e sombras
 // violetas, da segunda imagem de referência do usuário (2026-10-06).

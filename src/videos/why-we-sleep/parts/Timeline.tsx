@@ -401,7 +401,6 @@ export const Timeline: React.FC<TimelineProps> = ({
       >
         <Pop at={enter(0)} origin="bottom">
           <Antelope
-            finish
             width={SLEEPER_WIDTH.antelope}
             colors={antelope}
             rest={1}

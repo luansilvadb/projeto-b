@@ -5,7 +5,7 @@ import { Grain } from "../../components/Grain";
 import { Place } from "../../components/Place";
 import { SvgLayer } from "../../components/SvgLayer";
 import { elephant, elephantNight, daylightTones } from "./palette";
-import { Savanna } from "./parts/Savanna";
+import { RichSavannaBackdrop } from "./parts/savanna/RichSavannaReference";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "./parts/savanna/RichTheme";
 
 const ROWS = [
@@ -48,7 +48,7 @@ export const ElephantSheet: React.FC = () => {
   return (
     <AbsoluteFill>
       <Camera {...CLOSE}>
-        <Savanna daylight={0} orb={MOON} finish>
+        <RichSavannaBackdrop daylight={0} orb={MOON}>
           <SvgLayer>
             <SavannaShadow
               x={990}
@@ -60,7 +60,7 @@ export const ElephantSheet: React.FC = () => {
           <Place x={900} y={SAVANNA_GROUND_Y + 6} anchor="bottom">
             <Elephant width={560} colors={elephantNight} {...SLEEPING} />
           </Place>
-        </Savanna>
+        </RichSavannaBackdrop>
       </Camera>
       <Grain />
     </AbsoluteFill>

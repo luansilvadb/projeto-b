@@ -62,11 +62,11 @@ Situação: o roteiro foi reescrito (quarta versão, aprovada em 2026-10-03). Em
 
 ### Consistência do antílope — 2026-10-06
 
-Pedido do usuário: "mantem a consistencia visual entre todas as cenas do antilope". O modelo da savana de referência passa a ser a fonte única do desenho em `src/art/AntelopeDrawing.tsx`, compartilhada pelas cenas narradas, pelas folhas de modelo e pelos estudos. Mantêm-se o corpo esbelto, a face, a barriga clara, a faixa escura, a garupa clara e os chifres; as poses se articulam sobre essa construção. `finish` já não troca sua anatomia.
+Pedido do usuário: "mantem a consistencia visual entre todas as cenas do antilope". O modelo da savana de referência passa a ser a fonte única do desenho em `src/art/AntelopeDrawing.tsx`, compartilhada pelas cenas narradas, pelas folhas de modelo e pelos estudos. Mantêm-se o corpo esbelto, a face, a barriga clara, a faixa escura, a garupa clara e os chifres; as poses se articulam sobre essa construção.
 
 De dia o pelo é ferrugem, com bordas douradas; à noite conserva seu matiz quente, com sombras ameixa e bordas azuladas, conforme as imagens fornecidas pelo usuário. As duas pinturas vêm de `antelope` e `antelopeNight` em `palette.ts`, inclusive nos estudos. A ficha de conferência `antilope` mostra dia e noite nas mesmas cinco poses.
 
-Os planos narrados do antílope usam a mesma savana em camadas das referências: colinas, acácias, nuvens, chão e vegetação não são redesenhados a cada horário ou escala. A câmera, a caminhada, o cochilo, o predador e as deixas continuam determinados pelo roteiro e pela partitura. Esta decisão cobre a unificação visual pedida; o aceite do vídeo permanece separado.
+Os planos narrados do antílope e os das elefantas usam a mesma savana em camadas, que nasceu das referências e mora em `parts/savanna/`: colinas, acácias, nuvens, chão e vegetação não são redesenhados a cada horário, escala ou bicho. A câmera, a caminhada, o cochilo, o predador e as deixas continuam determinados pelo roteiro e pela partitura. Esta decisão cobre a unificação visual pedida; o aceite do vídeo permanece separado.
 
 O elenco é só deste vídeo: a água-viva, o peixe e uma pessoa que faz o papel de "você". O canal não tem elenco fixo por enquanto (decidido em 2026-10-02); isso volta a ser discutido depois que o primeiro vídeo provar o fluxo.
 
@@ -153,11 +153,13 @@ Quatro modos para o capítulo 2, aprovados em 2026-10-03 (faixa `09-paletas-capi
 
 | Nome (em `palette`)     | Quando vale              | Fundo                                                        | Assunto                                         | Acento                    |
 | ----------------------- | ------------------------ | ------------------------------------------------------------ | ----------------------------------------------- | ------------------------- |
-| `savana-dia`            | as elefantas dormindo    | céu pêssego-dourado, chão ocre                               | elefanta azul-violeta                           | interior rosado da orelha |
-| `savana-noite`          | as noites acordadas      | céu azul-escuro com lua, chão ameixa                         | elefanta repintada mais clara                   | lua                       |
+| `savana-dia`            | as elefantas dormindo    | céu pêssego-dourado com nuvens, colinas e acácias; chão ocre | elefanta azul-violeta                           | interior rosado da orelha |
+| `savana-noite`          | as noites acordadas      | céu azul-escuro com lua cheia e estrelas; chão azul          | elefanta repintada mais clara                   | lua                       |
 | `mar-aberto`            | o golfinho na superfície | céu creme, água turquesa que escurece                        | golfinho azul-aço                               | sopro branco              |
 | `por-dentro`            | metade do cérebro dorme  | índigo profundo                                              | hemisfério aceso em ciano, o outro roxo apagado | brilho                    |
 | `céu-dia` / `céu-noite` | a fragata no ar          | lavanda com nuvens / índigo com estrelas; mar verde-petróleo | fragata preta / azul-ardósia                    | sol, lua                  |
+
+**A savana é uma só (2026-10-07, mudança `acabamento-unico`).** As elefantas passaram para a savana em camadas do antílope: o mesmo céu com nuvens, as mesmas colinas, acácias, chão em faixas e vegetação, em `parts/savanna/`, com um jogo de cores por horário (`savanna.day`, `dusk` e `night`, em `palette.ts`) e a luz passando de um ao outro sem troca de desenho. Decisões do usuário diante dos quadros de prova de `elephants` (`out/rascunho/prova/`): o dia em camadas foi aceito como está, com as cores do `savana-dia` aprovado distribuídas pelas camadas e o halo do sol quase na cor do céu; a noite em camadas foi aceita como está, com o chão azul e a lua cheia do antílope no lugar do chão ameixa e da lua crescente. A savana anterior das elefantas e o piloto do pôr do sol saíram do código.
 
 O capítulo alterna claro e escuro e nenhuma família domina: ouro, ameixa, turquesa, índigo, lavanda. A loja de cada bicho e os quadros de dado seguem em `loja-fechada` e `ideia`.
 

@@ -309,7 +309,6 @@ export const Critter: React.FC<CritterProps> = ({
         }}
       >
         <Antelope
-          finish
           width={DEN.width}
           colors={daylight > 0.25 ? antelope : antelopeNight}
           rest={Math.max(rest, NOD.buckle * nod)}

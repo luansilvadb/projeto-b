@@ -35,7 +35,8 @@ import {
   type HerdMember,
   type HerdStride,
 } from "../parts/Herd";
-import { Savanna, SAVANNA_GROUND_Y } from "../parts/Savanna";
+import { RichSavannaBackdrop } from "../parts/savanna/RichSavannaReference";
+import { SAVANNA_GROUND_Y } from "../parts/savanna/RichTheme";
 import { Sweep } from "./NightFallsScene";
 import { Grow } from "./SleepDebtScene";
 
@@ -84,9 +85,9 @@ export const SavannaStage: React.FC<SavannaStageProps> = ({
         {/* Dentro daqui o quadro é o do vídeo: é o relógio do cenário. */}
         <Sequence from={-clock} layout="none">
           <Camera {...camera}>
-            <Savanna daylight={daylight} orb={orb} finish>
+            <RichSavannaBackdrop daylight={daylight} orb={orb}>
               {children}
-            </Savanna>
+            </RichSavannaBackdrop>
           </Camera>
         </Sequence>
       </Build>

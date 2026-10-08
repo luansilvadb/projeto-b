@@ -268,7 +268,6 @@ const SplitShot: React.FC<SplitShotProps> = ({ checkAt, stillAt, clock }) => {
             >
               <Grow at={SLEEPER_AT_FRAMES} origin="bottom">
                 <Antelope
-                  finish
                   width={ANIMAL.width}
                   colors={antelope}
                   rest={1}
@@ -316,7 +315,6 @@ const SplitShot: React.FC<SplitShotProps> = ({ checkAt, stillAt, clock }) => {
                   }}
                 >
                   <Antelope
-                    finish
                     width={ANIMAL.width}
                     colors={antelope}
                     lid={blink(seconds, "still", { every: [1.4, 3] })}

@@ -20,8 +20,6 @@ export type AntelopeProps = Omit<AntelopePose, "earAngle"> & {
   readonly width: number;
   readonly colors: AntelopeColors;
   readonly ear?: number;
-  /** Compatibilidade com o piloto: o modelo agora é o mesmo nos dois modos. */
-  readonly finish?: boolean;
 };
 export const antelopePaint = (colors: AntelopeColors): AntelopePaint => ({
   body: colors.body,

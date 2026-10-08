@@ -1,7 +1,6 @@
 import { AntelopeSheet } from "./videos/why-we-sleep/AntelopeSheet";
 import { ElephantSheet } from "./videos/why-we-sleep/ElephantSheet";
 import { JellyfishSheet } from "./videos/why-we-sleep/JellyfishSheet";
-import { SunsetPilot } from "./videos/why-we-sleep/SunsetPilot";
 import { PersonSheet } from "./videos/why-we-sleep/PersonSheet";
 import { Composition, Folder, Still } from "remotion";
 import { IdentitySheet } from "./design/IdentitySheet";
@@ -140,13 +139,6 @@ export const RemotionRoot: React.FC = () => {
           height={HEIGHT}
           fps={FPS}
           durationInFrames={2}
-        />
-        {/* O piloto do cenário rico: a savana no pôr do sol. */}
-        <Still
-          id="por-do-sol"
-          component={SunsetPilot}
-          width={WIDTH}
-          height={HEIGHT}
         />
         {/* A vinheta do canal sozinha, para ver e ajustar sem o vídeo em volta. */}
         <Composition

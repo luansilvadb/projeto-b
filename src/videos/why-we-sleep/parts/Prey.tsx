@@ -64,7 +64,6 @@ export const Prey: React.FC<PreyProps> = ({
         }}
       >
         <Antelope
-          finish
           width={PREY.width}
           colors={daylight > 0.5 ? antelope : antelopeNight}
           rest={rest}
