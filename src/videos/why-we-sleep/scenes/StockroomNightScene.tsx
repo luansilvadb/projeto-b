@@ -15,7 +15,7 @@ import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, drop, linear, mix, ramp } from "../../../components/timing";
+import { cue, drop, linear, mix, ramp, shake } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import {
@@ -42,7 +42,7 @@ import {
 } from "../parts/ShopInside";
 import { Tag } from "../parts/Tag";
 import { lampAt } from "./ButWhatScene";
-import { flash, Prelude, shake, Sooner, Standing } from "./MaybeBrainScene";
+import { flash, Prelude, Sooner, Standing } from "./MaybeBrainScene";
 import { STUDIED_LEAD, StockroomSolidOpening } from "./StockroomSolidScene";
 import {
   COUNTER,

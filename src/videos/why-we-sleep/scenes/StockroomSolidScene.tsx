@@ -6,13 +6,13 @@ import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, mix, ramp } from "../../../components/timing";
+import { cue, mix, ramp, shake } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { ink, personInPajamas } from "../palette";
 import { IdeaBackdrop } from "../parts/IdeaBackdrop";
 import { Crate } from "../parts/ShopInside";
-import { NEVER, Preluded, flash, shake } from "./MaybeBrainScene";
+import { NEVER, Preluded, flash } from "./MaybeBrainScene";
 import { SEARCH_LEAD, SearchPrelude } from "./NobodyEscapedScene";
 import { Drift } from "./SleepDebtScene";
 

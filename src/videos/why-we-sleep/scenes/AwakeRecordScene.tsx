@@ -18,7 +18,7 @@ import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop, grown } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, mix, ramp, clamp01, clamp } from "../../../components/timing";
+import { cue, mix, ramp, shake, clamp01, clamp } from "../../../components/timing";
 import { HEIGHT, WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
@@ -35,7 +35,7 @@ import {
 } from "../parts/Gardner";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import { Tag } from "../parts/Tag";
-import { Ahead, Early, flash, shake } from "./MaybeBrainScene";
+import { Ahead, Early, flash } from "./MaybeBrainScene";
 
 // O bloco de Gardner é lilás: a blusa laranja dele some no pêssego.
 const HUE = "lilac";

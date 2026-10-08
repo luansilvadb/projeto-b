@@ -19,6 +19,7 @@ import {
   mix,
   ramp,
   settle,
+  shake,
   clamp,
 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
@@ -52,7 +53,7 @@ import {
   floating,
 } from "../parts/TankShot";
 import { BILL_LEAD, JellyfishDebtOpening } from "./JellyfishDebtScene";
-import { Ahead, Early, Prelude, Sooner, flash, shake } from "./MaybeBrainScene";
+import { Ahead, Early, Prelude, Sooner, flash } from "./MaybeBrainScene";
 import { billSway } from "./SkipANightScene";
 import { Drift, driftZoom } from "./SleepDebtScene";
 

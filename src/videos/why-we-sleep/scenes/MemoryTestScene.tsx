@@ -14,14 +14,14 @@ import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp, clamp01 } from "../../../components/timing";
+import { cue, linear, mix, ramp, shake, clamp01 } from "../../../components/timing";
 import { typography } from "../../../design/tokens";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { markFor } from "../../../video/stage";
 import { ink, lab, stopwatch } from "../palette";
 import { EXPERIMENTERS, SUBJECTS, SyllableSheet } from "../parts/SyllableList";
-import { flash, shake, Sooner } from "./MaybeBrainScene";
+import { flash, Sooner } from "./MaybeBrainScene";
 import { Drift, driftZoom, undrifted } from "./SleepDebtScene";
 
 /**

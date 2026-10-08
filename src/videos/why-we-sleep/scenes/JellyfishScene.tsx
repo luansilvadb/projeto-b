@@ -26,6 +26,7 @@ import {
   mix,
   ramp,
   settle,
+  shake,
   clamp,
 } from "../../../components/timing";
 import { HEIGHT, WIDTH } from "../../../format";
@@ -38,7 +39,7 @@ import { FISH_WATCHING, LAGOON } from "../parts/lagoonCameras";
 import { LagoonShot, type FishSpot } from "../parts/LagoonShot";
 import { PULSES_AWAKE, pulseCycles, pulseShape, steady } from "../parts/pulse";
 import { Tag } from "../parts/Tag";
-import { NEVER, Preluded, Standing, flash, shake } from "./MaybeBrainScene";
+import { NEVER, Preluded, Standing, flash } from "./MaybeBrainScene";
 
 // A lagoa abre deslizando do lado por onde o peixe entra até o enquadramento aberto.
 const SLIDE_SECONDS = 1.6;

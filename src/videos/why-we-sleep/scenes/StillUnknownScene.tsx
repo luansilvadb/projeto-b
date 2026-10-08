@@ -16,7 +16,7 @@ import { Stay } from "../../../components/Cast";
 import { wave } from "../../../components/Idle";
 import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
-import { cue, drop, mix, ramp, clamp } from "../../../components/timing";
+import { cue, drop, mix, ramp, shake, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { leaveProgress, SCENERY_EXIT_FRAMES } from "../../../video/stage";
@@ -31,7 +31,7 @@ import {
   FRONT_WIDE,
   ShopFront,
 } from "../parts/ShopFront";
-import { Prelude, Preluded, Sooner, flash, shake } from "./MaybeBrainScene";
+import { Prelude, Preluded, Sooner, flash } from "./MaybeBrainScene";
 import { LIT_LEAD, WhatItIsOpening } from "./WhatItIsScene";
 import { Grow } from "./SleepDebtScene";
 

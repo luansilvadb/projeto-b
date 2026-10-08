@@ -12,7 +12,7 @@ import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { grown } from "../../../components/Pop";
-import { cue, drop, linear, mix, ramp, clamp } from "../../../components/timing";
+import { cue, drop, linear, mix, ramp, shake, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { CoffeeTable } from "../parts/CoffeeTable";
@@ -36,7 +36,7 @@ import {
   swapUnderLid,
 } from "./AwakeRecordScene";
 import { SUBJECT_BEFORE_FRAMES, WaitingSubject } from "./GardnerSleepsScene";
-import { flash, shake } from "./MaybeBrainScene";
+import { flash } from "./MaybeBrainScene";
 import { Drift } from "./SleepDebtScene";
 
 const ROOM_HUE = "lilac";

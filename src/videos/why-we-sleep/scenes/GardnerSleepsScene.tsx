@@ -12,6 +12,7 @@ import {
   linear,
   mix,
   ramp,
+  shake,
   clamp01,
 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
@@ -41,7 +42,7 @@ import {
 } from "../parts/SleepBill";
 import { Tag } from "../parts/Tag";
 import { glance, swapUnderLid } from "./AwakeRecordScene";
-import { flash, shake } from "./MaybeBrainScene";
+import { flash } from "./MaybeBrainScene";
 import { RECAP_LEAD, RecapPrelude } from "./SoFarScene";
 import { billSway } from "./SkipANightScene";
 import { Drift, driftZoom, undrifted } from "./SleepDebtScene";

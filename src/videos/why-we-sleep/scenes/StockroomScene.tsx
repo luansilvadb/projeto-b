@@ -30,6 +30,7 @@ import {
   linear,
   mix,
   ramp,
+  shake,
 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
@@ -65,7 +66,7 @@ import {
   SyllableSheet,
 } from "../parts/SyllableList";
 import { seen } from "./ButWhatScene";
-import { flash, NEVER, Preluded, shake, Sooner } from "./MaybeBrainScene";
+import { flash, NEVER, Preluded, Sooner } from "./MaybeBrainScene";
 import { centeredAt } from "./MemoryTestScene";
 
 /** O cérebro da comparação: cheio, na cor quente das etiquetas, com as dobras num tom abaixo. */

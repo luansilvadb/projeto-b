@@ -28,7 +28,7 @@ import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, drop, mix, ramp, clamp } from "../../../components/timing";
+import { cue, drop, mix, ramp, shake, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { enterProgress, markFor } from "../../../video/stage";
@@ -259,20 +259,6 @@ export const Standing: React.FC<{ children: React.ReactNode }> = ({
       {children}
     </Build>
   );
-};
-
-/** Um vaivém que morre: `turns` idas e voltas em `frames` quadros, a partir de `at`. */
-export const shake = (
-  frame: number,
-  at: number,
-  frames: number,
-  amount: number,
-  turns: number,
-): number => {
-  const t = (frame - at) / frames;
-  return t <= 0 || t >= 1
-    ? 0
-    : amount * (1 - t) * Math.sin(t * turns * Math.PI * 2);
 };
 
 /** Um pisca: sobe a 1 em `frames / 2` quadros e volta, a partir de `at`. */
