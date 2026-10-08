@@ -41,7 +41,7 @@ def naturalness(utmos: UTMOS22Strong, samples: np.ndarray, sample_rate: int) -> 
 
 
 def semitones_from(reference_hz: float, hz: float | None) -> float | None:
-    return float(abs(12 * np.log2(hz / reference_hz))) if hz else None
+    return abs(pitch.semitones_between(reference_hz, hz)) if hz else None
 
 
 def main() -> None:
