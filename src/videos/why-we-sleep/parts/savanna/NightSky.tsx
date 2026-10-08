@@ -1,6 +1,6 @@
 import { wave } from "../../../../components/Idle";
 import { useStudyTime } from "../../../../studies/savanna-reference/SavannaReference";
-import { useRichTheme } from "./RichTheme";
+import { astroAt, useRichTheme } from "./RichTheme";
 import { savanna, savannaNightSky as s } from "../../palette";
 
 const p = savanna.night;
@@ -57,7 +57,8 @@ const dust = Array.from({ length: 340 }, (_, i) => {
 export const NightSky = () => {
   const t = useStudyTime();
   const { orb } = useRichTheme();
-  const arc = orb === undefined ? 0 : orb - 0.36;
+  // Sem astro pedido, a lua fica onde a referência noturna a pôs.
+  const [moonX, moonY] = orb === undefined ? [153, 281] : astroAt(orb);
   return (
     <>
       <defs>
@@ -119,10 +120,7 @@ export const NightSky = () => {
           </g>
         ))}
       </g>
-      <g
-        id="night-moon"
-        transform={`translate(${153 + arc * 450} ${281 + t * 0.15 - arc * 500})`}
-      >
+      <g id="night-moon" transform={`translate(${moonX} ${moonY + t * 0.15})`}>
         <circle r="174" fill={p.sunHalo} opacity=".19" />
         <circle r="135" fill={p.sunCoral} opacity=".19" />
         <circle r="105" fill={p.sunOrange} opacity=".12" />

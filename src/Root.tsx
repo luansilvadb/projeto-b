@@ -16,6 +16,8 @@ import {
 import {
   RichSavannaAnimation,
   RichSavannaReference,
+  SAVANNA_HOURS_FRAMES,
+  SavannaHours,
   NightSavannaAnimation,
   NightSavannaReference,
 } from "./videos/why-we-sleep/parts/savanna/RichSavannaReference";
@@ -95,6 +97,15 @@ export const RemotionRoot: React.FC = () => {
           height={HEIGHT}
           fps={FPS}
           durationInFrames={8 * FPS}
+        />
+        {/* A luz da savana: do dia (quadro 0) à noite (quadro 8), para conferir a mistura dos três horários. */}
+        <Composition
+          id="savana-luz"
+          component={SavannaHours}
+          width={WIDTH}
+          height={HEIGHT}
+          fps={FPS}
+          durationInFrames={SAVANNA_HOURS_FRAMES}
         />
         {/* A folha de modelo da água-viva: todas as poses, para julgar o desenho. */}
         <Still

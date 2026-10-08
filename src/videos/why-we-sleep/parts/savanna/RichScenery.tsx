@@ -5,7 +5,7 @@ import {
   GrassTuft,
   useStudyTime,
 } from "../../../../studies/savanna-reference/SavannaReference";
-import { useNight, useRichPalette, useRichTheme } from "./RichTheme";
+import { useRichPalette, useRichTheme } from "./RichTheme";
 import { useBuild, useCameraState } from "../../../../components/Camera";
 import { savannaNightSky } from "../../palette";
 
@@ -66,7 +66,7 @@ export const CloudBank = ({
 }) => {
   const id = useId();
   const seconds = useStudyTime();
-  const night = useNight();
+  const { moonlight } = useRichTheme();
   return (
     <g
       id={name}
@@ -90,7 +90,7 @@ export const CloudBank = ({
               rx={radius}
               ry={height * 0.72}
             />
-            {night &&
+            {moonlight > 0 &&
               radius > 25 &&
               (name.includes("lit-cloud") || name === "upper-left-cloud") && (
                 <path
@@ -98,7 +98,7 @@ export const CloudBank = ({
                   fill="none"
                   stroke={savannaNightSky.cloudEdge}
                   strokeWidth="1.7"
-                  opacity=".7"
+                  opacity={0.7 * moonlight}
                 />
               )}
           </g>

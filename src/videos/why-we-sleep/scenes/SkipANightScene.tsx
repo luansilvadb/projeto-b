@@ -26,7 +26,7 @@ export const OWING = framing([DEN.x, DEN.y - 100], 2.5, [1160, 700]);
 /** Onde a conta fica no quadro: o meio do alto do papel. */
 export const OWING_BILL = { x: 470, y: 150, scale: 1.2 };
 /** Onde o sol está de manhã, do começo de um plano ao fim do outro: sobe devagar. */
-export const MORNING_ORB = { from: 0.6, to: 0.62 };
+export const MORNING_ORB = { from: 0.296, to: 0.3 };
 
 /**
  * O balanço da conta aberta, em graus: o papel fica pendurado pelo alto e
@@ -44,8 +44,8 @@ const VIGIL = framing([DEN.x + 70, DEN.y - 130], 2.7, [900, 620]);
 const VIGIL_OPENING = framing([DEN.x - 40, DEN.y - 170], 1.75, [1120, 640]);
 const OPENING_SECONDS = 1;
 // A noite andou no corte: a lua já está mais alta do que o plano anterior a
-// deixou (`LATE_ORB`), noutro ponto do céu, e dali sobe até o meio dele, a velocidade constante.
-const MOON = { from: LATE_ORB + 0.055, top: 0.5, seconds: 2.5 };
+// deixou (`LATE_ORB`), noutro ponto do céu, e dali sobe mais um pouco, a velocidade constante.
+const MOON = { from: LATE_ORB + 0.008, top: 0.33, seconds: 2.5 };
 // As duas viradas de cabeça, de 0,5 s cada: em quantos quadros a cabeça vai
 // (ou volta) e quantos fica olhando para trás na primeira. Na segunda ela não
 // volta: o corpo é que a segue.
@@ -231,7 +231,8 @@ const OwingShot: React.FC<OwingShotProps> = ({
       >
         <SavannaShot
           camera={OWING}
-          daylight={1}
+          // A manhã dele é o sol baixo: o cenário fica na luz do entardecer, e não na do pleno dia.
+          daylight={0.5}
           orb={mix(MORNING_ORB.from, MORNING_ORB.to, linear(frame, 0, length))}
           clock={clock}
         >

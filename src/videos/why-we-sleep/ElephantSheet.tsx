@@ -5,7 +5,8 @@ import { Grain } from "../../components/Grain";
 import { Place } from "../../components/Place";
 import { SvgLayer } from "../../components/SvgLayer";
 import { elephant, elephantNight, daylightTones } from "./palette";
-import { Savanna, SAVANNA_GROUND_Y, SavannaShadow } from "./parts/Savanna";
+import { Savanna } from "./parts/Savanna";
+import { SAVANNA_GROUND_Y, SavannaShadow } from "./parts/savanna/RichTheme";
 
 const ROWS = [
   { time: "day", colors: elephant },

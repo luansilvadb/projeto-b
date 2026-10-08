@@ -187,7 +187,7 @@ const LossesShot: React.FC<LossesShotProps> = ({ at }) => {
           frame / length,
         )}
       >
-        <RichSavannaBackdrop daylight={0} orb={0.3}>
+        <RichSavannaBackdrop daylight={0} orb={0.303}>
           <Prey
             daylight={0}
             rest={ramp(frame, SETTLE.restAt * fps, SETTLE.rest * fps)}

@@ -766,6 +766,8 @@ const savannaDusk = {
   },
   shadow: "#902947",
   shadowDeep: "#722342",
+  /** A sombra de contato de quem pisa o chão. */
+  contact: "#38093C",
 } as const;
 
 /** As cores de um horário da savana em camadas: todos os horários têm as mesmas chaves, e o cenário mistura um no outro. */
@@ -834,10 +836,74 @@ const savannaNight: SavannaColors = {
   },
   shadow: "#12134f",
   shadowDeep: "#09093a",
+  contact: "#070230",
+};
+
+// O dia: os matizes do modo `savana-dia` aprovado em 2026-10-03 (céu
+// pêssego-dourado, chão ocre, copas castanhas), distribuídos pelas camadas.
+const savannaDay: SavannaColors = {
+  sky: ["#FFDC8E", "#FFD485", "#FFC878", "#FFBB6C", "#FFB063", "#FFA85C"],
+  sunshine: "#FFF2BA",
+  sun: "#FFF6C8",
+  sunEdge: "#FFFBE0",
+  // O halo do dia quase some no céu: o halo em degraus foi recusado pelo usuário no piloto do polimento.
+  sunOrange: "#FFEDB4",
+  sunCoral: "#FFE3A0",
+  sunHalo: "#FFD98A",
+  clouds: {
+    lemon: "#FFF4D2",
+    gold: "#FFE9B4",
+    orange: "#FFDFA0",
+    coral: "#FFD08E",
+    rose: "#FBC283",
+    purple: "#F2AE74",
+    dark: "#E99F66",
+  },
+  hills: ["#F2A552", "#EC9844", "#E88F37", "#DD8230", "#D2772B"],
+  canopy: {
+    edge: "#FFD777",
+    light: "#C2601C",
+    mid: "#A9460F",
+    dark: "#8F390C",
+    deep: "#7A2F0A",
+  },
+  trunk: "#7A2F0A",
+  distantTree: "#D0762C",
+  nearTree: "#BE6622",
+  ground: ["#F0B548", "#E8A93E", "#E09E34", "#D58E28", "#C97C1E"],
+  earth: {
+    bright: "#FFD06A",
+    gold: "#F2B84C",
+    orange: "#D98A28",
+    coral: "#CC7C22",
+    red: "#BC6C1A",
+  },
+  grass: {
+    dark: "#8A4A0E",
+    shade: "#7A3B03",
+    mid: "#B87616",
+    gold: "#FFCF5E",
+    orange: "#E39A2C",
+  },
+  bush: {
+    dark: "#7A3B03",
+    mid: "#99500F",
+    purple: "#A85C14",
+    rose: "#C4701E",
+    coral: "#D88628",
+    orange: "#E89A34",
+  },
+  shadow: "#7A3B03",
+  shadowDeep: "#5E2C02",
+  contact: "#7A3B03",
 };
 
 /** A savana em camadas, do antílope e das elefantas: um jogo de cores por horário sobre o mesmo desenho. */
-export const savanna = { dusk: savannaDusk, night: savannaNight } as const;
+export const savanna = {
+  day: savannaDay,
+  dusk: savannaDusk,
+  night: savannaNight,
+} as const;
 
 /** O que só existe no céu da noite da savana: estrelas, crateras e o halo da lua, e a borda acesa das nuvens. */
 export const savannaNightSky = {

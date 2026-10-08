@@ -18,7 +18,7 @@ import {
   daylightTones,
   type TagTone,
 } from "../palette";
-import { SAVANNA_GROUND_Y, SavannaShadow } from "./Savanna";
+import { SAVANNA_GROUND_Y, SavannaShadow } from "./savanna/RichTheme";
 import { Tag } from "./Tag";
 
 /**

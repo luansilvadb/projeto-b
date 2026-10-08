@@ -15,16 +15,22 @@ import {
   SmallTuft,
   TallGrass,
 } from "./RichScenery";
-import { savanna } from "../../palette";
 import { NightSky } from "./NightSky";
-import { RichTheme, useNight, useRichPalette } from "./RichTheme";
-import { Layer } from "../../../../components/Camera";
+import {
+  astroAt,
+  RichTheme,
+  savannaColorsAt,
+  useRichPalette,
+  useRichTheme,
+} from "./RichTheme";
+import { Layer, useCarriedNumber } from "../../../../components/Camera";
+import { mix } from "../../../../components/timing";
 
 // As coordenadas acompanham a segunda referência. A reconstrução é vetorial:
 // cada plano de distância e cada parte móvel continuam editáveis no Remotion.
 const Paint = () => {
   const p = useRichPalette();
-  const night = useNight();
+  const { moonlight } = useRichTheme();
   return (
     <defs>
       <linearGradient
@@ -37,7 +43,7 @@ const Paint = () => {
       >
         {p.sky.map((color, index) => (
           <stop
-            key={color}
+            key={index}
             offset={index / (p.sky.length - 1)}
             stopColor={color}
           />
@@ -46,11 +52,11 @@ const Paint = () => {
       <radialGradient
         id="rich-sunrise"
         cx="550"
-        cy={night ? 580 : 620}
-        r={night ? 410 : 510}
+        cy={mix(620, 580, moonlight)}
+        r={mix(510, 410, moonlight)}
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor={p.sunshine} stopOpacity={night ? 0.7 : 0.85} />
+        <stop stopColor={p.sunshine} stopOpacity={mix(0.85, 0.7, moonlight)} />
         <stop offset=".38" stopColor={p.sunshine} stopOpacity=".3" />
         <stop offset="1" stopColor={p.sunshine} stopOpacity="0" />
       </radialGradient>
@@ -83,7 +89,7 @@ const Paint = () => {
       >
         {p.ground.map((color, index) => (
           <stop
-            key={color}
+            key={index}
             offset={index / (p.ground.length - 1)}
             stopColor={color}
           />
@@ -104,8 +110,10 @@ const Paint = () => {
 
 const Sky = () => {
   const p = useRichPalette();
-  const night = useNight();
+  const { moonlight, orb } = useRichTheme();
   const t = useStudyTime();
+  // Sem astro pedido, o sol fica onde a referência do entardecer o pôs.
+  const [sunX, sunY] = orb === undefined ? [114, 293] : astroAt(orb);
   return (
     <RichLayer depth={0.12}>
       <rect x="-150" y="-100" width="1972" height="800" fill="url(#rich-sky)" />
@@ -116,16 +124,23 @@ const Sky = () => {
         height="710"
         fill="url(#rich-sunrise)"
       />
-      {night ? (
-        <NightSky />
-      ) : (
-        <g transform={`translate(114 ${293 + t * 0.6})`}>
+      {/* O sol e a lua trocam por opacidade: a luz que passa do entardecer à noite não troca de desenho num quadro. */}
+      {moonlight > 0 ? (
+        <g opacity={moonlight}>
+          <NightSky />
+        </g>
+      ) : null}
+      {moonlight < 1 ? (
+        <g
+          transform={`translate(${sunX} ${sunY + t * 0.6})`}
+          opacity={1 - moonlight}
+        >
           <circle r="194" fill={p.sunHalo} opacity=".27" />
           <circle r="162" fill={p.sunCoral} opacity=".68" />
           <circle r="119" fill="url(#rich-sun-orange)" />
           <circle r="69" fill="url(#rich-sun)" />
         </g>
-      )}
+      ) : null}
       <CloudBank
         name="upper-left-cloud"
         x={340}
@@ -803,13 +818,14 @@ const Foreground = () => {
 
 export const RichSavannaReference = ({
   animated = false,
-  night = false,
+  daylight = 0.5,
   environmentOnly = false,
   cameraDriven = false,
   orb,
 }: {
   readonly animated?: boolean;
-  readonly night?: boolean;
+  /** 0 é noite, 0,5 é o entardecer e 1 é pleno dia; no meio, as cores passam de um horário ao outro. */
+  readonly daylight?: number;
   readonly environmentOnly?: boolean;
   readonly cameraDriven?: boolean;
   readonly orb?: number;
@@ -819,8 +835,8 @@ export const RichSavannaReference = ({
   return (
     <RichTheme.Provider
       value={{
-        palette: night ? savanna.night : savanna.dusk,
-        night,
+        palette: savannaColorsAt(daylight),
+        moonlight: Math.min(1, Math.max(0, 1 - 2 * daylight)),
         cameraDriven,
         orb,
       }}
@@ -831,11 +847,7 @@ export const RichSavannaReference = ({
             viewBox="0 0 1672 940.5"
             width="100%"
             height="100%"
-            aria-label={
-              night
-                ? "Savana à noite, com lua cheia, estrelas, acácias e antílope"
-                : "Savana em camadas, com nuvens iluminadas, acácias e antílope ao pôr do sol"
-            }
+            aria-label="Savana em camadas, com nuvens, acácias e o sol ou a lua"
           >
             <Paint />
             <Sky />
@@ -850,29 +862,51 @@ export const RichSavannaReference = ({
 };
 
 export const RichSavannaAnimation = () => <RichSavannaReference animated />;
-export const NightSavannaReference = () => <RichSavannaReference night />;
+export const NightSavannaReference = () => (
+  <RichSavannaReference daylight={0} />
+);
 export const NightSavannaAnimation = () => (
-  <RichSavannaReference night animated />
+  <RichSavannaReference daylight={0} animated />
 );
 
-/** O cenário do elenco usa o mesmo desenho das referências, sem seu ator de demonstração. */
+// A conferência da luz: nove horas, do dia (quadro 0) à noite (quadro 8).
+const HOURS = 8;
+export const SAVANNA_HOURS_FRAMES = HOURS + 1;
+export const SavannaHours = () => (
+  <RichSavannaReference
+    daylight={1 - useCurrentFrame() / HOURS}
+    environmentOnly
+    orb={0.3}
+  />
+);
+
+/**
+ * O cenário do elenco: o mesmo desenho das referências, sem o ator de
+ * demonstração. Na mesma savana do plano anterior, a luz e o astro continuam
+ * de onde estavam.
+ */
 export const RichSavannaBackdrop = ({
-  daylight,
-  orb,
+  daylight: ownDaylight,
+  orb: ownOrb,
   children,
 }: {
   readonly daylight: number;
+  /** Posição do sol ou da lua ao longo do arco: 0 nasce à esquerda, 1 se põe à direita. */
   readonly orb?: number;
   readonly children: React.ReactNode;
-}) => (
-  <>
-    <RichSavannaReference
-      animated
-      night={daylight < 0.25}
-      environmentOnly
-      cameraDriven
-      orb={orb}
-    />
-    <Layer depth={1}>{children}</Layer>
-  </>
-);
+}) => {
+  const daylight = useCarriedNumber("savanna-daylight", ownDaylight);
+  const orb = useCarriedNumber("savanna-orb", ownOrb ?? 0);
+  return (
+    <>
+      <RichSavannaReference
+        animated
+        daylight={daylight}
+        environmentOnly
+        cameraDriven
+        orb={ownOrb === undefined ? undefined : orb}
+      />
+      <Layer depth={1}>{children}</Layer>
+    </>
+  );
+};

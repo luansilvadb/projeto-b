@@ -42,7 +42,7 @@ import {
   savanna,
   sound,
 } from "../palette";
-import { SAVANNA_GROUND_Y, SavannaShadow } from "../parts/Savanna";
+import { SAVANNA_GROUND_Y, SavannaShadow } from "../parts/savanna/RichTheme";
 import { RichSavannaBackdrop } from "../parts/savanna/RichSavannaReference";
 
 /**
@@ -76,12 +76,17 @@ const DEN_MEDIUM_END = framing(
  */
 export const DEN_CLOSE = framing([DEN.x - 20, DEN.y - 44], 5.6, [900, 640]);
 
-/** Onde a lua está quando a noite cai: alta, à esquerda, para aparecer também nos planos de perto. */
-const NIGHT_ORB = 0.36;
+/**
+ * Onde a lua está quando a noite cai: alta, à esquerda, para aparecer também
+ * nos planos de perto. Os valores do astro deste capítulo são posições no arco
+ * do céu (0 nasce à esquerda, 1 se põe à direita), escolhidas para o sol e a
+ * lua ficarem onde as referências do entardecer e da noite os puseram.
+ */
+const NIGHT_ORB = 0.311;
 /** Onde ela está quando o bicho já ressona e o predador chega: é de onde `skip-a-night` a faz subir. */
-export const LATE_ORB = NIGHT_ORB + 0.04;
+export const LATE_ORB = NIGHT_ORB + 0.005;
 // O sol do entardecer desce devagar, à esquerda, do começo ao fim do plano aberto.
-const DUSK_ORB = { from: 0.335, to: 0.295 };
+const DUSK_ORB = { from: 0.3, to: 0.296 };
 // A noite desce do alto do quadro sobre o entardecer, em 0,25 s.
 const NIGHTFALL: Wipe = { frames: 8, from: "top" };
 

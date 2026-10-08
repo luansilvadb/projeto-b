@@ -14,8 +14,7 @@ import { wave } from "../../../components/Idle";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { daylightTones, savannaFinish } from "../palette";
 
-/** Onde as elefantas pisam no plano aberto. */
-export const SAVANNA_GROUND_Y = 880;
+import { SAVANNA_GROUND_Y } from "./savanna/RichTheme";
 
 type SavannaProps = {
   /** 1 é pleno dia, 0 é noite fechada; no meio, o entardecer. */
@@ -301,32 +300,3 @@ export const Savanna: React.FC<SavannaProps> = ({
     </>
   );
 };
-
-type ContactProps = {
-  readonly x: number;
-  readonly y: number;
-  readonly width: number;
-  readonly daylight: number;
-};
-
-/** Sombra de contato no chão da savana. Vai dentro de um SvgLayer. */
-export const SavannaShadow: React.FC<ContactProps> = ({
-  x,
-  y,
-  width,
-  daylight,
-}) => (
-  <ellipse
-    cx={x}
-    cy={y}
-    rx={width / 2}
-    ry={width * 0.05}
-    fill={blend(
-      daylightTones.day.contact,
-      daylightTones.dusk.contact,
-      daylightTones.night.contact,
-      daylight,
-    )}
-    opacity={0.28}
-  />
-);

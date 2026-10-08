@@ -323,7 +323,8 @@ const PayingShot: React.FC<PayingShotProps> = ({
     <>
       <SavannaShot
         camera={OWING}
-        daylight={1}
+        // O sol baixo da manhã: a mesma luz do plano anterior, e não a do pleno dia.
+        daylight={0.5}
         orb={MORNING_ORB.to + LONGER.orb * longer}
         clock={clock}
       >

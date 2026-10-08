@@ -13,24 +13,24 @@ O trabalho de imagem segue a skill `diretor-de-arte`. `<cena>` é o `id` do rote
 
 ## 2. Pessoa
 
-- [ ] 2.1 Em `src/art/Person.tsx`, apagar a construção antiga e a prop `finish`, mantendo `lean`; tirar o atributo `finish` de `ElephantAwakeScene`, `MaybeBrainScene`, `OneOfThemScene`, `WhatItIsScene` e `Bed.tsx`; conferir com `pnpm lint`
-- [ ] 2.2 Renderizar as cenas que já usavam a construção nova (`elephant-awake`, `maybe-brain`, `one-of-them`, `what-it-is`) e conferir que os quadros não mudaram
-- [ ] 2.3 Conferir e corrigir as poses de `third-of-life`, `two-hours` e `unknown-cause`: em cada plano com a pessoa, nenhum membro solto ou atravessando o tronco, e o gesto no alvo de antes
-- [ ] 2.4 Conferir e corrigir `parts/Chalkboard.tsx` (o braço erguido para o quadro) nos renders de `biggest-mistake`, `forced-awake` e `tonight`
-- [ ] 2.5 Conferir e corrigir `parts/TankShot.tsx` (a pesquisadora, a prancheta, a rede) nos renders de `maybe-brain`, `jellyfish-night`, `jellyfish-platform`, `jellyfish-debt` e `older-than-brain`
-- [ ] 2.6 Conferir e corrigir `parts/Gardner.tsx` e `parts/CoffeeTable.tsx` nos renders de `sleep-debt`, `awake-record`, `gardner-hours`, `gardner-sleeps` e `so-far`: Gardner, os dois amigos, Dement e quem senta à mesa
-- [ ] 2.7 Conferir e corrigir `parts/ShopInside.tsx` e as três cenas do estoque (`stockroom`, `stockroom-night`, `stockroom-solid`): a lojista com a caixa e os fregueses
-- [ ] 2.8 Conferir e corrigir `memory-test` e `memory-result`: os pesquisadores entregando a lista e as duas pessoas
-- [ ] 2.9 `PersonSheet.tsx` passa a mostrar uma fileira só, nas cinco poses; conferir abrindo o still da composição `pessoa`
-- [ ] 2.10 Acionar o `critico-de-quadro` sobre os quadros de todas as cenas dos itens 2.3 a 2.8, com a pergunta da construção única e da pose contra a ficha; corrigir o que for bloqueante ou relevante e anexar o relatório à conversa
-- [ ] 2.11 Em `art.md`, reescrever a silhueta da pessoa no Elenco (tronco em feijão, pescoço, quadril, sapato em cunha) e tirar do "Piloto do polimento" o que deixou de valer para a pessoa e para a elefanta ("a adoção nas cenas, não"); conferir que o texto descreve o que os quadros mostram
+- [x] 2.1 Em `src/art/Person.tsx`, apagar a construção antiga e a prop `finish`, mantendo `lean`; tirar o atributo `finish` de `ElephantAwakeScene`, `MaybeBrainScene`, `OneOfThemScene`, `WhatItIsScene` e `Bed.tsx`; conferir com `pnpm lint`
+- [x] 2.2 Renderizar as cenas que já usavam a construção nova (`elephant-awake`, `maybe-brain`, `one-of-them`, `what-it-is`) e conferir que os quadros não mudaram
+- [x] 2.3 Conferir e corrigir as poses de `third-of-life`, `two-hours` e `unknown-cause`: em cada plano com a pessoa, nenhum membro solto ou atravessando o tronco, e o gesto no alvo de antes
+- [x] 2.4 Conferir e corrigir `parts/Chalkboard.tsx` (o braço erguido para o quadro) nos renders de `biggest-mistake`, `forced-awake` e `tonight`
+- [x] 2.5 Conferir e corrigir `parts/TankShot.tsx` (a pesquisadora, a prancheta, a rede) nos renders de `maybe-brain`, `jellyfish-night`, `jellyfish-platform`, `jellyfish-debt` e `older-than-brain`
+- [x] 2.6 Conferir e corrigir `parts/Gardner.tsx` e `parts/CoffeeTable.tsx` nos renders de `sleep-debt`, `awake-record`, `gardner-hours`, `gardner-sleeps` e `so-far`: Gardner, os dois amigos, Dement e quem senta à mesa
+- [x] 2.7 Conferir e corrigir `parts/ShopInside.tsx` e as três cenas do estoque (`stockroom`, `stockroom-night`, `stockroom-solid`): a lojista com a caixa e os fregueses
+- [x] 2.8 Conferir e corrigir `memory-test` e `memory-result`: os pesquisadores entregando a lista e as duas pessoas
+- [x] 2.9 `PersonSheet.tsx` passa a mostrar uma fileira só, nas cinco poses; conferir abrindo o still da composição `pessoa`
+- [x] 2.10 Acionar o `critico-de-quadro` sobre os quadros de todas as cenas dos itens 2.3 a 2.8, com a pergunta da construção única e da pose contra a ficha; corrigir o que for bloqueante ou relevante e anexar o relatório à conversa
+- [x] 2.11 Em `art.md`, reescrever a silhueta da pessoa no Elenco (tronco em feijão, pescoço, quadril, sapato em cunha) e tirar do "Piloto do polimento" o que deixou de valer para a pessoa e para a elefanta ("a adoção nas cenas, não"); conferir que o texto descreve o que os quadros mostram
 
 ## 3. Savana
 
-- [ ] 3.1 Mover por `git mv` `RichSavannaReference.tsx`, `RichScenery.tsx`, `RichTheme.tsx`, `NightSky.tsx` e `RichAntelope.tsx` para `src/videos/why-we-sleep/parts/savanna/`; atualizar os imports de `Root.tsx`, `NightFallsScene` e `ThirdOfLifeScene`; conferir com `pnpm lint` e renderizando `night-falls` sem diferença nos quadros
-- [ ] 3.2 Levar as cores de `richPalette.ts` e `nightPalette.ts` para `palette.ts`, como os jogos `dusk` e `night` de `savanna`, e apagar os dois arquivos; conferir com `pnpm lint` e com `night-falls` e `third-of-life` renderizados sem diferença
-- [ ] 3.3 Acrescentar o jogo `day`, com os matizes do `savana-dia` aprovado distribuídos pelas camadas, e fazer o cenário misturar os três jogos de forma contínua por `daylight`, com sol, lua e estrelas entrando por opacidade; conferir numa tira de quadros de dia a noite, em `out/rascunho/`, que nenhum quadro troca de desenho e que o meio não fica barrento
-- [ ] 3.4 Dar ao cenário único o que `SavannaStage` usa hoje: luz e astro carregados entre planos, subida e descida com o palco e desenho extra no céu; mover `SAVANNA_GROUND_Y` e `SavannaShadow` para `parts/savanna/` e atualizar `Herd`, `Prey` e `NightFallsScene`; conferir com `pnpm lint`
+- [x] 3.1 Mover por `git mv` `RichSavannaReference.tsx`, `RichScenery.tsx`, `RichTheme.tsx`, `NightSky.tsx` e `RichAntelope.tsx` para `src/videos/why-we-sleep/parts/savanna/`; atualizar os imports de `Root.tsx`, `NightFallsScene` e `ThirdOfLifeScene`; conferir com `pnpm lint` e renderizando `night-falls` sem diferença nos quadros
+- [x] 3.2 Levar as cores de `richPalette.ts` e `nightPalette.ts` para `palette.ts`, como os jogos `dusk` e `night` de `savanna`, e apagar os dois arquivos; conferir com `pnpm lint` e com `night-falls` e `third-of-life` renderizados sem diferença
+- [x] 3.3 Acrescentar o jogo `day`, com os matizes do `savana-dia` aprovado distribuídos pelas camadas, e fazer o cenário misturar os três jogos de forma contínua por `daylight`, com sol, lua e estrelas entrando por opacidade; conferir numa tira de quadros de dia a noite, em `out/rascunho/`, que nenhum quadro troca de desenho e que o meio não fica barrento
+- [x] 3.4 Dar ao cenário único o que `SavannaStage` usa hoje: luz e astro carregados entre planos, subida e descida com o palco e desenho extra no céu; mover `SAVANNA_GROUND_Y` e `SavannaShadow` para `parts/savanna/` e atualizar `Herd`, `Prey` e `NightFallsScene`; conferir com `pnpm lint`
 - [ ] 3.5 Renderizar um quadro de prova de `elephants`, plano 1, com a manada na savana em camadas de dia, em `out/rascunho/`, ao lado do quadro atual; levar ao usuário como decisão de imagem e registrar a resposta em `art.md`. Recusado, ajustar o jogo `day` pela regra da linha de parada antes de seguir
 - [ ] 3.6 Com o aceite, trocar o cenário dentro de `SavannaStage` e renderizar `elephants`, `two-hours`, `elephant-awake` e `elephant-verdict`; conferir que as trocas entre planos da savana não desmontam o cenário e que a luz continua de onde estava
 - [ ] 3.7 Apagar `parts/Savanna.tsx`, `savannaFinish`, `sunset`, `SunsetPilot.tsx` e a composição dele em `Root.tsx`; tirar `finish` de `Antelope.tsx`, `Prey.tsx`, `Timeline.tsx`, `NightFallsScene`, `DebtTestScene` e `AntelopeSheet.tsx`; conferir que `grep -rn "finish" src` não devolve nenhuma prop de desenho e que `pnpm lint` passa
