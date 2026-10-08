@@ -68,7 +68,7 @@ Se a criação for recusada, corrija a permissão de links e repita a criação 
 
 `.agents/` é a fonte canônica do conhecimento local: `skills/` guarda os workflows e suas unidades, `agents/` guarda as oito definições de especialistas e `commands/opsx/` guarda os seis comandos do Claude. As instruções compartilhadas ficam em `AGENTS.md` na raiz. Edite os destinos canônicos; `.claude` e `CLAUDE.md` são apenas os links de compatibilidade descritos acima.
 
-As dez skills locais são `diretor-criativo`, `diretor-de-arte`, `diretor-de-som`, `producao`, `openspec-apply-change`, `openspec-archive-change`, `openspec-explore`, `openspec-propose`, `openspec-sync-specs` e `openspec-update-change`. A `creator` e a `grilling` ficam na instalação global compartilhada.
+As quatro skills locais são `diretor-criativo`, `diretor-de-arte`, `diretor-de-som` e `producao`. A `creator`, a `grilling` e as seis skills `openspec-*` ficam na instalação global compartilhada. Os artefatos OpenSpec do projeto continuam em `openspec/`, e os comandos do Claude em `.agents/commands/opsx/`.
 
 O Codex descobre as skills em `.agents/skills/` e lê `AGENTS.md`; o Claude Code acessa o mesmo conteúdo pelos links. As definições Markdown de especialistas e os comandos `/opsx:*` mantêm o formato do Claude: centralizá-los não os registra automaticamente como subagentes ou comandos nativos do Codex. Skills globais externas, como `ponytail` e `remotion-best-practices`, continuam em suas instalações fora do projeto. Depois da migração, abra novas sessões para carregar o novo inventário.
 
@@ -76,7 +76,7 @@ O Codex descobre as skills em `.agents/skills/` e lê `AGENTS.md`; o Claude Code
 
 A instalação pessoal é separada do repositório: `~/.agents/skills/` é a fonte física das skills globais compartilhadas. O Codex as descobre nesse diretório; a própria pasta `~/.claude/skills/` é um link simbólico para essa fonte. Adicionar, alterar ou remover uma skill na fonte se reflete automaticamente no caminho do Claude.
 
-As 11 skills pessoais compartilhadas são `creator`, `find-skills`, `skill-creator`, `grilling`, `ponytail`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help`, `ponytail-review` e `remotion-best-practices`. Elas continuam externas ao projeto; o conteúdo técnico da skill de Remotion é mantido pela origem, não editado à mão. A `grilling` global pessoal está em `.agents/skills`, sem outra instalação pessoal em `.codex/skills/grilling`.
+As 17 skills pessoais compartilhadas são `creator`, `find-skills`, `skill-creator`, `grilling`, `openspec-apply-change`, `openspec-archive-change`, `openspec-explore`, `openspec-propose`, `openspec-sync-specs`, `openspec-update-change`, `ponytail`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help`, `ponytail-review` e `remotion-best-practices`. Elas continuam externas ao projeto; o conteúdo técnico da skill de Remotion é mantido pela origem, não editado à mão. A `grilling` global pessoal está em `~/.agents/skills/`, sem outra instalação pessoal em `.codex/skills/grilling`.
 
 As pastas globais `.claude` e `.codex` continuam físicas; o link é a pasta `.claude/skills`. Ela compartilha toda a árvore de `.agents/skills`, incluindo `synced`. As skills sincronizadas continuam mantidas pelos aplicativos; plugins, skills de sistema e ChatCut ficam nos caminhos gerenciados pelo aplicativo. As versões locais e gerenciadas podem ter o mesmo nome de uma skill pessoal.
 

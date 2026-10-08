@@ -87,6 +87,8 @@ O pedido determina o dono, e a skill dona determina o conhecimento e o procedime
 
 A skill `creator`, em `~/.agents/skills/creator/`, cria e poda essas skills; a `grilling`, em `~/.agents/skills/grilling/`, é a entrevista que as três direções acionam para levar decisões ao usuário. Ambas são globais, fora do repositório. `remotion-best-practices` também é global, em `~/.agents/skills/remotion-best-practices/`, e vem do Remotion: não edite à mão. A organização dos links globais é definida em `~/.agents/AGENTS.md`.
 
+As seis skills OpenSpec também são globais, em `~/.agents/skills/`: `openspec-apply-change`, `openspec-archive-change`, `openspec-explore`, `openspec-propose`, `openspec-sync-specs` e `openspec-update-change`. Use essas fontes ao trabalhar com OpenSpec; os artefatos do projeto continuam em `openspec/`, e os comandos do Claude em `.agents/commands/opsx/`.
+
 ## Convenções que mudam o que se escreve
 
 - Nomes de arquivos, código e chaves do roteiro em inglês. Comentários, documentação, conteúdo dos vídeos e skills em português do Brasil.
