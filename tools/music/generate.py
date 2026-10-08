@@ -36,8 +36,7 @@ def main() -> None:
     job = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
     root = Path(job["aceStepRoot"])
     gpu = get_gpu_config()
-    quantize = job.get("quantize", gpu.quantization_default)
-    quantization = "int8_weight_only" if quantize else None
+    quantization = "int8_weight_only" if gpu.quantization_default else None
 
     dit = AceStepHandler()
     status, ok = dit.initialize_service(
@@ -76,7 +75,7 @@ def main() -> None:
             bpm=job.get("bpm"),
             keyscale=job.get("keyScale", ""),
             duration=duration,
-            inference_steps=job.get("inferenceSteps", INFERENCE_STEPS),
+            inference_steps=INFERENCE_STEPS,
             shift=SHIFT,
             seed=job["seed"],
             thinking=use_llm,
