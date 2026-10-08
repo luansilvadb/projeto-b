@@ -9,7 +9,7 @@ import { Onomatopoeia } from "../../../components/Onomatopoeia";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, ramp, clamp } from "../../../components/timing";
+import { cue, linear, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { lab, sound, tags } from "../palette";
@@ -36,12 +36,6 @@ import { NEVER, Preluded } from "./MaybeBrainScene";
 const DISC_AT = { x: 1260, y: BENCH_Y + 50, scale: 1 };
 const PLAQUE = { x: 420, y: 390 };
 const CONTROL = discRatSpot(1, DISC_AT);
-/**
- * A bancada dos ratos tem três trechos, um ao lado do outro, e a câmera
- * desliza de um ao seguinte: o disco, os ratos de comparação e os dez em fila
- * sob o calendário (os dois últimos em `rats-result`).
- */
-export const BENCH_STRETCHES = 3;
 /** Os enquadramentos do disco: a bancada inteira, o disco de perto e o rato de comparação. */
 const WIDE = framing([960, 540], 1);
 // Onde a deriva do plano aberto termina: um nada mais perto do disco.
@@ -49,12 +43,22 @@ const WIDE_END = framing([DISC_AT.x, 640], 1.03, [DISC_AT.x, 640]);
 const CLOSE = framing([DISC_AT.x, 640], 1.9, [960, 580]);
 // O quadro vai da borda direita da placa (que, cortada, disputaria com a etiqueta) ao fim do trecho, em 1920.
 const MEDIUM = framing([1338, 600], 1.65, [960, 600]);
-/** Onde a deriva do plano médio termina: é daqui que a câmera de `rats-result` desliza para os ratos de comparação. */
+/** Onde a deriva do plano médio termina: é daqui que a câmera de `rats-result` fecha nos ratos de comparação. */
 export const DISC_MEDIUM_END = framing([1338, 600], 1.7, [960, 600]);
+
+/** A altura em que os ratos pisam na bancada quando o aparelho sai de baixo deles, em `rats-result`. */
+export const DISC_LANDING = BENCH_Y + 10;
+/** O ronco de quem cochila no disco: onde fica, o tamanho da letra, a escala no cenário e o sobe e desce. */
+export const SNORE = {
+  x: CONTROL.x + 190,
+  y: CONTROL.top + 10,
+  size: 84,
+  scale: 1 / MEDIUM.zoom,
+  bob: (seconds: number) => 5 * wave(seconds, 4.2, 0.3),
+};
 
 // Em quantos quadros a bancada sobe ao palco, na entrada da cena.
 const BENCH_IN_FRAMES = 27;
-
 
 // O pulo para cima do disco: de onde cada rato sai (na bancada, na frente da bandeja, em pixels a partir do lugar dele
 // no disco), o agachar que avisa, o tempo no ar, o assentar, e a altura do arco.
@@ -272,6 +276,12 @@ type DiscSetProps = {
   readonly videoClock: number;
   /** A etiqueta e o ronco aparecem. */
   readonly labelled?: boolean;
+  /**
+   * O aparelho saindo, em `rats-result`: quanto do disco e da bandeja resta,
+   * de 1 a 0 (encolhem sobre a bancada), e quanto a etiqueta já saiu, de 0 a
+   * 1. Os dois ratos e o ronco ficam, e quem os desenha é a cena de lá.
+   */
+  readonly leaving?: { readonly disc: number; readonly label: number };
 };
 
 type DiscShotProps = DiscSetProps & {
@@ -280,12 +290,13 @@ type DiscShotProps = DiscSetProps & {
   readonly follow?: number;
 };
 
-/** O que está sobre o primeiro trecho da bancada: o aparelho, os dois ratos, a etiqueta e o ronco. */
+/** O que está sobre a bancada: o aparelho, os dois ratos, a etiqueta e o ronco. */
 const DiscSet: React.FC<DiscSetProps> = ({
   cues,
   clock,
   videoClock,
   labelled = false,
+  leaving,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -293,6 +304,12 @@ const DiscSet: React.FC<DiscSetProps> = ({
   const state = discState(at, fps, cues, (videoClock + frame) / fps);
   const tag = { x: CONTROL.x + 90, y: CONTROL.top - 130 };
   const line = ramp(at, cues.tagAt, 8);
+  const labelLeft = 1 - (leaving?.label ?? 0);
+  // A linha vai do rato à etiqueta; saindo, ela se recolhe para dentro da etiqueta.
+  const root = [CONTROL.x - 20, CONTROL.top + 6] as const;
+  const tip = [tag.x - 30, tag.y + 30] as const;
+  const along = (t: number) =>
+    `${mix(root[0], tip[0], t)},${mix(root[1], tip[1], t)}`;
   const spots = [discRatSpot(0, DISC_AT), CONTROL] as const;
 
   return (
@@ -313,41 +330,56 @@ const DiscSet: React.FC<DiscSetProps> = ({
           ) : null,
         )}
       </SvgLayer>
-      <RatDisc
-        {...DISC_AT}
-        rats={["awake", "awake"]}
-        turn={state.turn}
-        carried={state.carried}
-        seconds={state.seconds}
-        poses={state.poses}
-        // Quem dorme não fareja; o outro, sim.
-        alive={1}
-        ripple={state.ripple}
-        streaks={state.streaks}
-        // O disco e os dois ratos são o assunto dos três planos da cena: de perto, com volume.
-        close
-      />
-      {labelled ? (
+      {/* Saindo, o aparelho encolhe em volta do ponto em que os ratos vão pisar na bancada: eles descem com o tampo. */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          transformOrigin: `${DISC_AT.x}px ${DISC_LANDING}px`,
+          scale: `${leaving?.disc ?? 1}`,
+        }}
+      >
+        <RatDisc
+          {...DISC_AT}
+          empty={leaving !== undefined}
+          rats={["awake", "awake"]}
+          turn={state.turn}
+          carried={state.carried}
+          seconds={state.seconds}
+          poses={state.poses}
+          // Quem dorme não fareja; o outro, sim.
+          alive={1}
+          ripple={state.ripple}
+          streaks={state.streaks}
+          // O disco e os dois ratos são o assunto dos três planos da cena: de perto, com volume.
+          close
+        />
+      </div>
+      {labelled && labelLeft > 0 ? (
         <>
           {/* A linha sai do rato e vai até a etiqueta, com a ponta redonda primeiro. */}
           {line > 0 ? (
             <SvgLayer>
               <path
-                d={`M${CONTROL.x - 20},${CONTROL.top + 6} L${CONTROL.x - 20 + (tag.x - 30 - CONTROL.x + 20) * line},${CONTROL.top + 6 + (tag.y + 30 - CONTROL.top - 6) * line}`}
+                d={`M${along(1 - labelLeft)} L${along(line)}`}
                 stroke={tags.mint.fill}
                 strokeWidth={6}
                 strokeLinecap="round"
               />
               <circle
-                cx={CONTROL.x - 20}
-                cy={CONTROL.top + 6}
-                r={9 * Math.min(1, line * 3)}
+                cx={mix(root[0], tip[0], 1 - labelLeft)}
+                cy={mix(root[1], tip[1], 1 - labelLeft)}
+                r={9 * Math.min(1, line * 3) * labelLeft}
                 fill={tags.mint.fill}
               />
             </SvgLayer>
           ) : null}
           {/* A etiqueta está no cenário: desfaz a aproximação da câmera para ficar no tamanho de etiqueta. */}
-          <Place x={tag.x} y={tag.y} style={{ scale: `${1 / MEDIUM.zoom}` }}>
+          <Place
+            x={tag.x}
+            y={tag.y}
+            style={{ scale: `${labelLeft / MEDIUM.zoom}` }}
+          >
             <Pop at={cues.tagAt - clock + 4}>
               <Tag size="note" on="mint">
                 comparação
@@ -355,26 +387,28 @@ const DiscSet: React.FC<DiscSetProps> = ({
             </Pop>
           </Place>
           {/* O ronco sobe e desce devagar, com a respiração de quem dorme. */}
-          <Place
-            x={CONTROL.x + 190}
-            y={CONTROL.top + 10}
-            style={{
-              scale: `${1 / MEDIUM.zoom}`,
-              translate: `-50% calc(-50% + ${5 * wave(state.seconds, 4.2, 0.3)}px)`,
-              rotate: `${2 * wave(state.seconds, 3.1)}deg`,
-            }}
-          >
-            <Onomatopoeia
-              at={cues.napAt - clock + 6}
-              size={84}
-              color={sound.warm}
-              edge={sound.edge}
-              tilt={12}
-              fade={0.22}
+          {leaving ? null : (
+            <Place
+              x={SNORE.x}
+              y={SNORE.y}
+              style={{
+                scale: `${SNORE.scale}`,
+                translate: `-50% calc(-50% + ${SNORE.bob(state.seconds)}px)`,
+                rotate: `${2 * wave(state.seconds, 3.1)}deg`,
+              }}
             >
-              ZZZ
-            </Onomatopoeia>
-          </Place>
+              <Onomatopoeia
+                at={cues.napAt - clock + 6}
+                size={SNORE.size}
+                color={sound.warm}
+                edge={sound.edge}
+                tilt={12}
+                fade={0.22}
+              >
+                ZZZ
+              </Onomatopoeia>
+            </Place>
+          )}
         </>
       ) : null}
     </>
@@ -395,21 +429,37 @@ const AFTER: Cues = {
   lookAt: -8200,
 };
 
-/** A placa do laboratório, na parede do primeiro trecho. */
-export const DiscPlaque: React.FC = () => <LabPlaque {...PLAQUE} />;
-
 /**
- * O primeiro trecho da bancada como a cena o deixou: o rato de comparação
- * cochilando sob a etiqueta, o do teste olhando para ele. É o que
- * `rats-result` desenha enquanto a câmera desliza para o trecho seguinte.
+ * O aparelho como a cena o deixou, saindo de baixo dos dois ratos: é o que
+ * `rats-result` desenha enquanto a câmera fecha neles. `leaving` é o de `DiscSet`.
  */
-export const DiscAtRest: React.FC<{ videoClock: number }> = ({
-  videoClock,
-}) => {
+export const DiscLeaving: React.FC<{
+  videoClock: number;
+  leaving: NonNullable<DiscSetProps["leaving"]>;
+}> = ({ videoClock, leaving }) => {
   const frame = useCurrentFrame();
   return (
-    <DiscSet cues={AFTER} clock={-frame} videoClock={videoClock} labelled />
+    <DiscSet
+      cues={AFTER}
+      clock={-frame}
+      videoClock={videoClock}
+      labelled
+      leaving={leaving}
+    />
   );
+};
+
+/**
+ * Os dois ratos como a cena os deixou, para `rats-result` continuá-los sem
+ * salto: onde cada um pisa no disco e a pose dele (o do teste, de olho
+ * arregalado para o outro; o de comparação, cochilando).
+ */
+export const discRatsAtRest = (seconds: number, fps: number) => {
+  const state = discState(0, fps, AFTER, seconds);
+  return ([0, 1] as const).map((index) => {
+    const spot = discRatSpot(index, DISC_AT);
+    return { x: spot.x + state.carried, y: spot.y, pose: state.poses[index] };
+  });
 };
 
 /** O disco sobre a bandeja de água, com os dois ratos, no laboratório de Chicago. */
@@ -421,12 +471,11 @@ const DiscShot: React.FC<DiscShotProps> = ({ camera, follow = 0, ...set }) => {
   return (
     <RatLab
       steady
-      span={BENCH_STRETCHES}
       camera={{
         ...camera,
         x: camera.x + follow * followed * camera.zoom,
       }}
-      wall={<DiscPlaque />}
+      wall={<LabPlaque {...PLAQUE} />}
     >
       <DiscSet {...set} />
     </RatLab>

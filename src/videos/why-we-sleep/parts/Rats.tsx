@@ -55,7 +55,7 @@ type RatProps = {
  * O movimento de um rato, por cima do `state`. Sem valores, o rato é o
  * desenho parado: é o que recebem as cenas que não o animam.
  */
-type RatMotion = {
+export type RatMotion = {
   /** Quanto a pálpebra está fechada, de 0 a 1: o olho fecha e abre aos poucos, em vez de trocar de estado num quadro. */
   readonly lid?: number;
   /** Quanto a cor já saiu, de 0 a 1: o rato a caminho da silhueta apagada. Só na silhueta. */
@@ -449,10 +449,22 @@ export const Rat: React.FC<RatProps> = ({
 type BenchProps = {
   /** O tampo é o chão da sala: sem a frente escura da bancada. */
   readonly floor?: boolean;
+  /**
+   * Quanto da frente escura está no quadro, de 0 a 1: a bancada que vira chão
+   * no mesmo cenário a perde descendo, em vez de trocá-la num quadro. Por
+   * padrão, o que `floor` diz.
+   */
+  readonly front?: number;
 };
 
+// Quanto a frente desce até sair por baixo do quadro mais fechado que a mostra.
+const FRONT_SINK = 340;
+
 /** A bancada do laboratório sem o tanque: o tampo e a frente. Como chão, só o tampo. */
-const RatBench: React.FC<BenchProps> = ({ floor = false }) => (
+const RatBench: React.FC<BenchProps> = ({
+  floor = false,
+  front = floor ? 0 : 1,
+}) => (
   <SvgLayer>
     <rect
       x={-400}
@@ -462,10 +474,10 @@ const RatBench: React.FC<BenchProps> = ({ floor = false }) => (
       fill={lab.bench}
     />
     <rect x={-400} y={BENCH_Y} width={2720} height={26} fill={lab.benchTop} />
-    {floor ? null : (
+    {front <= 0 ? null : (
       <rect
         x={-400}
-        y={BENCH_Y + 150}
+        y={BENCH_Y + 150 + (1 - front) * FRONT_SINK}
         width={2720}
         height={600}
         fill={lab.benchShade}
@@ -509,6 +521,8 @@ type RatLabProps = {
   readonly camera: CameraState;
   /** O tampo da bancada vira o chão da sala. */
   readonly floor?: boolean;
+  /** Quanto da frente escura da bancada está no quadro, como em `RatBench`. */
+  readonly front?: number;
   /** O que fica na parede, atrás da bancada: a placa, o calendário, o quadro-negro. */
   readonly wall?: React.ReactNode;
   /**
@@ -518,17 +532,10 @@ type RatLabProps = {
    * começa a toda velocidade). Por padrão, é o palco quem mistura.
    */
   readonly steady?: boolean;
-  /**
-   * Quantas larguras de quadro a bancada tem: a parede e o tampo se repetem
-   * para a direita, e a câmera pode deslizar de um trecho a outro. Por padrão, uma.
-   */
-  readonly span?: number;
   /** O que está sobre a bancada, em pixels do cenário. */
   readonly children?: React.ReactNode;
 };
 
-/** A largura de um trecho da bancada: a do quadro. */
-export const BENCH_SPAN = 1920;
 
 /**
  * O molde dos planos de laboratório dos ratos: a parede da água-viva, a
@@ -538,35 +545,20 @@ export const BENCH_SPAN = 1920;
 export const RatLab: React.FC<RatLabProps> = ({
   camera,
   floor,
+  front,
   wall,
   steady = false,
-  span = 1,
   children,
 }) => {
   const stage = useBuild();
-  const stretches = Array.from({ length: span }, (_, index) => index);
   return (
     <AbsoluteFill>
       <Build {...stage} takeover={steady ? 1 : stage.takeover}>
         <Camera {...camera}>
           <Layer depth={1}>
-            {stretches.map((index) => (
-              <AbsoluteFill
-                key={index}
-                style={{ translate: `${index * BENCH_SPAN}px 0` }}
-              >
-                <LabWall />
-              </AbsoluteFill>
-            ))}
+            <LabWall />
             {wall}
-            {stretches.map((index) => (
-              <AbsoluteFill
-                key={index}
-                style={{ translate: `${index * BENCH_SPAN}px 0` }}
-              >
-                <RatBench floor={floor} />
-              </AbsoluteFill>
-            ))}
+            <RatBench floor={floor} front={front} />
             {children}
           </Layer>
         </Camera>

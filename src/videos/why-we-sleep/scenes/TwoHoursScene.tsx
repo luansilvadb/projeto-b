@@ -3,30 +3,32 @@ import { Person } from "../../../art/Person";
 import { Silhouette } from "../../../art/Silhouettes";
 import { cameraBetween, framing } from "../../../components/Camera";
 import { Stay, useStage } from "../../../components/Cast";
+import { wave } from "../../../components/Idle";
 import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
 import { Pop, POP_SECONDS, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { cue, mix, ramp, settle, clamp01 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { Shot, type Wipe } from "../../../video/Shot";
+import { Shot } from "../../../video/Shot";
 import { ink, personInPajamas } from "../palette";
 import { Herd, type HerdMember } from "../parts/Herd";
 import { ELEPHANT_HOURS, OUR_HOURS, RULER } from "../parts/SleepRuler";
 import { Tag } from "../parts/Tag";
-import { SavannaStage, TrunkStill } from "./ElephantsScene";
-import { Sweep } from "./NightFallsScene";
+import { SavannaStage, TRUNK_END } from "./ElephantsScene";
 import { Grow } from "./SleepDebtScene";
 
 // Uma delas, de noite, dormindo em pé: embaixo, no meio, com o céu livre em cima para a régua.
-const SLEEPER: HerdMember = { x: 960, y: 50, width: 600, seed: "sleeper" };
+// É a matriarca que adormeceu no plano da tromba, virada para o mesmo lado e com a mesma pausa
+// viva: a câmera recua dela até aqui, e na savana deste plano ela é maior e está no meio.
+const SLEEPER: HerdMember = { ...TRUNK_END.sleeper, x: 960, y: 50, width: 600 };
 const NIGHT = framing([960, 540], 1);
 /** O segundo plano chega um pouco mais perto dela, por baixo das barras. */
 const NIGHT_CLOSER = framing([960, 760], 1.12, [960, 830]);
 // A lua fica à direita, depois do fim da régua: atrás das barras ela sumiria.
 const MOON = 0.705;
-// A cena abre varrendo o plano da tromba, da cena anterior: a mesma noite, em outro enquadramento.
-const SWEEP: Wipe = { frames: 8, from: "right" };
+// A cena abre no close da tromba, da cena anterior, e a câmera recua até o plano médio, com peso. Em segundos.
+const PULL_BACK = 0.8;
 
 type ShotClock = {
   /** O quadro do vídeo em que o plano começa: o relógio do cenário. */
@@ -34,26 +36,44 @@ type ShotClock = {
 };
 
 type NightProps = ShotClock & {
+  /** Quanto a câmera já recuou do close da tromba, da cena anterior, de 0 a 1. */
+  readonly back?: number;
   /** Quanto a câmera já chegou ao enquadramento de perto, de 0 a 1. */
   readonly closer?: number;
 };
 
 /** A savana de noite, com a elefanta dormindo em pé. */
-const Night: React.FC<NightProps> = ({ closer = 0, clock }) => {
+const Night: React.FC<NightProps> = ({ back = 1, closer = 0, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const from = TRUNK_END.sleeper;
 
   return (
     <SavannaStage
-      camera={cameraBetween(NIGHT, NIGHT_CLOSER, closer)}
+      camera={cameraBetween(
+        TRUNK_END.camera,
+        cameraBetween(NIGHT, NIGHT_CLOSER, closer),
+        back,
+      )}
       daylight={0}
-      orb={MOON}
+      orb={mix(TRUNK_END.orb, MOON, back)}
       clock={clock}
     >
       <Herd
-        members={[SLEEPER]}
+        // Ela vai do lugar e do tamanho que tinha na manada aos deste plano junto com a câmera;
+        // o tamanho, em progressão geométrica, como a aproximação.
+        members={[
+          {
+            ...SLEEPER,
+            x: mix(from.x, SLEEPER.x, back),
+            y: mix(from.y, SLEEPER.y ?? 0, back),
+            width: from.width * (SLEEPER.width / from.width) ** back,
+          },
+        ]}
         daylight={0}
         asleep={1}
+        // A tromba chega solta do plano anterior e só então pende como um pêndulo.
+        trunk={0.03 * back * (1 + wave((clock + frame) / fps, 4.7, from.phase))}
         seconds={(clock + frame) / fps}
       />
     </SavannaStage>
@@ -354,8 +374,8 @@ const Bars: React.FC<BarsProps> = ({
   );
 };
 
-// A entrada da régua e da nossa barra, em quadros do plano, depois de a varredura passar.
-const ENTER = { ruler: 8, rulerFrames: 16, ours: 12, oursFrames: 16, slot: 24 };
+// A entrada da régua e da nossa barra, em quadros do plano, com a câmera já quase no lugar.
+const ENTER = { ruler: 16, rulerFrames: 16, ours: 20, oursFrames: 16, slot: 32 };
 
 type BarShotProps = ShotClock & {
   /** Quadros do plano em que a barra dela entra e em que pisca. */
@@ -363,7 +383,7 @@ type BarShotProps = ShotClock & {
   readonly flashAt: number;
 };
 
-/** A régua entra sobre ela, que dorme em pé; a barra dela toma o lugar vago, debaixo da nossa, e para em duas horas. */
+/** A câmera recua da tromba até ela inteira, que dorme em pé, e a régua entra sobre ela; a barra dela toma o lugar vago, debaixo da nossa, e para em duas horas. */
 const BarShot: React.FC<BarShotProps> = ({ fillAt, flashAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -373,9 +393,7 @@ const BarShot: React.FC<BarShotProps> = ({ fillAt, flashAt, clock }) => {
 
   return (
     <>
-      <Sweep wipe={SWEEP} under={<TrunkStill clock={clock} />}>
-        <Night clock={clock} />
-      </Sweep>
+      <Night back={ramp(frame, 0, PULL_BACK * fps)} clock={clock} />
       {/* As barras continuam no plano seguinte: não saem com este, e quando o outro chega é ele quem as desenha. */}
       {frame < ENTER.ruler || stage.handedOver ? null : (
         <Stay>
@@ -418,8 +436,8 @@ const QuarterShot: React.FC<QuarterShotProps> = ({
   return (
     <>
       <Night closer={near} clock={clock} />
-      {/* As barras já estavam no palco; no fim, é a varredura da cena seguinte que as leva. */}
-      <Stay>
+      {/* As barras já estavam no palco: não entram de novo. No fim, encolhem no próprio ponto, antes de o dia nascer na cena seguinte. */}
+      <Stay only="entering">
         <Bars
           near={near}
           copyAt={copyAt}
@@ -432,17 +450,14 @@ const QuarterShot: React.FC<QuarterShotProps> = ({
 };
 
 /**
- * O último quadro da cena, para a seguinte redesenhar por baixo da varredura
- * dela: a noite, de perto, com as barras e o "um quarto".
+ * O fim da cena, para a seguinte partir dele: a câmera de perto, a lua e a
+ * elefanta que dorme em pé.
  */
-export const QuarterStill: React.FC<ShotClock> = ({ clock }) => (
-  <>
-    <Night closer={1} clock={clock} />
-    <Stay>
-      <Bars near={1} copyAt={SHOWN} />
-    </Stay>
-  </>
-);
+export const QUARTER_END = {
+  camera: NIGHT_CLOSER,
+  orb: MOON,
+  sleeper: SLEEPER,
+};
 
 export const TwoHoursScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>

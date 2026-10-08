@@ -21,23 +21,29 @@ import { idea, ink } from "../palette";
 import {
   braked,
   Herd,
+  herdPhase,
   SleepingElephant,
   type HerdMember,
   type HerdStride,
 } from "../parts/Herd";
+import { SAVANNA_GROUND_Y, SavannaShadow } from "../parts/savanna/RichTheme";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import { ELEPHANT_HOURS } from "../parts/SleepRuler";
 import { Tag } from "../parts/Tag";
 import { VacantSign } from "../parts/VacantSign";
-import { risenAt, SavannaStage } from "./ElephantsScene";
+import { onScreen, risenAt, SavannaStage } from "./ElephantsScene";
 import { BRAIN_MAP_LEAD, BrainMapPrelude } from "./MaybeBrainScene";
-import { Drift, DRIFT, Grow } from "./SleepDebtScene";
+import { Drift, DRIFT, Grow, undrifted } from "./SleepDebtScene";
 
-// As duas do estudo, lado a lado e pequenas no plano: só duas. A de trás vem primeiro.
+// As duas do estudo, lado a lado e pequenas no plano: só duas. A de trás vem primeiro. Andam para a
+// direita: a da frente é a que dorme virada para a régua e para o pedestal nos planos seguintes, e
+// passa de um a outro sem se virar.
 const PAIR: readonly HerdMember[] = [
-  { x: 1160, y: -16, width: 290, seed: "pair-second" },
-  { x: 820, y: 16, width: 310, seed: "pair-first" },
+  { x: 1160, y: -16, width: 290, seed: "pair-second", flipped: true },
+  { x: 820, y: 16, width: 310, seed: "pair-first", flipped: true },
 ];
+// A da frente: é ela quem para, dorme e continua nos planos de fundo liso.
+const FIRST = 1;
 // A caminhada delas: de quão longe vêm, em pixels, e a velocidade, em pixels por quadro. O que falta
 // quando o plano aberto acaba é percorrido na freada do seguinte (`least` é o mínimo que ela tem).
 const WALK = { from: 260, speed: 2, least: 8 };
@@ -58,6 +64,8 @@ type ShotClock = {
 };
 
 type PairProps = {
+  /** Sem a da frente: quando ela já saiu do chão da savana e é desenhada por cima dele. */
+  readonly alone?: boolean;
   /** Quanto falta andar, em pixels, e a passada; paradas, nada. */
   readonly ahead?: number;
   readonly stride?: HerdStride;
@@ -69,15 +77,18 @@ type PairProps = {
 
 /** As duas elefantas no chão da savana, de noite. Vai dentro de `SavannaStage`. */
 const Pair: React.FC<PairProps> = ({
+  alone = false,
   ahead = 0,
   stride,
   trunk,
   asleep = [0, 0],
   seconds,
 }) => (
-  <AbsoluteFill style={{ translate: `${ahead}px 0` }}>
+  // Elas vêm da esquerda.
+  <AbsoluteFill style={{ translate: `${-ahead}px 0` }}>
     <Herd
-      members={PAIR}
+      // A de trás é a primeira da lista: sozinha, fica com os valores dela.
+      members={alone ? PAIR.slice(0, FIRST) : PAIR}
       daylight={0}
       stride={stride}
       trunk={trunk}
@@ -245,9 +256,13 @@ const OnlyTwoShot: React.FC<OnlyTwoShotProps> = ({ twoAt, doubtAt, clock }) => {
   );
 };
 
-// A régua e a elefanta do plano seguinte entram nos últimos quadros deste, enquanto o cenário desce.
-// Em quadros: quando começam e quanto cada uma leva.
-const RULER_BEFORE = { frames: 16, ruler: 11, who: 4, whoFrames: 11 };
+// A régua do plano seguinte entra nos últimos quadros deste, enquanto o cenário desce.
+// Em quadros: quando começa e quanto leva.
+// Começa depois de a elefanta sair de onde a barra vai ficar: uma não cresce por baixo da outra.
+const RULER_BEFORE = { frames: 12, ruler: 10 };
+// A elefanta que dorme é comum aos dois planos: não desce com o chão. Quando ele começa a descer,
+// ela vai do lugar e do tamanho que tem na savana aos da régua, com peso. Em quadros antes da troca.
+const STAYS = { before: 20, frames: 18 };
 // A tromba de quem adormece em pé cai em 0,8 s; a pálpebra desce em 0,3 s.
 const DROWSE = { trunk: 0.8, lid: 0.3 };
 
@@ -279,6 +294,18 @@ const AsleepShot: React.FC<AsleepShotProps> = ({
     idle(phase) * (1 - ramp(frame, at, DROWSE.trunk * fps));
   const lid = (at: number) => ramp(frame, at, DROWSE.lid * fps);
   const beforeAt = length - RULER_BEFORE.frames;
+  const first = PAIR[FIRST];
+  const leavesAt = length - STAYS.before;
+  const leaving = frame >= leavesAt;
+  const moved = ramp(frame, leavesAt, STAYS.frames);
+  // Onde ela está na tela, no enquadramento em que a câmera parou, nas medidas do plano seguinte.
+  const zoom = 1 - DRIFT;
+  const [fromX, fromY] = undrifted(
+    onScreen(ON_ONE, [first.x, SAVANNA_GROUND_Y + (first.y ?? 0)]),
+    ZERO_FOCUS,
+    zoom,
+  );
+  const fromWidth = (first.width * ON_ONE.zoom) / zoom;
   return (
     <>
       <SavannaStage
@@ -287,7 +314,19 @@ const AsleepShot: React.FC<AsleepShotProps> = ({
         orb={MOON}
         clock={clock}
       >
+        {/* A sombra dela é do chão, e desce com ele. */}
+        {leaving ? (
+          <SvgLayer>
+            <SavannaShadow
+              x={first.x}
+              y={SAVANNA_GROUND_Y + (first.y ?? 0) + 6}
+              width={first.width * 0.8}
+              daylight={0}
+            />
+          </SvgLayer>
+        ) : null}
         <Pair
+          alone={leaving}
           ahead={ahead}
           stride={{
             along: WALK.speed * (walkedFor + frame),
@@ -298,27 +337,30 @@ const AsleepShot: React.FC<AsleepShotProps> = ({
           seconds={seconds}
         />
       </SavannaStage>
-      {/* A régua e a elefanta do plano seguinte entram aqui, enquanto a savana desce: a troca não deixa
-          a tela vazia. Quando o plano delas chega, é ele quem as desenha. */}
-      {frame >= beforeAt && !stage.handedOver ? (
+      {/* A régua do plano seguinte entra aqui, enquanto a savana desce, e a elefanta que dorme vai até
+          o lugar dela ao lado da régua: a troca não deixa a tela vazia, e ela não sai. Quando o plano
+          seguinte chega, é ele quem as desenha. */}
+      {leaving && !stage.handedOver ? (
         <Stay>
-          <Drift focus={ZERO_FOCUS} zoom={1 - DRIFT}>
-            <AbsoluteFill
-              style={{
-                transformOrigin: `${CLOSE.zero + CLOSE.hour}px ${CLOSE.bar}px`,
-                scale: `${grown(frame, beforeAt, RULER_BEFORE.ruler)}`,
-              }}
-            >
-              <CloseRuler />
-            </AbsoluteFill>
-            <AbsoluteFill
-              style={{
-                transformOrigin: `${WHO.x}px ${WHO.y}px`,
-                scale: `${grown(frame, beforeAt + RULER_BEFORE.who, RULER_BEFORE.whoFrames)}`,
-              }}
-            >
-              <Sleeper {...WHO} seconds={seconds} />
-            </AbsoluteFill>
+          <Drift focus={ZERO_FOCUS} zoom={zoom}>
+            {frame >= beforeAt ? (
+              <AbsoluteFill
+                style={{
+                  transformOrigin: `${CLOSE.zero + CLOSE.hour}px ${CLOSE.bar}px`,
+                  scale: `${grown(frame, beforeAt, RULER_BEFORE.ruler)}`,
+                }}
+              >
+                <CloseRuler />
+              </AbsoluteFill>
+            ) : null}
+            {/* Ainda de noite: é o fundo do plano seguinte que a clareia, quando toma a cor. */}
+            <Sleeper
+              x={mix(fromX, WHO.x, moved)}
+              y={mix(fromY, WHO.y, moved)}
+              width={mix(fromWidth, WHO.width, moved)}
+              lit={0}
+              seconds={seconds}
+            />
           </Drift>
         </Stay>
       ) : null}
@@ -450,16 +492,38 @@ type SleeperProps = {
   readonly x: number;
   readonly y: number;
   readonly width: number;
+  /** Quanto o fundo liso já a ilumina, de 0 (a pintura de noite, da savana, sem a sombra do fundo) a 1. */
+  readonly lit?: number;
   readonly seconds: number;
 };
 
-/** A elefanta dormindo em pé sobre o fundo liso, com a sombra dela. */
-const Sleeper: React.FC<SleeperProps> = ({ x, y, width, seconds }) => (
+/**
+ * A elefanta dormindo em pé sobre o fundo liso, com a sombra dela. É a da
+ * frente da savana, com a mesma respiração e a mesma orelha.
+ */
+const Sleeper: React.FC<SleeperProps> = ({
+  x,
+  y,
+  width,
+  lit = 1,
+  seconds,
+}) => (
   <>
     <SvgLayer>
-      <IdeaShadow hue={HUE} x={x} y={y + 6} width={width * 0.8} />
+      <g opacity={lit}>
+        <IdeaShadow hue={HUE} x={x} y={y + 6} width={width * 0.8} />
+      </g>
     </SvgLayer>
-    <SleepingElephant x={x} y={y} width={width} flipped seconds={seconds} />
+    <SleepingElephant
+      x={x}
+      y={y}
+      width={width}
+      flipped
+      seed={PAIR[FIRST].seed}
+      phase={herdPhase(FIRST)}
+      daylight={lit}
+      seconds={seconds}
+    />
   </>
 );
 
@@ -483,10 +547,11 @@ const ZeroShot: React.FC<ZeroShotProps> = ({ shrinkAt, emptyAt, clock }) => {
           <Stay only="entering">
             <CloseRuler shrinkAt={shrinkAt} emptyAt={emptyAt} />
           </Stay>
-          {/* Ela também já estava, e continua no plano seguinte: quando ele chega, é ele quem a desenha. */}
+          {/* Ela também já estava, e continua no plano seguinte: quando ele chega, é ele quem a desenha.
+              Chega com a pintura de noite e clareia junto com o fundo. */}
           {stage.handedOver ? null : (
             <Stay>
-              <Sleeper {...WHO} seconds={seconds} />
+              <Sleeper {...WHO} lit={stage.enter()} seconds={seconds} />
             </Stay>
           )}
         </Drift>

@@ -11,6 +11,7 @@ import {
   type Expression,
   type PersonColors,
 } from "../../../art/Person";
+import { cameraBetween } from "../../../components/Camera";
 import { Cast, FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, wave } from "../../../components/Idle";
@@ -27,7 +28,7 @@ import {
   clamp,
 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { Shot, useShotLength, type Wipe } from "../../../video/Shot";
+import { Shot, useShotLength } from "../../../video/Shot";
 import { ink, person, personInPajamas, daylightTones } from "../palette";
 import { Bed } from "../parts/Bed";
 import {
@@ -43,31 +44,38 @@ import { IdeaBackdrop } from "../parts/IdeaBackdrop";
 import { Tag } from "../parts/Tag";
 import { HERDS_RISE, SavannaStage } from "./ElephantsScene";
 import { PairPrelude } from "./ElephantVerdictScene";
-import { Sweep } from "./NightFallsScene";
 import { Drift, DRIFT } from "./SleepDebtScene";
-import { QuarterStill } from "./TwoHoursScene";
+import { QUARTER_END } from "./TwoHoursScene";
 
-// Ela anda para a esquerda, sozinha no plano aberto.
+// Ela anda para a direita, sozinha no plano aberto: é a que dormia em pé na cena anterior, virada
+// para o mesmo lado e com a mesma pausa viva, e a direção é a do tempo na faixa e a da pessoa do
+// plano seguinte.
 const WALKER: HerdMember = {
-  x: 1080,
+  ...QUARTER_END.sleeper,
+  x: 840,
   y: 20,
   width: 380,
-  seed: "awake",
 };
 // A caminhada, em pixels por quadro: o passo de uma elefanta adulta. A câmera
-// a acompanha, e no quadro ela só deriva devagar para a esquerda: é o chão que passa.
+// a acompanha, e no quadro ela só deriva devagar para a direita: é o chão que passa.
 const WALK = { ahead: 270, speed: 3.6, drift: 4 / 3 };
-// A câmera parte deste deslocamento, à direita, e termina no oposto dele.
+// A câmera parte deste deslocamento, à esquerda, e termina no oposto dele.
 const TRACK_FROM = WALK.ahead - 100;
-// Começa ao nascer do sol e termina duas horas antes de a segunda noite acabar: as 46 horas, de 48.
-const SPAN = { from: 0, cycles: (2 * 46) / 48 };
+// O sol nasce na volta 0 e o plano termina duas horas antes de a segunda noite acabar: as 46 horas,
+// de 48. Ele abre no fim da noite da cena anterior, com a lua onde ela a deixou: a lua acaba de se
+// pôr, o sol nasce, e a luz vira no lugar (as varreduras saíram, decisão do usuário).
+const SPAN = { from: QUARTER_END.orb / 2 - 0.5, cycles: (2 * 46) / 48 };
+// O primeiro amanhecer é mais lento que os outros: a noite da cena anterior vira dia à vista, em
+// 0,7 s, e não em 5 quadros. É a menor medida que ainda dá noite cheia no primeiro quadro.
+const FIRST_DAWN = { twilight: 0.63, until: 0.25 };
+// A câmera sai do enquadramento da cena anterior e chega ao deste, com peso, enquanto ela acorda;
+// só então ela anda. Em quadros.
+const ARRIVE = { frames: 22, wakeAt: 3, wake: 10, walkAt: 16, walk: 14 };
 // O rastro do sol e da lua: dois dias e duas noites numa faixa, que se enche conforme eles passam.
 const TRAIL = { x: 560, y: 300, width: 800, height: 88 };
 const HOURS_TAG = { x: 960, y: TRAIL.y + TRAIL.height + 76 };
-// O dia varre a noite da cena anterior, da direita, em 0,25 s.
-const DAYBREAK: Wipe = { frames: 8, from: "right" };
-// A faixa entra crescendo depois de a varredura passar.
-const TRAIL_IN = { at: 9, frames: 12 };
+// A faixa entra crescendo quando a câmera chega.
+const TRAIL_IN = { at: 20, frames: 12 };
 
 type PassedDaysProps = {
   /** Quanto das duas voltas já passou, de 0 a 1. */
@@ -231,42 +239,60 @@ type AwakeShotProps = ShotClock & {
   readonly hoursAt: number;
 };
 
-/** O dia varre a noite; o sol e a lua passam duas vezes sobre ela, que segue andando de olhos abertos, e a câmera a acompanha. */
+/** O dia nasce sobre a que dormia; ela acorda e anda, o sol e a lua passam duas vezes sobre ela, de olhos abertos, e a câmera a acompanha. */
 const AwakeShot: React.FC<AwakeShotProps> = ({ hoursAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
   const passing = linear(frame, 0, length);
-  const cycles = SPAN.from + SPAN.cycles * passing;
-  const daylight = daylightAt(cycles);
+  const cycles = mix(SPAN.from, SPAN.cycles, passing);
+  const daylight = daylightAt(
+    cycles,
+    cycles < FIRST_DAWN.until ? FIRST_DAWN.twilight : undefined,
+  );
   const walked = WALK.speed * frame;
   const stage = useStage();
   const beforeAt = length - STRIP_BEFORE.frames;
+  // Ela vai do lugar e do tamanho em que dormia aos da caminhada junto com a câmera.
+  const arrived = ramp(frame, 0, ARRIVE.frames);
+  const slept = QUARTER_END.sleeper;
   return (
     <>
-      <Sweep wipe={DAYBREAK} under={<QuarterStill clock={clock} />}>
-        <SavannaStage
+      <SavannaStage
+        camera={cameraBetween(
+          QUARTER_END.camera,
           // A câmera anda com ela, um pouco mais devagar: o chão e as árvores passam, cada camada no seu passo.
-          camera={{
-            x: TRACK_FROM - (WALK.speed - WALK.drift) * frame,
+          {
+            x: (WALK.speed - WALK.drift) * frame - TRACK_FROM,
             y: 0,
             zoom: 1,
-          }}
+          },
+          arrived,
+        )}
+        daylight={daylight}
+        orb={orbAt(cycles)}
+        clock={clock}
+      >
+        <Herd
+          members={[
+            {
+              ...WALKER,
+              x: mix(slept.x, WALKER.x - WALK.ahead + walked, arrived),
+              y: mix(slept.y ?? 0, WALKER.y ?? 0, arrived),
+              width: slept.width * (WALKER.width / slept.width) ** arrived,
+            },
+          ]}
           daylight={daylight}
-          orb={orbAt(cycles)}
-          clock={clock}
-        >
-          <AbsoluteFill style={{ translate: `${WALK.ahead - walked}px 0` }}>
-            <Herd
-              members={[WALKER]}
-              daylight={daylight}
-              stride={{ along: walked, pace: 1 }}
-              seconds={seconds}
-            />
-          </AbsoluteFill>
-        </SavannaStage>
-      </Sweep>
+          asleep={1 - ramp(frame, ARRIVE.wakeAt, ARRIVE.wake)}
+          // As patas só começam o passo quando a câmera chega: antes disso ela está parada.
+          stride={{
+            along: walked,
+            pace: ramp(frame, ARRIVE.walkAt, ARRIVE.walk),
+          }}
+          seconds={seconds}
+        />
+      </SavannaStage>
       {/* A faixa de três dias e a cama do plano seguinte entram aqui, enquanto a savana desce: a troca não
           deixa a tela vazia. Quando o plano delas chega, é ele quem as desenha. */}
       {frame >= beforeAt && !stage.handedOver ? (
@@ -295,7 +321,7 @@ const AwakeShot: React.FC<AwakeShotProps> = ({ hoursAt, clock }) => {
           </Drift>
         </Stay>
       ) : null}
-      {/* A faixa e o número não entram com o plano: nascem depois da varredura. Saem encolhendo, com ele. */}
+      {/* A faixa e o número não entram com o plano: nascem quando a câmera chega. Saem encolhendo, com ele. */}
       <Stay only="entering">
         {frame >= TRAIL_IN.at ? (
           <AbsoluteFill
@@ -304,7 +330,7 @@ const AwakeShot: React.FC<AwakeShotProps> = ({ hoursAt, clock }) => {
               scale: `${grown(frame, TRAIL_IN.at, TRAIL_IN.frames)}`,
             }}
           >
-            <PassedDays passed={(SPAN.cycles / 2) * passing} />
+            <PassedDays passed={Math.max(0, cycles) / 2} />
           </AbsoluteFill>
         ) : null}
         <Place x={HOURS_TAG.x} y={HOURS_TAG.y}>

@@ -13,7 +13,14 @@ import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp, settle, clamp } from "../../../components/timing";
+import {
+  cue,
+  linear,
+  mix,
+  ramp,
+  settle,
+  clamp,
+} from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import {
@@ -45,9 +52,9 @@ import {
   floating,
 } from "../parts/TankShot";
 import { BILL_LEAD, JellyfishDebtOpening } from "./JellyfishDebtScene";
-import { Prelude, Sooner, flash, shake } from "./MaybeBrainScene";
+import { Ahead, Early, Prelude, Sooner, flash, shake } from "./MaybeBrainScene";
 import { billSway } from "./SkipANightScene";
-import { Drift } from "./SleepDebtScene";
+import { Drift, driftZoom } from "./SleepDebtScene";
 
 // O tanque enche o quadro, e a pesquisadora, de mãos na prancheta, fica de fora: quem puxa é outra mão.
 const ON_TANK = framing([1300, 545], 1.7);
@@ -173,6 +180,7 @@ const AdriftShot: React.FC<AdriftShotProps> = ({
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const stage = useStage();
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
   const counting = SECONDS_LIMIT * linear(frame, countAt, fiveAt - countAt);
@@ -253,6 +261,15 @@ const AdriftShot: React.FC<AdriftShotProps> = ({
           </div>
         </Pop>
       </Place>
+      {/* A cama do plano seguinte já cresce aqui, sobre o tanque que desce, do tamanho em que a deriva dele começa:
+          a troca não deixa a tela só com a parede. Quando ele chega, é ele quem a desenha. */}
+      {length - frame <= BED_AHEAD && !stage.handedOver ? (
+        <Ahead until={length - frame} by={BED_EARLY}>
+          <Drift focus={BED_FOCUS} zoom={driftZoom(0, 1)}>
+            <SleeperBed seconds={seconds} />
+          </Drift>
+        </Ahead>
+      ) : null}
     </AbsoluteFill>
   );
 };
@@ -275,6 +292,48 @@ const NUDGE = { frames: 9, every: 9 };
 const CORNER = { x: 430, y: 230, scale: 0.7 };
 // O plano abre com a cama e os dois cantos já no lugar: a fala começa no primeiro quadro.
 const BED_SOONER = 30;
+// A cama começa a crescer antes de o plano chegar, desenhada pelo plano anterior: quantos quadros antes, e
+// quanto a marcação dela se adianta para isso (a de um objeto de cena começa 4 quadros depois da troca).
+const BED_AHEAD = 8;
+const BED_EARLY = BED_AHEAD + 4;
+
+type SleeperBedProps = {
+  /** O instante, em segundos, no relógio do vídeo: o cobertor sobe e desce nele. */
+  readonly seconds: number;
+  /** O olho aberto a meio, e quanto a mão a empurra, de -1 a 1. Por padrão, dormindo e quieta. */
+  readonly sleepy?: boolean;
+  readonly push?: number;
+  /** Quanto a mão já pousou no ombro dela, de 0 a 1: com ela ali, o cobertor para de subir e descer. */
+  readonly held?: number;
+};
+
+/** A pessoa dormindo na cama, que entra e sai em volta do pé da cama: é o mesmo desenho no fim do plano anterior, que a mostra entrando, e neste. */
+const SleeperBed: React.FC<SleeperBedProps> = ({
+  seconds,
+  sleepy = false,
+  push = 0,
+  held = 0,
+}) => (
+  <Cast origin={[BED.x, BED.y]}>
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        transformOrigin: `${BED.x}px ${BED.y}px`,
+        scale: `1 ${1 + 0.006 * wave(seconds, 4.6)}`,
+      }}
+    >
+      <Bed
+        {...BED}
+        colors={personInPajamas}
+        hue="lilac"
+        state={sleepy ? "sleepy" : "asleep"}
+        // Enquanto ninguém a chama, só o cobertor sobe e desce.
+        nudge={push + 0.35 * wave(seconds, 4.6) * (1 - held)}
+      />
+    </div>
+  </Cast>
+);
 
 /** Uma sacudida: empurra, volta além do ponto e assenta. De -1 a 1. */
 const nudgeAt = (frame: number, at: number): number =>
@@ -306,8 +365,6 @@ const ShakenShot: React.FC<ShakenShotProps> = ({
   const seconds = (clock + frame) / fps;
   const nudges = [thirdAt - 2 * NUDGE.every, thirdAt - NUDGE.every, thirdAt];
   const push = nudges.reduce((sum, at) => sum + nudgeAt(frame, at), 0);
-  // Enquanto ninguém a chama, só o cobertor sobe e desce.
-  const asleepBreath = 0.35 * wave(seconds, 4.6);
   // O braço desce de fora do quadro, pousa a mão no ombro dela e sai por onde veio.
   const armIn = ramp(frame, armAt, ARM.seconds * fps) * (1 - stage.leave());
   const lift = ARM.from * (1 - armIn);
@@ -323,27 +380,18 @@ const ShakenShot: React.FC<ShakenShotProps> = ({
   return (
     <AbsoluteFill>
       <FlatStage backdrop={<IdeaBackdrop hue="lilac" spot={[0.46, 0.55]} />}>
-        <Sooner by={BED_SOONER}>
-          <Drift focus={BED_FOCUS}>
-            <Cast origin={[BED.x, BED.y]}>
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  transformOrigin: `${BED.x}px ${BED.y}px`,
-                  scale: `1 ${1 + 0.006 * wave(seconds, 4.6)}`,
-                }}
-              >
-                <Bed
-                  {...BED}
-                  colors={personInPajamas}
-                  hue="lilac"
-                  // O olho abre no meio da terceira sacudida, com o corpo ainda em movimento.
-                  state={frame >= thirdAt + 3 ? "sleepy" : "asleep"}
-                  nudge={push + asleepBreath * (1 - armIn)}
-                />
-              </div>
-            </Cast>
+        <Drift focus={BED_FOCUS}>
+          {/* A cama já vinha crescendo no fim do plano anterior: continua de onde ele parou. */}
+          <Early by={BED_EARLY}>
+            <SleeperBed
+              seconds={seconds}
+              // O olho abre no meio da terceira sacudida, com o corpo ainda em movimento.
+              sleepy={frame >= thirdAt + 3}
+              push={push}
+              held={armIn}
+            />
+          </Early>
+          <Sooner by={BED_SOONER}>
             {armIn > 0 ? (
               <SvgLayer>
                 {/* Quem chama: o ombro no alto do quadro, o braço e a mão no ombro dela. Sem dono à vista. */}
@@ -419,7 +467,9 @@ const ShakenShot: React.FC<ShakenShotProps> = ({
                 checked={[ramp(frame, checkAt, 0.3 * fps), 0]}
               />
             </Place>
-          </Drift>
+          </Sooner>
+        </Drift>
+        <Sooner by={BED_SOONER}>
           {/* O bolso volta, cheio, e fica: a conta sai dele no plano seguinte, que passa a desenhá-lo. Fora da deriva, para estar no canto exato. */}
           {stage.handedOver ? null : (
             <Stay only="leaving">

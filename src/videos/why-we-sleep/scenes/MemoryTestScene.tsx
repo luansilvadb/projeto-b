@@ -2,7 +2,13 @@ import "../../../design/fonts";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { Person } from "../../../art/Person";
 import { Build, Layer, useBuild } from "../../../components/Camera";
-import { Cast, FlatStage, Stay, useStage } from "../../../components/Cast";
+import {
+  Cast,
+  FlatStage,
+  Stay,
+  Troupe,
+  useStage,
+} from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
@@ -15,7 +21,7 @@ import { Shot, useShotLength } from "../../../video/Shot";
 import { markFor } from "../../../video/stage";
 import { ink, lab, stopwatch } from "../palette";
 import { EXPERIMENTERS, SUBJECTS, SyllableSheet } from "../parts/SyllableList";
-import { NEVER, Preluded, flash, shake, Sooner } from "./MaybeBrainScene";
+import { flash, shake, Sooner } from "./MaybeBrainScene";
 import { Drift, driftZoom, undrifted } from "./SleepDebtScene";
 
 /**
@@ -25,15 +31,17 @@ import { Drift, driftZoom, undrifted } from "./SleepDebtScene";
  */
 export const Hasten: React.FC<{
   frames: number;
+  /** Quantos quadros o cenário espera antes de subir: o fundo toma a cor primeiro. */
+  delay?: number;
   children: React.ReactNode;
-}> = ({ frames, children }) => {
+}> = ({ frames, delay = 0, children }) => {
   const built = useBuild();
   const stage = useStage();
   return (
     <Build
       {...built}
       // Enquanto o fundo ainda toma a cor dele, o plano está chegando: depois disso vale o palco, que o tira de cena.
-      risen={built.lit < 1 ? stage.enter(0, frames) : built.risen}
+      risen={built.lit < 1 ? stage.enter(delay, frames) : built.risen}
     >
       {children}
     </Build>
@@ -213,8 +221,11 @@ const SEATED = { xs: [760, 1160], y: 911, height: 540 };
 const CHAIR_TOP = 561;
 const STANDING = { xs: [320, 1600], y: FLOOR, height: 650 };
 const ROOM_FOCUS = [960, 600] as const;
-// A sala sobe nestes quadros: a fala começa aos 0,4 s.
-const ROOM_RISE = 15;
+// A parede toma a cor dela depressa, sobre o céu da rua de `but-what`, e só então a sala sobe, com a rua já
+// fora do quadro: subindo junto, os pesquisadores ficavam em cima do toldo e contra o céu da noite, e os
+// dois lugares pareciam um só. A fala começa aos 0,4 s.
+const WALL_FRAMES = 6;
+const ROOM_RISE = { after: 1, frames: 13 };
 // O calendário na parede, entre os dois pesquisadores.
 const YEAR = { x: 960, y: 231, width: 306 };
 // A mão de quem entrega, nas unidades do desenho da pessoa: com a folha junto ao peito, e com o braço estendido.
@@ -310,10 +321,13 @@ const HandoverShot: React.FC<HandoverShotProps> = ({
 
   return (
     <AbsoluteFill>
-      <FlatStage backdrop={WALL}>
+      <AbsoluteFill style={{ opacity: stage.enter(0, WALL_FRAMES) }}>
+        {WALL}
+      </AbsoluteFill>
+      <Troupe>
         <Drift focus={ROOM_FOCUS}>
           {/* A sala sobe e desce com o palco, como um cenário: o piso, a mesa e quem está nela. */}
-          <Hasten frames={ROOM_RISE}>
+          <Hasten frames={ROOM_RISE.frames} delay={ROOM_RISE.after}>
             <Layer depth={1}>
               <SvgLayer>
                 <rect
@@ -486,7 +500,7 @@ const HandoverShot: React.FC<HandoverShotProps> = ({
           </Hasten>
         </Drift>
         <Grain />
-      </FlatStage>
+      </Troupe>
     </AbsoluteFill>
   );
 };
@@ -638,27 +652,14 @@ const ListShot: React.FC<ListShotProps> = ({
   );
 };
 
-/**
- * O plano que abre a cena, antes de qualquer deixa: o último plano de
- * `but-what` o desenha com `Prelude`, e a sala já sobe enquanto a rua desce. `clock` é o quadro do vídeo em que a cena começa.
- */
-/** Quantos quadros antes da cena a sala começa a subir: a rua ainda está descendo, e a sala não pode cobri-la inteira. */
-export const MEMORY_TEST_LEAD = 7;
-
-export const MemoryTestOpening: React.FC<{ clock: number }> = ({ clock }) => (
-  <HandoverShot yearAt={NEVER} giveAt={NEVER} clock={clock} />
-);
-
 export const MemoryTestScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="1924: uma lista para cada pessoa">
-      <Preluded lead={MEMORY_TEST_LEAD}>
-        <HandoverShot
-          yearAt={cue(scene, "mil")}
-          giveAt={cue(scene, "Duas")}
-          clock={scene.from}
-        />
-      </Preluded>
+      <HandoverShot
+        yearAt={cue(scene, "mil")}
+        giveAt={cue(scene, "Duas")}
+        clock={scene.from}
+      />
     </Shot>
     <Shot range={shots[1]} name="a lista de sílabas, por quase dois meses">
       <ListShot

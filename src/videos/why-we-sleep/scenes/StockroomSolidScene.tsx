@@ -16,7 +16,7 @@ import { Magnifier } from "../parts/Search";
 import { FRONT, FRONT_OPENING, ShopFront } from "../parts/ShopFront";
 import { Crate } from "../parts/ShopInside";
 import { lampAt } from "./ButWhatScene";
-import { NEVER, Preluded, flash, shake, Sooner } from "./MaybeBrainScene";
+import { NEVER, Prelude, Preluded, flash, shake } from "./MaybeBrainScene";
 import { Hasten } from "./MemoryTestScene";
 import { SEARCH_LEAD, SearchPrelude } from "./NobodyEscapedScene";
 import { Drift } from "./SleepDebtScene";
@@ -115,7 +115,9 @@ const TRAIL = [
   [1090, 470, 38],
 ] as const;
 const RECALL_FOCUS = [960, 540] as const;
-const YOU_SOONER = 14;
+// Ela cresce no meio do que se vê dela (os pés ficam abaixo do quadro), e começa `lead` quadros antes do
+// plano, desenhada pelo anterior: a rua já desceu quase toda, e o plano não abre vazio. Em quadros.
+const YOU_IN = { origin: [YOU.x, 640], frames: 10, lead: 3 } as const;
 // Ela acorda e se espreguiça: os braços sobem acima da cabeça, o corpo estica, e tudo volta. Em quadros.
 const STRETCH = { at: 5, up: 9, hold: 6, down: 9 };
 // Os braços dela, nas unidades do desenho da pessoa: soltos, esticados para cima, e o de trás apontando o balão.
@@ -192,33 +194,42 @@ const RecallShot: React.FC<RecallShotProps> = ({
           <SearchPrelude until={length - frame} />
         ) : null}
         <Drift focus={RECALL_FOCUS}>
-          <Sooner by={YOU_SOONER}>
-            <Place
-              x={YOU.x}
-              y={YOU.y}
-              anchor="bottom"
+          {/* O palco não a põe: ela cresce por conta própria. Sai com ele. */}
+          <Stay only="entering">
+            <AbsoluteFill
               style={{
-                // Espreguiçando, o corpo estica e pende um pouco para trás.
-                scale: `1 ${breath(seconds, "you") + 0.035 * stretched}`,
-                rotate: `${-2.5 * stretched + 1.5 * pointing}deg`,
+                transformOrigin: `${YOU_IN.origin[0]}px ${YOU_IN.origin[1]}px`,
+                // A entrada é contada no palco, e não no plano: ela começa antes dele.
+                scale: `${popScale(stage.enter(0, YOU_IN.frames) * YOU_IN.frames, 0, YOU_IN.frames, 0, 1.04)}`,
               }}
             >
-              <Person
-                height={YOU.height}
-                colors={personInPajamas}
-                expression={expression}
-                blink={lids}
-                frontArm={arm(ARMS.front.loose, ARMS.front.up)}
-                backArm={{
-                  hand: [
-                    mix(back.hand[0], ARMS.back.point[0], pointing),
-                    mix(back.hand[1], ARMS.back.point[1], pointing),
-                  ],
-                  bend: mix(back.bend, ARMS.back.point[2], pointing),
+              <Place
+                x={YOU.x}
+                y={YOU.y}
+                anchor="bottom"
+                style={{
+                  // Espreguiçando, o corpo estica e pende um pouco para trás.
+                  scale: `1 ${breath(seconds, "you") + 0.035 * stretched}`,
+                  rotate: `${-2.5 * stretched + 1.5 * pointing}deg`,
                 }}
-              />
-            </Place>
-          </Sooner>
+              >
+                <Person
+                  height={YOU.height}
+                  colors={personInPajamas}
+                  expression={expression}
+                  blink={lids}
+                  frontArm={arm(ARMS.front.loose, ARMS.front.up)}
+                  backArm={{
+                    hand: [
+                      mix(back.hand[0], ARMS.back.point[0], pointing),
+                      mix(back.hand[1], ARMS.back.point[1], pointing),
+                    ],
+                    bend: mix(back.bend, ARMS.back.point[2], pointing),
+                  }}
+                />
+              </Place>
+            </AbsoluteFill>
+          </Stay>
           {/* O balão e as bolhas entram na palavra deles, e saem com o plano. */}
           <Stay only="entering">
             <Cast origin={[TRAIL[0][0], TRAIL[0][1]]}>
@@ -267,30 +278,37 @@ const RecallShot: React.FC<RecallShotProps> = ({
  * O plano que abre a cena, antes de qualquer deixa: o último plano de
  * `stockroom-night` o desenha com `Prelude`, e a rua já sobe enquanto a loja por dentro desce. `clock` é o quadro do vídeo em que a cena começa.
  */
-/** Quantos quadros antes da cena a rua começa a subir: a loja por dentro ainda está descendo. */
-export const STUDIED_LEAD = 7;
+/** Quantos quadros antes da cena a rua começa a subir: a loja por dentro ainda está descendo, e mais cedo que isto a lua e a fachada subiam por dentro dela. */
+export const STUDIED_LEAD = 3;
 
 export const StockroomSolidOpening: React.FC<{ clock: number }> = ({
   clock,
 }) => <StudiedShot lensAt={NEVER} wanderAt={NEVER + 100} clock={clock} />;
 
-export const StockroomSolidScene: React.FC<SceneProps> = ({ scene, shots }) => (
-  <>
-    <Shot range={shots[0]} name="a loja de longe, sob a lupa">
-      <Preluded lead={STUDIED_LEAD}>
-        <StudiedShot
-          lensAt={cue(scene, "comparação")}
-          wanderAt={cue(scene, "ainda")}
-          clock={scene.from}
-        />
-      </Preluded>
-    </Shot>
-    <Shot range={shots[1]} name="ela acorda e reconhece o rosto">
-      <RecallShot
-        recallAt={cue(scene, "ajuda") - shots[1].from}
-        pointAt={cue(scene, "você") - shots[1].from}
-        clock={scene.from + shots[1].from}
-      />
-    </Shot>
-  </>
-);
+export const StockroomSolidScene: React.FC<SceneProps> = ({ scene, shots }) => {
+  const recall = (
+    <RecallShot
+      recallAt={cue(scene, "ajuda") - shots[1].from}
+      pointAt={cue(scene, "você") - shots[1].from}
+      clock={scene.from + shots[1].from}
+    />
+  );
+  return (
+    <>
+      <Shot range={shots[0]} name="a loja de longe, sob a lupa">
+        <Preluded lead={STUDIED_LEAD}>
+          <StudiedShot
+            lensAt={cue(scene, "comparação")}
+            wanderAt={cue(scene, "ainda")}
+            clock={scene.from}
+          />
+        </Preluded>
+        {/* A pessoa do plano seguinte já cresce aqui, por cima da rua que desce. */}
+        <Prelude lead={YOU_IN.lead}>{recall}</Prelude>
+      </Shot>
+      <Shot range={shots[1]} name="ela acorda e reconhece o rosto">
+        <Preluded lead={YOU_IN.lead}>{recall}</Preluded>
+      </Shot>
+    </>
+  );
+};

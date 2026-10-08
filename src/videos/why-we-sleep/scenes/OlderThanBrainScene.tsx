@@ -8,7 +8,13 @@ import {
 import { Cassiopea } from "../../../art/Cassiopea";
 import { Elephant } from "../../../art/Elephant";
 import { cameraBetween, framing } from "../../../components/Camera";
-import { Cast, FlatStage, Stay, useStage } from "../../../components/Cast";
+import {
+  Cast,
+  FlatStage,
+  StageContext,
+  Stay,
+  useStage,
+} from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
@@ -17,20 +23,33 @@ import { cue, mix, ramp, clamp01, clamp } from "../../../components/timing";
 import { WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
+import { enterProgress, leaveStart, markFor } from "../../../video/stage";
 import { elephant, ink, jellyfish, lab } from "../palette";
 import { CLIPBOARD, Clipboard, HELD_CLIPBOARD } from "../parts/Clipboard";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import { Glove, TANK_CENTER } from "../parts/Laboratory";
 import { PULSES_ASLEEP, pulseCycles, pulseShape, steady } from "../parts/pulse";
 import { BillToPocket, billHeight } from "../parts/SleepBill";
-import { TIMELINE, Timeline } from "../parts/Timeline";
-import { RESEARCHER, TankJellyfish, TankShot } from "../parts/TankShot";
+import {
+  SeaFloor,
+  TIMELINE,
+  TIMELINE_JELLYFISH,
+  Timeline,
+} from "../parts/Timeline";
+import {
+  JELLYFISH_WIDTH,
+  LooseJellyfish,
+  RESEARCHER,
+  RESTING_Y,
+  TankJellyfish,
+  TankShot,
+} from "../parts/TankShot";
 import { VacantSign } from "../parts/VacantSign";
 import { ALARM_MAP_LEAD, AlarmMapPrelude } from "./ForcedAwakeScene";
-import { seenAt } from "./JellyfishScene";
+import { blend, seenAt } from "./JellyfishScene";
 import { Sooner, flash, useCastScale } from "./MaybeBrainScene";
 import { billSway } from "./SkipANightScene";
-import { Drift } from "./SleepDebtScene";
+import { Drift, driftZoom } from "./SleepDebtScene";
 import { grown } from "../../../components/Pop";
 
 // De onde a câmera vem: o fim da aproximação lenta de `jellyfish-debt` 3.
@@ -50,6 +69,8 @@ const SPLIT_X = 400;
 const STOW_SECONDS = 0.7;
 // A pessoa é desenhada com esta altura, nas unidades dela: dá a escala da prancheta na mão da pesquisadora.
 const PERSON_UNITS = 650;
+// Onde ela fica dentro do tanque, no cenário do laboratório.
+const IN_TANK = [TANK_CENTER, RESTING_Y] as const;
 
 type ProofShotProps = {
   /** Quadros do plano em que os vistos piscam e em que a conta volta para o bolso. */
@@ -63,10 +84,20 @@ type ProofShotProps = {
 const ProofShot: React.FC<ProofShotProps> = ({ checksAt, stowAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const stage = useStage();
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
   const arriving = ramp(frame, 0, CAMERA_SECONDS * fps);
   const stowed = ramp(frame, stowAt, STOW_SECONDS * fps);
+  const camera = cameraBetween(
+    LAB_BEFORE,
+    // A aproximação lenta para no fim do plano: é dali que a linha do tempo a leva.
+    cameraBetween(PROOF, PROOF_END, Math.min(1, frame / length)),
+    arriving,
+  );
+  // Quando o laboratório começa a descer, ela se solta do tanque e fica na tela: o plano seguinte a leva para a linha.
+  const afloat = frame >= leaveStart(length);
+  const [x, y] = seenAt(camera, IN_TANK);
   // A prancheta estava na mão da pesquisadora no plano anterior: sai dali, do tamanho que tinha, e vai para o canto,
   // enquanto ela sai de cena. A mão de luva que a segura passa a vir de fora do quadro.
   const person = RESEARCHER.height / PERSON_UNITS;
@@ -107,19 +138,31 @@ const ProofShot: React.FC<ProofShotProps> = ({ checksAt, stowAt, clock }) => {
   return (
     <AbsoluteFill>
       <TankShot
-        camera={cameraBetween(
-          LAB_BEFORE,
-          cameraBetween(PROOF, PROOF_END, frame / length),
-          arriving,
-        )}
+        camera={camera}
         hour="day"
         researcher={[1, 1]}
         board={{ gone: Math.max(0.001, ramp(frame, 0, 9)) }}
         platform={TANK_CENTER}
         clock={clock}
       >
-        <TankJellyfish droop={1} rhythm={steady(PULSES_ASLEEP)} clock={clock} />
+        {afloat ? null : (
+          <TankJellyfish
+            droop={1}
+            rhythm={steady(PULSES_ASLEEP)}
+            clock={clock}
+          />
+        )}
       </TankShot>
+      {afloat && !stage.handedOver ? (
+        <LooseJellyfish
+          x={x}
+          y={y}
+          width={JELLYFISH_WIDTH * camera.zoom}
+          droop={1}
+          cycles={pulseCycles(clock + frame, fps, steady(PULSES_ASLEEP))}
+          seconds={seconds}
+        />
+      ) : null}
       <Stay only="entering">
         <Cast origin={[BOARD.x, BOARD.y]}>
           <div
@@ -194,18 +237,38 @@ const ProofShot: React.FC<ProofShotProps> = ({ checksAt, stowAt, clock }) => {
 const MARKS = { sleep: 240, brain: 1090, icon: 130, tag: 250 };
 // O arco passa por cima da água-viva, que fica entre as duas marcas.
 const ARC = { from: 36, rise: 250, seconds: 0.6 };
+// Ela vem do tanque do plano anterior até o lugar dela na linha, nestes quadros, e as cores passam às da noite.
+const TO_LINE_FRAMES = 24;
+const LINE_LEAVES_SOONER = 6;
+// De onde ela vem: onde o último quadro do plano anterior a deixou, dentro do tanque.
+const FROM_TANK = {
+  at: seenAt(PROOF_END, IN_TANK),
+  width: JELLYFISH_WIDTH * PROOF_END.zoom,
+};
 
 type LineShotProps = {
   /** Quadros do plano em que a marca do sono pulsa e em que a do cérebro acende. */
   readonly pulseAt: number;
   readonly brainAt: number;
+  /** O quadro do vídeo em que o plano começa: o pulso dela conta nele. */
+  readonly clock: number;
 };
 
 /** A linha do tempo: o sono no começo, a água-viva logo depois, o cérebro mais adiante, e um arco do sono até ele. */
-const LineShot: React.FC<LineShotProps> = ({ pulseAt, brainAt }) => {
+const LineShot: React.FC<LineShotProps> = ({ pulseAt, brainAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const stage = useStage();
+  const length = useShotLength();
+  // Ela já estava na tela: deriva do tanque até a linha, com peso, enquanto o fundo do mar sobe em volta.
+  const settled = ramp(frame, 0, TO_LINE_FRAMES);
+  const jelly = TIMELINE_JELLYFISH;
+  // A linha sai mais cedo que a marcação dos objetos de cena manda: já encolheu quando o pedestal do plano
+  // seguinte começa a crescer no lugar dela.
+  const line = {
+    ...stage,
+    leave: (delay = 0) => stage.leave(Math.max(0, delay - LINE_LEAVES_SOONER)),
+  };
   const y = TIMELINE.y - MARKS.tag - ARC.from;
   // O arco sai da marca do sono e chega à do cérebro, depois de ela acender; na saída, recolhe.
   const arc =
@@ -220,16 +283,41 @@ const LineShot: React.FC<LineShotProps> = ({ pulseAt, brainAt }) => {
 
   return (
     <AbsoluteFill>
-      <Timeline
-        jellyfish
-        eased
-        alive
-        // A linha se desenha do passado para hoje ao chegar, em vez de aparecer pronta.
-        drawn={ramp(frame, 0, 0.5 * fps)}
-        arrow={ramp(frame, 0, 6)}
-        sleepAt={5}
-        brainAt={brainAt}
-      />
+      {/* O fundo do mar é o cenário do plano: a água toma a cor dela sobre o laboratório, e o recife, os morros e a
+          areia sobem e descem em camadas. A linha fica solta por cima, como elenco. */}
+      <SeaFloor layered />
+      <StageContext.Provider value={line}>
+        <Timeline
+          floor={false}
+          eased
+          alive
+          // A linha se desenha do passado para hoje ao chegar, em vez de aparecer pronta.
+          drawn={ramp(frame, 0, 0.5 * fps)}
+          arrow={ramp(frame, 0, 6)}
+          sleepAt={5}
+          brainAt={brainAt}
+        />
+      </StageContext.Provider>
+      {/* No fim ela encolhe no próprio ponto, na marcação do elenco. */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          transformOrigin: `${jelly.x}px ${jelly.y}px`,
+          scale: `${1 - stage.leave(markFor("actor", jelly.x).leaveAt)}`,
+        }}
+      >
+        <LooseJellyfish
+          x={mix(FROM_TANK.at[0], jelly.x, settled)}
+          y={mix(FROM_TANK.at[1], jelly.y, settled)}
+          width={mix(FROM_TANK.width, jelly.width, settled)}
+          colors={blend(jellyfish.day, jellyfish.night, settled)}
+          droop={mix(1, 0.8, settled)}
+          cycles={pulseCycles(clock + frame, fps, steady(PULSES_ASLEEP))}
+          seconds={(clock + frame) / fps}
+          sway={mix(0.3, 0.4, settled)}
+        />
+      </div>
       <SvgLayer>
         {/* A marca do sono pulsa: dois anéis de luz saem da lua, um depois do outro. */}
         {[0, 7].map((delay) => {
@@ -270,6 +358,17 @@ const LineShot: React.FC<LineShotProps> = ({ pulseAt, brainAt }) => {
           </g>
         ) : null}
       </SvgLayer>
+      {/* O pedestal e a elefanta do plano seguinte já crescem aqui, do tamanho em que a deriva dele começa. Quando ele
+          chega, é ele quem os desenha. */}
+      {frame >= length - VACANT_LEAD && !stage.handedOver ? (
+        <Drift focus={VACANT_FOCUS} zoom={driftZoom(0, 1)}>
+          <Pedestal
+            at={frame - length}
+            light={1}
+            seconds={(clock + frame) / fps}
+          />
+        </Drift>
+      ) : null}
     </AbsoluteFill>
   );
 };
@@ -285,6 +384,61 @@ const VACANT_FOCUS = [960, 560] as const;
 const VACANT_SOONER = 30;
 // De quão alto a água-viva desce para pousar (de fora do quadro), e em quantos segundos.
 const LANDING = { from: -1000, seconds: 0.7 };
+
+// O pedestal e a elefanta começam a crescer estes quadros antes de o plano chegar, sobre o fundo do mar que
+// desce: a troca não deixa a tela só com a água.
+const VACANT_LEAD = 6;
+
+type PedestalProps = {
+  /** O quadro do plano do pedestal que se desenha: negativo, antes de ele chegar. */
+  readonly at: number;
+  /** Quanto o foco de luz está aceso, de 0 a 1. */
+  readonly light: number;
+  /** O instante, em segundos, no relógio do vídeo: a respiração da elefanta conta nele. */
+  readonly seconds: number;
+};
+
+/**
+ * O pedestal vazio e a elefanta que dorme ao lado: quem abre o plano. Os dois
+ * crescem juntos, cada um do próprio ponto, a partir de `VACANT_LEAD` quadros
+ * antes de o plano chegar: é o mesmo desenho no fim da linha do tempo, que os
+ * mostra entrando, e no plano.
+ */
+const Pedestal: React.FC<PedestalProps> = ({ at, light, seconds }) => {
+  const stage = useStage();
+  const opening = {
+    ...stage,
+    cast: true,
+    enter: (_delay?: number, frames?: number) =>
+      enterProgress(at + VACANT_LEAD, 0, frames),
+    // Antes de o plano chegar, quem está saindo é o plano anterior, e não eles.
+    leave: at < 0 ? () => 0 : stage.leave,
+  };
+  return (
+    <StageContext.Provider value={opening}>
+      <Cast origin={[SIGN.x, SIGN.y]}>
+        <VacantSign {...SIGN} light={light} />
+      </Cast>
+      {/* A elefanta olha para o pedestal: o desenho, que olha para a esquerda, é espelhado. */}
+      <Place
+        x={ELEPHANT.x}
+        y={GROUND}
+        anchor="bottom"
+        style={{
+          scale: `-1 ${breath(seconds, "vacant-elephant", { amplitude: 0.014, period: 4.5 })}`,
+        }}
+      >
+        <Elephant
+          width={ELEPHANT.width}
+          colors={elephant}
+          lid={1}
+          droop={1}
+          ear={0.1 + 0.06 * wave(seconds, 4.5, 0.2)}
+        />
+      </Place>
+    </StageContext.Provider>
+  );
+};
 
 type VacantShotProps = {
   /** Quadros do plano em que a água-viva pousa e em que o foco de luz pisca. */
@@ -338,37 +492,19 @@ const VacantShot: React.FC<VacantShotProps> = ({ landAt, blinkAt, clock }) => {
                 width={JELLYFISH.width * 1.1 * landing ** 3 * out}
               />
             </SvgLayer>
-            <Cast origin={[SIGN.x, SIGN.y]}>
-              <VacantSign
-                {...SIGN}
-                // O foco pisca duas vezes sobre o lugar vazio.
-                light={
-                  1 -
-                  0.75 *
-                    Math.max(
-                      flash(frame, blinkAt, 6),
-                      flash(frame, blinkAt + 8, 6),
-                    )
-                }
-              />
-            </Cast>
-            {/* A elefanta olha para o pedestal: o desenho, que olha para a esquerda, é espelhado. */}
-            <Place
-              x={ELEPHANT.x}
-              y={GROUND}
-              anchor="bottom"
-              style={{
-                scale: `-1 ${breath(seconds, "vacant-elephant", { amplitude: 0.014, period: 4.5 })}`,
-              }}
-            >
-              <Elephant
-                width={ELEPHANT.width}
-                colors={elephant}
-                lid={1}
-                droop={1}
-                ear={0.1 + 0.06 * wave(seconds, 4.5, 0.2)}
-              />
-            </Place>
+            <Pedestal
+              at={frame}
+              // O foco pisca duas vezes sobre o lugar vazio.
+              light={
+                1 -
+                0.75 *
+                  Math.max(
+                    flash(frame, blinkAt, 6),
+                    flash(frame, blinkAt + 8, 6),
+                  )
+              }
+              seconds={seconds}
+            />
             {/* A água-viva não entra com o palco: desce na palavra dela. Sai com ele. */}
             {frame < landAt ? null : (
               <Stay only="entering">
@@ -422,6 +558,7 @@ export const OlderThanBrainScene: React.FC<SceneProps> = ({ scene, shots }) => {
         <LineShot
           pulseAt={cue(scene, "sono") - shots[1].from}
           brainAt={cue(scene, "antes") - shots[1].from}
+          clock={scene.from + shots[1].from}
         />
       </Shot>
       <Shot range={shots[2]} name="o pedestal segue vazio">

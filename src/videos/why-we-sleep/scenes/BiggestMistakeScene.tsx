@@ -16,6 +16,7 @@ import {
   type CameraState,
 } from "../../../components/Camera";
 import {
+  Cast,
   FlatStage,
   StageContext,
   Stay,
@@ -27,7 +28,15 @@ import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { ALREADY_SHOWN, cue, drop, linear, mix, ramp, settle, clamp } from "../../../components/timing";
+import {
+  cue,
+  drop,
+  linear,
+  mix,
+  ramp,
+  settle,
+  clamp,
+} from "../../../components/timing";
 import { typography } from "../../../design/tokens";
 import { HEIGHT, WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
@@ -45,7 +54,6 @@ import {
 } from "../parts/Chalkboard";
 import { LifeTree } from "../parts/LifeTree";
 import { Tag } from "../parts/Tag";
-
 
 /**
  * A parede do laboratório, a mesma do corredor: é o fundo de todos os planos
@@ -103,86 +111,98 @@ const WallCalendar: React.FC<WallCalendarProps> = ({ years, next, turned }) => {
         rotate: `${1.3 * wave(frame / fps, 3.3, 0.2)}deg`,
       }}
     >
-      <SvgLayer>
-        {/* O prego e as folhas de baixo, um pouco fora de esquadro. */}
-        <circle
-          cx={x}
-          cy={y - height / 2 - 34}
-          r={12}
-          fill={idea.peach.contact}
-        />
-        <rect
-          x={x - width / 2 + 14}
-          y={y - height / 2 + 18}
-          width={width}
-          height={height}
-          rx={26}
-          fill={idea.peach.contact}
-          opacity={0.3}
-        />
-        <rect
-          x={x - width / 2}
-          y={y - height / 2}
-          width={width}
-          height={height}
-          rx={26}
-          fill={ink.ring}
-        />
-        <path
-          d={`M${x - width / 2},${y - height / 2 + HEADER} L${x - width / 2},${y - height / 2 + 26} Q${x - width / 2},${y - height / 2} ${x - width / 2 + 26},${y - height / 2} L${x + width / 2 - 26},${y - height / 2} Q${x + width / 2},${y - height / 2} ${x + width / 2},${y - height / 2 + 26} L${x + width / 2},${y - height / 2 + HEADER} Z`}
-          fill={ink.tag}
-        />
-        {[-120, 0, 120].map((offset) => (
-          <rect
-            key={offset}
-            x={x + offset - 11}
-            y={y - height / 2 - 30}
-            width={22}
-            height={70}
-            rx={11}
-            fill={ink.dark}
-          />
-        ))}
-      </SvgLayer>
-      {/* A folha de baixo: a que aparece quando a de cima vira. */}
-      <Place x={x} y={y + 40}>
-        <Years years={turning ? next : years} />
-      </Place>
       {/*
+        O calendário entra e sai do palco inteiro, em volta do prego: a folha
+        e os anos escritos nela são uma coisa só, e não um papel em branco
+        que ganha o número depois.
+      */}
+      <Cast origin={[x, y - height / 2 - 34]}>
+        <Stay>
+          <SvgLayer>
+            {/* O prego e as folhas de baixo, um pouco fora de esquadro. */}
+            <circle
+              cx={x}
+              cy={y - height / 2 - 34}
+              r={12}
+              fill={idea.peach.contact}
+            />
+            <rect
+              x={x - width / 2 + 14}
+              y={y - height / 2 + 18}
+              width={width}
+              height={height}
+              rx={26}
+              fill={idea.peach.contact}
+              opacity={0.3}
+            />
+            <rect
+              x={x - width / 2}
+              y={y - height / 2}
+              width={width}
+              height={height}
+              rx={26}
+              fill={ink.ring}
+            />
+            <path
+              d={`M${x - width / 2},${y - height / 2 + HEADER} L${x - width / 2},${y - height / 2 + 26} Q${x - width / 2},${y - height / 2} ${x - width / 2 + 26},${y - height / 2} L${x + width / 2 - 26},${y - height / 2} Q${x + width / 2},${y - height / 2} ${x + width / 2},${y - height / 2 + 26} L${x + width / 2},${y - height / 2 + HEADER} Z`}
+              fill={ink.tag}
+            />
+            {[-120, 0, 120].map((offset) => (
+              <rect
+                key={offset}
+                x={x + offset - 11}
+                y={y - height / 2 - 30}
+                width={22}
+                height={70}
+                rx={11}
+                fill={ink.dark}
+              />
+            ))}
+          </SvgLayer>
+          {/* A folha de baixo: a que aparece quando a de cima vira. */}
+          <Place x={x} y={y + 40}>
+            <Years years={turning ? next : years} />
+          </Place>
+          {/*
         A folha que vira: presa às argolas, ela sobe encolhendo para o
         cabeçalho, com os anos dela, e escurece um pouco ao dobrar. O número
         nunca troca à vista: quem troca é a folha.
       */}
-      {turning ? (
-        <div
-          style={{
-            position: "absolute",
-            left: x - width / 2,
-            top: y - height / 2 + HEADER,
-            width,
-            height: height - HEADER,
-            borderRadius: "0 0 26px 26px",
-            overflow: "hidden",
-            background: ink.ring,
-            transformOrigin: "50% 0",
-            scale: `1 ${1 - turned}`,
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: height / 2 + 40 - HEADER,
-              translate: "-50% -50%",
-            }}
-          >
-            <Years years={years} />
-          </div>
-          <AbsoluteFill
-            style={{ background: idea.peach.contact, opacity: 0.4 * turned }}
-          />
-        </div>
-      ) : null}
+          {turning ? (
+            <div
+              style={{
+                position: "absolute",
+                left: x - width / 2,
+                top: y - height / 2 + HEADER,
+                width,
+                height: height - HEADER,
+                borderRadius: "0 0 26px 26px",
+                overflow: "hidden",
+                background: ink.ring,
+                transformOrigin: "50% 0",
+                scale: `1 ${1 - turned}`,
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  left: "50%",
+                  top: height / 2 + 40 - HEADER,
+                  translate: "-50% -50%",
+                }}
+              >
+                <Years years={years} />
+              </div>
+              <AbsoluteFill
+                style={{
+                  background: idea.peach.contact,
+                  opacity: 0.4 * turned,
+                }}
+              />
+            </div>
+          ) : null}
+        </Stay>
+      </Cast>
     </AbsoluteFill>
   );
 };
@@ -353,11 +373,7 @@ const IntroShot: React.FC<IntroShotProps> = ({
 
   return (
     <Sooner by={INTRO_SOONER}>
-      <ShotPush
-        focus={INTRO_FOCUS}
-        by={INTRO_PUSH}
-        backdrop={<LabWall />}
-      >
+      <ShotPush focus={INTRO_FOCUS} by={INTRO_PUSH} backdrop={<LabWall />}>
         <WallCalendar
           years={DECADES[page]}
           next={DECADES[Math.min(last, page + 1)]}
@@ -712,38 +728,35 @@ const GESTURE = { at: 2, prep: 7, sweep: 4, back: 4, settle: 6 };
 // O giz não espera mais que o quadro: as aspas abrem quando ele chega.
 const QUOTE_AFTER_FRAMES = APPROACH.frames - APPROACH.lead;
 // A frase é apagada antes de a câmera recuar: as linhas passam a giz esmaecido.
-const ERASE_BEFORE = 15;
-// O recuo para o quadro inteiro: ele e o quadro das aspas diminuem juntos e
-// saem pela esquerda, e o quadro grande chega pela direita. Começa antes de o
-// plano seguinte chegar e termina dentro dele.
-const RECEDE = {
-  lead: 12,
-  frames: 18,
-  scale: 0.5,
-  around: [360, 700],
-  left: 1140,
-  board: 1800,
-} as const;
+const ERASE_BEFORE = 22;
+// A passagem para o quadro inteiro: o quadro das aspas é o mesmo do plano seguinte. Ele cresce e
+// vai para o meio, de onde está, em vez de sair por um lado enquanto outro entra pelo outro (por
+// uns quadros eram dois quadros-negros na tela). Começa antes de o plano seguinte chegar e termina
+// dentro dele.
+const RECEDE = { lead: 12, frames: 18 } as const;
+// Quando o quadro começa a andar, a frase apagada some de vez e ele já saiu do palco, encolhendo no próprio
+// ponto: o quadro passa por onde ele estava. Em quadros antes de o plano seguinte chegar.
+const WIPED = { before: 16, frames: 10 };
+const HE_LEAVES = { before: 18, frames: 10 };
 
-/** De 0 a 1, quanto a câmera já recuou do quadro das aspas, `sinceCut` quadros depois (ou antes) de o plano do quadro inteiro chegar. */
+/** De 0 a 1, quanto o quadro das aspas já foi até o lugar do quadro inteiro, `sinceCut` quadros depois (ou antes) de o plano seguinte chegar. */
 const receded = (sinceCut: number): number =>
   ramp(sinceCut, -RECEDE.lead, RECEDE.frames);
 
-/** O plano das aspas visto de mais longe: tudo o que está dentro diminui junto e sai pela esquerda. */
-const Receding: React.FC<{ by: number; children: React.ReactNode }> = ({
-  by,
-  children,
-}) => (
-  <AbsoluteFill
-    style={{
-      transformOrigin: `${RECEDE.around[0]}px ${RECEDE.around[1]}px`,
-      translate: `${-RECEDE.left * by}px 0`,
-      scale: `${mix(1, RECEDE.scale, by)}`,
-    }}
-  >
-    {children}
-  </AbsoluteFill>
-);
+/**
+ * O quadro-negro a caminho do plano das aspas para o do quadro inteiro, em
+ * pixels da tela: `zoom` é a aproximação lenta do plano das aspas, que já o
+ * ampliou um pouco.
+ */
+const boardBetween = (zoom: number, away: number): Box => {
+  const from = pushed(QUOTE_BOARD, QUOTE_FOCUS, zoom);
+  return {
+    x: mix(from.x, BOARD_WIDE.x, away),
+    y: mix(from.y, BOARD_WIDE.y, away),
+    width: mix(from.width, BOARD_WIDE.width, away),
+    height: mix(from.height, BOARD_WIDE.height, away),
+  };
+};
 
 type QuoteShotProps = {
   /** Quadros do plano em que as aspas abrem, em que cada linha se escreve e em que as aspas fecham. */
@@ -788,20 +801,21 @@ const QuoteShot: React.FC<QuoteShotProps> = ({
   );
   const quoteAt = Math.max(openAt, QUOTE_AFTER_FRAMES);
   const away = receded(frame - length);
-  // O quadro grande chega em pixels do quadro; aqui dentro a aproximação lenta já ampliou tudo um pouco.
+  // O caminho do quadro é dado em pixels da tela; aqui dentro a aproximação lenta já ampliou tudo um pouco.
   const zoom = slowPushAt(frame, length, QUOTE_PUSH);
-  const wide = pushed(
-    shifted(BOARD_WIDE, mix(RECEDE.board, 0, away)),
-    QUOTE_FOCUS,
-    1 / zoom,
+  const board =
+    away > 0
+      ? pushed(boardBetween(zoom, away), QUOTE_FOCUS, 1 / zoom)
+      : shifted(QUOTE_BOARD, mix(APPROACH.board, 0, arrived));
+  const heLeft = interpolate(
+    frame,
+    [length - HE_LEAVES.before, length - HE_LEAVES.before + HE_LEAVES.frames],
+    [0, 1],
+    { ...clamp, easing: Easing.in(Easing.cubic) },
   );
 
   return (
-    <ShotPush
-      focus={QUOTE_FOCUS}
-      by={QUOTE_PUSH}
-      backdrop={<LabWall />}
-    >
+    <ShotPush focus={QUOTE_FOCUS} by={QUOTE_PUSH} backdrop={<LabWall />}>
       {/*
         Nada daqui entra nem sai pela marcação do palco: ele e o quadro chegam
         com a câmera e vão embora com ela. Quando o plano seguinte chega, é
@@ -809,31 +823,45 @@ const QuoteShot: React.FC<QuoteShotProps> = ({
       */}
       {stage.handedOver ? null : (
         <Stay>
-          <Receding by={away}>
-            <Board {...shifted(QUOTE_BOARD, mix(APPROACH.board, 0, arrived))} />
-            {arrived < 1 ? null : (
+          <Board {...board} />
+          {arrived < 1 ? null : (
+            // O giz apagado some de vez antes de o quadro andar: é o apagador terminando o serviço.
+            <AbsoluteFill
+              style={{
+                opacity: 1 - linear(frame, length - WIPED.before, WIPED.frames),
+              }}
+            >
               <Quote
-                box={QUOTE_BOARD}
+                // O que resta do giz vai com o quadro quando ele começa a andar.
+                box={board}
                 at={quoteAt}
                 linesAt={linesAt}
                 closeAt={closeAt}
                 erasedAt={length - ERASE_BEFORE}
               />
-            )}
-            <Researcher
-              {...him}
-              since={since}
-              reach={-0.4 * prep + 1.54 * sweep - 0.18 * back + 0.04 * rest}
-              tilt={-4 * prep + 7 * sweep - 1.2 * back - 0.6 * rest}
-              lid={interpolate(
-                frame,
-                [sweepAt - 1, sweepAt + 1, sweepAt + 3, sweepAt + 5],
-                [0, 1, 1, 0],
-                clamp,
-              )}
-            />
-          </Receding>
-          {away <= 0 ? null : <Board {...wide} />}
+            </AbsoluteFill>
+          )}
+          {heLeft >= 1 ? null : (
+            <AbsoluteFill
+              style={{
+                transformOrigin: `${QUOTE_HIM.x}px ${HEIGHT}px`,
+                scale: `${1 - heLeft}`,
+              }}
+            >
+              <Researcher
+                {...him}
+                since={since}
+                reach={-0.4 * prep + 1.54 * sweep - 0.18 * back + 0.04 * rest}
+                tilt={-4 * prep + 7 * sweep - 1.2 * back - 0.6 * rest}
+                lid={interpolate(
+                  frame,
+                  [sweepAt - 1, sweepAt + 1, sweepAt + 3, sweepAt + 5],
+                  [0, 1, 1, 0],
+                  clamp,
+                )}
+              />
+            </AbsoluteFill>
+          )}
         </Stay>
       )}
       <Grain />
@@ -919,8 +947,6 @@ type VerdictShotProps = {
   readonly stampAt: number;
   /** A aproximação lenta do plano das aspas quando este plano chegou. */
   readonly quoteZoom: number;
-  /** Há quantos quadros o pesquisador está no palco quando o plano começa. */
-  readonly since: number;
 };
 
 /** No quadro, a árvore da vida com todos os ramos dormindo, e o carimbo enorme por cima: "erro?". */
@@ -928,7 +954,6 @@ const VerdictShot: React.FC<VerdictShotProps> = ({
   raisedAt,
   stampAt,
   quoteZoom,
-  since,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -941,9 +966,8 @@ const VerdictShot: React.FC<VerdictShotProps> = ({
     shaken < 0 || shaken > SHAKE.frames
       ? 0
       : SHAKE.pixels * (1 - shaken / SHAKE.frames) ** 2;
-  // A câmera ainda está recuando do plano das aspas: o quadro grande chega pela direita.
-  const away = receded(frame);
-  const box = shifted(BOARD_WIDE, mix(RECEDE.board, 0, away));
+  // O quadro ainda está a caminho: é o do plano das aspas, que cresce até o lugar dele aqui.
+  const box = boardBetween(quoteZoom, receded(frame));
   const stamp = chalkStamp(box);
   // No fim, a árvore vai para o plano seguinte: em pixels do quadro, e aqui
   // dentro a aproximação lenta já ampliou tudo um pouco.
@@ -959,34 +983,7 @@ const VerdictShot: React.FC<VerdictShotProps> = ({
   const here = chalkTree(box);
 
   return (
-    <ShotPush
-      focus={VERDICT_FOCUS}
-      by={VERDICT_PUSH}
-      backdrop={<LabWall />}
-    >
-      {/* O que o plano das aspas deixou saindo: ele e o quadro pequeno, com a frase apagada. */}
-      {away >= 1 ? null : (
-        <Stay>
-          <AbsoluteFill
-            style={{
-              transformOrigin: `${QUOTE_FOCUS[0]}px ${QUOTE_FOCUS[1]}px`,
-              scale: `${quoteZoom}`,
-            }}
-          >
-            <Receding by={away}>
-              <Board {...QUOTE_BOARD} />
-              <Quote
-                box={QUOTE_BOARD}
-                at={ALREADY_SHOWN}
-                linesAt={[ALREADY_SHOWN, ALREADY_SHOWN, ALREADY_SHOWN]}
-                closeAt={ALREADY_SHOWN}
-                erasedAt={ALREADY_SHOWN}
-              />
-              <Researcher {...QUOTE_HIM} since={since} reach={1} />
-            </Receding>
-          </AbsoluteFill>
-        </Stay>
-      )}
+    <ShotPush focus={VERDICT_FOCUS} by={VERDICT_PUSH} backdrop={<LabWall />}>
       <div
         style={{
           position: "absolute",
@@ -1094,7 +1091,6 @@ export const BiggestMistakeScene: React.FC<SceneProps> = ({ scene, shots }) => {
           raisedAt={cue(scene, "erro") - shots[3].from}
           stampAt={cue(scene, "evolução") - shots[3].from}
           quoteZoom={1 + QUOTE_PUSH}
-          since={lengths[0] + lengths[1] + lengths[2]}
         />
       </Shot>
     </>

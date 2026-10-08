@@ -5,19 +5,19 @@ import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { cue, linear, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { Shot, useShotLength, type Wipe } from "../../../video/Shot";
+import { Shot, useShotLength } from "../../../video/Shot";
 import { billHeight, BILL_LINES, SleepBill } from "../parts/SleepBill";
 import {
   Critter,
   DEN,
   LATE_ORB,
   SavannaShot,
-  Sweep,
   Thicket,
 } from "./NightFallsScene";
 
-// O dia varre a noite a partir da direita, em 0,25 s.
-const DAYBREAK: Wipe = { frames: 8, from: "right" };
+// Amanhece no lugar, com o cenário no palco: em quanto tempo a luz vai da noite
+// ao sol baixo da manhã, em segundos. É o tempo em que a cabeça dele começa a cair.
+const DAYBREAK_SECONDS = 1;
 /**
  * De dia, o bicho fica no terço direito, virado para a conta, que fica no
  * esquerdo, sobre o céu: a cena `sleep-debt` começa neste mesmo enquadramento.
@@ -52,7 +52,7 @@ const MOON = { from: LATE_ORB + 0.008, top: 0.33, seconds: 2.5 };
 const LOOK = { turn: 7, hold: 2, gap: 4 };
 // A meia-volta do fim do plano, em quadros: o corpo se abaixa (preparo), gira
 // com um pulinho (ação) e assenta. A câmera vai junto, com peso, até o
-// enquadramento da manhã; tudo termina 0,5 s antes de o dia varrer.
+// enquadramento da manhã; tudo termina 0,5 s antes de amanhecer.
 const ABOUT = { crouch: 3, spin: 7, settle: 6, camera: 19, rest: 15 };
 
 /**
@@ -75,7 +75,7 @@ const watchfulEar = (seconds: number): number =>
 /**
  * A pausa viva de quem está de vigia, num instante: o peso troca de pata, a
  * cabeça varre devagar, o olho passeia e uma orelha gira. O plano da manhã
- * redesenha a noite por baixo da varredura com estes mesmos valores.
+ * parte destes mesmos valores e os desfaz enquanto amanhece.
  */
 const vigilIdle = (seconds: number) => ({
   lean: 0.9 * wave(seconds, 4.1, 0.4),
@@ -100,7 +100,7 @@ type VigilShotProps = ShotClock & {
  * arregalados, virado para a moita, e a lua atravessa o céu. Em "acordado" ele
  * olha para trás e volta; olha de novo, e dessa vez o corpo vai atrás da
  * cabeça. É assim que ele termina o plano no lugar, no lado e na pose em que a
- * manhã o encontra: o dia só troca a pintura.
+ * manhã o encontra: o dia só muda a luz.
  */
 const VigilShot: React.FC<VigilShotProps> = ({ moonAt, lookAt, clock }) => {
   const frame = useCurrentFrame();
@@ -215,45 +215,41 @@ const OwingShot: React.FC<OwingShotProps> = ({
   const above = OWING_BILL.y + billHeight(0) * OWING_BILL.scale + 40;
   const idle = vigilIdle(seconds);
   const watch = 1 - ramp(frame, 0.1 * fps, 0.4 * fps);
+  // A luz parte da noite em que o plano anterior terminou e clareia no lugar:
+  // o céu, o chão, o capim e o bicho leem o mesmo valor, e a lua dá lugar ao
+  // sol por opacidade, no cenário. A manhã dele é o sol baixo: a luz do
+  // entardecer (0,5), e não a do pleno dia.
+  const dawn = ramp(frame, 0, DAYBREAK_SECONDS * fps);
+  const daylight = mix(0, 0.5, dawn);
 
   return (
     <>
-      <Sweep
-        wipe={DAYBREAK}
-        under={
-          // A noite do plano anterior, no último quadro dele: a mesma câmera, o
-          // mesmo bicho no mesmo lugar e na mesma pose. A borda só troca a pintura.
-          <SavannaShot camera={OWING} daylight={0} orb={MOON.top} clock={clock}>
-            <Thicket daylight={0} seconds={seconds} />
-            <Critter daylight={0} alert {...idle} seconds={seconds} />
-          </SavannaShot>
-        }
+      <SavannaShot
+        camera={OWING}
+        daylight={daylight}
+        orb={mix(
+          MOON.top,
+          mix(MORNING_ORB.from, MORNING_ORB.to, linear(frame, 0, length)),
+          dawn,
+        )}
+        clock={clock}
       >
-        <SavannaShot
-          camera={OWING}
-          // A manhã dele é o sol baixo: o cenário fica na luz do entardecer, e não na do pleno dia.
-          daylight={0.5}
-          orb={mix(MORNING_ORB.from, MORNING_ORB.to, linear(frame, 0, length))}
-          clock={clock}
-        >
-          <Thicket daylight={1} seconds={seconds} />
-          <Critter
-            daylight={1}
-            nod={nod}
-            tired={1}
-            // Os olhos arregalados da noite pesam logo que o dia chega; a vigia (a
-            // orelha, a cabeça que varre) se desfaz com eles. Enquanto a borda
-            // passa, as duas pinturas ainda têm a mesma pose.
-            alert={Math.max(watch, JERK.stare * jerk)}
-            // No tranco o corpo vai um pouco para trás, com a cabeça.
-            lean={idle.lean * watch + JERK.lean * jerk}
-            head={idle.head * watch}
-            glance={idle.glance * watch}
-            ear={idle.ear * watch}
-            seconds={seconds}
-          />
-        </SavannaShot>
-      </Sweep>
+        <Thicket daylight={daylight} seconds={seconds} />
+        <Critter
+          daylight={daylight}
+          nod={nod}
+          tired={1}
+          // Os olhos arregalados da noite pesam logo que o dia chega; a vigia (a
+          // orelha, a cabeça que varre) se desfaz com eles.
+          alert={Math.max(watch, JERK.stare * jerk)}
+          // No tranco o corpo vai um pouco para trás, com a cabeça.
+          lean={idle.lean * watch + JERK.lean * jerk}
+          head={idle.head * watch}
+          glance={idle.glance * watch}
+          ear={idle.ear * watch}
+          seconds={seconds}
+        />
+      </SavannaShot>
       {/* A conta entra na fala, não com o plano, e fica para a cena seguinte, no mesmo lugar. */}
       <Stay>
         <Place

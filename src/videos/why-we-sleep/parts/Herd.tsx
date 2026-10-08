@@ -35,11 +35,13 @@ const cycleOf = (cycles: number) => ((cycles % 1) + 1) % 1;
 /**
  * A luz do dia, de 0 (noite) a 1 (dia), para um tempo contado em voltas: cada
  * volta inteira é um dia e uma noite, e a volta começa com o sol nascendo.
+ * `twilight` menor estica o amanhecer e o entardecer: é o de quem precisa que
+ * a luz vire devagar, à vista.
  */
-export const daylightAt = (cycles: number): number =>
+export const daylightAt = (cycles: number, twilight = TWILIGHT): number =>
   Math.min(
     1,
-    Math.max(0, 0.5 + TWILIGHT * Math.sin(cycleOf(cycles) * Math.PI * 2)),
+    Math.max(0, 0.5 + twilight * Math.sin(cycleOf(cycles) * Math.PI * 2)),
   );
 
 /** Onde o astro está no arco, de 0 a 1: o sol na primeira metade da volta, a lua na segunda. */
@@ -87,7 +89,16 @@ export type HerdMember = {
   readonly seed: string;
   /** Virada para a direita. O desenho olha para a esquerda. */
   readonly flipped?: boolean;
+  /**
+   * A fase do abano das orelhas e do pêndulo da tromba; sem valor, vem da
+   * posição na lista. É dita por quem leva a mesma elefanta de um plano a
+   * outro, numa lista diferente: assim a orelha não salta na troca.
+   */
+  readonly phase?: number;
 };
+
+/** A fase da pausa viva de quem está na posição `index` da lista. */
+export const herdPhase = (index: number): number => index * 0.37;
 
 /** Um valor para a manada inteira, ou um por elefanta, na ordem de `members`; sem valor, a pausa viva dela. */
 type Each = number | readonly (number | undefined)[];
@@ -166,10 +177,10 @@ export const Herd: React.FC<HerdProps> = ({
           />
         ))}
       </SvgLayer>
-      {members.map(({ x, y = 0, width, seed, flipped }, index) => {
+      {members.map(({ x, y = 0, width, seed, flipped, ...member }, index) => {
         const sleeping = typeof asleep === "number" ? asleep : asleep[index];
         const awake = 1 - sleeping;
-        const phase = index * 0.37;
+        const phase = member.phase ?? herdPhase(index);
         const gait = gaitOf(width, seed);
         const pace = stride?.pace ?? 0;
         // O corpo sobe a cada pata que passa pelo apoio: quatro vezes por volta, e pouco, que ela é pesada.
@@ -255,15 +266,28 @@ type SleepingElephantProps = {
   readonly y: number;
   readonly width: number;
   readonly flipped?: boolean;
+  /** A semente da respiração e a fase da orelha: as de quem ela era na savana, quando vem de lá. */
+  readonly seed?: string;
+  readonly phase?: number;
+  /** 1 é a pintura de dia, 0 a de noite. */
+  readonly daylight?: number;
   readonly seconds: number;
 };
 
-/** A elefanta dormindo em pé, fora da savana: olho fechado, tromba caída, cabeça pendida. Sem sombra: quem a põe dá o chão. */
+/**
+ * A elefanta dormindo em pé, fora da savana: olho fechado, tromba caída,
+ * cabeça pendida. Sem sombra: quem a põe dá o chão. É o mesmo desenho de quem
+ * dorme na `Herd`, com a mesma respiração e a mesma orelha: a que sai da
+ * savana para um fundo liso não muda de pose na troca.
+ */
 export const SleepingElephant: React.FC<SleepingElephantProps> = ({
   x,
   y,
   width,
   flipped = false,
+  seed = "sleeping-elephant",
+  phase = 0,
+  daylight = 1,
   seconds,
 }) => (
   <Place
@@ -271,16 +295,16 @@ export const SleepingElephant: React.FC<SleepingElephantProps> = ({
     y={y}
     anchor="bottom"
     style={{
-      scale: `${flipped ? -1 : 1} ${breath(seconds, "sleeping-elephant", { amplitude: 0.014, period: 4.5 })}`,
+      scale: `${flipped ? -1 : 1} ${breath(seconds, seed, { amplitude: 0.012, period: 4.5 })}`,
     }}
   >
     <Elephant
       width={width}
-      colors={elephant}
+      colors={elephantAt(daylight)}
       lid={1}
       droop={1}
       trunk={0}
-      ear={0.1}
+      ear={0.2 * Math.abs(wave(seconds, 2.2, phase))}
     />
   </Place>
 );

@@ -71,7 +71,7 @@ const LitShot: React.FC<LitShotProps> = ({ litAt, lookAt }) => {
       >
         <LifeBar
           // A barra se desenha ao chegar, como no gancho, e recolhe na saída.
-          drawn={ramp(frame, 0, 0.5 * fps) * (1 - stage.leave(8))}
+          drawn={ramp(frame, 0, 0.5 * fps) * (1 - stage.leave(5))}
           lit={ramp(frame, litAt, LIT.seconds * fps)}
           sky={linear(frame, litAt + LIT.skyAfter * fps, LIT.skySeconds * fps)}
           twinkle={seconds}
@@ -131,6 +131,9 @@ const LINE_SOONER = 30;
 // a escala: abre deslocada `pan` pixels para o começo da linha e desliza, com
 // peso, até o quadro composto, quando a cama entra.
 const FOLLOW = { pan: 90 };
+// A água-viva começa a crescer estes quadros antes do plano, quando a barra acabou de recolher: sem
+// isto o fundo ficava dois ou três quadros liso.
+const SLEEPERS_LEAD = 7;
 
 type SleepersShotProps = {
   /** Quadros do plano em que a conta entra no fim da linha e em que o carimbo pisca. */
@@ -199,30 +202,40 @@ const SleepersShot: React.FC<SleepersShotProps> = ({ billAt, stampAt }) => {
  * O plano que abre a cena, antes de qualquer deixa: o último plano de
  * `still-unknown` o desenha com `Prelude`, e ela já cresce enquanto a lagoa desce.
  */
-/** Quantos quadros antes da cena ela começa a crescer: antes disso a água-viva ainda está no lugar dela. */
-export const LIT_LEAD = 5;
+/** Quantos quadros antes da cena ela começa a crescer: o medalhão e o contorno do cérebro ainda encolhem, e mais tarde que isto a lagoa ficava dois ou três quadros só com um ponto. */
+export const LIT_LEAD = 9;
 
 export const WhatItIsOpening: React.FC = () => (
   <LitShot litAt={NEVER} lookAt={NEVER} />
 );
 
-export const WhatItIsScene: React.FC<SceneProps> = ({ scene, shots }) => (
-  <>
-    <Shot range={shots[0]} name="o terço se acende">
-      <Preluded lead={LIT_LEAD}>
-        <LitShot litAt={cue(scene, "terço")} lookAt={cue(scene, "dormindo")} />
-      </Preluded>
-    </Shot>
-    <Shot range={shots[1]} name="os animais dormem desde antes do cérebro">
-      <SleepersShot
-        billAt={cue(scene, "corpo") - shots[1].from}
-        stampAt={cue(scene, "quando") - shots[1].from}
-      />
-      {/* Rechtschaffen e o quadro-negro de `tonight` crescem aqui, por cima dos três que encolhem: a troca
+export const WhatItIsScene: React.FC<SceneProps> = ({ scene, shots }) => {
+  const sleepers = (
+    <SleepersShot
+      billAt={cue(scene, "corpo") - shots[1].from}
+      stampAt={cue(scene, "quando") - shots[1].from}
+    />
+  );
+  return (
+    <>
+      <Shot range={shots[0]} name="o terço se acende">
+        <Preluded lead={LIT_LEAD}>
+          <LitShot
+            litAt={cue(scene, "terço")}
+            lookAt={cue(scene, "dormindo")}
+          />
+        </Preluded>
+        {/* A água-viva da linha do tempo já cresce aqui, quando a barra recolheu. */}
+        <Prelude lead={SLEEPERS_LEAD}>{sleepers}</Prelude>
+      </Shot>
+      <Shot range={shots[1]} name="os animais dormem desde antes do cérebro">
+        <Preluded lead={SLEEPERS_LEAD}>{sleepers}</Preluded>
+        {/* Rechtschaffen e o quadro-negro de `tonight` crescem aqui, por cima dos três que encolhem: a troca
           de cena não deixa a tela só com o fundo do mar. */}
-      <Prelude lead={RECALL_LEAD}>
-        <TonightOpening clock={scene.from + shots[1].to} />
-      </Prelude>
-    </Shot>
-  </>
-);
+        <Prelude lead={RECALL_LEAD}>
+          <TonightOpening clock={scene.from + shots[1].to} />
+        </Prelude>
+      </Shot>
+    </>
+  );
+};

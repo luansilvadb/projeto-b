@@ -264,6 +264,10 @@ const DiscShot: React.FC<DiscShotProps> = ({
 // O quarto inteiro; de perto, o cartaz e as três cabeças viradas para ele. O ponto é o que vai para o centro do quadro.
 const WHOLE = { focus: [960, 540], zoom: 1 } as const;
 const ON_POSTER = { focus: [755, 520], zoom: 1.4 } as const;
+// No quadro fechado o calendário fica rente à borda direita, do lado de fora: só com a câmera, que freia ao
+// chegar, a ponta da folha ficava na borda por vários quadros, como uma linha clara. Ele vai um pouco para o
+// lado enquanto a câmera fecha, e volta quando ela abre: quantos pixels, e em quantos quadros.
+const CALENDAR_ASIDE = { by: 150, frames: 14 };
 const [LEFT, MIDDLE, RIGHT] = ROOM.boys;
 const BOYS = ["boy-left", "gardner", "boy-right"] as const;
 // Onde fica a cabeça de cada um, para os olhos seguirem a moeda.
@@ -474,7 +478,15 @@ const PosterShot: React.FC<PosterShotProps> = ({ posterAt, clock }) => {
         HEIGHT / 2,
       ])}
     >
-      <Bedroom hue={HUE} on={HUE} posterAt={posterAt} seconds={seconds} />
+      <Bedroom
+        hue={HUE}
+        on={HUE}
+        posterAt={posterAt}
+        calendarAside={
+          CALENDAR_ASIDE.by * ramp(frame, 0, CALENDAR_ASIDE.frames)
+        }
+        seconds={seconds}
+      />
       <BoyShadows middle={MIDDLE} />
       <Friend
         {...LEFT}
@@ -659,7 +671,14 @@ const CoinShot: React.FC<CoinShotProps> = ({ pointAt, shockAt, clock }) => {
 
   return (
     <Room camera={settling(WHOLE.focus, WHOLE.zoom, frame / length, 0.03)}>
-      <Bedroom hue={HUE} on={HUE} seconds={seconds} />
+      <Bedroom
+        hue={HUE}
+        on={HUE}
+        calendarAside={
+          CALENDAR_ASIDE.by * (1 - ramp(frame, 0, CALENDAR_ASIDE.frames))
+        }
+        seconds={seconds}
+      />
       <BoyShadows middle={MIDDLE} />
       <Friend
         {...LEFT}

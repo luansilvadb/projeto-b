@@ -31,7 +31,7 @@ import {
   FRONT_WIDE,
   ShopFront,
 } from "../parts/ShopFront";
-import { Prelude, Sooner, flash, shake } from "./MaybeBrainScene";
+import { Prelude, Preluded, Sooner, flash, shake } from "./MaybeBrainScene";
 import { LIT_LEAD, WhatItIsOpening } from "./WhatItIsScene";
 import { Grow } from "./SleepDebtScene";
 
@@ -49,7 +49,7 @@ const SWAY = { degrees: 16, turns: 2.5, seconds: 1.3 };
  * sob o trio que ainda encolhe, para a troca não deixar a tela só com o fundo.
  * Quem desenha esses quadros é o plano anterior, com `ShopPrelude`.
  */
-export const SHOP_RISE = { lead: 16, frames: 26 };
+export const SHOP_RISE = { lead: 10, frames: 26 };
 
 /** Quanto da rua já subiu, de 0 a 1, no quadro `at` do plano da loja (negativo antes de ele chegar). */
 const shopRisen = (at: number): number =>
@@ -195,6 +195,9 @@ const ATTEMPT = {
 const SCENERY_LEAD = 20;
 // O cérebro já está no lugar quando "a resposta" soa.
 const FITS_SOONER = 30;
+// A lagoa e o cérebro começam a entrar estes quadros antes do plano, sobre a rua que desce: sem isto
+// sobravam uma lasca do toldo e a lua, e o cérebro ainda era um ponto.
+const FITS_LEAD = 4;
 
 type FitsShotProps = {
   /** Quadros do plano em que o medalhão cai no cérebro, em que a câmera desce e em que ele tenta pousar nela. */
@@ -314,25 +317,30 @@ const FitsShot: React.FC<FitsShotProps> = ({
 export const StillUnknownScene: React.FC<SceneProps> = ({ scene, shots }) => {
   const { fps } = useVideoConfig();
   const fitsFrames = shots[1].to - shots[1].from;
+  const fits = (
+    <FitsShot
+      // O cérebro leva uns quadros para crescer no lugar: o medalhão cai logo depois.
+      landAt={Math.max(6, cue(scene, "resposta") - shots[1].from)}
+      descendAt={cue(scene, "água") - shots[1].from}
+      // A tentativa assenta antes de a lagoa começar a sair, que é dois terços de segundo antes da troca.
+      tryAt={Math.min(
+        cue(scene, "sem") - shots[1].from,
+        fitsFrames -
+          (ATTEMPT.seconds + ATTEMPT.riseSeconds) * fps -
+          SCENERY_LEAD,
+      )}
+      clock={scene.from + shots[1].from}
+    />
+  );
   return (
     <>
       <Shot range={shots[0]} name="a loja ainda com a interrogação">
         <StillAskingShot swayAt={cue(scene, "falta")} clock={scene.from} />
+        {/* A lagoa e o cérebro do plano seguinte já sobem aqui, por cima da rua que desce. */}
+        <Prelude lead={FITS_LEAD}>{fits}</Prelude>
       </Shot>
       <Shot range={shots[1]} name="a resposta cabe num cérebro; ela não tem um">
-        <FitsShot
-          // O cérebro leva uns quadros para crescer no lugar: o medalhão cai logo depois.
-          landAt={Math.max(6, cue(scene, "resposta") - shots[1].from)}
-          descendAt={cue(scene, "água") - shots[1].from}
-          // A tentativa assenta antes de a lagoa começar a sair, que é dois terços de segundo antes da troca.
-          tryAt={Math.min(
-            cue(scene, "sem") - shots[1].from,
-            fitsFrames -
-              (ATTEMPT.seconds + ATTEMPT.riseSeconds) * fps -
-              SCENERY_LEAD,
-          )}
-          clock={scene.from + shots[1].from}
-        />
+        <Preluded lead={FITS_LEAD}>{fits}</Preluded>
         {/* A pessoa de `what-it-is` cresce aqui, por cima da lagoa que desce: a troca de cena não deixa a
             tela só com o fundo. */}
         <Prelude lead={LIT_LEAD}>

@@ -1,13 +1,6 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { Person } from "../../../art/Person";
-import { useMemo } from "react";
-import {
-  Cast,
-  FlatStage,
-  StageContext,
-  Stay,
-  useStage,
-} from "../../../components/Cast";
+import { Cast, FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
@@ -32,25 +25,6 @@ import { flash, Prelude, Sooner } from "./MaybeBrainScene";
 import { HEAD_LEAD, StockroomOpening } from "./StockroomScene";
 import { centeredAt, SHEET as CLOSE_LIST } from "./MemoryTestScene";
 import { Drift, driftZoom, Grow, undrifted } from "./SleepDebtScene";
-
-/**
- * Quem está aqui sai depois da marcação de sempre: é o que os dois planos têm
- * em comum, e fica na tela até o plano seguinte chegar, para a troca não
- * deixar o quadro só com o fundo.
- */
-const Later: React.FC<{ by: number; children: React.ReactNode }> = ({
-  by,
-  children,
-}) => {
-  const stage = useStage();
-  const later = useMemo(
-    () => ({ ...stage, leave: (delay = 0) => stage.leave(delay + by) }),
-    [stage, by],
-  );
-  return (
-    <StageContext.Provider value={later}>{children}</StageContext.Provider>
-  );
-};
 
 /** O fundo liso das três voltas desta cena. */
 const HUE = "peach";
@@ -207,8 +181,12 @@ const SPLIT_FOCUS = [960, 600] as const;
 const SPLIT_SOONER = 12;
 // Apagado, cada lado fica sob um véu da cor de contato do fundo dele.
 const DIM = 0.62;
-// A lista de perto da cena anterior se divide em duas, uma para cada mesa de cabeceira: em quantos quadros.
+// A lista de perto da cena anterior encolhe até a mesa de cabeceira do lado em que estava, o de quem ficou
+// acordada: em quantos quadros. A outra entra crescendo na mesa dela. (Dividida em duas, a lista grande ficava
+// sobre a divisa dos quartos, sob os véus, e parecia dissolver.)
 const SPLIT_FRAMES = 18;
+// A lista viaja por cima dos véus, branca, e toma a penumbra do quarto ao pousar: nestes últimos quadros.
+const LAND_FRAMES = 7;
 // Em quantos segundos o relógio de cada lado corre as oito horas, a velocidade constante.
 const CLOCK_SECONDS = { slept: 1.6, awake: 1 };
 
@@ -235,6 +213,26 @@ const SplitShot: React.FC<SplitShotProps> = ({ sleptAt, awakeAt, clock }) => {
   const parted = ramp(frame, 0, SPLIT_FRAMES);
   const listFrom = undrifted([CLOSE_LIST.x, CLOSE_LIST.y], SPLIT_FOCUS, zoom);
   const big = CLOSE_LIST.width / zoom;
+  const [nightList, dayList] = TABLE_LISTS;
+  const travelling = (
+    <Place
+      x={0}
+      y={0}
+      style={{
+        translate: centeredAt(
+          mix(listFrom[0], dayList.x, parted),
+          mix(listFrom[1], dayList.y, parted),
+        ),
+        rotate: `${mix(CLOSE_LIST.tilt, dayList.tilt, parted)}deg`,
+      }}
+    >
+      <SyllableSheet
+        width={big * (LIST.width / big) ** parted}
+        // Pequena, a letra fica abaixo do legível: vira o traço da tarja.
+        written={1 - ramp(frame, 3, 9)}
+      />
+    </Place>
+  );
 
   return (
     <AbsoluteFill>
@@ -338,32 +336,23 @@ const SplitShot: React.FC<SplitShotProps> = ({ sleptAt, awakeAt, clock }) => {
               />
             </Place>
             {/*
-              A lista de perto da cena anterior se divide em duas, que pousam nas mesas de cabeceira; e
-              as duas continuam no plano seguinte, que as leva para o centro. Aqui não entram nem saem.
+              A lista de perto da cena anterior encolhe até a mesa de quem ficou acordada, e a outra cresce
+              na mesa de quem dormiu; as duas continuam no plano seguinte, que as leva para o centro: não saem.
             */}
-            {stage.handedOver
-              ? null
-              : TABLE_LISTS.map(({ x, y, tilt }) => (
-                  <Stay key={x}>
-                    <Place
-                      x={0}
-                      y={0}
-                      style={{
-                        translate: centeredAt(
-                          mix(listFrom[0], x, parted),
-                          mix(listFrom[1], y, parted),
-                        ),
-                        rotate: `${mix(CLOSE_LIST.tilt, tilt, parted)}deg`,
-                      }}
-                    >
-                      <SyllableSheet
-                        width={big * (LIST.width / big) ** parted}
-                        // Pequena, a letra fica abaixo do legível: vira o traço da tarja.
-                        written={1 - ramp(frame, 3, 9)}
-                      />
-                    </Place>
-                  </Stay>
-                ))}
+            {stage.handedOver ? null : (
+              <>
+                <Stay only="leaving">
+                  <Place
+                    x={nightList.x}
+                    y={nightList.y}
+                    style={{ rotate: `${nightList.tilt}deg` }}
+                  >
+                    <SyllableSheet width={LIST.width} written={0} />
+                  </Place>
+                </Stay>
+                <Stay>{travelling}</Stay>
+              </>
+            )}
           </Drift>
         </Sooner>
         {/* Cada lado só acende na oração dele: até lá existe, apagado. */}
@@ -391,6 +380,19 @@ const SplitShot: React.FC<SplitShotProps> = ({ sleptAt, awakeAt, clock }) => {
             <rect x={953} y={0} width={14} height={1080} fill={ink.paper} />
           </SvgLayer>
         </AbsoluteFill>
+        {/* A mesma lista, por cima dos véus e da divisória, enquanto viaja: some sobre a de baixo ao pousar. */}
+        {frame < SPLIT_FRAMES + 2 && !stage.handedOver ? (
+          <AbsoluteFill
+            style={{
+              opacity:
+                1 - ramp(frame, SPLIT_FRAMES - LAND_FRAMES, LAND_FRAMES + 2),
+            }}
+          >
+            <Drift focus={SPLIT_FOCUS}>
+              <Stay>{travelling}</Stay>
+            </Drift>
+          </AbsoluteFill>
+        ) : null}
         <Grain />
       </FlatStage>
     </AbsoluteFill>
@@ -420,8 +422,6 @@ const ARRIVE_FRAMES = 18;
 // As sílabas apagam uma a uma: o intervalo entre elas, e quanto cada uma leva.
 const FORGET = { step: 3, seconds: 0.3 };
 const PAIR_SOONER = 12;
-// As duas pessoas são as mesmas do plano seguinte: saem por último, quando ele já chegou.
-const PAIR_LATER = 12;
 
 type TestShotProps = {
   /** Quadros do plano em que as sílabas começam a apagar, em que o colchete e a etiqueta entram, e em que entra "só duas". */
@@ -441,6 +441,7 @@ const TestShot: React.FC<TestShotProps> = ({
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
+  const stage = useStage();
   const seconds = (clock + frame) / fps;
   const top = SHEETS.y - SHEET_HEIGHT / 2;
   const zoom = driftZoom(0, length);
@@ -535,8 +536,10 @@ const TestShot: React.FC<TestShotProps> = ({
               </Place>
             </Stay>
           ))}
-          <Later by={PAIR_LATER}>
-            <Sooner by={PAIR_SOONER}>
+          {/* As duas pessoas são as mesmas do plano seguinte, que as leva daqui para a esquerda: entram e não saem. */}
+          {stage.handedOver ? null : (
+            <Stay only="leaving">
+              <Sooner by={PAIR_SOONER}>
               {PAIR.xs.map((x, index) => (
                 <Cast key={x} origin={[x, PAIR.y]} order={2 + index}>
                   <SvgLayer>
@@ -564,8 +567,9 @@ const TestShot: React.FC<TestShotProps> = ({
                   />
                 </Place>
               ))}
-            </Sooner>
-          </Later>
+              </Sooner>
+            </Stay>
+          )}
           <Stay only="entering">
             <Place
               x={(PAIR.xs[0] + PAIR.xs[1]) / 2}
@@ -591,10 +595,11 @@ const SHELF = { x: 1140, y: 880, width: 940, rows: 6 };
 const CROWD = { xs: [270, 480], y: 900, height: 400 };
 const SHELF_FOCUS = [960, 700] as const;
 // A estante cresce prateleira por prateleira: o intervalo entre elas e quanto cada uma leva, em quadros.
-const SHELVE = { step: 6, frames: 9 };
+const SHELVE = { step: 5, frames: 9 };
 // A câmera recua no começo do plano, com peso, e depois deriva até o quadro composto.
 const PULL_BACK = { from: 1.1, to: 1.035, frames: 18 };
-const CROWD_SOONER = 14;
+// As duas vêm de onde o plano anterior as deixou, à direita, e vão para a esquerda enquanto a câmera recua.
+const CROSS_FRAMES = 16;
 
 type ShelfShotProps = {
   /** Quadros do plano em que a estante começa a crescer e em que a etiqueta entra. */
@@ -616,6 +621,17 @@ const ShelfShot: React.FC<ShelfShotProps> = ({ growAt, centuryAt, clock }) => {
     mix(PULL_BACK.from, PULL_BACK.to, ramp(frame, 0, PULL_BACK.frames)) -
     (PULL_BACK.to - 1) *
       linear(frame, PULL_BACK.frames, length - PULL_BACK.frames);
+  const crossed = ramp(frame, 0, CROSS_FRAMES);
+  const crowd = CROWD.xs.map((x, index) => {
+    // Onde o plano anterior a deixou, já descontada a câmera deste.
+    const from = undrifted([PAIR.xs[index], PAIR.y], SHELF_FOCUS, zoom);
+    const small = PAIR.height / zoom;
+    return {
+      x: mix(from[0], x, crossed),
+      y: mix(from[1], CROWD.y, crossed),
+      height: small * (CROWD.height / small) ** crossed,
+    };
+  });
 
   return (
     <AbsoluteFill>
@@ -635,28 +651,34 @@ const ShelfShot: React.FC<ShelfShotProps> = ({ growAt, centuryAt, clock }) => {
               </SvgLayer>
             </Cast>
           </Stay>
-          <Sooner by={CROWD_SOONER}>
-            {CROWD.xs.map((x, index) => (
-              <Cast key={x} origin={[x, CROWD.y]} order={index}>
+          {/* As duas já estavam no palco: não entram, atravessam o quadro; saem com o plano. */}
+          <Stay only="entering">
+            {crowd.map(({ x, y, height }, index) => (
+              <Cast key={index} origin={[x, y]} order={index}>
                 <SvgLayer>
-                  <IdeaShadow hue={HUE} x={x} y={CROWD.y + 4} width={210} />
+                  <IdeaShadow
+                    hue={HUE}
+                    x={x}
+                    y={y + 4}
+                    width={(210 * height) / CROWD.height}
+                  />
                 </SvgLayer>
               </Cast>
             ))}
-            {CROWD.xs.map((x, index) => (
+            {crowd.map(({ x, y, height }, index) => (
               <Place
-                key={x}
+                key={index}
                 x={x}
-                y={CROWD.y}
+                y={y}
                 anchor="bottom"
                 style={{
                   scale: `1 ${breath(seconds, `pair-${index}`)}`,
                   // Olhando a estante subir, o corpo vai um pouco para trás; depois, o peso troca de pé.
-                  rotate: `${-2 * ramp(frame, growAt + 6, 0.8 * fps) + 0.9 * wave(seconds, 3.1, index * 0.45)}deg`,
+                  rotate: `${-2 * ramp(frame, growAt + 6, 0.8 * fps) + 0.9 * crossed * wave(seconds, 3.1, index * 0.45)}deg`,
                 }}
               >
                 <Person
-                  height={CROWD.height}
+                  height={height}
                   colors={SUBJECTS[index]}
                   bun={index === 1}
                   // Elas olham para a estante, à direita e para cima; o espanto troca de rosto sob a pálpebra.
@@ -670,7 +692,7 @@ const ShelfShot: React.FC<ShelfShotProps> = ({ growAt, centuryAt, clock }) => {
                 />
               </Place>
             ))}
-          </Sooner>
+          </Stay>
           <Stay only="entering">
             <Place x={SHELF.x} y={128}>
               <Pop at={centuryAt}>
@@ -710,7 +732,11 @@ export const MemoryResultScene: React.FC<SceneProps> = ({ scene, shots }) => (
     </Shot>
     <Shot range={shots[2]} name="um século de estudos">
       <ShelfShot
-        growAt={cue(scene, "resultado") - shots[2].from}
+        // A estante só cresce com as duas já fora do lugar dela: antes, nascia sob os pés delas.
+        growAt={Math.max(
+          cue(scene, "resultado") - shots[2].from,
+          CROSS_FRAMES - 5,
+        )}
         centuryAt={cue(scene, "século") - shots[2].from}
         clock={scene.from + shots[2].from}
       />

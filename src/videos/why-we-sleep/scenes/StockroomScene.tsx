@@ -1,26 +1,36 @@
 import {
   AbsoluteFill,
-  interpolateColors,
+  Easing,
+  interpolate,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
 import { Brain } from "../../../art/Brain";
 import { Person, type PersonColors } from "../../../art/Person";
-import type { StorefrontColors } from "../../../art/Storefront";
 import {
+  Build,
   Camera,
   Layer,
   cameraBetween,
   framing,
+  useBuild,
   type CameraState,
 } from "../../../components/Camera";
-import { FlatStage, Stay } from "../../../components/Cast";
+import { FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { popOpacity, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, drop, linear, mix, ramp, clamp01 } from "../../../components/timing";
+import {
+  clamp,
+  clamp01,
+  cue,
+  drop,
+  linear,
+  mix,
+  ramp,
+} from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import {
@@ -32,7 +42,6 @@ import {
   pedestal,
   person,
   researcher,
-  shop,
   shopInside,
   sleepResearcher,
 } from "../palette";
@@ -56,20 +65,11 @@ import {
   SyllableSheet,
 } from "../parts/SyllableList";
 import { seen } from "./ButWhatScene";
-import {
-  flash,
-  NEVER,
-  Preluded,
-  shake,
-  Sooner,
-  Standing,
-} from "./MaybeBrainScene";
-import { centeredAt } from "./MemoryTestScene";
+import { flash, NEVER, Preluded, shake, Sooner } from "./MaybeBrainScene";
+import { centeredAt, Hasten } from "./MemoryTestScene";
 
 /** O cérebro da comparação: cheio, na cor quente das etiquetas, com as dobras num tom abaixo. */
 const SHOP_BRAIN = { fill: ink.tag, line: ink.tagEdge };
-// A cor do brilho: a silhueta clara por que o cérebro passa para virar a loja.
-const BRIGHT = ink.ring;
 
 // A cabeça de quem dormiu, de perfil, à direita; a lista sobe à frente do rosto dela.
 const HEAD = { x: 1150, y: 500, size: 560 };
@@ -116,8 +116,20 @@ type HeadPictureProps = {
   /** Quadro do plano em que o cérebro aparece dentro da cabeça. */
   readonly brainAt: number;
   readonly seconds: number;
-  /** Quanto o cérebro já virou a silhueta clara, de 0 a 1. */
-  readonly bright?: number;
+  /**
+   * O plano seguinte desfaz o quadro: quanto a lista e a cabeça já encolheram,
+   * cada uma no próprio ponto, onde o cérebro está e de que tamanho (ele vai
+   * até o lugar da loja e encolhe nela).
+   */
+  readonly undone?: {
+    readonly list: number;
+    readonly head: number;
+    readonly brain: {
+      readonly x: number;
+      readonly y: number;
+      readonly scale: number;
+    };
+  };
   /** Quantos quadros faltam para o plano começar, quando é a cena anterior quem o desenha, parado no primeiro quadro. */
   readonly until?: number;
 };
@@ -132,10 +144,11 @@ const HeadPicture: React.FC<HeadPictureProps> = ({
   at,
   brainAt,
   seconds,
-  bright = 0,
+  undone,
   until = 0,
 }) => {
   const { fps } = useVideoConfig();
+  const brain = undone?.brain ?? { ...BRAIN_SPOT, scale: 1 };
   const risen = ramp(at, RISE.at, RISE.frames);
   // A lista entra por baixo do quadro antes de a cena chegar, freando: no primeiro quadro está no lugar de partida.
   const below =
@@ -157,12 +170,14 @@ const HeadPicture: React.FC<HeadPictureProps> = ({
             translate: `-50% calc(-50% + ${5 * wave(seconds, 4.8)}px)`,
           }}
         >
-          <ProfileHead
-            size={HEAD.size}
-            colors={SUBJECTS[0]}
-            open={open}
-            openColor={idea.peach.spot}
-          />
+          <div style={{ scale: `${1 - (undone?.head ?? 0)}` }}>
+            <ProfileHead
+              size={HEAD.size}
+              colors={SUBJECTS[0]}
+              open={open}
+              openColor={idea.peach.spot}
+            />
+          </div>
         </Place>
       </Sooner>
       {lit ? (
@@ -170,25 +185,17 @@ const HeadPicture: React.FC<HeadPictureProps> = ({
           <div
             style={{
               position: "absolute",
-              left: BRAIN_SPOT.x,
-              top: BRAIN_SPOT.y,
-              translate: `-50% calc(-50% + ${5 * wave(seconds, 4.8)}px)`,
-              scale: `${popScale(at, brainAt, frames) * pulse}`,
+              left: 0,
+              top: 0,
+              translate: centeredAt(brain.x, brain.y + 5 * wave(seconds, 4.8)),
+              scale: `${popScale(at, brainAt, frames) * pulse * brain.scale}`,
               opacity: popOpacity(at, brainAt, frames),
             }}
           >
             <Brain
               width={HEAD_BRAIN.width}
-              color={interpolateColors(
-                bright,
-                [0, 1],
-                [SHOP_BRAIN.line, BRIGHT],
-              )}
-              fill={interpolateColors(
-                bright,
-                [0, 1],
-                [SHOP_BRAIN.fill, BRIGHT],
-              )}
+              color={SHOP_BRAIN.line}
+              fill={SHOP_BRAIN.fill}
               folds
             />
           </div>
@@ -207,6 +214,7 @@ const HeadPicture: React.FC<HeadPictureProps> = ({
                 6 * risen * wave(seconds, 3.3, 0.2),
             ),
             rotate: `${mix(LIST.tilt[0], LIST.tilt[1], risen) + 0.9 * risen * wave(seconds, 4.1, 0.5)}deg`,
+            scale: `${1 - (undone?.list ?? 0)}`,
           }}
         >
           <SyllableSheet
@@ -216,37 +224,41 @@ const HeadPicture: React.FC<HeadPictureProps> = ({
         </Place>
       </Stay>
       <SvgLayer>
-        {KEPT_CHIPS.map((chip, order) => {
-          const start = brainAt + FLIGHT.after + order * FLIGHT.step;
-          if (at < start || bright >= 1) {
-            return null;
-          }
-          // A lembrança sai da tarja dela, sobe num arco e pousa dentro do cérebro.
-          const flown = ramp(at, start, FLIGHT.frames);
-          const from = chipSpot(chip);
-          const to = [
-            BRAIN_SPOT.x + INSIDE[order][0] * HEAD_BRAIN.width,
-            BRAIN_SPOT.y + INSIDE[order][1] * HEAD_BRAIN.width,
-          ];
-          const size = mix(1.5, 1, flown);
-          return (
-            <rect
-              key={chip}
-              x={mix(from[0], to[0], flown) - 26 * size}
-              y={
-                mix(from[1], to[1], flown) -
-                13 * size -
-                FLIGHT.arc * Math.sin(Math.PI * flown) +
-                5 * wave(seconds, 4.8) * flown
-              }
-              width={52 * size}
-              height={26 * size}
-              rx={10 * size}
-              fill={goods.crate}
-              opacity={1 - bright}
-            />
-          );
-        })}
+        {/* As lembranças já pousadas vão com o cérebro. */}
+        <g
+          transform={`translate(${brain.x} ${brain.y}) scale(${brain.scale}) translate(${-BRAIN_SPOT.x} ${-BRAIN_SPOT.y})`}
+        >
+          {KEPT_CHIPS.map((chip, order) => {
+            const start = brainAt + FLIGHT.after + order * FLIGHT.step;
+            if (at < start) {
+              return null;
+            }
+            // A lembrança sai da tarja dela, sobe num arco e pousa dentro do cérebro.
+            const flown = ramp(at, start, FLIGHT.frames);
+            const from = chipSpot(chip);
+            const to = [
+              BRAIN_SPOT.x + INSIDE[order][0] * HEAD_BRAIN.width,
+              BRAIN_SPOT.y + INSIDE[order][1] * HEAD_BRAIN.width,
+            ];
+            const size = mix(1.5, 1, flown);
+            return (
+              <rect
+                key={chip}
+                x={mix(from[0], to[0], flown) - 26 * size}
+                y={
+                  mix(from[1], to[1], flown) -
+                  13 * size -
+                  FLIGHT.arc * Math.sin(Math.PI * flown) +
+                  5 * wave(seconds, 4.8) * flown
+                }
+                width={52 * size}
+                height={26 * size}
+                rx={10 * size}
+                fill={goods.crate}
+              />
+            );
+          })}
+        </g>
       </SvgLayer>
     </>
   );
@@ -377,7 +389,8 @@ export const serving = (reach: number, item: number, color: string) => {
   };
 };
 
-const STREET_BRAIN = { x: FRONT.x, y: 470, width: 760 };
+// Onde o cérebro vai parar para virar a loja: o meio da fachada, um pouco maior do que estava na cabeça.
+const SHOP_SPOT = { x: FRONT.x, y: FRONT.ground - 330, scale: 1.2 };
 // Quem passa na calçada: de onde vem, de fora do quadro, onde para, e a altura.
 const WALKERS = [
   { from: -170, to: 480, shopper: 1, height: 400, frames: 54 },
@@ -391,69 +404,43 @@ const DELIVERY = [
 ] as const;
 // Cada caixa cai de cima do quadro, acelera e achata ao bater.
 const FALL = { height: 760, frames: 10, squash: 0.14 };
-// A porta da loja, por onde a câmera entra no fim do plano.
-const DOORWAY = [
-  FRONT.x + (140 * FRONT.width) / 520,
-  FRONT.ground - (170 * FRONT.width) / 520,
-] as const;
-// O cérebro vira a loja: a câmera entra nele, ele clareia, a silhueta clara da fachada toma o
-// lugar dele, a rua abre em volta numa janela redonda e as cores chegam. Em quadros.
+// O cérebro vira a loja, no palco comum. A lista e a cabeça encolhem, cada uma no seu ponto; o cérebro
+// vai para o meio do quadro; o fundo passa ao céu do dia; a rua sobe em camadas; a fachada cresce no
+// ponto em que o cérebro está, por trás dele, e ele encolhe dentro dela. Em quadros.
 const TURN = {
-  push: 12,
-  brightAt: 7,
-  bright: 4,
-  windowAt: 11,
-  window: 14,
-  brainOutAt: 13,
-  brainOut: 3,
-  colorAt: 15,
-  color: 7,
-  streetAt: 13,
+  list: 8,
+  headAt: 2,
+  head: 9,
+  carry: 12,
+  skyAt: 2,
+  sky: 12,
+  streetAt: 3,
   street: 16,
+  shopAt: 8,
+  shop: 11,
+  brainOutAt: 11,
+  brainOut: 8,
+  // Os dois da porta crescem quando a fachada assentou.
+  buyerAt: 19,
+  keeperAt: 21,
 };
-// O plano começa um pouco mais aberto e deriva até o quadro composto; no fim, a câmera entra pela porta.
+// O plano começa um pouco mais aberto e deriva até o quadro composto.
 const OPEN_START = framing([960, 560], 0.95);
-const TURNING = framing([960, 520], 1.12);
-const DOOR_IN = framing(DOORWAY, 3.1);
-/** Em quantos quadros a câmera entra na loja, a partir do fim do plano da rua. */
-const ENTER_FRAMES = 24;
+// Na troca para dentro da loja a rua desce com a fachada, a partir do corte: em quantos quadros.
+const STREET_OUT = 10;
+/** Em quantos quadros os três da porta vão da calçada ao lugar deles no balcão, e a loja de dentro sobe. */
+const PASSAGE = 20;
 
-/** A câmera do plano da rua, quadro a quadro: além do fim dele, é a entrada pela porta. */
+/** A câmera do plano da rua, quadro a quadro: no fim dele, e depois, é o quadro composto. */
 const streetCamera = (frame: number, length: number): CameraState =>
-  frame <= length
-    ? cameraBetween(
-        TURNING,
-        cameraBetween(OPEN_START, FRONT_WIDE, linear(frame, 0, length)),
-        ramp(frame, TURN.windowAt, TURN.window),
-      )
-    : cameraBetween(FRONT_WIDE, DOOR_IN, ramp(frame, length, ENTER_FRAMES));
+  cameraBetween(OPEN_START, FRONT_WIDE, linear(frame, 0, length));
 
-/** As cores da loja a caminho da silhueta clara (0) para as do dia (1). */
-const fromSilhouette = (t: number): StorefrontColors => {
-  const toward = (color: string) =>
-    interpolateColors(t, [0, 1], [BRIGHT, color]);
-  const day = shop.day;
-  return {
-    ...day,
-    wall: toward(day.wall),
-    wallShade: toward(day.wallShade),
-    base: toward(day.base),
-    sign: toward(day.sign),
-    signIcon: toward(day.signIcon),
-    awning: [toward(day.awning[0]), toward(day.awning[1])],
-    awningRail: toward(day.awningRail),
-    glass: toward(day.glass),
-    glassShine: toward(day.glassShine),
-    frame: toward(day.frame),
-    goods: [toward(day.goods[0]), toward(day.goods[1])],
-    door: toward(day.door),
-    doorShade: toward(day.doorShade),
-    knob: toward(day.knob),
-    shutter: toward(day.shutter),
-    shutterLine: toward(day.shutterLine),
-    lamp: toward(day.lamp),
-  };
-};
+// Os três que os dois planos têm em comum, na calçada, quando o plano da rua termina: o pé de cada um e a altura.
+const ON_STREET = {
+  buyer: { x: FRONT.x - 110, y: FRONT.ground + 40, height: 400 },
+  keeper: { x: FRONT.x + 190, y: FLOOR_Y + 10, height: 420 },
+  walker: { x: WALKERS[1].to, y: FRONT.ground + 64, height: WALKERS[1].height },
+} as const;
 
 type GrownProps = {
   /** O ponto do chão de onde ele cresce, e o quadro em que entra. */
@@ -487,7 +474,7 @@ type OpenShopShotProps = {
   readonly clock: number;
 };
 
-/** A câmera entra no cérebro, que vira a fachada da loja, movimentada de dia: fregueses chegam, caixas descem, a lojista atende. */
+/** O cérebro vira a fachada da loja, movimentada de dia: fregueses chegam, caixas descem, a lojista atende. */
 const OpenShopShot: React.FC<OpenShopShotProps> = ({
   walkAt,
   crateAt,
@@ -498,122 +485,115 @@ const OpenShopShot: React.FC<OpenShopShotProps> = ({
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
+  const stage = useStage();
+  const built = useBuild();
   const seconds = (clock + frame) / fps;
-  const pushed = ramp(frame, 0, TURN.push);
-  const bright = linear(frame, TURN.brightAt, TURN.bright);
-  const turning = frame < TURN.windowAt + TURN.window;
-  // A janela redonda por onde a rua aparece nasce escondida atrás do cérebro claro e abre até o quadro.
-  const window = mix(200, 1300, ramp(frame, TURN.windowAt, TURN.window));
-  const brainOut = linear(frame, TURN.brainOutAt, TURN.brainOut);
+  const turning = frame < TURN.brainOutAt + TURN.brainOut;
+  const carried = ramp(frame, 0, TURN.carry);
+  const sky = linear(frame, TURN.skyAt, TURN.sky);
+  const risen = interpolate(
+    frame,
+    [TURN.streetAt, TURN.streetAt + TURN.street],
+    [0, 1],
+    { ...clamp, easing: Easing.out(Easing.cubic) },
+  );
+  // Na troca seguinte a rua desce, com a fachada e com quem não continua: acelera, sem frear.
+  const sunk = interpolate(frame, [length, length + STREET_OUT], [0, 1], {
+    ...clamp,
+    easing: Easing.in(Easing.quad),
+  });
   // A lojista oferece a mercadoria ao freguês da porta: o braço sobe e desce um pouco.
   const offer = serving(1 + 0.12 * wave(seconds, 2.3), 1, goods.items[1]);
 
   return (
     <AbsoluteFill>
-      {turning ? (
-        <>
-          <IdeaBackdrop hue="peach" spot={[0.58, 0.45]} />
-          {/* O plano anterior, parado onde ficou: a câmera entra no cérebro, que vai para o meio do quadro e clareia. */}
-          <AbsoluteFill
-            style={{
-              transformOrigin: `${BRAIN_SPOT.x}px ${BRAIN_SPOT.y}px`,
-              translate: `${(STREET_BRAIN.x - BRAIN_SPOT.x) * pushed}px ${(STREET_BRAIN.y - BRAIN_SPOT.y) * pushed}px`,
-              scale: `${(STREET_BRAIN.width / HEAD_BRAIN.width) ** pushed}`,
-            }}
-          >
-            <HeadPicture
-              at={before + frame}
-              brainAt={brainAt}
-              seconds={seconds}
-              bright={bright}
-            />
-          </AbsoluteFill>
-        </>
-      ) : null}
-      {frame >= TURN.windowAt ? (
-        <AbsoluteFill
-          style={{
-            clipPath: turning
-              ? `circle(${window}px at ${STREET_BRAIN.x}px ${STREET_BRAIN.y}px)`
-              : undefined,
-          }}
+      {sky < 1 ? <IdeaBackdrop hue="peach" spot={[0.58, 0.45]} /> : null}
+      {/* A passagem é contada daqui, e não do palco: o céu toma a cor, a rua sobe, e na saída desce a partir do corte. */}
+      <Build {...built} lit={sky} risen={Math.min(risen, 1 - sunk)}>
+        <ShopFront
+          halo={1}
+          time="day"
+          shutter={0}
+          clock={clock}
+          camera={streetCamera(frame, length)}
+          // A fachada cresce no ponto do cérebro, sem esperar a calçada; depois é da rua, e desce com ela.
+          standing={frame < TURN.streetAt + TURN.street}
+          grown={
+            frame < TURN.shopAt
+              ? 0
+              : popScale(frame, TURN.shopAt, TURN.shop, 0, 1.05)
+          }
+          // O toldo balança no vento.
+          awning={seconds / 2.6}
         >
-          {/* Este plano faz a própria passagem: a rua não sobe nem desce com o palco. */}
-          <Standing>
-            <ShopFront
-              halo={1}
-              time="day"
-              shutter={0}
-              clock={clock}
-              camera={streetCamera(frame, length)}
-              built={ramp(frame, TURN.streetAt, TURN.street)}
-              colors={
-                frame < TURN.colorAt + TURN.color
-                  ? fromSilhouette(ramp(frame, TURN.colorAt, TURN.color))
-                  : undefined
-              }
-              // O toldo balança no vento.
-              awning={seconds / 2.6}
-            >
-              <SvgLayer>
-                {DELIVERY.map(([x, row, after]) => {
-                  const at = crateAt + after;
-                  const fallen = drop(frame, at, FALL.frames);
-                  return frame >= at ? (
-                    <Crate
-                      key={x}
-                      x={x}
-                      y={
-                        FRONT.ground +
-                        44 -
-                        row * CRATE.height -
-                        FALL.height * (1 - fallen)
-                      }
-                      // Bate, achata e volta.
-                      squash={
-                        1 - FALL.squash * flash(frame, at + FALL.frames - 1, 7)
-                      }
-                    />
-                  ) : null;
-                })}
-              </SvgLayer>
-              {WALKERS.map(({ shopper, height, ...path }, index) => {
-                const walk = stroll({
-                  ...path,
-                  at: walkAt + index * 6,
-                  now: frame,
-                  height,
-                });
-                return (
-                  <Place
-                    key={shopper}
-                    x={0}
-                    y={0}
-                    anchor="bottom"
-                    style={{
-                      translate: `calc(-50% + ${walk.x}px) calc(-100% + ${FRONT.ground + 64}px)`,
-                      scale: `${walk.facing} ${breath(seconds, `walker-${index}`)}`,
-                    }}
-                  >
-                    <Person
-                      height={height}
-                      colors={SHOPPERS[shopper]}
-                      plainFace
-                      stride={walk.stride}
-                    />
-                  </Place>
-                );
-              })}
-              {/* Na porta, a lojista entrega a mercadoria a um freguês: os dois já estão lá quando a loja aparece. */}
-              <Grown origin={[FRONT.x - 110, FRONT.ground + 40]} at={17}>
+          <SvgLayer>
+            {DELIVERY.map(([x, row, after]) => {
+              const at = crateAt + after;
+              const fallen = drop(frame, at, FALL.frames);
+              return frame >= at ? (
+                <Crate
+                  key={x}
+                  x={x}
+                  y={
+                    FRONT.ground +
+                    44 -
+                    row * CRATE.height -
+                    FALL.height * (1 - fallen)
+                  }
+                  // Bate, achata e volta.
+                  squash={
+                    1 - FALL.squash * flash(frame, at + FALL.frames - 1, 7)
+                  }
+                />
+              ) : null;
+            })}
+          </SvgLayer>
+          {WALKERS.map(({ shopper, height, ...path }, index) => {
+            // A freguesa de roxo continua no plano seguinte, que a desenha a partir do corte.
+            if (index === 1 && stage.handedOver) {
+              return null;
+            }
+            const walk = stroll({
+              ...path,
+              at: walkAt + index * 6,
+              now: frame,
+              height,
+            });
+            return (
+              <Place
+                key={shopper}
+                x={0}
+                y={0}
+                anchor="bottom"
+                style={{
+                  translate: `calc(-50% + ${walk.x}px) calc(-100% + ${FRONT.ground + 64}px)`,
+                  scale: `${walk.facing} ${breath(seconds, `walker-${index}`)}`,
+                }}
+              >
+                <Person
+                  height={height}
+                  colors={SHOPPERS[shopper]}
+                  plainFace
+                  stride={walk.stride}
+                />
+              </Place>
+            );
+          })}
+          {/* Na porta, a lojista entrega a mercadoria a um freguês. Os dois continuam no plano seguinte, que os desenha a partir do corte. */}
+          {stage.handedOver ? null : (
+            <>
+              <Grown
+                origin={[ON_STREET.buyer.x, ON_STREET.buyer.y]}
+                at={TURN.buyerAt}
+              >
                 <Place
-                  x={FRONT.x - 110}
-                  y={FRONT.ground + 40}
+                  x={ON_STREET.buyer.x}
+                  y={ON_STREET.buyer.y}
                   anchor="bottom"
                   style={{ scale: `1 ${breath(seconds, "buyer")}` }}
                 >
                   <Person
-                    height={400}
+                    height={ON_STREET.buyer.height}
                     colors={SHOPPERS[0]}
                     plainFace
                     backArm={{
@@ -623,34 +603,41 @@ const OpenShopShot: React.FC<OpenShopShotProps> = ({
                   />
                 </Place>
               </Grown>
-              <Grown origin={[FRONT.x + 190, FLOOR_Y + 10]} at={19}>
+              <Grown
+                origin={[ON_STREET.keeper.x, ON_STREET.keeper.y]}
+                at={TURN.keeperAt}
+              >
                 <Keeper
-                  x={FRONT.x + 190}
-                  height={420}
+                  x={ON_STREET.keeper.x}
+                  height={ON_STREET.keeper.height}
                   seconds={seconds}
                   flip
                   blink={blink(seconds, "keeper")}
                   {...offer}
                 />
               </Grown>
-            </ShopFront>
-          </Standing>
-        </AbsoluteFill>
-      ) : null}
-      {/* A silhueta clara do cérebro some sobre a da fachada, que é da mesma cor: uma forma vira a outra. */}
-      {frame >= TURN.windowAt && brainOut < 1 ? (
-        <div
-          style={{
-            position: "absolute",
-            left: STREET_BRAIN.x,
-            top: STREET_BRAIN.y,
-            translate: "-50% -50%",
-            opacity: 1 - brainOut,
-            scale: `${1 + 0.12 * brainOut}`,
+            </>
+          )}
+        </ShopFront>
+      </Build>
+      {turning ? (
+        // O plano anterior, como ficou: a lista e a cabeça encolhem, e o cérebro vai até o lugar da loja e encolhe nela.
+        <HeadPicture
+          at={before + frame}
+          brainAt={brainAt}
+          seconds={seconds}
+          undone={{
+            list: drop(frame, 0, TURN.list),
+            head: drop(frame, TURN.headAt, TURN.head),
+            brain: {
+              x: mix(BRAIN_SPOT.x, SHOP_SPOT.x, carried),
+              y: mix(BRAIN_SPOT.y, SHOP_SPOT.y, carried),
+              scale:
+                mix(1, SHOP_SPOT.scale, carried) *
+                (1 - drop(frame, TURN.brainOutAt, TURN.brainOut)),
+            },
           }}
-        >
-          <Brain width={STREET_BRAIN.width} color={BRIGHT} fill={BRIGHT} />
-        </div>
+        />
       ) : null}
     </AbsoluteFill>
   );
@@ -718,7 +705,8 @@ export const Pile: React.FC<PileProps> = ({ count, falling, wobble = 0 }) => (
 
 /** A loja por dentro, em plano médio: da entrada, à esquerda, até quase o depósito. */
 export const INSIDE_MEDIUM = framing([830, 610], 1.15);
-// A câmera entra pela porta mais aberta, assenta e deriva até o plano médio.
+// A câmera começa mais aberta, assenta e deriva até o plano médio: em quantos quadros assenta.
+const ENTER_FRAMES = 24;
 const INSIDE_FAR = framing([830, 610], 0.82);
 const INSIDE_NEAR = framing([830, 610], 1.11);
 /** O balcão: onde a lojista atende, onde o freguês da vez fica e onde o seguinte espera. */
@@ -777,6 +765,8 @@ type BusyViewProps = {
   readonly glanceAt: number;
   readonly crateAt: number;
   readonly seconds: number;
+  /** Os três que vêm da calçada ainda estão a caminho: quem os desenha é a passagem, por cima da loja. */
+  readonly arriving?: boolean;
 };
 
 /** Dentro da loja, de dia: a lojista atende um freguês atrás do outro, e as caixas se empilham na entrada. */
@@ -786,6 +776,7 @@ const BusyView: React.FC<BusyViewProps> = ({
   glanceAt,
   crateAt,
   seconds,
+  arriving: onTheWay = false,
 }) => {
   // A primeira freguesa (de roxo) recebe a mercadoria, vira-se e sai pela porta.
   const firstGot = serveAt + HAND_OVER.reach;
@@ -907,51 +898,56 @@ const BusyView: React.FC<BusyViewProps> = ({
             />
           ))}
         </SvgLayer>
-        <Place
-          x={0}
-          y={0}
-          anchor="bottom"
-          style={{
-            translate: `calc(-50% + ${leaving.x}px) calc(-100% + ${FLOOR_Y + 10}px)`,
-            // Ela se vira para a porta: o corpo passa de frente para o balcão a de frente para a saída.
-            scale: `${mix(1, -1, turned)} ${breath(seconds, "queue-first")}`,
-          }}
-        >
-          <Person
-            height={SHOPPER_HEIGHT[2]}
-            colors={SHOPPERS[2]}
-            plainFace
-            stride={leaving.stride}
-            {...taking(firstGot, goods.items[1])}
-          />
-        </Place>
-        <Place
-          x={0}
-          y={0}
-          anchor="bottom"
-          style={{
-            translate: `calc(-50% + ${advancing.x}px) calc(-100% + ${FLOOR_Y + 10}px)`,
-            scale: `1 ${breath(seconds, "queue-0")}`,
-            // Parado no balcão, o peso troca de pé.
-            rotate: `${0.9 * wave(seconds, 3.7, 0.3)}deg`,
-          }}
-        >
-          <Person
-            height={SHOPPER_HEIGHT[0]}
-            colors={SHOPPERS[0]}
-            plainFace
-            stride={advancing.stride}
-            // Com ela de olho nas caixas, ele ergue o outro braço e acena.
-            frontArm={{
-              hand: [
-                mix(-136, -168, calling) + 16 * calling * wave(seconds, 0.36),
-                mix(-214, -470, calling),
-              ],
-              bend: mix(26, -20, calling),
-            }}
-            {...taking(secondGot, goods.items[2])}
-          />
-        </Place>
+        {onTheWay ? null : (
+          <>
+            <Place
+              x={0}
+              y={0}
+              anchor="bottom"
+              style={{
+                translate: `calc(-50% + ${leaving.x}px) calc(-100% + ${FLOOR_Y + 10}px)`,
+                // Ela se vira para a porta: o corpo passa de frente para o balcão a de frente para a saída.
+                scale: `${mix(1, -1, turned)} ${breath(seconds, "queue-first")}`,
+              }}
+            >
+              <Person
+                height={SHOPPER_HEIGHT[2]}
+                colors={SHOPPERS[2]}
+                plainFace
+                stride={leaving.stride}
+                {...taking(firstGot, goods.items[1])}
+              />
+            </Place>
+            <Place
+              x={0}
+              y={0}
+              anchor="bottom"
+              style={{
+                translate: `calc(-50% + ${advancing.x}px) calc(-100% + ${FLOOR_Y + 10}px)`,
+                scale: `1 ${breath(seconds, "queue-0")}`,
+                // Parado no balcão, o peso troca de pé.
+                rotate: `${0.9 * wave(seconds, 3.7, 0.3)}deg`,
+              }}
+            >
+              <Person
+                height={SHOPPER_HEIGHT[0]}
+                colors={SHOPPERS[0]}
+                plainFace
+                stride={advancing.stride}
+                // Com ela de olho nas caixas, ele ergue o outro braço e acena.
+                frontArm={{
+                  hand: [
+                    mix(-136, -168, calling) +
+                      16 * calling * wave(seconds, 0.36),
+                    mix(-214, -470, calling),
+                  ],
+                  bend: mix(26, -20, calling),
+                }}
+                {...taking(secondGot, goods.items[2])}
+              />
+            </Place>
+          </>
+        )}
         <Place
           x={0}
           y={0}
@@ -972,66 +968,170 @@ const BusyView: React.FC<BusyViewProps> = ({
           />
         </Place>
       </AbsoluteFill>
-      <Keeper
-        x={KEEPER_X - GLANCE.step * glance}
-        seconds={seconds}
-        flip
-        lean={GLANCE.lean * glance}
-        // De olho nas caixas, o rosto é o de quem repara; a troca acontece com a pálpebra fechada.
-        expression={
-          at >= glanceAt + 3 && at < backAt - GLANCE.back + 4
-            ? "curious"
-            : "neutral"
-        }
-        blink={Math.max(
-          blink(seconds, "keeper"),
-          flash(at, glanceAt, 6),
-          flash(at, backAt - GLANCE.back + 1, 6),
-        )}
-        {...serving(reach, item, itemColor)}
-      />
+      {onTheWay ? null : (
+        <Keeper
+          x={KEEPER_X - GLANCE.step * glance}
+          seconds={seconds}
+          flip
+          lean={GLANCE.lean * glance}
+          // De olho nas caixas, o rosto é o de quem repara; a troca acontece com a pálpebra fechada.
+          expression={
+            at >= glanceAt + 3 && at < backAt - GLANCE.back + 4
+              ? "curious"
+              : "neutral"
+          }
+          blink={Math.max(
+            blink(seconds, "keeper"),
+            flash(at, glanceAt, 6),
+            flash(at, backAt - GLANCE.back + 1, 6),
+          )}
+          {...serving(reach, item, itemColor)}
+        />
+      )}
     </ShopInside>
   );
 };
 
-type BusyShotProps = Omit<BusyViewProps, "at" | "seconds"> & {
-  /** A duração do plano da rua: a câmera dele, que entra pela porta, diz onde a loja de dentro aparece. */
-  readonly before: number;
+type PassingProps = {
+  /** Quanto do caminho já foi feito, de 0 (na calçada) a 1 (no lugar, dentro da loja). */
+  readonly moved: number;
+  /** A câmera da loja de dentro neste quadro: diz onde o lugar de cada um cai na tela. */
+  readonly camera: CameraState;
+  readonly seconds: number;
+};
+
+/**
+ * Os três que a rua e a loja têm em comum (o freguês de laranja, a freguesa de
+ * roxo e a lojista) na troca: não saem nem entram. Vão de onde estavam na
+ * calçada até o lugar deles no balcão, mudando de tamanho no caminho, por cima
+ * da rua que desce e da loja que sobe. Chegam na pose em que `BusyView` os recebe.
+ */
+const Passing: React.FC<PassingProps> = ({ moved, camera, seconds }) => {
+  /** O pé e a altura de quem vai de um lugar da calçada a um lugar do chão da loja. */
+  const path = (
+    from: { readonly x: number; readonly y: number; readonly height: number },
+    x: number,
+    height: number,
+  ) => {
+    const to = seen(camera, [x, FLOOR_Y + 10]);
+    return {
+      x: mix(from.x, to[0], moved),
+      y: mix(from.y, to[1], moved),
+      height: mix(from.height, height * camera.zoom, moved),
+    };
+  };
+  const buyer = path(ON_STREET.buyer, COUNTER.wait, SHOPPER_HEIGHT[0]);
+  const walker = path(ON_STREET.walker, COUNTER.x, SHOPPER_HEIGHT[2]);
+  const keeper = path(ON_STREET.keeper, KEEPER_X, 520);
+  const at = (x: number, y: number) =>
+    `calc(-50% + ${x}px) calc(-100% + ${y}px)`;
+
+  return (
+    // São os mesmos do plano anterior: o palco não os põe nem os tira.
+    <Stay>
+      <Place
+        x={0}
+        y={0}
+        anchor="bottom"
+        style={{
+          translate: at(buyer.x, buyer.y),
+          scale: `1 ${mix(breath(seconds, "buyer"), breath(seconds, "queue-0"), moved)}`,
+          rotate: `${0.9 * moved * wave(seconds, 3.7, 0.3)}deg`,
+        }}
+      >
+        <Person
+          height={buyer.height}
+          colors={SHOPPERS[0]}
+          plainFace
+          backArm={{
+            hand: [150, -310 - 8 * (1 - moved) * wave(seconds, 2.3, 0.15)],
+            bend: 20,
+          }}
+        />
+      </Place>
+      <AbsoluteFill
+        style={{ translate: `${keeper.x}px ${keeper.y - FLOOR_Y - 10}px` }}
+      >
+        <Keeper
+          x={0}
+          height={keeper.height}
+          seconds={seconds}
+          flip
+          blink={blink(seconds, "keeper")}
+          {...serving(
+            1 + mix(0.12, 0.08, moved) * wave(seconds, 2.3),
+            1,
+            goods.items[1],
+          )}
+        />
+      </AbsoluteFill>
+      {/* A freguesa de roxo passa pela frente da lojista e se vira para o balcão, do outro lado dela. */}
+      <Place
+        x={0}
+        y={0}
+        anchor="bottom"
+        style={{
+          translate: at(walker.x, walker.y),
+          scale: `${mix(-1, 1, ramp(moved, 0.25, 0.5))} ${mix(breath(seconds, "walker-1"), breath(seconds, "queue-first"), moved)}`,
+        }}
+      >
+        <Person
+          height={walker.height}
+          colors={SHOPPERS[2]}
+          plainFace
+          backArm={{
+            hand: [mix(134, 150, moved), mix(-252, -310, moved)],
+            bend: mix(28, 20, moved),
+          }}
+        />
+      </Place>
+    </Stay>
+  );
+};
+
+type BusyShotProps = Omit<BusyViewProps, "at" | "seconds" | "arriving"> & {
   readonly clock: number;
 };
 
-/** A câmera entra pela porta: a loja de dentro abre a partir dela, e o plano fica com a lojista e os fregueses. */
-const BusyShot: React.FC<BusyShotProps> = ({ before, clock, ...cues }) => {
+/**
+ * A loja por dentro toma o lugar da rua: a parede toma a cor, a loja sobe com
+ * o chão dela, e os três da porta vão para o balcão sem sair da tela. O plano
+ * fica com a lojista e os fregueses.
+ */
+const BusyShot: React.FC<BusyShotProps> = ({ clock, ...cues }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
-  const entered = ramp(frame, 0, ENTER_FRAMES);
-  // A porta da fachada, onde o plano da rua a põe na tela enquanto a câmera dele entra por ela.
-  const door = seen(streetCamera(before + frame, before), DOORWAY);
-  const half = [mix(0, 1300, entered), mix(0, 800, entered)];
+  const seconds = (clock + frame) / fps;
   const camera = cameraBetween(
-    cameraBetween(INSIDE_FAR, INSIDE_NEAR, entered),
+    cameraBetween(INSIDE_FAR, INSIDE_NEAR, ramp(frame, 0, ENTER_FRAMES)),
     INSIDE_MEDIUM,
     linear(frame, ENTER_FRAMES, length - ENTER_FRAMES),
   );
+  const passing = frame < PASSAGE;
 
   return (
-    <AbsoluteFill
-      style={{
-        clipPath:
-          entered < 1
-            ? `inset(${Math.max(0, door[1] - half[1])}px ${Math.max(0, 1920 - door[0] - half[0])}px ${Math.max(0, 1080 - door[1] - half[1])}px ${Math.max(0, door[0] - half[0])}px round ${60 * (1 - entered)}px)`
-            : undefined,
-      }}
-    >
-      {/* A passagem é a da câmera: a loja não sobe nem desce com o palco. */}
-      <Standing>
+    <AbsoluteFill>
+      {/* A loja sobe no tempo da passagem: quando os três chegam, o chão deles está no lugar. */}
+      <Hasten frames={PASSAGE - 2}>
         <Camera {...camera}>
           <Layer depth={1}>
-            <BusyView at={frame} seconds={(clock + frame) / fps} {...cues} />
+            <BusyView
+              at={frame}
+              seconds={seconds}
+              arriving={passing}
+              {...cues}
+            />
           </Layer>
         </Camera>
-      </Standing>
+      </Hasten>
+      {passing ? (
+        <Passing
+          moved={ramp(frame, 0, PASSAGE)}
+          camera={camera}
+          seconds={seconds}
+        />
+      ) : null}
       <Grain />
     </AbsoluteFill>
   );
@@ -1064,7 +1164,7 @@ export const StockroomScene: React.FC<SceneProps> = ({ scene, shots }) => {
           // Os fregueses só entram com a rua já montada.
           walkAt={Math.max(
             cue(scene, "passa") - shots[1].from,
-            TURN.windowAt + 8,
+            TURN.keeperAt - 2,
           )}
           crateAt={cue(scene, "recebendo") - shots[1].from}
           before={shots[0].to - shots[0].from}
@@ -1074,10 +1174,13 @@ export const StockroomScene: React.FC<SceneProps> = ({ scene, shots }) => {
       </Shot>
       <Shot range={shots[2]} name="fregueses no balcão, caixas na entrada">
         <BusyShot
-          serveAt={cue(scene, "aberta", 2) - shots[2].from}
+          // Ela só atende com os três já no lugar.
+          serveAt={Math.max(
+            cue(scene, "aberta", 2) - shots[2].from,
+            PASSAGE + 8,
+          )}
           glanceAt={cue(scene, "guardar") - shots[2].from}
           crateAt={cue(scene, "chega") - shots[2].from}
-          before={shots[1].to - shots[1].from}
           clock={scene.from + shots[2].from}
         />
       </Shot>

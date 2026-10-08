@@ -507,6 +507,8 @@ type ResearcherProps = {
   /** Onde a etiqueta fica, a partir dos pés dele, e o fundo sobre o qual ela fica. */
   readonly nameOffset?: readonly [number, number];
   readonly on?: TagTone;
+  /** Quanto a etiqueta já saiu, de 0 a 1: ela encolhe no próprio ponto. Por padrão, fica. */
+  readonly nameGone?: number;
   /**
    * Quanto o braço já subiu até onde ele aponta, de 0 (solto, com a mão na
    * cintura) a 1: é o gesto de `pointing` feito aos poucos, e com o braço
@@ -548,6 +550,7 @@ export const Researcher: React.FC<ResearcherProps> = ({
   nameAt,
   nameOffset = [0, -height - 70],
   on = "peach",
+  nameGone = 0,
   reach,
   tilt = 0,
   rise = 0,
@@ -599,7 +602,11 @@ export const Researcher: React.FC<ResearcherProps> = ({
         />
       </Place>
       {nameAt === undefined ? null : (
-        <Place x={x + nameOffset[0]} y={y + nameOffset[1]}>
+        <Place
+          x={x + nameOffset[0]}
+          y={y + nameOffset[1]}
+          style={{ scale: `${1 - nameGone}` }}
+        >
           <Pop at={nameAt}>
             <Tag size="note" on={on}>
               Allan Rechtschaffen

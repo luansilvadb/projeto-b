@@ -1,15 +1,23 @@
 import { useId } from "react";
 import {
   AbsoluteFill,
+  interpolateColors,
   random,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { Cassiopea } from "../../../art/Cassiopea";
+import { Cassiopea, type CassiopeaColors } from "../../../art/Cassiopea";
 import { Person } from "../../../art/Person";
 import { taperPath, type Point } from "../../../art/shapes";
 import { Leftovers } from "../../../components/Actors";
-import { Camera, Layer, type CameraState } from "../../../components/Camera";
+import {
+  Build,
+  Camera,
+  Layer,
+  Wall,
+  useBuild,
+  type CameraState,
+} from "../../../components/Camera";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
@@ -45,7 +53,7 @@ import { type PulseRhythm, pulseCycles, pulseShape } from "./pulse";
 /** Onde a pesquisadora fica: os pés dela, atrás da bancada, à esquerda do tanque. */
 export const RESEARCHER = { x: 392, y: 966, height: 760 };
 /** Largura do sino da água-viva dentro do tanque. */
-const JELLYFISH_WIDTH = 300;
+export const JELLYFISH_WIDTH = 300;
 // Do centro do desenho dela até onde o sino encosta no apoio, em fração da largura do sino.
 const RESTING = 62 / 330;
 /** O centro dela quando está pousada na plataforma, quando boia sem apoio e quando pousa no chão do tanque. */
@@ -64,9 +72,17 @@ const WINDOW = { x: 1612, y: 36, width: 280, height: 470 };
 
 type Hour = "day" | "night";
 
-/** A janela do laboratório: é ela que diz se é dia ou noite lá fora. Vai sobre a parede. */
-const LabWindow: React.FC<{ hour: Hour; clock: number }> = ({
-  hour,
+// O sol e a lua da janela: onde ficam no vidro, e quanto cada um desce para sair por baixo dele.
+const WINDOW_ORB = { x: 150, y: 130, sunFalls: 500, moonFalls: 900 };
+
+/**
+ * A janela do laboratório: é ela que diz se é dia ou noite lá fora. Vai sobre
+ * a parede. `daylight` vai de 0 (noite) a 1 (dia), e o caminho entre os dois é
+ * o amanhecer: o céu muda de cor, a lua desce para fora do vidro, as estrelas
+ * somem e o sol sobe.
+ */
+const LabWindow: React.FC<{ daylight: number; clock: number }> = ({
+  daylight,
   clock,
 }) => {
   const id = useId();
@@ -76,8 +92,13 @@ const LabWindow: React.FC<{ hour: Hour; clock: number }> = ({
   const seconds = (clock + frame) / fps;
   const halo = 0.5 + 0.5 * wave(seconds, 3.2);
   const { x, y, width, height } = WINDOW;
-  const tones =
-    hour === "day" ? [sky.day.top, sky.day.bottom] : daylightTones.night.sky;
+  const night = daylightTones.night.sky;
+  const tones = [sky.day.top, sky.day.bottom].map((tone, index) =>
+    interpolateColors(daylight, [0, 1], [night[index], tone]),
+  );
+  const sunY = y + WINDOW_ORB.y + WINDOW_ORB.sunFalls * (1 - daylight);
+  const moonFall = WINDOW_ORB.moonFalls * daylight;
+  const stars = Math.max(0, 1 - 2 * daylight);
 
   return (
     <SvgLayer>
@@ -86,6 +107,9 @@ const LabWindow: React.FC<{ hour: Hour; clock: number }> = ({
           <stop offset={0} stopColor={tones[0]} />
           <stop offset={1} stopColor={tones[1]} />
         </linearGradient>
+        <clipPath id={`${id}-pane`}>
+          <rect x={x} y={y} width={width} height={height} rx={12} />
+        </clipPath>
       </defs>
       <rect
         x={x - 18}
@@ -103,48 +127,54 @@ const LabWindow: React.FC<{ hour: Hour; clock: number }> = ({
         rx={12}
         fill={`url(#${id})`}
       />
-      {hour === "day" ? (
-        <>
-          <circle
-            cx={x + 150}
-            cy={y + 130}
-            r={92 + 8 * halo}
-            fill={sky.day.cloud}
-            opacity={0.45 - 0.1 * halo}
-          />
-          <circle cx={x + 150} cy={y + 130} r={62} fill={sky.day.sun} />
-        </>
-      ) : (
-        <>
-          <circle
-            cx={x + 150}
-            cy={y + 130}
-            r={84 + 10 * halo}
-            fill={ink.moon}
-            opacity={0.1 + 0.08 * halo}
-          />
-          <path
-            transform={`translate(${x + 86} ${y + 70}) scale(1.25)`}
-            d="M 62 10 A 42 42 0 1 0 90 62 A 34 34 0 1 1 62 10 Z"
-            fill={ink.moon}
-          />
-          {[
-            [60, 250, 7],
-            [200, 300, 5],
-            [120, 380, 6],
-            [226, 60, 5],
-          ].map(([sx, sy, r], star) => (
+      {/* O astro só existe dentro do vidro: sai e entra por baixo dele. */}
+      <g clipPath={`url(#${id}-pane)`}>
+        {daylight > 0 ? (
+          <>
             <circle
-              key={sx}
-              cx={x + sx}
-              cy={y + sy}
-              r={r}
-              fill={ink.ring}
-              opacity={0.65 + 0.35 * wave(seconds, 1.9 + star * 0.4, star / 4)}
+              cx={x + WINDOW_ORB.x}
+              cy={sunY}
+              r={92 + 8 * halo}
+              fill={sky.day.cloud}
+              opacity={0.45 - 0.1 * halo}
             />
-          ))}
-        </>
-      )}
+            <circle cx={x + WINDOW_ORB.x} cy={sunY} r={62} fill={sky.day.sun} />
+          </>
+        ) : null}
+        {daylight < 1 ? (
+          <>
+            <circle
+              cx={x + WINDOW_ORB.x}
+              cy={y + WINDOW_ORB.y + moonFall}
+              r={84 + 10 * halo}
+              fill={ink.moon}
+              opacity={0.1 + 0.08 * halo}
+            />
+            <path
+              transform={`translate(${x + 86} ${y + 70 + moonFall}) scale(1.25)`}
+              d="M 62 10 A 42 42 0 1 0 90 62 A 34 34 0 1 1 62 10 Z"
+              fill={ink.moon}
+            />
+            {[
+              [60, 250, 7],
+              [200, 300, 5],
+              [120, 380, 6],
+              [226, 60, 5],
+            ].map(([sx, sy, r], star) => (
+              <circle
+                key={sx}
+                cx={x + sx}
+                cy={y + sy}
+                r={r * stars}
+                fill={ink.ring}
+                opacity={
+                  0.65 + 0.35 * wave(seconds, 1.9 + star * 0.4, star / 4)
+                }
+              />
+            ))}
+          </>
+        ) : null}
+      </g>
       {/* A travessa e o peitoril. */}
       <rect
         x={x}
@@ -176,6 +206,11 @@ type Board = {
    * elenco do palco, e de mãos vazias, porque a prancheta ficou com a cena.
    */
   readonly gone?: number;
+  /**
+   * Quanto ela já chegou, de 0 a 1, no plano em que entra com o cenário já no
+   * palco: cresce dos próprios pés, com a prancheta na mão. Por padrão, inteira.
+   */
+  readonly arrived?: number;
 };
 
 type LabResearcherProps = Board & {
@@ -190,12 +225,14 @@ const LabResearcher: React.FC<LabResearcherProps> = ({
   raised = 1,
   written,
   gone = 0,
+  arrived = 1,
   clock = 0,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const seconds = (clock + frame) / fps;
-  if (gone >= 1) {
+  const size = (1 - gone) * arrived;
+  if (size <= 0) {
     return null;
   }
 
@@ -205,7 +242,7 @@ const LabResearcher: React.FC<LabResearcherProps> = ({
       y={RESEARCHER.y}
       anchor="bottom"
       style={{
-        scale: `${1 - gone} ${(1 - gone) * breath(seconds, "researcher")}`,
+        scale: `${size} ${size * breath(seconds, "researcher")}`,
       }}
     >
       <Person
@@ -273,6 +310,54 @@ export const TankJellyfish: React.FC<TankJellyfishProps> = ({
     </Place>
   );
 };
+
+type LooseJellyfishProps = {
+  /** O centro dela e a largura do sino, em pixels do quadro. */
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly colors?: CassiopeaColors;
+  readonly droop?: number;
+  /** A contagem de pulsos e o instante, em segundos, no relógio do vídeo. */
+  readonly cycles: number;
+  readonly seconds: number;
+  /** Quanto a corrente leva os braços de um lado para o outro. */
+  readonly sway?: number;
+};
+
+/**
+ * A água-viva solta do cenário, em pixels do quadro: para a troca em que ela
+ * fica na tela enquanto o cenário sai de baixo dela e o seguinte sobe em
+ * volta. Quem a desenha dá o lugar e o tamanho que ela tinha no cenário, visto
+ * pela câmera, e ela não entra nem sai com o palco.
+ */
+export const LooseJellyfish: React.FC<LooseJellyfishProps> = ({
+  x,
+  y,
+  width,
+  colors = jellyfish.day,
+  droop = 0,
+  cycles,
+  seconds,
+  sway = 0.3,
+}) => (
+  <div
+    style={{
+      position: "absolute",
+      left: x,
+      top: y,
+      translate: "-50% -50%",
+    }}
+  >
+    <Cassiopea
+      width={width}
+      colors={colors}
+      droop={droop}
+      pulse={pulseShape(cycles)}
+      sway={sway * wave(seconds, 5)}
+    />
+  </div>
+);
 
 // Os jatos saem da parede esquerda do vidro e chegam à borda do sino.
 const JET = {
@@ -388,6 +473,22 @@ type TankShotProps = {
   /** A hora lá fora, na janela. */
   readonly hour?: Hour;
   /**
+   * A hora a caminho de outra, de 0 (noite) a 1 (dia): o amanhecer visto na
+   * janela, sem trocar de pintura. Vale acima de `hour`.
+   */
+  readonly daylight?: number;
+  /**
+   * O tanque fora do lugar dele na bancada: quanto está deslocado, em pixels
+   * do cenário, e a escala, em volta do pé dele. É o tanque que já estava na
+   * tela no plano anterior, noutro tamanho: ele não sobe com o laboratório, e
+   * vai dali até o lugar dele enquanto a bancada chega por baixo.
+   */
+  readonly tankAt?: {
+    readonly x: number;
+    readonly y: number;
+    readonly scale: number;
+  };
+  /**
    * A luz do laboratório apagada: tudo mergulha no índigo, menos o tanque.
    * O valor é o ponto do quadro, em fração, em que o tanque aceso fica.
    */
@@ -417,6 +518,8 @@ type TankShotProps = {
 export const TankShot: React.FC<TankShotProps> = ({
   camera,
   hour = "night",
+  daylight = hour === "day" ? 1 : 0,
+  tankAt,
   lightsOff,
   researcher: checked,
   platform,
@@ -424,32 +527,66 @@ export const TankShot: React.FC<TankShotProps> = ({
   board,
   clock = 0,
   dark = 1,
-}) => (
-  <AbsoluteFill>
-    <Camera {...camera}>
-      <Layer depth={1}>
-        <LabWall />
-        <LabWindow hour={hour} clock={clock} />
-        {checked ? (
-          <LabResearcher checked={checked} clock={clock} {...board} />
-        ) : null}
-        <LabBench />
-        <Tank platform={platform} clock={clock}>
-          {children}
-        </Tank>
-        <Leftovers />
-      </Layer>
-    </Camera>
-    {lightsOff ? (
-      <AbsoluteFill
-        style={{
-          // O tanque fica aceso; em volta, o laboratório mergulha no índigo da noite.
-          background: `radial-gradient(ellipse 40% 52% at ${lightsOff[0] * 100}% ${lightsOff[1] * 100}%, ${lab.glass} 55%, ${lagoon.night.water[1]})`,
-          opacity: 0.88 * dark,
-          mixBlendMode: "multiply",
-        }}
-      />
-    ) : null}
-    <Grain />
-  </AbsoluteFill>
-);
+}) => {
+  const tank = (
+    <Tank platform={platform} clock={clock}>
+      {children}
+    </Tank>
+  );
+  return (
+    <AbsoluteFill>
+      <Camera {...camera}>
+        <Layer depth={1}>
+          <LabWall />
+          <LabWindow daylight={daylight} clock={clock} />
+          {checked ? (
+            <LabResearcher checked={checked} clock={clock} {...board} />
+          ) : null}
+          <LabBench />
+          {tankAt ? (
+            <InPlace>
+              <AbsoluteFill
+                style={{
+                  transformOrigin: `${TANK_CENTER}px ${BENCH_Y}px`,
+                  translate: `${tankAt.x}px ${tankAt.y}px`,
+                  scale: `${tankAt.scale}`,
+                }}
+              >
+                {tank}
+              </AbsoluteFill>
+            </InPlace>
+          ) : (
+            tank
+          )}
+          <Leftovers />
+        </Layer>
+      </Camera>
+      {lightsOff ? (
+        <AbsoluteFill
+          style={{
+            // O tanque fica aceso; em volta, o laboratório mergulha no índigo da noite.
+            background: `radial-gradient(ellipse 40% 52% at ${lightsOff[0] * 100}% ${lightsOff[1] * 100}%, ${lab.glass} 55%, ${lagoon.night.water[1]})`,
+            opacity: 0.88 * dark,
+            mixBlendMode: "multiply",
+          }}
+        />
+      ) : null}
+      <Grain />
+    </AbsoluteFill>
+  );
+};
+
+/**
+ * O que já estava no palco quando o cenário chega: não sobe com a camada em
+ * que está. É o `Wall` do cenário (que fica no lugar enquanto a camada sobe)
+ * sem a opacidade de quem ainda toma a cor.
+ */
+const InPlace: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const built = useBuild();
+  return (
+    // Sem nome de plano: este `Build` só muda a luz do que está dentro, e não é o cenário do palco.
+    <Build {...built} lit={1} shot={null} heir={null} tracked={false}>
+      <Wall>{children}</Wall>
+    </Build>
+  );
+};

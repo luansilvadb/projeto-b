@@ -408,6 +408,8 @@ const AROUND_SECONDS = 1.2;
 const BLINK = { frames: 8, gap: 9 };
 // A cama abre o plano: entra sem esperar a marcação do elenco.
 const BED_SOONER = 4;
+// De onde a cama cresce, a partir do chão dela, em pixels do quadro: à direita dele e à altura do peito, longe do rosto.
+const BED_FROM = { x: 165, y: 190 };
 
 type CrashShotProps = {
   /** Quadros do plano em que ele se deita, em que o relógio começa a correr e em que a barra "8 h" pisca. */
@@ -462,7 +464,8 @@ const CrashShot: React.FC<CrashShotProps> = ({
           {stage.handedOver ? null : (
             <Stay only="leaving">
               <Sooner by={BED_SOONER}>
-                <Cast origin={[BED_HIGH.x, BED_HIGH.y - 80]}>
+                {/* A cama cresce de um ponto ao lado dele, abaixo do lugar dela, e sobe até lá: do meio dela, saía de trás da cabeça dele. */}
+                <Cast origin={[BED_HIGH.x + BED_FROM.x, BED_HIGH.y + BED_FROM.y]}>
                   <Bed
                     {...BED_HIGH}
                     colors={gardner}
@@ -661,6 +664,10 @@ const CLOSE_DRIFT = { from: 0.965, between: 0.985 };
 // A conta vem para o meio, cresce e vira: de frente, o papel "sono devido"; do outro lado, as onze noites.
 // A cama e o bolso encolhem nos lugares deles enquanto isso.
 const TURN = { frames: 18, clear: 8 };
+// A meia-volta do papel, a velocidade constante, dentro da viagem: com a curva da viagem, o papel passava de
+// meio aberto de um lado a meio aberto do outro em dois quadros, e o de perfil ficava vazio. `edge` é a largura
+// mínima, em fração: de perfil o papel ainda tem espessura.
+const FLIP = { at: 2, frames: 13, edge: 0.05 };
 // De perto, o papel balança menos que ao lado da cama, em fração do balanço da conta.
 const PAPER_SWAY = 0.8;
 // As noites são riscadas uma a uma, com este intervalo em quadros.
@@ -763,7 +770,8 @@ const TurnShot: React.FC<TurnShotProps> = ({
   const x = mix(BILL.x, CLOSE_CENTER[0], turned);
   const y = mix(BILL.y + openHeight / 2, CLOSE_CENTER[1], turned);
   // De frente até o perfil, e do perfil até o outro lado.
-  const facing = Math.cos(Math.PI * turned);
+  const side = Math.cos(Math.PI * linear(frame, FLIP.at, FLIP.frames));
+  const facing = side > 0 ? Math.max(side, FLIP.edge) : Math.min(side, -FLIP.edge);
   // A inclinação que ela tinha ao lado da cama se desfaz no caminho.
   const tilt = billTilt(seconds, 1, 1) * (1 - ramp(frame, 0, TURN.frames / 2));
   const strikes = DETAIL_NIGHTS * STRIKE_EVERY;

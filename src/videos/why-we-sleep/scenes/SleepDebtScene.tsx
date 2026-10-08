@@ -184,11 +184,12 @@ const TABLE_FOCUS = [820, 560] as const;
 // A pessoa entra crescendo nos últimos quadros do plano da savana, enquanto o
 // cenário desce: na primeira palavra do plano dela, já está sentada.
 const SEATED_BEFORE_FRAMES = 14;
-// A conta vai do lado do bicho para o lado da mesa num arco, por cima da
-// cabeça de quem está sentado: em linha reta ela deslizava por trás da cabeça.
-// Em quantos quadros, quanto sobe no alto do arco (o pé do papel passa acima
-// do cabelo) e quanto o papel, preso pelo alto, se inclina com o caminho.
-const BILL_ARC = { frames: 26, lift: 450, tilt: 9 };
+// A conta vai do lado do bicho para o lado da mesa num movimento só, por cima
+// da cabeça de quem está sentado, sem sair do quadro: em vez de subir além da
+// borda, o papel se afasta (encolhe) no alto do arco, e é pequeno que o pé
+// dele passa acima do cabelo. Em quantos quadros, quanto sobe, quanto encolhe
+// e quanto o papel, preso pelo alto, se inclina com o caminho.
+const BILL_ARC = { frames: 26, lift: 125, shrink: 0.46, tilt: 9 };
 
 /**
  * Um ponto do quadro para um `Place` que se move devagar: o `Place` fica na
@@ -329,9 +330,9 @@ const PayingShot: React.FC<PayingShotProps> = ({
         orb={MORNING_ORB.to + LONGER.orb * longer}
         clock={clock}
       >
-        <Thicket daylight={1} seconds={seconds} />
+        <Thicket daylight={0.5} seconds={seconds} />
         <Critter
-          daylight={1}
+          daylight={0.5}
           // Ele chega como o plano anterior o deixou: cochilando em pé.
           // Na queda o cochilo vira sono: o olho fecha antes, e o pescoço se solta no caminho.
           nod={drowsyNod(seconds) * (1 - ramp(frame, fallAt + 2, 0.27 * fps))}
@@ -440,11 +441,11 @@ const MorningShot: React.FC<MorningShotProps> = ({ dropAt, clock }) => {
   // A conta vem do lado do bicho, onde o plano anterior a deixou, para o lado da mesa:
   // sobe, passa por cima da cabeça dela e desce, com peso.
   const slid = ramp(frame, 0, BILL_ARC.frames);
-  const flight = clamp01(frame / BILL_ARC.frames);
-  // O alto do arco vem antes do meio do caminho: é quando o papel está sobre a cabeça.
-  const lifted = Math.sin(Math.PI * flight ** 0.8);
+  // O arco anda com o caminho, que parte e chega parado: a conta não salta no
+  // primeiro quadro. O alto vem antes do meio: é quando o papel está sobre a cabeça.
+  const lifted = Math.sin(Math.PI * slid ** 0.8);
   // O pé do papel fica para trás na subida e passa à frente na descida.
-  const swung = BILL_ARC.tilt * Math.sin(2 * Math.PI * flight);
+  const swung = BILL_ARC.tilt * Math.sin(2 * Math.PI * slid);
 
   return (
     <AbsoluteFill>
@@ -469,7 +470,8 @@ const MorningShot: React.FC<MorningShotProps> = ({ dropAt, clock }) => {
               <SleepBill
                 scale={
                   OWING_BILL.scale *
-                  (TABLE_BILL.scale / OWING_BILL.scale) ** slid
+                  (TABLE_BILL.scale / OWING_BILL.scale) ** slid *
+                  (1 - BILL_ARC.shrink * lifted)
                 }
                 stamp={1}
               />

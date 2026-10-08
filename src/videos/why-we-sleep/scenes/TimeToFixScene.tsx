@@ -19,9 +19,18 @@ import { wave } from "../../../components/Idle";
 import { Onomatopoeia } from "../../../components/Onomatopoeia";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, drop, linear, mix, ramp, settle, clamp } from "../../../components/timing";
+import {
+  cue,
+  drop,
+  linear,
+  mix,
+  ramp,
+  settle,
+  clamp,
+} from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
+import { leaveProgress, SCENERY_EXIT_FRAMES } from "../../../video/stage";
 import { ink, sound } from "../palette";
 import { IdeaBackdrop } from "../parts/IdeaBackdrop";
 import { CUT_POINTS, LifeTree } from "../parts/LifeTree";
@@ -73,12 +82,16 @@ const LEFTOVER = {
   until: 16,
 } as const;
 
-/** Adianta a entrada no palco de quem está dentro, em quadros, e apressa o fundo: ele toma a cor em `backdrop` quadros. */
+/**
+ * Adianta a entrada no palco de quem está dentro, em quadros, e apressa o fundo: ele toma a cor em
+ * `backdrop` quadros. `late` atrasa a saída: quem sai ainda encolhe quando o plano seguinte chega.
+ */
 const Sooner: React.FC<{
   by?: number;
   backdrop?: number;
+  late?: number;
   children: React.ReactNode;
-}> = ({ by = 0, backdrop, children }) => {
+}> = ({ by = 0, backdrop, late = 0, children }) => {
   const stage = useStage();
   const sooner = useMemo(
     () => ({
@@ -88,8 +101,9 @@ const Sooner: React.FC<{
         delay === undefined && frames === undefined
           ? stage.enter(0, backdrop)
           : stage.enter(Math.max(0, (delay ?? 0) - by), frames),
+      leave: (delay = 0) => stage.leave(delay + late),
     }),
-    [stage, by, backdrop],
+    [stage, by, backdrop, late],
   );
   return (
     <StageContext.Provider value={sooner}>{children}</StageContext.Provider>
@@ -143,7 +157,6 @@ type Pruning = {
   readonly enterAt: number;
   readonly cutAt: number;
 };
-
 
 /** Quanto alguém já saiu do palco, de 0 a 1, entre dois quadros: acelera para fora, como toda saída do elenco. */
 const gone = (frame: number, [from, to]: readonly [number, number]): number =>
@@ -285,6 +298,13 @@ const SEA_DRIFT = { by: 0.045, focus: [1180, 640] } as const;
 const FOLLOW = { pan: 96, floor: 0.4, overscan: 1.045 };
 // A marca do sono acende na palavra: o palco não a segura meio segundo.
 const TIMELINE_SOONER = 14;
+// E a linha sai estes quadros depois da marcação: ainda encolhe quando o pedestal do plano seguinte
+// aponta, e a água não fica vazia entre os dois.
+const TIMELINE_LATE = 3;
+// Na saída, o fundo do mar desce como um cenário em camadas (`SeaFloor layered`): o recife, os
+// morros e a areia vão para baixo do quadro, os de perto por último, e a água fica. Só coberto pelo
+// fundo seguinte, o recife ficava como fantasma sob o globo. Na entrada ele continua tomando a cor
+// inteiro, por baixo da poda que termina: quem dirige as camadas é só a saída.
 
 type TimelineShotProps = {
   /** Quadros do plano em que a marca do sono e a etiqueta dos anos entram. */
@@ -308,6 +328,7 @@ const TimelineShot: React.FC<TimelineShotProps> = ({
   const lineAt = sleepAt + LINE_AFTER_PIN_FRAMES;
   const drawn = ramp(frame, lineAt, LINE_SECONDS * fps);
   const pan = FOLLOW.pan * (1 - drawn);
+  const sunk = leaveProgress(frame, length, 0, SCENERY_EXIT_FRAMES);
   return (
     <AbsoluteFill>
       <AbsoluteFill
@@ -317,7 +338,7 @@ const TimelineShot: React.FC<TimelineShotProps> = ({
         }}
       >
         {/* O fundo do mar é o fundo do plano: toma a cor dele sobre o anterior. A linha é elenco. */}
-        <Sooner by={TIMELINE_SOONER}>
+        <Sooner by={TIMELINE_SOONER} late={TIMELINE_LATE}>
           <FlatStage
             backdrop={
               <Troupe cast={false}>
@@ -327,7 +348,9 @@ const TimelineShot: React.FC<TimelineShotProps> = ({
                     scale: `${FOLLOW.overscan}`,
                   }}
                 >
-                  <SeaFloor shimmer />
+                  <Build lit={1} risen={1 - sunk}>
+                    <SeaFloor shimmer layered />
+                  </Build>
                 </AbsoluteFill>
               </Troupe>
             }

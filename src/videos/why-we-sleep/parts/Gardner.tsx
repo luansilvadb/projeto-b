@@ -1293,6 +1293,8 @@ type BedroomProps = {
   /** Quadros em que o cartaz e o calendário estouram na parede; sem valor, já estão nela. */
   readonly posterAt?: number;
   readonly calendarAt?: number;
+  /** Quanto o calendário está à direita do lugar dele, em pixels: sai do quadro antes de a câmera frear. */
+  readonly calendarAside?: number;
   /** Quanto o chão ainda está abaixo do lugar dele, em pixels: o quarto montando. */
   readonly sunk?: number;
   /** O tempo, em segundos: os papéis da parede balançam de leve. Sem valor, parados. */
@@ -1307,6 +1309,7 @@ export const Bedroom: React.FC<BedroomProps> = ({
   on = "lilac",
   posterAt,
   calendarAt,
+  calendarAside = 0,
   sunk = 0,
   seconds,
 }) => {
@@ -1324,6 +1327,7 @@ export const Bedroom: React.FC<BedroomProps> = ({
       />
       <WallCalendar
         {...ROOM.calendar}
+        x={ROOM.calendar.x + calendarAside}
         turned={turned}
         filled={filled}
         on={on}

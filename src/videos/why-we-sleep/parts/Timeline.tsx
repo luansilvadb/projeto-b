@@ -5,6 +5,7 @@ import { Brain } from "../../../art/Brain";
 import { Cassiopea } from "../../../art/Cassiopea";
 import { Elephant } from "../../../art/Elephant";
 import { taperPath } from "../../../art/shapes";
+import { Layer } from "../../../components/Camera";
 import { Drifters } from "../../../components/Drifters";
 import { breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
@@ -43,6 +44,16 @@ const SLEEP_X = 240;
 const JELLYFISH = { x: 625, width: 380, alone: { x: 315, width: 300 } };
 // Do centro do desenho dela até onde o sino encosta, em fração da largura do sino.
 const RESTING = 62 / 330;
+/**
+ * Onde a água-viva fica quando divide a linha com a marca do sono: o centro
+ * dela e a largura do sino. Para o plano que a traz de outro cenário e a
+ * desenha por conta própria, em vez de pedir `jellyfish`.
+ */
+export const TIMELINE_JELLYFISH = {
+  x: JELLYFISH.x,
+  y: TIMELINE.y - JELLYFISH.width * RESTING - 6,
+  width: JELLYFISH.width,
+};
 // O primeiro cérebro vem depois do sono e da água-viva, que não tem cérebro.
 const BRAIN_X = 1090;
 const PIN = { icon: 130, tag: 250 };
@@ -117,7 +128,24 @@ type TimelineProps = {
 type SeaFloorProps = {
   /** A luz que entra pela água tremula: cada feixe clareia e escurece no próprio tempo. Por padrão, parada. */
   readonly shimmer?: boolean;
+  /**
+   * O fundo do mar como cenário do palco, em camadas: a água toma a cor dela
+   * no lugar, e o recife, os morros e a areia sobem ao entrar e descem ao
+   * sair, os de perto por último. Sem isto é uma pintura só, para quem o usa
+   * como fundo liso de um plano.
+   */
+  readonly layered?: boolean;
 };
+
+type TierProps = {
+  /** A profundidade da camada, quando o fundo do mar é cenário: 0 é a água, 1 é a areia. */
+  readonly depth: number | null;
+  readonly children: React.ReactNode;
+};
+
+/** Um pedaço do fundo do mar: uma camada do cenário, ou só o desenho, quando ele é uma pintura. */
+const Tier: React.FC<TierProps> = ({ depth, children }) =>
+  depth === null ? <>{children}</> : <Layer depth={depth}>{children}</Layer>;
 
 // Quanto dura o colchete dos anos se abrindo, e quanto a etiqueta espera por ele, em segundos.
 const BRACKET_SECONDS = 0.4;
@@ -128,7 +156,10 @@ const MARK_FADE = 60;
 const GLINT = { seconds: 2.2, radius: 13 };
 
 /** O fundo do mar em índigo: a água, a luz que entra, a areia violeta e o capim nos cantos. */
-export const SeaFloor: React.FC<SeaFloorProps> = ({ shimmer = false }) => {
+export const SeaFloor: React.FC<SeaFloorProps> = ({
+  shimmer = false,
+  layered = false,
+}) => {
   const id = useId();
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -144,153 +175,174 @@ export const SeaFloor: React.FC<SeaFloorProps> = ({ shimmer = false }) => {
     reef,
     rootsFar,
   } = lagoon.night;
+  // Em camadas, cada pedaço tem a profundidade dele; pintado, nenhum.
+  const at = (depth: number) => (layered ? depth : null);
 
   return (
-    <AbsoluteFill
-      style={{
-        background: `linear-gradient(${water[0]}, ${water[1]} 45%, ${water[2]} 80%)`,
-      }}
-    >
-      <AbsoluteFill
-        style={{
-          background: `radial-gradient(ellipse 900px 620px at 22% 0%, ${light}40, transparent)`,
-        }}
-      />
-      <SvgLayer>
+    <AbsoluteFill>
+      <Tier depth={at(0)}>
+        <AbsoluteFill
+          style={{
+            background: `linear-gradient(${water[0]}, ${water[1]} 45%, ${water[2]} 80%)`,
+          }}
+        />
+        <AbsoluteFill
+          style={{
+            background: `radial-gradient(ellipse 900px 620px at 22% 0%, ${light}40, transparent)`,
+          }}
+        />
         {/* A distância: os feixes de luz, o recife em silhueta e um cardume, perto da cor da água. */}
-        {[
-          [120, 300, 520],
-          [520, 190, 1000],
-          [900, 150, 1420],
-        ].map(([top, width, bottom]) => {
-          // Com a luz tremulando, cada feixe também varre o fundo devagar, no próprio tempo.
-          const sweep = shimmer ? 90 * wave(seconds, 4.3, top / 500) : 0;
-          return (
-            <path
-              key={top}
-              d={`M${top},-20 L${top + width},-20 L${bottom + width * 1.7 + sweep},${TIMELINE_FLOOR} L${bottom + sweep},${TIMELINE_FLOOR} Z`}
-              fill={light}
-              opacity={
-                shimmer
-                  ? 0.065 * (1 + 0.6 * wave(seconds, 2.7, top / 700))
-                  : 0.05
-              }
-            />
-          );
-        })}
-        <g fill={reef}>
-          <path
-            d={`M-40,${TIMELINE_FLOOR} C20,520 190,430 300,560 C360,470 520,500 560,700 C640,640 760,720 800,${TIMELINE_FLOOR} Z`}
-          />
-          <path
-            d={`M1020,${TIMELINE_FLOOR} C1080,640 1220,560 1330,640 C1400,420 1620,360 1720,520 C1800,470 1940,560 1960,${TIMELINE_FLOOR} Z`}
-          />
-        </g>
-        <g fill={rootsFar}>
-          <path
-            d={`M380,${TIMELINE_FLOOR} C460,760 620,740 700,820 C760,780 880,800 960,${TIMELINE_FLOOR} Z`}
-          />
-          <path
-            d={`M1380,${TIMELINE_FLOOR} C1460,700 1620,640 1740,760 C1800,720 1900,760 1960,${TIMELINE_FLOOR} Z`}
-          />
-        </g>
-        {[
-          [1180, 230, 1],
-          [1290, 180, 0.8],
-          [1330, 270, 0.7],
-          [1450, 215, 0.9],
-          [760, 330, 0.7],
-        ].map(([x, y, size]) => (
-          <path
-            key={x}
-            // Com a luz tremulando o cardume também nada: avança devagar e ondula, cada peixe na sua fase.
-            transform={`translate(${x + 8 * wave(seconds, 6, x / 300) + (shimmer ? 30 * seconds : 0)} ${y + (shimmer ? 7 * wave(seconds, 1.9, x / 170) : 0)}) scale(${size})`}
-            d="M-46,0 C-26,-24 14,-24 34,-4 L58,-22 L52,0 L58,22 L34,4 C14,24 -26,24 -46,0 Z"
-            fill={reef}
-          />
-        ))}
-      </SvgLayer>
-      <Drifters
-        seed="plankton"
-        count={70}
-        color={ink.glow}
-        opacity={0.4}
-        speed={shimmer ? 4 : 1}
-      />
-      <SvgLayer>
-        <defs>
-          <linearGradient id={id} x1={0} y1={0} x2={0} y2={1}>
-            <stop offset={0} stopColor={sand[0]} />
-            <stop offset={0.5} stopColor={sand[1]} />
-            <stop offset={1} stopColor={sand[2]} />
-          </linearGradient>
-        </defs>
-        <path
-          d={`M-20,${TIMELINE_FLOOR - 4} C400,${TIMELINE_FLOOR - 40} 900,${TIMELINE_FLOOR + 26} 1300,${TIMELINE_FLOOR - 6} C1600,${TIMELINE_FLOOR - 30} 1800,${TIMELINE_FLOOR - 10} 1940,${TIMELINE_FLOOR - 20} L1940,1100 L-20,1100 Z`}
-          fill={sandEdge}
-        />
-        <path
-          d={`M-20,${TIMELINE_FLOOR + 8} C400,${TIMELINE_FLOOR - 28} 900,${TIMELINE_FLOOR + 38} 1300,${TIMELINE_FLOOR + 6} C1600,${TIMELINE_FLOOR - 18} 1800,${TIMELINE_FLOOR + 2} 1940,${TIMELINE_FLOOR - 8} L1940,1100 L-20,1100 Z`}
-          fill={`url(#${id})`}
-        />
-        {[
-          [260, 1030, 150],
-          [820, 1050, 210],
-          [1420, 1020, 170],
-        ].map(([x, y, length]) => (
-          <rect
-            key={x}
-            x={x}
-            y={y}
-            width={length}
-            height={10}
-            rx={5}
-            fill={ripple}
-          />
-        ))}
-        {[
-          [560, 1010, 26],
-          [610, 1024, 14],
-          [1180, 1040, 22],
-        ].map(([x, y, r]) => (
-          <ellipse
-            key={x}
-            cx={x}
-            cy={y}
-            rx={r}
-            ry={r * 0.6}
-            fill={pebble[(x / 10) % 2 < 1 ? 0 : 1]}
-          />
-        ))}
-        {/* O capim-marinho dos cantos: a moldura do fundo do mar. */}
-        {[40, 1930].map((x, corner) => (
-          <g key={x}>
-            {[-70, -30, 10, 50, 90].map((offset, blade) => (
+        <SvgLayer>
+          {[
+            [120, 300, 520],
+            [520, 190, 1000],
+            [900, 150, 1420],
+          ].map(([top, width, bottom]) => {
+            // Com a luz tremulando, cada feixe também varre o fundo devagar, no próprio tempo.
+            const sweep = shimmer ? 90 * wave(seconds, 4.3, top / 500) : 0;
+            return (
               <path
-                key={offset}
-                d={taperPath(
-                  [x + offset, 1100],
-                  [
-                    x +
-                      offset * 1.2 +
-                      10 * wave(seconds, 4, blade / 5 + corner / 2),
-                    960 - (blade % 2) * 40,
-                  ],
-                  [
-                    x +
-                      offset * 1.7 +
-                      26 * wave(seconds, 4, blade / 5 + corner / 2),
-                    800 - (blade % 3) * 70,
-                  ],
-                  34,
-                  5,
-                )}
-                fill={grass[blade % grass.length]}
+                key={top}
+                d={`M${top},-20 L${top + width},-20 L${bottom + width * 1.7 + sweep},${TIMELINE_FLOOR} L${bottom + sweep},${TIMELINE_FLOOR} Z`}
+                fill={light}
+                opacity={
+                  shimmer
+                    ? 0.065 * (1 + 0.6 * wave(seconds, 2.7, top / 700))
+                    : 0.05
+                }
               />
-            ))}
+            );
+          })}
+        </SvgLayer>
+      </Tier>
+      <Tier depth={at(0.25)}>
+        <SvgLayer>
+          <g fill={reef}>
+            <path
+              d={`M-40,${TIMELINE_FLOOR} C20,520 190,430 300,560 C360,470 520,500 560,700 C640,640 760,720 800,${TIMELINE_FLOOR} Z`}
+            />
+            <path
+              d={`M1020,${TIMELINE_FLOOR} C1080,640 1220,560 1330,640 C1400,420 1620,360 1720,520 C1800,470 1940,560 1960,${TIMELINE_FLOOR} Z`}
+            />
           </g>
-        ))}
-      </SvgLayer>
+        </SvgLayer>
+      </Tier>
+      <Tier depth={at(0.5)}>
+        <SvgLayer>
+          <g fill={rootsFar}>
+            <path
+              d={`M380,${TIMELINE_FLOOR} C460,760 620,740 700,820 C760,780 880,800 960,${TIMELINE_FLOOR} Z`}
+            />
+            <path
+              d={`M1380,${TIMELINE_FLOOR} C1460,700 1620,640 1740,760 C1800,720 1900,760 1960,${TIMELINE_FLOOR} Z`}
+            />
+          </g>
+        </SvgLayer>
+      </Tier>
+      <Tier depth={at(0.25)}>
+        <SvgLayer>
+          {[
+            [1180, 230, 1],
+            [1290, 180, 0.8],
+            [1330, 270, 0.7],
+            [1450, 215, 0.9],
+            [760, 330, 0.7],
+          ].map(([x, y, size]) => (
+            <path
+              key={x}
+              // Com a luz tremulando o cardume também nada: avança devagar e ondula, cada peixe na sua fase.
+              transform={`translate(${x + 8 * wave(seconds, 6, x / 300) + (shimmer ? 30 * seconds : 0)} ${y + (shimmer ? 7 * wave(seconds, 1.9, x / 170) : 0)}) scale(${size})`}
+              d="M-46,0 C-26,-24 14,-24 34,-4 L58,-22 L52,0 L58,22 L34,4 C14,24 -26,24 -46,0 Z"
+              fill={reef}
+            />
+          ))}
+        </SvgLayer>
+      </Tier>
+      <Tier depth={at(0.9)}>
+        <Drifters
+          seed="plankton"
+          count={70}
+          color={ink.glow}
+          opacity={0.4}
+          speed={shimmer ? 4 : 1}
+        />
+      </Tier>
+      <Tier depth={at(1)}>
+        <SvgLayer>
+          <defs>
+            <linearGradient id={id} x1={0} y1={0} x2={0} y2={1}>
+              <stop offset={0} stopColor={sand[0]} />
+              <stop offset={0.5} stopColor={sand[1]} />
+              <stop offset={1} stopColor={sand[2]} />
+            </linearGradient>
+          </defs>
+          <path
+            d={`M-20,${TIMELINE_FLOOR - 4} C400,${TIMELINE_FLOOR - 40} 900,${TIMELINE_FLOOR + 26} 1300,${TIMELINE_FLOOR - 6} C1600,${TIMELINE_FLOOR - 30} 1800,${TIMELINE_FLOOR - 10} 1940,${TIMELINE_FLOOR - 20} L1940,1100 L-20,1100 Z`}
+            fill={sandEdge}
+          />
+          <path
+            d={`M-20,${TIMELINE_FLOOR + 8} C400,${TIMELINE_FLOOR - 28} 900,${TIMELINE_FLOOR + 38} 1300,${TIMELINE_FLOOR + 6} C1600,${TIMELINE_FLOOR - 18} 1800,${TIMELINE_FLOOR + 2} 1940,${TIMELINE_FLOOR - 8} L1940,1100 L-20,1100 Z`}
+            fill={`url(#${id})`}
+          />
+          {[
+            [260, 1030, 150],
+            [820, 1050, 210],
+            [1420, 1020, 170],
+          ].map(([x, y, length]) => (
+            <rect
+              key={x}
+              x={x}
+              y={y}
+              width={length}
+              height={10}
+              rx={5}
+              fill={ripple}
+            />
+          ))}
+          {[
+            [560, 1010, 26],
+            [610, 1024, 14],
+            [1180, 1040, 22],
+          ].map(([x, y, r]) => (
+            <ellipse
+              key={x}
+              cx={x}
+              cy={y}
+              rx={r}
+              ry={r * 0.6}
+              fill={pebble[(x / 10) % 2 < 1 ? 0 : 1]}
+            />
+          ))}
+          {/* O capim-marinho dos cantos: a moldura do fundo do mar. */}
+          {[40, 1930].map((x, corner) => (
+            <g key={x}>
+              {[-70, -30, 10, 50, 90].map((offset, blade) => (
+                <path
+                  key={offset}
+                  d={taperPath(
+                    [x + offset, 1100],
+                    [
+                      x +
+                        offset * 1.2 +
+                        10 * wave(seconds, 4, blade / 5 + corner / 2),
+                      960 - (blade % 2) * 40,
+                    ],
+                    [
+                      x +
+                        offset * 1.7 +
+                        26 * wave(seconds, 4, blade / 5 + corner / 2),
+                      800 - (blade % 3) * 70,
+                    ],
+                    34,
+                    5,
+                  )}
+                  fill={grass[blade % grass.length]}
+                />
+              ))}
+            </g>
+          ))}
+        </SvgLayer>
+      </Tier>
     </AbsoluteFill>
   );
 };

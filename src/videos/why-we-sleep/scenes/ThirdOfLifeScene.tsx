@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   AbsoluteFill,
   Easing,
@@ -13,7 +14,12 @@ import {
   framing,
   Layer,
 } from "../../../components/Camera";
-import { FlatStage, Troupe } from "../../../components/Cast";
+import {
+  FlatStage,
+  StageContext,
+  Troupe,
+  useStage,
+} from "../../../components/Cast";
 import { Drifters } from "../../../components/Drifters";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, phaseOf, wave } from "../../../components/Idle";
@@ -37,6 +43,25 @@ type BarShotProps = {
 // A etiqueta espera o terço escurecer um pouco, e a pessoa só reage depois de ver a etiqueta.
 const TAG_DELAY_SECONDS = 0.3;
 const REACTION_DELAY_FRAMES = 3;
+// A barra sai estes quadros depois da marcação: ainda encolhe quando a lua e as nuvens da savana
+// apontam embaixo, e o pêssego não fica vazio entre uma coisa e outra.
+const BAR_LEAVES_LATE = 3;
+
+/** Atrasa a saída do palco de quem está dentro. */
+const LeavingLater: React.FC<{ by: number; children: React.ReactNode }> = ({
+  by,
+  children,
+}) => {
+  const stage = useStage();
+  const later = useMemo(
+    () => ({ ...stage, leave: (delay = 0) => stage.leave(delay + by) }),
+    [stage, by],
+  );
+  return (
+    <StageContext.Provider value={later}>{children}</StageContext.Provider>
+  );
+};
+
 // A aproximação lenta do plano, como a de `SlowPush`: 4% do começo ao fim, em volta do meio do quadro.
 const PUSH = { focus: [960, 560], by: 0.04 } as const;
 // A câmera do plano (decisão do usuário): aproxima no espanto. A escala
@@ -84,21 +109,23 @@ const BarShot: React.FC<BarShotProps> = ({ thirdAt }) => {
           <Camera {...camera}>
             <Layer depth={1}>
               <Troupe>
-                <LifeBar
-                  drawn={ramp(frame, 0, 0.7 * fps)}
-                  // O terço escurece em 0,7 s, e a borda dele desacelera ao chegar. Com a curva de
-                  // peso, quase todo o caminho era andado nos quadros do meio, e parecia escurecer de uma vez.
-                  asleep={interpolate(
-                    frame,
-                    [thirdAt, thirdAt + 0.7 * fps],
-                    [0, 1],
-                    {
-                      ...clamp,
-                      easing: Easing.out(Easing.quad),
-                    },
-                  )}
-                  thirdAt={tagAt}
-                />
+                <LeavingLater by={BAR_LEAVES_LATE}>
+                  <LifeBar
+                    drawn={ramp(frame, 0, 0.7 * fps)}
+                    // O terço escurece em 0,7 s, e a borda dele desacelera ao chegar. Com a curva de
+                    // peso, quase todo o caminho era andado nos quadros do meio, e parecia escurecer de uma vez.
+                    asleep={interpolate(
+                      frame,
+                      [thirdAt, thirdAt + 0.7 * fps],
+                      [0, 1],
+                      {
+                        ...clamp,
+                        easing: Easing.out(Easing.quad),
+                      },
+                    )}
+                    thirdAt={tagAt}
+                  />
+                </LeavingLater>
                 <SvgLayer>
                   <IdeaShadow
                     hue="peach"
@@ -145,15 +172,17 @@ const BarShot: React.FC<BarShotProps> = ({ thirdAt }) => {
 
 // O bicho dorme no meio do quadro, com a árvore atrás dele e os ícones por cima.
 const NIGHT = framing([PREY.x + 60, PREY.y - 250], 1.5);
+// A câmera da troca: a savana sobe em camadas de baixo do quadro, e a câmera só fecha um pouco
+// sobre o mesmo ponto enquanto ela assenta. Sem deslocamento: um que descesse faria o chão subir,
+// passar do lugar e voltar.
+const NIGHT_ARRIVAL = framing([PREY.x + 60, PREY.y - 250], 1.5 * 0.94);
+const ARRIVAL_SECONDS = 1;
 // A aproximação lenta do plano: 4% mais perto no fim, sem mudar o ponto enquadrado.
-// A câmera da troca: chega mais aberta e olhando o céu, e desce até o bicho enquanto o cenário sobe, no
-// mesmo sentido dele; a troca deixa de ser uma cortina e passa a ser um movimento do olhar.
-const NIGHT_ARRIVAL = framing([PREY.x + 60, PREY.y - 250 + 120], 1.5 * 0.92);
-const ARRIVAL_SECONDS = 1.1;
 const NIGHT_CLOSER = framing([PREY.x + 60, PREY.y - 250], 1.5 * 1.04);
-// O bicho chega de pé com o cenário, dobra as pernas e deita, e só então a cabeça pende e o olho
-// fecha: o movimento da troca é dele, e o "dorme enroscado" do roteiro acontece à vista.
-const SETTLE = { restAt: 0.1, rest: 0.8, sleepAt: 0.5, sleep: 0.7 };
+// O bicho sobe de pé com o chão. Só com o chão no lugar (0,4 s) ele dobra as pernas e deita, e a
+// cabeça pende e o olho fecha no fim da descida: o "dorme enroscado" do roteiro acontece à vista,
+// e não escondido atrás da subida do cenário.
+const SETTLE = { restAt: 0.4, rest: 0.7, sleepAt: 0.8, sleep: 0.7 };
 const BADGE = { y: PREY.y - 330, gap: 200, size: 160 };
 const LOSSES: readonly Loss[] = ["food", "mate", "watch"];
 const STRIKE_DELAY_SECONDS = 0.35;

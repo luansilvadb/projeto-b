@@ -1,9 +1,12 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { Storefront, type StorefrontColors } from "../../../art/Storefront";
 import {
+  Build,
   Camera,
   Layer,
+  Wall,
   framing,
+  useBuild,
   type CameraState,
 } from "../../../components/Camera";
 import { Grain } from "../../../components/Grain";
@@ -65,6 +68,32 @@ type ShopFrontProps = {
   readonly colors?: StorefrontColors;
   /** Quanto o halo do sol ou da lua respira, a partir de 0 (ver `ShopStreet`). */
   readonly halo?: number;
+  /**
+   * A loja não sobe nem desce com a rua: fica onde a câmera a põe, e a calçada
+   * chega por baixo dela. Serve à troca em que a loja é a ponte (o ícone que
+   * vira a porta, o cérebro que vira a fachada).
+   */
+  readonly standing?: boolean;
+  /** O tamanho da loja em volta do meio dela, de 0 a 1: ela cresce no ponto, como elenco. Por padrão, 1. */
+  readonly grown?: number;
+};
+
+// O meio da fachada, em volta do qual ela cresce.
+const FRONT_MIDDLE = [FRONT.x, FRONT.ground - 0.4 * FRONT.width] as const;
+
+/** O que está aqui não desce com a camada em que está: o cenário chega em volta. */
+const Upright: React.FC<{ on: boolean; children: React.ReactNode }> = ({
+  on,
+  children,
+}) => {
+  const built = useBuild();
+  return on ? (
+    <Build {...built} lit={1}>
+      <Wall>{children}</Wall>
+    </Build>
+  ) : (
+    children
+  );
 };
 
 // A sombra de quem passa lá dentro: dois pés, que alternam, e a mancha deles no clarão da calçada.
@@ -87,6 +116,8 @@ export const ShopFront: React.FC<ShopFrontProps> = ({
   doorOpen,
   colors,
   halo,
+  standing = false,
+  grown = 1,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -122,76 +153,90 @@ export const ShopFront: React.FC<ShopFrontProps> = ({
               width={FRONT.width}
             />
           </SvgLayer>
-          <Place x={FRONT.x} y={FRONT.ground} anchor="bottom">
-            <Storefront
-              width={FRONT.width}
-              colors={colors ?? (night ? shop.night : shop.day)}
-              shutter={shutter}
-              lamp={lamp}
-              awning={awning}
-              doorOpen={doorOpen}
-            />
-          </Place>
-          {busy ? (
-            // A fresta de luz por baixo da porta e o clarão dela na calçada, que oscila: há movimento lá dentro.
-            <SvgLayer>
-              <rect
-                x={FRONT_OPENING.x}
-                y={gapY}
-                width={FRONT_OPENING.width}
-                height={14}
-                fill={shop.night.lamp}
-              />
-              <ellipse
-                cx={
-                  FRONT.x +
-                  FRONT_OPENING.width * 0.25 * flicker * wave(seconds, 2.3)
-                }
-                cy={FRONT.ground + 30}
-                rx={FRONT_OPENING.width * 0.42}
-                ry={34}
-                fill={shop.night.lamp}
-                opacity={0.3 + 0.12 * flicker * wave(seconds, 0.7)}
-              />
-              {passing === undefined ? null : (
-                <g>
-                  {/* Os dois pés de quem anda lá dentro cortam a fresta, um depois do outro. */}
-                  {[0, 1].map((foot) => {
-                    const lifted = Math.max(
-                      0,
-                      Math.sin(
-                        (passing * PASSER.steps + foot * 0.5) * Math.PI * 2,
-                      ),
-                    );
-                    const x = passerX + (foot - 0.5) * PASSER.gap * 2;
-                    const from = Math.max(FRONT_OPENING.x, x - PASSER.foot / 2);
-                    const to = Math.min(
-                      FRONT_OPENING.x + FRONT_OPENING.width,
-                      x + PASSER.foot / 2,
-                    );
-                    return to > from ? (
-                      <rect
-                        key={foot}
-                        x={from}
-                        y={gapY + 8 * lifted}
-                        width={to - from}
-                        height={14 - 8 * lifted}
-                        fill={street.night.contact}
-                      />
-                    ) : null;
-                  })}
-                  <ellipse
-                    cx={passerX}
-                    cy={FRONT.ground + 30}
-                    rx={PASSER.foot * 2.2}
-                    ry={30}
-                    fill={street.night.sidewalk}
-                    opacity={0.75 * Math.min(1, passing * 8, (1 - passing) * 8)}
+          <Upright on={standing}>
+            <AbsoluteFill
+              style={{
+                transformOrigin: `${FRONT_MIDDLE[0]}px ${FRONT_MIDDLE[1]}px`,
+                scale: `${grown}`,
+              }}
+            >
+              <Place x={FRONT.x} y={FRONT.ground} anchor="bottom">
+                <Storefront
+                  width={FRONT.width}
+                  colors={colors ?? (night ? shop.night : shop.day)}
+                  shutter={shutter}
+                  lamp={lamp}
+                  awning={awning}
+                  doorOpen={doorOpen}
+                />
+              </Place>
+              {busy ? (
+                // A fresta de luz por baixo da porta e o clarão dela na calçada, que oscila: há movimento lá dentro.
+                <SvgLayer>
+                  <rect
+                    x={FRONT_OPENING.x}
+                    y={gapY}
+                    width={FRONT_OPENING.width}
+                    height={14}
+                    fill={shop.night.lamp}
                   />
-                </g>
-              )}
-            </SvgLayer>
-          ) : null}
+                  <ellipse
+                    cx={
+                      FRONT.x +
+                      FRONT_OPENING.width * 0.25 * flicker * wave(seconds, 2.3)
+                    }
+                    cy={FRONT.ground + 30}
+                    rx={FRONT_OPENING.width * 0.42}
+                    ry={34}
+                    fill={shop.night.lamp}
+                    opacity={0.3 + 0.12 * flicker * wave(seconds, 0.7)}
+                  />
+                  {passing === undefined ? null : (
+                    <g>
+                      {/* Os dois pés de quem anda lá dentro cortam a fresta, um depois do outro. */}
+                      {[0, 1].map((foot) => {
+                        const lifted = Math.max(
+                          0,
+                          Math.sin(
+                            (passing * PASSER.steps + foot * 0.5) * Math.PI * 2,
+                          ),
+                        );
+                        const x = passerX + (foot - 0.5) * PASSER.gap * 2;
+                        const from = Math.max(
+                          FRONT_OPENING.x,
+                          x - PASSER.foot / 2,
+                        );
+                        const to = Math.min(
+                          FRONT_OPENING.x + FRONT_OPENING.width,
+                          x + PASSER.foot / 2,
+                        );
+                        return to > from ? (
+                          <rect
+                            key={foot}
+                            x={from}
+                            y={gapY + 8 * lifted}
+                            width={to - from}
+                            height={14 - 8 * lifted}
+                            fill={street.night.contact}
+                          />
+                        ) : null;
+                      })}
+                      <ellipse
+                        cx={passerX}
+                        cy={FRONT.ground + 30}
+                        rx={PASSER.foot * 2.2}
+                        ry={30}
+                        fill={street.night.sidewalk}
+                        opacity={
+                          0.75 * Math.min(1, passing * 8, (1 - passing) * 8)
+                        }
+                      />
+                    </g>
+                  )}
+                </SvgLayer>
+              ) : null}
+            </AbsoluteFill>
+          </Upright>
           {children}
         </Layer>
       </Camera>

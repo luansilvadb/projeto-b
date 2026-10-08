@@ -20,7 +20,14 @@ import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp, settle, clamp } from "../../../components/timing";
+import {
+  cue,
+  linear,
+  mix,
+  ramp,
+  settle,
+  clamp,
+} from "../../../components/timing";
 import { HEIGHT, WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
@@ -277,6 +284,8 @@ const CROSS_FRAMES = 18;
 const INSIDE_FOCUS = [INSIDE.x, INSIDE.y - 120] as const;
 const INSIDE_PUSH = 0.08;
 const NET_SECONDS = 1.2;
+// O contorno sai nos últimos quadros do plano: estes depois de a saída do palco começar.
+const OUTLINE_LEAVES = 10;
 
 /** Onde um ponto do cenário aparece no quadro, visto por uma câmera: o inverso de `framing`. */
 export const seenAt = (
@@ -288,7 +297,7 @@ export const seenAt = (
 ];
 
 /** As cores dela a caminho de uma pintura para a outra: cada tom interpola, e o halo só existe na que o tem. */
-const blend = <Tones,>(from: Tones, to: Tones, t: number): Tones => {
+export const blend = <Tones,>(from: Tones, to: Tones, t: number): Tones => {
   if (typeof from === "string" && typeof to === "string") {
     return interpolateColors(t, [0, 1], [from, to]) as Tones;
   }
@@ -329,13 +338,15 @@ type InsideViewProps = {
   };
   /** Quanto o fundo índigo já tomou o quadro, de 0 a 1. */
   readonly backdrop?: number;
+  /** Quanto o contorno já saiu de cena, de 0 a 1: encolhe no próprio ponto. */
+  readonly outlineGone?: number;
 };
 
 /**
  * "Por dentro" do sino, desenhado por valores: o fundo índigo, ela grande e
  * translúcida, a rede acesa e o contorno do cérebro que não está lá. É o
- * plano 3 desta cena e, no último quadro dele, o que a noite de
- * `jellyfish-night` varre.
+ * plano 3 desta cena e, de trás para a frente, a abertura de
+ * `jellyfish-night`, que recua dele até a lagoa de noite.
  */
 const InsideView: React.FC<InsideViewProps> = ({
   seconds,
@@ -347,6 +358,7 @@ const InsideView: React.FC<InsideViewProps> = ({
   colors = jellyfish.night,
   at = INSIDE,
   backdrop = 1,
+  outlineGone = 0,
 }) => (
   <AbsoluteFill>
     <AbsoluteFill style={{ opacity: backdrop }}>
@@ -376,7 +388,7 @@ const InsideView: React.FC<InsideViewProps> = ({
           twinkle={seconds}
         />
       </div>
-      {outline > 0 ? (
+      {outline > 0 && outlineGone < 1 ? (
         <div
           style={{
             position: "absolute",
@@ -384,6 +396,7 @@ const InsideView: React.FC<InsideViewProps> = ({
             top: NO_BRAIN.y + 6 * wave(seconds, 2.4),
             translate: "-50% -50%",
             rotate: `${-6 + 1.2 * wave(seconds, 4.1, 0.3)}deg`,
+            scale: `${1 - outlineGone}`,
             // O contorno se desenha da esquerda para a direita, tracejado por tracejado.
             clipPath:
               outline < 1
@@ -398,17 +411,53 @@ const InsideView: React.FC<InsideViewProps> = ({
   </AbsoluteFill>
 );
 
-/** O último quadro de "por dentro", com o relógio correndo: é o que a cena seguinte redesenha por baixo da varredura dela. */
-export const InsideAtEnd: React.FC<{ seconds: number; fps: number }> = ({
-  seconds,
-  fps,
-}) => (
-  <InsideView
-    seconds={seconds}
-    cycles={pulseCycles(seconds * fps, fps, steady(PULSES_AWAKE))}
-    zoom={1 + INSIDE_PUSH}
-  />
+/**
+ * O enquadramento da lagoa que põe a água-viva onde o último quadro de "por
+ * dentro" a deixa, com a aproximação lenta do plano já feita: é de onde a
+ * câmera de `jellyfish-night` recua.
+ */
+export const INSIDE_END = framing(
+  [JELLYFISH_SPOT.x, JELLYFISH_SPOT.y],
+  (INSIDE.width * (1 + INSIDE_PUSH)) / JELLYFISH_SPOT.width,
+  [
+    INSIDE_FOCUS[0] + (INSIDE.x - INSIDE_FOCUS[0]) * (1 + INSIDE_PUSH),
+    INSIDE_FOCUS[1] + (INSIDE.y - INSIDE_FOCUS[1]) * (1 + INSIDE_PUSH),
+  ],
 );
+
+type InsideLeavingProps = {
+  /** A câmera da lagoa, que recua: ela fica onde a câmera a vê. */
+  readonly camera: CameraState;
+  /** O instante e a contagem de pulsos, no relógio do vídeo. */
+  readonly seconds: number;
+  readonly cycles: number;
+  /** Quanto de "por dentro" já ficou para trás, de 0 a 1: o índigo abre e a rede apaga. */
+  readonly left: number;
+};
+
+/**
+ * "Por dentro" saindo de cima da lagoa: o caminho de `InsideShot` ao
+ * contrário. A cena seguinte o desenha sobre a lagoa dela enquanto a câmera
+ * recua do sino: o índigo abre, a rede apaga e o corpo volta a ser opaco.
+ */
+export const InsideLeaving: React.FC<InsideLeavingProps> = ({
+  camera,
+  seconds,
+  cycles,
+  left,
+}) => {
+  const [x, y] = seenAt(camera, [JELLYFISH_SPOT.x, JELLYFISH_SPOT.y]);
+  return (
+    <InsideView
+      seconds={seconds}
+      cycles={cycles}
+      outline={0}
+      nerves={1 - left}
+      at={{ x, y, width: JELLYFISH_SPOT.width * camera.zoom }}
+      backdrop={1 - left}
+    />
+  );
+};
 
 type InsideShotProps = {
   /** Quadros do plano em que o contorno se desenha e em que a rede de neurônios acende. */
@@ -430,6 +479,7 @@ const InsideShot: React.FC<InsideShotProps> = ({
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const stage = useStage();
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
   const cycles = pulseCycles(clock + frame, fps, steady(PULSES_AWAKE));
@@ -471,6 +521,8 @@ const InsideShot: React.FC<InsideShotProps> = ({
         colors={blend(jellyfish.day, jellyfish.night, indigo)}
         at={{ x, y, width: JELLYFISH_SPOT.width * camera.zoom }}
         backdrop={indigo}
+        // O contorno é o que está solto neste plano: encolhe no ponto dele logo antes de a cena seguinte recuar daqui.
+        outlineGone={stage.leave(OUTLINE_LEAVES)}
       />
       <Grain />
     </AbsoluteFill>

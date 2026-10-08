@@ -1,10 +1,28 @@
+import { interpolateColors } from "remotion";
 import { useCarriedNumber } from "../../../components/Camera";
-import { Antelope } from "../../../art/Antelope";
+import { Antelope, type AntelopeColors } from "../../../art/Antelope";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { antelope, antelopeNight, ink } from "../palette";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "./savanna/RichTheme";
+
+/**
+ * A pintura do antílope na luz do cenário: a da noite em 0, a do dia do
+ * entardecer (0,5) em diante, e as duas misturadas no caminho. É o que deixa a
+ * luz mudar no lugar, com ele em cena, sem o pelo trocar de cor num quadro.
+ */
+export const antelopeLit = (daylight: number): AntelopeColors =>
+  Object.fromEntries(
+    Object.entries(antelope).map(([key, day]) => [
+      key,
+      interpolateColors(
+        daylight,
+        [0, 0.5],
+        [antelopeNight[key as keyof AntelopeColors] ?? day, day],
+      ),
+    ]),
+  ) as AntelopeColors;
 
 /** Onde o antílope fica no plano aberto da savana, e o tamanho dele. */
 export const PREY = { x: 1040, y: SAVANNA_GROUND_Y + 40, width: 420 };
@@ -65,7 +83,7 @@ export const Prey: React.FC<PreyProps> = ({
       >
         <Antelope
           width={PREY.width}
-          colors={daylight > 0.5 ? antelope : antelopeNight}
+          colors={antelopeLit(daylight)}
           rest={rest}
           droop={asleep}
           tired={tired}

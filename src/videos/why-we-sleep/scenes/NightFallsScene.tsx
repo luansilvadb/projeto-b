@@ -33,15 +33,9 @@ import {
 } from "../../../components/timing";
 import { typography } from "../../../design/tokens";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { Shot, useShotLength, wipeClip, type Wipe } from "../../../video/Shot";
-import {
-  antelope,
-  antelopeNight,
-  daylightTones,
-  ink,
-  savanna,
-  sound,
-} from "../palette";
+import { Shot, useShotLength } from "../../../video/Shot";
+import { daylightTones, ink, savanna, sound } from "../palette";
+import { antelopeLit } from "../parts/Prey";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "../parts/savanna/RichTheme";
 import { RichSavannaBackdrop } from "../parts/savanna/RichSavannaReference";
 
@@ -87,8 +81,10 @@ const NIGHT_ORB = 0.311;
 export const LATE_ORB = NIGHT_ORB + 0.005;
 // O sol do entardecer desce devagar, à esquerda, do começo ao fim do plano aberto.
 const DUSK_ORB = { from: 0.3, to: 0.296 };
-// A noite desce do alto do quadro sobre o entardecer, em 0,25 s.
-const NIGHTFALL: Wipe = { frames: 8, from: "top" };
+// A noite cai no lugar, com o cenário no palco: em quanto tempo a luz vai do
+// entardecer à noite, em segundos. Começa com a câmera e acaba pouco depois de
+// ela chegar, antes de ele fechar os olhos.
+const NIGHTFALL_SECONDS = 0.9;
 
 type SavannaShotProps = {
   readonly camera: CameraState;
@@ -152,39 +148,8 @@ export const SavannaShot: React.FC<SavannaShotProps> = ({
   );
 };
 
-type SweepProps = {
-  readonly wipe: Wipe;
-  /** O último quadro do plano anterior, redesenhado: fica por baixo até a borda passar. */
-  readonly under: React.ReactNode;
-  readonly children: React.ReactNode;
-};
-
-/**
- * A varredura entre duas pinturas do mesmo lugar (o entardecer e a noite, a
- * noite e o dia): a pintura nova entra por uma borda que cruza o quadro, sobre
- * a anterior, e as duas dividem a mesma câmera. É feita dentro do plano novo,
- * e não com `wipe` do `Shot`, porque a câmera continua se movendo durante a
- * varredura: as duas pinturas precisam do mesmo enquadramento, quadro a quadro.
- */
-export const Sweep: React.FC<SweepProps> = ({ wipe, under, children }) => {
-  const frame = useCurrentFrame();
-
-  return (
-    <>
-      {frame < wipe.frames ? under : null}
-      <AbsoluteFill
-        style={{
-          clipPath: frame < wipe.frames ? wipeClip(frame, wipe) : undefined,
-        }}
-      >
-        {children}
-      </AbsoluteFill>
-    </>
-  );
-};
-
 type CritterProps = {
-  /** 1 é dia, 0 é noite: escolhe a pintura do bicho e a da sombra. */
+  /** A luz do cenário (0 é noite, 0,5 o entardecer): a pintura do bicho e a da sombra a acompanham, de forma contínua. */
   readonly daylight: number;
   /** Deitado, de 0 a 1. */
   readonly rest?: number;
@@ -310,7 +275,7 @@ export const Critter: React.FC<CritterProps> = ({
       >
         <Antelope
           width={DEN.width}
-          colors={daylight > 0.25 ? antelope : antelopeNight}
+          colors={antelopeLit(daylight)}
           rest={Math.max(rest, NOD.buckle * nod)}
           droop={Math.max(asleep, nod)}
           tired={tired}
@@ -705,7 +670,7 @@ type LyingShotProps = ShotClock & {
   readonly closeAt: number;
 };
 
-/** A noite desce sobre a savana enquanto a câmera chega ao bicho; ele se enrosca sob a árvore e fecha os olhos. */
+/** A noite cai sobre a savana, no lugar, enquanto a câmera chega ao bicho; ele se enrosca sob a árvore e fecha os olhos. */
 const LyingShot: React.FC<LyingShotProps> = ({ lieAt, closeAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -723,34 +688,29 @@ const LyingShot: React.FC<LyingShotProps> = ({ lieAt, closeAt, clock }) => {
   const sigh = (frame - closeAt - 0.3 * fps) / (0.7 * fps);
   const sighing = sigh <= 0 || sigh >= 1 ? 0 : Math.sin(Math.PI * sigh) ** 2;
 
+  // A luz parte do entardecer em que o plano aberto terminou e escurece no
+  // lugar: o céu, o chão, o capim e o bicho leem o mesmo valor, e o sol dá
+  // lugar à lua por opacidade, no cenário.
+  const night = ramp(frame, 0, NIGHTFALL_SECONDS * fps);
+  const daylight = mix(0.5, 0, night);
+
   return (
-    <Sweep
-      wipe={NIGHTFALL}
-      under={
-        // O entardecer do plano anterior, no último quadro dele, visto pela câmera deste.
-        <SavannaShot
-          camera={camera}
-          daylight={0.5}
-          orb={DUSK_ORB.to}
-          clock={clock}
-        >
-          <Thicket daylight={0.5} seconds={seconds} wind={wind} />
-          <Critter daylight={0.5} seconds={seconds} />
-        </SavannaShot>
-      }
+    <SavannaShot
+      camera={camera}
+      daylight={daylight}
+      orb={mix(DUSK_ORB.to, NIGHT_ORB, night)}
+      clock={clock}
     >
-      <SavannaShot camera={camera} daylight={0} orb={NIGHT_ORB} clock={clock}>
-        <Thicket daylight={0} seconds={seconds} wind={wind} />
-        <Critter
-          daylight={0}
-          rest={ramp(frame, lieAt, 0.6 * fps)}
-          asleep={ramp(frame, closeAt, 0.3 * fps)}
-          squash={1 + 0.05 * sighing}
-          ear={0.25 * sighing}
-          seconds={seconds}
-        />
-      </SavannaShot>
-    </Sweep>
+      <Thicket daylight={daylight} seconds={seconds} wind={wind} />
+      <Critter
+        daylight={daylight}
+        rest={ramp(frame, lieAt, 0.6 * fps)}
+        asleep={ramp(frame, closeAt, 0.3 * fps)}
+        squash={1 + 0.05 * sighing}
+        ear={0.25 * sighing}
+        seconds={seconds}
+      />
+    </SavannaShot>
   );
 };
 

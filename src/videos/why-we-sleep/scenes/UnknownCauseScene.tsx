@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   AbsoluteFill,
   Easing,
@@ -6,16 +7,24 @@ import {
   useVideoConfig,
 } from "remotion";
 import { Person } from "../../../art/Person";
-import { useBuild } from "../../../components/Camera";
-import { Stay, useStage } from "../../../components/Cast";
+import { Build, Camera, Layer, useBuild } from "../../../components/Camera";
+import { StageContext, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { Pop, POP_SECONDS, popOpacity } from "../../../components/Pop";
+import { grown, Pop, POP_SECONDS, popOpacity } from "../../../components/Pop";
 import { SlowPush } from "../../../components/SlowPush";
-import { cue, drop, linear, mix, ramp, clamp } from "../../../components/timing";
+import {
+  cue,
+  drop,
+  linear,
+  mix,
+  ramp,
+  clamp,
+} from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
+import { enterProgress } from "../../../video/stage";
 import { chalkboard, ink, daylightTones, sleepResearcher } from "../palette";
 import { BALANCE, Balance, ExamSheet, panSpot } from "../parts/ExamSheet";
 import { BENCH_Y, LabWall } from "../parts/Laboratory";
@@ -25,7 +34,6 @@ import { DISC_LEAD, DiscPrelude } from "./AwakeRecordScene";
 import { AlarmClock } from "./ForcedAwakeScene";
 import { NEVER, Preluded } from "./MaybeBrainScene";
 import { Grow } from "./SleepDebtScene";
-
 
 // A prancheta do exame é o assunto: grande, à direita; Rechtschaffen, da cintura para cima, à esquerda.
 // Ela termina acima do selo da fonte, que ocupa o canto de baixo à direita.
@@ -43,6 +51,9 @@ const BLANK = { grow: 0.05, frames: 10, gap: 13 };
 // A bancada dos ratos sai por baixo no fim do plano anterior; ele e a prancheta entram logo no primeiro
 // quadro, cada um na sua vez, para a parede não ficar sozinha: o quadro em que começam e quanto levam.
 const ENTER = { him: 0, sheet: 3, frames: 11 };
+// Ele e a prancheta saem estes quadros depois da marcação do palco: a balança só cresce quando o plano dela
+// chega, e a parede, que fica, passaria esse tempo sozinha.
+const LEAVE_LATE = 5;
 /** Quantos quadros antes da cena ele começa a entrar, desenhado pelo último plano de `rats-result`. */
 export const EXAM_LEAD = 8;
 // Ele reage à interrogação um instante depois de ela entrar, e leva estes quadros para levar a mão à cabeça.
@@ -70,6 +81,14 @@ const ExamShot: React.FC<ExamShotProps> = ({
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const stage = useStage();
+  const late = useMemo(
+    () => ({
+      ...stage,
+      leave: (delay = 0) => stage.leave(delay + LEAVE_LATE),
+    }),
+    [stage],
+  );
   const seconds = frame / fps;
   const frames = POP_SECONDS * fps;
   // A entrada começou antes da cena; no prelúdio o plano está parado no quadro 0, e quem anda é `until`.
@@ -102,55 +121,70 @@ const ExamShot: React.FC<ExamShotProps> = ({
   );
 
   return (
-    <SlowPush focus={[1160, 600]} by={0.05} backdrop={<LabWall />}>
-      {/* O mesmo pesquisador de `Researcher`, com a mão na cabeça: a pose que a peça não tem.
+    <AbsoluteFill>
+      {/* A parede é o cenário que este plano divide com o da balança (`sets`): fica no palco na troca, parada,
+          e a câmera de lá parte daqui. Só o que está na frente dela se aproxima. */}
+      <Camera>
+        <Layer depth={1}>
+          <LabWall />
+        </Layer>
+      </Camera>
+      <StageContext.Provider value={late}>
+        <SlowPush focus={[1160, 600]} by={0.05}>
+          {/* O mesmo pesquisador de `Researcher`, com a mão na cabeça: a pose que a peça não tem.
           Ele e a prancheta entram por conta própria, antes da marcação do palco, e saem com ela. */}
-      <Stay only="entering">
-        <Place
-          x={RECHTSCHAFFEN.x}
-          y={RECHTSCHAFFEN.y}
-          anchor="bottom"
-          style={{ scale: `1 ${breath(seconds, "rechtschaffen")}` }}
-        >
-          <Grow at={ENTER.him + early} frames={ENTER.frames} origin="bottom">
-            <Person
-              height={RECHTSCHAFFEN.height}
-              colors={sleepResearcher}
-              glasses={ink.dark}
-              // Enquanto os vistos entram, ele acompanha a prancheta com os olhos.
-              expression={frame >= swapAt ? "puzzled" : "curious"}
-              blink={Math.max(lid, blink(seconds, "rechtschaffen"))}
-              frontArm={{
-                hand: [
-                  mix(ARM.loose.hand[0], ARM.scratching.hand[0], raised) +
-                    8 * raised * wave(seconds, 0.5),
-                  mix(ARM.loose.hand[1], ARM.scratching.hand[1], raised),
-                ],
-                bend: mix(ARM.loose.bend, ARM.scratching.bend, raised),
-              }}
-            />
-          </Grow>
-        </Place>
-        <Place
-          x={SHEET.x}
-          y={SHEET.y}
-          // O papel balança um nada na mão de quem o segura fora do quadro.
-          style={{ rotate: `${3 + 0.5 * wave(seconds, 4.2, 0.4)}deg` }}
-        >
-          <Grow at={ENTER.sheet + early} frames={ENTER.frames}>
-            <ExamSheet
-              scale={SHEET.scale}
-              question={question}
-              checked={checked}
-              blank={blank}
-              // O tracejado da resposta em branco corre devagar: a pergunta continua aberta.
-              dash={frame * 0.5}
-            />
-          </Grow>
-        </Place>
-      </Stay>
-      <Grain />
-    </SlowPush>
+          <Stay only="entering">
+            <Place
+              x={RECHTSCHAFFEN.x}
+              y={RECHTSCHAFFEN.y}
+              anchor="bottom"
+              style={{ scale: `1 ${breath(seconds, "rechtschaffen")}` }}
+            >
+              <Grow
+                at={ENTER.him + early}
+                frames={ENTER.frames}
+                origin="bottom"
+              >
+                <Person
+                  height={RECHTSCHAFFEN.height}
+                  colors={sleepResearcher}
+                  glasses={ink.dark}
+                  // Enquanto os vistos entram, ele acompanha a prancheta com os olhos.
+                  expression={frame >= swapAt ? "puzzled" : "curious"}
+                  blink={Math.max(lid, blink(seconds, "rechtschaffen"))}
+                  frontArm={{
+                    hand: [
+                      mix(ARM.loose.hand[0], ARM.scratching.hand[0], raised) +
+                        8 * raised * wave(seconds, 0.5),
+                      mix(ARM.loose.hand[1], ARM.scratching.hand[1], raised),
+                    ],
+                    bend: mix(ARM.loose.bend, ARM.scratching.bend, raised),
+                  }}
+                />
+              </Grow>
+            </Place>
+            <Place
+              x={SHEET.x}
+              y={SHEET.y}
+              // O papel balança um nada na mão de quem o segura fora do quadro.
+              style={{ rotate: `${3 + 0.5 * wave(seconds, 4.2, 0.4)}deg` }}
+            >
+              <Grow at={ENTER.sheet + early} frames={ENTER.frames}>
+                <ExamSheet
+                  scale={SHEET.scale}
+                  question={question}
+                  checked={checked}
+                  blank={blank}
+                  // O tracejado da resposta em branco corre devagar: a pergunta continua aberta.
+                  dash={frame * 0.5}
+                />
+              </Grow>
+            </Place>
+          </Stay>
+          <Grain />
+        </SlowPush>
+      </StageContext.Provider>
+    </AbsoluteFill>
   );
 };
 
@@ -198,6 +232,9 @@ const WEIGH = { from: 1.025, to: 1.06, slide: 1.8 };
 // e quanto leva. `sink` é quanto a camada do assunto desce ao sair (o `SINK` de `components/Camera.tsx`,
 // para a profundidade 1): é o que a balança sobe de volta.
 const LEAVE = { before: 16, frames: 11, sink: 1300 };
+// A entrada: a parede já está no palco, do plano da prancheta. A bancada sobe por baixo, e a balança cresce
+// no próprio ponto, em volta do eixo: em quantos quadros.
+const ARRIVE = { bench: 12, balanceAt: 0, balance: 13 };
 
 /** A inclinação da balança num quadro do plano: vazia, treme; com o rato, pende para ele; com os dois, vai e volta sem assentar. */
 const balanceTilt = (
@@ -277,7 +314,9 @@ const DebateShot: React.FC<DebateShotProps> = ({
   const { fps } = useVideoConfig();
   const length = useShotLength();
   const stage = useStage();
-  const { risen } = useBuild();
+  const build = useBuild();
+  // A bancada deste plano não estava no da prancheta: sobe ao chegar, e desce com o palco ao sair.
+  const risen = Math.min(build.risen, enterProgress(frame, 0, ARRIVE.bench));
   const seconds = frame / fps;
   const tilt = balanceTilt(frame, fps, sleepAt, stressAt);
   // Ela encolhe acelerando, como todo elenco que sai.
@@ -293,7 +332,7 @@ const DebateShot: React.FC<DebateShotProps> = ({
   const slide = Math.max(-room, Math.min(room, WEIGH.slide * tilt));
 
   return (
-    <>
+    <Build {...build} risen={risen}>
       <RatLab
         // A câmera se aproxima devagar do eixo da balança e pende um nada para o prato que pesa.
         camera={{
@@ -307,7 +346,7 @@ const DebateShot: React.FC<DebateShotProps> = ({
           style={{
             transformOrigin: `${SCALE.x}px ${SCALE.y - BALANCE.height / 2}px`,
             translate: `0 ${-LEAVE.sink * (1 - risen)}px`,
-            scale: `${1 - left}`,
+            scale: `${grown(frame, ARRIVE.balanceAt, ARRIVE.balance) * (1 - left)}`,
           }}
         >
           <Balance
@@ -377,7 +416,7 @@ const DebateShot: React.FC<DebateShotProps> = ({
       {frame >= length - DISC_LEAD && !stage.handedOver ? (
         <DiscPrelude until={length - frame} clock={clock + length} />
       ) : null}
-    </>
+    </Build>
   );
 };
 

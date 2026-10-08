@@ -11,9 +11,11 @@ import { Grain } from "../../../components/Grain";
 import { wave } from "../../../components/Idle";
 import { Onomatopoeia } from "../../../components/Onomatopoeia";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, mix, ramp, settle } from "../../../components/timing";
+import { grown } from "../../../components/Pop";
+import { cue, linear, mix, ramp, settle } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { Shot, type Wipe, useShotLength } from "../../../video/Shot";
+import { Shot, useShotLength } from "../../../video/Shot";
+import { JOIN_FRAMES } from "../../../video/stage";
 import { ink, sound } from "../palette";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import { BENCH_Y, LAB, TANK_CENTER, Tank } from "../parts/Laboratory";
@@ -33,13 +35,14 @@ import {
 } from "../parts/SleepBill";
 import { Jets, RESTING_Y, TankJellyfish, TankShot } from "../parts/TankShot";
 import { NEVER, Preluded, Sooner, flash } from "./MaybeBrainScene";
-import { Sweep } from "./NightFallsScene";
 import { billSway } from "./SkipANightScene";
 import { Drift } from "./SleepDebtScene";
 
 // A conta se abre à esquerda; o tanque fica à direita dela, menor que no laboratório, sob o bolso do canto.
 const BILL = { x: 440, y: 200, scale: 1.36 };
 const SMALL_TANK = { scale: 0.86, x: 60, y: 96 };
+// O tanque fica na tela quando o laboratório chega: vai dali até o lugar dele na bancada nestes quadros.
+const TANK_SETTLES = 20;
 const OUT_SECONDS = 0.9;
 // Onde o quadro se divide entre a conta e o bolso, para cada um sair de cena em volta do próprio ponto.
 const SPLIT_X = 1500;
@@ -63,6 +66,12 @@ type BillShotProps = {
   readonly stampAt: number;
   /** O quadro do vídeo em que o plano começa. */
   readonly clock: number;
+  /**
+   * Pulsos a somar à contagem dela até o fim do plano, aos poucos: é o que
+   * falta para o sino chegar ao plano dos jatos no ponto do pulso em que ele
+   * a recebe. Antes da cena, no prelúdio, nenhum.
+   */
+  readonly phase?: number;
 };
 
 /** A conta carimbada sai do bolso marcado no canto e se abre ao lado do tanque. */
@@ -71,9 +80,12 @@ const BillShot: React.FC<BillShotProps> = ({
   linesAt,
   stampAt,
   clock,
+  phase = 0,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const stage = useStage();
+  const length = useShotLength();
   const seconds = (clock + frame) / fps;
   const outFrames = OUT_SECONDS * fps;
   const out = ramp(frame, outAt, outFrames);
@@ -105,25 +117,34 @@ const BillShot: React.FC<BillShotProps> = ({
               <SvgLayer>
                 <IdeaShadow hue="peach" x={tank[0]} y={floor + 8} width={860} />
               </SvgLayer>
-              <AbsoluteFill
-                style={{
-                  transformOrigin: `${TANK_CENTER}px ${BENCH_Y}px`,
-                  translate: `${SMALL_TANK.x}px ${SMALL_TANK.y}px`,
-                  scale: `${SMALL_TANK.scale}`,
-                }}
-              >
-                <Tank platform={TANK_CENTER} clock={clock}>
-                  {/* Ela entra e sai com o tanque, e não por conta própria. */}
-                  <Troupe cast={false}>
-                    <TankJellyfish
-                      droop={0.15}
-                      rhythm={steady(PULSES_AWAKE)}
-                      clock={clock}
-                    />
-                  </Troupe>
-                </Tank>
-              </AbsoluteFill>
             </Cast>
+            {/* O tanque continua no plano seguinte, que passa a desenhá-lo e põe o laboratório em volta: aqui ele
+                entra, mas não sai. */}
+            {stage.handedOver ? null : (
+              <Stay only="leaving">
+                <Cast origin={tank}>
+                  <AbsoluteFill
+                    style={{
+                      transformOrigin: `${TANK_CENTER}px ${BENCH_Y}px`,
+                      translate: `${SMALL_TANK.x}px ${SMALL_TANK.y}px`,
+                      scale: `${SMALL_TANK.scale}`,
+                    }}
+                  >
+                    <Tank platform={TANK_CENTER} clock={clock}>
+                      {/* Ela entra com o tanque, e não por conta própria. */}
+                      <Troupe cast={false}>
+                        <TankJellyfish
+                          droop={DROOP.awake}
+                          rhythm={steady(PULSES_AWAKE)}
+                          phase={phase * linear(frame, 0, length)}
+                          clock={clock}
+                        />
+                      </Troupe>
+                    </Tank>
+                  </AbsoluteFill>
+                </Cast>
+              </Stay>
+            )}
           </Drift>
         </Sooner>
         {/* A conta e o bolso são um desenho só, para o papel passar por trás da frente do bolso. O bolso já estava no
@@ -186,6 +207,8 @@ const SHAKE = { degrees: 2.4, seconds: 0.18 };
 const HISS = { x: 420, y: 330, frames: 15 };
 // A aproximação lenta dos dois planos do laboratório, um depois do outro.
 const LAB_LATER = framing([TANK_CENTER, 600], 1.05, [TANK_CENTER, 600]);
+// O ponto do quadro em que o tanque aceso fica quando a luz do laboratório apaga.
+const LIGHTS_OFF = [TANK_CENTER / 1920, 0.5] as const;
 
 /** O ritmo do pulso nos dois planos do laboratório, em quadros do vídeo: cai com os braços, sobe a cada jato, e de dia cai de vez. */
 const kept = (
@@ -216,101 +239,84 @@ type Kept = {
   readonly phase: number;
 };
 
-type NightTankProps = Kept & {
-  /** O quadro do plano dos jatos que é desenhado: o plano seguinte o redesenha depois do fim, por baixo da varredura. */
-  readonly at: number;
-  /** A duração do plano dos jatos, e o quadro do vídeo em que começa o plano que o desenha. */
-  readonly length: number;
-  readonly clock: number;
-  /** Quanto a luz já apagou, de 0 a 1. */
-  readonly dark?: number;
-};
+type JetsShotProps = Kept & { readonly clock: number };
 
-/** O laboratório de noite, em índigo, e o tanque aceso: os jatos de água a cutucam cada vez que os braços caem. */
-const NightTank: React.FC<NightTankProps> = ({
-  at,
-  length,
-  clock,
-  jets,
-  rhythm,
-  phase,
-  dark = 1,
-}) => {
+/**
+ * De noite, o laboratório em índigo e o tanque aceso: os três jatos de água a
+ * cutucam cada vez que os braços caem, cada um com o seu "PSSST", que estoura
+ * e sai em meio segundo. O tanque já estava na tela, ao lado da conta: a
+ * bancada, a janela e o escuro chegam em volta dele.
+ */
+const JetsShot: React.FC<JetsShotProps> = ({ clock, jets, rhythm, phase }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const stage = useStage();
+  const length = useShotLength();
   const seconds = (clock + frame) / fps;
+  // O tanque vai do tamanho e do lugar que tinha ao lado da conta até o lugar dele na bancada, com peso.
+  const settling = 1 - ramp(frame, 0, TANK_SETTLES);
+  const hiss = jets.find((jet) => frame >= jet && frame < jet + HISS.frames);
   // Cada jato chega depressa, fica e recolhe.
   const reach = Math.max(
     ...jets.map(
-      (jet) => settle(at, jet, JET.reach) - ramp(at, jet + JET.lasts, JET.back),
+      (jet) =>
+        settle(frame, jet, JET.reach) - ramp(frame, jet + JET.lasts, JET.back),
     ),
   );
   // Os braços caem devagar até o jato seguinte; quando a água bate, sobem de uma vez.
   const droop = jets.reduce(
     (fallen, jet, index) => {
       const next = jets[index + 1] ?? Infinity;
-      const up = ramp(at, jet + ROUSED.after, 10);
+      const up = ramp(frame, jet + ROUSED.after, 10);
       const down =
         next === Infinity
           ? 0
           : ramp(
-              at,
+              frame,
               jet + ROUSED.after + ROUSED.lasts,
               next - jet - ROUSED.after - ROUSED.lasts,
             );
       return mix(mix(fallen, DROOP.awake, up), DROOP.falling, down);
     },
-    mix(DROOP.awake, DROOP.falling, ramp(at, 10, jets[0] - 14)),
+    mix(DROOP.awake, DROOP.falling, ramp(frame, 10, jets[0] - 14)),
   );
   const hit = Math.max(0, reach - 0.6) / 0.4;
 
   return (
-    <TankShot
-      camera={cameraBetween(
-        LAB.medium,
-        LAB.mediumEnd,
-        Math.min(1, at / length),
-      )}
-      hour="night"
-      lightsOff={[TANK_CENTER / 1920, 0.5]}
-      dark={dark}
-      platform={TANK_CENTER}
-      clock={clock}
-    >
-      <TankJellyfish
-        x={TANK_CENTER + 5 * hit * wave(seconds, SHAKE.seconds)}
-        tilt={SHAKE.degrees * hit * wave(seconds, SHAKE.seconds)}
-        droop={droop}
-        rhythm={rhythm}
-        phase={phase}
-        clock={clock}
-      />
-      <Jets reach={reach} />
-    </TankShot>
-  );
-};
-
-type JetsShotProps = Kept & { readonly clock: number };
-
-/** De noite, os três jatos: cada um com o seu "PSSST", que estoura e sai em meio segundo. */
-const JetsShot: React.FC<JetsShotProps> = ({ clock, ...keptAwake }) => {
-  const frame = useCurrentFrame();
-  const stage = useStage();
-  const length = useShotLength();
-  const hiss = keptAwake.jets.find(
-    (jet) => frame >= jet && frame < jet + HISS.frames,
-  );
-
-  return (
     <AbsoluteFill>
-      <NightTank
-        {...keptAwake}
-        at={frame}
-        length={length}
-        clock={clock}
+      <TankShot
+        camera={cameraBetween(
+          LAB.medium,
+          LAB.mediumEnd,
+          Math.min(1, frame / length),
+        )}
+        hour="night"
+        lightsOff={LIGHTS_OFF}
         // A luz apaga junto com a chegada do laboratório, e não antes dele.
         dark={stage.enter()}
-      />
+        // Enquanto o laboratório sobe, o tanque não sobe com ele: já estava aqui.
+        tankAt={
+          frame < JOIN_FRAMES
+            ? {
+                x: SMALL_TANK.x * settling,
+                y: SMALL_TANK.y * settling,
+                scale: mix(1, SMALL_TANK.scale, settling),
+              }
+            : undefined
+        }
+        platform={TANK_CENTER}
+        clock={clock}
+      >
+        <TankJellyfish
+          x={TANK_CENTER + 5 * hit * wave(seconds, SHAKE.seconds)}
+          tilt={SHAKE.degrees * hit * wave(seconds, SHAKE.seconds)}
+          droop={droop}
+          rhythm={rhythm}
+          phase={phase}
+          clock={clock}
+        />
+        <Jets reach={reach} />
+      </TankShot>
       {hiss === undefined ? null : (
         <div
           style={{
@@ -337,16 +343,16 @@ const JetsShot: React.FC<JetsShotProps> = ({ clock, ...keptAwake }) => {
   );
 };
 
-// O dia varre a noite do laboratório, do lado da janela.
-const DAYBREAK: Wipe = { frames: 8, from: "right" };
+// O dia nasce no lugar: o escuro abre, a lua desce e o sol sobe na janela, nestes quadros.
+const DAWN_FRAMES = 26;
+// A pesquisadora entra depois de a luz começar a mudar, crescendo no ponto dela.
+const RESEARCHER_AT = 10;
 
 type NapShotProps = Kept & {
   /** Quadros do plano em que o ritmo cai, em que os braços caem e em que "cobra depois" ganha o visto. */
   readonly slowAt: number;
   readonly fallAt: number;
   readonly checkAt: number;
-  /** A duração do plano dos jatos, que este redesenha por baixo da varredura. */
-  readonly before: number;
   readonly clock: number;
 };
 
@@ -355,49 +361,38 @@ const NapShot: React.FC<NapShotProps> = ({
   slowAt,
   fallAt,
   checkAt,
-  before,
   clock,
   ...keptAwake
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
+  // A mesma geometria, e só a luz muda: com peso, como a câmera.
+  const dawn = ramp(frame, 0, DAWN_FRAMES);
 
   return (
-    <Sweep
-      wipe={DAYBREAK}
-      under={
-        // A noite do plano anterior, depois do último quadro dele.
-        <Stay>
-          <NightTank
-            {...keptAwake}
-            at={before + frame}
-            length={before}
-            clock={clock}
-          />
-        </Stay>
-      }
+    <TankShot
+      camera={cameraBetween(LAB.mediumEnd, LAB_LATER, frame / length)}
+      daylight={dawn}
+      lightsOff={dawn < 1 ? LIGHTS_OFF : undefined}
+      dark={1 - dawn}
+      researcher={[1, ramp(frame, checkAt, 0.3 * fps)]}
+      board={{ arrived: grown(frame, RESEARCHER_AT) }}
+      platform={TANK_CENTER}
+      clock={clock}
     >
-      <TankShot
-        camera={cameraBetween(LAB.mediumEnd, LAB_LATER, frame / length)}
-        hour="day"
-        researcher={[1, ramp(frame, checkAt, 0.3 * fps)]}
-        platform={TANK_CENTER}
+      <TankJellyfish
+        y={RESTING_Y}
+        droop={mix(
+          mix(DROOP.awake, 0.45, ramp(frame, slowAt, 0.6 * fps)),
+          1,
+          ramp(frame, fallAt, 0.8 * fps),
+        )}
+        rhythm={keptAwake.rhythm}
+        phase={keptAwake.phase}
         clock={clock}
-      >
-        <TankJellyfish
-          y={RESTING_Y}
-          droop={mix(
-            mix(DROOP.awake, 0.45, ramp(frame, slowAt, 0.6 * fps)),
-            1,
-            ramp(frame, fallAt, 0.8 * fps),
-          )}
-          rhythm={keptAwake.rhythm}
-          phase={keptAwake.phase}
-          clock={clock}
-        />
-      </TankShot>
-    </Sweep>
+      />
+    </TankShot>
   );
 };
 
@@ -434,7 +429,8 @@ export const JellyfishDebtScene: React.FC<SceneProps> = ({ scene, shots }) => {
     jets,
     scene.from + shots[2].from + slowAt,
   );
-  const keptAwake = { jets, rhythm, phase: settledPhase(fps, rhythm) };
+  const phase = settledPhase(fps, rhythm);
+  const keptAwake = { jets, rhythm, phase };
   const fallAt = cue(scene, "ela") - shots[2].from;
   return (
     <>
@@ -445,6 +441,8 @@ export const JellyfishDebtScene: React.FC<SceneProps> = ({ scene, shots }) => {
             linesAt={cue(scene, "regra")}
             stampAt={cue(scene, "compensa")}
             clock={scene.from}
+            // Menos de meio pulso, para um lado ou para o outro.
+            phase={phase - Math.round(phase)}
           />
         </Preluded>
       </Shot>
@@ -457,7 +455,6 @@ export const JellyfishDebtScene: React.FC<SceneProps> = ({ scene, shots }) => {
           slowAt={slowAt}
           fallAt={fallAt}
           checkAt={fallAt + 0.3 * fps}
-          before={shots[2].from - jetsFrom}
           clock={scene.from + shots[2].from}
         />
       </Shot>

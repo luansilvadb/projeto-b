@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   AbsoluteFill,
   Easing,
@@ -10,7 +11,13 @@ import { Cassiopea } from "../../../art/Cassiopea";
 import { Elephant, STRIDE_LENGTH } from "../../../art/Elephant";
 import { Person, type PersonColors } from "../../../art/Person";
 import { taperPath } from "../../../art/shapes";
-import { castScale, FlatStage, Stay, useStage } from "../../../components/Cast";
+import {
+  castScale,
+  FlatStage,
+  StageContext,
+  Stay,
+  useStage,
+} from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, breath, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
@@ -262,6 +269,25 @@ const Leaving: React.FC<LeavingProps> = ({ origin, children }) => {
     >
       {children}
     </AbsoluteFill>
+  );
+};
+
+// Os três saem estes quadros antes da marcação do palco: a rua da loja sobe em seguida, e eles ainda
+// encolhiam em cima do toldo e dos prédios dela.
+const TRIO_OUT_SOONER = 6;
+
+/** O elenco que está aqui sai `by` quadros antes da marcação do palco. */
+const LeavingSooner: React.FC<{ by: number; children: React.ReactNode }> = ({
+  by,
+  children,
+}) => {
+  const stage = useStage();
+  const sooner = useMemo(
+    () => ({ ...stage, leave: (delay = 0) => stage.leave(delay - by) }),
+    [stage, by],
+  );
+  return (
+    <StageContext.Provider value={sooner}>{children}</StageContext.Provider>
   );
 };
 
@@ -656,14 +682,16 @@ const LieDownShot: React.FC<Cues & { readonly clock: number }> = ({
           <ShopPrelude until={length - frame} clock={clock} />
         ) : null}
         {/* Os três já estavam no palco: não entram; saem com o plano, a cama em volta do pé dela. */}
-        <Stay only="entering">
-          <Drift
-            focus={WIDE_PUSH.focus}
-            zoom={1 + (WIDE_PUSH.by * frame) / length}
-          >
-            <Among from={cues.wideAt} {...cues} />
-          </Drift>
-        </Stay>
+        <LeavingSooner by={TRIO_OUT_SOONER}>
+          <Stay only="entering">
+            <Drift
+              focus={WIDE_PUSH.focus}
+              zoom={1 + (WIDE_PUSH.by * frame) / length}
+            >
+              <Among from={cues.wideAt} {...cues} />
+            </Drift>
+          </Stay>
+        </LeavingSooner>
       </FlatStage>
       <Grain />
     </>

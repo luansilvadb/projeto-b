@@ -1,5 +1,6 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { Earth } from "../../../art/Earth";
+import { Build } from "../../../components/Camera";
 import {
   Cast,
   FlatStage,
@@ -20,7 +21,11 @@ import {
 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
-import { markFor } from "../../../video/stage";
+import {
+  leaveProgress,
+  markFor,
+  SCENERY_EXIT_FRAMES,
+} from "../../../video/stage";
 import { ink } from "../palette";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import {
@@ -312,33 +317,46 @@ export const SeaStage: React.FC<SeaStageProps> = ({
   pan,
   zoom = 1,
   children,
-}) => (
-  <FlatStage
-    backdrop={
-      <Troupe cast={false}>
-        <AbsoluteFill
-          style={{
-            transformOrigin: `${END_SIGN.x}px ${END_SIGN.y}px`,
-            translate: `${pan}px 0`,
-            scale: `${FLOOR_OVERSCAN * zoom}`,
-          }}
-        >
-          <SeaFloor shimmer />
-        </AbsoluteFill>
-      </Troupe>
-    }
-  >
-    <AbsoluteFill
-      style={{
-        transformOrigin: `${END_SIGN.x}px ${END_SIGN.y}px`,
-        translate: `${pan}px 0`,
-        scale: `${zoom}`,
-      }}
+}) => {
+  const frame = useCurrentFrame();
+  const length = useShotLength();
+  const stage = useStage();
+  // Na saída o fundo do mar desce em camadas, como a lagoa: desfeito junto com a água, o recife ficava
+  // a meia opacidade sobre o plano seguinte. Na entrada ele continua tomando a cor inteiro, como fundo.
+  const sunk =
+    stage.leave() > 0
+      ? leaveProgress(frame, length, 0, SCENERY_EXIT_FRAMES)
+      : 0;
+  return (
+    <FlatStage
+      backdrop={
+        <Troupe cast={false}>
+          <AbsoluteFill
+            style={{
+              transformOrigin: `${END_SIGN.x}px ${END_SIGN.y}px`,
+              translate: `${pan}px 0`,
+              scale: `${FLOOR_OVERSCAN * zoom}`,
+            }}
+          >
+            <Build lit={1} risen={1 - sunk}>
+              <SeaFloor shimmer layered />
+            </Build>
+          </AbsoluteFill>
+        </Troupe>
+      }
     >
-      {children}
-    </AbsoluteFill>
-  </FlatStage>
-);
+      <AbsoluteFill
+        style={{
+          transformOrigin: `${END_SIGN.x}px ${END_SIGN.y}px`,
+          translate: `${pan}px 0`,
+          scale: `${zoom}`,
+        }}
+      >
+        {children}
+      </AbsoluteFill>
+    </FlatStage>
+  );
+};
 
 type LineGroupProps = {
   /** O começo da linha no quadro, em pixels: o ponto para o qual ela recolhe. */

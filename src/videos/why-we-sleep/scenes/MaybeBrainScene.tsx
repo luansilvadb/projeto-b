@@ -737,6 +737,13 @@ const SuspectsShot: React.FC<SuspectsShotProps> = ({
             </Stay>
           ) : null}
         </Drift>
+        {/* A pesquisadora do plano seguinte já cresce aqui, quando a pessoa acaba de sair: a troca não deixa a
+            tela só com o fundo. Quando ele chega, é ele quem a desenha. */}
+        {length - frame <= RESEARCHER_AHEAD && !stage.handedOver ? (
+          <Ahead until={length - frame} by={RESEARCHER_EARLY}>
+            <NetResearcher seconds={seconds} />
+          </Ahead>
+        ) : null}
         {/* Fora da deriva: o disco parte do quadro exato em que o plano anterior o deixou. */}
         {frame < DISC_LANDS + 3 ? (
           <Stay>
@@ -770,8 +777,10 @@ const CONTOUR_END = framing([CONTOUR.x, CONTOUR.y], 1.03, [
   CONTOUR.x,
   CONTOUR.y,
 ]);
-// Ela abre o plano: sobe com o laboratório, sem esperar a marcação do elenco.
-const RESEARCHER_SOONER = 16;
+// Ela abre o plano, sem esperar a marcação do elenco, e começa a crescer antes de ele chegar, desenhada pelo
+// plano anterior: quantos quadros antes, e quanto a marcação dela se adianta para isso.
+const RESEARCHER_AHEAD = 9;
+const RESEARCHER_EARLY = 24;
 // O braço que aponta: de solto ao lado do corpo até o contorno, nas unidades do desenho da pessoa.
 const POINTING = {
   rest: { hand: [112, -228], bend: 10 },
@@ -810,6 +819,45 @@ const Net: React.FC<NetProps> = ({ lift, turn }) => (
       <ellipse rx={84} ry={22} fill="none" stroke={lab.clip} strokeWidth={14} />
     </g>
   </g>
+);
+
+type NetResearcherProps = {
+  /** O instante, em segundos, no relógio do vídeo. */
+  readonly seconds: number;
+  /** Quanto o braço já aponta o contorno, e quanto ela ajeita a rede, de 0 a 1. Por padrão, parada. */
+  readonly pointing?: number;
+  readonly hitch?: number;
+};
+
+/** A pesquisadora de rede de pesca no ombro, na frente da bancada, grande: é o mesmo desenho no fim do plano anterior, que a mostra entrando, e no dela. */
+const NetResearcher: React.FC<NetResearcherProps> = ({
+  seconds,
+  pointing = 0,
+  hitch = 0,
+}) => (
+  <Place
+    x={RESEARCHER.x + 40}
+    y={1150}
+    anchor="bottom"
+    style={{ scale: `1 ${breath(seconds, "researcher")}` }}
+  >
+    <Person
+      height={900}
+      colors={researcher}
+      bun
+      plainFace
+      blink={blink(seconds, "net-researcher")}
+      frontArm={{ hand: [-100, -236 - 34 * hitch], bend: 30 + 8 * hitch }}
+      backArm={{
+        hand: [
+          mix(POINTING.rest.hand[0], POINTING.out.hand[0], pointing),
+          mix(POINTING.rest.hand[1], POINTING.out.hand[1], pointing),
+        ],
+        bend: mix(POINTING.rest.bend, POINTING.out.bend, pointing),
+      }}
+      held={<Net lift={18 * hitch} turn={-5 * hitch} />}
+    />
+  </Place>
 );
 
 type ResearcherShotProps = {
@@ -851,32 +899,10 @@ const ResearcherShot: React.FC<ResearcherShotProps> = ({
           <Brain width={CONTOUR.width} color={ink.ring} dashed folds />
         </Place>
       </TankShot>
-      {/* Ela fica na frente da bancada, grande: é quem age neste plano. */}
-      <Sooner by={RESEARCHER_SOONER}>
-        <Place
-          x={RESEARCHER.x + 40}
-          y={1150}
-          anchor="bottom"
-          style={{ scale: `1 ${breath(seconds, "researcher")}` }}
-        >
-          <Person
-            height={900}
-            colors={researcher}
-            bun
-            plainFace
-            blink={blink(seconds, "net-researcher")}
-            frontArm={{ hand: [-100, -236 - 34 * hitch], bend: 30 + 8 * hitch }}
-            backArm={{
-              hand: [
-                mix(POINTING.rest.hand[0], POINTING.out.hand[0], pointing),
-                mix(POINTING.rest.hand[1], POINTING.out.hand[1], pointing),
-              ],
-              bend: mix(POINTING.rest.bend, POINTING.out.bend, pointing),
-            }}
-            held={<Net lift={18 * hitch} turn={-5 * hitch} />}
-          />
-        </Place>
-      </Sooner>
+      {/* Ela fica na frente da bancada, grande: é quem age neste plano. Já vinha crescendo no fim do anterior. */}
+      <Early by={RESEARCHER_EARLY}>
+        <NetResearcher seconds={seconds} pointing={pointing} hitch={hitch} />
+      </Early>
     </AbsoluteFill>
   );
 };

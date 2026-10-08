@@ -24,20 +24,20 @@ import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { cue, linear, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
-import { Shot, useShotLength, type Wipe } from "../../../video/Shot";
+import { Shot, useShotLength } from "../../../video/Shot";
 import { ink, stopwatch } from "../palette";
 import { Calendar } from "../parts/Calendar";
 import {
   braked,
   daylightAt,
   Herd,
+  herdPhase,
   orbAt,
   type HerdMember,
   type HerdStride,
 } from "../parts/Herd";
 import { RichSavannaBackdrop } from "../parts/savanna/RichSavannaReference";
 import { SAVANNA_GROUND_Y } from "../parts/savanna/RichTheme";
-import { Sweep } from "./NightFallsScene";
 import { Grow } from "./SleepDebtScene";
 
 type SavannaStageProps = {
@@ -97,7 +97,7 @@ export const SavannaStage: React.FC<SavannaStageProps> = ({
 };
 
 /** Onde um ponto do chão da savana aparece no quadro, visto por uma câmera. */
-const onScreen = (
+export const onScreen = (
   camera: CameraState,
   [x, y]: readonly [number, number],
 ): readonly [number, number] => [
@@ -390,9 +390,19 @@ const MatriarchsShot: React.FC<MatriarchsShotProps> = ({
 
 // O calendário no canto de cima, à direita; o selo da fonte fica no de baixo.
 const CALENDAR = { x: 1560, y: 310, scale: 1.4, days: 35 };
+// A lua do plano da tromba, que vem a seguir.
+const TRUNK_ORB = 0.57;
 // Os dias e as noites que passam enquanto o plano dura. Começa na hora do sol
-// dos planos anteriores e termina de dia, para a noite do plano seguinte ter o que varrer.
-const SPAN = { from: DAY_ORB / 2, cycles: 2.015 };
+// dos planos anteriores e termina na noite do plano seguinte, com a lua já
+// onde ele a tem: a luz não muda na troca (as varreduras saíram, decisão do
+// usuário). Uma volta e meia leva de um a outro: dia, noite, dia, noite. O
+// tempo corre constante e freia nos últimos `settle` quadros, para o astro
+// não parar de uma vez.
+const SPAN = {
+  from: DAY_ORB / 2,
+  cycles: 1.5 + TRUNK_ORB / 2 - DAY_ORB / 2,
+  settle: 24,
+};
 // O registro da tromba: um cartão no canto de cima, à esquerda, onde uma linha
 // vai sendo desenhada conforme a tromba se mexe. A largura é o tempo; a altura, a tromba.
 const RECORD = {
@@ -426,7 +436,11 @@ const CountShot: React.FC<CountShotProps> = ({ calendarAt, daysAt, clock }) => {
   const { fps } = useVideoConfig();
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
-  const cycles = SPAN.from + SPAN.cycles * linear(frame, 0, length);
+  // Quantos quadros de tempo já correram: a freada do fim vale meia freada de caminho.
+  const now = Math.min(frame, length);
+  const braking = Math.max(0, now - (length - SPAN.settle));
+  const run = now - (braking * braking) / (2 * SPAN.settle);
+  const cycles = SPAN.from + (SPAN.cycles * run) / (length - SPAN.settle / 2);
   const camera = cameraBetween(CLOSE, MEDIUM, ramp(frame, 0, 0.6 * fps));
   const trunkAt = (at: number) =>
     mix(
@@ -557,10 +571,6 @@ const CountShot: React.FC<CountShotProps> = ({ calendarAt, daysAt, clock }) => {
   );
 };
 
-/** A noite desce do alto do quadro sobre o dia, em 0,25 s, como em `night-falls`. */
-const NIGHTFALL: Wipe = { frames: 8, from: "top" };
-// A lua do plano da tromba.
-const TRUNK_ORB = 0.57;
 /**
  * De perto, a matriarca da esquerda: a cabeça à esquerda, a tromba no meio, o
  * cronômetro ao lado. É a mesma elefanta dos planos anteriores, e a câmera é
@@ -600,7 +610,7 @@ type TrunkShotProps = ShotClock & {
   readonly asleepAt: number;
 };
 
-/** A noite desce e a câmera chega à tromba, que desacelera e para; o cronômetro ao lado corre até "5 min", e ela adormece. */
+/** Já é noite: a câmera chega à tromba, que desacelera e para; o cronômetro ao lado corre até "5 min", e ela adormece. */
 const TrunkShot: React.FC<TrunkShotProps> = ({ watchAt, asleepAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -618,47 +628,24 @@ const TrunkShot: React.FC<TrunkShotProps> = ({ watchAt, asleepAt, clock }) => {
   const landed = (frame - fiveAt) / (0.3 * fps);
   const bump =
     landed <= 0 || landed >= 1 ? 0 : 0.08 * Math.sin(Math.PI * landed);
-  const lastDay = SPAN.from + SPAN.cycles;
   const retreat = ramp(frame, 0, RETREAT.seconds * fps);
-  const herds = (daylight: number) => (
-    <Herds
-      daylight={daylight}
-      trunks={[trunk, idleTrunk(seconds, 0.6)]}
-      asleep={asleep}
-      away={RETREAT.by * retreat}
-      // A passada cresce e encolhe com a velocidade do recuo.
-      awayPace={Math.sin(Math.PI * retreat)}
-      seconds={seconds}
-    />
-  );
 
   return (
     <>
-      <Sweep
-        wipe={NIGHTFALL}
-        under={
-          // O dia em que o plano anterior terminou, visto pela câmera deste.
-          <SavannaStage
-            camera={camera}
-            daylight={daylightAt(lastDay)}
-            orb={orbAt(lastDay)}
-            clock={clock}
-          >
-            {herds(daylightAt(lastDay))}
-          </SavannaStage>
-        }
-      >
-        <SavannaStage
-          camera={camera}
+      {/* A noite e a lua são as do fim do plano anterior: só a câmera se move. */}
+      <SavannaStage camera={camera} daylight={0} orb={TRUNK_ORB} clock={clock}>
+        <Herds
           daylight={0}
-          orb={TRUNK_ORB}
-          clock={clock}
-        >
-          {herds(0)}
-        </SavannaStage>
-      </Sweep>
-      {/* O cronômetro estoura na fala, e não com o plano; no fim, é a varredura da cena seguinte que o leva. */}
-      <Stay>
+          trunks={[trunk, idleTrunk(seconds, 0.6)]}
+          asleep={asleep}
+          away={RETREAT.by * retreat}
+          // A passada cresce e encolhe com a velocidade do recuo.
+          awayPace={Math.sin(Math.PI * retreat)}
+          seconds={seconds}
+        />
+      </SavannaStage>
+      {/* O cronômetro estoura na fala, e não com o plano; no fim, encolhe no próprio ponto antes de a câmera da cena seguinte recuar. */}
+      <Stay only="entering">
         <Place x={WATCH.x} y={WATCH.y}>
           <Pop at={watchAt}>
             <Watch minutes={minutes} bump={bump} />
@@ -670,33 +657,17 @@ const TrunkShot: React.FC<TrunkShotProps> = ({ watchAt, asleepAt, clock }) => {
 };
 
 /**
- * O último quadro do plano da tromba, para a cena seguinte redesenhar por
- * baixo da varredura dela: a matriarca dormindo em pé, de perto, e o
- * cronômetro em "5 min". A respiração continua, pelo relógio do vídeo.
+ * O fim do plano da tromba, para a cena seguinte partir dele: a câmera, a lua
+ * e a matriarca que dorme em pé, com a pausa viva que ela tem na manada. De
+ * perto só ela cabe no quadro: o resto das manadas não precisa ser redesenhado.
  */
-export const TrunkStill: React.FC<ShotClock> = ({ clock }) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const seconds = (clock + frame) / fps;
-
-  return (
-    <>
-      <SavannaStage camera={TRUNK} daylight={0} orb={TRUNK_ORB} clock={clock}>
-        <Herds
-          daylight={0}
-          trunks={[0, idleTrunk(seconds, 0.6)]}
-          asleep={1}
-          away={RETREAT.by}
-          seconds={seconds}
-        />
-      </SavannaStage>
-      <Stay>
-        <Place x={WATCH.x} y={WATCH.y}>
-          <Watch minutes={WATCH.minutes} />
-        </Place>
-      </Stay>
-    </>
-  );
+export const TRUNK_END = {
+  camera: TRUNK,
+  orb: TRUNK_ORB,
+  sleeper: {
+    ...MATRIARCHS.left,
+    phase: herdPhase(MATRIARCH),
+  } satisfies HerdMember,
 };
 
 export const ElephantsScene: React.FC<SceneProps> = ({ scene, shots }) => (

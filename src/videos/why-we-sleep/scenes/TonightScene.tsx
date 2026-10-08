@@ -260,8 +260,9 @@ const STARS = [
 ] as const;
 // A lua espera no canto da janela, meio escondida pela moldura, e passa por ela devagar, a velocidade constante.
 const MOON = { from: 0.1, to: 0.72, y: 0.34 };
-// A cama e a janela já estão no lugar quando "Hoje à noite" soa.
-const ASLEEP_SOONER = 14;
+// A cama e a janela já estão no lugar quando "Hoje à noite" soa, e começam a crescer enquanto o quadro-negro
+// ainda encolhe: com 14 quadros sobravam de 2 a 4 só com o fundo.
+const ASLEEP_SOONER = 18;
 
 /**
  * Onde a cama está na tela, e de que tamanho, quando o plano termina: a

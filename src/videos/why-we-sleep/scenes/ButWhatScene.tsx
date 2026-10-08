@@ -1,11 +1,15 @@
 import {
   AbsoluteFill,
+  Easing,
+  interpolate,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
 import {
+  Build,
   cameraBetween,
   framing,
+  useBuild,
   type CameraState,
 } from "../../../components/Camera";
 import { FlatStage, Stay, useStage } from "../../../components/Cast";
@@ -15,10 +19,17 @@ import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
 import { Pop, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, linear, mix, ramp } from "../../../components/timing";
+import {
+  clamp,
+  cue,
+  drop,
+  linear,
+  mix,
+  ramp,
+} from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
-import { ink } from "../palette";
+import { ink, street } from "../palette";
 import { AnswerIcon } from "../parts/AnswerIcon";
 import {
   ICONS,
@@ -35,8 +46,7 @@ import {
   ShopFront,
 } from "../parts/ShopFront";
 import { ROW_HUE, rowLife } from "./FivePartsScene";
-import { NEVER, Prelude, flash } from "./MaybeBrainScene";
-import { MEMORY_TEST_LEAD, MemoryTestOpening } from "./MemoryTestScene";
+import { NEVER, flash } from "./MaybeBrainScene";
 import { driftZoom } from "./SleepDebtScene";
 
 // A fila um pouco à esquerda do centro: o último ícone, o da loja, tem espaço para crescer.
@@ -160,16 +170,18 @@ const MapShot: React.FC<MapShotProps> = ({ shopAt, clock }) => {
   return (
     <AbsoluteFill>
       <FlatStage backdrop={<IdeaBackdrop hue={ROW_HUE} spot={[0.8, 0.5]} />}>
-        {/* A fila entra na cascata dela e continua no plano seguinte, que a redesenha: o palco não a põe nem a tira. */}
-        <Stay>
-          <MapRow
-            frame={frame}
-            length={length}
-            shopAt={shopAt}
-            clock={clock}
-            tinted={stage.enter()}
-          />
-        </Stay>
+        {/* A fila entra na cascata dela e continua no plano seguinte, que a redesenha desde o primeiro quadro: o palco não a põe nem a tira. */}
+        {stage.handedOver ? null : (
+          <Stay>
+            <MapRow
+              frame={frame}
+              length={length}
+              shopAt={shopAt}
+              clock={clock}
+              tinted={stage.enter()}
+            />
+          </Stay>
+        )}
         <Grain />
       </FlatStage>
     </AbsoluteFill>
@@ -196,12 +208,16 @@ const ICON_ART = { side: 220, door: 108, gap: 72, disc: 100, ring: 110 };
 // O ícone vira a loja: quando a câmera parte, em quantos quadros chega, e por quantos o desenho do
 // ícone ainda cobre a loja de verdade, pequena, antes de sair.
 const BECOME = { at: 1, frames: 27, swapAt: 2, swap: 5 };
-// A janela redonda do ícone abre além do tamanho dele, até a rua tomar o quadro.
-const WIDEN = { at: 8, frames: 18, by: 1.3 };
-// A rua se monta em volta enquanto a janela abre.
-const STREET = { at: 10, frames: 22 };
-// A fila encolhe atrás, um ícone depois do outro.
-const SHRINK = { step: 2, frames: 9 };
+// O fundo passa à noite da rua no lugar, e o disco do ícone, que é da cor dela, some dentro dela.
+const NIGHT = { frames: 12 };
+// O anel claro do ícone afina até sumir, em volta da loja que cresce.
+const RING = { at: 3, frames: 9 };
+// A rua sobe em camadas em volta da loja, quando a câmera já está perto. Ela parte de mais fundo que o
+// palco a poria (`from`, em alturas de subida): com a câmera longe tudo é pequeno, a descida de sempre
+// encolhe junto, e a calçada inteira apareceria no pé do quadro.
+const STREET = { at: 6, frames: 18, from: -4 };
+// A fila encolhe, um ícone depois do outro.
+const SHRINK = { step: 1, frames: 7 };
 // A sombra de quem passa lá dentro leva este tempo para cruzar a fresta, a velocidade constante.
 const PASS_SECONDS = 1.2;
 
@@ -226,14 +242,16 @@ type DoorShotProps = {
 };
 
 /**
- * O ícone cresce e vira a porta da loja baixada: o disco dele é uma janela
- * para a rua de noite, com a loja de verdade lá dentro, do tamanho do ícone. A
- * câmera chega até ela, a janela abre até tomar o quadro e a rua se monta em volta.
+ * O ícone cresce e vira a porta da loja baixada, no palco comum: os outros
+ * ícones encolhem no ponto, o fundo passa à noite, o anel do ícone afina e
+ * some, e a loja de verdade, que estava no lugar do desenho dele, cresce com a
+ * câmera enquanto a rua sobe em camadas em volta dela.
  */
 const DoorShot: React.FC<DoorShotProps> = ({ glowAt, passAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
+  const built = useBuild();
   const seconds = (clock + frame) / fps;
   const life = rowLife(seconds);
   // O ícone como o plano anterior o deixou, no último quadro dele: o pulso e a flutuação da fila.
@@ -251,69 +269,57 @@ const DoorShot: React.FC<DoorShotProps> = ({ glowAt, passAt, clock }) => {
     cameraBetween(DOOR_MEDIUM, DOOR_MEDIUM_END, Math.min(1, frame / length)),
     ramp(frame, BECOME.at, BECOME.frames),
   );
-  // A janela acompanha a loja: o centro e o raio dela vêm de onde a porta está na tela.
+  // O disco e o anel do ícone acompanham a loja: o centro e o raio vêm de onde a porta está na tela.
   const door = FRONT_OPENING.width * camera.zoom;
   const gap = seen(camera, [DOOR.x, DOOR.bottom]);
   const center = [gap[0], gap[1] - (ICON_ART.gap / ICON_ART.door) * door];
-  const widened = 1 + WIDEN.by * ramp(frame, WIDEN.at, WIDEN.frames);
-  const radius = (ICON_ART.disc / ICON_ART.door) * door * widened;
-  const ring = ((ICON_ART.ring - ICON_ART.disc) / ICON_ART.door) * door;
-  const opening = frame < BECOME.at + BECOME.frames;
+  const radius = (ICON_ART.disc / ICON_ART.door) * door;
+  const ring =
+    ((ICON_ART.ring - ICON_ART.disc) / ICON_ART.door) *
+    door *
+    (1 - ramp(frame, RING.at, RING.frames));
+  const night = linear(frame, 0, NIGHT.frames);
+  const shrinking =
+    frame < 1 + (ICONS.length - 1) * SHRINK.step + SHRINK.frames;
   const present: Partial<Record<IconKey, number>> = {};
   ICONS.forEach((icon, index) => {
-    present[icon] = 1 - ramp(frame, 1 + index * SHRINK.step, SHRINK.frames);
+    present[icon] = 1 - drop(frame, 1 + index * SHRINK.step, SHRINK.frames);
   });
   const swapped = linear(frame, BECOME.swapAt, BECOME.swap);
 
   return (
     <AbsoluteFill>
-      {opening ? (
-        <>
-          <IdeaBackdrop hue={ROW_HUE} spot={[0.8, 0.5]} />
-          <IconRow
-            {...ROW}
-            hue={ROW_HUE}
-            states={{
-              eyes: "check",
-              ruler: "cross",
-              brain: "cross",
-              alarm: "cross",
-            }}
-            omit={["shop"]}
-            grow={life.grow}
-            lift={life.lift}
-            tilt={life.tilt}
-            motion={life.motion}
-            present={present}
+      {/* O disco do ícone é a noite da rua: quando o fundo chega à cor dele, não há mais disco. */}
+      {night < 1 ? (
+        <SvgLayer>
+          <circle
+            cx={center[0]}
+            cy={center[1]}
+            r={radius}
+            fill={street.night.sky[0]}
+            opacity={1 - night}
           />
-          {/* O anel claro do ícone é a moldura da janela, e sai do quadro com ela. */}
-          <SvgLayer>
-            <circle
-              cx={center[0]}
-              cy={center[1]}
-              r={radius + ring / 2}
-              fill="none"
-              stroke={ink.ring}
-              strokeWidth={ring}
-            />
-          </SvgLayer>
-        </>
+        </SvgLayer>
       ) : null}
-      <AbsoluteFill
-        style={{
-          clipPath: opening
-            ? `circle(${radius}px at ${center[0]}px ${center[1]}px)`
-            : undefined,
-        }}
+      {/* A noite e a subida da rua são contadas daqui, e não do palco: a loja é a ponte, e a rua só sobe com a câmera já perto dela. */}
+      <Build
+        {...built}
+        lit={night}
+        risen={interpolate(
+          frame,
+          [STREET.at, STREET.at + STREET.frames],
+          [STREET.from, 1],
+          { ...clamp, easing: Easing.out(Easing.cubic) },
+        )}
       >
         <ShopFront
           halo={1}
           time="night"
           shutter={1}
           busy
+          standing
           clock={clock}
           camera={camera}
-          built={ramp(frame, STREET.at, STREET.frames)}
           // A luz fica parada até a deixa; nela, dá um tranco e passa a oscilar.
           flicker={
             1.7 * ramp(frame, glowAt, 0.3 * fps) -
@@ -326,7 +332,37 @@ const DoorShot: React.FC<DoorShotProps> = ({ glowAt, passAt, clock }) => {
           }
           lamp={lampAt(seconds)}
         />
-      </AbsoluteFill>
+      </Build>
+      {shrinking ? (
+        <IconRow
+          {...ROW}
+          hue={ROW_HUE}
+          states={{
+            eyes: "check",
+            ruler: "cross",
+            brain: "cross",
+            alarm: "cross",
+          }}
+          omit={["shop"]}
+          grow={life.grow}
+          lift={life.lift}
+          tilt={life.tilt}
+          motion={life.motion}
+          present={present}
+        />
+      ) : null}
+      {ring > 0 ? (
+        <SvgLayer>
+          <circle
+            cx={center[0]}
+            cy={center[1]}
+            r={radius + ring / 2}
+            fill="none"
+            stroke={ink.ring}
+            strokeWidth={ring}
+          />
+        </SvgLayer>
+      ) : null}
       {/* O desenho do ícone cobre a loja pequena nos primeiros quadros: é o mesmo desenho, e a troca não se vê. */}
       {swapped < 1 ? (
         <div
@@ -352,6 +388,11 @@ const DoorShot: React.FC<DoorShotProps> = ({ glowAt, passAt, clock }) => {
 
 const MEDALLION = 150;
 const CAMERA_SECONDS = 0.8;
+// A rua sai cedo e depressa: começa a descer estes quadros antes da troca e some neste tanto, antes
+// de a sala de `memory-test` subir. Na marcação do palco ela ainda descia três quadros depois da troca,
+// e a sala subia sobre ela.
+// A rua termina de descer no quadro em que `memory-test` chega: mais cedo, sobravam dez quadros só de céu.
+const STREET_OUT = { lead: 17, frames: 17 };
 
 type AnswerShotProps = {
   /** Quadros do plano em que a interrogação entra, em que o medalhão acende e em que ele pulsa. */
@@ -378,59 +419,65 @@ const AnswerShot: React.FC<AnswerShotProps> = ({
     flash(frame, pulseAt, 0.4 * fps) +
     0.6 * flash(frame, pulseAt + 0.45 * fps, 0.4 * fps);
   const lit = ramp(frame, answerAt, 0.4 * fps);
+  const built = useBuild();
 
   return (
-    <ShopFront
-      halo={1}
-      time="night"
-      shutter={1}
-      busy
-      clock={clock}
-      lamp={lampAt(seconds)}
-      // Continua o plano anterior: a câmera parte de onde ele parou, chega à porta e segue chegando devagar.
-      camera={cameraBetween(
-        cameraBetween(DOOR_MEDIUM_END, FRONT_CLOSE, ramp(frame, 0, arrive)),
-        DOOR_CLOSE_END,
-        linear(frame, arrive, length - arrive),
-      )}
+    <Build
+      {...built}
+      risen={1 - drop(frame, length - STREET_OUT.lead, STREET_OUT.frames)}
     >
-      <Place
-        x={DOOR.x}
-        y={DOOR.y + 76}
-        // A interrogação balança devagar, pendurada na dúvida.
-        style={{ rotate: `${4 * wave(seconds, 3.4, 0.2)}deg` }}
+      <ShopFront
+        halo={1}
+        time="night"
+        shutter={1}
+        busy
+        clock={clock}
+        lamp={lampAt(seconds)}
+        // Continua o plano anterior: a câmera parte de onde ele parou, chega à porta e segue chegando devagar.
+        camera={cameraBetween(
+          cameraBetween(DOOR_MEDIUM_END, FRONT_CLOSE, ramp(frame, 0, arrive)),
+          DOOR_CLOSE_END,
+          linear(frame, arrive, length - arrive),
+        )}
       >
-        <Pop at={askAt} from={0.7} overshoot={1.08}>
-          <Label size="display" color={ink.moon}>
-            ?
-          </Label>
-        </Pop>
-      </Place>
-      <Place
-        x={DOOR.x}
-        y={DOOR.y - 94 + 5 * wave(seconds, 4.1)}
-        style={{ scale: `${1 + 0.1 * beat}` }}
-      >
-        <Pop at={answerAt}>
-          <div style={{ position: "relative", padding: 46 }}>
-            {/* O clarão atrás do medalhão: ele acende, e depois respira. */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                borderRadius: "50%",
-                background: `radial-gradient(circle, ${ink.moon}CC 55%, transparent 70%)`,
-                opacity: lit * (0.8 + 0.2 * wave(seconds, 2.2) + 0.2 * beat),
-                scale: `${mix(0.6, 1, lit) * (1 + 0.04 * wave(seconds, 2.2) + 0.14 * beat)}`,
-              }}
-            />
-            <div style={{ position: "relative" }}>
-              <AnswerIcon answer="stock" size={MEDALLION} />
+        <Place
+          x={DOOR.x}
+          y={DOOR.y + 76}
+          // A interrogação balança devagar, pendurada na dúvida.
+          style={{ rotate: `${4 * wave(seconds, 3.4, 0.2)}deg` }}
+        >
+          <Pop at={askAt} from={0.7} overshoot={1.08}>
+            <Label size="display" color={ink.moon}>
+              ?
+            </Label>
+          </Pop>
+        </Place>
+        <Place
+          x={DOOR.x}
+          y={DOOR.y - 94 + 5 * wave(seconds, 4.1)}
+          style={{ scale: `${1 + 0.1 * beat}` }}
+        >
+          <Pop at={answerAt}>
+            <div style={{ position: "relative", padding: 46 }}>
+              {/* O clarão atrás do medalhão: ele acende, e depois respira. */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: "50%",
+                  background: `radial-gradient(circle, ${ink.moon}CC 55%, transparent 70%)`,
+                  opacity: lit * (0.8 + 0.2 * wave(seconds, 2.2) + 0.2 * beat),
+                  scale: `${mix(0.6, 1, lit) * (1 + 0.04 * wave(seconds, 2.2) + 0.14 * beat)}`,
+                }}
+              />
+              <div style={{ position: "relative" }}>
+                <AnswerIcon answer="stock" size={MEDALLION} />
+              </div>
             </div>
-          </div>
-        </Pop>
-      </Place>
-    </ShopFront>
+          </Pop>
+        </Place>
+      </ShopFront>
+    </Build>
   );
 };
 
@@ -453,11 +500,6 @@ export const ButWhatScene: React.FC<SceneProps> = ({ scene, shots }) => (
         pulseAt={cue(scene, "memória") - shots[2].from}
         clock={scene.from + shots[2].from}
       />
-      {/* A sala de `memory-test` sobe aqui, por cima da rua que desce: a troca de cena não deixa a tela só
-          com o céu. */}
-      <Prelude lead={MEMORY_TEST_LEAD}>
-        <MemoryTestOpening clock={scene.from + shots[2].to} />
-      </Prelude>
     </Shot>
   </>
 );

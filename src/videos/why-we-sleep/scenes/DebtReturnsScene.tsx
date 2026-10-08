@@ -1,13 +1,16 @@
-import {
-  AbsoluteFill,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { FlatStage, Stay, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { cue, linear, mix, ramp, clamp01 } from "../../../components/timing";
+import {
+  cue,
+  drop,
+  linear,
+  mix,
+  ramp,
+  clamp01,
+} from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { IdeaBackdrop } from "../parts/IdeaBackdrop";
@@ -18,7 +21,14 @@ import {
   type IconKey,
   type IconState,
 } from "../parts/IconRow";
-import { BillPocket, BillToPocket, POCKET_CORNER } from "../parts/SleepBill";
+import {
+  BILL_LINES,
+  billHeight,
+  BillPocket,
+  BillToPocket,
+  POCKET_CORNER,
+  SleepBill,
+} from "../parts/SleepBill";
 import { SIDE_BILL } from "./DebtTestScene";
 import { ROW_HUE, rowLife } from "./FivePartsScene";
 import { billSway } from "./SkipANightScene";
@@ -39,6 +49,10 @@ const FROM_SIDE = (() => {
 // dois tempos, ir até a boca do bolso e descer por ela. Estão marcados para o
 // papel entrar no bolso em "volta".
 const ARRIVE_FRAMES = 11;
+// A ficha volta a ser só a conta nestes quadros: a prancheta, o prendedor e a linha do quadrado
+// encolhem, opacos, para trás do papel. Por opacidade, a prancheta meio apagada formava um segundo
+// papel atrás da conta.
+const UNFORM_FRAMES = 9;
 const FOLD_FRAMES = 12;
 const STOW_FRAMES = 11;
 // O bolso surge crescendo enquanto a conta chega, antes de ela dobrar.
@@ -120,6 +134,21 @@ const PocketShot: React.FC<PocketShotProps> = ({ foldAt, patAt, clock }) => {
   const swaying = ramp(frame, stowedAt, 0.3 * fps) * pocketSway(seconds);
   const rowFrom = length - ROW_BEFORE.frames;
   const life = rowLife(seconds);
+  const pocket = {
+    x: mix(BIG_POCKET.x, POCKET_CORNER.x, cornered),
+    y: mix(BIG_POCKET.y, POCKET_CORNER.y, cornered),
+    scale:
+      mix(BIG_POCKET.scale, POCKET_CORNER.scale, cornered) *
+      surged *
+      (1 + patted),
+  };
+  const from = [
+    mix(FROM_SIDE.x, BILL.x, arrived),
+    mix(FROM_SIDE.y, BILL.y, arrived),
+  ] as const;
+  const scale = FROM_SIDE.scale * (BILL.scale / FROM_SIDE.scale) ** arrived;
+  // O balanço da ficha morre enquanto ela chega: é parada que ela dobra.
+  const tilt = billSway(seconds) * (1 - arrived);
   const present: Partial<Record<IconKey, number>> = {};
   ICONS.forEach((icon, index) => {
     const at = rowFrom + index * ROW_BEFORE.step;
@@ -133,29 +162,40 @@ const PocketShot: React.FC<PocketShotProps> = ({ foldAt, patAt, clock }) => {
         {stage.handedOver ? null : (
           <Stay>
             <Drift focus={POCKET_FOCUS}>
+              {/*
+                A ficha que desmonta: a prancheta, o prendedor e a linha do quadrado, desenhados
+                atrás da conta, encolhem para trás do papel. A conta por cima é a mesma, sem a ficha.
+              */}
+              {frame < UNFORM_FRAMES ? (
+                <div
+                  style={{
+                    position: "absolute",
+                    left: from[0],
+                    top: from[1],
+                    translate: "-50% 0",
+                    transformOrigin: "50% 0",
+                    rotate: `${tilt}deg`,
+                  }}
+                >
+                  <div
+                    style={{
+                      // Em volta do meio do papel da conta: é para trás dele que a ficha some.
+                      transformOrigin: `50% ${(billHeight(BILL_LINES) * scale) / 2}px`,
+                      scale: `${1 - drop(frame, 0, UNFORM_FRAMES)}`,
+                    }}
+                  >
+                    <SleepBill scale={scale} stamp={0} form={1} checked={1} />
+                  </div>
+                </div>
+              ) : null}
               <BillToPocket
                 creased
-                from={[
-                  mix(FROM_SIDE.x, BILL.x, arrived),
-                  mix(FROM_SIDE.y, BILL.y, arrived),
-                ]}
-                scale={
-                  FROM_SIDE.scale * (BILL.scale / FROM_SIDE.scale) ** arrived
-                }
-                form={1 - ramp(frame, 0, 0.3 * fps)}
-                checked={1 - ramp(frame, 0, 0.25 * fps)}
-                // O balanço da ficha morre enquanto ela chega: é parada que ela dobra.
-                tilt={billSway(seconds) * (1 - arrived)}
+                from={from}
+                scale={scale}
+                tilt={tilt}
                 progress={stowed}
                 pocketTilt={swaying}
-                pocket={{
-                  x: mix(BIG_POCKET.x, POCKET_CORNER.x, cornered),
-                  y: mix(BIG_POCKET.y, POCKET_CORNER.y, cornered),
-                  scale:
-                    mix(BIG_POCKET.scale, POCKET_CORNER.scale, cornered) *
-                    surged *
-                    (1 + patted),
-                }}
+                pocket={pocket}
               />
             </Drift>
           </Stay>

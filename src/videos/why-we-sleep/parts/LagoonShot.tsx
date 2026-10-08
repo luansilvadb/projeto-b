@@ -47,11 +47,6 @@ type Time = "day" | "night";
 
 type LagoonShotProps = {
   readonly time: Time;
-  /**
-   * A noite descendo sobre o dia: entre 0 e 1, a borda está no quadro e a
-   * lagoa aparece pintada duas vezes. Vale quando `time` é "night".
-   */
-  readonly nightfall?: number;
   readonly camera: CameraState;
   /** Ritmo do pulso ao longo do plano. */
   readonly rhythm: readonly PulseRhythm[];
@@ -112,28 +107,12 @@ const TURNING = [0.4, 0.85] as const;
  * lugar e o peixe. De um plano para o outro mudam a hora, a câmera e o que
  * cada um está fazendo; o que ninguém está fazendo, a pausa viva faz.
  */
-export const LagoonShot: React.FC<LagoonShotProps> = (props) => {
-  const { time, nightfall = 1 } = props;
-  if (time === "night" && nightfall < 1) {
-    return (
-      <AbsoluteFill>
-        <LagoonView {...props} time="day" />
-        <AbsoluteFill
-          style={{ clipPath: `inset(0 0 ${(1 - nightfall) * 100}% 0)` }}
-        >
-          <LagoonView {...props} time="night" />
-        </AbsoluteFill>
-        <Grain />
-      </AbsoluteFill>
-    );
-  }
-  return (
-    <AbsoluteFill>
-      <LagoonView {...props} />
-      <Grain />
-    </AbsoluteFill>
-  );
-};
+export const LagoonShot: React.FC<LagoonShotProps> = (props) => (
+  <AbsoluteFill>
+    <LagoonView {...props} />
+    <Grain />
+  </AbsoluteFill>
+);
 
 const LagoonView: React.FC<LagoonShotProps> = ({
   time,

@@ -390,13 +390,19 @@ const LENS_SCALE = 0.42;
 // O raio com que a lente cobre o quadro inteiro, a partir do ponto de foco.
 const FULL_RADIUS = 1150;
 
+// A barra de baixo da porta de enrolar, dentro da lente: a altura dela, em pixels da lente no lugar.
+const SHUTTER_BAR = 18;
+
 /** Quanto a lente sobe e desce, em pixels, quando está no lugar. */
 const lensFloat = (seconds: number): number => 7 * wave(seconds, 3.8, 0.2);
 
 type LensProps = {
   /** De 0 (a loja de dentro no quadro inteiro) a 1 (a lente, no lugar dela). */
   readonly closed: number;
-  /** Quanto a fachada de porta baixada já cobre a loja de dentro, de cima para baixo, de 0 a 1. */
+  /**
+   * Quanto a porta de enrolar já desceu diante da loja de dentro, de 0 a 1: acima da barra dela está a
+   * fachada de porta baixada, e abaixo, a loja de dentro.
+   */
   readonly front: number;
   /** O pulso da lente, de 0 a 1. */
   readonly pulse?: number;
@@ -519,6 +525,21 @@ const Lens: React.FC<LensProps> = ({
           />
         </div>
       ) : null}
+      {/* A barra da porta de enrolar, na borda entre a fachada e a loja de dentro: quem desce e sobe é a porta. */}
+      {front > 0 && front < 1 ? (
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: front * radius * 2 - SHUTTER_BAR * fit,
+            height: SHUTTER_BAR * fit,
+            background: shop.night.shutterLine,
+            borderBottom: `${4 * fit}px solid ${shop.night.lamp}`,
+            boxSizing: "border-box",
+          }}
+        />
+      ) : null}
       {/* O aro da lente: nasce com ela, e some quando ela toma o quadro. */}
       <div
         style={{
@@ -533,11 +554,15 @@ const Lens: React.FC<LensProps> = ({
   );
 };
 
-// A loja encolhe até a lente, e a fachada de porta baixada desce dentro dela; o cone sai da cabeça. Em quadros.
+// A loja encolhe até a lente, e a porta de enrolar desce dentro dela, a velocidade constante, como porta;
+// o cone sai da cabeça. No fim do plano a porta sobe de novo (`liftLead` quadros antes da troca), e é
+// a loja de dentro do plano seguinte que aparece: a lente só cresce com ela já à vista. Em quadros.
 const DREAM = {
   shrink: 20,
-  frontAt: 13,
-  front: 11,
+  frontAt: 14,
+  front: 14,
+  liftLead: 20,
+  lift: 14,
   coneAt: 12,
   cone: 12,
   ringAt: 9,
@@ -550,6 +575,8 @@ type DreamShotProps = {
   /** A duração do plano anterior e as deixas dele: a loja de dentro continua, dentro da lente. */
   readonly before: number;
   readonly cues: Pick<CarryViewProps, "shutAt" | "grabAt">;
+  /** A loja de dentro do plano seguinte, como ele a abre: é ela que a porta descobre ao subir. */
+  readonly next: React.ReactNode;
   readonly clock: number;
 };
 
@@ -558,13 +585,18 @@ const DreamShot: React.FC<DreamShotProps> = ({
   pulseAt,
   before,
   cues,
+  next,
   clock,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const length = useShotLength();
   const seconds = (clock + frame) / fps;
   const closed = ramp(frame, 0, DREAM.shrink);
-  const front = ramp(frame, DREAM.frontAt, DREAM.front);
+  const liftAt = length - DREAM.liftLead;
+  const front =
+    linear(frame, DREAM.frontAt, DREAM.front) -
+    linear(frame, liftAt, DREAM.lift);
   // O cone cresce da cabeça até a lente; a ponta de lá abre com ele.
   const reach = ramp(frame, DREAM.coneAt, DREAM.cone);
   const far = {
@@ -636,15 +668,20 @@ const DreamShot: React.FC<DreamShotProps> = ({
         </Stay>
       </Troupe>
       <Lens closed={closed} front={front} pulse={pulse} seconds={seconds}>
-        {/* A loja de dentro continua de onde o plano anterior a deixou: não sobe com o palco. */}
+        {/* A loja de dentro continua de onde o plano anterior a deixou: não sobe com o palco. Com a porta
+            baixada, troca pela do plano seguinte. */}
         <Standing>
-          <CarryView
-            at={before + frame}
-            seconds={seconds}
-            fps={fps}
-            nightOnly
-            {...cues}
-          />
+          {frame < liftAt ? (
+            <CarryView
+              at={before + frame}
+              seconds={seconds}
+              fps={fps}
+              nightOnly
+              {...cues}
+            />
+          ) : (
+            next
+          )}
         </Standing>
       </Lens>
       <Grain />
@@ -686,8 +723,20 @@ const SORT = {
   openAfter: 55,
   pullBack: 26,
 };
-// A lente abre até a loja tomar o quadro: a fachada sobe dentro dela, e ela cresce. Em quadros.
-const WAKE = { front: 8, openAt: 2, open: 20 };
+// A lente abre até a loja tomar o quadro; a porta já subiu no fim do plano anterior. Em quadros.
+const WAKE = { openAt: 1, open: 20 };
+
+/** A loja da arrumação antes de o plano dela começar, como ele a abre: é o que a lente do sonho mostra quando a porta sobe. */
+const SortOpening: React.FC<{ takeAt: number; seconds: number }> = ({
+  takeAt,
+  seconds,
+}) => (
+  <Camera {...SORT_CLOSE}>
+    <Layer depth={1}>
+      <SortView at={0} takeAt={takeAt} seconds={seconds} />
+    </Layer>
+  </Camera>
+);
 
 type SortViewProps = {
   readonly at: number;
@@ -896,10 +945,10 @@ const SortShot: React.FC<SortShotProps> = ({
   return (
     <AbsoluteFill>
       {opening ? (
-        // A lente do plano anterior, no mesmo lugar: a fachada sobe dentro dela e ela abre até a loja tomar o quadro.
+        // A lente do plano anterior, no mesmo lugar, já com a loja de dentro à vista: ela abre até a loja tomar o quadro.
         <Lens
           closed={1 - ramp(frame, WAKE.openAt, WAKE.open)}
-          front={1 - ramp(frame, 0, WAKE.front)}
+          front={0}
           seconds={seconds}
         >
           {view}
@@ -927,6 +976,8 @@ const SortShot: React.FC<SortShotProps> = ({
 };
 
 export const StockroomNightScene: React.FC<SceneProps> = ({ scene, shots }) => {
+  const { fps } = useVideoConfig();
+  const takeAt = cue(scene, "leva") - shots[2].from;
   const carry = {
     shutAt: cue(scene, "baixar"),
     // Ela chega à pilha e pega a caixa em "levar".
@@ -945,6 +996,13 @@ export const StockroomNightScene: React.FC<SceneProps> = ({ scene, shots }) => {
           pulseAt={cue(scene, "cérebro") - shots[1].from}
           before={shots[0].to - shots[0].from}
           cues={carry}
+          next={
+            <SortOpening
+              takeAt={takeAt}
+              // O relógio da pausa viva é o do vídeo: a loja não salta quando o plano dela começa.
+              seconds={(scene.from + shots[2].from) / fps}
+            />
+          }
           clock={scene.from + shots[1].from}
         />
       </Shot>
@@ -953,7 +1011,7 @@ export const StockroomNightScene: React.FC<SceneProps> = ({ scene, shots }) => {
         name="cada lembrança, do provisório ao longo prazo"
       >
         <SortShot
-          takeAt={cue(scene, "leva") - shots[2].from}
+          takeAt={takeAt}
           provisionalAt={cue(scene, "provisório") - shots[2].from}
           longTermAt={cue(scene, "longo") - shots[2].from}
           clock={scene.from + shots[2].from}
