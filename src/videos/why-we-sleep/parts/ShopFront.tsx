@@ -28,11 +28,6 @@ export const FRONT_OPENING = {
   height: 270 * SCALE,
 };
 export const FRONT_WIDE = framing([960, 540], 1);
-/** A porta de enrolar de perto. */
-export const FRONT_CLOSE = framing(
-  [FRONT.x, FRONT_OPENING.y + FRONT_OPENING.height / 2],
-  1.7,
-);
 
 type ShopFrontProps = {
   readonly time: "day" | "night";
