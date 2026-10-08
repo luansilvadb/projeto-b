@@ -46,7 +46,7 @@ import { Drift } from "./SleepDebtScene";
 
 // A aproximação lenta do plano da procura, a mesma do animatic: de 6% a 14% mais perto, em volta do pé do pedestal.
 const PUSH = { focus: [1100, 940], from: 1.06, by: 0.08 } as const;
-// O globo e o pedestal já estão no lugar quando "A procura" soa: começam a entrar antes de a cena
+// O globo e o pedestal já estão no lugar quando a fala começa: começam a entrar antes de a cena
 // chegar, no fim de `stockroom-solid`, quando a pessoa já saiu e o balão encolhe. Quantos quadros antes
 // da cena cada um começa, e quanto a marcação do palco é adiantada para isso. O pedestal vem um quadro
 // depois do globo: mais cedo, o contorno vazio dele crescia em volta do balão, que ainda estava ali, e
@@ -66,7 +66,7 @@ const ORBIT = {
 };
 // Parada, ela baixa: a lente desce, vai um pouco para fora do globo, e o cabo cai. Em pixels e em graus.
 const LOWERED = { x: 46, y: 150, tilt: 16, seconds: 0.6 };
-// O foco de luz espera aceso a meio, e sobe de vez quando a fala diz que o lugar ficou vazio.
+// O foco de luz espera aceso a meio, e sobe de vez quando a lupa já baixou: a procura acabou, e o lugar ficou vazio.
 const LIGHT = { before: 0.3, seconds: 0.6 };
 
 /** A aproximação do plano da procura num quadro dele. */
@@ -341,13 +341,14 @@ export const NobodyEscapedScene: React.FC<SceneProps> = ({ scene, shots }) => {
   const { fps } = useVideoConfig();
   const searchFrames = shots[0].to - shots[0].from;
   return (
-    <Shot range={shots[0]} name="a procura termina sem ele">
+    <Shot range={shots[0]} name="a procura termina no pedestal vazio">
       <SearchEndsShot
-        turnAt={cue(scene, "procura")}
-        stopAt={cue(scene, "termina")}
-        // O foco sobe em "sem" e assenta meio segundo antes de o palco começar a sair.
+        // A fala é curta: a última volta começa com o plano, e a lupa para e baixa em "animais".
+        turnAt={0}
+        stopAt={cue(scene, "animais")}
+        // O foco sobe em "história" e assenta meio segundo antes de o palco começar a sair.
         lightAt={Math.min(
-          cue(scene, "sem"),
+          cue(scene, "história"),
           searchFrames - (LIGHT.seconds + 0.5) * fps,
         )}
       />

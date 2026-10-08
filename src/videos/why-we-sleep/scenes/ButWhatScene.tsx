@@ -39,12 +39,7 @@ import {
   type IconKey,
 } from "../parts/IconRow";
 import { IdeaBackdrop } from "../parts/IdeaBackdrop";
-import {
-  FRONT,
-  FRONT_CLOSE,
-  FRONT_OPENING,
-  ShopFront,
-} from "../parts/ShopFront";
+import { FRONT, FRONT_OPENING, ShopFront } from "../parts/ShopFront";
 import { ROW_HUE, rowLife } from "./FivePartsScene";
 import { NEVER, flash } from "./MaybeBrainScene";
 import { driftZoom } from "./SleepDebtScene";
@@ -189,6 +184,7 @@ const MapShot: React.FC<MapShotProps> = ({ shopAt, clock }) => {
 };
 
 // A porta de enrolar no meio do quadro, em plano médio; a câmera chega um pouco mais perto ao longo do plano.
+// A interrogação e o medalhão ficam nela: o plano de perto saiu com a fala dele.
 const DOOR = {
   x: FRONT.x,
   y: FRONT_OPENING.y + FRONT_OPENING.height / 2,
@@ -198,8 +194,6 @@ const DOOR = {
 const LIFT = 70;
 const DOOR_MEDIUM = framing([DOOR.x, DOOR.y - LIFT], 1.08);
 const DOOR_MEDIUM_END = framing([DOOR.x, DOOR.y - LIFT + 10], 1.14);
-// De perto, a câmera continua chegando devagar até o fim do plano.
-const DOOR_CLOSE_END = framing([DOOR.x, DOOR.y], 1.76);
 // O ícone da loja, onde o plano anterior o deixou.
 const ICON = iconSpot("shop", ROW);
 // No desenho do ícone (220 de lado): a largura da porta de enrolar, a que distância do centro fica a
@@ -218,8 +212,16 @@ const RING = { at: 3, frames: 9 };
 const STREET = { at: 6, frames: 18, from: -4 };
 // A fila encolhe, um ícone depois do outro.
 const SHRINK = { step: 1, frames: 7 };
-// A sombra de quem passa lá dentro leva este tempo para cruzar a fresta, a velocidade constante.
-const PASS_SECONDS = 1.2;
+const MEDALLION = 150;
+// A interrogação e o medalhão foram desenhados para a porta de perto: no plano médio, crescem este tanto.
+const ON_DOOR = 1.15;
+// O medalhão acende estes quadros antes de "memória", e pulsa nela: o plano acaba 0,7 s depois da palavra,
+// e a rua começa a descer antes disso.
+const ANSWER_BEFORE = 9;
+// A rua sai cedo e depressa: começa a descer estes quadros antes da troca e termina no quadro em que
+// `memory-test` chega. Na marcação do palco ela ainda descia três quadros depois da troca, e a sala
+// subia sobre ela; mais cedo, sobravam dez quadros só de céu.
+const STREET_OUT = { lead: 17, frames: 17 };
 
 /** Onde um ponto do plano do assunto aparece na tela, com a câmera em `camera`. */
 export const seen = (
@@ -235,9 +237,10 @@ export const lampAt = (seconds: number): number =>
   0.88 + 0.08 * wave(seconds, 1.9) + 0.04 * wave(seconds, 0.37, 0.2);
 
 type DoorShotProps = {
-  /** Quadros do plano em que a luz por baixo da porta passa a oscilar e em que a sombra passa por trás da fresta. */
-  readonly glowAt: number;
-  readonly passAt: number;
+  /** Quadros do plano em que a interrogação entra, em que o medalhão acende e em que ele pulsa. */
+  readonly askAt: number;
+  readonly answerAt: number;
+  readonly pulseAt: number;
   readonly clock: number;
 };
 
@@ -245,9 +248,15 @@ type DoorShotProps = {
  * O ícone cresce e vira a porta da loja baixada, no palco comum: os outros
  * ícones encolhem no ponto, o fundo passa à noite, o anel do ícone afina e
  * some, e a loja de verdade, que estava no lugar do desenho dele, cresce com a
- * câmera enquanto a rua sobe em camadas em volta dela.
+ * câmera enquanto a rua sobe em camadas em volta dela. Com a porta no lugar, a
+ * interrogação estoura nela e, sobre ela, acende o medalhão da caixa de estoque.
  */
-const DoorShot: React.FC<DoorShotProps> = ({ glowAt, passAt, clock }) => {
+const DoorShot: React.FC<DoorShotProps> = ({
+  askAt,
+  answerAt,
+  pulseAt,
+  clock,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
@@ -286,6 +295,11 @@ const DoorShot: React.FC<DoorShotProps> = ({ glowAt, passAt, clock }) => {
     present[icon] = 1 - drop(frame, 1 + index * SHRINK.step, SHRINK.frames);
   });
   const swapped = linear(frame, BECOME.swapAt, BECOME.swap);
+  // O medalhão pulsa uma vez, como um coração, e o clarão cresce com ele.
+  const beat = flash(frame, pulseAt, 0.4 * fps);
+  const lit = ramp(frame, answerAt, 0.4 * fps);
+  // A saída: a rua desce, e a loja, que até aí era a ponte e ficava no lugar, vai com ela.
+  const leaveAt = length - STREET_OUT.lead;
 
   return (
     <AbsoluteFill>
@@ -305,33 +319,70 @@ const DoorShot: React.FC<DoorShotProps> = ({ glowAt, passAt, clock }) => {
       <Build
         {...built}
         lit={night}
-        risen={interpolate(
-          frame,
-          [STREET.at, STREET.at + STREET.frames],
-          [STREET.from, 1],
-          { ...clamp, easing: Easing.out(Easing.cubic) },
-        )}
+        risen={
+          frame < leaveAt
+            ? interpolate(
+                frame,
+                [STREET.at, STREET.at + STREET.frames],
+                [STREET.from, 1],
+                { ...clamp, easing: Easing.out(Easing.cubic) },
+              )
+            : 1 - drop(frame, leaveAt, STREET_OUT.frames)
+        }
       >
         <ShopFront
           halo={1}
           time="night"
           shutter={1}
           busy
-          standing
+          standing={frame < leaveAt}
           clock={clock}
           camera={camera}
-          // A luz fica parada até a deixa; nela, dá um tranco e passa a oscilar.
-          flicker={
-            1.7 * ramp(frame, glowAt, 0.3 * fps) -
-            0.7 * ramp(frame, glowAt + 0.3 * fps, 1 * fps)
-          }
-          passing={
-            frame >= passAt && frame < passAt + PASS_SECONDS * fps
-              ? linear(frame, passAt, PASS_SECONDS * fps)
-              : undefined
-          }
+          // A luz por baixo da porta passa a oscilar quando a câmera chega.
+          flicker={ramp(frame, BECOME.at + BECOME.frames, 0.5 * fps)}
           lamp={lampAt(seconds)}
-        />
+        >
+          <Place
+            x={DOOR.x}
+            y={DOOR.y + 108}
+            // A interrogação balança devagar, pendurada na dúvida.
+            style={{
+              rotate: `${4 * wave(seconds, 3.4, 0.2)}deg`,
+              scale: `${ON_DOOR}`,
+            }}
+          >
+            <Pop at={askAt} from={0.7} overshoot={1.08}>
+              <Label size="display" color={ink.moon}>
+                ?
+              </Label>
+            </Pop>
+          </Place>
+          <Place
+            x={DOOR.x}
+            y={DOOR.y - 104 + 5 * wave(seconds, 4.1)}
+            style={{ scale: `${ON_DOOR * (1 + 0.1 * beat)}` }}
+          >
+            <Pop at={answerAt}>
+              <div style={{ position: "relative", padding: 46 }}>
+                {/* O clarão atrás do medalhão: ele acende, e depois respira. */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    borderRadius: "50%",
+                    background: `radial-gradient(circle, ${ink.moon}CC 55%, transparent 70%)`,
+                    opacity:
+                      lit * (0.8 + 0.2 * wave(seconds, 2.2) + 0.2 * beat),
+                    scale: `${mix(0.6, 1, lit) * (1 + 0.04 * wave(seconds, 2.2) + 0.14 * beat)}`,
+                  }}
+                />
+                <div style={{ position: "relative" }}>
+                  <AnswerIcon answer="stock" size={MEDALLION} />
+                </div>
+              </div>
+            </Pop>
+          </Place>
+        </ShopFront>
       </Build>
       {shrinking ? (
         <IconRow
@@ -386,120 +437,30 @@ const DoorShot: React.FC<DoorShotProps> = ({ glowAt, passAt, clock }) => {
   );
 };
 
-const MEDALLION = 150;
-const CAMERA_SECONDS = 0.8;
-// A rua sai cedo e depressa: começa a descer estes quadros antes da troca e some neste tanto, antes
-// de a sala de `memory-test` subir. Na marcação do palco ela ainda descia três quadros depois da troca,
-// e a sala subia sobre ela.
-// A rua termina de descer no quadro em que `memory-test` chega: mais cedo, sobravam dez quadros só de céu.
-const STREET_OUT = { lead: 17, frames: 17 };
-
-type AnswerShotProps = {
-  /** Quadros do plano em que a interrogação entra, em que o medalhão acende e em que ele pulsa. */
-  readonly askAt: number;
-  readonly answerAt: number;
-  readonly pulseAt: number;
-  readonly clock: number;
-};
-
-/** De perto: a interrogação na porta e, sobre ela, o medalhão da caixa de estoque. */
-const AnswerShot: React.FC<AnswerShotProps> = ({
-  askAt,
-  answerAt,
-  pulseAt,
-  clock,
-}) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const length = useShotLength();
-  const seconds = (clock + frame) / fps;
-  const arrive = CAMERA_SECONDS * fps;
-  // O medalhão pulsa duas vezes, como um coração, e o clarão cresce com ele.
-  const beat =
-    flash(frame, pulseAt, 0.4 * fps) +
-    0.6 * flash(frame, pulseAt + 0.45 * fps, 0.4 * fps);
-  const lit = ramp(frame, answerAt, 0.4 * fps);
-  const built = useBuild();
-
+export const ButWhatScene: React.FC<SceneProps> = ({ scene, shots }) => {
+  const door = shots[1].from;
+  const pulseAt = cue(scene, "memória") - door;
   return (
-    <Build
-      {...built}
-      risen={1 - drop(frame, length - STREET_OUT.lead, STREET_OUT.frames)}
-    >
-      <ShopFront
-        halo={1}
-        time="night"
-        shutter={1}
-        busy
-        clock={clock}
-        lamp={lampAt(seconds)}
-        // Continua o plano anterior: a câmera parte de onde ele parou, chega à porta e segue chegando devagar.
-        camera={cameraBetween(
-          cameraBetween(DOOR_MEDIUM_END, FRONT_CLOSE, ramp(frame, 0, arrive)),
-          DOOR_CLOSE_END,
-          linear(frame, arrive, length - arrive),
-        )}
+    <>
+      <Shot range={shots[0]} name="os três jeitos riscados; a loja acende">
+        {/* O plano não tem frase própria: a porta acende quando a pergunta começa ("E o que..."). */}
+        <MapShot shopAt={cue(scene, "que")} clock={scene.from} />
+      </Shot>
+      <Shot
+        range={shots[1]}
+        name="o ícone vira a porta da loja; a interrogação e o medalhão"
       >
-        <Place
-          x={DOOR.x}
-          y={DOOR.y + 76}
-          // A interrogação balança devagar, pendurada na dúvida.
-          style={{ rotate: `${4 * wave(seconds, 3.4, 0.2)}deg` }}
-        >
-          <Pop at={askAt} from={0.7} overshoot={1.08}>
-            <Label size="display" color={ink.moon}>
-              ?
-            </Label>
-          </Pop>
-        </Place>
-        <Place
-          x={DOOR.x}
-          y={DOOR.y - 94 + 5 * wave(seconds, 4.1)}
-          style={{ scale: `${1 + 0.1 * beat}` }}
-        >
-          <Pop at={answerAt}>
-            <div style={{ position: "relative", padding: 46 }}>
-              {/* O clarão atrás do medalhão: ele acende, e depois respira. */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  borderRadius: "50%",
-                  background: `radial-gradient(circle, ${ink.moon}CC 55%, transparent 70%)`,
-                  opacity: lit * (0.8 + 0.2 * wave(seconds, 2.2) + 0.2 * beat),
-                  scale: `${mix(0.6, 1, lit) * (1 + 0.04 * wave(seconds, 2.2) + 0.14 * beat)}`,
-                }}
-              />
-              <div style={{ position: "relative" }}>
-                <AnswerIcon answer="stock" size={MEDALLION} />
-              </div>
-            </div>
-          </Pop>
-        </Place>
-      </ShopFront>
-    </Build>
+        <DoorShot
+          // A interrogação espera a câmera chegar à porta.
+          askAt={Math.max(
+            cue(scene, "parte") - door,
+            BECOME.at + BECOME.frames - 5,
+          )}
+          answerAt={pulseAt - ANSWER_BEFORE}
+          pulseAt={pulseAt}
+          clock={scene.from + door}
+        />
+      </Shot>
+    </>
   );
 };
-
-export const ButWhatScene: React.FC<SceneProps> = ({ scene, shots }) => (
-  <>
-    <Shot range={shots[0]} name="os três jeitos riscados; a loja acende">
-      <MapShot shopAt={cue(scene, "última")} clock={scene.from} />
-    </Shot>
-    <Shot range={shots[1]} name="o ícone vira a porta da loja, de noite">
-      <DoorShot
-        glowAt={cue(scene, "consegue") - shots[1].from}
-        passAt={cue(scene, "faz", 2) - shots[1].from}
-        clock={scene.from + shots[1].from}
-      />
-    </Shot>
-    <Shot range={shots[2]} name="a interrogação e o medalhão da caixa">
-      <AnswerShot
-        askAt={cue(scene, "está") - shots[2].from}
-        answerAt={cue(scene, "parte", 2) - shots[2].from}
-        pulseAt={cue(scene, "memória") - shots[2].from}
-        clock={scene.from + shots[2].from}
-      />
-    </Shot>
-  </>
-);

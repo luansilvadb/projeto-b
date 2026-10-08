@@ -66,7 +66,9 @@ export const measurePeakLoudness = async (file: string): Promise<number> => {
     "-i",
     file,
     "-af",
-    "ebur128=metadata=1,ametadata=mode=print:key=lavfi.r128.M:file=-",
+    // Sem completar os 400 ms, um efeito curto só produz a leitura inicial
+    // de −120,7 LUFS. O silêncio é só da medição; o arquivo não muda.
+    "apad=pad_dur=0.4,ebur128=metadata=1,ametadata=mode=print:key=lavfi.r128.M:file=-",
     "-f",
     "null",
     "-",

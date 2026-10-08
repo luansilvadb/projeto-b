@@ -25,7 +25,6 @@ import {
   Preluded,
   Sooner,
   flash,
-  shake,
   useCastScale,
 } from "./MaybeBrainScene";
 import { Drift } from "./SleepDebtScene";
@@ -38,17 +37,26 @@ const CLOSE_BOARD: Box = { x: -500, y: -330, width: 2100, height: 1220 };
 // Ele, ao lado do quadro: os pés, a altura e onde fica o nome.
 const HIM = { x: 330, y: 1040, height: 680, name: [124, -800] } as const;
 const RECALL_FOCUS = [1100, 520] as const;
-// Ele e o quadro já estão no lugar quando o nome dele soa.
+// Ele e o quadro já estão no lugar quando a fala começa.
 const RECALL_SOONER = 14;
+// A fala não diz mais o nome dele: a etiqueta entra com ele, no começo do plano, e não numa palavra.
+const NAME_AT = 3;
+const NAME_LEAVES_LATE = 6;
 const REACH_SECONDS = 0.6;
-// A câmera fecha no carimbo em 0,7 s; depois, a aproximação lenta continua pelos dois planos de perto.
-const CLOSING_SECONDS = 0.7;
+// A câmera fecha no carimbo em 0,4 s, antes de ele mudar; a aproximação lenta continua até o plano acabar.
+const CLOSING_SECONDS = 0.4;
 const CLOSE_FOCUS = [1000, 600] as const;
-const CLOSE_PUSH = 0.05;
-// O carimbo treme uma vez: quantos graus, quantas idas e voltas, em quantos quadros.
-const TREMBLE = { degrees: 5, turns: 2, frames: 14 };
-// O carimbo perde a cor em 1,5 s.
-const FADE_SECONDS = 1.5;
+const CLOSE_PUSH = 0.03;
+// O plano tem 1,7 s para três batidas, uma de cada vez: a câmera chega, o carimbo perde a cor, a interrogação
+// pequena estoura. A cor começa a sair com a câmera quase parada (`FADE_AT`) e sai a velocidade constante: com
+// a curva de peso, quase toda a mudança cabia em um terço da duração escrita. A interrogação vem com a cor já
+// fora, estes quadros depois, e assenta 0,3 s antes de o quadro encolher. Juntas no mesmo meio segundo, as
+// três não se liam: é o pagamento de "longe de ser um erro".
+const FADE_AT = 10;
+const FADE_FRAMES = 16;
+const QUESTION_AFTER = 15;
+// A interrogação cresce do nada, passa do tamanho e assenta: os quadros de cada trecho.
+const QUESTION_POP = [6, 4] as const;
 // O quadro-negro sai estes quadros depois da marcação: ainda encolhe quando a janela e a cama do
 // plano seguinte apontam. Na marcação ele sumia no quadro da troca, que ficava só com o fundo.
 const BOARD_LEAVES_LATE = 2;
@@ -72,14 +80,13 @@ const himAt = (box: Box) => {
 };
 
 type RecallShotProps = {
-  /** Quadros do plano em que o nome dele entra e em que ele ergue o braço para o quadro. */
-  readonly nameAt: number;
+  /** O quadro do plano em que ele ergue o braço para o quadro. */
   readonly reachAt: number;
   readonly clock: number;
 };
 
 /** O quadro-negro do gancho, com a árvore de olhos fechados e o carimbo, e quem disse a frase. */
-const RecallShot: React.FC<RecallShotProps> = ({ nameAt, reachAt, clock }) => {
+const RecallShot: React.FC<RecallShotProps> = ({ reachAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const stage = useStage();
@@ -127,14 +134,17 @@ const RecallShot: React.FC<RecallShotProps> = ({ nameAt, reachAt, clock }) => {
                 />
               </Stay>
             )}
-            {/* O nome sai com o plano, antes de a câmera fechar. */}
-            <Place x={HIM.x + HIM.name[0]} y={HIM.y + HIM.name[1]}>
-              <Pop at={nameAt}>
-                <Tag size="note" on="peach">
-                  Allan Rechtschaffen
-                </Tag>
-              </Pop>
-            </Place>
+            {/* O nome sai com o plano, antes de a câmera fechar: o mais tarde que cabe, porque o plano é
+                curto e é a etiqueta que liga o quadro ao gancho. */}
+            <LeavingLater by={NAME_LEAVES_LATE}>
+              <Place x={HIM.x + HIM.name[0]} y={HIM.y + HIM.name[1]}>
+                <Pop at={NAME_AT}>
+                  <Tag size="note" on="peach">
+                    Allan Rechtschaffen
+                  </Tag>
+                </Pop>
+              </Place>
+            </LeavingLater>
           </Drift>
         </Sooner>
       </FlatStage>
@@ -144,110 +154,77 @@ const RecallShot: React.FC<RecallShotProps> = ({ nameAt, reachAt, clock }) => {
 };
 
 type StampShotProps = {
-  /** O quadro do carimbo em que o plano começa: os dois planos de perto são um só, contados daqui. */
-  readonly from: number;
-  /** Quantos quadros duram os dois planos de perto, juntos. */
-  readonly span: number;
-  /** Quadros, na mesma contagem, em que o carimbo treme, em que perde a cor e em que a interrogação pequena estoura. */
-  readonly trembleAt: number;
+  /** O quadro do plano em que o carimbo começa a perder a cor. */
   readonly fadeAt: number;
-  readonly questionAt: number;
   /** Há quantos quadros ele está no palco, e o relógio da árvore. */
   readonly since: number;
   readonly clock: number;
-  /** O último dos dois planos: o quadro sai com ele. */
-  readonly last?: boolean;
 };
 
 /**
- * De perto, o carimbo "erro?" sobre a árvore: a câmera fecha nele, ele treme
- * uma vez; depois perde a cor aos poucos, a moldura fica tracejada, e sobra a
- * interrogação pequena ao lado do tronco. Os dois planos são o mesmo
- * enquadramento: um desenho só, contado do começo do primeiro.
+ * De perto, o carimbo "erro?" sobre a árvore: a câmera fecha nele, ele perde a
+ * cor e a moldura fica tracejada, e por fim estoura a interrogação pequena ao
+ * lado do tronco.
  */
-const StampShot: React.FC<StampShotProps> = ({
-  from,
-  span,
-  trembleAt,
-  fadeAt,
-  questionAt,
-  since,
-  clock,
-  last = false,
-}) => {
+const StampShot: React.FC<StampShotProps> = ({ fadeAt, since, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const stage = useStage();
-  const at = from + frame;
-  const seconds = (clock + at) / fps;
-  const closed = ramp(at, 0, CLOSING_SECONDS * fps);
+  const length = useShotLength();
+  const seconds = (clock + frame) / fps;
+  const closed = ramp(frame, 0, CLOSING_SECONDS * fps);
   const box = boardAt(closed);
   const him = himAt(box);
   const stamp = chalkStamp(CLOSE_BOARD);
-  const board = (
-    <Chalkboard
-      box={box}
-      stamp="full"
-      doze={seconds}
-      stampTilt={shake(
-        at,
-        trembleAt,
-        TREMBLE.frames,
-        TREMBLE.degrees,
-        TREMBLE.turns,
-      )}
-      stampPulse={flash(at, trembleAt, TREMBLE.frames)}
-      faded={ramp(at, fadeAt, FADE_SECONDS * fps)}
-      // A interrogação cresce do nada, passa do tamanho e assenta.
-      question={interpolate(
-        at,
-        [questionAt, questionAt + 8, questionAt + 12],
-        [0, 1.15, 1],
-        {
-          ...clamp,
-          easing: Easing.out(Easing.quad),
-        },
-      )}
-    />
-  );
+  const questionAt = fadeAt + QUESTION_AFTER;
 
   return (
     <>
       <FlatStage backdrop={<IdeaBackdrop hue="peach" spot={[0.5, 0.5]} />}>
-        {/* No primeiro dos dois planos, o seguinte assume o desenho ao chegar. No último, o quadro
-            ainda termina de encolher por baixo do plano da cama. */}
-        {stage.handedOver && !last ? null : (
-          <Drift focus={CLOSE_FOCUS} zoom={1 + (CLOSE_PUSH * 2 * at) / span}>
-            {last ? (
-              // O quadro já estava no palco: não entra. Sai encolhendo em volta do carimbo.
-              <Stay only="entering">
-                <LeavingLater by={BOARD_LEAVES_LATE}>
-                  <Cast origin={[stamp.x, stamp.y]}>
-                    <Stay>{board}</Stay>
-                  </Cast>
-                </LeavingLater>
-              </Stay>
-            ) : (
-              <Stay>
-                {board}
-                {/* Ele sai pela esquerda enquanto a câmera fecha no carimbo. */}
-                {closed < 1 ? (
-                  <>
-                    <SvgLayer>
-                      <IdeaShadow
-                        hue="peach"
-                        x={him.x}
-                        y={him.y + 6}
-                        width={(340 * him.height) / HIM.height}
-                      />
-                    </SvgLayer>
-                    <Researcher {...him} reach={1} since={since} />
-                  </>
-                ) : null}
-              </Stay>
-            )}
-          </Drift>
-        )}
+        <Drift focus={CLOSE_FOCUS} zoom={1 + (CLOSE_PUSH * frame) / length}>
+          {/* O quadro já estava no palco: não entra. Sai encolhendo em volta do carimbo, e ainda termina
+              de encolher por baixo do plano da cama. */}
+          <Stay only="entering">
+            <LeavingLater by={BOARD_LEAVES_LATE}>
+              <Cast origin={[stamp.x, stamp.y]}>
+                <Stay>
+                  <Chalkboard
+                    box={box}
+                    stamp="full"
+                    doze={seconds}
+                    faded={linear(frame, fadeAt, FADE_FRAMES)}
+                    question={interpolate(
+                      frame,
+                      [
+                        questionAt,
+                        questionAt + QUESTION_POP[0],
+                        questionAt + QUESTION_POP[0] + QUESTION_POP[1],
+                      ],
+                      [0, 1.15, 1],
+                      {
+                        ...clamp,
+                        easing: Easing.out(Easing.quad),
+                      },
+                    )}
+                  />
+                </Stay>
+              </Cast>
+            </LeavingLater>
+          </Stay>
+          {/* Ele sai pela esquerda enquanto a câmera fecha no carimbo. */}
+          {closed < 1 ? (
+            <Stay>
+              <SvgLayer>
+                <IdeaShadow
+                  hue="peach"
+                  x={him.x}
+                  y={him.y + 6}
+                  width={(340 * him.height) / HIM.height}
+                />
+              </SvgLayer>
+              <Researcher {...him} reach={1} since={since} />
+            </Stay>
+          ) : null}
+        </Drift>
       </FlatStage>
       <Grain />
     </>
@@ -286,7 +263,7 @@ export const SLEEPER_AT_HANDOVER = {
 };
 
 type AsleepShotProps = {
-  /** Quadros do plano em que o "ZZZ" sobe e em que a lua começa a passar pela janela. */
+  /** Quadros do plano em que a lua começa a passar pela janela e em que o "ZZZ" sobe. */
   readonly snoreAt: number;
   readonly moonAt: number;
   /** O quadro do vídeo em que o plano começa: o relógio da respiração, que continua na chamada. */
@@ -405,48 +382,34 @@ const AsleepShot: React.FC<AsleepShotProps> = ({ snoreAt, moonAt, clock }) => {
  * O plano que abre a cena, antes de qualquer deixa: o último plano de
  * `what-it-is` o desenha com `Prelude`, e ele e o quadro-negro já crescem enquanto os três encolhem. `clock` é o quadro do vídeo em que a cena começa.
  */
-/** Quantos quadros antes da cena ele e o quadro-negro começam a crescer: antes disso a linha do tempo ainda está encolhendo. */
-export const RECALL_LEAD = 5;
+/** Quantos quadros antes da cena ele e o quadro-negro começam a crescer, com a linha do tempo ainda encolhendo: mais tarde que isto (eram 5), dois quadros ficavam só com o fundo do mar e um resto da linha. */
+export const RECALL_LEAD = 7;
 
 export const TonightOpening: React.FC<{ clock: number }> = ({ clock }) => (
-  <RecallShot nameAt={NEVER} reachAt={NEVER} clock={clock} />
+  <RecallShot reachAt={NEVER} clock={clock} />
 );
 
-export const TonightScene: React.FC<SceneProps> = ({ scene, shots }) => {
-  const stampFrom = shots[1].from;
-  const close = {
-    span: shots[2].to - stampFrom,
-    trembleAt: cue(scene, "erro") - stampFrom,
-    fadeAt: cue(scene, "erro", 2) - stampFrom,
-    questionAt: cue(scene, "longe") - stampFrom,
-    since: stampFrom,
-    clock: scene.from + stampFrom,
-  };
-  return (
-    <>
-      <Shot range={shots[0]} name="o quadro-negro do gancho">
-        <Preluded lead={RECALL_LEAD}>
-          <RecallShot
-            nameAt={cue(scene, "Réctchafen")}
-            reachAt={cue(scene, "dizia")}
-            clock={scene.from}
-          />
-        </Preluded>
-      </Shot>
-      <Shot range={shots[1]} name="o carimbo, de perto">
-        <StampShot from={0} {...close} />
-      </Shot>
-      <Shot range={shots[2]} name="o carimbo perde a cor">
-        {/* Continua o plano anterior, no mesmo enquadramento: parte de onde ele parou. */}
-        <StampShot from={shots[2].from - stampFrom} last {...close} />
-      </Shot>
-      <Shot range={shots[3]} name="um bom sono">
-        <AsleepShot
-          snoreAt={cue(scene, "dormir") - shots[3].from}
-          moonAt={cue(scene, "terço") - shots[3].from}
-          clock={scene.from + shots[3].from}
-        />
-      </Shot>
-    </>
-  );
-};
+export const TonightScene: React.FC<SceneProps> = ({ scene, shots }) => (
+  <>
+    <Shot range={shots[0]} name="o quadro-negro do gancho">
+      <Preluded lead={RECALL_LEAD}>
+        <RecallShot reachAt={cue(scene, "parece")} clock={scene.from} />
+      </Preluded>
+    </Shot>
+    <Shot range={shots[1]} name="o carimbo perde a cor">
+      {/* A deixa do plano, "erro", é a da cor que sai: começa quando a câmera já chega. */}
+      <StampShot
+        fadeAt={FADE_AT}
+        since={shots[1].from}
+        clock={scene.from + shots[1].from}
+      />
+    </Shot>
+    <Shot range={shots[2]} name="um bom sono">
+      <AsleepShot
+        moonAt={cue(scene, "noite") - shots[2].from}
+        snoreAt={cue(scene, "seja") - shots[2].from}
+        clock={scene.from + shots[2].from}
+      />
+    </Shot>
+  </>
+);

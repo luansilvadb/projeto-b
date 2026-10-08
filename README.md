@@ -1,6 +1,6 @@
 # projeto-b
 
-Vídeos educativos de ciência em motion graphics feitos em código. O Claude Code pesquisa, escreve, narra, anima, sonoriza e renderiza; uma pessoa decide o que o vídeo quer dizer, julga o que só o olho e o ouvido julgam, e publica.
+Vídeos educativos de ciência em motion graphics feitos em código. Os agentes pesquisam, escrevem, narram, animam, sonorizam e renderizam; uma pessoa decide o que o vídeo quer dizer, julga o que só o olho e o ouvido julgam, e publica.
 
 Tudo roda na máquina local, sem serviço pago: [Remotion](https://www.remotion.dev) para a animação, OmniVoice para a voz clonada, Whisper para conferir a fala, ACE-Step 1.5 para a trilha e o CDX23 (um Demucs) para medir o som. Os pesos do OmniVoice são de uso não comercial (CC-BY-NC).
 
@@ -22,9 +22,107 @@ Para buscar efeitos sonoros no [Freesound](https://freesound.org), copie `.env.e
 
 Para narrar com a sua voz, grave de 5 a 10 segundos em ambiente silencioso e salve em `voice/reference.wav`. Sem esse arquivo a narração não roda.
 
+### Links simbólicos no Windows
+
+Os caminhos de compatibilidade dos agentes são links relativos: `.claude` aponta para `.agents`, e `CLAUDE.md` aponta para `AGENTS.md`. No Windows, habilite o Modo de Desenvolvedor nas configurações do sistema ou use uma conta com permissão para criar links simbólicos. O Git também precisa de `core.symlinks=true` ao materializar o checkout.
+
+Para um clone novo, substitua `URL_DO_REPOSITORIO` pelo endereço do repositório:
+
+```powershell
+git -c core.symlinks=true clone URL_DO_REPOSITORIO projeto-b
+Set-Location projeto-b
+git config --local core.symlinks true
+Get-Item -Force -LiteralPath .claude,CLAUDE.md | Select-Object Name,LinkType,Target
+```
+
+O resultado deve mostrar `SymbolicLink` com destinos `.agents` e `AGENTS.md`, sem caminho absoluto. A configuração local vale só para este checkout; não é necessário alterar a configuração global do Git.
+
+Se o clone foi feito com suporte a symlinks desabilitado, os dois caminhos podem ser arquivos de texto contendo apenas seus destinos. Habilitar a opção depois não os converte automaticamente. Na raiz do checkout, confira primeiro que `.agents` e `AGENTS.md` contêm o conhecimento completo. O trecho abaixo só remove os dois arquivos de texto com os destinos esperados; interrompe se encontrar diretórios, links existentes ou outro conteúdo:
+
+```powershell
+$ErrorActionPreference = 'Stop'
+if (-not (Test-Path -LiteralPath .agents -PathType Container) -or
+    -not (Test-Path -LiteralPath AGENTS.md -PathType Leaf)) {
+    throw 'Os destinos canônicos precisam existir antes da recuperação.'
+}
+foreach ($entry in @(
+    @{ Path = '.claude'; Target = '.agents' }
+    @{ Path = 'CLAUDE.md'; Target = 'AGENTS.md' }
+)) {
+    $item = Get-Item -Force -LiteralPath $entry.Path
+    if ($item.PSIsContainer -or $item.LinkType -or
+        (Get-Content -Raw -LiteralPath $entry.Path).Trim() -ne $entry.Target) {
+        throw "Preserve $($entry.Path): não é o arquivo de texto esperado."
+    }
+}
+git config --local core.symlinks true
+Remove-Item -LiteralPath .claude,CLAUDE.md
+New-Item -ItemType SymbolicLink -Path .claude -Target .agents
+New-Item -ItemType SymbolicLink -Path CLAUDE.md -Target AGENTS.md
+Get-Item -Force -LiteralPath .claude,CLAUDE.md | Select-Object Name,LinkType,Target
+```
+
+Se a criação for recusada, corrija a permissão de links e repita a criação dos links faltantes. Preserve sempre os destinos canônicos; os links não exigem cópias nem sincronização de arquivos.
+
+## Conhecimento dos agentes
+
+`.agents/` é a fonte canônica do conhecimento local: `skills/` guarda os workflows e suas unidades, `agents/` guarda as oito definições de especialistas e `commands/opsx/` guarda os seis comandos do Claude. As instruções compartilhadas ficam em `AGENTS.md` na raiz. Edite os destinos canônicos; `.claude` e `CLAUDE.md` são apenas os links de compatibilidade descritos acima.
+
+As 12 skills locais são `creator`, `diretor-criativo`, `diretor-de-arte`, `diretor-de-som`, `grilling`, `producao`, `openspec-apply-change`, `openspec-archive-change`, `openspec-explore`, `openspec-propose`, `openspec-sync-specs` e `openspec-update-change`.
+
+O Codex descobre as skills em `.agents/skills/` e lê `AGENTS.md`; o Claude Code acessa o mesmo conteúdo pelos links. As definições Markdown de especialistas e os comandos `/opsx:*` mantêm o formato do Claude: centralizá-los não os registra automaticamente como subagentes ou comandos nativos do Codex. Skills globais externas, como `ponytail` e `remotion-best-practices`, continuam em suas instalações fora do projeto. Depois da migração, abra novas sessões para carregar o novo inventário.
+
+### Conhecimento global compartilhado
+
+A instalação pessoal é separada do repositório: `~/.agents/skills/<nome>/` é a fonte física das skills globais compartilhadas. O Codex as descobre nesse diretório; o Claude Code acessa cada uma por um link simbólico relativo em `~/.claude/skills/<nome>`, com destino `../../.agents/skills/<nome>`. No PowerShell, o destino aparece com barras invertidas, equivalentes às barras desses caminhos.
+
+As dez skills pessoais compartilhadas são `find-skills`, `skill-creator`, `grilling`, `ponytail`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help`, `ponytail-review` e `remotion-best-practices`. Elas continuam externas ao projeto; o conteúdo técnico da skill de Remotion é mantido pela origem, não editado à mão. A `grilling` global pessoal está em `.agents/skills`, sem outra instalação pessoal em `.codex/skills/grilling`.
+
+As pastas globais `.claude`, `.codex` e suas raízes de skills continuam físicas. Cada aplicativo mantém sua própria `skills/synced`, inclusive as versões específicas de navegador e computador; plugins, skills de sistema, ChatCut, lixeiras e metadados dos instaladores ficam nos caminhos gerenciados pelo aplicativo. As versões locais e gerenciadas podem ter o mesmo nome de uma skill pessoal: elas não são fundidas por esta organização.
+
+Edite a fonte em `~/.agents/skills/`. Para instalar uma skill pessoal nova, coloque ali o diretório completo e crie somente o link individual correspondente no Claude. Não substitua uma entrada existente antes de comparar e preservar seu conteúdo. Depois de atualizar por um instalador, confira se ele preservou os links ou recriou uma cópia física; reconcilie a cópia antes de restabelecer o link. Os scripts de avaliação de `skill-creator` ainda dependem de `claude -p`, mesmo quando a skill é consultada pelo Codex.
+
+Para conferir os links pessoais no Windows:
+
+```powershell
+$personalSkills = @('find-skills', 'skill-creator', 'grilling', 'ponytail',
+    'ponytail-audit', 'ponytail-debt', 'ponytail-gain', 'ponytail-help',
+    'ponytail-review', 'remotion-best-practices')
+$skillLinks = $personalSkills | ForEach-Object {
+    Join-Path $env:USERPROFILE ".claude/skills/$_"
+}
+Get-Item -Force -LiteralPath $skillLinks | Select-Object Name,LinkType,Target
+```
+
+Cada entrada deve mostrar `SymbolicLink` para `../../.agents/skills/<nome>`, nunca uma segunda pasta mantida. Links globais exigem a mesma permissão do Windows explicada acima, mas não dependem de uma configuração do Git.
+
+As instruções globais têm uma única fonte regular em `~/.agents/AGENTS.md`, separada do `AGENTS.md` deste repositório:
+
+| Caminho lido pelo cliente | Destino relativo do link |
+| ------------------------ | ------------------------ |
+| `~/.codex/AGENTS.md` | `../.agents/AGENTS.md` |
+| `~/.claude/CLAUDE.md` | `../.agents/AGENTS.md` |
+
+Edite a fonte global para orientações que valem em todos os projetos; as regras de produção deste repositório continuam no arquivo local. Os dois arquivos globais anteriores estavam vazios, então a fonte inicial só explica essa organização. No Codex, um `AGENTS.override.md` não vazio no diretório global tem precedência; com `CODEX_HOME` definido, confira os arquivos nesse diretório efetivo. Não remova um override sem preservar e revisar suas instruções.
+
+```powershell
+$codexRoot = if ($env:CODEX_HOME) { $env:CODEX_HOME } else {
+    Join-Path $env:USERPROFILE '.codex'
+}
+$globalInstructionLinks = @(
+    (Join-Path $codexRoot 'AGENTS.md'),
+    (Join-Path $env:USERPROFILE '.claude/CLAUDE.md')
+)
+Get-Item -Force -LiteralPath $globalInstructionLinks | Select-Object FullName,LinkType,Target
+```
+
+Os dois resultados devem ser `SymbolicLink` para `../.agents/AGENTS.md` nesta instalação. Essa compatibilidade é para Codex e Claude Code locais; não presume o carregamento de links de instruções ou skills pessoais em Cowork ou sessões na nuvem. Abra novas sessões para conferir as fontes das instruções e o inventário de skills; ler o mesmo arquivo pelos links é uma conferência estrutural, não prova de descoberta no cliente.
+
+A migração global guarda o inventário, hashes, origens e referências anteriores em `out/rascunho/unificar-instrucoes-globais-em-agents/`. O `verification.md` dessa pasta descreve os resultados e a reversão seletiva: remova somente os links, sem percorrer seus destinos, e restaure as entradas envolvidas a partir do backup conferido. Preserve edições posteriores nas fontes; não restaure pastas globais inteiras nem use `git reset --hard`. A bancada é temporária: mantenha o backup enquanto precisar dessa reversão e descarte-o quando ela não for mais necessária.
+
 ## Trabalhos, donos e artefatos
 
-Cada artefato de um vídeo tem um dono: uma skill do Claude Code em `.claude/skills/`, que guarda o procedimento de cada trabalho em `etapas/`.
+Cada artefato de um vídeo tem um dono: uma skill compartilhada pelos agentes em `.agents/skills/`, que guarda o procedimento de cada trabalho em `etapas/`.
 
 | Trabalho           | Dono               | Artefatos                                                         | Procedimentos (`etapas/`)                                   | Comandos                                                      | Dependências reais comuns                                              |
 | ------------------ | ------------------ | ----------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------- |
@@ -38,13 +136,19 @@ Cada artefato de um vídeo tem um dono: uma skill do Claude Code em `.claude/ski
 
 **Esses trabalhos se relacionam por dependências de artefato, não por uma fila fixa; uma prova visual, sonora ou factual pode acontecer cedo se resolver a maior incerteza atual.** A tabela não é ordem, e nenhum trabalho espera o aceite de outro. As dependências que existem são concretas: a voz precisa de um `script.json` válido, com `shots` em toda cena; a composição só monta com a narração gravada; o movimento fino precisa do tempo real da fala; a trilha sincronizada, da duração de cada cena; um efeito, do instante da ação; a montagem, do que vai ser montado; a descrição, das fontes e do texto atual. Um ajuste num vídeo pronto vai direto à skill dona do artefato, e quando a mudança pedida é de outro artefato, ela pertence ao dono dele.
 
-São quatro skills, uma por dono de artefato: `diretor-criativo` (o texto: pesquisa, ângulo, estrutura e roteiro), `diretor-de-arte` (a imagem e o movimento: elenco, paletas, a divisão de cada cena em planos, desenho, composição e animação), `diretor-de-som` (tudo que se ouve além da voz: a música, os níveis, os silêncios e os efeitos sonoros) e `producao` (a voz e o arquivo final: narração, a operação das ferramentas de som, a montagem e a descrição de publicação). Em cada uma, `SKILL.md` leva do pedido ao trabalho e ao que ler; os arquivos de `etapas/` dizem como fazer cada trabalho neste repositório; as unidades, nas outras pastas, guardam o conhecimento do estilo. O roteiro é o artefato em que as skills se cruzam: o `diretor-criativo` aciona o `diretor-de-arte` (`etapas/decupagem.md`) cedo, para uma prova visual, quando o texto depende de uma imagem incerta, e para os planos de todas as cenas, que o `pnpm narrate` exige; o `diretor-de-som` (`etapas/arco-de-som.md`) entra quando um silêncio muda o tempo do vídeo e sai mais barato decidido antes da voz. As skills dirigem na conversa; os especialistas que levantam, executam e julgam são subagentes em `.claude/agents/`, acionados por elas e sem o contexto de quem fez o trabalho: `pesquisador`, `checador` e `editor` (do `diretor-criativo`; o `checador` volta na montagem do arquivo final, acionado pela `producao`), `ilustrador`, `motion-designer`, `critico-de-quadro` e `critico-de-movimento` (do `diretor-de-arte`), `critico-de-som` (do `diretor-de-som`). A skill `remotion-best-practices` vem do Remotion, é atualizada com ele e fica fora do repositório, em `~/.claude/skills/` (global do Claude Code).
+São quatro skills, uma por dono de artefato: `diretor-criativo` (o texto: pesquisa, ângulo, estrutura e roteiro), `diretor-de-arte` (a imagem e o movimento: elenco, paletas, a divisão de cada cena em planos, desenho, composição e animação), `diretor-de-som` (tudo que se ouve além da voz: a música, os níveis, os silêncios e os efeitos sonoros) e `producao` (a voz e o arquivo final: narração, a operação das ferramentas de som, a montagem e a descrição de publicação). Em cada uma, `SKILL.md` leva do pedido ao trabalho e ao que ler; os arquivos de `etapas/` dizem como fazer cada trabalho neste repositório; as unidades, nas outras pastas, guardam o conhecimento do estilo. O roteiro é o artefato em que as skills se cruzam: o `diretor-criativo` aciona o `diretor-de-arte` (`etapas/decupagem.md`) cedo, para uma prova visual, quando o texto depende de uma imagem incerta, e para os planos de todas as cenas, que o `pnpm narrate` exige; o `diretor-de-som` (`etapas/arco-de-som.md`) entra quando um silêncio muda o tempo do vídeo e sai mais barato decidido antes da voz. As skills dirigem na conversa; os especialistas que levantam, executam e julgam são subagentes em `.agents/agents/`, acionados por elas e sem o contexto de quem fez o trabalho: `pesquisador`, `checador` e `editor` (do `diretor-criativo`; o `checador` volta na montagem do arquivo final, acionado pela `producao`), `ilustrador`, `motion-designer`, `critico-de-quadro` e `critico-de-movimento` (do `diretor-de-arte`), `critico-de-som` (do `diretor-de-som`). A skill `remotion-best-practices` vem do Remotion, é atualizada com ele e fica fora do repositório, em `~/.agents/skills/` (global compartilhada pelos agentes).
 
 Outros comandos: `pnpm dev` abre o Remotion Studio, `pnpm lint` checa tipos e estilo, `pnpm test` roda os testes do código e das ferramentas Python, `pnpm critique <vídeo>` mede o render (movimento, área com desenho e cor) contra a faixa de 12 vídeos de referência, e com `som` no fim mede o som (nível, continuidade e unidade da música, e quantidade de efeitos) contra a faixa dos mesmos 12, `pnpm eval:voice` compara a configuração da voz com variações dela em 16 frases fixas (naturalidade, entonação, altura, cortes e erros de pronúncia), `pnpm scene <vídeo> <id>` renderiza só uma cena, `pnpm join <vídeo>` monta o vídeo inteiro com as cenas já renderizadas e o som, `pnpm sound <vídeo> out/<vídeo>/<vídeo>.som.mp3` renderiza só o som do vídeo, `pnpm sfx "<busca>"` lista efeitos sonoros CC0 do Freesound e `pnpm sfx <id>` baixa o escolhido.
 
 ## Onde fica cada coisa
 
 ```
+.agents/skills/     skills locais e suas unidades de conhecimento
+.agents/agents/     definições Markdown dos especialistas do Claude
+.agents/commands/   comandos do Claude (opsx/)
+AGENTS.md           instruções compartilhadas dos agentes
+.claude             link relativo para .agents
+CLAUDE.md           link relativo para AGENTS.md
 src/design/          direção de arte: paleta, tipografia, formas e movimento
 src/components/      primitivos visuais reutilizáveis
 src/art/             desenhos feitos em código
@@ -90,4 +194,5 @@ out/rascunho/              o que não tem lugar acima; pode ser apagada inteira
 - A duração de cada cena vem da narração. Cenas não têm durações fixas.
 - A cena é a unidade da fala; a da imagem é o plano. Cada cena do roteiro lista os seus planos (`shots`), e cada plano começa numa palavra da narração.
 - O som além da voz é dado do roteiro, e nenhuma cena toca som: a trilha, os momentos dela, os níveis e os silêncios ficam em `music`, e os efeitos, em `sfx`. O volume de cada um é uma distância em dB abaixo da voz (`src/audio/ducking.ts` e `src/audio/sfx.ts`), nunca um número ajustado à mão.
+  Um efeito usa a palavra `cue`, o começo do plano `shot` ou o começo da cena. Com `at: "end"`, usa o fim do plano indicado ou, sem `shot`, o fim da cena; não combina com `cue`. O `offsetMs` desloca dessa âncora até a ação, inclusive para antes do fim.
 - As versões do Remotion são fixas e iguais em todos os pacotes `@remotion/*`; atualize com `pnpm run upgrade`.

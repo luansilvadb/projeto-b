@@ -109,13 +109,15 @@ type MusicSilenceSpec = {
 /**
  * Um efeito sonoro do vídeo. Toca na palavra `cue` da cena (a `occurrence`
  * quando ela se repete), ou no começo do plano `shot` (contado a partir de
- * 1), ou no começo da cena; `offsetMs` desloca o som para antes ou depois.
+ * 1), ou no começo da cena. `at: "end"` usa o fim do plano ou da cena;
+ * `offsetMs` desloca o som para antes ou depois.
  */
 export type SfxSpec = {
   readonly scene: string;
   readonly cue?: string;
   readonly occurrence?: number;
   readonly shot?: number;
+  readonly at?: "end";
   readonly offsetMs?: number;
   /** Um uso do catálogo (src/audio/sfx.ts). */
   readonly name: SfxName;
@@ -514,6 +516,12 @@ const findSfxProblems = (
     }
     if (effect.cue !== undefined && effect.shot !== undefined) {
       problems.push(`"${label}": use "cue" ou "shot", não os dois`);
+    }
+    if (effect.at !== undefined && effect.at !== "end") {
+      problems.push(`"${label}.at" precisa ser "end"`);
+    }
+    if (effect.cue !== undefined && effect.at !== undefined) {
+      problems.push(`"${label}": use "cue" ou "at", não os dois`);
     }
     if (effect.cue !== undefined && !isFilledString(effect.cue)) {
       problems.push(`"${label}.cue" precisa ser uma palavra da narração`);

@@ -47,15 +47,16 @@ import { Grow } from "./SleepDebtScene";
 import { grown } from "../../../components/Pop";
 
 /**
- * O resumo dos três jeitos de escapar. No primeiro plano, a fila dos ícones
- * pequena no alto e, embaixo dela, as três molduras já reservadas, apagadas,
- * cada uma com o número do jeito. Depois a fila sai por cima, as três crescem
- * lado a lado e cada uma acende e se enche quando o jeito dela é dito: a fala
- * só lista os jeitos, e quem lembra o resultado de cada um é a moldura. No
- * fim, as três ficam em cima e o pedestal "acordado 24 h" continua vazio.
+ * O resumo dos três jeitos de escapar, que a fala não lista mais: a tela
+ * carrega tudo. O primeiro plano abre com a fila dos ícones pequena no alto e,
+ * embaixo dela, as três molduras já reservadas, apagadas, cada uma com o
+ * número do jeito. Com a fila assentada, o despertador ganha o X, sozinho; só
+ * então a fila sai por cima, e as três crescem lado a lado e acendem uma a uma, depressa, cada uma
+ * com o resultado do jeito dela. No segundo plano as três ficam em cima e o
+ * pedestal "acordado 24 h" continua vazio.
  *
- * Os três planos são um palco só: cada um parte do arranjo em que o anterior
- * terminou, e quem desenha o que os dois têm em comum é sempre o plano novo.
+ * Os dois planos são um palco só: o segundo parte do arranjo em que o primeiro
+ * terminou, e quem desenha o que os dois têm em comum é o plano novo.
  */
 
 /** Tamanho de uma moldura em escala 1; a terceira é mais larga, porque guarda duas lembranças. */
@@ -83,8 +84,10 @@ const RESERVED_Y = 660;
 const LISTED = { y: 556, scale: 0.84 };
 
 /**
- * O arranjo de cada plano. A fila só fica no primeiro: com ela, as molduras
- * cheias somavam nove textos à vista.
+ * Os três arranjos das molduras: reservadas sob a fila, com que o primeiro
+ * plano abre; lado a lado, na largura do quadro, em que ele as acende; e no
+ * alto, sobre o pedestal, no segundo. A fila sai antes de elas acenderem: com
+ * ela, as molduras cheias somavam nove textos à vista.
  */
 const LAYOUTS: readonly Layout[] = [
   {
@@ -96,7 +99,7 @@ const LAYOUTS: readonly Layout[] = [
     focus: [960, 560],
   },
   {
-    // As três à vista do começo ao fim do plano: a fala passa por elas em quatro segundos, e não há tempo de ir de uma a outra.
+    // As três à vista de uma vez: acendem em pouco mais de um segundo, e não há tempo de ir de uma a outra.
     panels: [
       { x: 325, y: LISTED.y, scale: LISTED.scale },
       { x: 818, y: LISTED.y, scale: LISTED.scale },
@@ -140,8 +143,6 @@ const WAITING = 0.38;
 const HOVER = { pixels: 7, seconds: 3.2 };
 // Em quantos quadros uma moldura acende.
 const LIGHT_FRAMES = 10;
-// A primeira acende na deixa do plano, que é o quadro 0 dele: espera estes quadros, para a fila já estar saindo.
-const LIT_FROM = 3;
 // Quantos quadros depois de acender o que a moldura guarda começa a entrar.
 const ENTER_AFTER = 2;
 
@@ -526,10 +527,18 @@ export const RECAP_LEAD = 8;
 const ROW_IN = { at: -3 - RECAP_LEAD, step: 2, each: 8 };
 // As molduras entram logo depois, uma a uma.
 const PANELS_IN = { at: 2 - RECAP_LEAD, step: 3, each: 10 };
-// Na terceira moldura, o relógio "14 h" estoura estes quadros depois de a cama entrar.
-const CLOCK_AFTER = 9;
-// Os três X piscam juntos: quanto os ícones crescem, e por quantos quadros, duas vezes.
-const BLINK = { grow: 0.14, frames: 9, gap: 11 };
+// O primeiro plano não tem deixa (a fala é "Para a pergunta do começo, a resposta é que"): as batidas dele,
+// em quadros. A fila e as molduras assentam, com o despertador aceso e parado; ele ganha o X, sozinho (os três
+// X piscando juntos em seguida não se distinguiam, e o X caía no meio da chegada); só com o X posto a fila
+// sai por cima e as molduras crescem (`grow`, em `growFrames`); as molduras acendem a 0,2 s uma da outra, e a
+// cama entra depois do disco. Tudo assentado 0,8 s antes de "nenhum", que abre o plano do pedestal.
+const BEATS = {
+  cross: 16,
+  grow: 28,
+  growFrames: 18,
+  panels: [31, 37, 43],
+  bed: 49,
+} as const;
 // O último plano: o pedestal sobe de baixo do quadro, e a lupa vem do alto e pousa ao lado dele.
 const RISE = { at: 3, frames: 21, from: 560 };
 const LAND = { frames: 17, from: [640, -420], tilt: -28 } as const;
@@ -614,33 +623,31 @@ export const RecapPrelude: React.FC<RecapPreludeProps> = ({ until, clock }) => {
 };
 
 type Marks = {
-  /** Quadros do plano em que o despertador ganha o X e em que os três X piscam (plano 1). */
+  /** Quadro do plano em que o despertador ganha o X (plano 1). */
   readonly crossAt?: number;
-  readonly blinkAt?: number;
-  /** Quadros do plano em que cada moldura acende e se enche, na ordem da fala (plano 2). */
+  /** Quadros do plano em que cada moldura acende e se enche, da esquerda para a direita (plano 1). */
   readonly panelsAt?: readonly [number, number, number];
-  /** Quadros do plano em que a cama entra na terceira moldura, depois do disco (plano 2). */
+  /** Quadros do plano em que a cama entra na terceira moldura, depois do disco (plano 1). */
   readonly bedAt?: number;
-  /** Quadros do plano em que a lupa pousa e em que o foco de luz acende (plano 3). */
+  /** Quadros do plano em que a lupa pousa e em que o foco de luz acende (plano 2). */
   readonly lensAt?: number;
   readonly lightAt?: number;
 };
 
 type RecapShotProps = Marks & {
-  /** O plano da cena, de 0 a 2: diz o arranjo e de qual arranjo ele vem. */
-  readonly shot: number;
+  /** O plano do pedestal, o último; sem isso, o da fila e das molduras. */
+  readonly last?: boolean;
   /** O quadro da cena, e o do vídeo, em que o plano começa. */
   readonly clock: number;
   readonly videoClock: number;
 };
 
-/** A fila, as molduras e, no fim, o pedestal: o mesmo palco nos três planos, em arranjos diferentes. */
+/** A fila, as molduras e, no fim, o pedestal: o mesmo palco nos dois planos, em arranjos diferentes. */
 const RecapShot: React.FC<RecapShotProps> = ({
-  shot,
+  last = false,
   clock,
   videoClock,
   crossAt,
-  blinkAt,
   panelsAt,
   bedAt = ALREADY_SHOWN,
   lensAt,
@@ -651,21 +658,18 @@ const RecapShot: React.FC<RecapShotProps> = ({
   const length = useShotLength();
   const stage = useStage();
   const seconds = (videoClock + frame) / fps;
-  const last = shot === LAYOUTS.length - 1;
-  const to = LAYOUTS[shot];
-  // O plano parte de onde a deriva do anterior terminou, e deriva ele mesmo até o fim.
-  const from =
-    shot === 0
-      ? to.panels
-      : LAYOUTS[shot - 1].panels.map((slot) =>
-          pushed(slot, LAYOUTS[shot - 1].focus, DRIFT),
-        );
-  // As molduras vão de um arranjo ao outro no começo do plano, com peso: crescem quando a fila sai, recuam quando o pedestal sobe.
-  const moved = shot === 0 ? 1 : ramp(frame, 0, (last ? 0.8 : 0.6) * fps);
+  const to = LAYOUTS[last ? 2 : 1];
+  // O primeiro plano parte das molduras reservadas; o último, de onde a deriva do primeiro terminou.
+  const from = last
+    ? LAYOUTS[1].panels.map((slot) => pushed(slot, LAYOUTS[1].focus, DRIFT))
+    : LAYOUTS[0].panels;
+  // As molduras vão de um arranjo ao outro com peso: crescem quando a fila sai, recuam quando o pedestal sobe.
+  const moved = last
+    ? ramp(frame, 0, 0.8 * fps)
+    : ramp(frame, BEATS.grow, BEATS.growFrames);
   const drifting = DRIFT * linear(frame, 0, length);
-  // No segundo plano cada moldura acende na palavra do jeito dela; no último, as três já estão acesas.
-  const litAt = (index: number) =>
-    panelsAt === undefined ? undefined : Math.max(LIT_FROM, panelsAt[index]);
+  // No primeiro plano cada moldura acende na vez dela; no último, as três já estão acesas.
+  const litAt = (index: number) => panelsAt?.[index];
   const lit = (index: number) => {
     const at = litAt(index);
     return last ? 1 : at === undefined ? 0 : ramp(frame, at, LIGHT_FRAMES);
@@ -684,28 +688,10 @@ const RecapShot: React.FC<RecapShotProps> = ({
   });
   // A resposta é outra ideia: o fundo passa ao menta do gancho, onde o pedestal nasceu.
   const answer = last ? ramp(frame, 0, 0.8 * fps) : 0;
-  // A fila: pulsa no alto, o despertador ganha o X, os três X piscam juntos; no segundo plano, sai por cima.
+  // A fila: pulsa no alto, o despertador ganha o X, e ela sai por cima.
   const life = rowLife((clock + frame) / fps);
   const crossed = crossAt === undefined || frame >= crossAt;
-  const blink =
-    blinkAt === undefined
-      ? 0
-      : BLINK.grow *
-        ([0, BLINK.gap] as const)
-          .map((delay) =>
-            interpolate(
-              frame - blinkAt - delay,
-              [0, 3, BLINK.frames],
-              [0, 1, 0],
-              clamp,
-            ),
-          )
-          .reduce((sum, part) => sum + part, 0);
-  const present = shot === 0 ? rowPresent(frame) : {};
-  const rowY =
-    shot === 0
-      ? ROW_TOP.y
-      : mix(ROW_TOP.y, ROW_GONE_Y, ramp(frame, 0, 0.4 * fps));
+  const rowY = mix(ROW_TOP.y, ROW_GONE_Y, ramp(frame, BEATS.grow, 0.4 * fps));
   const memories = [
     <ElephantMemory
       key="elephant"
@@ -726,8 +712,8 @@ const RecapShot: React.FC<RecapShotProps> = ({
       litAt={litAt(2)}
       discAt={enterAt(2)}
       bedAt={bedAt}
-      // O relógio é a segunda informação da cama: estoura quando ela assenta.
-      clockAt={bedAt + CLOCK_AFTER}
+      // O relógio entra com a cama: depois dela, era o último a chegar e o menor texto do quadro.
+      clockAt={bedAt}
     />,
   ];
   // O pedestal sobe de baixo do quadro; a lupa vem do alto, pousa ao lado dele e fica pairando.
@@ -765,17 +751,15 @@ const RecapShot: React.FC<RecapShotProps> = ({
           </AbsoluteFill>
         </AbsoluteFill>
       ) : null}
-      {/* A fila sai pelo alto no começo do segundo plano, e não volta. */}
-      {shot === 0 || (shot === 1 && rowY > ROW_GONE_Y) ? (
+      {/* A fila sai pelo alto quando as molduras crescem, e não volta. */}
+      {!last && rowY > ROW_GONE_Y ? (
         <IconRow
           x={ROW_TOP.x}
           y={rowY}
           scale={ROW_TOP.scale}
           hue={ROW_HUE}
           // Ela entra sobre o menta da conta de Gardner: os ícones apagados passam ao lilás junto com o fundo.
-          tint={
-            shot === 0 ? { from: "mint", progress: stage.enter() } : undefined
-          }
+          tint={{ from: "mint", progress: stage.enter() }}
           states={{
             eyes: "check",
             ruler: "cross",
@@ -788,16 +772,11 @@ const RecapShot: React.FC<RecapShotProps> = ({
               ? { alarm: { from: "on", progress: ramp(frame, crossAt, 9) } }
               : {}
           }
-          present={present}
+          present={rowPresent(frame)}
           motion={life.motion}
           lift={life.lift}
           tilt={life.tilt}
-          grow={{
-            ...life.grow,
-            ruler: (life.grow.ruler ?? 1) * (1 + blink),
-            brain: (life.grow.brain ?? 1) * (1 + blink),
-            alarm: (life.grow.alarm ?? 1) * (1 + blink),
-          }}
+          grow={life.grow}
         />
       ) : null}
       {slots.map((slot, index) => (
@@ -808,7 +787,7 @@ const RecapShot: React.FC<RecapShotProps> = ({
             inset: 0,
             // No primeiro plano as três entram apagadas, uma depois da outra, crescendo do próprio ponto.
             transformOrigin: `${slot.x}px ${slot.y}px`,
-            scale: `${shot === 0 ? panelIn(frame, index) : leaving(slot.x)}`,
+            scale: `${last ? leaving(slot.x) : panelIn(frame, index)}`,
           }}
         >
           <Panel
@@ -881,32 +860,24 @@ export const SoFarScene: React.FC<SceneProps> = ({ scene, shots }) => {
   });
   return (
     <>
-      <Shot range={shots[0]} name="no alto, o despertador ganha um X">
+      <Shot
+        range={shots[0]}
+        name="o despertador ganha um X; as três molduras acendem"
+      >
         <RecapShot
-          shot={0}
           {...clock(0)}
-          crossAt={cue(scene, "três")}
-          blinkAt={cue(scene, "falharam")}
+          crossAt={BEATS.cross}
+          panelsAt={BEATS.panels}
+          bedAt={BEATS.bed}
         />
       </Shot>
-      <Shot range={shots[1]} name="as três molduras acendem, uma a cada jeito">
+      <Shot range={shots[1]} name="o pedestal continua vazio">
         <RecapShot
-          shot={1}
+          last
           {...clock(1)}
-          panelsAt={[
-            cue(scene, "Dormir") - shots[1].from,
-            cue(scene, "viver") - shots[1].from,
-            cue(scene, "ficar") - shots[1].from,
-          ]}
-          bedAt={cue(scene, "força") - shots[1].from}
-        />
-      </Shot>
-      <Shot range={shots[2]} name="o pedestal continua vazio">
-        <RecapShot
-          shot={2}
-          {...clock(2)}
-          lensAt={cue(scene, "resposta") - shots[2].from}
-          lightAt={cue(scene, "nenhum") - shots[2].from}
+          // A lupa pousa em "estudado", e o foco acende sobre o contorno vazio em "conseguiu".
+          lensAt={cue(scene, "estudado") - shots[1].from}
+          lightAt={cue(scene, "conseguiu") - shots[1].from}
         />
       </Shot>
     </>

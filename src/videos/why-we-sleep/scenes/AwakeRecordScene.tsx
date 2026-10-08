@@ -111,7 +111,9 @@ const DISC = {
 const NEWCOMER = { x: 1000, y: 980, height: 720 };
 // Ele vem de fora do quadro, pela direita. A partitura dava 0,9 s à entrada; andando, e não deslizando,
 // a travessia de meio quadro pede mais: seis passos, a pouco menos de 0,3 s cada.
-const WALK = { from: 2260, frames: 50, steps: 6, brake: 7, turn: 8 };
+// A meia-volta leva um número ímpar de quadros: com oito, o do meio caía no perfil exato, de largura zero, e
+// ele sumia por um quadro.
+const WALK = { from: 2260, frames: 50, steps: 6, brake: 7, turn: 7 };
 // A câmera acompanha a entrada dele: começa um pouco mais aberta e deslocada para o lado de onde ele vem.
 const FOLLOW = { focus: [1420, 620] as const, by: 0.07, rest: 0.02 };
 /**
@@ -180,8 +182,7 @@ const DiscShot: React.FC<DiscShotProps> = ({
   const away = ramp(frame, awayAt, 0.7 * fps);
   // Ele anda a velocidade quase constante e freia ao chegar.
   const arriveAt = walkAt + WALK.frames;
-  const walked =
-    1 - (1 - clamp01((frame - walkAt) / WALK.frames)) ** 1.5;
+  const walked = 1 - (1 - clamp01((frame - walkAt) / WALK.frames)) ** 1.5;
   const x = mix(WALK.from, NEWCOMER.x, walked);
   const gait = clamp01((arriveAt - frame) / WALK.brake);
   // Chegando, vira-se para quem assiste: a meia-volta passa pelo perfil.
@@ -201,8 +202,7 @@ const DiscShot: React.FC<DiscShotProps> = ({
   const settledAt = arriveAt + 10;
   const followed =
     mix(1 - FOLLOW.by, 1 - FOLLOW.rest, ramp(frame, walkAt, WALK.frames + 10)) +
-    FOLLOW.rest *
-      clamp01((frame - settledAt) / (length - settledAt));
+    FOLLOW.rest * clamp01((frame - settledAt) / (length - settledAt));
 
   return (
     <AbsoluteFill>
@@ -345,6 +345,9 @@ const BoyShadows: React.FC<BoyShadowsProps> = ({
 const REFRAME = { frames: 18, floor: 200 };
 // Os amigos entram um depois do outro, com este intervalo em quadros.
 const FRIEND_GAP = 6;
+// Quantos quadros antes do fim do plano do quarto o primeiro amigo entra: o intervalo, a entrada do segundo
+// e seis quadros dele parado.
+const FRIENDS_BEFORE = FRIEND_GAP + 12 + 6;
 
 type CalendarShotProps = {
   /** Quadros do plano em que o calendário estoura, em que "17 anos" entra e em que os amigos chegam. */
@@ -444,13 +447,18 @@ const POSTER = { notBefore: 16, look: 5, stagger: 2 };
 const AT_POSTER = [1, -0.55] as const;
 
 type PosterShotProps = {
-  /** Quadro do plano em que o cartaz estoura. */
+  /** Quadros do plano em que a fala diz "dois amigos" e em que o cartaz estoura. */
+  readonly friendsAt: number;
   readonly posterAt: number;
   readonly clock: number;
 };
 
 /** De perto, o cartaz "recorde: 260 h" estoura na parede, e os três viram a cabeça para ele. */
-const PosterShot: React.FC<PosterShotProps> = ({ posterAt, clock }) => {
+const PosterShot: React.FC<PosterShotProps> = ({
+  friendsAt,
+  posterAt,
+  clock,
+}) => {
   const frame = useCurrentFrame();
   const length = useShotLength();
   const { fps } = useVideoConfig();
@@ -464,6 +472,15 @@ const PosterShot: React.FC<PosterShotProps> = ({ posterAt, clock }) => {
       blink: Math.max(blink(seconds, boy), swap.lid),
       gaze: glance(frame, [
         [0, 0, 0],
+        // O plano abre em "decidiu", e o cartaz só vem em "recorde": quando a fala chega aos dois amigos,
+        // Gardner olha um e depois o outro.
+        ...(index === 1
+          ? ([
+              [friendsAt, -1, 0.05],
+              [friendsAt + 9, 1, 0.05],
+              [friendsAt + 19, 0, 0],
+            ] as const)
+          : []),
         [at + 1, ...AT_POSTER],
       ]),
       breath: breath(seconds, boy),
@@ -827,13 +844,14 @@ export const COIN_REST = { x: TOSS.rest[0], y: TOSS.rest[1], spin: TOSS.flat };
 const COIN_LANDS = TOSS.at + TOSS.frames;
 
 export const AwakeRecordScene: React.FC<SceneProps> = ({ scene, shots }) => {
-  const { fps } = useVideoConfig();
   const room = shots[1].from;
   const coinFrom = shots[3].from;
-  // Os amigos chegam um pouco antes da palavra deles, para estarem no lugar meio segundo antes de a câmera partir.
+  // Os amigos são ditos já no plano do cartaz, que abre em "decidiu": chegam antes da palavra deles, no fim
+  // do plano do quarto, o mais tarde que deixa o segundo assentar antes de a câmera partir. Antes disso
+  // vinham no mesmo quadro de "17 anos".
   const friendsAt = Math.min(
     cue(scene, "dois") - room,
-    shots[1].to - room - 0.5 * fps - 11 - FRIEND_GAP,
+    shots[1].to - room - FRIENDS_BEFORE,
   );
   // Os dedos sobem com a moeda já no chão.
   const pointAt = Math.max(cue(scene, "cobaia") - coinFrom, COIN_LANDS + 3);
@@ -842,7 +860,9 @@ export const AwakeRecordScene: React.FC<SceneProps> = ({ scene, shots }) => {
       <Shot range={shots[0]} name="o disco vazio sai; entra Randy Gardner">
         <DiscShot
           awayAt={cue(scene, "gente")}
-          walkAt={cue(scene, "documentados")}
+          // Ele é "um dos casos": entra com o disco já no canto. Em "documentados", o quadro ficava
+          // um segundo e meio só com o disco, e a fala sem imagem.
+          walkAt={cue(scene, "um")}
           nameAt={cue(scene, "Rêndi")}
           clock={scene.from}
         />
@@ -857,6 +877,7 @@ export const AwakeRecordScene: React.FC<SceneProps> = ({ scene, shots }) => {
       </Shot>
       <Shot range={shots[2]} name="de perto, o cartaz do recorde">
         <PosterShot
+          friendsAt={cue(scene, "dois") - shots[2].from}
           posterAt={Math.max(
             cue(scene, "recorde") - shots[2].from,
             POSTER.notBefore,

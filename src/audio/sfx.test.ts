@@ -67,6 +67,29 @@ describe("sfxEvents", () => {
     );
   });
 
+  it("acompanha o fim do plano e da cena quando a narração muda de duração", () => {
+    const effects: SfxSpec[] = [
+      { scene: "b", shot: 1, at: "end", offsetMs: -100, name: "paperFold" },
+      { scene: "b", at: "end", offsetMs: -100, name: "paperFold" },
+    ];
+    expect(events(effects).map(({ frame }) => frame)).toEqual([383, 597]);
+    const longer = timeline.map((scene) =>
+      scene.id === "b"
+        ? {
+            ...scene,
+            durationInFrames: 360,
+            words: scene.words.map((word) => ({
+              ...word,
+              frame: word.frame * 2,
+            })),
+          }
+        : scene,
+    );
+    expect(
+      sfxEvents(effects, longer, scenes, -20, FPS).map(({ frame }) => frame),
+    ).toEqual([473, 657]);
+  });
+
   it("nunca amplifica um som gravado baixo", () => {
     const [event] = events([{ scene: "a", name: "coinDrop" }], -5);
     expect(event.volume).toBe(1);

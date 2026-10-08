@@ -402,7 +402,7 @@ export const DebtTestScene: React.FC<SceneProps> = ({ scene, shots }) => (
     </Shot>
     <Shot range={shots[1]} name="dormindo de verdade, ou só parado">
       <SplitShot
-        checkAt={cue(scene, "sinais") - shots[1].from}
+        checkAt={cue(scene, "sinal") - shots[1].from}
         stillAt={cue(scene, "dormindo") - shots[1].from}
         clock={scene.from + shots[1].from}
       />

@@ -9,7 +9,6 @@ import { useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
 import { blink, breath } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
-import { popOpacity, popScale, POP_SECONDS } from "../../../components/Pop";
 import { SlowPush } from "../../../components/SlowPush";
 import { SvgLayer } from "../../../components/SvgLayer";
 import {
@@ -22,22 +21,19 @@ import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot } from "../../../video/Shot";
 import { person } from "../palette";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
-import { SleepBill } from "../parts/SleepBill";
 import { LifeBar, STANDING } from "../parts/LifeBar";
-import { TIMELINE, TIMELINE_END, Timeline } from "../parts/Timeline";
+import { TIMELINE, Timeline } from "../parts/Timeline";
 import {
   NEVER,
   Prelude,
   Preluded,
   Sooner,
-  flash,
   useCastScale,
 } from "./MaybeBrainScene";
 import { RECALL_LEAD, TonightOpening } from "./TonightScene";
 import { LineGroup, SeaStage } from "./NobodyEscapedScene";
-import { billSway } from "./SkipANightScene";
 
-// A pessoa e a barra já estão no lugar quando "Mas agora" soa.
+// A pessoa e a barra já estão no lugar quando "Mas o terço" soa.
 const LIT_SOONER = 20;
 // O quadro do plano em que a barra chega ao terço escuro: a etiqueta "um terço" entra nele.
 const THIRD_TAG_AT = 9;
@@ -123,11 +119,10 @@ const LitShot: React.FC<LitShotProps> = ({ litAt, lookAt }) => {
   );
 };
 
-// A conta no fim da linha: cabe no espaço que a `Timeline` reserva ali.
-const BILL_SCALE = 0.86;
-// De quanto em quanto os bichos entram na linha, em segundos, e quando entra o primeiro depois da água-viva.
-const SLEEPERS = { first: 0.45, stagger: 0.35 };
-// A água-viva e a linha já estão no lugar quando "os animais" soa.
+// De quanto em quanto os bichos entram na linha, em segundos, e quando entra o primeiro depois da água-viva:
+// o plano é curto, e a cama, a última, assenta antes de "largar".
+const SLEEPERS = { first: 0.3, stagger: 0.3 };
+// A água-viva e a linha já estão no lugar quando "nenhum animal" soa.
 const LINE_SOONER = 30;
 // A câmera do plano: acompanha os bichos entrando ao longo da linha. Não muda
 // a escala: abre deslocada `pan` pixels para o começo da linha e desliza, com
@@ -137,23 +132,16 @@ const FOLLOW = { pan: 90 };
 // isto o fundo ficava dois ou três quadros liso.
 const SLEEPERS_LEAD = 7;
 
-type SleepersShotProps = {
-  /** Quadros do plano em que a conta entra no fim da linha e em que o carimbo pisca. */
-  readonly billAt: number;
-  readonly stampAt: number;
-};
-
 /**
- * A linha do tempo com os bichos dormindo ao longo dela. No fim da linha entra
- * a conta de sono com o carimbo "cobrado", a mesma do bicho da savana.
+ * A linha do tempo com os bichos dormindo ao longo dela, do mais antigo ao
+ * mais recente: no fim da linha, a pessoa, na cama. Nenhuma deixa: o plano
+ * inteiro é a resposta a "nenhum animal".
  */
-const SleepersShot: React.FC<SleepersShotProps> = ({ billAt, stampAt }) => {
+const SleepersShot: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const seconds = frame / fps;
   const at = (index: number) =>
     Math.round((SLEEPERS.first + index * SLEEPERS.stagger) * fps);
-  const frames = POP_SECONDS * fps;
 
   return (
     <AbsoluteFill>
@@ -170,29 +158,6 @@ const SleepersShot: React.FC<SleepersShotProps> = ({ billAt, stampAt }) => {
               sleepersAt={[at(0), at(1), at(2)]}
             />
           </LineGroup>
-          {/* A conta, pendurada pelo alto, no fim da linha: balança de leve, e o carimbo pisca. */}
-          <Place
-            x={TIMELINE_END.x}
-            y={TIMELINE_END.y}
-            style={{
-              transformOrigin: "50% 0%",
-              rotate: `${billSway(seconds)}deg`,
-            }}
-          >
-            <div
-              style={{
-                opacity: popOpacity(frame, billAt, frames),
-                scale: popScale(frame, billAt, frames),
-              }}
-            >
-              <SleepBill
-                scale={BILL_SCALE}
-                lines={3}
-                stamp={1}
-                stampSize={1 + 0.22 * flash(frame, stampAt, 12)}
-              />
-            </div>
-          </Place>
         </SeaStage>
       </Sooner>
       <Grain />
@@ -212,25 +177,22 @@ export const WhatItIsOpening: React.FC = () => (
 );
 
 export const WhatItIsScene: React.FC<SceneProps> = ({ scene, shots }) => {
-  const sleepers = (
-    <SleepersShot
-      billAt={cue(scene, "corpo") - shots[1].from}
-      stampAt={cue(scene, "quando") - shots[1].from}
-    />
-  );
+  const sleepers = <SleepersShot />;
   return (
     <>
       <Shot range={shots[0]} name="o terço se acende">
         <Preluded lead={LIT_LEAD}>
           <LitShot
-            litAt={cue(scene, "terço")}
-            lookAt={cue(scene, "dormindo")}
+            // O terço fica escuro o tempo de ser visto, com a etiqueta dele, e acende quando a fala acaba
+            // de nomeá-lo ("o terço da vida"); ela se vira para ele quando ele termina de acender.
+            litAt={cue(scene, "vida")}
+            lookAt={cue(scene, "parecia")}
           />
         </Preluded>
         {/* A água-viva da linha do tempo já cresce aqui, quando a barra recolheu. */}
         <Prelude lead={SLEEPERS_LEAD}>{sleepers}</Prelude>
       </Shot>
-      <Shot range={shots[1]} name="os animais dormem desde antes do cérebro">
+      <Shot range={shots[1]} name="nenhum animal largou: todos dormem na linha">
         <Preluded lead={SLEEPERS_LEAD}>{sleepers}</Preluded>
         {/* Rechtschaffen e o quadro-negro de `tonight` crescem aqui, por cima dos três que encolhem: a troca
           de cena não deixa a tela só com o fundo do mar. */}

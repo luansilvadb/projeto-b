@@ -3,7 +3,7 @@
   "scenes": [
     {
       "id": "third-of-life",
-      "narration": "Você vai passar um terço da vida dormindo. Durante essas horas, um animal fica sem comer, sem se reproduzir e quase sem perceber quem chega perto.",
+      "narration": "Você vai passar um terço da vida dormindo. Durante essas horas, um animal fica sem comer, sem se reproduzir e quase sem defesa.",
       "shots": [
         {
           "staging": "A pessoa grande no centro, de pé. A barra de uma vida inteira passa atrás dela, na altura do peito, e um terço dela escurece.",
@@ -142,7 +142,7 @@
     },
     {
       "id": "night-falls",
-      "narration": "Imagine que você é um bicho pequeno na savana, no fim do dia. Você se deita, fecha os olhos e passa as próximas horas quase sem perceber o que acontece em volta.",
+      "narration": "Imagine que você é um bicho pequeno na savana, no fim do dia. Você se deita, fecha os olhos e dorme.",
       "shots": [
         {
           "staging": "A savana ao entardecer, vista de longe; um bicho pequeno caminha sozinho para debaixo de uma árvore.",
@@ -159,7 +159,7 @@
           "entry": "wipe"
         },
         {
-          "cue": "passa",
+          "cue": "dorme",
           "staging": "De perto: ele ressona, com \"zzz\". Atrás dele o capim se mexe.",
           "scale": "close",
           "palette": "savana-noite",
@@ -169,7 +169,8 @@
       "sources": [
         19,
         20
-      ]
+      ],
+      "holdMs": 1500
     },
     {
       "id": "last-to-know",
@@ -233,7 +234,7 @@
     },
     {
       "id": "debt-test",
-      "narration": "Os pesquisadores usam essa cobrança como um dos testes do sono. Compensar depois o sono perdido é um dos sinais de que o bicho estava dormindo de verdade.",
+      "narration": "Os pesquisadores usam essa cobrança como um dos testes do sono. O bicho que compensa depois dá sinal de que estava dormindo de verdade.",
       "shots": [
         {
           "staging": "De perto, a conta carimbada vira uma ficha de teste, com um quadrado para marcar.",
@@ -242,7 +243,7 @@
           "entry": "cut"
         },
         {
-          "cue": "Compensar",
+          "cue": "bicho",
           "staging": "Tela dividida: de um lado, o bicho só parado, de olho aberto, sem conta nenhuma; do outro, o bicho dormindo, com a conta \"cobrado\", que ganha um visto. Selo da fonte no canto: \"Cirelli e Tononi, 2008\".",
           "scale": "medium",
           "palette": "ideia",
@@ -251,11 +252,12 @@
       ],
       "sources": [
         20
-      ]
+      ],
+      "holdMs": 1000
     },
     {
       "id": "debt-returns",
-      "narration": "Essa cobrança volta duas vezes neste vídeo. Dormir é perigoso, e deixar de dormir tem cobrança. Falta ver quem tentou escapar.",
+      "narration": "O primeiro jeito de escapar é dormir menos.",
       "shots": [
         {
           "staging": "A conta com o carimbo \"cobrado\" é dobrada e guardada num bolso, que fica marcado no canto da tela.",
@@ -264,7 +266,7 @@
           "entry": "camera"
         },
         {
-          "cue": "Dormir",
+          "cue": "escapar",
           "staging": "A fila dos cinco ícones: os olhos no capim ganham um visto, e a régua, \"1\", acende e cresce.",
           "scale": "medium",
           "palette": "ideia",
@@ -274,12 +276,11 @@
       "sources": [
         19,
         20
-      ],
-      "holdMs": 1000
+      ]
     },
     {
       "id": "sleep-less",
-      "narration": "O primeiro jeito de escapar é dormir menos. Você dorme umas oito horas por noite, e tem bicho que dorme bem menos.",
+      "narration": "Você dorme umas oito horas por noite, e tem bicho que passa com muito menos.",
       "shots": [
         {
           "staging": "A régua do ícone vira a régua de 24 horas, sobre fundo liso.",
@@ -288,7 +289,7 @@
           "entry": "transform"
         },
         {
-          "cue": "Você",
+          "cue": "oito",
           "staging": "A pessoa dormindo no centro, grande, com a barra dela na régua em \"8 h\"; por baixo dela, um lugar vago para outra barra, mais curta.",
           "scale": "medium",
           "palette": "ideia",
@@ -384,7 +385,7 @@
     },
     {
       "id": "elephant-verdict",
-      "narration": "São só duas elefantas, pouco para ter certeza do número. Mesmo assim, as duas sempre voltaram a dormir. Poucos mamíferos chegaram tão perto de escapar, e ela parou em duas horas. Nem a elefanta conseguiu parar de dormir.",
+      "narration": "São só duas elefantas, pouco para ter certeza do número. Mesmo assim, nem a elefanta conseguiu parar de dormir.",
       "shots": [
         {
           "staging": "As duas elefantas lado a lado, pequenas, com a etiqueta \"só duas\". Selo da fonte no canto: \"Gravett et al., 2017\".",
@@ -394,20 +395,6 @@
         },
         {
           "cue": "Mesmo",
-          "staging": "Uma delas para, a tromba cai, o olho fecha: ela dorme em pé.",
-          "scale": "medium",
-          "palette": "savana-noite",
-          "entry": "camera"
-        },
-        {
-          "cue": "Poucos",
-          "staging": "A régua, de perto: a barra dela em \"2 h\", e a marca do zero, vazia, logo à esquerda.",
-          "scale": "close",
-          "palette": "ideia",
-          "entry": "cut"
-        },
-        {
-          "cue": "Nem",
           "staging": "O pedestal \"acordado 24 h\" segue sem dono. A elefanta dorme ao lado dele.",
           "scale": "wide",
           "palette": "ideia",
@@ -422,7 +409,7 @@
     },
     {
       "id": "maybe-brain",
-      "narration": "Dormir menos, o primeiro jeito, tem limite. O segundo jeito é viver sem cérebro. A elefanta tem um, você tem um, e pode ser que o sono seja uma necessidade dele. Parece razoável, e foi testado.",
+      "narration": "O segundo jeito é viver sem cérebro. A elefanta tem um, você tem um, e pode ser que o sono seja uma necessidade dele. Parece razoável, e foi testado.",
       "shots": [
         {
           "staging": "Na fila dos cinco ícones, a régua \"1\" ganha um X, e o contorno sem cérebro, \"2\", acende.",
@@ -431,7 +418,7 @@
           "entry": "cut"
         },
         {
-          "cue": "segundo",
+          "cue": "viver",
           "staging": "O contorno cresce até encher o quadro.",
           "scale": "close",
           "palette": "ideia",
@@ -459,7 +446,7 @@
     },
     {
       "id": "jellyfish",
-      "narration": "Em dois mil e dezessete, pesquisadores do Cáltec escolheram uma água-viva, a Cassiopéia. Ela passa praticamente a vida inteira pousada de cabeça para baixo no fundo do mar, pulsando. No lugar do cérebro, ela tem só uma rede de neurônios espalhada pelo corpo.",
+      "narration": "Pesquisadores do Cáltec escolheram uma água-viva, a Cassiopéia. Ela passa praticamente a vida inteira pousada de cabeça para baixo no fundo do mar, pulsando. No lugar do cérebro, ela tem só uma rede de neurônios espalhada pelo corpo.",
       "shots": [
         {
           "staging": "A lagoa rasa. A água-viva entra nadando de cabeça para cima, vira e pousa no fundo de areia. O peixe entra pela direita e para ao vê-la. Selo da fonte no canto: \"Nath et al., 2017\".",
@@ -488,7 +475,7 @@
     },
     {
       "id": "jellyfish-night",
-      "narration": "De noite, ela pulsa mais devagar. Só que isso prova pouco, porque ela podia estar só parada. Para saber se era sono, os pesquisadores fizeram dois testes.",
+      "narration": "De noite, ela pulsa mais devagar. Mas isso prova pouco, porque ela podia estar só parada. Para saber se era sono, os pesquisadores fizeram dois testes.",
       "shots": [
         {
           "staging": "A lagoa escurece e os anéis do pulso saem mais espaçados. O peixe boceja. Selo da fonte no canto: \"Nath et al., 2017\".",
@@ -497,7 +484,7 @@
           "entry": "wipe"
         },
         {
-          "cue": "Só",
+          "cue": "Mas",
           "staging": "A água-viva de perto, quieta no fundo, com uma interrogação presa a ela: dormindo, ou só parada?",
           "scale": "close",
           "palette": "lagoa-noite",
@@ -547,7 +534,7 @@
     },
     {
       "id": "jellyfish-debt",
-      "narration": "O segundo teste é a cobrança, aquela regra de que quem perde sono de verdade compensa depois. À noite, os pesquisadores soltaram jatos de água no tanque, para manter a água-viva acordada. No dia seguinte, na hora em que devia estar ativa, ela cochilava.",
+      "narration": "O segundo teste é a cobrança. À noite, os pesquisadores soltaram jatos de água no tanque, para manter a água-viva acordada. No dia seguinte, na hora em que devia estar ativa, ela cochilava.",
       "shots": [
         {
           "staging": "A conta carimbada sai do bolso marcado no canto e se abre ao lado do tanque.",
@@ -576,7 +563,7 @@
     },
     {
       "id": "older-than-brain",
-      "narration": "A água-viva passou nos dois testes, sem ter cérebro. Para os pesquisadores, é sinal de que o sono surgiu, provavelmente, antes de existir cérebro. Nem quem vive sem cérebro conseguiu parar de dormir.",
+      "narration": "A água-viva passou nos dois testes. Para os pesquisadores, é sinal de que o sono surgiu, provavelmente, antes do cérebro. Nem quem vive sem cérebro conseguiu parar de dormir.",
       "shots": [
         {
           "staging": "A água-viva cochilando no tanque, de perto, com a conta \"cobrado\" presa a ele e a prancheta de dois vistos ao lado.",
@@ -609,7 +596,7 @@
     },
     {
       "id": "forced-awake",
-      "narration": "O segundo jeito também falhou. Resta o terceiro, que é ficar acordado à força. Foi isso que aconteceu com dez ratos, no laboratório de Álan Réctchafen, o pesquisador de Chicago que falava no maior erro da evolução.",
+      "narration": "O terceiro jeito é ficar acordado à força. Foi isso que aconteceu com dez ratos, no laboratório de Álan Réctchafen.",
       "shots": [
         {
           "staging": "Na fila dos cinco ícones, o contorno \"2\" ganha um X, e o despertador, \"3\", acende.",
@@ -618,21 +605,14 @@
           "entry": "cut"
         },
         {
-          "cue": "terceiro",
+          "cue": "ficar",
           "staging": "Um rato sonolento no centro, grande; uma mão segura sobre ele um despertador que toca, \"TRIIIM\", e atrás o calendário risca um dia depois do outro.",
           "scale": "medium",
           "palette": "laboratorio",
           "entry": "transform"
         },
         {
-          "cue": "Foi",
-          "staging": "Dez ratos em fila, de perto, olham para cima. Selo da fonte no canto: \"Everson et al., 1989\".",
-          "scale": "close",
-          "palette": "laboratorio",
-          "entry": "cut"
-        },
-        {
-          "cue": "laboratório",
+          "cue": "ratos",
           "staging": "O quadro abre: Rechtschaffen, de jaleco, diante do quadro-negro do gancho, com a árvore e o carimbo \"erro?\"; os dez ratos aos pés do quadro. Etiqueta: \"Allan Rechtschaffen\".",
           "scale": "wide",
           "palette": "laboratorio",
@@ -705,7 +685,7 @@
     },
     {
       "id": "unknown-cause",
-      "narration": "Só que, quando a equipe procurou no corpo deles a causa da morte, ficou sem resposta. Até hoje se discute quanto disso foi a falta de sono e quanto foi o estresse de ser acordado à força.",
+      "narration": "Mas, quando a equipe procurou no corpo deles a causa da morte, ficou sem resposta. Até hoje se discute quanto disso foi a falta de sono e quanto foi o estresse de ser acordado à força.",
       "shots": [
         {
           "staging": "Uma prancheta de exame com vários itens preenchidos e a linha \"causa da morte\" em branco, com uma interrogação. Rechtschaffen coça a cabeça. Selo da fonte no canto: \"Everson et al., 1989\".",
@@ -728,7 +708,7 @@
     },
     {
       "id": "awake-record",
-      "narration": "Com gente, um dos casos mais bem documentados de tempo sem dormir é o de Rêndi Gárdner. Em dezembro de mil novecentos e sessenta e três, ele tinha dezessete anos e decidiu, com dois amigos, bater o recorde de tempo sem dormir. No cara ou coroa, a cobaia ficou sendo ele.",
+      "narration": "Com gente, um dos casos mais bem documentados de tempo sem dormir é o de Rêndi Gárdner. Em dezembro de mil novecentos e sessenta e três, ele tinha dezessete anos e decidiu, com dois amigos, bater o recorde. No cara ou coroa, a cobaia ficou sendo ele.",
       "shots": [
         {
           "staging": "O disco dos ratos, vazio, encolhe para o canto; no lugar dele entra um rapaz de pé, com a etiqueta \"Randy Gardner\". Selo da fonte no canto: \"NPR, 2024\".",
@@ -744,7 +724,7 @@
           "entry": "cut"
         },
         {
-          "cue": "bater",
+          "cue": "decidiu",
           "staging": "De perto, um cartaz pregado na parede, \"recorde: 260 h\", e os três olhando para ele.",
           "scale": "close",
           "palette": "ideia",
@@ -786,7 +766,7 @@
     },
     {
       "id": "gardner-sleeps",
-      "narration": "Acompanhado por um pesquisador do sono, Gárdner teve náusea, a memória começou a falhar, e ele ficou irritado. Quando enfim se deitou, dormiu catorze horas seguidas, bem mais que as suas oito. É a cobrança de novo, agora em gente. Só que a conta ficou longe de ser paga hora por hora, catorze horas por onze noites. O sono perdido também se recupera como sono mais fundo.",
+      "narration": "Acompanhado por um pesquisador do sono, Gárdner teve náusea, a memória começou a falhar, e ele ficou irritado. Quando enfim se deitou, dormiu catorze horas seguidas. É pouco para tantos dias acordado. O sono perdido também se recupera como sono mais fundo.",
       "shots": [
         {
           "staging": "Ao lado do rapaz, um pesquisador de jaleco observa, com a prancheta, e leva a etiqueta \"William Dement\". Três balões acendem sobre o rapaz, um por item da fala: enjoo, um branco, raiva. Selo da fonte no canto: \"NPR, 2024\".",
@@ -796,21 +776,14 @@
         },
         {
           "cue": "Quando",
-          "staging": "Ele desaba na cama, com \"ZZZ\", e o relógio dá a volta: \"14 h\". Na régua, a barra dele passa bem da barra \"8 h\" da pessoa. Selo da fonte no canto: \"NPR, 2024\".",
+          "staging": "Ele desaba na cama, com \"ZZZ\", e o relógio dá a volta: \"14 h\". Selo da fonte no canto: \"NPR, 2024\".",
           "scale": "medium",
           "palette": "ideia",
           "entry": "camera"
         },
         {
-          "cue": "cobrança",
-          "staging": "A conta sai do bolso marcado no canto e se abre ao lado da cama dele, com o carimbo \"cobrado\".",
-          "scale": "medium",
-          "palette": "ideia",
-          "entry": "camera"
-        },
-        {
-          "cue": "Só",
-          "staging": "De perto, a conta: de um lado, onze noites riscadas; do outro, só \"14 h\".",
+          "cue": "pouco",
+          "staging": "A conta sai do bolso marcado no canto e se abre ao lado da cama dele, com o carimbo \"cobrado\": de um lado, onze noites riscadas; do outro, só \"14 h\".",
           "scale": "close",
           "palette": "ideia",
           "entry": "camera"
@@ -832,23 +805,16 @@
     },
     {
       "id": "so-far",
-      "narration": "Os três jeitos de escapar falharam. Dormir menos, viver sem cérebro, ficar acordado à força. Para a pergunta do começo, a resposta é que nenhum animal estudado até hoje conseguiu parar de dormir.",
+      "narration": "Para a pergunta do começo, a resposta é que nenhum animal estudado até hoje conseguiu parar de dormir.",
       "shots": [
         {
-          "staging": "No alto, a fila dos cinco ícones: o despertador \"3\" ganha um X.",
+          "staging": "No alto, a fila dos cinco ícones: o despertador \"3\" ganha um X, e os três X piscam. Embaixo, as três molduras acendem uma a uma, depressa: na \"1\", a elefanta e a barra \"2 h\"; na \"2\", a água-viva dormindo no fundo; na \"3\", o disco dos ratos, com o rato do teste em silhueta, e o rapaz na cama com o relógio em \"14 h\".",
           "scale": "wide",
           "palette": "ideia",
           "entry": "cut"
         },
         {
-          "cue": "Dormir",
-          "staging": "As três molduras, lado a lado, acendem uma a uma, cada uma quando o jeito dela é dito: na \"1\", a elefanta e a barra \"2 h\"; na \"2\", a água-viva dormindo no fundo; na \"3\", o disco dos ratos, com o rato do teste em silhueta, e o rapaz na cama com o relógio em \"14 h\".",
-          "scale": "wide",
-          "palette": "ideia",
-          "entry": "camera"
-        },
-        {
-          "cue": "pergunta",
+          "cue": "nenhum",
           "staging": "Abaixo das três molduras, o pedestal \"acordado 24 h\", vazio; a lupa do gancho pousa ao lado dele. Selo da fonte no canto: \"Cirelli e Tononi, 2008\".",
           "scale": "wide",
           "palette": "ideia",
@@ -865,7 +831,7 @@
     },
     {
       "id": "but-what",
-      "narration": "Falta a última parte, o que o sono faz. Se nenhum animal consegue parar, tudo indica que ele faz alguma coisa de que o corpo precisa. A resposta completa ainda está em aberto, mas uma parte dela é estudada há mais de um século, e é a memória.",
+      "narration": "E o que o sono faz? Uma parte da resposta é a memória.",
       "shots": [
         {
           "staging": "Na fila dos cinco ícones, os três do meio estão riscados, e a porta da loja, o último, acende.",
@@ -874,25 +840,19 @@
           "entry": "cut"
         },
         {
-          "cue": "Se",
-          "staging": "O ícone cresce e vira a porta de uma loja baixada, de noite, com luz saindo por baixo e movimento lá dentro.",
+          "cue": "Uma",
+          "staging": "O ícone cresce e vira a porta de uma loja baixada, de noite, com luz saindo por baixo; na porta, uma interrogação, e sobre ela acende um medalhão com uma caixa de estoque. Selo da fonte no canto: \"Rasch e Born, 2013\".",
           "scale": "medium",
           "palette": "loja-fechada",
           "entry": "transform"
-        },
-        {
-          "cue": "resposta",
-          "staging": "De perto, uma interrogação na porta; sobre ela acende um medalhão com uma caixa de estoque. Selo da fonte no canto: \"Rasch e Born, 2013\".",
-          "scale": "close",
-          "palette": "loja-fechada",
-          "entry": "camera"
         }
       ],
       "sources": [
         2,
         14,
         20
-      ]
+      ],
+      "holdMs": 600
     },
     {
       "id": "memory-test",
@@ -918,7 +878,7 @@
     },
     {
       "id": "memory-result",
-      "narration": "Às vezes elas dormiam logo depois de decorar, e às vezes passavam as mesmas horas acordadas. Quando dormiam, esqueciam menos. Eram só duas pessoas, mas o resultado se repetiu em um século de pesquisa.",
+      "narration": "Às vezes elas dormiam logo depois de decorar, e às vezes passavam as mesmas horas acordadas. Quando dormiam, esqueciam menos, e o resultado se repetiu em um século de pesquisa.",
       "shots": [
         {
           "staging": "Tela dividida, que acende um lado por oração: primeiro uma das pessoas dormindo, com a lista na mesa de cabeceira; depois a mesma pessoa acordada, com o relógio marcando as mesmas horas. Selo da fonte no canto: \"Jenkins e Dallenbach, 1924, em Rasch e Born, 2013\".",
@@ -1005,16 +965,9 @@
     },
     {
       "id": "stockroom-solid",
-      "narration": "A loja é só uma comparação, e como o cérebro faz isso ainda se estuda. O que já se sabe é que dormir ajuda a guardar o que você aprendeu.",
+      "narration": "O que já se sabe é que dormir ajuda a guardar o que você aprendeu.",
       "shots": [
         {
-          "staging": "A loja de porta baixada, de longe, com uma lupa sobre ela: o que acontece lá dentro ainda está sendo olhado.",
-          "scale": "wide",
-          "palette": "loja-fechada",
-          "entry": "cut"
-        },
-        {
-          "cue": "sabe",
           "staging": "A pessoa, da cintura para cima, acorda e reconhece o rosto da etiqueta de uma das caixas. Selo da fonte no canto: \"Rasch e Born, 2013\".",
           "scale": "medium",
           "palette": "ideia",
@@ -1028,7 +981,7 @@
     },
     {
       "id": "nobody-escaped",
-      "narration": "A procura pelo animal que parou de dormir termina sem ele.",
+      "narration": "Nós somos um dos animais dessa história.",
       "shots": [
         {
           "staging": "O globo sob a lupa, como no gancho, e ao lado o pedestal \"acordado 24 h\", ainda vazio. Selo da fonte no canto: \"Cirelli e Tononi, 2008\".",
@@ -1044,7 +997,7 @@
     },
     {
       "id": "one-of-them",
-      "narration": "Nós somos um dos animais dessa procura. Toda noite, cada um de nós larga o que está fazendo, se deita e faz o que a elefanta e a água-viva fazem.",
+      "narration": "Toda noite, cada um de nós larga o que está fazendo, se deita e faz o que a elefanta e a água-viva fazem.",
       "shots": [
         {
           "staging": "A pessoa do primeiro plano no centro, grande; a elefanta de um lado e a água-viva do outro, na mesma linha.",
@@ -1090,7 +1043,7 @@
     },
     {
       "id": "what-it-is",
-      "narration": "Mas agora sabemos o que é esse terço da vida que passamos dormindo. É uma coisa que os animais fazem, provavelmente, desde antes de existir cérebro, e que o corpo cobra quando falta.",
+      "narration": "Mas o terço da vida que parecia perdido é o que nenhum animal conseguiu largar.",
       "shots": [
         {
           "staging": "A barra de uma vida inteira, do primeiro plano do vídeo; o terço escuro se acende em índigo.",
@@ -1099,8 +1052,8 @@
           "entry": "cut"
         },
         {
-          "cue": "animais",
-          "staging": "A linha do tempo de meio bilhão de anos, com bichos dormindo ao longo dela; no fim da linha entra a conta com o carimbo \"cobrado\", a mesma do bicho da savana.",
+          "cue": "nenhum",
+          "staging": "A linha do tempo de meio bilhão de anos, com bichos dormindo ao longo dela, e a pessoa do primeiro plano, dormindo, no fim da linha.",
           "scale": "wide",
           "palette": "abissal",
           "entry": "cut"
@@ -1114,7 +1067,7 @@
     },
     {
       "id": "tonight",
-      "narration": "Álan Réctchafen dizia que o sono, sem um papel vital, seria o maior erro que a evolução já cometeu. Um erro desses algum animal teria abandonado, e tudo indica que o sono está longe de ser um erro. Hoje à noite, nós vamos dormir mais uma parte desse terço da vida. Que seja um bom sono.",
+      "narration": "Ao que parece, o sono está longe de ser um erro. Hoje à noite, que seja um bom sono.",
       "shots": [
         {
           "staging": "O quadro-negro do gancho: a árvore da vida com todos os ramos de olhos fechados e o carimbo \"erro?\". Etiqueta: \"Allan Rechtschaffen\".",
@@ -1123,22 +1076,14 @@
           "entry": "cut"
         },
         {
-          "cue": "seria",
-          "staging": "De perto, o carimbo \"erro?\" sobre a árvore de olhos fechados.",
-          "scale": "close",
-          "palette": "ideia",
-          "entry": "camera"
-        },
-        {
-          "cue": "Um",
-          "occurrence": 2,
+          "cue": "erro",
           "staging": "O carimbo \"erro?\" perde a cor no quadro; a interrogação continua, pequena, ao lado da árvore.",
           "scale": "close",
           "palette": "ideia",
           "entry": "transform"
         },
         {
-          "cue": "Hoje",
+          "cue": "seja",
           "staging": "A pessoa dormindo, no centro, com a janela e a noite lá fora. A imagem fica no silêncio depois da fala.",
           "scale": "medium",
           "palette": "ideia",
@@ -1186,14 +1131,13 @@
     }
   ],
   "music": {
-    "caption": "curious forward-moving theme, gentle steady pulse, clear melody, thoughtful wonder, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental",
+    "caption": "warm hopeful theme, full from the first bar, tender felt piano melody, bowed strings, steady calm pulse, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental",
     "bpm": 96,
-    "keyScale": "A minor",
+    "keyScale": "C major",
     "parts": [
       {
         "from": "but-what",
-        "caption": "warm hopeful resolution of the same theme, full from the first bar, tender felt piano melody, bowed strings, steady calm pulse, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental",
-        "keyScale": "C major"
+        "caption": "warm hopeful resolution of the same theme, full from the first bar, tender felt piano melody, bowed strings, steady calm pulse, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
       }
     ],
     "silences": [
@@ -1204,31 +1148,6 @@
     ],
     "moments": [
       {
-        "from": "night-falls",
-        "to": "last-to-know",
-        "caption": "the same theme hushed and wary, low sustained strings, soft slow pulse, felt piano notes far apart, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
-      },
-      {
-        "from": "elephants",
-        "to": "elephant-awake",
-        "caption": "the same theme broad and warm, long open string chords, slow and spacious, gentle pulse, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
-      },
-      {
-        "from": "jellyfish",
-        "to": "jellyfish-debt",
-        "caption": "the same theme weightless, slow swelling warm synth pads, soft sub bass, sparse felt piano, no percussion, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
-      },
-      {
-        "from": "forced-awake",
-        "to": "rats-disc",
-        "caption": "the same theme tightening, ticking staccato strings ostinato, low felt piano, restrained urgency, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
-      },
-      {
-        "from": "rats-result",
-        "to": "unknown-cause",
-        "caption": "the same theme reduced to a held low string note and slow soft felt piano notes far apart, no pulse, no percussion, grave and still, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
-      },
-      {
         "from": "what-it-is",
         "to": "tonight",
         "caption": "the same theme slowed down, felt piano alone playing long notes over a soft string pad, no pulse, tender and still, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
@@ -1236,68 +1155,214 @@
     ],
     "levels": [
       {
-        "from": "tonight",
+        "from": "third-of-life",
         "level": "recuo"
-      },
-      {
-        "from": "subscribe",
-        "level": "leito"
       }
     ]
   },
   "sfx": [
     {
-      "scene": "skip-a-night",
-      "shot": 2,
-      "name": "whoosh",
-      "level": "leve"
+      "scene": "biggest-mistake",
+      "cue": "evolução",
+      "offsetMs": -33,
+      "name": "stamp"
     },
     {
-      "scene": "two-hours",
+      "scene": "time-to-fix",
+      "cue": "corrigir",
+      "offsetMs": -100,
+      "name": "scissors"
+    },
+    {
+      "scene": "sleep-debt",
+      "cue": "dorme",
+      "offsetMs": 200,
+      "name": "bodyFall"
+    },
+    {
+      "scene": "sleep-debt",
+      "cue": "dorme",
+      "offsetMs": 700,
+      "name": "stamp"
+    },
+    {
+      "scene": "sleep-debt",
+      "cue": "pesa",
+      "offsetMs": 967,
+      "name": "headTap"
+    },
+    {
+      "scene": "debt-returns",
       "shot": 1,
-      "name": "whoosh",
-      "level": "leve"
+      "offsetMs": 367,
+      "name": "paperFold"
     },
     {
       "scene": "elephant-awake",
-      "shot": 1,
-      "name": "whoosh",
+      "cue": "madrugada",
+      "offsetMs": 367,
+      "name": "bedFall",
       "level": "leve"
     },
     {
-      "scene": "jellyfish-night",
-      "shot": 1,
-      "name": "whoosh",
-      "level": "leve"
+      "scene": "jellyfish",
+      "cue": "Cassiopéia",
+      "offsetMs": -100,
+      "name": "softLanding"
     },
     {
       "scene": "jellyfish-platform",
       "cue": "tiraram",
+      "offsetMs": 67,
       "name": "whoosh"
     },
     {
       "scene": "jellyfish-debt",
+      "cue": "segundo",
+      "offsetMs": -100,
+      "name": "paperFold"
+    },
+    {
+      "scene": "jellyfish-debt",
       "cue": "soltaram",
-      "offsetMs": -133,
-      "name": "splash"
+      "offsetMs": -100,
+      "name": "waterJet"
+    },
+    {
+      "scene": "jellyfish-debt",
+      "cue": "tanque",
+      "offsetMs": -100,
+      "name": "waterJet"
+    },
+    {
+      "scene": "jellyfish-debt",
+      "cue": "água",
+      "occurrence": 2,
+      "offsetMs": -100,
+      "name": "waterJet"
+    },
+    {
+      "scene": "older-than-brain",
+      "shot": 1,
+      "at": "end",
+      "offsetMs": -633,
+      "name": "paperFold"
+    },
+    {
+      "scene": "older-than-brain",
+      "cue": "quem",
+      "offsetMs": 567,
+      "name": "softLanding"
+    },
+    {
+      "scene": "forced-awake",
+      "cue": "força",
+      "offsetMs": -100,
+      "name": "alarmClock"
+    },
+    {
+      "scene": "rats-disc",
+      "cue": "disco",
+      "offsetMs": -100,
+      "name": "whoosh",
+      "level": "leve"
     },
     {
       "scene": "rats-disc",
       "cue": "disco",
       "occurrence": 2,
-      "offsetMs": -133,
+      "offsetMs": -100,
       "name": "whoosh"
     },
     {
       "scene": "awake-record",
-      "shot": 4,
-      "offsetMs": 1000,
+      "cue": "cara",
+      "offsetMs": 867,
       "name": "coinDrop"
+    },
+    {
+      "scene": "awake-record",
+      "cue": "cara",
+      "offsetMs": 1067,
+      "name": "coinDrop",
+      "level": "leve"
+    },
+    {
+      "scene": "gardner-hours",
+      "cue": "uma",
+      "occurrence": 2,
+      "offsetMs": 200,
+      "name": "headTap"
+    },
+    {
+      "scene": "gardner-sleeps",
+      "cue": "deitou",
+      "offsetMs": 367,
+      "name": "bedFall"
+    },
+    {
+      "scene": "gardner-sleeps",
+      "shot": 3,
+      "offsetMs": 100,
+      "name": "paperFold"
+    },
+    {
+      "scene": "gardner-sleeps",
+      "shot": 4,
+      "at": "end",
+      "offsetMs": -367,
+      "name": "paperFold"
+    },
+    {
+      "scene": "so-far",
+      "shot": 1,
+      "offsetMs": 1833,
+      "name": "softLanding",
+      "level": "leve"
+    },
+    {
+      "scene": "stockroom",
+      "cue": "recebendo",
+      "offsetMs": 200,
+      "name": "boxDrop"
+    },
+    {
+      "scene": "stockroom",
+      "cue": "recebendo",
+      "offsetMs": 467,
+      "name": "boxDrop"
+    },
+    {
+      "scene": "stockroom",
+      "cue": "recebendo",
+      "offsetMs": 733,
+      "name": "boxDrop"
+    },
+    {
+      "scene": "stockroom",
+      "cue": "chega",
+      "offsetMs": 200,
+      "name": "boxDrop"
     },
     {
       "scene": "stockroom-night",
       "cue": "baixar",
+      "offsetMs": -100,
       "name": "shutterDown"
+    },
+    {
+      "scene": "stockroom-night",
+      "shot": 2,
+      "offsetMs": 500,
+      "name": "shutterDown",
+      "level": "leve"
+    },
+    {
+      "scene": "one-of-them",
+      "cue": "deita",
+      "offsetMs": 400,
+      "name": "bedFall",
+      "level": "leve"
     }
   ]
 }

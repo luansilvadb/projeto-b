@@ -17,6 +17,16 @@ import {
  * Freesound chega com um volume.
  */
 export const SFX = {
+  waterJet: { file: "sfx/freesound/411810.ogg", peakLufs: -22.3 },
+  stamp: { file: "sfx/freesound/362624.ogg", peakLufs: -20.7 },
+  paperFold: { file: "sfx/freesound/68222.ogg", peakLufs: -38.8 },
+  alarmClock: { file: "sfx/freesound/180737.ogg", peakLufs: -32.9 },
+  scissors: { file: "sfx/freesound/352504.ogg", peakLufs: -25.9 },
+  bodyFall: { file: "sfx/freesound/346692.ogg", peakLufs: -20.5 },
+  bedFall: { file: "sfx/freesound/138274.ogg", peakLufs: -31.7 },
+  softLanding: { file: "sfx/freesound/653910.ogg", peakLufs: -16.4 },
+  boxDrop: { file: "sfx/freesound/346169.ogg", peakLufs: -17.5 },
+  headTap: { file: "sfx/freesound/434146.ogg", peakLufs: -15.5 },
   coinDrop: { file: "sfx/freesound/510731.ogg", peakLufs: -28.5 },
   shutterDown: { file: "sfx/freesound/325585.ogg", peakLufs: -24.2 },
   whoosh: { file: "sfx/freesound/60011.ogg", peakLufs: -19.2 },
@@ -64,8 +74,12 @@ export const sfxEvents = (
     const anchor = effect.cue
       ? cueFrame(scene, effect.cue, effect.occurrence)
       : effect.shot
-        ? shotRanges(scene, inScript.shots)[effect.shot - 1].from
-        : 0;
+        ? shotRanges(scene, inScript.shots)[effect.shot - 1][
+            effect.at === "end" ? "to" : "from"
+          ]
+        : effect.at === "end"
+          ? scene.durationInFrames
+          : 0;
     const offset = Math.round(((effect.offsetMs ?? 0) / 1000) * fps);
     const { file, peakLufs } = SFX[effect.name];
     const below = SFX_LEVELS[effect.level ?? "normal"];

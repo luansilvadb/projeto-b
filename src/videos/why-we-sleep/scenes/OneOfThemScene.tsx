@@ -320,9 +320,9 @@ const SWIM_IN = {
   after: 0.6,
   tilt: 12,
 } as const;
-// "Os três se olham": ela se vira para a elefanta, pisca, e se vira para a água-viva. Quantos graus
-// o corpo pende, quantos quadros dura cada olhar e em quantos ela se vira.
-const GLANCE = { degrees: 3.5, frames: 24, turn: 12 };
+// "Os três se olham": ela se vira para a elefanta, que chega, pisca, e se vira para a água-viva, que
+// desce. Quantos graus o corpo pende, quantos quadros dura cada olhar e em quantos ela se vira.
+const GLANCE = { degrees: 3.5, frames: 20, turn: 10 };
 // Em quantos quadros a pálpebra fecha antes de o rosto trocar, e abre depois.
 const LID_FRAMES = 3;
 // O braço da frente, nas unidades do desenho da pessoa: solto, e com a mão no olho, que ela esfrega.
@@ -405,7 +405,7 @@ const walked = (t: number, brake: number): number => {
 };
 
 type Cues = {
-  /** Quadros da cena em que a elefanta parte, em que os três se olham e em que ela esfrega os olhos. */
+  /** Quadros da cena em que a elefanta parte, em que a pessoa se vira para ela e em que esfrega os olhos. */
   readonly enterAt: number;
   readonly lookAt: number;
   readonly rubAt: number;
@@ -461,9 +461,10 @@ const Among: React.FC<AmongProps> = ({
   const walking = (at - enterAt) / walkFrames;
   const covered = walked(walking, WALK_IN.brake);
   const strideLength = (STRIDE_LENGTH * layout.elephant.width) / 520;
-  // Os três se olham: ela vira a tromba e o olho para a pessoa; depois, sono.
+  // Os três se olham: já perto dela, a elefanta vira a tromba e o olho para a pessoa, e a água-viva pende
+  // os braços para o meio; os dois soltam o olhar quando ela esfrega os olhos. Depois, sono.
   const greeting =
-    ramp(at, lookAt, 10) * (1 - ramp(at, lookAt + 2 * GLANCE.frames, 14));
+    ramp(at, lookAt + GLANCE.frames, 10) * (1 - ramp(at, rubAt + 6, 14));
   const elephantDozes = ramp(at, elephantAt, DOZE_SECONDS * fps);
 
   // A água-viva vem nadando de cima, pela direita: chega de lado primeiro e desce no fim, para pousar.
@@ -783,17 +784,14 @@ export const OneOfThemOpening: React.FC<{ until: number }> = ({ until }) => (
 );
 
 export const OneOfThemScene: React.FC<SceneProps> = ({ scene, shots }) => {
-  const { fps } = useVideoConfig();
   const wideAt = shots[1].from;
-  const enterAt = Math.max(0, cue(scene, "Nós") - 6);
+  const rubAt = cue(scene, "larga");
   const cues: Cues = {
-    enterAt,
-    // Os três se olham quando a água-viva acaba de pousar.
-    lookAt: Math.max(
-      cue(scene, "um"),
-      enterAt + (SWIM_IN.after + SWIM_IN.seconds) * fps + 2,
-    ),
-    rubAt: cue(scene, "larga"),
+    // A fala não espera: a elefanta e a água-viva entram com a cena.
+    enterAt: 0,
+    // Ela se vira para cada um quando ele chega, e está de frente de novo quando esfrega os olhos.
+    lookAt: rubAt - 2 * GLANCE.frames - GLANCE.turn,
+    rubAt,
     wideAt,
     lieAt: wideAt,
     elephantAt: cue(scene, "elefanta"),
@@ -801,7 +799,7 @@ export const OneOfThemScene: React.FC<SceneProps> = ({ scene, shots }) => {
   };
   return (
     <>
-      <Shot range={shots[0]} name="um dos animais dessa procura">
+      <Shot range={shots[0]} name="entre a elefanta e a água-viva">
         <Preluded lead={AMONG_LEAD}>
           <AmongThemShot {...cues} />
         </Preluded>

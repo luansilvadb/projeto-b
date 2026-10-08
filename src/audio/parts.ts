@@ -395,9 +395,11 @@ export const levelDb = (
 ): number =>
   changes.reduce((db, change) => {
     const target = MUSIC_MIX.levelsDb[change.level];
-    const progress = Math.min(
-      Math.max((frame - change.frame) / rampFrames + 0.5, 0),
-      1,
-    );
+    // No começo do vídeo não há nível anterior para cruzar: a primeira
+    // palavra já precisa receber o nível escolhido para a abertura.
+    const progress =
+      change.frame === 0
+        ? 1
+        : Math.min(Math.max((frame - change.frame) / rampFrames + 0.5, 0), 1);
     return db + (target - db) * progress;
   }, MUSIC_MIX.levelsDb.leito as number);

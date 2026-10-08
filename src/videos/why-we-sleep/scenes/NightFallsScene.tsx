@@ -684,8 +684,10 @@ const LyingShot: React.FC<LyingShotProps> = ({ lieAt, closeAt, clock }) => {
   );
   // O vento largo do plano aberto volta ao de sempre enquanto a câmera chega: a moita não salta na troca.
   const wind = mix(DUSK_WIND, 6, ramp(frame, 0, 0.7 * fps));
-  // Fechados os olhos, ele solta um suspiro: o corpo enche e esvazia uma vez, devagar.
-  const sigh = (frame - closeAt - 0.3 * fps) / (0.7 * fps);
+  // Fechados os olhos, ele solta um suspiro: o corpo enche e esvazia uma vez, devagar. O plano
+  // acaba logo depois de "olhos": o suspiro encurta para caber nele, em vez de ser cortado no meio.
+  const sighAt = closeAt + 0.2 * fps;
+  const sigh = (frame - sighAt) / Math.min(0.7 * fps, length - sighAt);
   const sighing = sigh <= 0 || sigh >= 1 ? 0 : Math.sin(Math.PI * sigh) ** 2;
 
   // A luz parte do entardecer em que o plano aberto terminou e escurece no
@@ -772,18 +774,19 @@ const Snore: React.FC<SnoreProps> = ({ at, seconds }) => {
   );
 };
 
-type AsleepShotProps = ShotClock & {
-  /** Quadros do plano em que o ronco sobe e em que o capim se mexe. */
-  readonly snoreAt: number;
-  readonly stirAt: number;
-};
+// O plano abre em "dorme", a última palavra da cena, e dura quase só o silêncio que vem depois:
+// nada nele tem deixa. O ronco sobe com a câmera já quase no bicho, ainda sobre a palavra, e o
+// capim só se mexe 1 s depois, no silêncio, e assenta 0,6 s antes de a cena seguinte chegar.
+const SNORE_AT_SECONDS = 0.5;
+const STIR_AT_SECONDS = 1.5;
 
 /** De perto, ele ressona; atrás dele, o capim se abre e fecha, e ele continua igual. */
-const AsleepShot: React.FC<AsleepShotProps> = ({ snoreAt, stirAt, clock }) => {
+const AsleepShot: React.FC<ShotClock> = ({ clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
+  const stirAt = STIR_AT_SECONDS * fps;
   // Abre depressa e fecha mais devagar, em 0,6 s: alguém passou por dentro.
   const parted = interpolate(
     frame,
@@ -819,7 +822,7 @@ const AsleepShot: React.FC<AsleepShotProps> = ({ snoreAt, stirAt, clock }) => {
       {/* O ronco não entra com o plano: sobe na fala. Sai encolhendo, como o resto do que está solto. */}
       <Stay only="entering">
         <Place x={SNORE.x} y={SNORE.y}>
-          <Snore at={snoreAt} seconds={seconds} />
+          <Snore at={SNORE_AT_SECONDS * fps} seconds={seconds} />
         </Place>
       </Stay>
     </>
@@ -839,11 +842,7 @@ export const NightFallsScene: React.FC<SceneProps> = ({ scene, shots }) => (
       />
     </Shot>
     <Shot range={shots[2]} name="ele ressona; o capim se mexe">
-      <AsleepShot
-        snoreAt={cue(scene, "horas") - shots[2].from}
-        stirAt={cue(scene, "perceber") - shots[2].from}
-        clock={scene.from + shots[2].from}
-      />
+      <AsleepShot clock={scene.from + shots[2].from} />
     </Shot>
   </>
 );

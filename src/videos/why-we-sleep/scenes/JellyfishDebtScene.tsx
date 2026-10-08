@@ -43,7 +43,7 @@ const BILL = { x: 440, y: 200, scale: 1.36 };
 const SMALL_TANK = { scale: 0.86, x: 60, y: 96 };
 // O tanque fica na tela quando o laboratório chega: vai dali até o lugar dele na bancada nestes quadros.
 const TANK_SETTLES = 20;
-const OUT_SECONDS = 0.9;
+const OUT_SECONDS = 0.7;
 // Onde o quadro se divide entre a conta e o bolso, para cada um sair de cena em volta do próprio ponto.
 const SPLIT_X = 1500;
 // As linhas da conta, nas medidas do desenho dela: onde a primeira fica, o passo, onde o traço começa e o comprimento de cada um.
@@ -54,15 +54,16 @@ const ENTRY = {
   width: BILL_WIDTH - 130,
   lengths: [0.86, 0.62, 0.94, 0.7, 0.8],
 };
-// As linhas acendem uma a uma, com este intervalo em quadros; o carimbo pisca duas vezes.
-const LINE_EVERY = 6;
+// As linhas acendem uma a uma, depressa, com este intervalo em quadros; o carimbo pisca duas vezes.
+const LINE_EVERY = 3;
+// O carimbo pisca em cima da palavra, e não adiantado como o resto: as linhas ainda acabam de acender.
+const STAMP_LAG = 4;
 // O tanque abre o plano: entra no primeiro quadro.
 const TANK_SOONER = 8;
 
 type BillShotProps = {
-  /** Quadros do plano em que a conta sai do bolso, em que as linhas acendem e em que o carimbo pisca. */
+  /** Quadros do plano em que a conta sai do bolso e em que o carimbo pisca; as linhas acendem quando ela acaba de abrir. */
   readonly outAt: number;
-  readonly linesAt: number;
   readonly stampAt: number;
   /** O quadro do vídeo em que o plano começa. */
   readonly clock: number;
@@ -77,7 +78,6 @@ type BillShotProps = {
 /** A conta carimbada sai do bolso marcado no canto e se abre ao lado do tanque. */
 const BillShot: React.FC<BillShotProps> = ({
   outAt,
-  linesAt,
   stampAt,
   clock,
   phase = 0,
@@ -89,6 +89,7 @@ const BillShot: React.FC<BillShotProps> = ({
   const seconds = (clock + frame) / fps;
   const outFrames = OUT_SECONDS * fps;
   const out = ramp(frame, outAt, outFrames);
+  const linesAt = outAt + outFrames;
   const floor = BENCH_Y + SMALL_TANK.y;
   const tank: readonly [number, number] = [TANK_CENTER + SMALL_TANK.x, floor];
   const height = billHeight(BILL_LINES) * BILL.scale;
@@ -411,7 +412,6 @@ export const JellyfishDebtOpening: React.FC<{ clock: number }> = ({
 }) => (
   <BillShot
     outAt={NEVER}
-    linesAt={NEVER + 100}
     stampAt={NEVER + 200}
     clock={clock}
   />
@@ -440,9 +440,10 @@ export const JellyfishDebtScene: React.FC<SceneProps> = ({ scene, shots }) => {
       <Shot range={shots[0]} name="a conta sai do bolso, ao lado do tanque">
         <Preluded lead={BILL_LEAD}>
           <BillShot
-            outAt={cue(scene, "cobrança")}
-            linesAt={cue(scene, "regra")}
-            stampAt={cue(scene, "compensa")}
+            // A fala já não diz a regra: quem a lembra é a conta. Ela sai do bolso em "segundo", para
+            // estar aberta, com o carimbo à vista, quando "cobrança" soa.
+            outAt={cue(scene, "segundo")}
+            stampAt={cue(scene, "cobrança") + STAMP_LAG}
             clock={scene.from}
             // Menos de meio pulso, para um lado ou para o outro.
             phase={phase - Math.round(phase)}
@@ -461,7 +462,6 @@ export const JellyfishDebtScene: React.FC<SceneProps> = ({ scene, shots }) => {
           clock={scene.from + shots[2].from}
         />
       </Shot>
-      {/* O primeiro jato. */}
     </>
   );
 };

@@ -276,4 +276,19 @@ describe("o som no roteiro", () => {
       parse({ sfx: [{ scene: "a", shot: 1, cue: "oito", name: "whoosh" }] }),
     ).toThrowError(/use "cue" ou "shot", não os dois/);
   });
+
+  it("aceita o fim do plano e recusa fim junto com palavra ou valor desconhecido", () => {
+    expect(
+      parse({ sfx: [{ scene: "a", shot: 1, at: "end", name: "paperFold" }] })()
+        .sfx,
+    ).toHaveLength(1);
+    expect(
+      parse({
+        sfx: [{ scene: "a", cue: "oito", at: "end", name: "paperFold" }],
+      }),
+    ).toThrowError(/use "cue" ou "at", não os dois/);
+    expect(
+      parse({ sfx: [{ scene: "a", at: "hold", name: "paperFold" }] }),
+    ).toThrowError(/\.at" precisa ser "end"/);
+  });
 });

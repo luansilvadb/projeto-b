@@ -184,11 +184,13 @@ const GLYPH = {
 const FULL = { major: 30, minor: 16, stroke: 6, faint: 0.6 };
 // Os tempos da transformação, em quadros: o resto da fila encolhe, o ícone sobe até quem dorme
 // (a cama entra crescendo no caminho), o disco se recolhe atrás da régua e ela se estica.
+// O plano não tem deixa e dura pouco mais de 1 s (acaba em "oito"): a transformação inteira cabe
+// nele, com a régua começando a se esticar ainda no fim da subida.
 const ROW_OUT = { step: 2, each: 8 };
-const RISE = { at: 2, frames: 19 };
+const RISE = { at: 2, frames: 14 };
 const BED_IN = { at: 4, frames: 13 };
-const DISC_OUT = { at: 13, frames: 10 };
-const STRETCH_FRAMES = 24;
+const DISC_OUT = { at: 8, frames: 9 };
+const STRETCH = { at: 11, frames: 20 };
 
 type RulerMorphProps = {
   /** O centro do ícone e a escala dele (pixels por unidade do desenho), nas coordenadas do grupo da régua. */
@@ -302,17 +304,12 @@ type ShotClock = {
   readonly clock: number;
 };
 
-type RulerShotProps = ShotClock & {
-  /** Quadro do plano em que a régua do ícone começa a se esticar. */
-  readonly stretchAt: number;
-};
-
 /**
  * A fila em que a cena anterior parou se desfaz: os outros ícones, a pílula
  * "1" e o bolso encolhem no lugar, e a régua do ícone sobe até ficar sobre
  * quem dorme, onde se estica e vira a régua de 24 horas, ainda sem barra.
  */
-const RulerShot: React.FC<RulerShotProps> = ({ stretchAt, clock }) => {
+const RulerShot: React.FC<ShotClock> = ({ clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const stage = useStage();
@@ -330,8 +327,7 @@ const RulerShot: React.FC<RulerShotProps> = ({ stretchAt, clock }) => {
   const startSize = (ROW.scale * RULER_GROWN) / (1 - DRIFT) / OPEN.scale;
   const endSize = RULER_GROWN;
   const risen = ramp(frame, RISE.at, RISE.frames);
-  const stretchFrom = Math.max(stretchAt, RISE.at + RISE.frames + 1);
-  const stretch = ramp(frame, stretchFrom, STRETCH_FRAMES);
+  const stretch = ramp(frame, STRETCH.at, STRETCH.frames);
   // O que sai encolhe no próprio ponto, acelerando, um depois do outro.
   const gone = (at: number, frames = ROW_OUT.each) =>
     interpolate(frame, [at, at + frames], [0, 1], {
@@ -344,7 +340,7 @@ const RulerShot: React.FC<RulerShotProps> = ({ stretchAt, clock }) => {
   });
   const moved = ramp(frame, 0, 0.8 * fps);
   const labelFrames = POP_SECONDS * fps;
-  const endAt = stretchFrom + STRETCH_FRAMES;
+  const endAt = STRETCH.at + STRETCH.frames;
 
   return (
     <AbsoluteFill>
@@ -428,11 +424,12 @@ const RulerShot: React.FC<RulerShotProps> = ({ stretchAt, clock }) => {
                 disc={1 - ramp(frame, DISC_OUT.at, DISC_OUT.frames)}
                 stretch={stretch}
               />
-              {/* Os números das pontas entram quando a linha chega a cada uma. */}
+              {/* Os números das pontas entram quando a linha chega a cada uma: ela já está quase lá uns
+                  quadros antes de assentar, e os dois terminam de estourar com o plano. */}
               {(
                 [
-                  ["0", 0, endAt - 5],
-                  ["24 h", RULER.hours, endAt],
+                  ["0", 0, endAt - 6],
+                  ["24 h", RULER.hours, endAt - 4],
                 ] as const
               ).map(([text, hours, at]) =>
                 frame >= at ? (
@@ -457,22 +454,18 @@ const RulerShot: React.FC<RulerShotProps> = ({ stretchAt, clock }) => {
 };
 
 // A barra enche hora por hora, em cascata: o intervalo entre uma hora e a seguinte e quanto cada uma leva, em quadros.
-const FILL = { at: 6, step: 2.2, each: 6 };
+// O plano abre em "oito": ela enche enquanto a fala diz "oito horas", em 0,6 s.
+const FILL = { at: 2, step: 1.6, each: 6 };
 // O dono da barra entra com ela; o "8 h" só depois de ela chegar.
 const HOURS_AFTER_FRAMES = 3;
 
 type SleeperShotProps = ShotClock & {
-  /** Quadros do plano em que o "8 h" entra e em que abre o lugar da barra seguinte. */
-  readonly hoursAt: number;
+  /** Quadro do plano em que abre o lugar da barra seguinte. */
   readonly slotAt: number;
 };
 
 /** De perto: quem dorme, grande, no centro; a barra das oito horas enche e ganha "8 h"; debaixo dela abre o lugar de outra, mais curta. */
-const SleeperShot: React.FC<SleeperShotProps> = ({
-  hoursAt,
-  slotAt,
-  clock,
-}) => {
+const SleeperShot: React.FC<SleeperShotProps> = ({ slotAt, clock }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const stage = useStage();
@@ -498,7 +491,7 @@ const SleeperShot: React.FC<SleeperShotProps> = ({
             near={ramp(frame, 0, 0.6 * fps)}
             filled={filled}
             whoAt={FILL.at}
-            hoursAt={Math.max(hoursAt, fullAt + HOURS_AFTER_FRAMES)}
+            hoursAt={fullAt + HOURS_AFTER_FRAMES}
             slot={ramp(frame, slotAt, 0.5 * fps)}
             seconds={seconds}
           />
@@ -512,11 +505,10 @@ const SleeperShot: React.FC<SleeperShotProps> = ({
 export const SleepLessScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="a régua do ícone nasce sobre quem dorme">
-      <RulerShot stretchAt={cue(scene, "jeito")} clock={scene.from} />
+      <RulerShot clock={scene.from} />
     </Shot>
     <Shot range={shots[1]} name="quem dorme, e a barra das oito horas">
       <SleeperShot
-        hoursAt={cue(scene, "oito") - shots[1].from}
         slotAt={cue(scene, "tem") - shots[1].from}
         clock={scene.from + shots[1].from}
       />

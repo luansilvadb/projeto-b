@@ -10,7 +10,6 @@ import {
   cameraBetween,
   framing,
   useBuild,
-  type CameraState,
 } from "../../../components/Camera";
 import { FlatStage, useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
@@ -31,14 +30,9 @@ import {
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { enterProgress } from "../../../video/stage";
-import { alarmClock, chalkboard, sound } from "../palette";
+import { alarmClock, sound } from "../palette";
 import { Calendar } from "../parts/Calendar";
-import {
-  Chalkboard,
-  chalkStamp,
-  Researcher,
-  type Box,
-} from "../parts/Chalkboard";
+import { Chalkboard, Researcher, type Box } from "../parts/Chalkboard";
 import { IdeaBackdrop } from "../parts/IdeaBackdrop";
 import {
   ICONS,
@@ -63,14 +57,22 @@ const GROWN = 1.3;
 
 // A fila entra em cascata no começo do plano: o intervalo entre um ícone e o seguinte, e quanto cada um leva, em quadros.
 const ROW_IN = { at: -3, step: 2, each: 8 };
-// O X do contorno só entra com a fila inteira no lugar.
-const CROSS_NOT_BEFORE = ROW_IN.at + 4 * ROW_IN.step + ROW_IN.each;
 // Em quantos quadros um ícone passa de um estado a outro.
 const TURN_FRAMES = 9;
 
 // A cascata começa estes quadros antes da cena, por baixo do pedestal de `older-than-brain`, que encolhe:
 // sem isso a fila abria o plano já a meio tamanho, depois de um quadro só com o fundo.
 const ROW_LEAD = 5;
+// O plano dura 1,4 s e não tem frase própria: é o X que diz que o segundo jeito acabou. Para ser um
+// acontecimento, ele cai com a fila inteira assentada e o contorno aceso e parado estes quadros: caindo
+// quando o ícone dele assentava, perdia-se na cascata e na troca de cor do fundo.
+const CROSS_HOLD = 6;
+const CROSS_AT =
+  ROW_IN.at -
+  ROW_LEAD +
+  (ICONS.length - 1) * ROW_IN.step +
+  ROW_IN.each +
+  CROSS_HOLD;
 
 type MapRowProps = {
   /** O quadro do plano que se desenha: negativo, antes de ele chegar. */
@@ -86,7 +88,6 @@ type MapRowProps = {
 const MapRow: React.FC<MapRowProps> = ({ frame, crossAt, nextAt, tinted }) => {
   const { fps } = useVideoConfig();
   const life = rowLife(frame / fps);
-  const cross = Math.max(crossAt, CROSS_NOT_BEFORE);
   const present: Partial<Record<IconKey, number>> = {};
   ICONS.forEach((icon, index) => {
     present[icon] = grown(
@@ -105,17 +106,17 @@ const MapRow: React.FC<MapRowProps> = ({ frame, crossAt, nextAt, tinted }) => {
       states={{
         eyes: "check",
         ruler: "cross",
-        brain: frame >= cross ? "cross" : "on",
+        brain: frame >= crossAt ? "cross" : "on",
         alarm: frame >= nextAt ? "on" : "off",
       }}
       // Antes da cena nada mudou ainda, e o relógio de quem desenha o prelúdio é outro.
-      since={frame < 0 ? {} : { brain: cross, alarm: nextAt }}
+      since={frame < 0 ? {} : { brain: crossAt, alarm: nextAt }}
       turning={{
-        ...(frame >= cross
+        ...(frame >= crossAt
           ? {
               brain: {
                 from: "on",
-                progress: ramp(frame, cross, TURN_FRAMES),
+                progress: ramp(frame, crossAt, TURN_FRAMES),
               },
             }
           : {}),
@@ -135,7 +136,7 @@ const MapRow: React.FC<MapRowProps> = ({ frame, crossAt, nextAt, tinted }) => {
         ...life.tilt,
         // Aceso, o despertador chacoalha: é o gesto dele, como em `five-parts`.
         alarm:
-          (life.tilt.alarm ?? 0) + shake(frame, nextAt + 3, 0.6 * fps, 11, 5),
+          (life.tilt.alarm ?? 0) + shake(frame, nextAt + 3, 0.5 * fps, 11, 5),
       }}
       grow={{
         ...life.grow,
@@ -199,9 +200,9 @@ const ICON_BODY = (56 * 0.82) / 220;
 const SPOT = iconSpot("alarm", ROW);
 // O calendário da parede já tem estes dias riscados quando o plano começa; a fala risca mais dois.
 const WALL_CALENDAR = { x: 330, y: 430, scale: 1.5, days: 32, filled: 5 };
-// Onde a aproximação lenta do plano termina: é daqui que a câmera do plano dos dez desce até eles.
+// Onde a aproximação lenta do plano termina: é daqui que a câmera do plano da sala abre.
 const ALARM_END = framing([960, 600], 1.04, [960, 600]);
-// O laboratório fica para o plano dos dez: quem sai é o rato e o calendário, que encolhem no próprio ponto
+// O laboratório fica para o plano da sala: quem sai é o rato e o calendário, que encolhem no próprio ponto
 // logo antes da troca. O atraso de cada um, em quadros depois de a saída do palco começar.
 const LEAVE_AFTER = { calendar: 6, rat: 10 };
 // De onde a mão vem, fora do quadro, e quanto ela está afastada antes de chegar.
@@ -388,22 +389,29 @@ const AlarmShot: React.FC<AlarmShotProps> = ({ ringAt, strikeAt, clock }) => {
             linear(frame, 0, length),
           )}
           wall={
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                scale: `${WALL_CALENDAR.scale * calendarLeft}`,
-                transformOrigin: `${WALL_CALENDAR.x}px ${WALL_CALENDAR.y}px`,
-              }}
-            >
-              <Calendar
-                x={WALL_CALENDAR.x}
-                y={WALL_CALENDAR.y}
-                days={WALL_CALENDAR.days}
-                filled={WALL_CALENDAR.filled + strikes}
-                gradual
-              />
-            </div>
+            <>
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  scale: `${WALL_CALENDAR.scale * calendarLeft}`,
+                  transformOrigin: `${WALL_CALENDAR.x}px ${WALL_CALENDAR.y}px`,
+                }}
+              >
+                <Calendar
+                  x={WALL_CALENDAR.x}
+                  y={WALL_CALENDAR.y}
+                  days={WALL_CALENDAR.days}
+                  filled={WALL_CALENDAR.filled + strikes}
+                  gradual
+                />
+              </div>
+              {/* O quadro-negro do plano seguinte já cresce aqui, na mesma parede, enquanto o rato encolhe:
+                  a troca não deixa a sala vazia. */}
+              {frame >= length - ROOM_IN.lead ? (
+                <RoomBoard frame={frame - length} />
+              ) : null}
+            </>
           }
         >
           <SvgLayer>
@@ -558,149 +566,106 @@ const TEN = { x: 1000, y: 1006, width: 200, spacing: 196, rows: 2 } as const;
 const WIDE = framing([960, 540], 1);
 // A sala aberta ainda se aproxima um nada até o fim do plano, na direção do quadro-negro.
 const WIDE_END = framing([1100, 500], 1.03, [1100, 500]);
-// De perto: as duas fileiras de ratos enchem a largura. O enquadramento desce até a calha do quadro-negro
-// sair por cima: cortada no alto, era uma barra sem nome.
-const ON_RATS = framing([TEN.x + 20, TEN.y - 65], 1.72, [960, 590]);
 // Quanto cada rato se ergue pela frente, em graus: com menos, eles olhavam para a esquerda, e não para o quadro.
 const LOOK_UP = 24;
+// A sala se monta no laboratório do despertador, que fica: a câmera abre um nada e a frente escura da bancada
+// desce (o tampo vira o chão), o quadro-negro cresce na parede, onde estava o calendário, e ele cresce dos pés.
+// Em quadros: quanto a câmera leva, quanto o quadro-negro e ele levam para crescer, e quantos quadros antes
+// do plano o quadro-negro começa (o plano do despertador o desenha: sem isso a troca tinha um quadro só de parede).
+const ROOM_IN = { camera: 18, board: 14, him: 12, lead: 8 };
+
+/** O quadro-negro do gancho crescendo na parede, num quadro do plano da sala: negativo, antes de ele chegar. */
+const RoomBoard: React.FC<{ frame: number }> = ({ frame }) => (
+  <AbsoluteFill
+    style={{
+      transformOrigin: `${BOARD.x + BOARD.width / 2}px ${BOARD.y + BOARD.height / 2}px`,
+      scale: `${grown(frame, -ROOM_IN.lead, ROOM_IN.board)}`,
+    }}
+  >
+    <Chalkboard box={BOARD} stamp="full" />
+  </AbsoluteFill>
+);
 // Os dez entram em cascata: o intervalo entre um e o seguinte (0,08 s) e quanto cada um leva, em quadros.
-// O primeiro já cresce no quadro em que o plano chega: o rato do despertador acabou de encolher.
-const RATS_IN = { at: 0, step: 2.4, each: 9 };
-// A câmera desce do rato do despertador até os dez, no começo do plano deles: em quantos segundos.
-const DOWN_SECONDS = 0.6;
+// O primeiro espera o quadro-negro começar a crescer: é a parede que diz onde eles estão.
+const RATS_IN = { at: 3, step: 2.4, each: 9 };
 // Erguer o corpo: o agachar que avisa, a subida com sobra e o assentar, em quadros a partir da deixa.
 const RISE = { crouch: 4, up: 8, settle: 5, over: 1.14 };
 // A etiqueta de nome encolhe no ponto antes de a sala sair: quantos quadros antes do fim do plano, e quanto leva.
 const NAME_OUT = { before: 22, frames: 9 };
-// O carimbo pisca: um halo que cresce em volta dele e some, duas vezes. Meia largura e meia altura do carimbo, em tamanhos da letra.
-const STAMP_HALO = { halfWidth: 1.72, halfHeight: 0.7, frames: 13, gap: 15 };
 
-type BoardShotProps = {
-  /** O quadro da cena em que o plano começa: os ratos respiram e farejam de onde estavam. */
+type OpeningShotProps = {
+  /** O quadro da cena em que o plano começa: os ratos respiram e farejam no relógio dela. */
   readonly clock: number;
-  readonly camera: CameraState;
-  /** Quanto da frente da bancada do plano do despertador ainda está no quadro; por padrão, nada: o tampo é o chão. */
-  readonly front?: number;
-  /** O quadro-negro e ele já estão na sala; por padrão, sim. */
-  readonly staffed?: boolean;
-  /** Quadro do plano em que os ratos começam a entrar; sem valor, já estão lá. */
-  readonly ratsAt?: number;
-  /** Quadro do plano em que os ratos erguem o corpo; sem valor, já olham para cima. */
-  readonly lookAt?: number;
-  /** Quadro do plano em que a etiqueta de nome entra; sem valor, não há. */
-  readonly nameAt?: number;
-  /** Quadro do plano em que ele aponta o carimbo; sem valor, fica de braço solto. */
-  readonly pointAt?: number;
-  /** Há quantos quadros ele está na sala quando o plano começa. */
-  readonly since?: number;
+  /** Quadros do plano em que ele entra na sala e em que a etiqueta de nome entra. */
+  readonly himAt: number;
+  readonly nameAt: number;
 };
 
 /**
- * A sala de Rechtschaffen: ele diante do quadro-negro do gancho, com a árvore
- * e o carimbo "erro?", e os dez ratos aos pés do quadro, olhando para cima.
- * De perto, só os ratos (ele está na sala, fora do quadro, de braço solto);
- * aberto, a sala inteira.
+ * A sala de Rechtschaffen, aberta, no laboratório do plano do despertador: a
+ * parede e a bancada ficam, o quadro-negro do gancho cresce na parede, com a
+ * árvore e o carimbo "erro?", os dez ratos entram em cascata aos pés dele e,
+ * com ele na sala, erguem o corpo e olham para cima. A fala não o
+ * reapresenta: quem o faz reconhecer é o quadro-negro e a etiqueta de nome.
  */
-const BoardShot: React.FC<BoardShotProps> = ({
-  clock,
-  camera,
-  front = 0,
-  staffed = true,
-  ratsAt,
-  lookAt,
-  nameAt,
-  pointAt,
-  since = 0,
-}) => {
+const OpeningShot: React.FC<OpeningShotProps> = ({ clock, himAt, nameAt }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
-  const stamp = chalkStamp(BOARD);
+  const opened = ramp(frame, 0, ROOM_IN.camera);
+  // Eles só se erguem com os dez no lugar e com ele já na sala: é para o quadro que olham.
+  const lookAt = Math.max(
+    himAt + ROOM_IN.him,
+    RATS_IN.at + (RATS - 1) * RATS_IN.step + RATS_IN.each + RISE.crouch,
+  );
   // Cada rato se ergue com um quadro de diferença do vizinho: juntos, mas não como uma peça só.
-  const lag = (index: number) => index % 3;
   const raised = (index: number) =>
-    lookAt === undefined
-      ? 1
-      : interpolate(
-          frame - lag(index),
-          [
-            lookAt - RISE.crouch,
-            lookAt,
-            lookAt + RISE.up,
-            lookAt + RISE.up + RISE.settle,
-          ],
-          [0, -0.12, RISE.over, 1],
-          { ...clamp, easing: Easing.out(Easing.quad) },
-        );
-  const reach = pointAt === undefined ? 0 : ramp(frame, pointAt, 0.5 * fps);
-  // A expressão dele troca no meio do gesto, sob a pálpebra fechada.
-  const lid =
-    pointAt === undefined
-      ? 0
-      : interpolate(
-          frame,
-          [pointAt + 3, pointAt + 6, pointAt + 9, pointAt + 13],
-          [0, 1, 1, 0],
-          clamp,
-        );
-  const pointed = pointAt === undefined ? -1 : frame - pointAt - 0.5 * fps;
+    interpolate(
+      frame - (index % 3),
+      [
+        lookAt - RISE.crouch,
+        lookAt,
+        lookAt + RISE.up,
+        lookAt + RISE.up + RISE.settle,
+      ],
+      [0, -0.12, RISE.over, 1],
+      { ...clamp, easing: Easing.out(Easing.quad) },
+    );
 
   return (
     <RatLab
       floor
-      front={front}
+      front={1 - opened}
       steady
-      camera={camera}
-      wall={
-        !staffed ? null : (
-          <>
-            <Chalkboard box={BOARD} stamp="full" />
-            {/* O carimbo pisca quando ele o aponta: um halo da cor dele cresce em volta e some. */}
-            <SvgLayer>
-              {[0, 1].map((pulse) => {
-                const t =
-                  (pointed - pulse * STAMP_HALO.gap) / STAMP_HALO.frames;
-                if (t <= 0 || t >= 1) {
-                  return null;
-                }
-                const size = 1 + 0.38 * (1 - (1 - t) ** 2);
-                const halfWidth = STAMP_HALO.halfWidth * stamp.size * size;
-                const halfHeight = STAMP_HALO.halfHeight * stamp.size * size;
-                return (
-                  <rect
-                    key={pulse}
-                    x={stamp.x - halfWidth}
-                    y={stamp.y - halfHeight}
-                    width={halfWidth * 2}
-                    height={halfHeight * 2}
-                    rx={stamp.size * 0.3 * size}
-                    fill="none"
-                    stroke={chalkboard.stamp}
-                    strokeWidth={22 * (1 - t)}
-                    opacity={1 - t}
-                    transform={`rotate(-9 ${stamp.x} ${stamp.y})`}
-                  />
-                );
-              })}
-            </SvgLayer>
-          </>
-        )
-      }
+      camera={cameraBetween(
+        ALARM_END,
+        cameraBetween(
+          WIDE,
+          WIDE_END,
+          linear(frame, ROOM_IN.camera, length - ROOM_IN.camera),
+        ),
+        opened,
+      )}
+      wall={<RoomBoard frame={frame} />}
     >
-      {staffed ? (
-        <Researcher
-          {...RECHTSCHAFFEN}
-          reach={reach}
-          lid={lid}
-          nameAt={nameAt}
-          nameOffset={[180, -RECHTSCHAFFEN.height - 60]}
-          on="mint"
-          // A etiqueta sai antes de a sala descer: descendo com ela, cruzava com a placa de `rats-disc`, que sobe.
-          nameGone={drop(frame, length - NAME_OUT.before, NAME_OUT.frames)}
-          since={since}
-        />
-      ) : null}
+      {frame < himAt ? null : (
+        <AbsoluteFill
+          style={{
+            transformOrigin: `${RECHTSCHAFFEN.x}px ${RECHTSCHAFFEN.y}px`,
+            scale: `${grown(frame, himAt, ROOM_IN.him)}`,
+          }}
+        >
+          <Researcher
+            {...RECHTSCHAFFEN}
+            nameAt={nameAt}
+            nameOffset={[180, -RECHTSCHAFFEN.height - 60]}
+            on="mint"
+            // A etiqueta sai antes de a sala descer: descendo com ela, cruzava com a placa de `rats-disc`, que sobe.
+            nameGone={drop(frame, length - NAME_OUT.before, NAME_OUT.frames)}
+          />
+        </AbsoluteFill>
+      )}
       <RatRow
         {...TEN}
         state={() => "awake"}
@@ -708,11 +673,8 @@ const BoardShot: React.FC<BoardShotProps> = ({
         lookUp={LOOK_UP}
         alive={1}
         raised={raised}
-        present={
-          ratsAt === undefined
-            ? undefined
-            : (index) =>
-                grown(frame, ratsAt + index * RATS_IN.step, RATS_IN.each)
+        present={(index) =>
+          grown(frame, RATS_IN.at + index * RATS_IN.step, RATS_IN.each)
         }
         seed="ten"
       />
@@ -720,105 +682,42 @@ const BoardShot: React.FC<BoardShotProps> = ({
   );
 };
 
-type RatsShotProps = {
-  readonly clock: number;
-  /** Quadro do plano em que os dez erguem o corpo e olham para cima. */
-  readonly lookAt: number;
-};
-
-/**
- * De perto: os dez entram em cascata, em duas fileiras, e na fala erguem o
- * corpo, juntos. É o laboratório do plano do despertador: a parede e a bancada
- * ficam, e a câmera desce do rato sonolento até o tampo, que aqui é o chão. O
- * quadro-negro e Rechtschaffen só entram na sala com a câmera já embaixo, fora
- * do quadro: o plano seguinte os revela ao abrir.
- */
-const RatsShot: React.FC<RatsShotProps> = ({ clock, lookAt }) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const down = DOWN_SECONDS * fps;
-  const arrived = ramp(frame, 0, down);
+export const ForcedAwakeScene: React.FC<SceneProps> = ({ scene, shots }) => {
+  const opening = shots[2].from;
+  const himAt = cue(scene, "no") - opening;
   return (
-    <BoardShot
-      clock={clock}
-      // De perto a câmera fica: o quadro já tem os dez entrando e se erguendo, e mais perto a borda cortava o rato da ponta.
-      camera={cameraBetween(ALARM_END, ON_RATS, arrived)}
-      front={1 - arrived}
-      staffed={frame >= down}
-      ratsAt={RATS_IN.at}
-      lookAt={Math.max(
-        lookAt,
-        RATS_IN.at + (RATS - 1) * RATS_IN.step + RATS_IN.each + RISE.crouch,
-      )}
-    />
+    <>
+      <Shot range={shots[0]} name="o contorno ganha um X; o despertador acende">
+        {/* O plano não tem frase própria: o X cai com a fila no lugar, e o despertador acende dentro de
+            "terceiro", quando o X acabou de cair: são duas batidas, e não uma. */}
+        <MapShot
+          crossAt={CROSS_AT}
+          nextAt={Math.max(cue(scene, "terceiro"), CROSS_AT + TURN_FRAMES)}
+        />
+      </Shot>
+      <Shot range={shots[1]} name="o despertador sobre o rato sonolento">
+        <AlarmShot
+          ringAt={cue(scene, "força") - shots[1].from}
+          strikeAt={cue(scene, "Foi") - shots[1].from}
+          clock={shots[1].from}
+        />
+      </Shot>
+      <Shot
+        range={shots[2]}
+        name="Rechtschaffen, o quadro-negro e os dez ratos"
+      >
+        <OpeningShot
+          clock={opening}
+          himAt={himAt}
+          // A etiqueta espera ele assentar.
+          nameAt={Math.max(cue(scene, "Álan") - opening, himAt + ROOM_IN.him)}
+        />
+        {/* A bancada do disco de `rats-disc` sobe aqui, por cima da do quadro-negro, que desce: a troca de cena
+            não deixa a tela só com a parede. */}
+        <Prelude>
+          <RatsDiscOpening videoClock={scene.from + shots[2].to} />
+        </Prelude>
+      </Shot>
+    </>
   );
 };
-
-type OpeningShotProps = {
-  readonly clock: number;
-  readonly nameAt: number;
-  readonly pointAt: number;
-  /** Quantos quadros durou o plano de perto: ele já estava na sala. */
-  readonly since: number;
-};
-
-/** A câmera sobe e recua dos ratos para a sala inteira, no começo do plano; ele aponta o carimbo na fala. */
-const OpeningShot: React.FC<OpeningShotProps> = ({
-  clock,
-  nameAt,
-  pointAt,
-  since,
-}) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const length = useShotLength();
-  const arrive = 0.9 * fps;
-  return (
-    <BoardShot
-      clock={clock}
-      camera={cameraBetween(
-        ON_RATS,
-        cameraBetween(WIDE, WIDE_END, linear(frame, arrive, length - arrive)),
-        ramp(frame, 0, arrive),
-      )}
-      // A etiqueta espera a câmera assentar.
-      nameAt={Math.max(nameAt, arrive)}
-      pointAt={pointAt}
-      since={since}
-    />
-  );
-};
-
-export const ForcedAwakeScene: React.FC<SceneProps> = ({ scene, shots }) => (
-  <>
-    <Shot range={shots[0]} name="o contorno ganha um X; o despertador acende">
-      <MapShot crossAt={cue(scene, "segundo")} nextAt={cue(scene, "falhou")} />
-    </Shot>
-    <Shot range={shots[1]} name="o despertador sobre o rato sonolento">
-      <AlarmShot
-        ringAt={cue(scene, "que") - shots[1].from}
-        strikeAt={cue(scene, "acordado") - shots[1].from}
-        clock={shots[1].from}
-      />
-    </Shot>
-    <Shot range={shots[2]} name="dez ratos, de perto, olham para cima">
-      <RatsShot
-        clock={shots[2].from}
-        lookAt={cue(scene, "dez") - shots[2].from}
-      />
-    </Shot>
-    <Shot range={shots[3]} name="Rechtschaffen, o quadro-negro e os dez ratos">
-      <OpeningShot
-        clock={shots[3].from}
-        nameAt={cue(scene, "Álan") - shots[3].from}
-        pointAt={cue(scene, "maior") - shots[3].from}
-        since={shots[3].from - shots[2].from}
-      />
-      {/* A bancada do disco de `rats-disc` sobe aqui, por cima da do quadro-negro, que desce: a troca de cena
-          não deixa a tela só com a parede. */}
-      <Prelude>
-        <RatsDiscOpening videoClock={scene.from + shots[3].to} />
-      </Prelude>
-    </Shot>
-  </>
-);

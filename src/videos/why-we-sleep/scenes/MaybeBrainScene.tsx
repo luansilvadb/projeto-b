@@ -289,6 +289,11 @@ const CHOSEN = 1.3;
 
 // A fila começa a entrar estes quadros antes da cena, por baixo do pedestal de `elephant-verdict`, que encolhe.
 const MAP_LEAD = 9;
+// O X e o contorno que acende são duas batidas em torno de "segundo": quantos quadros depois da
+// deixa dela o X cai, com a fila assentada e a régua acesa e parada um instante, e quantos depois o
+// contorno acende. Mais tarde que isto ele não termina de crescer antes de sair da fila, em "viver".
+const CROSS_LAG = 2;
+const NEXT_LAG = 10;
 
 type MapRowProps = {
   /** O quadro do plano que se desenha: negativo, antes de ele chegar. */
@@ -908,15 +913,16 @@ const ResearcherShot: React.FC<ResearcherShotProps> = ({
 };
 
 export const MaybeBrainScene: React.FC<SceneProps> = ({ scene, shots }) => {
-  const { fps } = useVideoConfig();
-  const crossAt = cue(scene, "primeiro");
+  const secondAt = cue(scene, "segundo");
   return (
     <>
       <Shot range={shots[0]} name="a régua ganha um X; o contorno acende">
         <MapShot
-          crossAt={crossAt}
-          // O contorno acende ainda neste plano, com folga: no seguinte ele já cresce.
-          nextAt={Math.min(cue(scene, "limite"), shots[0].to - 0.9 * fps)}
+          // A fala já não diz que o primeiro jeito acabou: quem diz é o X, que cai com a fila já
+          // assentada, no começo de "segundo".
+          crossAt={secondAt + CROSS_LAG}
+          // O contorno acende dentro da palavra, ainda neste plano: no seguinte ele já cresce.
+          nextAt={secondAt + NEXT_LAG}
           clock={scene.from}
         />
       </Shot>

@@ -419,15 +419,18 @@ const KINDS = ["slept", "awake"] as const;
 const TEST_FOCUS = [665, 580] as const;
 // A câmera chega às listas: em quantos quadros elas vêm das mesas de cabeceira até o centro.
 const ARRIVE_FRAMES = 18;
-// As sílabas apagam uma a uma: o intervalo entre elas, e quanto cada uma leva.
-const FORGET = { step: 3, seconds: 0.3 };
+// As sílabas apagam uma a uma: o intervalo entre elas, quanto cada uma leva, e quantos quadros a lista de quem
+// dormiu espera pela outra. Apertado para as duas terminarem juntas e ficarem lado a lado, já diferentes,
+// quase um segundo antes de saírem: é a prova de "esqueciam menos", e com 0,5 s quase não era vista.
+const FORGET = { step: 2, seconds: 0.3, sleptAfter: 4 };
 const PAIR_SOONER = 12;
+// "só duas" estoura quando as duas pessoas que ela nomeia acabam de crescer: a fala não tem mais palavra para ela.
+const ONLY_AT = 16;
 
 type TestShotProps = {
-  /** Quadros do plano em que as sílabas começam a apagar, em que o colchete e a etiqueta entram, e em que entra "só duas". */
+  /** Quadros do plano em que as sílabas começam a apagar e em que o colchete e a etiqueta entram. */
   readonly forgetAt: number;
   readonly tagAt: number;
-  readonly onlyAt: number;
   readonly clock: number;
 };
 
@@ -435,7 +438,6 @@ type TestShotProps = {
 const TestShot: React.FC<TestShotProps> = ({
   forgetAt,
   tagAt,
-  onlyAt,
   clock,
 }) => {
   const frame = useCurrentFrame();
@@ -514,7 +516,9 @@ const TestShot: React.FC<TestShotProps> = ({
                       const order = FORGOTTEN[index].indexOf(syllable);
                       // A de quem ficou acordada apaga primeiro; a outra, logo depois, e menos.
                       const at =
-                        forgetAt + order * FORGET.step + (index === 0 ? 8 : 0);
+                        forgetAt +
+                        order * FORGET.step +
+                        (index === 0 ? FORGET.sleptAfter : 0);
                       return order < 0
                         ? 1
                         : 1 - ramp(frame, at, FORGET.seconds * fps);
@@ -562,7 +566,7 @@ const TestShot: React.FC<TestShotProps> = ({
                     blink={Math.max(
                       blink(seconds, `pair-${index}`),
                       // A etiqueta estoura sobre elas, e as duas piscam, uma depois da outra.
-                      flash(frame, onlyAt + 5 + index * 4, 5),
+                      flash(frame, ONLY_AT + 5 + index * 4, 5),
                     )}
                   />
                 </Place>
@@ -575,7 +579,7 @@ const TestShot: React.FC<TestShotProps> = ({
               x={(PAIR.xs[0] + PAIR.xs[1]) / 2}
               y={PAIR.y - PAIR.height - 70}
             >
-              <Pop at={onlyAt}>
+              <Pop at={ONLY_AT}>
                 <Tag on={HUE} size="note">
                   só duas
                 </Tag>
@@ -720,13 +724,12 @@ export const MemoryResultScene: React.FC<SceneProps> = ({ scene, shots }) => (
     </Shot>
     <Shot range={shots[1]} name="as duas listas na hora do teste">
       <TestShot
-        // As sílabas só apagam com as listas no lugar.
+        // As sílabas só apagam com as listas no lugar, e logo que chegam: o plano é curto.
         forgetAt={Math.max(
-          ARRIVE_FRAMES + 2,
+          ARRIVE_FRAMES,
           cue(scene, "dormiam", 2) - shots[1].from,
         )}
         tagAt={cue(scene, "esqueciam") - shots[1].from}
-        onlyAt={cue(scene, "só") - shots[1].from}
         clock={scene.from + shots[1].from}
       />
     </Shot>

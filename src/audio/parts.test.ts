@@ -342,6 +342,15 @@ describe("os níveis da trilha", () => {
     expect(levelDb(500, levelChanges(timeline, music), 60)).toBe(leito);
   });
 
+  it("aplica o nível da abertura desde o primeiro quadro, sem cruzar do padrão", () => {
+    const opening = levelChanges(timeline, {
+      ...music,
+      levels: [{ from: "hook", level: "recuo" }],
+    });
+    expect(levelDb(0, opening, 60)).toBe(recuo);
+    expect(levelDb(12, opening, 60)).toBe(recuo);
+  });
+
   it("acusa a cena que não está na narração", () => {
     expect(() =>
       levelChanges(timeline, {

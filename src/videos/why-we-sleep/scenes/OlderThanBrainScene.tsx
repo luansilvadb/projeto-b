@@ -66,7 +66,9 @@ const BILL = { x: 640, y: 690, scale: 0.92, lines: 3 };
 const POCKET = { x: 236, y: 700, scale: 0.8 };
 // Onde o quadro se divide entre o bolso e a conta, para cada um entrar em volta do próprio ponto.
 const SPLIT_X = 400;
-const STOW_SECONDS = 0.7;
+// A conta é guardada com a saída do plano: a dobra e a viagem, em quadros, e quantos antes da troca ela
+// entra no bolso. O bolso só encolhe depois de recebê-la: quantos quadros a saída dele atrasa.
+const STOW = { frames: 16, before: 4, pocketWaits: 6 };
 // A pessoa é desenhada com esta altura, nas unidades dela: dá a escala da prancheta na mão da pesquisadora.
 const PERSON_UNITS = 650;
 // Onde ela fica dentro do tanque, no cenário do laboratório.
@@ -88,7 +90,13 @@ const ProofShot: React.FC<ProofShotProps> = ({ checksAt, stowAt, clock }) => {
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
   const arriving = ramp(frame, 0, CAMERA_SECONDS * fps);
-  const stowed = ramp(frame, stowAt, STOW_SECONDS * fps);
+  const stowed = ramp(frame, stowAt, STOW.frames);
+  // O bolso já estava no palco, e sai depois da marcação dele: espera a conta.
+  const pocketStage = {
+    ...stage,
+    enter: () => 1,
+    leave: (delay = 0) => stage.leave(delay + STOW.pocketWaits),
+  };
   const camera = cameraBetween(
     LAB_BEFORE,
     // A aproximação lenta para no fim do plano: é dali que a linha do tempo a leva.
@@ -178,8 +186,8 @@ const ProofShot: React.FC<ProofShotProps> = ({ checksAt, stowAt, clock }) => {
               scale={board.scale}
               checked={[1, 1]}
               flash={[
-                flash(frame, checksAt, 10),
-                flash(frame, checksAt + 9, 10),
+                flash(frame, checksAt, 8),
+                flash(frame, checksAt + 8, 8),
               ]}
             />
           </div>
@@ -194,17 +202,19 @@ const ProofShot: React.FC<ProofShotProps> = ({ checksAt, stowAt, clock }) => {
         </Cast>
         {/* A conta, colada no vidro, e o bolso: um desenho só, em duas metades, para cada um crescer do próprio ponto.
             No fim do plano ela se dobra e volta para o bolso, de onde saiu em `jellyfish-debt`. */}
-        <Cast origin={[POCKET.x, POCKET.y]}>
-          <AbsoluteFill
-            style={{
-              clipPath: `inset(0 ${WIDTH - SPLIT_X}px 0 0)`,
-              transformOrigin: `${POCKET.x}px ${POCKET.y}px`,
-              scale: `${pocketIn}`,
-            }}
-          >
-            {bill}
-          </AbsoluteFill>
-        </Cast>
+        <StageContext.Provider value={pocketStage}>
+          <Cast origin={[POCKET.x, POCKET.y]}>
+            <AbsoluteFill
+              style={{
+                clipPath: `inset(0 ${WIDTH - SPLIT_X}px 0 0)`,
+                transformOrigin: `${POCKET.x}px ${POCKET.y}px`,
+                scale: `${pocketIn}`,
+              }}
+            >
+              {bill}
+            </AbsoluteFill>
+          </Cast>
+        </StageContext.Provider>
         <AbsoluteFill
           style={{
             clipPath: `inset(0 0 0 ${SPLIT_X}px)`,
@@ -540,17 +550,14 @@ const VacantShot: React.FC<VacantShotProps> = ({ landAt, blinkAt, clock }) => {
 };
 
 export const OlderThanBrainScene: React.FC<SceneProps> = ({ scene, shots }) => {
-  const { fps } = useVideoConfig();
   return (
     <>
       <Shot range={shots[0]} name="passou nos dois testes">
         <ProofShot
           checksAt={cue(scene, "dois")}
-          // A conta volta para o bolso em "sem", e não em "cérebro": assenta meio segundo antes da troca.
-          stowAt={Math.min(
-            cue(scene, "sem"),
-            shots[0].to - (STOW_SECONDS + 0.5) * fps,
-          )}
+          // A conta volta para o bolso depois dos vistos, com a saída do plano: o tanque em que estava
+          // colada desce, e ela entra no bolso logo antes da troca.
+          stowAt={shots[0].to - STOW.frames - STOW.before}
           clock={scene.from}
         />
       </Shot>

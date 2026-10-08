@@ -195,7 +195,7 @@ const STRIKE_DELAY_SECONDS = 0.35;
 const FLOAT = { pixels: 14, degrees: 3, seconds: 2.7 };
 
 type LossesShotProps = {
-  /** Quadro do plano em que cada ícone acende, na ordem da fala: comer, reproduzir, perceber. */
+  /** Quadro do plano em que cada ícone acende, na ordem da fala: comer, reproduzir, defender-se. */
   readonly at: readonly [number, number, number];
 };
 
@@ -271,7 +271,7 @@ export const ThirdOfLifeScene: React.FC<SceneProps> = ({ scene, shots }) => {
   const lossesAt = [
     cue(scene, "comer") - shots[1].from,
     cue(scene, "reproduzir") - shots[1].from,
-    cue(scene, "perceber") - shots[1].from,
+    cue(scene, "defesa") - shots[1].from,
   ] as const;
   return (
     <>
