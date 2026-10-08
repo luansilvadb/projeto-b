@@ -134,8 +134,9 @@ const FALL = { warning: 0.3, seconds: 0.33, stampAfter: 0.3 };
 const DUST = { puffs: 3, seconds: 0.55 };
 // O carimbo: de que tamanho vem, em quantos quadros desce, e a sobra da batida (afunda e volta).
 const STAMP = { from: 2.3, frames: 6, sink: 0.88, back: 5 };
-// "Dorme mais tempo": o sol anda no céu, à vista, enquanto ele continua no chão.
-const LONGER = { orb: 0.05, seconds: 1.2 };
+// "Dorme mais tempo": o sol anda um nada no céu enquanto ele continua no chão. Andando de verdade, o disco
+// subia até encostar na conta (leitura do crítico de quadro, 2026-10-07).
+const LONGER = { orb: 0.004, seconds: 1.2 };
 // "Mais fundo": um suspiro que enche o flanco, e o corpo assenta mais baixo do que estava.
 const DEEPER = { sigh: 0.07, sighSeconds: 1.1, sink: 0.05 };
 // "Acorda menos": a orelha treme, o olho abre uma fresta, a cabeça ergue um nada, e tudo volta.

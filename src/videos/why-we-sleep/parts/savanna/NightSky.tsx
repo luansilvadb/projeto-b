@@ -56,27 +56,27 @@ const dust = Array.from({ length: 340 }, (_, i) => {
 
 export const NightSky = () => {
   const t = useStudyTime();
-  const { orb } = useRichTheme();
+  const { orb, uid } = useRichTheme();
   // Sem astro pedido, a lua fica onde a referência noturna a pôs.
   const [moonX, moonY] = orb === undefined ? [153, 281] : astroAt(orb);
   return (
     <>
       <defs>
-        <radialGradient id="night-moon-glow">
+        <radialGradient id={`${uid}-night-moon-glow`}>
           <stop stopColor={s.moonGlow} stopOpacity=".49" />
           <stop offset=".47" stopColor={s.moonGlow} stopOpacity=".16" />
           <stop offset="1" stopColor={s.moonGlow} stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="night-star-glow">
+        <radialGradient id={`${uid}-night-star-glow`}>
           <stop stopColor={s.stars} stopOpacity=".6" />
           <stop offset=".18" stopColor={s.blueStars} stopOpacity=".2" />
           <stop offset="1" stopColor={s.blueStars} stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="night-moon">
+        <radialGradient id={`${uid}-night-moon`}>
           <stop stopColor={p.sunEdge} />
           <stop offset="1" stopColor={p.sun} />
         </radialGradient>
-        <radialGradient id="night-moon-corona">
+        <radialGradient id={`${uid}-night-moon-corona`}>
           <stop offset=".56" stopColor={s.moonGlow} stopOpacity=".56" />
           <stop offset=".69" stopColor={s.moonGlow} stopOpacity=".35" />
           <stop offset=".86" stopColor={s.moonGlow} stopOpacity=".12" />
@@ -97,7 +97,12 @@ export const NightSky = () => {
         {starPoints.map(([x, y, r], i) => (
           <g key={i} opacity={0.86 + 0.12 * wave(t, 4.8 + (i % 3), i / 37)}>
             {r > 2 && (
-              <circle cx={x} cy={y} r={r * 3.4} fill="url(#night-star-glow)" />
+              <circle
+                cx={x}
+                cy={y}
+                r={r * 3.4}
+                fill={`url(#${uid}-night-star-glow)`}
+              />
             )}
             {r > 2 ? (
               <rect
@@ -120,13 +125,13 @@ export const NightSky = () => {
           </g>
         ))}
       </g>
-      <g id="night-moon" transform={`translate(${moonX} ${moonY + t * 0.15})`}>
+      <g transform={`translate(${moonX} ${moonY + t * 0.15})`}>
         <circle r="174" fill={p.sunHalo} opacity=".19" />
         <circle r="135" fill={p.sunCoral} opacity=".19" />
         <circle r="105" fill={p.sunOrange} opacity=".12" />
-        <circle r="174" fill="url(#night-moon-glow)" />
-        <circle r="119" fill="url(#night-moon-corona)" />
-        <circle r="79" fill="url(#night-moon)" />
+        <circle r="174" fill={`url(#${uid}-night-moon-glow)`} />
+        <circle r="119" fill={`url(#${uid}-night-moon-corona)`} />
+        <circle r="79" fill={`url(#${uid}-night-moon)`} />
         <g fill={s.moonCrater} opacity=".28">
           <path d="M-59 -28 C-49 -53 -29 -66 -10 -62 C6 -59 -22 -56 -31 -48 C-45 -39 -46 -31 -48 -21 C-51 -15 -51 -3 -56 -5 C-64 -7 -64 -18 -59 -28 Z" />
           <path d="M-38 -42 C-26 -52 -9 -49 -8 -38 C-3 -45 9 -42 11 -30 C12 -20 4 -17 -7 -20 C-9 -10 -22 -5 -34 -4 C-39 3 -48 -1 -46 -11 C-53 -21 -48 -34 -38 -42 Z" />

@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { wave } from "../../../../components/Idle";
 import {
@@ -30,11 +31,11 @@ import { mix } from "../../../../components/timing";
 // cada plano de distância e cada parte móvel continuam editáveis no Remotion.
 const Paint = () => {
   const p = useRichPalette();
-  const { moonlight } = useRichTheme();
+  const { moonlight, uid } = useRichTheme();
   return (
     <defs>
       <linearGradient
-        id="rich-sky"
+        id={`${uid}-rich-sky`}
         x1="0"
         y1="0"
         x2="0"
@@ -50,7 +51,7 @@ const Paint = () => {
         ))}
       </linearGradient>
       <radialGradient
-        id="rich-sunrise"
+        id={`${uid}-rich-sunrise`}
         cx="550"
         cy={mix(620, 580, moonlight)}
         r={mix(510, 410, moonlight)}
@@ -60,27 +61,27 @@ const Paint = () => {
         <stop offset=".38" stopColor={p.sunshine} stopOpacity=".3" />
         <stop offset="1" stopColor={p.sunshine} stopOpacity="0" />
       </radialGradient>
-      <linearGradient id="rich-sun-orange" x2=".25" y2="1">
+      <linearGradient id={`${uid}-rich-sun-orange`} x2=".25" y2="1">
         <stop stopColor={p.sunCoral} />
         <stop offset=".45" stopColor={p.sunOrange} />
         <stop offset="1" stopColor={p.clouds.orange} />
       </linearGradient>
-      <linearGradient id="rich-sun" x2=".6" y2="1">
+      <linearGradient id={`${uid}-rich-sun`} x2=".6" y2="1">
         <stop stopColor={p.sunEdge} />
         <stop offset="1" stopColor={p.sun} />
       </linearGradient>
-      <linearGradient id="rich-canopy" x1=".1" y1="0" x2=".8" y2="1">
+      <linearGradient id={`${uid}-rich-canopy`} x1=".1" y1="0" x2=".8" y2="1">
         <stop stopColor={p.canopy.light} />
         <stop offset=".55" stopColor={p.canopy.mid} />
         <stop offset="1" stopColor={p.canopy.dark} />
       </linearGradient>
-      <linearGradient id="rich-hill" x2="1" y2=".7">
+      <linearGradient id={`${uid}-rich-hill`} x2="1" y2=".7">
         <stop stopColor={p.hills[1]} />
         <stop offset=".7" stopColor={p.hills[3]} />
         <stop offset="1" stopColor={p.hills[2]} />
       </linearGradient>
       <linearGradient
-        id="rich-ground"
+        id={`${uid}-rich-ground`}
         x1="0"
         y1="698"
         x2="0"
@@ -95,12 +96,12 @@ const Paint = () => {
           />
         ))}
       </linearGradient>
-      <linearGradient id="rich-grass-gold" x2="0" y2="1">
+      <linearGradient id={`${uid}-rich-grass-gold`} x2="0" y2="1">
         <stop stopColor={p.earth.bright} />
         <stop offset=".6" stopColor={p.grass.gold} />
         <stop offset="1" stopColor={p.bush.orange} />
       </linearGradient>
-      <linearGradient id="rich-grass-orange" x2="0" y2="1">
+      <linearGradient id={`${uid}-rich-grass-orange`} x2="0" y2="1">
         <stop stopColor={p.grass.orange} />
         <stop offset="1" stopColor={p.bush.rose} />
       </linearGradient>
@@ -110,19 +111,25 @@ const Paint = () => {
 
 const Sky = () => {
   const p = useRichPalette();
-  const { moonlight, orb } = useRichTheme();
+  const { moonlight, orb, uid } = useRichTheme();
   const t = useStudyTime();
   // Sem astro pedido, o sol fica onde a referência do entardecer o pôs.
   const [sunX, sunY] = orb === undefined ? [114, 293] : astroAt(orb);
   return (
     <RichLayer depth={0.12}>
-      <rect x="-150" y="-100" width="1972" height="800" fill="url(#rich-sky)" />
+      <rect
+        x="-150"
+        y="-100"
+        width="1972"
+        height="800"
+        fill={`url(#${uid}-rich-sky)`}
+      />
       <rect
         x="-150"
         y="0"
         width="1972"
         height="710"
-        fill="url(#rich-sunrise)"
+        fill={`url(#${uid}-rich-sunrise)`}
       />
       {/* O sol e a lua trocam por opacidade: a luz que passa do entardecer à noite não troca de desenho num quadro. */}
       {moonlight > 0 ? (
@@ -137,8 +144,8 @@ const Sky = () => {
         >
           <circle r="194" fill={p.sunHalo} opacity=".27" />
           <circle r="162" fill={p.sunCoral} opacity=".68" />
-          <circle r="119" fill="url(#rich-sun-orange)" />
-          <circle r="69" fill="url(#rich-sun)" />
+          <circle r="119" fill={`url(#${uid}-rich-sun-orange)`} />
+          <circle r="69" fill={`url(#${uid}-rich-sun)`} />
         </g>
       ) : null}
       <CloudBank
@@ -540,6 +547,7 @@ const Sky = () => {
 
 const Hills = () => {
   const p = useRichPalette();
+  const { uid } = useRichTheme();
   return (
     <>
       <RichLayer depth={0.3}>
@@ -549,7 +557,7 @@ const Hills = () => {
         />
         <path
           d="M-100 578 C26 553 95 566 172 570 C241 575 326 586 416 604 C493 625 587 632 668 614 C790 585 880 579 976 561 C1072 543 1146 550 1226 556 C1302 561 1368 577 1449 594 C1520 614 1620 599 1760 603 L1760 762 L-100 762 Z"
-          fill="url(#rich-hill)"
+          fill={`url(#${uid}-rich-hill)`}
         />
         <RichAcacia name="far-left-tree" x={48} y={621} scale={0.16} distant />
         <RichAcacia
@@ -605,12 +613,13 @@ const Hills = () => {
 
 const Ground = ({ subject = true }: { readonly subject?: boolean }) => {
   const p = useRichPalette();
+  const { uid } = useRichTheme();
   const RichGrassColors = useRichGrassColors();
   return (
     <RichLayer depth={1}>
       <path
         d="M-200 700 C84 692 248 695 409 701 C621 708 794 710 991 708 C1225 704 1474 703 1800 694 L1800 1100 L-200 1100 Z"
-        fill="url(#rich-ground)"
+        fill={`url(#${uid}-rich-ground)`}
       />
       {/* Desníveis compridos e irregulares fazem a luz correr pelo chão sem uma grade. */}
       <path
@@ -832,6 +841,7 @@ export const RichSavannaReference = ({
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const uid = useId();
   return (
     <RichTheme.Provider
       value={{
@@ -839,6 +849,7 @@ export const RichSavannaReference = ({
         moonlight: Math.min(1, Math.max(0, 1 - 2 * daylight)),
         cameraDriven,
         orb,
+        uid,
       }}
     >
       <TimeContext.Provider value={animated ? frame / fps : 0}>

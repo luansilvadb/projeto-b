@@ -126,6 +126,7 @@ export const RichAcacia = ({
   readonly color?: string;
 }) => {
   const p = useRichPalette();
+  const { uid } = useRichTheme();
   const seconds = useStudyTime();
   const sway = 0.24 * (wave(seconds, 6.1, x / 1700) - wave(0, 6.1, x / 1700));
   const canopy =
@@ -139,7 +140,7 @@ export const RichAcacia = ({
         <path d="M-17 0 C-15 -32 -12 -65 -10 -93 C-11 -109 -17 -120 -28 -131 L-48 -147 L-93 -165 L-87 -168 L-43 -153 L-66 -173 L-53 -174 L-20 -145 L-46 -182 L-32 -184 L-6 -143 L-10 -177 L0 -177 L10 -146 L31 -180 L44 -180 L22 -142 L60 -159 L105 -172 L112 -169 L65 -150 L40 -133 C26 -123 18 -111 17 -96 C15 -67 19 -29 20 0 Z" />
         <path
           d={canopy}
-          fill={distant ? (color ?? p.distantTree) : "url(#rich-canopy)"}
+          fill={distant ? (color ?? p.distantTree) : `url(#${uid}-rich-canopy)`}
         />
       </g>
       {distant ? null : (
@@ -221,12 +222,13 @@ export const Bush = ({
 
 export const useRichGrassColors = () => {
   const p = useRichPalette();
+  const { uid } = useRichTheme();
   return {
     dark: p.grass.dark,
     shade: p.grass.shade,
     mid: p.grass.mid,
-    gold: "url(#rich-grass-gold)",
-    orange: "url(#rich-grass-orange)",
+    gold: `url(#${uid}-rich-grass-gold)`,
+    orange: `url(#${uid}-rich-grass-orange)`,
   };
 };
 

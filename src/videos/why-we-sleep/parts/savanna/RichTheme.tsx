@@ -10,7 +10,13 @@ export const RichTheme = createContext<{
   readonly moonlight: number;
   readonly cameraDriven?: boolean;
   readonly orb?: number;
-}>({ palette: savanna.dusk, moonlight: 0 });
+  /**
+   * O prefixo dos degradês desta cópia do cenário. Na troca de plano há duas
+   * savanas no palco, a que sai e a que entra: com um nome só, uma pintava o
+   * céu com o degradê da outra, e a hora do céu saltava no fim da troca.
+   */
+  readonly uid: string;
+}>({ palette: savanna.dusk, moonlight: 0, uid: "" });
 export const useRichPalette = () => useContext(RichTheme).palette;
 export const useRichTheme = () => useContext(RichTheme);
 
