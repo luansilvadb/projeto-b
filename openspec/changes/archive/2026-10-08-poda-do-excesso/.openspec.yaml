@@ -1,0 +1,4 @@
+schema: spec-driven
+created: 2026-10-08
+# Refatoração e ferramentas: nenhum comportamento observável muda.
+skip_specs: true
