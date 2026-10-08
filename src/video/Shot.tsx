@@ -1,12 +1,5 @@
 import { createContext, useContext, useMemo } from "react";
-import {
-  AbsoluteFill,
-  Easing,
-  interpolate,
-  Sequence,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
+import { Sequence, useCurrentFrame, useVideoConfig } from "remotion";
 import { Build } from "../components/Camera";
 import { StageContext, type Stage } from "../components/Cast";
 import type { FrameRange } from "../narration/timeline";
@@ -16,14 +9,6 @@ import {
   leaveProgress,
   SCENERY_EXIT_FRAMES,
 } from "./stage";
-import { clamp } from "../components/timing";
-
-export type Wipe = {
-  /** Quantos quadros a varredura leva para cobrir o plano anterior. */
-  readonly frames: number;
-  /** De que lado do quadro a varredura entra. */
-  readonly from: "left" | "right" | "top" | "bottom";
-};
 
 /** O que o vídeo decidiu para um plano: se ele divide o palco com a cena anterior ou com a seguinte. */
 export type ShotPlan = {
@@ -75,10 +60,6 @@ type ShotProps = {
   readonly range: FrameRange;
   /** Nome do plano na linha do tempo do Studio. */
   readonly name?: string;
-  /** Quadros a mais em que o plano continua desenhado, por baixo do seguinte, para a varredura dele. */
-  readonly hold?: number;
-  /** O plano entra varrendo o anterior, que precisa de `hold` com os mesmos quadros. */
-  readonly wipe?: Wipe;
   readonly children: React.ReactNode;
 };
 
@@ -86,21 +67,15 @@ type ShotProps = {
  * Um plano da cena: aparece só no trecho dele. Dentro do plano,
  * useCurrentFrame() conta a partir do começo do plano, e não da cena.
  */
-export const Shot: React.FC<ShotProps> = ({
-  range,
-  name,
-  hold,
-  wipe,
-  children,
-}) => {
+export const Shot: React.FC<ShotProps> = ({ range, name, children }) => {
   const plan = useContext(ShotPlans).get(range) ?? OFFSTAGE;
   const length = range.to - range.from;
-  const joinsNext = hold === undefined && plan.joinsNext;
+  const joinsNext = plan.joinsNext;
 
   return (
     <Sequence
       from={range.from}
-      durationInFrames={length + (hold ?? (joinsNext ? JOIN_FRAMES : 0))}
+      durationInFrames={length + (joinsNext ? JOIN_FRAMES : 0)}
       name={name}
     >
       <OnStage
@@ -111,9 +86,7 @@ export const Shot: React.FC<ShotProps> = ({
         shot={plan.key}
         previous={plan.previousKey}
       >
-        <ShotLength.Provider value={length}>
-          {wipe ? <Wiping wipe={wipe}>{children}</Wiping> : children}
-        </ShotLength.Provider>
+        <ShotLength.Provider value={length}>{children}</ShotLength.Provider>
       </OnStage>
     </Sequence>
   );
@@ -180,29 +153,3 @@ const OnStage: React.FC<OnStageProps> = ({
     </StageContext.Provider>
   );
 };
-
-/** O `clip-path` de quem entra por varredura, no quadro `frame` dela. */
-export const wipeClip = (frame: number, wipe: Wipe): string => {
-  // A borda cruza o quadro quase a velocidade constante, só freando no fim.
-  const hidden = interpolate(frame, [0, wipe.frames], [100, 0], {
-    ...clamp,
-    easing: Easing.out(Easing.quad),
-  });
-  // A parte do quadro que a varredura ainda não alcançou, no lado oposto ao que ela entra.
-  const inset = {
-    left: `0 ${hidden}% 0 0`,
-    right: `0 0 0 ${hidden}%`,
-    top: `0 0 ${hidden}% 0`,
-    bottom: `${hidden}% 0 0 0`,
-  }[wipe.from];
-  return `inset(${inset})`;
-};
-
-const Wiping: React.FC<{ wipe: Wipe; children: React.ReactNode }> = ({
-  wipe,
-  children,
-}) => (
-  <AbsoluteFill style={{ clipPath: wipeClip(useCurrentFrame(), wipe) }}>
-    {children}
-  </AbsoluteFill>
-);
