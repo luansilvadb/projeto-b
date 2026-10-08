@@ -103,14 +103,14 @@ export const RemotionRoot: React.FC = () => {
           width={WIDTH}
           height={HEIGHT}
         />
-        {/* O piloto do polimento: a elefanta antes e depois (quadro 0) e o plano de noite com e sem acabamento (1 e 2). */}
+        {/* A folha da elefanta: sozinha, de dia e de noite (quadro 0), e o plano de noite na savana (1). */}
         <Composition
           id="elefanta"
           component={ElephantSheet}
           width={WIDTH}
           height={HEIGHT}
           fps={FPS}
-          durationInFrames={3}
+          durationInFrames={2}
         />
         {/* A folha da pessoa: as poses em silhueta numa cor só (quadro 0) e pintadas (1). */}
         <Composition

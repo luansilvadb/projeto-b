@@ -32,7 +32,6 @@ import {
   lab,
   lagoon,
   stopwatch,
-  elephantFinish,
 } from "../palette";
 import { Bed } from "../parts/Bed";
 import { IdeaBackdrop } from "../parts/IdeaBackdrop";
@@ -316,7 +315,6 @@ const ElephantMemory: React.FC<ElephantMemoryProps> = ({
           <Elephant
             width={410}
             colors={elephant}
-            finish={elephantFinish}
             lid={1}
             droop={1}
             trunk={0}

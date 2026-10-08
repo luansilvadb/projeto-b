@@ -409,7 +409,7 @@ const RESTLESS_FRAMES = 12;
 const trunkTip = (trunk: number): readonly [number, number] => {
   const { x, y, width } = MATRIARCHS.left;
   const scale = width / 520;
-  const [tipX, tipY] = trunkTipAt(trunk, 0, true);
+  const [tipX, tipY] = trunkTipAt(trunk, 0);
   return [x - scale * tipX, SAVANNA_GROUND_Y + y + scale * tipY];
 };
 

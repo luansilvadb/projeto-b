@@ -2,26 +2,12 @@ import { useId } from "react";
 import { taperPath, type Point } from "./shapes";
 import { mix } from "../components/timing";
 
-export type ElephantColors = {
-  readonly body: string;
-  readonly shade: string;
-  /** A borda de luz no dorso. */
-  readonly light: string;
-  /** O interior da orelha e a ponta da tromba. */
-  readonly earInside: string;
-  readonly tusk: string;
-  readonly nail: string;
-  readonly eye: string;
-  readonly pupil: string;
-};
-
 /**
- * O acabamento (unidade `forma` da direção de arte, registro de personagem):
- * a elefanta em cor cheia, com um matiz por parte, uma sombra por parte e
- * pernas em tubo, e mais nada. Fica fora de `ElephantColors` porque a manada
- * interpola aquelas cores, uma a uma, entre o dia e a noite.
+ * As cores da elefanta (unidade `forma` da direção de arte, registro de
+ * personagem): cor cheia, com um matiz por parte e uma sombra por parte, e
+ * mais nada.
  */
-export type ElephantFinish = {
+export type ElephantColors = {
   readonly body: string;
   /** A sombra, num matiz vizinho ao do corpo: a barriga, o queixo, o lado de baixo da tromba, a orelha por fora. */
   readonly shadow: string;
@@ -52,8 +38,6 @@ type ElephantProps = {
   readonly stride?: number;
   /** Quanto a cabeça pende: 0 erguida, 1 caída de sono. */
   readonly droop?: number;
-  /** O colar de sensor do estudo, com a luz nesta opacidade; sem o valor, não há colar. */
-  readonly collar?: number;
   /**
    * O andar: a fase do ciclo de passos, em voltas (uma volta são as quatro
    * patas). Com ele, cada pata sai do chão ao ir para a frente e as quatro
@@ -66,8 +50,6 @@ type ElephantProps = {
   readonly pace?: number;
   /** A tromba estendida para a frente, de 0 a 1: o cumprimento de quem encosta a tromba na de outra. */
   readonly reach?: number;
-  /** O acabamento; sem ele, a elefanta é a do animatic aprovado, em dois tons. */
-  readonly finish?: ElephantFinish;
 };
 
 // A figura cabe nesta caixa, de perfil, olhando para a esquerda; a origem é o chão sob a barriga.
@@ -93,23 +75,12 @@ const REACHING = { tip: [-316, -196], control: [-262, -268] } as const;
 /**
  * Onde está a ponta da tromba, nas unidades do desenho (a origem é o chão sob
  * a barriga, e ela olha para a esquerda), sem contar a cabeça que pende. A
- * cena que prende algo à ponta pergunta aqui, em vez de repetir os números: a
- * tromba do acabamento cai mais a prumo que a do animatic.
+ * cena que prende algo à ponta pergunta aqui, em vez de repetir os números.
  */
-export const trunkTipAt = (
-  trunk: number,
-  reach: number,
-  finished: boolean,
-): Point =>
-  finished
-    ? [
-        mix(mix(-214, -202, trunk), REACHING.tip[0], reach),
-        mix(-34 - 156 * trunk, REACHING.tip[1], reach),
-      ]
-    : [
-        mix(-262 + 60 * trunk, REACHING.tip[0], reach),
-        mix(-40 - 150 * trunk, REACHING.tip[1], reach),
-      ];
+export const trunkTipAt = (trunk: number, reach: number): Point => [
+  mix(mix(-214, -202, trunk), REACHING.tip[0], reach),
+  mix(-34 - 156 * trunk, REACHING.tip[1], reach),
+];
 
 /**
  * A elefanta, de perfil: dorso em corcova, testa alta, orelha grande, tromba
@@ -125,23 +96,13 @@ export const Elephant: React.FC<ElephantProps> = ({
   ear = 0.3,
   stride = 0,
   droop = 0,
-  collar,
   gait,
   pace = 1,
   reach = 0,
-  finish,
 }) => {
   const id = useId();
   const scale = width / VIEW.width;
-  // A cabeça pende para a frente quando dorme; o pescoço é o giro.
-  const headTilt = 12 * droop;
-  const trunkTip = trunkTipAt(trunk, reach, false);
-  const trunkControl: Point = [
-    mix(-246 - 20 * trunk, REACHING.control[0], reach),
-    mix(-150 - 60 * trunk, REACHING.control[1], reach),
-  ];
   const step = 24 * stride;
-  const nearShade = { fill: colors.shade };
 
   /**
    * Onde uma pata está no ciclo do andar. Na primeira metade da volta ela está
@@ -161,268 +122,74 @@ export const Elephant: React.FC<ElephantProps> = ({
       : { shift: GAIT.reach * pace * (4 * turn - 3), lift: 0 };
   };
 
-  const leg = (x: number, shift: number, back: boolean, lift = 0) => (
-    <g key={`${x}-${back}`}>
-      <path
-        d={taperPath(
-          [x, -150],
-          // A pata que sai do chão dobra o joelho para a frente.
-          [x + shift * 0.4 - lift * 0.7, -80 - lift * 0.4],
-          [x + shift, -18 - lift],
-          64,
-          52,
-        )}
-        fill={back ? colors.shade : colors.body}
-      />
-      <rect
-        x={x + shift - 30}
-        y={-22 - lift}
-        width={60}
-        height={22}
-        rx={11}
-        fill={back ? colors.shade : colors.body}
-      />
-      {[-16, 0, 16].map((toe) => (
-        <ellipse
-          key={toe}
-          cx={x + shift + toe}
-          cy={-6 - lift}
-          rx={7}
-          ry={5}
-          fill={colors.nail}
-          opacity={back ? 0.6 : 1}
-        />
-      ))}
-    </g>
-  );
   const walking = gait !== undefined;
   const farHind = footfall(GAIT.phase.farHind);
   const farFore = footfall(GAIT.phase.farFore);
   const nearHind = footfall(GAIT.phase.nearHind);
   const nearFore = footfall(GAIT.phase.nearFore);
 
-  if (finish) {
-    // A tromba do acabamento cai quase a prumo, com a barriga da curva para a
-    // frente, e nasce larga, tomando a metade de baixo da face: assim ela é a
-    // continuação da testa, e não um tubo encostado numa bola.
-    const tip = trunkTipAt(trunk, reach, true);
-    const control: Point = [
-      mix(mix(-270, -266, trunk), REACHING.control[0], reach),
-      mix(-150 - 60 * trunk, REACHING.control[1], reach),
-    ];
-    const trunkPath = taperPath([-170, -262], control, tip, 104, 28);
-    const trunkTip = tip;
-    /**
-     * A perna em tubo, que alarga até o pé: `thigh` é a largura no alto (a de
-     * trás nasce de uma coxa, a da frente é mais reta) e `bow`, para onde o
-     * joelho se curva. As do lado de lá não têm unhas.
-     */
-    const limb = (
-      x: number,
-      shift: number,
-      raised: number,
-      bow: number,
-      thigh: number,
-      far: boolean,
-    ) => {
-      // O elefante quase não tira a pata do chão: com a subida inteira do
-      // animatic, a pata do lado de lá, agora à vista sob a barriga, parecia flutuar.
-      const lift = raised * 0.3;
-      const foot: Point = [x + shift, -lift];
-      return (
-        <g key={`${x}-${far}`} fill={far ? finish.deep : finish.body}>
-          <path
-            d={taperPath(
-              [x, -190],
-              [x + shift * 0.4 - lift * 0.7 + bow, -100 - lift * 0.4],
-              [x + shift, -22 - lift],
-              thigh,
-              70,
-            )}
-          />
-          <path
-            d={`M${foot[0] - 35},${foot[1] - 26} C${foot[0] - 42},${foot[1] - 8} ${foot[0] - 38},${foot[1]} ${foot[0] - 24},${foot[1]} L${foot[0] + 26},${foot[1]} C${foot[0] + 40},${foot[1]} ${foot[0] + 42},${foot[1] - 8} ${foot[0] + 35},${foot[1] - 26} Z`}
-          />
-          {far
-            ? null
-            : [-18, 0, 18].map((toe) => (
-                <ellipse
-                  key={toe}
-                  cx={foot[0] + toe - 3}
-                  cy={foot[1] - 8}
-                  rx={8}
-                  ry={6}
-                  fill={finish.nail}
-                />
-              ))}
-        </g>
-      );
-    };
-
-    // A pupila desce com a pálpebra: parada no meio do olho, a pálpebra pesada a
-    // cobria e sobrava uma lasca branca, que lia como raiva e não como sono.
-    const pupilY = Math.min(
-      EYE.y + 8,
-      Math.max(EYE.y + look[1] * 4, EYE.y - 15 + 40 * lid),
-    );
-
+  // A tromba cai quase a prumo, com a barriga da curva para a
+  // frente, e nasce larga, tomando a metade de baixo da face: assim ela é a
+  // continuação da testa, e não um tubo encostado numa bola.
+  const tip = trunkTipAt(trunk, reach);
+  const control: Point = [
+    mix(mix(-270, -266, trunk), REACHING.control[0], reach),
+    mix(-150 - 60 * trunk, REACHING.control[1], reach),
+  ];
+  const trunkPath = taperPath([-170, -262], control, tip, 104, 28);
+  /**
+   * A perna em tubo, que alarga até o pé: `thigh` é a largura no alto (a de
+   * trás nasce de uma coxa, a da frente é mais reta) e `bow`, para onde o
+   * joelho se curva. As do lado de lá não têm unhas.
+   */
+  const limb = (
+    x: number,
+    shift: number,
+    raised: number,
+    bow: number,
+    thigh: number,
+    far: boolean,
+  ) => {
+    // O elefante quase não tira a pata do chão: com a subida inteira, a pata
+    // do lado de lá, à vista sob a barriga, parecia flutuar.
+    const lift = raised * 0.3;
+    const foot: Point = [x + shift, -lift];
     return (
-      <svg
-        width={VIEW.width * scale}
-        height={VIEW.height * scale}
-        viewBox={`${-VIEW.width / 2} ${-VIEW.height} ${VIEW.width} ${VIEW.height}`}
-        overflow="visible"
-      >
-        <defs>
-          <clipPath id={`${id}-body`}>
-            <path d={FINISHED_BODY} />
-          </clipPath>
-          <clipPath id={`${id}-head`}>
-            <path d={HEAD} />
-          </clipPath>
-          <clipPath id={`${id}-trunk`}>
-            <path d={trunkPath} />
-          </clipPath>
-        </defs>
-
-        {/* As pernas do lado de lá aparecem de verdade: mais de meia perna para dentro, e em outro ângulo. */}
-        {walking
-          ? [
-              limb(92, farHind.shift, farHind.lift, 18, 110, true),
-              limb(-106, farFore.shift, farFore.lift, 4, 90, true),
-            ]
-          : [
-              limb(92, -step, 0, 18, 110, true),
-              limb(-106, step, 0, 4, 90, true),
-            ]}
+      <g key={`${x}-${far}`} fill={far ? colors.deep : colors.body}>
         <path
-          d={taperPath([226, -256], [266, -204], [264, -122], 24, 12)}
-          fill={finish.deep}
-        />
-        <path
-          d="M264,-134 C282,-120 280,-92 266,-84 C250,-92 248,-120 264,-134 Z"
-          fill={finish.deep}
-        />
-
-        <path d={FINISHED_BODY} fill={finish.body} />
-        {/* A sombra da barriga: gorda no meio, zerando nas pernas, que passam por cima dela. */}
-        <path
-          clipPath={`url(#${id}-body)`}
-          d="M-116,-58 C-70,-96 -10,-104 50,-100 C100,-96 150,-104 196,-84 L196,-20 L-116,-20 Z"
-          fill={finish.shadow}
-        />
-        {walking
-          ? [
-              limb(152, nearHind.shift, nearHind.lift, 16, 132, false),
-              limb(-56, nearFore.shift, nearFore.lift, -4, 104, false),
-            ]
-          : [
-              limb(152, step, 0, 16, 132, false),
-              limb(-56, -step, 0, -4, 104, false),
-            ]}
-
-        <g transform={`rotate(${18 * droop} -60 -300)`}>
-          <path d={trunkPath} fill={finish.body} />
-          <g clipPath={`url(#${id}-trunk)`}>
-            {/* O lado de baixo da tromba: largo na raiz, sob o queixo, e zerando antes da ponta. */}
-            <path
-              d={taperPath(
-                [-140, -236],
-                [control[0] + 34, control[1] + 10],
-                [
-                  mix(control[0], tip[0], 0.7) + 12,
-                  mix(control[1], tip[1], 0.7),
-                ],
-                46,
-                2,
-              )}
-              fill={finish.shadow}
-            />
-          </g>
-          {/*
-            A ponta: arredondada, na cor do corpo, com a abertura rosada
-            dentro, menor que o tubo. Neste vídeo o sono é medido pela tromba,
-            e é a ponta que o olho segue; uma tampa rosa do tamanho do tubo
-            lia como borracha de lápis.
-          */}
-          <circle cx={trunkTip[0]} cy={trunkTip[1]} r={14} fill={finish.body} />
-          <ellipse
-            cx={trunkTip[0]}
-            cy={trunkTip[1] + 4}
-            rx={8.5}
-            ry={6}
-            fill={finish.earInside}
-          />
-          <path
-            d={taperPath([-164, -214], [-200, -198], [-230, -186], 20, 9)}
-            fill={finish.tusk}
-          />
-          <circle cx={-230} cy={-186} r={4.5} fill={finish.tusk} />
-
-          <path d={HEAD} fill={finish.body} />
-          {/* O queixo na sombra. */}
-          <path
-            clipPath={`url(#${id}-head)`}
-            d="M-212,-252 C-190,-216 -150,-198 -100,-202 C-60,-206 -30,-224 -6,-262 L0,-170 L-212,-170 Z"
-            fill={finish.shadow}
-          />
-
-          {/* Passando de dois terços, a pálpebra deixava só uma lasca branca, sem pupila: o olho já se desenha fechado. */}
-          {lid > 0.66 ? (
-            <path
-              d={`M${EYE.x - 13},${EYE.y + 1} Q${EYE.x},${EYE.y + 11} ${EYE.x + 13},${EYE.y + 1}`}
-              fill="none"
-              stroke={finish.deep}
-              strokeWidth={9}
-              strokeLinecap="round"
-            />
-          ) : (
-            <>
-              <circle
-                cx={EYE.x}
-                cy={EYE.y}
-                r={EYE.radius + 5}
-                fill={finish.eye}
-              />
-              <circle
-                cx={EYE.x + look[0] * 4}
-                cy={pupilY}
-                r={10}
-                fill={finish.pupil}
-              />
-              <circle
-                cx={EYE.x + look[0] * 4 - 3}
-                cy={pupilY - 3}
-                r={3.5}
-                fill={finish.eye}
-              />
-              {lid > 0 ? (
-                <path
-                  d={`M${EYE.x - 20},${EYE.y - 20} L${EYE.x + 20},${EYE.y - 20} L${EYE.x + 20},${EYE.y - 19 + 40 * lid} Q${EYE.x},${EYE.y - 14 + 40 * lid} ${EYE.x - 20},${EYE.y - 19 + 40 * lid} Z`}
-                  fill={finish.body}
-                />
-              ) : null}
-            </>
+          d={taperPath(
+            [x, -190],
+            [x + shift * 0.4 - lift * 0.7 + bow, -100 - lift * 0.4],
+            [x + shift, -22 - lift],
+            thigh,
+            70,
           )}
-
-          <g transform={`rotate(${-6 - 20 * ear} -50 -320)`}>
-            {/* O traço da mesma cor arredonda o canto de cima da orelha. */}
-            <path
-              d={EAR}
-              fill={finish.shadow}
-              stroke={finish.shadow}
-              strokeWidth={12}
-              strokeLinejoin="round"
-            />
-            <path
-              d="M-46,-312 C-20,-340 44,-332 66,-290 C82,-256 76,-206 46,-186 C14,-170 -18,-196 -32,-238 C-40,-264 -46,-290 -46,-312 Z"
-              fill={finish.earInside}
-            />
-          </g>
-        </g>
-      </svg>
+        />
+        <path
+          d={`M${foot[0] - 35},${foot[1] - 26} C${foot[0] - 42},${foot[1] - 8} ${foot[0] - 38},${foot[1]} ${foot[0] - 24},${foot[1]} L${foot[0] + 26},${foot[1]} C${foot[0] + 40},${foot[1]} ${foot[0] + 42},${foot[1] - 8} ${foot[0] + 35},${foot[1] - 26} Z`}
+        />
+        {far
+          ? null
+          : [-18, 0, 18].map((toe) => (
+              <ellipse
+                key={toe}
+                cx={foot[0] + toe - 3}
+                cy={foot[1] - 8}
+                rx={8}
+                ry={6}
+                fill={colors.nail}
+              />
+            ))}
+      </g>
     );
-  }
+  };
+
+  // A pupila desce com a pálpebra: parada no meio do olho, a pálpebra pesada a
+  // cobria e sobrava uma lasca branca, que lia como raiva e não como sono.
+  const pupilY = Math.min(
+    EYE.y + 8,
+    Math.max(EYE.y + look[1] * 4, EYE.y - 15 + 40 * lid),
+  );
 
   return (
     <svg
@@ -435,147 +202,140 @@ export const Elephant: React.FC<ElephantProps> = ({
         <clipPath id={`${id}-body`}>
           <path d={BODY} />
         </clipPath>
+        <clipPath id={`${id}-head`}>
+          <path d={HEAD} />
+        </clipPath>
+        <clipPath id={`${id}-trunk`}>
+          <path d={trunkPath} />
+        </clipPath>
       </defs>
 
-      {/* Pernas de trás, mais escuras, e o rabo. */}
+      {/* As pernas do lado de lá aparecem de verdade: mais de meia perna para dentro, e em outro ângulo. */}
       {walking
-        ? leg(130, farHind.shift, true, farHind.lift)
-        : leg(130, -step, true)}
-      {walking
-        ? leg(-70, farFore.shift, true, farFore.lift)
-        : leg(-70, step, true)}
+        ? [
+            limb(92, farHind.shift, farHind.lift, 18, 110, true),
+            limb(-106, farFore.shift, farFore.lift, 4, 90, true),
+          ]
+        : [limb(92, -step, 0, 18, 110, true), limb(-106, step, 0, 4, 90, true)]}
       <path
-        d={taperPath([214, -250], [250, -200], [258, -120], 16, 6)}
-        fill={colors.shade}
+        d={taperPath([226, -256], [266, -204], [264, -122], 24, 12)}
+        fill={colors.deep}
       />
-      <ellipse cx={258} cy={-112} rx={10} ry={14} fill={colors.shade} />
+      <path
+        d="M264,-134 C282,-120 280,-92 266,-84 C250,-92 248,-120 264,-134 Z"
+        fill={colors.deep}
+      />
 
       <path d={BODY} fill={colors.body} />
-      <g clipPath={`url(#${id}-body)`}>
-        {/* Sombra sob a barriga e borda de luz no dorso. */}
-        <path
-          d="M-170,-120 C-80,-70 120,-70 230,-130 L240,-20 L-180,-20 Z"
-          {...nearShade}
-        />
-        <path
-          d="M-120,-330 C-20,-372 120,-368 200,-320 C110,-342 -20,-346 -120,-316 Z"
-          fill={colors.light}
-        />
-      </g>
-
-      {/* Pernas da frente. */}
+      {/* A sombra da barriga: gorda no meio, zerando nas pernas, que passam por cima dela. */}
+      <path
+        clipPath={`url(#${id}-body)`}
+        d="M-116,-58 C-70,-96 -10,-104 50,-100 C100,-96 150,-104 196,-84 L196,-20 L-116,-20 Z"
+        fill={colors.shadow}
+      />
       {walking
-        ? leg(150, nearHind.shift, false, nearHind.lift)
-        : leg(150, step, false)}
-      {walking
-        ? leg(-50, nearFore.shift, false, nearFore.lift)
-        : leg(-50, -step, false)}
+        ? [
+            limb(152, nearHind.shift, nearHind.lift, 16, 132, false),
+            limb(-56, nearFore.shift, nearFore.lift, -4, 104, false),
+          ]
+        : [
+            limb(152, step, 0, 16, 132, false),
+            limb(-56, -step, 0, -4, 104, false),
+          ]}
 
-      {collar === undefined ? null : (
-        // O colar do estudo passa pelo pescoço, atrás da orelha, com a luz do sensor embaixo.
-        <g>
+      <g transform={`rotate(${18 * droop} -60 -300)`}>
+        <path d={trunkPath} fill={colors.body} />
+        <g clipPath={`url(#${id}-trunk)`}>
+          {/* O lado de baixo da tromba: largo na raiz, sob o queixo, e zerando antes da ponta. */}
           <path
-            d="M-54,-350 C-10,-360 20,-330 16,-250 C12,-200 -10,-186 -40,-190"
-            fill="none"
-            stroke={colors.pupil}
-            strokeWidth={14}
-            strokeLinecap="round"
-          />
-          <circle cx={-32} cy={-186} r={13} fill={colors.pupil} />
-          <circle
-            cx={-32}
-            cy={-186}
-            r={7}
-            fill={colors.earInside}
-            opacity={0.3 + 0.7 * collar}
+            d={taperPath(
+              [-140, -236],
+              [control[0] + 34, control[1] + 10],
+              [mix(control[0], tip[0], 0.7) + 12, mix(control[1], tip[1], 0.7)],
+              46,
+              2,
+            )}
+            fill={colors.shadow}
           />
         </g>
-      )}
-
-      <g transform={`rotate(${headTilt} -60 -300)`}>
-        {/* Tromba: um tubo que afina, com a ponta um pouco mais clara. */}
-        <path
-          d={taperPath([-166, -244], trunkControl, trunkTip, 66, 28)}
-          fill={colors.body}
-        />
-        <path
-          d={taperPath(
-            [-166, -234],
-            [trunkControl[0] + 14, trunkControl[1] + 20],
-            [trunkTip[0] + 8, trunkTip[1] + 8],
-            30,
-            14,
-          )}
-          fill={colors.shade}
-          opacity={0.5}
-        />
-        <circle
-          cx={trunkTip[0]}
-          cy={trunkTip[1]}
-          r={15}
+        {/*
+          A ponta: arredondada, na cor do corpo, com a abertura rosada
+          dentro, menor que o tubo. Neste vídeo o sono é medido pela tromba,
+          e é a ponta que o olho segue; uma tampa rosa do tamanho do tubo
+          lia como borracha de lápis.
+        */}
+        <circle cx={tip[0]} cy={tip[1]} r={14} fill={colors.body} />
+        <ellipse
+          cx={tip[0]}
+          cy={tip[1] + 4}
+          rx={8.5}
+          ry={6}
           fill={colors.earInside}
         />
-        {/* Presa pequena, de fêmea. */}
         <path
-          d={taperPath([-164, -214], [-200, -198], [-228, -188], 18, 6)}
+          d={taperPath([-164, -214], [-200, -198], [-230, -186], 20, 9)}
           fill={colors.tusk}
         />
+        <circle cx={-230} cy={-186} r={4.5} fill={colors.tusk} />
 
-        {/* Cabeça: testa alta e abaulada, bochecha redonda. */}
+        <path d={HEAD} fill={colors.body} />
+        {/* O queixo na sombra. */}
         <path
-          d="M-20,-330 C-60,-380 -180,-380 -196,-290 C-204,-240 -170,-196 -116,-192 C-70,-190 -30,-216 -22,-262 Z"
-          fill={colors.body}
-        />
-        <path
-          d="M-190,-256 C-182,-214 -150,-194 -112,-196 C-80,-198 -56,-212 -40,-234 C-70,-214 -116,-206 -190,-256 Z"
-          fill={colors.shade}
-          opacity={0.45}
-        />
-        <path
-          d="M-170,-340 C-130,-366 -70,-368 -36,-346 C-80,-356 -130,-354 -170,-340 Z"
-          fill={colors.light}
+          clipPath={`url(#${id}-head)`}
+          d="M-212,-252 C-190,-216 -150,-198 -100,-202 C-60,-206 -30,-224 -6,-262 L0,-170 L-212,-170 Z"
+          fill={colors.shadow}
         />
 
-        {/* Olho pequeno, no lugar de verdade, com pálpebra. */}
-        <circle cx={EYE.x} cy={EYE.y} r={EYE.radius} fill={colors.eye} />
-        <circle
-          cx={EYE.x + look[0] * 4}
-          cy={EYE.y + look[1] * 4}
-          r={7}
-          fill={colors.pupil}
-        />
-        <circle
-          cx={EYE.x + look[0] * 4 - 2.5}
-          cy={EYE.y + look[1] * 4 - 2.5}
-          r={2.5}
-          fill={colors.eye}
-        />
-        {lid > 0 ? (
+        {/* Passando de dois terços, a pálpebra deixava só uma lasca branca, sem pupila: o olho já se desenha fechado. */}
+        {lid > 0.66 ? (
           <path
-            d={`M${EYE.x - 15},${EYE.y - 15} L${EYE.x + 15},${EYE.y - 15} L${EYE.x + 15},${EYE.y - 15 + 30 * lid} Q${EYE.x},${EYE.y - 11 + 30 * lid} ${EYE.x - 15},${EYE.y - 15 + 30 * lid} Z`}
-            fill={colors.body}
-          />
-        ) : null}
-        {lid > 0.9 ? (
-          <path
-            d={`M${EYE.x - 12},${EYE.y + 2} Q${EYE.x},${EYE.y + 10} ${EYE.x + 12},${EYE.y + 2}`}
+            d={`M${EYE.x - 13},${EYE.y + 1} Q${EYE.x},${EYE.y + 11} ${EYE.x + 13},${EYE.y + 1}`}
             fill="none"
-            stroke={colors.shade}
-            strokeWidth={4}
+            stroke={colors.deep}
+            strokeWidth={9}
             strokeLinecap="round"
           />
-        ) : null}
+        ) : (
+          <>
+            <circle
+              cx={EYE.x}
+              cy={EYE.y}
+              r={EYE.radius + 5}
+              fill={colors.eye}
+            />
+            <circle
+              cx={EYE.x + look[0] * 4}
+              cy={pupilY}
+              r={10}
+              fill={colors.pupil}
+            />
+            <circle
+              cx={EYE.x + look[0] * 4 - 3}
+              cy={pupilY - 3}
+              r={3.5}
+              fill={colors.eye}
+            />
+            {lid > 0 ? (
+              <path
+                d={`M${EYE.x - 20},${EYE.y - 20} L${EYE.x + 20},${EYE.y - 20} L${EYE.x + 20},${EYE.y - 19 + 40 * lid} Q${EYE.x},${EYE.y - 14 + 40 * lid} ${EYE.x - 20},${EYE.y - 19 + 40 * lid} Z`}
+                fill={colors.body}
+              />
+            ) : null}
+          </>
+        )}
 
-        {/* Orelha: a forma própria, um tom acima, presa atrás do olho e abrindo para fora. */}
         <g transform={`rotate(${-6 - 20 * ear} -50 -320)`}>
+          {/* O traço da mesma cor arredonda o canto de cima da orelha. */}
           <path
-            d="M-50,-330 C-10,-364 70,-350 84,-290 C94,-240 60,-196 14,-198 C-24,-200 -54,-240 -50,-330 Z"
-            fill={colors.shade}
+            d={EAR}
+            fill={colors.shadow}
+            stroke={colors.shadow}
+            strokeWidth={12}
+            strokeLinejoin="round"
           />
           <path
-            d="M-36,-316 C-4,-342 58,-330 68,-284 C74,-246 50,-212 18,-214 C-10,-216 -36,-246 -36,-316 Z"
+            d="M-46,-312 C-20,-340 44,-332 66,-290 C82,-256 76,-206 46,-186 C14,-170 -18,-196 -32,-238 C-40,-264 -46,-290 -46,-312 Z"
             fill={colors.earInside}
-            opacity={0.5}
           />
         </g>
       </g>
@@ -583,14 +343,10 @@ export const Elephant: React.FC<ElephantProps> = ({
   );
 };
 
-// As formas que o acabamento desenha duas vezes, uma na cor do luar e outra por cima.
 const HEAD =
   "M-8,-316 C-26,-392 -150,-412 -198,-332 C-216,-298 -208,-256 -190,-230 C-170,-200 -130,-184 -92,-190 C-50,-196 -14,-226 -6,-270 Z";
 const EAR =
   "M-56,-336 C-20,-378 72,-368 98,-300 C114,-254 96,-194 50,-174 C10,-158 -30,-188 -44,-236 C-52,-268 -58,-300 -56,-336 Z";
-// O corpo do acabamento: a corcova no ombro, a sela do dorso, a garupa que cai e a barriga pendendo no meio.
-const FINISHED_BODY =
-  "M-150,-262 C-142,-326 -100,-386 -40,-386 C10,-386 40,-352 90,-346 C140,-340 186,-340 216,-312 C250,-280 262,-226 254,-176 C248,-138 228,-112 196,-100 C140,-82 110,-92 60,-74 C10,-56 -60,-56 -110,-84 C-158,-110 -176,-156 -170,-204 C-168,-226 -158,-246 -150,-262 Z";
-// Corpo em curva única: corcova do dorso, barriga baixa.
+// O corpo: a corcova no ombro, a sela do dorso, a garupa que cai e a barriga pendendo no meio.
 const BODY =
-  "M-150,-240 C-120,-330 -20,-372 100,-360 C190,-352 236,-300 240,-220 C244,-150 220,-100 170,-80 C80,-50 -60,-50 -140,-90 C-180,-110 -176,-180 -150,-240 Z";
+  "M-150,-262 C-142,-326 -100,-386 -40,-386 C10,-386 40,-352 90,-346 C140,-340 186,-340 216,-312 C250,-280 262,-226 254,-176 C248,-138 228,-112 196,-100 C140,-82 110,-92 60,-74 C10,-56 -60,-56 -110,-84 C-158,-110 -176,-156 -170,-204 C-168,-226 -158,-246 -150,-262 Z";

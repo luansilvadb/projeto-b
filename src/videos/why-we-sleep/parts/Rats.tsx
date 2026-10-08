@@ -15,7 +15,7 @@ import { blink, breath, phaseOf, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { typography } from "../../../design/tokens";
-import { elephant, lab, rat, researcher } from "../palette";
+import { lab, rat, researcher } from "../palette";
 import { BENCH_Y, LabWall } from "./Laboratory";
 import { clamp01 } from "../../../components/timing";
 
@@ -114,13 +114,13 @@ export const withIdle = (
 });
 
 // As cores do rato de perto. A ficha dá o branco e o rosado da orelha; os tons de volume vêm de quem já mora
-// no laboratório (o branco frio e a sombra da plataforma) e do interior da orelha da elefanta, o rosa mais fundo.
+// no laboratório (o branco frio e a sombra da plataforma) e de um rosa mais fundo que o da orelha.
 const COAT = {
   base: lab.platform,
   light: rat.body,
   shade: lab.platformShade,
   pink: rat.ear,
-  pinkDeep: elephant.earInside,
+  pinkDeep: rat.earDeep,
 };
 // O corpo de perto, na mesma caixa da silhueta e com o olho no mesmo lugar: a cabeça se separa do dorso
 // por uma baixa na nuca, a anca é redonda e a barriga sai do chão.

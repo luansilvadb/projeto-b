@@ -20,7 +20,6 @@ import {
   jellyfish,
   lagoon,
   personInPajamas,
-  elephantFinish,
 } from "../palette";
 import { Bed } from "./Bed";
 import { PULSES_ASLEEP, pulseCycles, pulseShape, steady } from "./pulse";
@@ -424,7 +423,6 @@ export const Timeline: React.FC<TimelineProps> = ({
           <Elephant
             width={SLEEPER_WIDTH.elephant}
             colors={elephant}
-            finish={elephantFinish}
             lid={1}
             droop={1}
             ear={0.1}

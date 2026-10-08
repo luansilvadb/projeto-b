@@ -28,7 +28,7 @@ import {
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { markFor } from "../../../video/stage";
-import { elephant, elephantFinish, idea, jellyfish, person, personInPajamas } from "../palette";
+import { elephant, idea, jellyfish, person, personInPajamas } from "../palette";
 import { Bed, BED_SIZE } from "../parts/Bed";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import {
@@ -210,7 +210,6 @@ const Trio: React.FC<TrioProps> = ({
         <Elephant
           width={layout.elephant.width}
           colors={elephant}
-          finish={elephantFinish}
           lid={Math.max(asleep, blink(seconds, "trio-elephant"))}
           droop={beast.droop ?? 0}
           trunk={beast.trunk ?? 0}

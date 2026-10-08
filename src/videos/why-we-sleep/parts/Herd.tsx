@@ -4,7 +4,6 @@ import {
   Elephant,
   STRIDE_LENGTH,
   type ElephantColors,
-  type ElephantFinish,
 } from "../../../art/Elephant";
 import { blink, breath, phaseOf, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
@@ -18,8 +17,6 @@ import {
   ink,
   savanna,
   type TagTone,
-  elephantFinish,
-  elephantNightFinish,
 } from "../palette";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "./Savanna";
 import { Tag } from "./Tag";
@@ -70,35 +67,16 @@ const ELEPHANT_KEYS = Object.keys(elephant) as (keyof ElephantColors)[];
 
 /** A pintura da elefanta entre a noite e o dia: as cores passam de uma à outra com a luz, em vez de trocar num quadro. */
 const elephantAt = (daylight: number): ElephantColors =>
-  daylight <= 0
-    ? elephantNight
-    : daylight >= 1
-      ? elephant
-      : (Object.fromEntries(
-          ELEPHANT_KEYS.map((key) => [
-            key,
-            interpolateColors(
-              daylight,
-              [0, 1],
-              [elephantNight[key], elephant[key]],
-            ),
-          ]),
-        ) as ElephantColors);
-
-const FINISH_KEYS = Object.keys(elephantFinish) as (keyof ElephantFinish)[];
-
-/** O acabamento da elefanta entre a noite e o dia. */
-const finishAt = (daylight: number): ElephantFinish =>
   Object.fromEntries(
-    FINISH_KEYS.map((key) => [
+    ELEPHANT_KEYS.map((key) => [
       key,
       interpolateColors(
         Math.min(1, Math.max(0, daylight)),
         [0, 1],
-        [elephantNightFinish[key], elephantFinish[key]],
+        [elephantNight[key], elephant[key]],
       ),
     ]),
-  ) as ElephantFinish;
+  ) as ElephantColors;
 
 export type HerdMember = {
   /** Onde ela pisa: x no quadro, e y a partir do chão da savana (negativo é mais longe). */
@@ -169,7 +147,6 @@ export const Herd: React.FC<HerdProps> = ({
   seconds,
 }) => {
   const colors = elephantAt(daylight);
-  const finish = finishAt(daylight);
   /** A fase do ciclo de passos de uma elefanta: cada uma começa num ponto, para não marcharem juntas. */
   const gaitOf = (width: number, seed: string) =>
     stride === undefined
@@ -214,7 +191,6 @@ export const Herd: React.FC<HerdProps> = ({
             <Elephant
               width={width}
               colors={colors}
-              finish={finish}
               lid={Math.max(
                 sleeping,
                 eachOf(lid, index) ?? 0,
@@ -301,7 +277,6 @@ export const SleepingElephant: React.FC<SleepingElephantProps> = ({
     <Elephant
       width={width}
       colors={elephant}
-      finish={elephantFinish}
       lid={1}
       droop={1}
       trunk={0}

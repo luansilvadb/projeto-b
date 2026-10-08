@@ -1,6 +1,6 @@
 import type { CassiopeaColors } from "../../art/Cassiopea";
 import type { AntelopeColors } from "../../art/Antelope";
-import type { ElephantColors, ElephantFinish } from "../../art/Elephant";
+import type { ElephantColors } from "../../art/Elephant";
 import type { FishColors } from "../../art/Fish";
 import type { PersonColors } from "../../art/Person";
 import type { StopwatchColors } from "../../art/Stopwatch";
@@ -180,14 +180,18 @@ export const personInPajamas: PersonColors = {
 /** A lojista é a pessoa de avental coral: a cor do avental e a do bolso. */
 export const apron = ["#FF452D", "#E52A42"] as const;
 
-/** A elefanta: cinza-lilás, com o interior da orelha rosado. Proposta para o capítulo 2. */
+/**
+ * A elefanta, do piloto do polimento (2026-10-06): cor cheia no lugar do
+ * cinza-lilás, sombra em violeta e não no corpo escurecido, e um matiz por
+ * parte (o rosa da orelha, o creme da presa, o amarelo das unhas).
+ */
 export const elephant: ElephantColors = {
-  body: "#727DB5",
-  shade: "#505B9A",
-  light: "#9CA5D4",
-  earInside: "#C96D88",
-  tusk: "#F4F1E6",
-  nail: "#D9DCEA",
+  body: "#7B82EA",
+  shadow: "#5A45C6",
+  deep: "#3D2A98",
+  earInside: "#F0668E",
+  tusk: "#FFF0CC",
+  nail: "#FFC857",
   eye: "#FFFFFF",
   pupil: "#1B1F3C",
 };
@@ -255,6 +259,8 @@ export const lab = {
 export const rat = {
   body: "#FFFFFF",
   ear: "#F294A1",
+  /** O rosa mais fundo do rato de perto: era o do interior da orelha da elefanta do animatic, e ficou com ele. */
+  earDeep: "#C96D88",
   eye: "#1B1F3C",
   gone: "#3CA890",
 } as const;
@@ -647,35 +653,9 @@ export const gardner: PersonColors = {
   shoeShade: "#D9DCEA",
 };
 
-/** A elefanta na savana de noite: repintada mais clara, como a ficha visual pede, para não se apagar no céu azul-escuro. */
+/** A elefanta sob a lua: mais clara, como a ficha visual pede, para não se apagar no céu azul-escuro. */
 export const elephantNight: ElephantColors = {
   ...elephant,
-  body: "#98A2D6",
-  shade: "#6F7AB8",
-  light: "#BFC6EA",
-};
-
-/**
- * A elefanta do acabamento, piloto do polimento (2026-10-06): cor cheia no
- * lugar do cinza-lilás, sombra em violeta e não no corpo escurecido, e um
- * matiz por parte (o rosa da orelha, o creme da presa, o amarelo das unhas).
- * Vale só onde a cena pede o acabamento; as cores aprovadas, acima, continuam
- * como estão.
- */
-export const elephantFinish: ElephantFinish = {
-  body: "#7B82EA",
-  shadow: "#5A45C6",
-  deep: "#3D2A98",
-  earInside: "#F0668E",
-  tusk: "#FFF0CC",
-  nail: "#FFC857",
-  eye: "#FFFFFF",
-  pupil: "#1B1F3C",
-};
-
-/** A mesma elefanta sob a lua: mais clara, para não se apagar no céu. */
-export const elephantNightFinish: ElephantFinish = {
-  ...elephantFinish,
   body: "#8D92F4",
   shadow: "#6852DA",
   deep: "#4530AC",
