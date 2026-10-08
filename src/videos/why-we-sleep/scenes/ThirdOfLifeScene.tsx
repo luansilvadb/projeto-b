@@ -27,8 +27,6 @@ import { ink, person } from "../palette";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import { LifeBar, STANDING } from "../parts/LifeBar";
 import { LossBadge, PREY, Prey, type Loss } from "../parts/Prey";
-import { BiggestMistakeOpening } from "./BiggestMistakeScene";
-import { OpeningArrival, OpeningExit, OpeningPrelude } from "../parts/OpeningPassage";
 import { RichSavannaBackdrop } from "../parts/savanna/RichSavannaReference";
 
 type BarShotProps = {
@@ -242,22 +240,10 @@ export const ThirdOfLifeScene: React.FC<SceneProps> = ({ scene, shots }) => {
   return (
     <>
       <Shot range={shots[0]} name="um terço da vida">
-        <OpeningExit>
-          <BarShot thirdAt={cue(scene, "terço")} />
-        </OpeningExit>
-        <OpeningPrelude>
-          <LossesShot at={lossesAt} />
-        </OpeningPrelude>
+        <BarShot thirdAt={cue(scene, "terço")} />
       </Shot>
       <Shot range={shots[1]} name="o que o bicho deixa de fazer dormindo">
-        <OpeningExit>
-          <OpeningArrival>
-            <LossesShot at={lossesAt} />
-          </OpeningArrival>
-        </OpeningExit>
-        <OpeningPrelude>
-          <BiggestMistakeOpening />
-        </OpeningPrelude>
+        <LossesShot at={lossesAt} />
       </Shot>
     </>
   );

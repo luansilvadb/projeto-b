@@ -45,8 +45,6 @@ import {
 } from "../parts/Chalkboard";
 import { LifeTree } from "../parts/LifeTree";
 import { Tag } from "../parts/Tag";
-import { NEVER } from "./MaybeBrainScene";
-import { OpeningArrival } from "../parts/OpeningPassage";
 
 
 /**
@@ -1046,15 +1044,6 @@ const VerdictShot: React.FC<VerdictShotProps> = ({
   );
 };
 
-/**
- * O plano que abre a cena, antes de qualquer deixa: o último plano de
- * `third-of-life` o desenha com `OpeningPrelude`: o quadro inteiro chega
- * por baixo enquanto a savana sobe, sem desmontar o pesquisador e o calendário.
- */
-export const BiggestMistakeOpening: React.FC = () => (
-  <IntroShot nameAt={NEVER} decadesAt={NEVER} yearsAt={NEVER + 1} />
-);
-
 export const BiggestMistakeScene: React.FC<SceneProps> = ({ scene, shots }) => {
   const lengths = shots.map((shot) => shot.to - shot.from);
   // Onde ele está no quadro quando o plano do rosto passa o palco ao corredor.
@@ -1072,13 +1061,11 @@ export const BiggestMistakeScene: React.FC<SceneProps> = ({ scene, shots }) => {
   return (
     <>
       <Shot range={shots[0]} name="o pesquisador e os 44 anos">
-        <OpeningArrival>
-          <IntroShot
-            nameAt={cue(scene, "Réctchafen")}
-            decadesAt={cue(scene, "quarenta")}
-            yearsAt={cue(scene, "quatro")}
-          />
-        </OpeningArrival>
+        <IntroShot
+          nameAt={cue(scene, "Réctchafen")}
+          decadesAt={cue(scene, "quarenta")}
+          yearsAt={cue(scene, "quatro")}
+        />
       </Shot>
       <Shot range={shots[1]} name="o laboratório do sono, em Chicago">
         <LabDoorShot

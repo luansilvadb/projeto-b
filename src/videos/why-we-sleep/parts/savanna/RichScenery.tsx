@@ -11,23 +11,32 @@ import { savannaNightSky } from "../../palette";
 
 export const RichLayer = ({
   depth,
+  backdrop = false,
   children,
 }: {
   readonly depth: number;
+  /**
+   * O fundo do cenário: não desce com as camadas, toma a cor dele no lugar,
+   * como todo fundo do palco. Descendo junto, o céu entrava e saía como uma
+   * chapa de borda reta.
+   */
+  readonly backdrop?: boolean;
   readonly children: ReactNode;
 }) => {
   const seconds = useStudyTime();
   const { cameraDriven } = useRichTheme();
   const camera = useCameraState();
-  const { risen } = useBuild();
+  const { lit, risen } = useBuild();
   if (cameraDriven) {
     // A mesma transformação de Layer, em unidades do SVG. Assim as deixas e
     // os enquadramentos do roteiro continuam mandando nas duas pinturas.
     const zoom = 1 + (camera.zoom - 1) * depth;
     const units = 1672 / 1920;
-    const sink = depth === 0 ? 0 : (1 - risen) * (1000 + 300 * depth) * zoom;
+    const sink =
+      depth === 0 || backdrop ? 0 : (1 - risen) * (1000 + 300 * depth) * zoom;
     return (
       <g
+        opacity={backdrop ? lit : undefined}
         transform={`translate(${-camera.x * depth * units} ${(sink - camera.y * depth) * units}) translate(836 470.25) scale(${zoom}) translate(-836 -470.25)`}
       >
         {children}

@@ -116,432 +116,437 @@ const Sky = () => {
   // Sem astro pedido, o sol fica onde a referência do entardecer o pôs.
   const [sunX, sunY] = orb === undefined ? [114, 293] : astroAt(orb);
   return (
-    <RichLayer depth={0.12}>
-      <rect
-        x="-150"
-        y="-100"
-        width="1972"
-        height="800"
-        fill={`url(#${uid}-rich-sky)`}
-      />
-      <rect
-        x="-150"
-        y="0"
-        width="1972"
-        height="710"
-        fill={`url(#${uid}-rich-sunrise)`}
-      />
-      {/* O sol e a lua trocam por opacidade: a luz que passa do entardecer à noite não troca de desenho num quadro. */}
-      {moonlight > 0 ? (
-        <g opacity={moonlight}>
-          <NightSky />
-        </g>
-      ) : null}
-      {moonlight < 1 ? (
-        <g
-          transform={`translate(${sunX} ${sunY + t * 0.6})`}
-          opacity={1 - moonlight}
-        >
-          <circle r="194" fill={p.sunHalo} opacity=".27" />
-          <circle r="162" fill={p.sunCoral} opacity=".68" />
-          <circle r="119" fill={`url(#${uid}-rich-sun-orange)`} />
-          <circle r="69" fill={`url(#${uid}-rich-sun)`} />
-        </g>
-      ) : null}
-      <CloudBank
-        name="upper-left-cloud"
-        x={340}
-        y={232}
-        width={328}
-        color={p.clouds.rose}
-        speed={0.8}
-        lobes={[
-          [23, 20, 11],
-          [61, 22, 17],
-          [112, 43, 47],
-          [165, 31, 34],
-          [214, 24, 19],
-          [242, 24, 10],
-          [285, 34, 5],
-        ]}
-      />
-      <CloudBank
-        name="upper-left-lit-base"
-        x={340}
-        y={232}
-        width={327}
-        color={p.clouds.orange}
-        speed={0.8}
-        lobes={[
-          [23, 20, 11],
-          [48, 24, 5],
-          [252, 32, 4],
-          [297, 19, 3],
-        ]}
-      />
-      <CloudBank
-        name="upper-small-cloud"
-        x={650}
-        y={273}
-        width={82}
-        color={p.clouds.coral}
-        speed={1.1}
-        lobes={[
-          [15, 14, 6],
-          [41, 18, 15],
-          [66, 15, 7],
-        ]}
-      />
-      <CloudBank
-        name="upper-small-strand"
-        x={739}
-        y={273}
-        width={31}
-        color={p.clouds.rose}
-        speed={1.1}
-        lobes={[[15, 14, 3]]}
-      />
-      <CloudBank
-        name="upper-right-lit-cloud"
-        x={1347}
-        y={213}
-        width={423}
-        color={p.clouds.orange}
-        speed={0.65}
-        lobes={[
-          [23, 20, 4],
-          [54, 13, 8],
-          [82, 22, 12],
-          [115, 24, 20],
-          [145, 18, 16],
-          [180, 35, 43],
-          [233, 42, 64],
-          [313, 51, 104],
-          [381, 48, 61],
-        ]}
-      />
-      <CloudBank
-        name="upper-right-shadow"
-        x={1457}
-        y={213}
-        width={324}
-        color={p.clouds.rose}
-        speed={0.65}
-        lobes={[
-          [32, 26, 6],
-          [119, 37, 37],
-          [174, 39, 51],
-          [222, 55, 102],
-          [281, 51, 54],
-        ]}
-      />
-      <CloudBank
-        name="left-lit-cloud-bank"
-        x={238}
-        y={478}
-        width={492}
-        color={p.clouds.lemon}
-        speed={1.15}
-        lobes={[
-          [55, 27, 52],
-          [113, 44, 97],
-          [165, 31, 72],
-          [219, 45, 68],
-          [263, 27, 41],
-          [294, 26, 27],
-          [335, 24, 22],
-          [381, 25, 6],
-          [440, 28, 3],
-        ]}
-      />
-      <CloudBank
-        name="left-orange-cloud-bank"
-        x={235}
-        y={478}
-        width={455}
-        color={p.clouds.gold}
-        speed={1.15}
-        lobes={[
-          [59, 31, 42],
-          [113, 43, 90],
-          [147, 22, 56],
-          [181, 32, 60],
-          [236, 34, 57],
-          [279, 30, 29],
-          [322, 28, 20],
-          [357, 29, 10],
-        ]}
-      />
-      <CloudBank
-        name="left-coral-cloud-front"
-        x={285}
-        y={478}
-        width={337}
-        color={p.clouds.orange}
-        speed={1.15}
-        lobes={[
-          [48, 44, 78],
-          [92, 32, 53],
-          [125, 21, 42],
-          [164, 31, 50],
-          [210, 32, 25],
-          [259, 27, 10],
-          [294, 25, 6],
-        ]}
-      />
-      <CloudBank
-        name="left-purple-cloud-front"
-        x={152}
-        y={478}
-        width={308}
-        color={p.clouds.purple}
-        speed={1.15}
-        lobes={[
-          [22, 25, 7],
-          [60, 26, 23],
-          [124, 46, 54],
-          [173, 27, 34],
-          [215, 25, 14],
-          [262, 26, 5],
-        ]}
-      />
-      <CloudBank
-        name="left-small-purple-cloud"
-        x={0}
-        y={479}
-        width={151}
-        color={p.clouds.purple}
-        speed={1.15}
-        lobes={[
-          [21, 21, 6],
-          [49, 19, 14],
-          [95, 37, 33],
-          [130, 22, 7],
-        ]}
-      />
-      <CloudBank
-        name="right-lit-cloud-bank"
-        x={984}
-        y={368}
-        width={455}
-        color={p.clouds.gold}
-        speed={0.8}
-        lobes={[
-          [42, 35, 5],
-          [89, 33, 15],
-          [139, 35, 36],
-          [185, 28, 25],
-          [227, 28, 47],
-          [282, 37, 78],
-          [341, 47, 104],
-          [390, 38, 59],
-          [428, 24, 19],
-        ]}
-      />
-      <CloudBank
-        name="right-orange-cloud-front"
-        x={1012}
-        y={369}
-        width={427}
-        color={p.clouds.orange}
-        speed={0.8}
-        lobes={[
-          [43, 27, 4],
-          [95, 32, 17],
-          [151, 25, 21],
-          [204, 29, 30],
-          [244, 25, 55],
-          [294, 39, 80],
-          [350, 40, 52],
-          [393, 27, 20],
-        ]}
-      />
-      <CloudBank
-        name="right-rose-cloud"
-        x={1257}
-        y={359}
-        width={184}
-        color={p.clouds.rose}
-        speed={0.8}
-        lobes={[
-          [39, 27, 57],
-          [92, 40, 88],
-          [137, 32, 39],
-        ]}
-      />
-      <CloudBank
-        name="right-purple-cloud-front"
-        x={1266}
-        y={369}
-        width={466}
-        color={p.clouds.dark}
-        speed={0.8}
-        lobes={[
-          [40, 29, 20],
-          [87, 35, 61],
-          [126, 32, 31],
-          [171, 34, 43],
-          [240, 47, 84],
-          [314, 35, 42],
-          [364, 27, 9],
-          [412, 33, 4],
-        ]}
-      />
-      <CloudBank
-        name="center-high-cloud"
-        x={869}
-        y={351}
-        width={181}
-        color={p.clouds.coral}
-        lobes={[
-          [20, 22, 4],
-          [54, 23, 11],
-          [80, 25, 8],
-          [123, 24, 21],
-          [164, 16, 3],
-        ]}
-      />
-      <CloudBank
-        name="left-thin-cloud"
-        x={400}
-        y={363}
-        width={67}
-        color={p.clouds.orange}
-        lobes={[
-          [20, 19, 5],
-          [45, 16, 4],
-        ]}
-      />
-      <CloudBank
-        name="right-thin-cloud"
-        x={1430}
-        y={415}
-        width={204}
-        color={p.clouds.coral}
-        lobes={[
-          [26, 24, 4],
-          [72, 24, 8],
-          [106, 23, 18],
-          [137, 20, 9],
-          [169, 31, 6],
-        ]}
-      />
-      <CloudBank
-        name="center-low-cloud"
-        x={777}
-        y={448}
-        width={321}
-        color={p.clouds.orange}
-        speed={1.3}
-        lobes={[
-          [34, 30, 5],
-          [78, 31, 10],
-          [111, 23, 22],
-          [162, 32, 32],
-          [210, 29, 15],
-          [261, 33, 10],
-          [291, 23, 5],
-        ]}
-      />
-      <CloudBank
-        name="right-low-purple-cloud"
-        x={1128}
-        y={456}
-        width={239}
-        color={p.clouds.purple}
-        lobes={[
-          [24, 28, 5],
-          [56, 31, 11],
-          [109, 31, 21],
-          [146, 32, 13],
-          [183, 24, 28],
-          [212, 17, 8],
-        ]}
-      />
-      <CloudBank
-        name="right-low-rose-cloud"
-        x={847}
-        y={476}
-        width={337}
-        color={p.clouds.rose}
-        lobes={[
-          [44, 34, 7],
-          [91, 36, 12],
-          [135, 29, 17],
-          [170, 28, 14],
-          [229, 48, 46],
-          [278, 27, 25],
-          [312, 24, 7],
-        ]}
-      />
-      <CloudBank
-        name="horizon-lit-cloud"
-        x={248}
-        y={582}
-        width={607}
-        color={p.clouds.lemon}
-        speed={0.5}
-        lobes={[
-          [90, 39, 45],
-          [151, 48, 63],
-          [202, 35, 28],
-          [287, 38, 23],
-          [351, 51, 49],
-          [400, 30, 25],
-          [462, 37, 28],
-          [504, 30, 17],
-          [551, 29, 10],
-        ]}
-      />
-      <CloudBank
-        name="horizon-coral-cloud"
-        x={247}
-        y={587}
-        width={621}
-        color={p.clouds.coral}
-        speed={0.5}
-        lobes={[
-          [95, 42, 43],
-          [154, 45, 64],
-          [203, 34, 27],
-          [293, 37, 31],
-          [351, 48, 55],
-          [415, 30, 36],
-          [467, 37, 41],
-          [507, 28, 23],
-          [552, 26, 13],
-        ]}
-      />
-      <CloudBank
-        name="low-detached-cloud"
-        x={760}
-        y={537}
-        width={179}
-        color={p.clouds.coral}
-        speed={0.6}
-        lobes={[
-          [28, 26, 4],
-          [51, 22, 9],
-          [78, 22, 24],
-          [107, 22, 10],
-          [140, 15, 6],
-        ]}
-      />
-      <CloudBank
-        name="far-right-horizon-cloud"
-        x={1554}
-        y={498}
-        width={196}
-        color={p.clouds.coral}
-        speed={0.6}
-        lobes={[
-          [29, 27, 6],
-          [64, 25, 12],
-          [105, 34, 24],
-          [164, 34, 6],
-        ]}
-      />
-    </RichLayer>
+    <>
+      <RichLayer depth={0.12} backdrop>
+        {/* O céu vai até a base do quadro, por trás do chão: com as camadas ainda embaixo, na entrada e na saída, não sobra uma faixa reta no horizonte. */}
+        <rect
+          x="-150"
+          y="-100"
+          width="1972"
+          height="1300"
+          fill={`url(#${uid}-rich-sky)`}
+        />
+        <rect
+          x="-150"
+          y="0"
+          width="1972"
+          height="710"
+          fill={`url(#${uid}-rich-sunrise)`}
+        />
+      </RichLayer>
+      <RichLayer depth={0.12}>
+        {/* O sol e a lua trocam por opacidade: a luz que passa do entardecer à noite não troca de desenho num quadro. */}
+        {moonlight > 0 ? (
+          <g opacity={moonlight}>
+            <NightSky />
+          </g>
+        ) : null}
+        {moonlight < 1 ? (
+          <g
+            transform={`translate(${sunX} ${sunY + t * 0.6})`}
+            opacity={1 - moonlight}
+          >
+            <circle r="194" fill={p.sunHalo} opacity=".27" />
+            <circle r="162" fill={p.sunCoral} opacity=".68" />
+            <circle r="119" fill={`url(#${uid}-rich-sun-orange)`} />
+            <circle r="69" fill={`url(#${uid}-rich-sun)`} />
+          </g>
+        ) : null}
+        <CloudBank
+          name="upper-left-cloud"
+          x={340}
+          y={232}
+          width={328}
+          color={p.clouds.rose}
+          speed={0.8}
+          lobes={[
+            [23, 20, 11],
+            [61, 22, 17],
+            [112, 43, 47],
+            [165, 31, 34],
+            [214, 24, 19],
+            [242, 24, 10],
+            [285, 34, 5],
+          ]}
+        />
+        <CloudBank
+          name="upper-left-lit-base"
+          x={340}
+          y={232}
+          width={327}
+          color={p.clouds.orange}
+          speed={0.8}
+          lobes={[
+            [23, 20, 11],
+            [48, 24, 5],
+            [252, 32, 4],
+            [297, 19, 3],
+          ]}
+        />
+        <CloudBank
+          name="upper-small-cloud"
+          x={650}
+          y={273}
+          width={82}
+          color={p.clouds.coral}
+          speed={1.1}
+          lobes={[
+            [15, 14, 6],
+            [41, 18, 15],
+            [66, 15, 7],
+          ]}
+        />
+        <CloudBank
+          name="upper-small-strand"
+          x={739}
+          y={273}
+          width={31}
+          color={p.clouds.rose}
+          speed={1.1}
+          lobes={[[15, 14, 3]]}
+        />
+        <CloudBank
+          name="upper-right-lit-cloud"
+          x={1347}
+          y={213}
+          width={423}
+          color={p.clouds.orange}
+          speed={0.65}
+          lobes={[
+            [23, 20, 4],
+            [54, 13, 8],
+            [82, 22, 12],
+            [115, 24, 20],
+            [145, 18, 16],
+            [180, 35, 43],
+            [233, 42, 64],
+            [313, 51, 104],
+            [381, 48, 61],
+          ]}
+        />
+        <CloudBank
+          name="upper-right-shadow"
+          x={1457}
+          y={213}
+          width={324}
+          color={p.clouds.rose}
+          speed={0.65}
+          lobes={[
+            [32, 26, 6],
+            [119, 37, 37],
+            [174, 39, 51],
+            [222, 55, 102],
+            [281, 51, 54],
+          ]}
+        />
+        <CloudBank
+          name="left-lit-cloud-bank"
+          x={238}
+          y={478}
+          width={492}
+          color={p.clouds.lemon}
+          speed={1.15}
+          lobes={[
+            [55, 27, 52],
+            [113, 44, 97],
+            [165, 31, 72],
+            [219, 45, 68],
+            [263, 27, 41],
+            [294, 26, 27],
+            [335, 24, 22],
+            [381, 25, 6],
+            [440, 28, 3],
+          ]}
+        />
+        <CloudBank
+          name="left-orange-cloud-bank"
+          x={235}
+          y={478}
+          width={455}
+          color={p.clouds.gold}
+          speed={1.15}
+          lobes={[
+            [59, 31, 42],
+            [113, 43, 90],
+            [147, 22, 56],
+            [181, 32, 60],
+            [236, 34, 57],
+            [279, 30, 29],
+            [322, 28, 20],
+            [357, 29, 10],
+          ]}
+        />
+        <CloudBank
+          name="left-coral-cloud-front"
+          x={285}
+          y={478}
+          width={337}
+          color={p.clouds.orange}
+          speed={1.15}
+          lobes={[
+            [48, 44, 78],
+            [92, 32, 53],
+            [125, 21, 42],
+            [164, 31, 50],
+            [210, 32, 25],
+            [259, 27, 10],
+            [294, 25, 6],
+          ]}
+        />
+        <CloudBank
+          name="left-purple-cloud-front"
+          x={152}
+          y={478}
+          width={308}
+          color={p.clouds.purple}
+          speed={1.15}
+          lobes={[
+            [22, 25, 7],
+            [60, 26, 23],
+            [124, 46, 54],
+            [173, 27, 34],
+            [215, 25, 14],
+            [262, 26, 5],
+          ]}
+        />
+        <CloudBank
+          name="left-small-purple-cloud"
+          x={0}
+          y={479}
+          width={151}
+          color={p.clouds.purple}
+          speed={1.15}
+          lobes={[
+            [21, 21, 6],
+            [49, 19, 14],
+            [95, 37, 33],
+            [130, 22, 7],
+          ]}
+        />
+        <CloudBank
+          name="right-lit-cloud-bank"
+          x={984}
+          y={368}
+          width={455}
+          color={p.clouds.gold}
+          speed={0.8}
+          lobes={[
+            [42, 35, 5],
+            [89, 33, 15],
+            [139, 35, 36],
+            [185, 28, 25],
+            [227, 28, 47],
+            [282, 37, 78],
+            [341, 47, 104],
+            [390, 38, 59],
+            [428, 24, 19],
+          ]}
+        />
+        <CloudBank
+          name="right-orange-cloud-front"
+          x={1012}
+          y={369}
+          width={427}
+          color={p.clouds.orange}
+          speed={0.8}
+          lobes={[
+            [43, 27, 4],
+            [95, 32, 17],
+            [151, 25, 21],
+            [204, 29, 30],
+            [244, 25, 55],
+            [294, 39, 80],
+            [350, 40, 52],
+            [393, 27, 20],
+          ]}
+        />
+        <CloudBank
+          name="right-rose-cloud"
+          x={1257}
+          y={359}
+          width={184}
+          color={p.clouds.rose}
+          speed={0.8}
+          lobes={[
+            [39, 27, 57],
+            [92, 40, 88],
+            [137, 32, 39],
+          ]}
+        />
+        <CloudBank
+          name="right-purple-cloud-front"
+          x={1266}
+          y={369}
+          width={466}
+          color={p.clouds.dark}
+          speed={0.8}
+          lobes={[
+            [40, 29, 20],
+            [87, 35, 61],
+            [126, 32, 31],
+            [171, 34, 43],
+            [240, 47, 84],
+            [314, 35, 42],
+            [364, 27, 9],
+            [412, 33, 4],
+          ]}
+        />
+        <CloudBank
+          name="center-high-cloud"
+          x={869}
+          y={351}
+          width={181}
+          color={p.clouds.coral}
+          lobes={[
+            [20, 22, 4],
+            [54, 23, 11],
+            [80, 25, 8],
+            [123, 24, 21],
+            [164, 16, 3],
+          ]}
+        />
+        <CloudBank
+          name="left-thin-cloud"
+          x={400}
+          y={363}
+          width={67}
+          color={p.clouds.orange}
+          lobes={[
+            [20, 19, 5],
+            [45, 16, 4],
+          ]}
+        />
+        <CloudBank
+          name="right-thin-cloud"
+          x={1430}
+          y={415}
+          width={204}
+          color={p.clouds.coral}
+          lobes={[
+            [26, 24, 4],
+            [72, 24, 8],
+            [106, 23, 18],
+            [137, 20, 9],
+            [169, 31, 6],
+          ]}
+        />
+        <CloudBank
+          name="center-low-cloud"
+          x={777}
+          y={448}
+          width={321}
+          color={p.clouds.orange}
+          speed={1.3}
+          lobes={[
+            [34, 30, 5],
+            [78, 31, 10],
+            [111, 23, 22],
+            [162, 32, 32],
+            [210, 29, 15],
+            [261, 33, 10],
+            [291, 23, 5],
+          ]}
+        />
+        <CloudBank
+          name="right-low-purple-cloud"
+          x={1128}
+          y={456}
+          width={239}
+          color={p.clouds.purple}
+          lobes={[
+            [24, 28, 5],
+            [56, 31, 11],
+            [109, 31, 21],
+            [146, 32, 13],
+            [183, 24, 28],
+            [212, 17, 8],
+          ]}
+        />
+        <CloudBank
+          name="right-low-rose-cloud"
+          x={847}
+          y={476}
+          width={337}
+          color={p.clouds.rose}
+          lobes={[
+            [44, 34, 7],
+            [91, 36, 12],
+            [135, 29, 17],
+            [170, 28, 14],
+            [229, 48, 46],
+            [278, 27, 25],
+            [312, 24, 7],
+          ]}
+        />
+        <CloudBank
+          name="horizon-lit-cloud"
+          x={248}
+          y={582}
+          width={607}
+          color={p.clouds.lemon}
+          speed={0.5}
+          lobes={[
+            [90, 39, 45],
+            [151, 48, 63],
+            [202, 35, 28],
+            [287, 38, 23],
+            [351, 51, 49],
+            [400, 30, 25],
+            [462, 37, 28],
+            [504, 30, 17],
+            [551, 29, 10],
+          ]}
+        />
+        <CloudBank
+          name="horizon-coral-cloud"
+          x={247}
+          y={587}
+          width={621}
+          color={p.clouds.coral}
+          speed={0.5}
+          lobes={[
+            [95, 42, 43],
+            [154, 45, 64],
+            [203, 34, 27],
+            [293, 37, 31],
+            [351, 48, 55],
+            [415, 30, 36],
+            [467, 37, 41],
+            [507, 28, 23],
+            [552, 26, 13],
+          ]}
+        />
+        <CloudBank
+          name="low-detached-cloud"
+          x={760}
+          y={537}
+          width={179}
+          color={p.clouds.coral}
+          speed={0.6}
+          lobes={[
+            [28, 26, 4],
+            [51, 22, 9],
+            [78, 22, 24],
+            [107, 22, 10],
+            [140, 15, 6],
+          ]}
+        />
+        <CloudBank
+          name="far-right-horizon-cloud"
+          x={1554}
+          y={498}
+          width={196}
+          color={p.clouds.coral}
+          speed={0.6}
+          lobes={[
+            [29, 27, 6],
+            [64, 25, 12],
+            [105, 34, 24],
+            [164, 34, 6],
+          ]}
+        />
+      </RichLayer>
+    </>
   );
 };
 
