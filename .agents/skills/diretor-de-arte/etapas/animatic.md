@@ -53,7 +53,7 @@ Depois que o trecho funciona, veja o que nele vale repetir (o personagem, a cons
 - **Pare um plano quando ele responde à pergunta dele.** Não se continua porque ainda há detalhe possível ou porque a referência tem mais textura.
 - **Movimento não salva quadro fraco.** No animatic, entradas simples pela deixa da narração (`Appear`) bastam; atuação, câmera, efeito e transição final são de `etapas/animacao.md`. O plano que não se sustenta parado tem defeito de quadro ou de encenação, e é ali que se conserta.
 
-**Construção antes do acabamento.** Acabamento não conserta construção (`forma`, provado no piloto). Por isso a figura viva nova, a criatura complexa, a pose de que a cena depende e o desenho que já falhou na forma passam primeiro pela silhueta numa cor só, na pose da cena, antes da pintura; havendo dúvida nela, quem julga é o `critico-de-quadro`. A moeda, o fundo e a forma abstrata, que se reconhecem sem depender de pose, vão direto.
+**Silhueta antes da pintura** (`forma`): faça primeiro, numa cor só e na pose da cena, para figura viva, criatura complexa, pose decisiva ou desenho que já falhou; pinte quando estiver legível e acione `critico-de-quadro` se houver dúvida. Moeda, fundo e forma abstrata não precisam desse teste.
 
 **Folha de modelo** (`personagem`, uma composição na pasta `design` do `src/Root.tsx`). É feita para o personagem que volta, depois de ele funcionar num plano de verdade, com os estados que o roteiro usa; pose, expressão ou vista novas entram quando uma cena as pede. Figurante e personagem de uma aparição só não têm folha.
 

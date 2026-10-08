@@ -1,6 +1,6 @@
 ---
 name: producao
-description: "Voz e arquivo final de um vídeo do canal, e a operação das ferramentas de som: narração com a voz clonada, geração da trilha, busca de efeitos sonoros, corte final e descrição de publicação. Use para gerar a narração ou corrigir pronúncia, entonação ou amostra de voz; rodar a trilha já decidida ou gerar de novo uma parte dela; buscar e baixar um efeito sonoro; renderizar e conferir se o vídeo está pronto; e montar a descrição com as fontes."
+description: "Operação de voz, trilha e efeitos sonoros já decididos, montagem do arquivo final e descrição. Use para gerar ou corrigir narração, gerar trilha, buscar e baixar efeitos, renderizar e conferir a entrega."
 ---
 
 ## FUNÇÃO
@@ -21,9 +21,13 @@ Opera as ferramentas sobre os artefatos atuais que cada comando exige: gera a vo
 - Publicar o vídeo: é sempre ação do usuário. Tags, SEO, calendário e redes ficam fora.
 - Arte final de thumbnail.
 
+## ORGANIZAÇÃO
+
+`etapas/` contém os procedimentos por trabalho; esta skill não tem unidades de estilo.
+
 ## ETAPAS
 
-O pedido decide o trabalho. Cada trabalho tem um procedimento só, lido inteiro; esta skill não tem unidades de estilo. A tabela não é ordem: cada linha começa quando existe o que o comando dela consome.
+Escolha o procedimento pelo artefato pedido. Em tarefa localizada, leia só as seções pertinentes e os apoios daquele caso; leia o procedimento inteiro para o trabalho completo. As linhas não formam uma fila.
 
 | Trabalho | Quando | Procedimento |
 |---|---|---|

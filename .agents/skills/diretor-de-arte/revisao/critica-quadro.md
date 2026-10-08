@@ -14,7 +14,7 @@ Como achar o defeito visual que explica por que um quadro não funciona, e com q
 - **A evidência responde a uma dúvida.** Recorte, folha, silhueta, comparação e medida são feitos quando há o que perguntar a eles.
 - **A correção se confirma no defeito.** Ela está certa quando o quadro novo resolve o que a motivou, sem estragar o que está em volta.
 - **A crítica para quando não resta defeito que justifique outra mudança.**
-- **Proposta não reprova.** O que uma unidade marca como proposta (`SKILL.md`, Base das medidas) é hipótese em teste: descumpri-la não é defeito, e segui-la mal vai ao relatório como observação para o usuário.
+- **Proposta não reprova.** Uma regra marcada como proposta é hipótese em teste: descumpri-la não é defeito, e segui-la mal vai ao relatório como observação para o usuário.
 
 **Instrumentos**, do que manda ao que só explica:
 
@@ -48,7 +48,7 @@ Sem imagem ainda, na decupagem, a evidência é a coluna da encenação, lida de
 
 A mesma falha muda de gravidade conforme a perda. A silhueta que não deixa reconhecer um personagem novo nem a ação dele é defeito de construção, e costuma bloquear, porque nenhum acabamento a conserta (`forma`). O acabamento de quem emite luz num personagem bloqueia quando muda o que ele parece ser, e é relevante quando só o deixa genérico.
 
-**Medidas.** Tiradas do vídeo renderizado por `pnpm critique` e comparadas com a faixa dos 12 vídeos de referência. As faixas estão num lugar só, `CRITERIA` em `src/critique/reference.ts`, e saem na tabela do comando:
+**Medidas.** As faixas vêm de 12 vídeos do Kurzgesagt (março de 2025 a setembro de 2026; 123 minutos). A leitura cobriu 332 planos, três quadros por plano, e subconta composições. `CRITERIA` em `src/critique/reference.ts` é a fonte das faixas; o comando imprime:
 
 - desde os quadros parados: área do quadro com desenho, cores por quadro, trocas da cor dominante por minuto e peso da família de cor mais comum;
 - só depois de animar: tempo com a tela quase parada, tempo com mais de 10% do quadro em movimento e tempo até 40% do quadro ser outro.

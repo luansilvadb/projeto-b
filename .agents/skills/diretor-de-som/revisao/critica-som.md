@@ -32,7 +32,9 @@ Como distinguir, no som de um render, o defeito técnico, o sinal de medida e a 
 3. **As séries segundo a segundo**, gravadas junto, dizem onde: a distância da música à voz, a fala, as mudanças de seção, as viradas de volume, os efeitos. São lidas quando há uma pergunta, no trecho dela; nenhuma linha do mapa precisa de um número que a confirme.
 4. **O ouvido do usuário** percebe, e é o único que fecha o que é de percepção.
 
-**Sensores.** Todas as medidas são sensores, e não só as de nível e de efeitos. As referências são as de `CRITERIA`, em `src/critique/sound.ts`; `out` na saída do comando quer dizer "fora da faixa configurada", e nada além disso.
+**Origem das faixas.** O estudo de 2026-10-05 mediu 12 vídeos do Kurzgesagt, sem patrocínio (123 minutos), separados em voz, música e efeitos. `CRITERIA` em `src/critique/sound.ts` é a fonte atual; a calibração e os testes do ACE-Step estão em `out/referencias/kurzgesagt/som/ESTUDO.md`. A geração foi testada com ACE-Step Turbo numa RTX 2060 SUPER; mudar modelo ou placa pede repetir os testes.
+
+**Sensores.** Todas as medidas são sensores. `out` na saída do comando quer dizer "fora da faixa configurada", e nada além disso.
 
 | Medida | Referência | Pode ajudar a localizar |
 |---|---|---|

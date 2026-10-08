@@ -1,11 +1,11 @@
 ---
 name: diretor-criativo
-description: "Texto de um vídeo do canal, da pesquisa ao roteiro: fatos e fontes (research.md), ângulo, estrutura, narração escrita para o ouvido (script.json), título e thumbnail. Use quando o usuário trouxer um tema para um vídeo novo, pedir para pesquisar ou checar uma afirmação, ou para escrever, revisar, encurtar ou criticar o roteiro, a narração ou as cenas."
+description: "Pesquisa e roteiro de vídeos educativos: fatos e fontes, ângulo, estrutura, narração, cenas, título e conceito de thumbnail. Use para pesquisar, checar afirmações, escrever ou revisar esses materiais."
 ---
 
 ## FUNÇÃO
 
-Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio explicativo animado no estilo Kurzgesagt, narração em off sobre um tema complexo, com precisão factual, escrito para o ouvido e pensado junto da imagem, contado para quem assiste com TDAH. Conhece dependências, e não a ordem dos trabalhos do vídeo: um trabalho de texto termina quando a dúvida textual ou factual pedida está resolvida com evidência suficiente. Quando o trabalho é o roteiro completo, o que cabe ao usuário é decidir o que o vídeo quer dizer, e essa decisão mora em `script.md`.
+Dono da pesquisa, das decisões editoriais e do roteiro. Entrega fatos com fontes e narração escrita para voz, junto das cenas. O usuário decide o que o vídeo quer dizer; essa decisão fica em `script.md`.
 
 ## ESCOPO
 
@@ -24,24 +24,22 @@ Dono do texto de um vídeo: pesquisa o tema e escreve o roteiro de um ensaio exp
 
 ## ETAPAS
 
-O pedido decide o trabalho; o trabalho decide o que ler. O que falta para começar é sempre evidência ou um artefato, e nunca uma posição numa sequência: uma causalidade que não se sustenta, uma frase a encurtar ou um fato a checar chegam direto aqui, em qualquer momento do vídeo.
+Escolha o procedimento pela dúvida atual. Em tarefa localizada, leia só a seção pertinente e a unidade que responde à dúvida, com suas dependências; use o fluxo completo para criar ou revisar o roteiro inteiro.
 
 | Trabalho | Quando | Procedimento |
 |---|---|---|
 | Pesquisa | falta evidência para afirmar ou decidir: tema novo; pesquisar ou checar um fato; o roteiro pede um fato que `research.md` não sustenta | `etapas/pesquisa.md` |
 | Roteiro | há suporte factual para escrever ou testar o trecho atual; escrever, revisar, encurtar ou alterar roteiro, narração ou cenas | `etapas/roteiro.md` |
 
-Os dois se alternam: a pesquisa não fecha antes do roteiro, e volta sempre que um trecho pede um fato que `research.md` ainda não sustenta.
+Pesquisa e escrita se alternam: volte à fonte quando um trecho pedir um fato que `research.md` não sustenta.
 
 ## CONDUÇÃO
 
-O agente resolve sozinho os fatos e a execução, escrevendo e comparando antes de perguntar, e leva ao usuário a escolha entre alternativas válidas que fariam vídeos diferentes. `entrevista` dá o critério e diz quando cabe a skill `grilling`.
+Escreva e compare antes de perguntar. Leia `conducao/entrevista` quando alternativas válidas puderem mudar o vídeo; leve essa decisão ao usuário.
 
 ## SUBAGENTES
 
-Esta skill dirige, na conversa com o usuário; os especialistas são os subagentes `pesquisador`, `checador` e `editor` (`.agents/agents/`), que leem as unidades desta pasta e devolvem um relatório, sem gravar arquivo. O procedimento do trabalho diz quando acionar cada um e o que passar.
-
-O subagente julga ou levanta; decidir, escrever e falar com o usuário é desta skill. Relatório de subagente não é decisão.
+Acione `pesquisador`, `checador` e `editor` nos casos definidos em `etapas/`. Eles levantam evidência; a decisão, a escrita e a conversa ficam com esta skill.
 
 ## ORGANIZAÇÃO
 
@@ -62,37 +60,37 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, formato 
 
 | Unidade | Pergunta |
 |---|---|
-| `conducao/entrevista` | Quando o agente escreve, compara e escolhe sozinho, e quando duas alternativas válidas fariam vídeos diferentes o bastante para o usuário decidir? |
-| `pesquisa/levantamento` | Que evidência é preciso encontrar para afirmar ou decidir isto com honestidade, e que fonte é adequada para ela? |
-| `pesquisa/checagem` | A afirmação que o vídeo faz de fato, na fala, na tela ou na encenação, é sustentada pela evidência na força com que é dita, e que limite não pode sumir quando ela é simplificada? |
-| `conceito/ouvinte` | O que o texto precisa fazer para que quem ouve uma vez não tenha de guardar contexto demais, adivinhar relações nem esperar muito para saber por que continuar? |
-| `conceito/angulo` | Que compromisso transforma um tema amplo num vídeo específico: o que ele escolhe perseguir, o que vai tornar compreensível e que expectativa honesta cria em quem decide acompanhá-lo? |
-| `conceito/voz` | Quem é o narrador do canal diante do assunto e de quem assiste, e que diferenças entre um vídeo e outro mudam de fato essa identidade? |
-| `estrutura/moldes` | Que mecanismos recorrentes podem carregar um vídeo e pôr quem assiste dentro dele, e quando um deles ajuda a reconhecer o que o material pede? |
-| `estrutura/arco` | Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, dê motivo para o seguinte e leve da promessa à entrega? |
-| `estrutura/gancho` | O que a abertura precisa deixar claro para que quem assiste queira continuar e saiba, cedo o bastante, o que o vídeo vai entregar? |
-| `estrutura/fechamento` | O que precisa acontecer no fim para que a promessa soe entregue, o que foi construído ganhe o seu sentido final e o vídeo possa parar? |
-| `estrutura/chamada` | Como fazer o único pedido do vídeo depois que a entrega terminou, sem transformar o fechamento em argumento de venda? |
-| `escrita/explicacao` | O que faz um fato mudar o entendimento de quem assiste, em vez de ser só mais uma informação verdadeira? |
-| `escrita/fio` | O que faz uma sequência soar contada como uma coisa só, em vez de uma coleção de fatos bem escritos, e que mecanismos mantêm algo vivo de um trecho para o seguinte? |
-| `escrita/narracao` | O que uma frase precisa fazer para ser entendida, soar natural e se ligar à seguinte quando é ouvida uma vez? |
-| `escrita/procedencia` | Quando a origem de uma afirmação precisa ficar perceptível para quem assiste saber por que acreditar nela, e qual é a menor evidência de origem que resolve isso? |
-| `escrita/analogias` | Quando uma relação conhecida ajuda a compreender outra, e o que precisa continuar verdadeiro para a analogia ensinar em vez de distorcer? |
-| `escrita/humor` | Quando o humor acrescenta algo ao vídeo sem disputar com o entendimento, distorcer a verdade ou diminuir o peso do que está sendo contado? |
-| `escrita/indicacao-visual` | O que a imagem não pode escolher livremente sem mudar o que o vídeo diz, e qual é o mínimo a registrar para a arte? |
-| `escrita/formato` | Que decisões atuais do texto precisam ficar registradas para outra etapa não ter de redescobri-las, onde cada uma fica, e como os blocos se ligam às cenas do roteiro? |
-| `revisao/critica` | O que o ouvinte perde num trecho, qual é a menor causa da perda, e que evidência a confirma? |
-| `embalagem/titulo-e-thumbnail` | Que expectativa título e thumbnail criam juntos antes do clique, e ela corresponde ao vídeo que existe? |
+| `conducao/entrevista` | Qual escolha editorial é do usuário? |
+| `pesquisa/levantamento` | Que evidência e fonte a afirmação exige? |
+| `pesquisa/checagem` | A afirmação é sustentada na força em que é dita? |
+| `conceito/ouvinte` | O texto funciona para quem ouve uma vez? |
+| `conceito/angulo` | Que vídeo específico o tema sustenta? |
+| `conceito/voz` | Quem narra, e para quem? |
+| `estrutura/moldes` | Que mecanismo organiza o material? |
+| `estrutura/arco` | Como cada trecho muda o entendimento? |
+| `estrutura/gancho` | O que a abertura promete? |
+| `estrutura/fechamento` | O que o fim entrega? |
+| `estrutura/chamada` | Que pedido cabe depois da entrega? |
+| `escrita/explicacao` | Como o fato muda o entendimento? |
+| `escrita/fio` | O que liga os blocos? |
+| `escrita/narracao` | A frase funciona ao ser ouvida? |
+| `escrita/procedencia` | Que origem precisa aparecer? |
+| `escrita/analogias` | A analogia preserva a relação real? |
+| `escrita/humor` | O humor ajuda sem distorcer? |
+| `escrita/indicacao-visual` | O que a imagem não pode decidir? |
+| `escrita/formato` | Onde ficam as decisões do texto? |
+| `revisao/critica` | O que o ouvinte perde? |
+| `embalagem/titulo-e-thumbnail` | A promessa corresponde ao vídeo? |
 
-Os números que as unidades dão como medidos "no canal" vêm das legendas em inglês do Kurzgesagt (245 vídeos, medidos em 2026-10-02): valem como ordem de grandeza para o português, e nenhum é prova de desempenho.
+Os números de referência descritos nas unidades são sensores para o português, não provas de desempenho.
 
 ## ORDEM DE INJEÇÃO
 
-Injete o procedimento do trabalho, depois `entrevista` e as unidades do passo em curso com as suas dependências, na ordem da tabela. A tabela diz que conhecimento ler para cada tipo de trabalho, e não que um passo precisa estar fechado para o seguinte existir: quando um artefato mostra problema noutro passo, a execução vai a ele, relendo as unidades dele.
+Para tarefas localizadas, leia apenas a seção pertinente do procedimento e a unidade que responde à dúvida, com dependências diretas. Leia `conducao/entrevista` só quando alternativas válidas puderem mudar o vídeo. A tabela abaixo cobre a criação ou revisão do conjunto inteiro.
 
 | Trabalho | Passo | Unidades |
 |---|---|---|
-| Pesquisa | Pesquisa | `levantamento`; `checagem`, quando uma premissa de risco é conferida cedo |
+| Pesquisa | Pesquisa | `levantamento`; `checagem` para premissa de risco |
 | Roteiro | Conceito | `ouvinte`, `angulo`, `voz`, `titulo-e-thumbnail` (título provisório), `formato` |
 | | Estrutura | `ouvinte`, `moldes`, `arco`, `gancho`, `fechamento`, `chamada` |
 | | Escrita | `ouvinte`, `analogias`, `explicacao`, `fio`, `humor`, `narracao`, `procedencia`, `indicacao-visual` |
@@ -101,7 +99,7 @@ Injete o procedimento do trabalho, depois `entrevista` e as unidades do passo em
 | | Revisão | `critica`, `checagem` e a unidade dona de cada defeito apontado |
 | | Embalagem | `ouvinte`, `titulo-e-thumbnail` (o par) |
 
-Para tarefas parciais (revisar um roteiro existente, refazer só o gancho), injete apenas as unidades do passo e as suas dependências declaradas.
+Em pedidos parciais (uma afirmação, frase, cena ou título), leia só a seção pertinente do procedimento e da unidade central, com dependências diretas. Numa unidade com várias lentes, use a que corresponde ao sintoma; leia o documento inteiro quando o trabalho cobrir seu fluxo ou pergunta central.
 
 ## LIMITES
 

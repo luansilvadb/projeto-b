@@ -41,7 +41,7 @@ Como achar o defeito perceptível que explica por que um movimento não funciona
 
 O que uma unidade marca como proposta não reprova (`critica-quadro`).
 
-**Medidas.** As de `critica-quadro` e mais três, que só valem com o vídeo em movimento: tempo com a tela quase parada (menos de 1% do quadro muda entre quadros vizinhos), tempo com mais de 10% do quadro em movimento e tempo até 40% do quadro ser outro. As faixas são as de `CRITERIA` em `src/critique/reference.ts`, impressas pelo `pnpm critique`.
+**Medidas.** As de `critica-quadro` e mais três, que só valem com o vídeo em movimento: tempo com a tela quase parada (menos de 1% do quadro muda entre quadros vizinhos), tempo com mais de 10% do quadro em movimento e tempo até 40% do quadro ser outro. As faixas são as de `CRITERIA` em `src/critique/reference.ts`, impressas pelo `pnpm critique`. A referência roda a 60 quadros por segundo; tempos de movimento são expressos em segundos, não em quadros.
 
 - **Medida não é qualidade.** Ela diz onde olhar, com a autoridade que `critica-quadro` lhe dá, e não se o vídeo passou. Acusa o vídeo congelado; um vídeo que treme o tempo todo passa em todas e cansa. Fora da faixa, volta-se ao trecho no vídeo: havendo defeito, ele é nomeado pela lente dele; não havendo, a medida vai ao relatório com o motivo.
 - **O que elas enxergam.** São tiradas a 320 por 180 pixels, a 10 quadros por segundo: veem a câmera e os objetos grandes, e o movimento residual só quando desloca bordas (respiração de 2% da altura, bobina de 9 px, luz que tremula um quarto, moldura que balança). Degradê que se move e partícula de 3 px ficam abaixo delas.

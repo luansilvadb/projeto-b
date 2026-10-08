@@ -1,11 +1,11 @@
 ---
 name: diretor-de-som
-description: "Som de um vídeo do canal, fora a voz: a música como um leito contínuo, os momentos em que ela muda, os níveis da mixagem, os silêncios e os efeitos sonoros. Use quando o usuário achar a trilha desconexa, genérica, alta, baixa ou repetitiva; ao decidir cedo uma pausa ou outro compromisso de som que muda o tempo do vídeo, antes que a voz ou a animação fiquem caras de refazer; ao fazer ou refazer o som de um vídeo; ao decidir onde cabe um efeito ou um silêncio; e ao julgar o som de um render."
+description: "Direção de som fora a voz: música, níveis, silêncios e efeitos. Use para decidir ou ajustar o mapa de som, antecipar uma pausa que muda o tempo do vídeo ou revisar um render."
 ---
 
 ## FUNÇÃO
 
-Dono de tudo que se ouve além da narração: resolve o que a música faz em cada trecho e por quê, onde ela recua, onde some, e que ações da imagem ganham som. Trabalha pelo **leito**: uma identidade musical contínua que acompanha o vídeo, mesmo quando a ferramenta obriga a gerá-la em partes, e não uma fila de músicas. Conhece dependências, e não a ordem das etapas do vídeo: um trabalho de som começa quando existem os artefatos que produzem a evidência que a dúvida atual pede. Quando o trabalho é o som inteiro, fecha no **aceite do som**: o usuário aceita o conjunto como experiência.
+Dono do som fora a voz: decide o papel contínuo da música, os níveis, os silêncios e quais ações ganham efeitos. No trabalho do conjunto, o usuário ouve e aceita o som como experiência.
 
 ## ESCOPO
 
@@ -23,7 +23,7 @@ Dono de tudo que se ouve além da narração: resolve o que a música faz em cad
 
 ## ETAPAS
 
-O pedido decide o trabalho; o trabalho decide o que ler. O que falta para começar é sempre um artefato (a voz, a duração, o instante da ação, o áudio), e nunca o aceite de outra disciplina: um artefato provisório serve à dúvida que ele já responde, e uma decisão só se estabiliza até onde os artefatos de que depende estão estáveis.
+Escolha o procedimento pelo trabalho. Em ajuste localizado, leia só as seções e unidades ligadas à dúvida e às dependências reais; use o fluxo completo para mapear ou revisar o conjunto.
 
 | Trabalho | Quando | Procedimento |
 |---|---|---|
@@ -32,13 +32,13 @@ O pedido decide o trabalho; o trabalho decide o que ler. O que falta para começ
 
 ## CONDUÇÃO
 
-O agente produz e testa a implementação: projeta, gera, mede e itera. O agente não ouve, e por isso usa o usuário como **ouvido** para o que é de percepção, com o arquivo, o instante e a pergunta; a resposta é evidência, e não aprovação. Leva ao usuário como decisão só as alternativas válidas que mudariam a experiência, em som. `entrevista-som` separa as três coisas.
+O agente projeta, gera e mede; o usuário é o ouvido para percepções que a medida não resolve. Consulte `entrevista-som` somente quando a resposta do usuário ou uma escolha entre experiências válidas for necessária.
 
 `sound.md` guarda a intenção e a implementação atuais e acompanha a melhor solução; o anterior é o git. Fica protegido como compromisso só o que o usuário decidiu, e a única aprovação do som é o aceite do conjunto, pedido quando o trabalho é o conjunto.
 
 ## SUBAGENTES
 
-Esta skill dirige, na conversa com o usuário. Quem diagnostica o som pronto é o subagente `critico-de-som` (`.agents/agents/`), que não escreveu o mapa e também não ouve: mede o render, confere o estado, investiga os sinais e devolve os defeitos técnicos e as dúvidas de ouvido. Relatório de subagente não é aprovação.
+Acione `critico-de-som` para diagnóstico independente nos casos definidos em `etapas/som.md`; o relatório traz evidência, não aprovação.
 
 ## ORGANIZAÇÃO
 
@@ -57,35 +57,30 @@ Os arquivos de `etapas/` guardam o que é deste repositório: arquivos, campos e
 
 | Unidade | Pergunta |
 |---|---|
-| `conducao/entrevista-som` | No som, o que o agente resolve sozinho, o que pede só o ouvido do usuário e o que é decisão dele, e como cada coisa chega a quem ouve? |
-| `trilha/leito` | O que faz a trilha soar como a música de um vídeo só, e em quantas partes ela é gerada? |
-| `trilha/descricao` | Como pedir ao gerador a música de uma parte ou de um momento, e o que a descrição prova? |
-| `trilha/momentos` | Quando uma região da parte merece um repaint local, e onde ele começa e termina? |
-| `mixagem/niveis` | Quando a mesma música precisa ficar mais perto ou mais longe da voz, e qual preset realiza isso? |
-| `mixagem/silencio` | Quando a música some, e quando o roteiro abre espaço para ela? |
-| `efeitos/dose` | Que acontecimento da imagem ganha um efeito, com que presença e em que instante? |
-| `efeitos/escolha` | Como descobrir o som que realiza um uso, e reaproveitá-lo quando o uso volta? |
-| `revisao/critica-som` | Como distinguir, no som de um render, o defeito técnico, o sinal de medida e a dúvida que só o ouvido resolve? |
+| `conducao/entrevista-som` | O que resolve o agente, o ouvido ou o usuário? |
+| `trilha/leito` | Como a música mantém uma identidade contínua? |
+| `trilha/descricao` | Como descrever a parte ou o momento musical? |
+| `trilha/momentos` | Quando e onde refazer um momento? |
+| `mixagem/niveis` | Como a música se aproxima ou se afasta da voz? |
+| `mixagem/silencio` | Quando a música some ou a fala abre espaço? |
+| `efeitos/dose` | Quando e com que presença uma ação ganha efeito? |
+| `efeitos/escolha` | Que arquivo realiza um uso do mapa? |
+| `revisao/critica-som` | O que é defeito, sinal ou dúvida de ouvido? |
 
-**Base das medidas.** Os números das unidades vêm de um estudo de som do Kurzgesagt feito em 2026-10-05: os mesmos 12 vídeos do estudo visual (123 minutos, sem patrocínio), separados em voz, música e efeitos e medidos camada a camada. As faixas estão em `CRITERIA`, em `src/critique/sound.ts`; o relatório, com as calibrações e os testes do ACE-Step, em `out/referencias/kurzgesagt/som/ESTUDO.md` (fora do git: `tools/sound/` refaz as medidas). Ao questionar ou atualizar uma medida, pese:
-
-- É um canal só: as faixas dizem onde esse som vive, não o que é certo em geral. Toda medida é sensor, e `out` na saída do comando quer dizer "fora da faixa configurada", e nada além disso (`critica-som`).
-- A separação erra: a contagem de efeitos tem um piso de 2 por minuto, e a medida de nível é corrigida por uma reta de calibração.
-- Nada do que as unidades dizem sobre caráter, emoção ou tema foi medido: é direção, e quem a confirma é o ouvido do usuário.
-- O que o ACE-Step entrega foi testado numa RTX 2060 SUPER com o modelo turbo. Outro modelo ou outra placa pedem os testes de novo.
+**Medidas.** As faixas são sensores do canal, não metas; a crítica e a calibração ficam em `revisao/critica-som` e `src/critique/sound.ts`.
 
 ## ORDEM DE INJEÇÃO
 
-Injete o procedimento do trabalho, depois `entrevista-som` e as unidades do passo em curso com as suas dependências, na ordem da tabela:
+Em tarefa localizada, leia a seção pertinente do procedimento e da unidade da camada afetada, com dependências diretas. Use `entrevista-som` quando a percepção ou uma escolha do usuário for necessária. A tabela cobre o trabalho completo:
 
 | Trabalho | Passo | Unidades | Entrega |
 |---|---|---|---|
-| Arco de som antecipado | Dúvida | `silencio`; `leito` só se a dúvida é de continuidade da música | o `holdMs` pedido ao dono do roteiro e o compromisso em `sound.md`, quando houver |
+| Arco de som antecipado | Dúvida | `silencio`; `leito` para continuidade musical | o `holdMs` pedido ao dono do roteiro e o compromisso em `sound.md`, quando houver |
 | Fazer ou revisar o som | Mapa | `leito`, `descricao`, `momentos`, `niveis`, `silencio`, `dose`: as da camada em que o mapa cresce | a hipótese atual de música, mixagem e efeitos em `sound.md` e nos campos `music` e `sfx`, ampliada conforme o som gerado funciona |
 | | Sons | `escolha` | cada uso do mapa com um som no catálogo, ou dito como pendente |
 | | Revisão | `critica-som` | relatório (defeitos, dúvidas de ouvido, sem defeito, sensores) e, quando o trabalho é o conjunto, o roteiro de escuta que leva ao aceite |
 
-Para tarefas parciais (trocar a música de um trecho, acrescentar um efeito, baixar a trilha), injete apenas as unidades do passo e as suas dependências declaradas.
+Em tarefas parciais (um efeito, um nível, uma costura), não injete todas as camadas do mapa. Leia a seção da unidade que responde à dúvida e suas dependências; na crítica, só a lente ou sensor pertinente.
 
 ## LIMITES
 
