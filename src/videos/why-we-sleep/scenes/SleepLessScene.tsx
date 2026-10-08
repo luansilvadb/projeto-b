@@ -1,7 +1,5 @@
 import {
   AbsoluteFill,
-  Easing,
-  interpolate,
   interpolateColors,
   useCurrentFrame,
   useVideoConfig,
@@ -13,7 +11,7 @@ import { Label } from "../../../components/Label";
 import { Place } from "../../../components/Place";
 import { POP_SECONDS, popScale } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
-import { cue, mix, ramp, clamp } from "../../../components/timing";
+import { cue, mix, ramp, drop } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { idea, ink, personInPajamas } from "../palette";
@@ -329,14 +327,9 @@ const RulerShot: React.FC<ShotClock> = ({ clock }) => {
   const risen = ramp(frame, RISE.at, RISE.frames);
   const stretch = ramp(frame, STRETCH.at, STRETCH.frames);
   // O que sai encolhe no próprio ponto, acelerando, um depois do outro.
-  const gone = (at: number, frames = ROW_OUT.each) =>
-    interpolate(frame, [at, at + frames], [0, 1], {
-      ...clamp,
-      easing: Easing.in(Easing.quad),
-    });
   const present: Partial<Record<IconKey, number>> = {};
   ICONS.filter((icon) => icon !== "ruler").forEach((icon, index) => {
-    present[icon] = 1 - gone(index * ROW_OUT.step);
+    present[icon] = 1 - drop(frame, index * ROW_OUT.step, ROW_OUT.each);
   });
   const moved = ramp(frame, 0, 0.8 * fps);
   const labelFrames = POP_SECONDS * fps;
@@ -374,7 +367,7 @@ const RulerShot: React.FC<ShotClock> = ({ clock }) => {
                     (spot.size / 2 + 54 * ROW.scale) +
                     (spot.size * (RULER_GROWN - 1)) / 2,
                   translate: "-50% -50%",
-                  scale: `${ROW.scale * (1 - gone(0))}`,
+                  scale: `${ROW.scale * (1 - drop(frame, 0, ROW_OUT.each))}`,
                 }}
               >
                 <Tag on={ROW_HUE} size="note">
@@ -385,7 +378,7 @@ const RulerShot: React.FC<ShotClock> = ({ clock }) => {
               <Place
                 x={POCKET_CORNER.x}
                 y={POCKET_CORNER.y}
-                style={{ scale: `${1 - gone(1, 9)}` }}
+                style={{ scale: `${1 - drop(frame, 1, 9)}` }}
               >
                 <BillPocket scale={POCKET_CORNER.scale} />
               </Place>
