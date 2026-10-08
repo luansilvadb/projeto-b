@@ -260,55 +260,6 @@ export const Herd: React.FC<HerdProps> = ({
   );
 };
 
-type SleepingElephantProps = {
-  /** Onde ela pisa, em pixels do quadro. */
-  readonly x: number;
-  readonly y: number;
-  readonly width: number;
-  readonly flipped?: boolean;
-  /** A semente da respiração e a fase da orelha: as de quem ela era na savana, quando vem de lá. */
-  readonly seed?: string;
-  readonly phase?: number;
-  /** 1 é a pintura de dia, 0 a de noite. */
-  readonly daylight?: number;
-  readonly seconds: number;
-};
-
-/**
- * A elefanta dormindo em pé, fora da savana: olho fechado, tromba caída,
- * cabeça pendida. Sem sombra: quem a põe dá o chão. É o mesmo desenho de quem
- * dorme na `Herd`, com a mesma respiração e a mesma orelha: a que sai da
- * savana para um fundo liso não muda de pose na troca.
- */
-export const SleepingElephant: React.FC<SleepingElephantProps> = ({
-  x,
-  y,
-  width,
-  flipped = false,
-  seed = "sleeping-elephant",
-  phase = 0,
-  daylight = 1,
-  seconds,
-}) => (
-  <Place
-    x={x}
-    y={y}
-    anchor="bottom"
-    style={{
-      scale: `${flipped ? -1 : 1} ${breath(seconds, seed, { amplitude: 0.012, period: 4.5 })}`,
-    }}
-  >
-    <Elephant
-      width={width}
-      colors={elephantAt(daylight)}
-      lid={1}
-      droop={1}
-      trunk={0}
-      ear={0.2 * Math.abs(wave(seconds, 2.2, phase))}
-    />
-  </Place>
-);
-
 /**
  * A freada de uma manada que andou `walkedFor` quadros no plano anterior: a
  * velocidade cai em linha reta até zero. O que faltava andar quando aquele
