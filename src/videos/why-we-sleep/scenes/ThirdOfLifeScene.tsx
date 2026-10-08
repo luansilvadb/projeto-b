@@ -27,6 +27,7 @@ import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { cue, ramp, clamp } from "../../../components/timing";
+import { useCastScale } from "./MaybeBrainScene";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { ink, person } from "../palette";
@@ -91,6 +92,7 @@ const BarShot: React.FC<BarShotProps> = ({ thirdAt }) => {
     framing(PUSH.focus, 1 + PUSH.by, PUSH.focus),
     frame / length,
   );
+  const standing = useCastScale(STANDING.x);
   // A câmera parte junto com o encolher dela e chega depois do pulo.
   const wide =
     1 -
@@ -127,11 +129,12 @@ const BarShot: React.FC<BarShotProps> = ({ thirdAt }) => {
                   />
                 </LeavingLater>
                 <SvgLayer>
+                  {/* A sombra sai com a pessoa: parada no chão depois de ela encolher, lia como mancha. */}
                   <IdeaShadow
                     hue="peach"
                     x={STANDING.x}
                     y={STANDING.y + 6}
-                    width={380}
+                    width={380 * standing}
                   />
                 </SvgLayer>
                 <Place
@@ -176,6 +179,7 @@ const NIGHT = framing([PREY.x + 60, PREY.y - 250], 1.5);
 // sobre o mesmo ponto enquanto ela assenta. Sem deslocamento: um que descesse faria o chão subir,
 // passar do lugar e voltar.
 const NIGHT_ARRIVAL = framing([PREY.x + 60, PREY.y - 250], 1.5 * 0.94);
+const NIGHTFALL_SECONDS = 0.7;
 const ARRIVAL_SECONDS = 1;
 // A aproximação lenta do plano: 4% mais perto no fim, sem mudar o ponto enquadrado.
 const NIGHT_CLOSER = framing([PREY.x + 60, PREY.y - 250], 1.5 * 1.04);
@@ -201,6 +205,9 @@ const LossesShot: React.FC<LossesShotProps> = ({ at }) => {
   const { fps } = useVideoConfig();
   const length = useShotLength();
   const seconds = frame / fps;
+  // A savana chega no entardecer e anoitece no lugar enquanto sobe: a noite direto sobre o pêssego do plano
+  // anterior passava por um pardo acinzentado no meio da troca.
+  const daylight = 0.5 * (1 - ramp(frame, 0, NIGHTFALL_SECONDS * fps));
   return (
     <AbsoluteFill>
       <Camera
@@ -214,9 +221,9 @@ const LossesShot: React.FC<LossesShotProps> = ({ at }) => {
           frame / length,
         )}
       >
-        <RichSavannaBackdrop daylight={0} orb={0.303}>
+        <RichSavannaBackdrop daylight={daylight} orb={0.303}>
           <Prey
-            daylight={0}
+            daylight={daylight}
             rest={ramp(frame, SETTLE.restAt * fps, SETTLE.rest * fps)}
             asleep={ramp(frame, SETTLE.sleepAt * fps, SETTLE.sleep * fps)}
             seconds={seconds}
