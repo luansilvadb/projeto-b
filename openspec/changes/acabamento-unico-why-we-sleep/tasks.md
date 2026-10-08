@@ -34,16 +34,16 @@ O trabalho de imagem segue a skill `diretor-de-arte`. `<cena>` é o `id` do rote
 - [x] 3.5 Renderizar um quadro de prova de `elephants`, plano 1, com a manada na savana em camadas de dia, em `out/rascunho/`, ao lado do quadro atual; levar ao usuário como decisão de imagem e registrar a resposta em `art.md`. Recusado, ajustar o jogo `day` pela regra da linha de parada antes de seguir
 - [x] 3.6 Com o aceite, trocar o cenário dentro de `SavannaStage` e renderizar `elephants`, `two-hours`, `elephant-awake` e `elephant-verdict`; conferir que as trocas entre planos da savana não desmontam o cenário e que a luz continua de onde estava
 - [x] 3.7 Apagar `parts/Savanna.tsx`, `savannaFinish`, `sunset`, `SunsetPilot.tsx` e a composição dele em `Root.tsx`; tirar `finish` de `Antelope.tsx`, `Prey.tsx`, `Timeline.tsx`, `NightFallsScene`, `DebtTestScene` e `AntelopeSheet.tsx`; conferir que `grep -rn "finish" src` não devolve nenhuma prop de desenho e que `pnpm lint` passa
-- [ ] 3.8 Acionar o `critico-de-quadro` sobre os quadros das quatro cenas das elefantas e das cenas do antílope, com a pergunta do cenário único e da elefanta contra o fundo; corrigir o que for bloqueante ou relevante
+- [x] 3.8 Acionar o `critico-de-quadro` sobre os quadros das quatro cenas das elefantas e das cenas do antílope, com a pergunta do cenário único e da elefanta contra o fundo; corrigir o que for bloqueante ou relevante
 - [x] 3.9 Atualizar `src/studies/savanna-reference/README.md` (fica só o primeiro estudo, e diz onde a savana do vídeo mora) e, em `art.md`, a tabela do capítulo 2 e o trecho da consistência do antílope, para dizer que a savana é uma só para o antílope e para as elefantas; conferir que os comandos do README rodam como escritos
 
 ## 4. Conjunto
 
-- [ ] 4.1 `pnpm lint` e `pnpm test` passam
-- [ ] 4.2 Renderizar as cenas que ainda não foram renderizadas depois das mudanças e rodar `pnpm join why-we-sleep`; conferir que a duração de `out/why-we-sleep/why-we-sleep.mp4` é a mesma do render de 2026-10-07 (571,98 s)
-- [ ] 4.3 Montar em `out/rascunho/` a folha de contato do vídeo novo e conferir, contra os cenários da spec, que a pessoa e a savana têm uma construção só do começo ao fim
-- [ ] 4.4 `pnpm critique why-we-sleep` e conferir no trecho cada medida que saiu da faixa em relação ao render anterior
-- [ ] 4.5 Levar o vídeo ao usuário com o que mudou e o que ficou para a segunda mudança (os lugares)
+- [x] 4.1 `pnpm lint` e `pnpm test` passam
+- [x] 4.2 Renderizar as cenas que ainda não foram renderizadas depois das mudanças e rodar `pnpm join why-we-sleep`; conferir que a duração de `out/why-we-sleep/why-we-sleep.mp4` é a mesma do render de 2026-10-07 (571,98 s)
+- [x] 4.3 Montar em `out/rascunho/` a folha de contato do vídeo novo e conferir, contra os cenários da spec, que a pessoa e a savana têm uma construção só do começo ao fim
+- [x] 4.4 `pnpm critique why-we-sleep` e conferir no trecho cada medida que saiu da faixa em relação ao render anterior
+- [x] 4.5 Levar o vídeo ao usuário com o que mudou e o que ficou para a segunda mudança (os lugares)
 
 ## Workflow follow-up
 
