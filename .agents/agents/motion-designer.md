@@ -26,7 +26,7 @@ Pronto quando: tudo o que a partitura da cena diz que acontece está na tela, co
 - **Arquivos** criados e alterados.
 - **Sequências de quadros**: os caminhos das que você usou para decidir alguma coisa.
 - **Comandos** rodados e o que retornaram.
-- **Sons**: os momentos da partitura marcados com `<Sfx>` e os usos que faltam no catálogo.
+- **Sons**: os momentos da partitura marcados com `Som:` e os usos que faltam no catálogo.
 - **Trocas de execução**: onde você se afastou dos tempos ou das técnicas da partitura, o que a troca resolveu e o instante de cada ação que fica, para a partitura ser atualizada.
 - **Decisões para o usuário**: onde as saídas contam coisas diferentes (`conducao/entrevista-movimento.md`): uma ação que acrescenta sentido, um plano que muda de foco, uma passagem que vira ruptura ou continuidade. Não decida: descreva as alternativas, com a que você recomenda.
 - **Fora da lista**: o que precisaria mudar num arquivo que você não podia tocar (um primitivo, a cena vizinha), e por quê.

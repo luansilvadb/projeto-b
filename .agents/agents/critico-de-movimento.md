@@ -15,9 +15,9 @@ Leia, nesta ordem:
 ## O que fazer
 
 1. Tire as medidas: `pnpm critique out/<arquivo>.mp4`, com o mapa segundo a segundo.
-2. Leia o trecho inteiro numa tira esparsa, que faz as vezes do vídeo, em `out/<vídeo>/tiras/`. O mesmo comando monta a densa, com `fps=8` ou `fps=10` e um intervalo curto:
+2. Leia o trecho inteiro numa tira esparsa, que faz as vezes do vídeo, em `out/<vídeo>/tiras/`, usando `fps=2`:
    `ffmpeg -y -ss <s> -t <dur> -i <mp4> -vf "fps=2,scale=320:180,tile=6x5" -frames:v 1 out/<vídeo>/tiras/<cena>-<plano>-<s>.png`
-3. Onde algo parecer errado, ou onde uma medida saiu da faixa, monte a tira densa só daquele intervalo (causa, mudança e consequência) e use a lente do defeito. Abra cada tira com Read; não leia `scenes/`.
+3. Onde algo parecer errado, ou onde uma medida saiu da faixa, monte a tira densa só daquele intervalo curto (causa, mudança e consequência), trocando `fps=2` por `fps=8` ou `fps=10` no comando acima. Abra cada tira com Read; não leia `scenes/`.
 
 Não renderize: `pnpm render` é de quem o acionou. As tiras são o único arquivo que você grava.
 
