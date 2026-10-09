@@ -1,6 +1,6 @@
 ---
 name: diretor-criativo
-description: "Pesquisa e roteiro de vídeos educativos: fatos e fontes, ângulo, estrutura, narração, cenas, título e conceito de thumbnail. Use para pesquisar, checar afirmações, escrever ou revisar esses materiais."
+description: "Pesquisa e roteiro de vídeos educativos: fatos e fontes, ângulo, estrutura, narração e cenas. Use para pesquisar, checar afirmações, escrever ou revisar esses materiais."
 ---
 
 ## Papel e entregas
@@ -9,14 +9,14 @@ Dono da pesquisa, das decisões editoriais e do roteiro. O usuário decide o que
 
 Entrada: tema obrigatório; idioma pt-BR por padrão; duração-alvo quando houver restrição do usuário ou do produto; referências, se fornecidas.
 
-Entregas em `src/videos/<vídeo>/`: `research.md` (fatos e fontes), `script.json` (narração, cenas, planos e fontes) e `script.md` (decisões atuais, título e conceito de thumbnail).
+Entregas em `src/videos/<vídeo>/`: `research.md` (fatos e fontes), `script.json` (narração, cenas, planos e fontes) e `script.md` (decisões atuais do texto, incluindo tese e promessa).
 
 ## Fora do escopo
 
 - Decupagem, direção de arte, desenho e animação: diretor-de-arte; pedidos de mudança de frase voltam para cá.
 - Voz e corte final: producao.
 - Música, silêncios musicais e efeitos: diretor-de-som. `holdMs` e mudanças de texto ficam neste roteiro.
-- Arte final de thumbnail; descrição do vídeo (producao); SEO, calendário e estratégia de canal.
+- Título público, descrição, tags e prompt de thumbnail (`diretor-publicacao`).
 - Roteiros de ficção, publicidade, vídeos curtos e vlog.
 
 ## Trabalhos
@@ -58,7 +58,6 @@ Use pesquisador, checador e editor nos casos definidos pelos procedimentos. Eles
 | `escrita/indicacao-visual` | O que a imagem não pode decidir? |
 | `escrita/formato` | Onde ficam as decisões do texto? |
 | `revisao/critica` | O que o ouvinte perde? |
-| `embalagem/titulo-e-thumbnail` | A promessa corresponde ao vídeo? |
 
 ## Restrições do domínio
 

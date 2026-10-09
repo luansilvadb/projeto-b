@@ -23,7 +23,7 @@ Que expectativa título e thumbnail criam juntos antes do clique, e ela correspo
 
 **Na thumbnail, foco, e não contagem.** O olho entende o que comparar, reconhecer ou estranhar, na escala em que ela é vista? Uma relação pode pedir dois ou três elementos (Sol e Terra lado a lado são a própria comparação), e um objeto só pode ser confuso. Tensão, perigo, algo fora do lugar, rosto, seta e círculo são recursos, e nenhum é requisito: a imagem também funciona por beleza, escala, reconhecimento, transformação ou simplicidade, e não se fabrica conflito nem personagem humano que o vídeo não pede. O texto na imagem é recurso também: identifica o que não se reconhece, dá um número, cria um contraste, estabelece uma relação que a imagem sozinha não entrega. Cada palavra sobrevive ao tamanho pequeno e acrescenta algo ao par; pouco texto é consequência disso, e zero é resposta válida. Quando a imagem só funciona depois de uma sentença lida, o conceito visual provavelmente trabalha pouco, salvo quando o texto é o assunto (uma citação, um dado, um documento).
 
-**Conceito, e não composição.** Esta skill entrega o conceito de thumbnail: a relação ou a afirmação que a imagem precisa fazer e o texto que o sentido exige, quando há, no menor texto que preserva a ideia. Posição, proporção, paleta, câmera, luz e acabamento são da arte final. Como em `indicacao-visual`, o conceito bom admite várias soluções visuais:
+**Conceito e prompt.** O conceito fixa a relação ou a afirmação que a imagem precisa fazer e o texto que o sentido exige. O prompt escolhe uma composição para realizar esse conceito; não muda o que a imagem afirma. Use `art.md` como referência para elenco, desenho e paleta do vídeo, e escolha enquadramento, foco, luz e acabamento que mantenham a leitura clara em tela pequena. A thumbnail é uma representação própria da embalagem, não precisa copiar um quadro. Esta skill entrega texto pronto para um gerador, não o PNG final. Como em `indicacao-visual`, um conceito bom admite várias soluções visuais:
 
 > Composição: "personagem no canto inferior esquerdo, buraco negro ocupando 72% do quadro, luz laranja."
 > Conceito: "escala desproporcional entre uma pessoa reconhecível e o buraco negro; ela está sendo esticada na direção do centro."
@@ -61,18 +61,20 @@ Que expectativa título e thumbnail criam juntos antes do clique, e ela correspo
 - Título que fala com "você": de 17% para 26%.
 - Os recentes tendem à afirmação curta e direta, com um adjetivo forte. O adjetivo entra quando o vídeo pede aquela palavra, e não para soar recente.
 
-**Registro.** A seção `Título e thumbnail` de `script.md` (`formato`) guarda o par atual, e a alternativa só enquanto há uma decisão aberta com o usuário. A decisão material do usuário fixa o que a embalagem vende, e não a palavra nem a composição (`entrevista`).
+**Prompt para gerar.** Escreva um prompt simples, completo e sem sintaxe exclusiva de um modelo. Diga o assunto, a composição, o contraste, o estilo que deve seguir `art.md`, o formato horizontal e qualquer texto exato que a imagem exija. Não acrescente texto decorativo nem fatos visuais que a pesquisa não sustenta. Se o texto exato não for confiável no gerador, peça uma área limpa para inserir a placa depois.
+
+**Registro.** `publication.md` guarda o título público, o conceito e o prompt atuais; alternativas só ficam enquanto há uma decisão aberta. `script.md` mantém a promessa, que a embalagem expressa sem alterar (`diretor-criativo/conceito/angulo`).
 
 ## DEPENDÊNCIAS
-- angulo: fornece o compromisso de que a embalagem escolhe um aspecto.
-- gancho: fornece a abertura que confirma a expectativa criada.
-- ouvinte: fornece o reconhecimento sem contexto e a distinção entre figura e fato.
-- checagem: confere o que título e imagem afirmam.
-- analogias: fornece o que uma figura precisa sustentar para entrar no par.
-- entrevista: fornece a fronteira entre a escolha do agente e a do usuário.
+- `diretor-criativo/conceito/angulo.md`: promessa e recorte que o par pode expressar.
+- `diretor-criativo/estrutura/gancho.md`: abertura que começa a pagar a expectativa.
+- `diretor-criativo/conceito/ouvinte.md`: reconhecimento sem contexto e distinção entre figura e fato.
+- `diretor-criativo/pesquisa/checagem.md`: força das afirmações.
+- `diretor-criativo/escrita/analogias.md`: relações figuradas que a imagem afirma.
+- `diretor-criativo/conducao/entrevista.md`: fronteira entre refinamento e decisão material do usuário.
 
 ## LIMITES
-- Composição, paleta e arte final de thumbnail estão fora do escopo.
+- O prompt pode dirigir composição, paleta e luz a partir de `art.md`; o arquivo final da imagem está fora do escopo.
 - Sem isca: o par que o vídeo não cumpre é reprovado, por mais atraente que seja.
 - Medida fora do perfil não é defeito: lê-se o par, e sem perda de reconhecimento o título segue.
 

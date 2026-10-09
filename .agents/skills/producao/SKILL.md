@@ -1,22 +1,23 @@
 ---
 name: producao
-description: "Operação de voz, trilha e efeitos sonoros já decididos, montagem do arquivo final e descrição. Use para gerar ou corrigir narração, gerar trilha, buscar e baixar efeitos, renderizar e conferir a entrega."
+description: "Operação de voz, trilha e efeitos sonoros já decididos, montagem do arquivo final e acervo. Use para gerar ou corrigir narração, gerar trilha, buscar e baixar efeitos, renderizar e arquivar o que foi publicado."
 ---
 
 ## Papel e entregas
 
 Opera as ferramentas sobre os artefatos atuais; não decide o conteúdo.
 
-Entregas: narração, manifesto de palavras e trilha em `public/videos/<vídeo>/`; arquivo final em `out/<vídeo>/<vídeo>.final.mp4`; descrição em `src/videos/<vídeo>/description.md`.
+Entregas: narração, manifesto de palavras e trilha em `public/videos/<vídeo>/`; arquivo final em `out/<vídeo>/<vídeo>.final.mp4`; cópia dos materiais publicados em `acervo/<vídeo>/`.
 
-Use o comando só com as entradas atuais que ele exige: roteiro válido e com `shots` para narrar; `music` e narração gravada para gerar trilha; lista de usos para buscar efeitos; cenas, voz e som atuais para montar; `script.json`, `script.md` e `research.md` para a descrição.
+Use o comando só com as entradas atuais que ele exige: roteiro válido e com `shots` para narrar; `music` e narração gravada para gerar trilha; lista de usos para buscar efeitos; cenas, voz e som atuais para montar.
 
 ## Fora do escopo
 
 - Texto do roteiro: diretor-criativo.
 - Mapa musical, níveis, silêncios e usos de efeitos: diretor-de-som.
 - Desenho, composição e movimento: diretor-de-arte.
-- Publicação é sempre ação do usuário; arte final de thumbnail, tags, SEO, calendário e redes ficam fora.
+- O pacote de publicação é do `diretor-publicacao`; o upload é sempre ação do usuário.
+- Arte final de thumbnail, redes, calendário e analytics ficam fora.
 
 ## Procedimentos
 
@@ -26,7 +27,7 @@ Use o comando só com as entradas atuais que ele exige: roteiro válido e com `s
 | Trilha | diretor-de-som pede geração ou mudança, ou a duração da voz mudou. | `etapas/trilha.md` |
 | Efeitos sonoros | diretor-de-som entrega usos que faltam. | `etapas/efeitos-sonoros.md` |
 | Montagem e arquivo final | Montar, normalizar ou conferir a entrega. | `etapas/corte-final.md` |
-| Descrição e acervo | Escrever a descrição ou guardar o que foi publicado. | `etapas/publicacao.md` |
+| Acervo | Guardar uma cópia do que o usuário publicou. | `etapas/acervo.md` |
 
 Para exceções à narração normal, leia só o apoio do caso:
 

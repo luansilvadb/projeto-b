@@ -70,7 +70,8 @@ O que entra quando existe, e onde:
 | `## Grafias de pronúncia` | `<como está em narration> = <grafia correta, a que vai para a tela>` | a voz pediu outra grafia |
 | `## Simplificações` | `Bloco <n>: <o que foi simplificado e o que ficou de fora>` | a simplificação foi assumida; a publicação a lê. Detalhe omitido não é simplificação. |
 | `## Contas` | `Bloco <n>: <número derivado> = <valores e cálculo>` | a conta não está inteira em `research.md` e precisa ser refeita na checagem |
-| `## Título e thumbnail` | `Título`, `Thumbnail` (o conceito atual) e `Em aberto` (o par alternativo e o que ele vende de diferente) | há par; `Em aberto` só enquanto a escolha está com o usuário, e sai com a decisão |
+
+O título público, o conceito e o prompt da thumbnail ficam em `publication.md`, sob o dono `diretor-publicacao`; `script.md` mantém só o título de trabalho no cabeçalho e a promessa que a embalagem expressa.
 
 As seções seguem a ordem desta tabela, com `Voz` antes de `Estrutura`.
 

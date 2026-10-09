@@ -66,8 +66,8 @@ Entregue ao usuário, para ele avaliar o conjunto:
 - o caminho de `out/<vídeo>/<vídeo>.final.mp4`, com duração e volume medidos;
 - o que foi verificado, que só pega defeito grosseiro, e o que só ele julga: ritmo, voz e música;
 - as medidas fora da referência que foram investigadas, e o que se viu no trecho;
-- a descrição com as fontes, se ainda não existe (`publicacao.md`).
+- o pacote de publicação com fontes, se está pronto (`src/videos/<vídeo>/publication.md`), produzido pelo `diretor-publicacao`.
 
 O que ele apontar vai ao dono do artefato, e só ele é refeito: a frase é da skill `diretor-criativo`; a imagem e o movimento, da `diretor-de-arte`; a música, o nível e o efeito, da `diretor-de-som`; a voz, o render e o volume, daqui. Depois do conserto, remonte e repita só as verificações que a mudança toca. A avaliação dele não é registrada em arquivo nenhum: o que ele decidir de material mora no arquivo do dono.
 
-Lembre-o de três pontos na hora de publicar. A narração é uma voz sintética clonada, e o YouTube tem regras de divulgação de conteúdo sintético que mudam com frequência: ele deve conferir a regra vigente antes de marcar o vídeo. A licença não comercial da voz, que ele decidiu antes da primeira geração (`narracao.md`), continua valendo na hora de monetizar. E conteúdo repetitivo, com cara de produção em massa, não monetiza: o que protege o canal são o olhar de uma pessoa sobre cada vídeo, a voz e a identidade visual próprias.
+Lembre-o da licença não comercial da voz, decidida antes da primeira geração (`narracao.md`), caso pretenda monetizar. A checklist atual do YouTube para divulgação de conteúdo de IA fica com o `diretor-publicacao`.

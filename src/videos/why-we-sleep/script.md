@@ -71,13 +71,6 @@ Os nomes dos capítulos são organização interna: o vídeo não tem cartela, e
 - Bloco 3: um quarto = 2 h ÷ 8 h. As 46 horas: acordar às 7 h de segunda e somar 46 horas dá 5 h de quarta.
 - Bloco 5: onze noites em claro a oito horas dão 88 horas; catorze são 16% disso. Onze dias = 264 h ÷ 24. Quatro horas a mais que o recorde = 264 − 260. Pouco mais de um mês = 32 dias, o último dos dez ratos.
 
-## Título e thumbnail
-
-- "Algum animal conseguiu parar de dormir?" / o pedestal roxo "acordado 24 h", vazio sob o foco de luz, com a elefanta e a água-viva dormindo dos lados; sem texto além da placa.
-- "Dormir é o maior erro da evolução?" / a árvore da vida com todos os ramos de olhos fechados e o carimbo "erro?".
-- "Até quem não tem cérebro dorme" (o título da sexta e da sétima versão) / a água-viva pousada, com o contorno tracejado do cérebro que não está lá.
-- Escolhido: o primeiro, pelo usuário, em 2026-10-04, na 1ª aprovação da oitava versão. É a promessa do vídeo, que ele responde por inteiro, e a thumbnail é o cenário-âncora. O terceiro entregava no título a virada do bloco 4.
-
 ## Versões
 
 - Primeira a terceira: reprovadas pelo usuário. Relatavam fatos sobre bichos sem antes dar ao espectador a expectativa que eles quebram.

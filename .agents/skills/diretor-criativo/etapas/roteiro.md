@@ -164,16 +164,16 @@ A voz não espera desenho final, folha de modelo, composição, movimento, trilh
 - os compromissos de imagem que mudam sentido ou identidade (quem conduz, o que ganhou rosto, a forma da analogia, a relação que uma encenação afirma), resumidos pela intenção;
 - as simplificações e as incertezas que pesam, e a fonte que limita uma afirmação importante;
 - os defeitos relevantes que ficaram de propósito;
-- o que a embalagem vende, com o título e o conceito de thumbnail atuais;
+- a promessa que a embalagem deve expressar; o `diretor-publicacao` a transforma em título, conceito e prompt da thumbnail;
 - as decisões abertas, se houver.
 
 Fica disponível, sem ser imposto: `script.json` com os planos, `art.md`, `research.md` com as fontes de cada cena e o relatório do `checador`. Uma medida entra no relato quando está fora da referência e vale o usuário saber dela antes da voz, ou quando confirmou uma dúvida; fora da faixa sem defeito, é uma linha, e não pendência.
 
-**O que a decisão dele fixa:** o que o vídeo diz, a experiência global, os compromissos visuais que mudam sentido e o que a embalagem vende. **O que ela não fixa:** a redação, a duração exata, a escala, a paleta e a entrada de cada plano, a composição, o movimento, a redação do título, a imagem da thumbnail e a mixagem. Ela fica em `script.md` (`escrita/formato`), e em nenhum outro registro.
+**O que a decisão dele fixa:** o que o vídeo diz, a experiência global, os compromissos visuais que mudam sentido e a promessa que a embalagem expressa. **O que ela não fixa:** a redação, a duração exata, a escala, a paleta e a entrada de cada plano, a composição, o movimento e a mixagem. A promessa fica em `script.md` (`escrita/formato`); título, conceito e prompt públicos ficam em `publication.md`, do `diretor-publicacao`.
 
 **Depois da voz**, duas perguntas que não se misturam:
 
-- **Precisa do usuário?** Só quando muda uma decisão dele. A frase mais natural, o conectivo, a fusão local e o título ou a imagem de thumbnail melhores que vendem o mesmo vídeo entram sem consulta, e `script.md` acompanha. O que muda o que ele decidiu vai a ele antes e, aceito, atualiza `script.md`.
+- **Precisa do usuário?** Só quando muda uma decisão dele. A frase mais natural, o conectivo e a fusão local entram sem consulta, e `script.md` acompanha. A embalagem que vende a mesma promessa é do `diretor-publicacao`; se exigir outra promessa, volte ao usuário e registre a mudança aceita em `script.md`.
 - **Custa produção?** Sim, mesmo sendo refino: a frase alterada regera o áudio dela, desloca os tempos e pede conferir os planos. O custo não pede licença, e não segura o conserto: a frase que o animatic mostra que não se encena é reescrita, e o fato que se descobre errado é corrigido. Não se defende um erro para poupar a voz gerada.
 
 A reescrita volta ao `checador` quando altera uma afirmação, a força dela ou uma comparação; a que só troca a ordem das palavras, não. Quem depende do texto (a voz, os planos, a trilha) responde só à mudança no próprio artefato: a frase regerada, o plano conferido, a duração que mudou. A checagem do conjunto na montagem do arquivo final (skill `producao`) é a rede.
