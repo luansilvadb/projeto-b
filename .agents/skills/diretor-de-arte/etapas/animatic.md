@@ -77,8 +77,9 @@ Mantenha texto importante dentro da margem `shape.safeArea` e nos tamanhos de `t
 
 ## Ver e conferir
 
+Valide o código pela regra de `AGENTS.md`. Para conferir quadro, cena e animatic:
+
 ```bash
-pnpm lint                        # tipos e regras do Remotion
 pnpm stills <vídeo> 30 120       # os quadros pedidos, em out/<vídeo>/stills/
 pnpm stills <vídeo>              # um quadro de cada plano
 pnpm scene <vídeo> <id> [id...]  # só essas cenas, em out/<vídeo>/cenas/<id>.mp4
@@ -90,7 +91,7 @@ O render responde a uma pergunta, e tem o tamanho dela: mudou um cenário em doi
 
 Todo quadro que serve de base a uma decisão foi aberto e visto, e nenhum lote grande é produzido em cima de um resultado que ninguém olhou.
 
-O subagente `critico-de-quadro`, que não desenhou nada, entra onde a cegueira de quem fez custa caro: depois do primeiro trecho, quando chega uma família visual nova, diante de uma dúvida que não cede, antes de uma decisão que vai ao usuário e na revisão do animatic inteiro. O ajuste pequeno que você mesmo viu e sabe consertar é feito e conferido por você. Passe a ele o nome da pasta do vídeo, o caminho dos quadros e, na revisão do conjunto, a tabela do `pnpm critique`. Ele julga; quem decide e redesenha é você: refaça os bloqueantes, e os relevantes salvo custo desproporcional; o conserto que muda uma decisão tomada (quem a figura é, o que uma cor significa, a relação que a analogia afirma, o assunto de um plano) vai antes ao usuário, e o que só refina o desenho, não (`entrevista-imagem`); quando o refino muda o desenho de um personagem, atualize a ficha e a folha de modelo. Renderize de novo só os quadros mexidos, confira o defeito que motivou a mudança e acione o subagente de novo só com os planos alterados. Se uma rodada não resolver nenhum defeito, pare e relate o que ficou em aberto.
+O subagente `critico-de-quadro`, que não desenhou nada, entra onde a cegueira de quem fez custa caro: depois do primeiro trecho, quando chega uma família visual nova, diante de uma dúvida que não cede, antes de uma decisão que vai ao usuário e na revisão do animatic inteiro. O ajuste pequeno que você mesmo viu e sabe consertar é feito e conferido por você. Passe a ele o nome da pasta do vídeo, o caminho dos quadros e, na revisão do conjunto, a tabela do `pnpm critique`. Ele julga; quem decide e redesenha é você: refaça os bloqueantes, e os relevantes salvo custo desproporcional; o conserto que muda uma decisão tomada (quem a figura é, o que uma cor significa, a relação que a analogia afirma, o assunto de um plano) vai antes ao usuário, e o que só refina o desenho, não (`entrevista-imagem`); quando o refino muda o desenho de um personagem, atualize a ficha e a folha de modelo. Renderize de novo só os quadros mexidos, confira o defeito que motivou a mudança e acione o subagente de novo só com os planos alterados. Se uma rodada não resolver nenhum defeito, informe ao diretor o que foi tentado e a evidência restante; ele define a próxima hipótese.
 
 O conjunto está pronto para ir ao usuário quando: o vídeo inteiro tem imagem, não se conhece defeito que impeça o entendimento, a identidade e as relações que importam estão coerentes de ponta a ponta, as decisões que eram do usuário foram tomadas, e o que resta é refino que não redefine a imagem. Não se exige acabamento final, folha de tudo, medida dentro da faixa nem polimento zerado.
 

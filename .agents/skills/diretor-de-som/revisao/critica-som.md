@@ -81,9 +81,9 @@ O defeito técnico recebe gravidade sem ouvido, pelo trabalho que o mapa dava à
 - **Sem defeito**: os sinais investigados que não provaram perda, cada um com o motivo. Com tudo coerente, uma linha: "mapa e `script.json` sem divergência encontrada".
 - **Sensores**: a tabela com o valor e a referência, como diagnóstico coletado, e não como aprovado ou reprovado.
 
-## DEPENDÊNCIAS
-- leito, descricao, momentos, niveis, silencio, dose, escolha: fornecem a pergunta de cada lente e são as donas dos consertos.
-- entrevista-som: fornece o formato do roteiro de escuta e o que volta ao usuário.
+## REFERÊNCIAS
+- Leia só a unidade dona da lente acionada: `leito`, `descricao`, `momentos`, `niveis`, `silencio`, `dose` ou `escolha`.
+- entrevista-som: só se houver dúvida de ouvido que precise voltar ao usuário.
 
 ## LIMITES
 - O que refazer, com que semente ou descrição, e o que levar ao usuário pertencem à etapa (`etapas/som`) e a `entrevista-som`.

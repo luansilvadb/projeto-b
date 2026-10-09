@@ -49,7 +49,7 @@ Peça pelo que a música faz: "restrained, low register, sparse" em vez de "not 
 
 **Depois de gerar**, a pergunta que decide: o som realizou o que a descrição precisava controlar? A medida elimina o defeito que conhece, e o ouvido do usuário responde a dúvida que pesa (`entrevista-som`). O usuário diz o que percebeu, e traduzir isso em palavras da descrição é do agente; o instrumento que ele pede por conta própria é entrada para este vídeo.
 
-Duas sementes que falham pelo mesmo motivo acusam a descrição: a propriedade pedida é a errada, é pouco concreta, concorre com outra ou restringe demais. Reescreva o menor trecho que controla o defeito: o som adulto e coerente, mas denso demais, muda o termo de densidade, de pulso ou de registro, e mantém o resto. É para isso que cada termo tem uma função: a falha aponta qual mexer.
+Quando a descrição for a causa provável, a propriedade pedida pode estar errada, ser pouco concreta, concorrer com outra ou restringir demais. Reescreva o menor trecho que controla o defeito: o som adulto e coerente, mas denso demais, muda o termo de densidade, de pulso ou de registro, e mantém o resto. É para isso que cada termo tem uma função: a falha aponta qual mexer.
 
 ## DEPENDÊNCIAS
 - leito: fornece a identidade percebida que a descrição tenta realizar e preservar.

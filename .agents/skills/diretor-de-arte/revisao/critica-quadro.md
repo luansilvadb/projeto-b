@@ -37,7 +37,7 @@ Sem imagem ainda, na decupagem, a evidência é a coluna da encenação, lida de
 - **Cor** (`cor`), quando a figura se perde no fundo ou a cor diz a coisa errada. O assunto se separa do fundo, as superfícies vizinhas se separam entre si, e o maior contraste está no ponto focal? O modo é o do lugar ou do sentido do plano, e a cor que significa algo continua significando? Sombra e luz têm cor?
 - **Desenho** (`forma`, `personagem`), quando a figura não se reconhece, parece montada, plana, carregada ou de outra matéria. A construção diz o que a coisa é, e a pose conta a cena? Parece de blocos, repetitiva ou sem volume? Os quatro itens de construção de `forma` explicam por quê, e a falta de um deles, sozinha, não é defeito. O acabamento é o do registro da coisa? Alguma forma, tirada, não faria falta? O orçamento de formas é sensor: diz onde conferir se virou ícone ou se o detalhe compete, e não reprova pela contagem. Quem volta é o mesmo, no estado certo, e a expressão se lê no tamanho em que aparece? Aprendido no piloto: a marca que parece sobrar num plano pode ser o que o olho segue em outro, e por isso se leem no roteiro os planos em que a peça aparece antes de apontar forma sobrando.
 - **Lugar e luz** (`cenario`), quando o plano parece sem lugar, o assunto disputa com o fundo ou as coisas flutuam. O plano tem o lugar de que precisa, e o assunto continua a coisa mais fácil de achar? Onde o plano depende de profundidade, ela se lê? A luz é coerente, e o que está no lugar está assentado nele? Cada coisa do ambiente tem um serviço, e o lugar que volta é o mesmo?
-- **Texto** (`texto`), quando a leitura, o vínculo ou a função de um texto falham. Cada texto tem função e dono à vista, e o que chega junto se associa sem esforço? Dá para ler no tamanho e no tempo em que aparece, sem cobrir o que precisa ser visto? A tela repete a narração, ou carrega sozinha o que devia estar encenado? Mais de cinco textos à vista passa do limite que o canal fixou (`texto`, vindo de `ouvinte`): vai ao relatório com esse dono, e a gravidade vem do que se perde na leitura, não da contagem.
+- **Texto** (`texto`), quando a leitura, o vínculo ou a função de um texto falham. Cada texto tem função e dono à vista, e o que chega junto se associa sem esforço? Dá para ler no tamanho e no tempo em que aparece, sem cobrir o que precisa ser visto? A tela repete a narração, ou carrega sozinha o que devia estar encenado? Mais de cinco textos à vista é sensor de carga (`texto`, vindo de `ouvinte`): confira o que chega junto e a leitura; reporte defeito só quando houver perda, com gravidade pelo que se perde.
 - **Fidelidade** (a base de fatos, `dado`), quando a imagem pode estar afirmando algo falso. Ela afirma o que a base de fatos não sustenta? Cada número na tela bate com a fonte? A proporção desenhada é a real, e quem é comparado está na mesma régua? Simplificar e estilizar não é mentir: é defeito quando muda a afirmação.
 
 **Gravidade**, pelo que o espectador perde:
@@ -57,12 +57,11 @@ A mesma falha muda de gravidade conforme a perda. A silhueta que não deixa reco
 
 As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família mais comum) só fazem sentido sobre um trecho com mais de um lugar. Um trecho que se passa num lugar só sai da faixa nelas sem ter defeito: o gancho de um vídeo, inteiro numa lagoa, ficou em 67% de uma família e caiu a 36% quando entraram o laboratório e a rua. Mede-se o trecho inteiro, nunca uma cena isolada.
 
-**O relatório** tem o tamanho do diagnóstico. Sem defeito, uma linha por trecho julgado, com o motivo onde algo poderia parecer defeito. Cada defeito leva o plano, o que o espectador perde, a evidência mínima que o mostra, a unidade dona e a gravidade, e diz quando o conserto mexeria numa decisão material já tomada pelo usuário. Folha, medida e comparação acompanham só o problema que elas localizaram. O que ninguém além do usuário julga (gosto, identidade do canal) vai dito como tal.
+**O relatório** tem o tamanho do diagnóstico. Começa pelo veredito: contagem por gravidade e medidas fora da faixa, com valor e referência. Sem defeito, uma linha por trecho julgado, com o motivo onde algo poderia parecer defeito. Cada defeito leva o plano, o que o espectador perde, a evidência mínima que o mostra, a unidade dona e a gravidade, e diz quando o conserto mexeria numa decisão material já tomada pelo usuário. Folha, medida e comparação acompanham só o problema que elas localizaram. O que ninguém além do usuário julga (gosto, identidade do canal) vai dito como tal.
 
-## DEPENDÊNCIAS
-- encenacao, planos, dado: fornecem os critérios das lentes de encenação e de decupagem.
-- composicao, cor, forma, personagem, cenario, texto: fornecem os critérios das lentes de imagem.
-- elenco: fornece a ficha de cada personagem e o critério do rosto.
+## REFERÊNCIAS
+- Leia só a unidade da lente acionada em `decupagem/`, `quadro/`, `conceito/` ou `desenho/`.
+- elenco: só quando a dúvida envolve rosto ou identidade de personagem.
 
 ## LIMITES
 

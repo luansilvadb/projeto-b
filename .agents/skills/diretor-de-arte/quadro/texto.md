@@ -17,7 +17,7 @@ Que texto entra na tela, e preso a quê?
 **O que o canal e o repositório fixam:**
 
 - **A letra.** Uma família só, com os tamanhos de `src/design/tokens.ts`; o menor deles, o do selo, é o piso de leitura em celular.
-- **Até cinco textos à vista**, o limite de `ouvinte`. O esquema que pede mais é agrupado, e cortar item é decisão do usuário.
+- **Mais de cinco textos à vista é sensor de carga, não teto.** Confira simultaneidade, vínculo e legibilidade; agrupe quando isso resolver uma dificuldade real. Cortar informação que muda o que a tela afirma é decisão do usuário.
 - **A margem segura** de `composicao`.
 - **A tela escreve como se escreve.** O que a narração soletra para a voz vira a grafia de verdade: "dê-ene-á" é "DNA". Nome científico vai em itálico, sob o nome comum.
 
@@ -41,7 +41,7 @@ Que texto entra na tela, e preso a quê?
 - planos: fornece a encenação de cada plano, onde o texto de tela é anotado.
 - dado: fornece os números e a forma como são mostrados.
 - composicao: fornece o ponto focal, os vazios do quadro e a margem segura.
-- ouvinte (skill `diretor-criativo`, `conceito/ouvinte`): fornece o limite de cinco itens à vista.
+- ouvinte (skill `diretor-criativo`, `conceito/ouvinte`): fornece o sensor de carga para itens simultâneos.
 
 ## LIMITES
 - A entrada e a saída do texto em movimento não são decididas aqui.

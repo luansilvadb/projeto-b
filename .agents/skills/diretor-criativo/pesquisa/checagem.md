@@ -39,7 +39,9 @@ Dizer "não sabemos" é permitido e fortalece a credibilidade do resto, quando a
 
 ## DEPENDÊNCIAS
 - levantamento: fornece a base de fatos, com fonte aberta, limite e, quando pesa, o grau de consenso.
-- entrevista: fornece a fronteira entre a simplificação que o agente resolve e a troca que é do usuário.
+
+## REFERÊNCIAS
+- entrevista: consulte quando duas formulações factualmente defensáveis deixarem uma escolha material ao usuário.
 
 ## LIMITES
 - Nenhuma afirmação *não verificada* permanece no roteiro final.

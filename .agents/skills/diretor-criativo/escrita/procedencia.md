@@ -59,6 +59,8 @@ O que costuma resolver, sem "sempre" nem "nunca":
 - levantamento: fornece autor, instituição, ano e método de cada achado, de que se escolhe o que ajuda.
 - explicacao: fornece a regra de contar o que acontece acontecendo; a origem não a suspende.
 - narracao: fornece como a origem e a citação soam na fala.
+
+## REFERÊNCIAS
 - indicacao-visual: registra na nota do bloco a origem que precisa ficar visível.
 
 ## LIMITES

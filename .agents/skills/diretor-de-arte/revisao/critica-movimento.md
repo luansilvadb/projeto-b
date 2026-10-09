@@ -48,12 +48,14 @@ O que uma unidade marca como proposta não reprova (`critica-quadro`).
 - **O trecho calmo.** As faixas vêm de vídeos inteiros: um gancho ou uma explicação pode ficar abaixo de "mais de 10% em movimento" sem que o vídeo inteiro fique. Quando falta movimento grande e isso é defeito, a lente é a de atuação ou a de câmera, não a de repouso.
 - **O mapa segundo a segundo** da fração de quadros quase parados e em movimento grande diz em que plano a medida saiu da faixa, e onde um cansaço sem defeito local se concentra. É por ele que se volta ao vídeo no trecho certo.
 
-**O relatório** tem o tamanho do diagnóstico. Sem defeito, uma linha por trecho julgado, com o motivo onde algo poderia parecer defeito. Cada defeito leva o plano e o instante, o que o espectador perde, a evidência mínima que o mostra, a unidade dona e a gravidade, e diz quando o conserto mexeria numa decisão material já tomada pelo usuário. Medida e mapa acompanham só o problema que eles localizaram. O que ninguém além do usuário julga (ritmo, peso, cansaço) vai dito como tal.
+**O relatório** tem o tamanho do diagnóstico. Começa pelo veredito: contagem por gravidade e tabela das medidas fora da faixa, com valor, referência e segundos. Sem defeito, uma linha por trecho julgado, com o motivo onde algo poderia parecer defeito. Cada defeito leva o plano e o instante, o que o espectador perde, a evidência mínima que o mostra, a unidade dona e a gravidade, e diz quando o conserto mexeria numa decisão material já tomada pelo usuário. Medida e mapa acompanham só o problema que eles localizaram. O que ninguém além do usuário julga (ritmo, peso, cansaço) vai dito como tal.
 
 ## DEPENDÊNCIAS
-- sincronia, entradas, pausa-viva, acao, movimento, transicoes, efeitos: fornecem os critérios de cada lente.
-- composicao, texto: fornecem o que o quadro precisa cumprir enquanto se move.
 - critica-quadro: fornece as medidas de imagem, a autoridade de toda medida e a regra das propostas.
+
+## REFERÊNCIAS
+- Leia só a unidade da lente acionada em `tempo/`, `atuacao/`, `camera/` ou `enfase/`.
+- composicao e texto: só quando o defeito depende do que o quadro precisa cumprir enquanto se move.
 
 ## LIMITES
 

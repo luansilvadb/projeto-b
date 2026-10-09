@@ -11,7 +11,7 @@ Confira antes do render pesado: descobrir um artefato faltando depois de meia ho
 - **Cenas**: as de `out/<vídeo>/cenas/` existem e têm a duração atual. O `pnpm join` acusa a que falta e a que ficou com a duração antiga: renderize essas com `pnpm scene`.
 - **Som**: o que o roteiro pede existe? Com `music` no roteiro, `public/videos/<vídeo>/music.json` e os arquivos da trilha, gerados sobre a duração atual da narração (`trilha.md`); sem eles o vídeo renderiza sem música. Os efeitos de `sfx` já estão cobertos pelo `check-script`, que recusa o uso fora do catálogo.
 - **Fatos**: acione o subagente `checador` com o nome da pasta do vídeo. Ele confere cada afirmação da fala e da tela contra `research.md`. Nenhuma pode voltar *não verificada*: a que voltar é do texto, cujo dono é a skill `diretor-criativo`.
-- **Código**: `pnpm lint` e `pnpm test` passam, quando o código mudou desde a última vez em que passaram.
+- **Código**: siga a condição de validação definida em `AGENTS.md`.
 - **Erro técnico conhecido**: nada que já se sabe quebrado (um render que falha, uma cena sem componente) segue para a montagem.
 
 Pronto quando: cada artefato existe e corresponde ao estado atual. O que falta é dito com o dono dele (a frase, a cena, a trilha), e a montagem espera por esse artefato, e não por um aceite.
@@ -22,7 +22,7 @@ Pronto quando: cada artefato existe e corresponde ao estado atual. O que falta �
 
 ## 3. Volume
 
-A mixagem do projeto mantém a relação entre voz e trilha, mas o arquivo sai mais baixo que o padrão do YouTube (-14 LUFS). O YouTube abaixa vídeos altos e não levanta os baixos, então um vídeo baixo soa fraco ao lado dos outros. Normalize:
+O alvo interno de exportação é -14 LUFS, com pico verdadeiro de até -1 dBTP. O player oferece [Volume estável](https://support.google.com/youtube/answer/14106294?hl=en), que atua na reprodução. Normalize:
 
 ```bash
 ffmpeg -i out/<vídeo>/<vídeo>.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 -ar 48000 -c:a aac -b:a 256k out/<vídeo>/<vídeo>.final.mp4
@@ -38,9 +38,9 @@ Pronto quando: `Input Integrated` está entre -15 e -13 LUFS e `Input True Peak`
 
 ## 4. Verificações no arquivo final
 
-```bash
+```powershell
 # Telas pretas de meio segundo ou mais, e silêncios de dois segundos ou mais.
-ffmpeg -hide_banner -nostats -i out/<vídeo>/<vídeo>.final.mp4 -vf blackdetect=d=0.5 -af silencedetect=noise=-50dB:d=2 -f null - 2>&1 | grep -E "black_start|silence_start"
+ffmpeg -hide_banner -nostats -i out/<vídeo>/<vídeo>.final.mp4 -vf blackdetect=d=0.5 -af silencedetect=noise=-50dB:d=2 -f null - 2>&1 | Select-String -Pattern "black_start|silence_start"
 
 # Folha de contato: um quadro a cada 10 segundos.
 ffmpeg -y -i out/<vídeo>/<vídeo>.final.mp4 -vf "fps=1/10,scale=480:-1,tile=6x10" -frames:v 1 out/<vídeo>/<vídeo>.sheet.png
@@ -54,7 +54,7 @@ Cada instrumento tem só a autoridade que tem:
 - **Tela preta e silêncio.** A saída vazia diz que não há nenhum dos dois. Uma linha é conferida contra o estado: o silêncio que o roteiro pede de propósito (um `holdMs`, um silêncio de `music`) não é defeito; o que ninguém pediu é erro técnico, e é consertado.
 - **Folha de contato.** Abra e percorra o vídeo inteiro com os olhos: alguma cena vazia, repetida, com texto cortado ou fora do estilo? Ela pega defeito grosseiro, e não julga movimento nem ritmo.
 - **Duração.** A do arquivo bate com a soma das cenas da narração. É contrato técnico: se não bate, a montagem está errada.
-- **Volume.** A faixa do passo 3 é alvo técnico da plataforma.
+- **Volume.** A faixa do passo 3 é o alvo interno de exportação; o player oferece Volume estável para ajustar a reprodução.
 - **Medidas do `pnpm critique`.** São sensores: investigue no trecho o outlier relevante, pelo mapa segundo a segundo e por uma tira de quadros (a leitura é a de `revisao/critica-movimento`, da skill `diretor-de-arte`). Sem defeito perceptível ou técnico demonstrado, a medida fora da faixa não bloqueia o arquivo final: vai dita na entrega, em uma linha. O defeito que a investigação demonstra é do dono do artefato.
 
 Pronto quando: não há tela preta nem silêncio sem explicação no estado, a folha foi percorrida inteira, a duração bate e cada outlier relevante foi investigado até virar defeito, com dono, ou "sem defeito".

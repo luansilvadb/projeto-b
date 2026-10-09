@@ -25,7 +25,7 @@ Descarte pelo que se lê (`diretor-de-som/efeitos/escolha`): outro acontecimento
 
 A resposta é classificação auditiva, e não decisão: o ouvido que faltava para dizer que arquivo realiza o uso. Com ela, cole no catálogo a linha que o `pnpm sfx <id>` imprime, trocando `<uso>` pelo nome do uso, e apague o arquivo baixado que não entrou. Se nenhum candidato realiza o uso depois de buscas diferentes, ele fica pendente: não entra o menos ruim.
 
-Pronto quando: cada uso da lista tem no catálogo um som que o usuário ouviu como a ação, ou foi devolvido como pendente, e `pnpm lint` passa. Devolva à skill `diretor-de-som` o `name` de cada um.
+Pronto quando: cada uso da lista tem no catálogo um som que o usuário ouviu como a ação, ou foi devolvido como pendente, e as validações seguem `AGENTS.md`. Devolva à skill `diretor-de-som` o `name` de cada um.
 
 ## Volume
 

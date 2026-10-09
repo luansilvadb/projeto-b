@@ -66,9 +66,9 @@ Nenhuma cena toca som. Os efeitos são da skill `diretor-de-som`, que os declara
 
 ## Ver e conferir
 
+Valide o código pela regra de `AGENTS.md`. Para conferir imagem e movimento:
+
 ```bash
-pnpm lint
-pnpm test
 pnpm scene <vídeo> <id> [id...]  # só as cenas mexidas, em out/<vídeo>/cenas/<id>.mp4
 pnpm critique out/<vídeo>/cenas/<id>.mp4
 pnpm join <vídeo>                # o vídeo inteiro, das cenas já renderizadas e do som
@@ -79,7 +79,7 @@ O render tem o tamanho da pergunta. O `pnpm scene` é o caminho de todo dia: o t
 
 Renderize só as cenas que mudaram: um desenho de `src/art/` ou de `parts/` que mudou pede todas as cenas que o usam, e uma frase da narração que mudou pede a cena dela (o `pnpm join` acusa as que ficaram com a duração antiga). Leia o trecho como `critica-movimento` descreve: uma tira esparsa do trecho inteiro e uma densa onde houver dúvida; `ffmpeg -ss <s> -t <dur> -i out/<vídeo>/cenas/<id>.mp4 -vf "fps=8,scale=320:180,tile=6x5" -frames:v 1 tira.png` monta uma. Com uma medida do `pnpm critique` fora da faixa, o mapa segundo a segundo e o que ela enxerga estão na seção Medidas da mesma unidade.
 
-A crítica acontece no caminho, e não só no fim. O subagente `critico-de-movimento`, que não animou nada, entra onde a cegueira de quem fez custa caro: no primeiro trecho, que define a linguagem; quando chega uma atuação, uma câmera ou uma passagem nova; diante de um defeito que não cede; antes de uma decisão que vai ao usuário; e na revisão do vídeo inteiro. O ajuste de dois quadros que você viu e sabe consertar é feito e conferido por você. Passe a ele o nome da pasta do vídeo, o caminho do MP4, os planos a julgar e a partitura. Ele julga; quem decide e refaz é você: os bloqueantes são refeitos, e os relevantes enquanto o retorno compensa; o conserto que muda uma decisão tomada (o que acontece, o foco de um plano, a relação entre dois planos, o que a composição diz) vai antes ao usuário, e o que só refina a execução, não (`entrevista-movimento`). Renderize de novo só as cenas mexidas, confira o defeito que motivou a mudança e acione o subagente de novo só com os planos alterados. Se uma rodada não resolver nenhum defeito, pare e relate o que ficou em aberto.
+A crítica acontece no caminho, e não só no fim. O subagente `critico-de-movimento`, que não animou nada, entra onde a cegueira de quem fez custa caro: no primeiro trecho, que define a linguagem; quando chega uma atuação, uma câmera ou uma passagem nova; diante de um defeito que não cede; antes de uma decisão que vai ao usuário; e na revisão do vídeo inteiro. O ajuste de dois quadros que você viu e sabe consertar é feito e conferido por você. Passe a ele o nome da pasta do vídeo, o caminho do MP4, os planos a julgar e a partitura. Ele julga; quem decide e refaz é você: os bloqueantes são refeitos, e os relevantes enquanto o retorno compensa; o conserto que muda uma decisão tomada (o que acontece, o foco de um plano, a relação entre dois planos, o que a composição diz) vai antes ao usuário, e o que só refina a execução, não (`entrevista-movimento`). Renderize de novo só as cenas mexidas, confira o defeito que motivou a mudança e acione o subagente de novo só com os planos alterados. Se uma rodada não resolver nenhum defeito, informe ao diretor o que foi tentado e a evidência restante; ele define a próxima hipótese.
 
 O conjunto está pronto para ir ao usuário quando: todo trecho que precisa de movimento o tem, não se conhece defeito que impeça o entendimento, o tempo, a atuação, a câmera e as passagens que importam funcionam em contexto, as decisões que eram do usuário foram tomadas, a partitura diz o que está na tela, e o que resta é polimento de retorno baixo. Não se exige medida dentro da faixa, movimento em todo plano, câmera ativa, efeito, quadros sempre diferentes nem uso de todos os primitivos.
 

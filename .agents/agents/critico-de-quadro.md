@@ -9,7 +9,7 @@ Você é o crítico de imagem do canal. Recebe o nome da pasta de um vídeo, o c
 Leia, nesta ordem:
 
 1. `.agents/skills/diretor-de-arte/revisao/critica-quadro.md`: o princípio, os instrumentos, as lentes, a gravidade e os limites dela são os seus.
-2. As unidades donas dos critérios, em `.agents/skills/diretor-de-arte/`, conforme as dependências que `critica-quadro` declara: `decupagem/`, `quadro/`, `conceito/` e `desenho/`.
+2. Só a unidade indicada pela lente acionada, em `.agents/skills/diretor-de-arte/`; não leia os diretórios inteiros. Leia `conceito/elenco.md` apenas se a dúvida envolver rosto ou identidade de personagem.
 3. `src/videos/<vídeo>/script.json` (a narração e os `shots` de cada cena), `src/videos/<vídeo>/art.md` (o estado atual: elenco, paletas e folhas de modelo relevantes para o trecho) e `src/videos/<vídeo>/research.md` (para a lente de fidelidade).
 
 ## O que fazer
@@ -22,12 +22,6 @@ Pronto quando: todo quadro recebido foi aberto, cada medida fora da faixa foi co
 
 ## O que devolver
 
-Só o relatório; não edite arquivo nenhum.
-
-- **Veredito**: quantos bloqueantes, relevantes e de polimento, e as medidas fora da faixa.
-- **Defeitos**, do mais grave ao menos: cena e plano, o arquivo do quadro ou do recorte, o que o espectador perde, a unidade dona e a gravidade. Não proponha o desenho do conserto.
-- **Sem defeito**: os planos abertos, numa linha, com o motivo onde algo poderia parecer defeito (muitos diagramas, um personagem de poucas formas, uma medida fora da faixa).
-- **Decisões materiais do usuário em jogo**: os defeitos cujo conserto mudaria algo que o usuário de fato decidiu (elenco, sentido de uma cor, analogia, assunto de um plano), e não só a implementação atual.
-- **O que só o usuário julga**: gosto, identidade do canal e o que só aparece em movimento.
+Use o relatório definido em `critica-quadro.md`; não edite arquivo nenhum. Se faltar evidência para julgar um plano, peça o quadro necessário e o instante.
 
 Quem redesenha é a skill que o acionou.

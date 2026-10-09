@@ -58,7 +58,9 @@ Que compromisso transforma um tema amplo num vídeo específico: o que ele escol
 ## DEPENDÊNCIAS
 - levantamento: fornece a evidência e as incertezas que permitem testar o compromisso atual.
 - checagem: fornece o grau de consenso, que limita o que se promete e conclui.
-- entrevista: fornece a fronteira entre a redação, que é do agente, e a escolha entre vídeos diferentes, que é do usuário.
+
+## REFERÊNCIAS
+- entrevista: use quando restarem recortes válidos que fazem vídeos diferentes.
 
 ## LIMITES
 - A porta de entrada é de `gancho`; o percurso, de `arco`; o que o fim entrega, de `fechamento`; a temperatura do narrador, de `voz`; como cada fato constrói o entendimento, de `explicacao`. O trecho escrito para testar um compromisso segue as unidades dele, e o que ele mostra volta para cá.

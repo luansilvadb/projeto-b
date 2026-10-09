@@ -5,8 +5,6 @@ O que o texto precisa fazer para que quem ouve uma vez não tenha de guardar con
 
 **Ouvinte.** Todo texto do vídeo (título, gancho, narração, fechamento, chamada e texto de tela) é escrito para quem assiste com TDAH (decisão do usuário em 2026-10-04). Isso diz que experiência o texto precisa dar, e não que técnica usar: pouca dependência de memória, relevância cedo, relações ditas quando fazem falta e progresso que se percebe.
 
-**Base.** A skill `i-have-adhd` (licença MIT), que molda as respostas de um assistente a quem executa tarefas; aqui está a tradução dela para quem ouve uma história.
-
 **Premissa.** O texto é recebido em fluxo, uma vez, na velocidade do narrador. O que o ouvinte precisa para entender agora está disponível agora, ou se recupera sem esforço. Quem assiste não carrega sozinho o que o próprio texto pode manter vivo. E o vídeo tem imagem: o que continua na tela (um personagem, um objeto, uma cor, uma cartela) continua disponível; como isso é desenhado é da skill `diretor-de-arte`.
 
 Cada necessidade abaixo é o que precisa funcionar. As técnicas são repertório: cada uma resolve um problema, e a solução que dá a mesma experiência por outro caminho vale igual.

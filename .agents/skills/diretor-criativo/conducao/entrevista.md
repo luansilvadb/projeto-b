@@ -58,9 +58,11 @@ A conversa termina quando o compromisso está claro, a troca foi escolhida e há
 **Registro.** `script.md` guarda as decisões atuais do vídeo e acompanha a melhor solução: a formulação que melhora sem mudar a decisão atualiza a linha dela. De uma decisão tomada com o usuário fica o compromisso, e o porquê quando ele impede a reescrita seguinte de desfazê-la (`formato`). A história, com a alternativa recusada, é do git.
 
 ## DEPENDÊNCIAS
-- checagem: fornece o limite factual, de que nenhuma alternativa passa.
 - critica: fornece o diagnóstico do defeito cujo conserto esta unidade classifica.
 - formato: fornece o lugar de cada decisão em `script.md`.
+
+## REFERÊNCIAS
+- checagem: consulte quando a escolha depender de distinguir uma alternativa factual válida de uma inválida.
 
 ## LIMITES
 - Não pedir decisão sobre texto que o próprio agente ainda não escreveu e criticou.

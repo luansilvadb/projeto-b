@@ -70,7 +70,7 @@ Se a criação for recusada, corrija a permissão de links e repita a criação 
 
 As cinco skills locais são `diretor-criativo`, `diretor-de-arte`, `diretor-de-som`, `diretor-publicacao` e `diretor-producao`. A `creator`, a `grilling` e as seis skills `openspec-*` ficam na instalação global compartilhada. Os artefatos OpenSpec do projeto continuam em `openspec/`, e os comandos do Claude em `.agents/commands/opsx/`.
 
-O Codex descobre as skills em `.agents/skills/` e lê `AGENTS.md`; o Claude Code acessa o mesmo conteúdo pelos links. As definições Markdown de especialistas e os comandos `/opsx:*` mantêm o formato do Claude: centralizá-los não os registra automaticamente como subagentes ou comandos nativos do Codex. Skills globais externas, como `ponytail` e `remotion-best-practices`, continuam em suas instalações fora do projeto. Depois da migração, abra novas sessões para carregar o novo inventário.
+O Codex descobre as skills em `.agents/skills/` e lê `AGENTS.md`; o Claude Code acessa o mesmo conteúdo pelos links. As definições Markdown de especialistas e os comandos `/opsx:*` mantêm o formato do Claude: centralizá-los não os registra automaticamente como subagentes ou comandos nativos do Codex. Para usar um especialista no Codex, a skill lê sua definição em `.agents/agents/` e a passa ao subagente disponível. O Codex usa as instruções do corpo Markdown, ignora o frontmatter `tools:` do Claude e interpreta os nomes de ferramentas do corpo conforme as ferramentas disponíveis. Skills globais externas, como `ponytail` e `remotion-best-practices`, continuam em suas instalações fora do projeto. Depois da migração, abra novas sessões para carregar o novo inventário.
 
 ### Conhecimento global compartilhado
 

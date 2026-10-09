@@ -23,7 +23,7 @@ Que expectativa título e thumbnail criam juntos antes do clique, e ela correspo
 
 **Na thumbnail, foco, e não contagem.** O olho entende o que comparar, reconhecer ou estranhar, na escala em que ela é vista? Uma relação pode pedir dois ou três elementos (Sol e Terra lado a lado são a própria comparação), e um objeto só pode ser confuso. Tensão, perigo, algo fora do lugar, rosto, seta e círculo são recursos, e nenhum é requisito: a imagem também funciona por beleza, escala, reconhecimento, transformação ou simplicidade, e não se fabrica conflito nem personagem humano que o vídeo não pede. O texto na imagem é recurso também: identifica o que não se reconhece, dá um número, cria um contraste, estabelece uma relação que a imagem sozinha não entrega. Cada palavra sobrevive ao tamanho pequeno e acrescenta algo ao par; pouco texto é consequência disso, e zero é resposta válida. Quando a imagem só funciona depois de uma sentença lida, o conceito visual provavelmente trabalha pouco, salvo quando o texto é o assunto (uma citação, um dado, um documento).
 
-**Conceito e prompt.** O conceito fixa a relação ou a afirmação que a imagem precisa fazer e o texto que o sentido exige. O prompt escolhe uma composição para realizar esse conceito; não muda o que a imagem afirma. Use `art.md` como referência para elenco, desenho e paleta do vídeo, e escolha enquadramento, foco, luz e acabamento que mantenham a leitura clara em tela pequena. A thumbnail é uma representação própria da embalagem, não precisa copiar um quadro. Esta skill entrega texto pronto para um gerador, não o PNG final. Como em `indicacao-visual`, um conceito bom admite várias soluções visuais:
+**Conceito e prompt.** O conceito fixa a relação ou a afirmação que a imagem precisa fazer e o texto que o sentido exige. O prompt escolhe uma composição para realizar esse conceito; não muda o que a imagem afirma. Use `art.md` como referência para elenco, desenho e paleta do vídeo, e escolha enquadramento, foco, luz e acabamento que mantenham a leitura clara em tela pequena. Esta skill entrega texto pronto para um gerador, não o PNG final. Como em `indicacao-visual`, um conceito bom admite várias soluções visuais:
 
 > Composição: "personagem no canto inferior esquerdo, buraco negro ocupando 72% do quadro, luz laranja."
 > Conceito: "escala desproporcional entre uma pessoa reconhecível e o buraco negro; ela está sendo esticada na direção do centro."
@@ -34,14 +34,6 @@ Que expectativa título e thumbnail criam juntos antes do clique, e ela correspo
 
 **Alternativas.** O número delas vem da incerteza. Um título forte e verdadeiro na primeira tentativa é usado e testado no par, sem concorrentes fabricados; havendo dúvida real, comparam-se as hipóteses que existem (duas redações, dois conceitos de par, pergunta ou afirmação, personagem ou mecanismo), sejam duas ou quatro. O padrão de título não gera alternativa: uma opção de cada forma é catálogo, e não exploração. Quem escolhe segue `entrevista`, pelo teste do vídeo diferente: quem clicasse em A e quem clicasse em B esperaria essencialmente o mesmo vídeo? Se sim, o agente compara e escolhe, e isso cobre redação, tamanho, pergunta ou afirmação, presença de texto e imagem A ou B. Vai ao usuário o que muda materialmente o que se vende: a promessa ou o recorte (que voltam a `angulo`), a emoção principal (medo ou maravilhamento), o grau de revelação (o título entrega a conclusão e vende o mecanismo, ou a guarda como descoberta). Sem saber se a diferença é material, monta-se o par completo antes de perguntar: dois títulos que parecem distantes podem ser igualados pela thumbnail. O usuário nunca recebe uma lista de títulos para votar.
 
-**Repertório de título.** Formas observadas no canal de referência. Não são categorias a cobrir, e um título bom pode não ser nenhuma delas: o nome direto do fenômeno, um personagem, uma consequência, uma comparação. O título não precisa nomear o tema ("O pior jeito de ficar acordado" é mais específico que "Sono explicado"), se o par deixa o assunto reconhecível.
-
-- **Pergunta ingênua**: "O que acontece se você cair em um buraco negro?"
-- **"E se"**: "E se a Lua desaparecesse?"
-- **Afirmação contraintuitiva**: "Você nunca tocou em nada"
-- **Superlativo verificável**: "A coisa mais mortal do universo"
-- **Tema + tensão**: "Sistema imunológico: a guerra dentro de você"
-
 **Testes.**
 
 - **Promessa.** Que expectativa este par cria, dita em uma frase? Ela é específica, verdadeira e paga pelo vídeo?
@@ -51,15 +43,6 @@ Que expectativa título e thumbnail criam juntos antes do clique, e ela correspo
 - **Pequena escala.** Reduzido, o conceito principal ainda se reconhece?
 - **Corte.** Que palavra sai do título sem perder a expectativa correta? Que elemento sai da thumbnail sem perder o conceito? A economia vem deste teste, e não de quota.
 - **Isca.** O par cria expectativa que o vídeo não entrega, aumenta a certeza ou o escopo, sugere evento que não ocorre, implica relação falsa ou esconde a ressalva que muda a afirmação? Forte e dramático não é isca por si.
-
-**Sensores.** Medidas dos títulos do canal de referência (251 títulos; os 50 mais recentes). Descrevem frequência, e não desempenho: visualizações favorecem vídeos antigos, não há experimento controlado e nenhum formato se compara por elas. Nenhuma decide a forma de um título que funciona, e a melhor expressão do vídeo não é trocada para acompanhar uma tendência.
-
-- Mediana de 43 caracteres e 8 palavras; 37 e 7 nos recentes. Perto de 45 e 8 é a referência. Comprimento é custo (demora a identificar, compete com a imagem, enterra o que importa) e motivo para olhar: o título está longo porque precisa, ou porque ainda não achou o núcleo? Dez palavras que trabalham ficam, quando a versão de sete perde a relação central.
-- Título em dois tempos ("Tema – Subtítulo"): de 30% para 10% nos recentes.
-- Título em forma de pergunta: de 21% para 12%.
-- "E se": de 6% para 2%.
-- Título que fala com "você": de 17% para 26%.
-- Os recentes tendem à afirmação curta e direta, com um adjetivo forte. O adjetivo entra quando o vídeo pede aquela palavra, e não para soar recente.
 
 **Prompt para gerar.** Escreva um prompt simples, completo e sem sintaxe exclusiva de um modelo. Diga o assunto, a composição, o contraste, o estilo que deve seguir `art.md`, o formato horizontal e qualquer texto exato que a imagem exija. Não acrescente texto decorativo nem fatos visuais que a pesquisa não sustenta. Se o texto exato não for confiável no gerador, peça uma área limpa para inserir a placa depois.
 

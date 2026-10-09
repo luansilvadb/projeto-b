@@ -26,7 +26,7 @@ Entregas: compromissos antecipados, quando necessários; mapa em `src/videos/<v�
 
 ## Condução e subagentes
 
-Projete, gere e meça. Consulte conducao/entrevista-som quando uma escolha válida exigir o ouvido ou a decisão do usuário. `sound.md` e os campos de `script.json` guardam a hipótese atual; só decisões do usuário são compromissos. Tarefa localizada termina na dúvida respondida; só o som do conjunto pede aceite do conjunto.
+Projete, gere e meça. Só um pedido que abrange todo o som leva a apresentar o conjunto ao usuário para avaliação, conforme `conducao/entrevista-som`. `sound.md` e os campos de `script.json` guardam a hipótese atual; só decisões do usuário são compromissos.
 
 Acione critico-de-som nos casos definidos por `etapas/som.md`. Ele diagnostica; esta skill decide.
 
@@ -46,7 +46,7 @@ Acione critico-de-som nos casos definidos por `etapas/som.md`. Ele diagnostica; 
 
 ## Restrições e parada
 
-- O agente não ouve: medidas localizam risco e podem provar defeitos técnicos; o caráter, a emoção e o aceite pertencem ao ouvido do usuário.
+- O agente não ouve: medidas localizam risco e podem provar defeitos técnicos; não atribua caráter ou emoção ao som sem a escuta do usuário.
 - Medidas são sensores, não metas. Cada mudança musical precisa fazer trabalho na experiência; efeito exige acontecimento perceptível, mas nem todo acontecimento ganha efeito.
 - Gere o menor trecho que responde à dúvida.
-- Pare quando a evidência responde à dúvida e não resta defeito relevante cujo conserto compense. Se faltar entrada, diga qual. Duas gerações seguidas com o mesmo problema pedem outra hipótese, não outra semente. Um `holdMs`, frase ou evento de imagem volta ao dono desse artefato.
+- Pare quando a evidência responde à dúvida e não resta defeito relevante cujo conserto compense. Se faltar entrada, diga qual. Um `holdMs`, frase ou evento de imagem volta ao dono desse artefato.

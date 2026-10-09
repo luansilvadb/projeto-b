@@ -63,13 +63,12 @@ O que não cede é a fronteira: nenhuma afirmação factual entra no roteiro sem
 
 "Novas buscas só repetem" é sinal de parada **da pergunta atual**: ela está respondida no grau necessário, com fonte adequada, as condições que importam claras e o contraditório procurado quando a afirmação o pede. Não é meta para o tema.
 
-## DEPENDÊNCIAS
-- checagem: fornece o significado dos graus de consenso e confere, depois, a afirmação que o vídeo faz de fato.
+## REFERÊNCIAS
+- checagem: aplica a escala de consenso à linguagem e confronta a afirmação final com esta base.
 
 ## LIMITES
 - Afirmação de memória não é registrada como se tivesse fonte; sem fonte aberta, o item vai a "Pontos em aberto".
 - Não escolhe o ângulo nem redige narração: entrega evidência, inclusive a que contraria o foco.
-- Esta unidade pergunta qual é a melhor evidência e o que ela diz. Se a afirmação que o vídeo faz é sustentada por essa evidência, quem pergunta é `checagem`.
 - Quem aciona o `pesquisador`, o formato de `research.md` e o que vai ao usuário são de `etapas/pesquisa`.
 
 ## EXEMPLO

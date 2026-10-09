@@ -71,4 +71,4 @@ Use ilustrador, motion-designer e os críticos nos casos definidos pelos procedi
 - Julgue desenhos pela imagem renderizada e movimentos pela sequência. Toda afirmação visual deve ser sustentada pela pesquisa; toda mudança de estado tem causa visível na fala ou na cena.
 - Movimento não altera foco, relação ou tamanho do assunto sem decisão do usuário.
 - Para tarefa localizada, pare quando o trecho renderizado resolve a dúvida. Para o conjunto, pare sem defeito bloqueante ou relevante que compense corrigir.
-- Se faltar artefato, relate-o. Se desenho ou movimento continuar ilegível após três rodadas, simplifique a encenação ou a ação.
+- Se faltar artefato, relate-o. Se desenho ou movimento continuar ilegível, corrija a causa sem limite fixo de rodadas. Simplifique apenas enquanto preservar a decisão atual; se a solução mudar sentido, identidade ou compromisso, leve as alternativas ao usuário.

@@ -73,10 +73,12 @@ O que faz um fato mudar o entendimento de quem assiste, em vez de ser só mais u
 ## DEPENDÊNCIAS
 - angulo: fornece a tese e a promessa, que cada trecho ajuda a tornar compreensíveis.
 - arco: decide onde entra cada relação de que uma conclusão depende.
-- fio: fornece o que fica vivo entre os blocos e a conclusão ganha.
 - ouvinte: fornece o contexto disponível, a carga e o progresso que se percebe.
-- analogias: fornece a comparação e a personificação, quando a linguagem direta não basta.
 - levantamento: fornece o mecanismo, a expectativa e o termo de comparação de cada achado.
+
+## REFERÊNCIAS
+- fio: consulte quando uma ideia precisar continuar viva entre blocos.
+- analogias: consulte quando a explicação depender de comparação ou personificação.
 
 ## LIMITES
 - Opinião e humor são do narrador sobre o assunto, nunca sobre quem assiste.
