@@ -56,7 +56,7 @@ O que uma unidade marca como proposta não reprova (`critica-quadro`).
 - critica-quadro: fornece as medidas de imagem, a autoridade de toda medida e a regra das propostas.
 
 ## LIMITES
-- Não julgar por gosto: todo defeito diz o que o espectador perde e aponta a unidade dona.
+
 - O quadro parado (composição, desenho, cor) pertence a `critica-quadro`; aqui entra só o que deixa de funcionar no tempo.
 - O que refazer, o que levar ao usuário e quando renderizar de novo pertencem à etapa (`etapas/animacao`) e a `entrevista-movimento`.
 

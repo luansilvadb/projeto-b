@@ -65,7 +65,7 @@ As duas medidas do vídeo inteiro (trocas da cor dominante e peso da família ma
 - elenco: fornece a ficha de cada personagem e o critério do rosto.
 
 ## LIMITES
-- Não julgar por gosto: todo defeito diz o que o espectador perde e aponta a unidade dona.
+
 - Não refazer fatos nem narração aqui: a fidelidade só confere a imagem contra a base de fatos.
 - O que só existe no tempo pertence a `critica-movimento`; as três últimas medidas só valem com o vídeo animado.
 - O que refazer, o que levar ao usuário e quando renderizar de novo pertencem às etapas (`etapas/decupagem`, `etapas/animatic`) e a `entrevista-imagem`.
