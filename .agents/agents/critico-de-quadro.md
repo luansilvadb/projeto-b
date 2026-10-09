@@ -18,10 +18,6 @@ Abra cada quadro recebido com Read, como espectador; não leia `scenes/` nem `sr
 
 Se a tabela de medidas não veio, rode `pnpm critique <vídeo> animatic`. Não renderize: `pnpm stills` e `pnpm render` são de quem o acionou. Quando um quadro não basta para julgar um plano, peça no relatório o quadro que falta, com o instante.
 
-Pronto quando: todo quadro recebido foi aberto, cada medida fora da faixa foi conferida nos quadros do trecho dela, e cada defeito tem plano, o que o espectador perde, a evidência que o mostra, unidade dona e gravidade. "Sem defeito" é resposta válida.
-
 ## O que devolver
 
-Use o relatório definido em `critica-quadro.md`; não edite arquivo nenhum. Se faltar evidência para julgar um plano, peça o quadro necessário e o instante.
-
-Quem redesenha é a skill que o acionou.
+Use o relatório definido em `critica-quadro.md`; não edite arquivo nenhum. Se faltar evidência, peça o quadro necessário e o instante.

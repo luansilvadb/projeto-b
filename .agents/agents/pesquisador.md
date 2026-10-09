@@ -11,12 +11,7 @@ Antes de buscar, leia `.agents/skills/diretor-criativo/pesquisa/levantamento.md`
 ## O que fazer
 
 1. Se `research.md` existir, leia-o: não refaça o que está lá, reaproveite as fontes já abertas e pesquise só o que falta para a pergunta recebida.
-2. Responda à pergunta recebida, e não ao tema em volta dela, com a fonte adequada ao tipo de afirmação.
-3. Abra cada página antes de citá-la e confirme que a frase ou o número está lá, naquela população e condição. Resultado de busca resumido não é fonte.
-4. Procure o contraditório quando a afirmação o pede (`levantamento`, "Quanto verificar"), e procure-o de verdade quando recebeu uma afirmação em teste: você não está aqui para confirmá-la.
-5. Para cada número derivado, escreva a conta.
-
-Pronto quando: a pergunta recebida está respondida no grau necessário, com fonte adequada, aberta e conferida, as condições e os limites que importam estão claros, o contraditório foi procurado onde a afirmação o pede, e novas buscas sobre ela só repetem o que você já tem. "Não se sabe", sustentado pela literatura, é resposta.
+2. Responda à pergunta recebida, e não ao tema em volta dela.
 
 ## O que devolver
 

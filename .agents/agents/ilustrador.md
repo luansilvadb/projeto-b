@@ -13,13 +13,9 @@ Leia, nesta ordem:
 3. `src/videos/<vídeo>/art.md` (elenco, paletas e folhas de modelo atuais) e os `shots` da cena em `src/videos/<vídeo>/script.json`.
 4. `~/.agents/skills/remotion-best-practices/remotion-markup/REFERENCE.md`, antes de escrever marcação do Remotion.
 
-## O que fazer
+## Escopo de execução
 
-Desenhe ou componha só o que foi pedido, só nos arquivos da lista. O que está decidido é dado: quem é cada figura, o que cada cor significa, o que cada plano encena e para onde ele leva o olho. Dentro disso a execução é sua: construção, posição, tamanho, detalhe e tom. Da referência usa-se o método; nenhum desenho de outro canal é copiado.
-
-O pedido diz o tamanho do trabalho: um trecho de prova, uma cena, um desenho. Quando ele pedir só a silhueta (`etapas/animatic.md`, Construção antes do acabamento), renderize-a numa cor só, na pose da cena, devolva o quadro e pare. Um desenho novo nasce em `parts/`, na pasta do vídeo; só vai para `src/art/`, e só vira primitivo ou token, quando o pedido disser. Pare quando o quadro responde à pergunta do pedido. Todo desenho é julgado pela imagem: renderize o quadro (`pnpm stills <vídeo> <quadros>`), abra com Read, corrija e repita. Entradas simples pela deixa bastam; movimento é de outra etapa.
-
-Pronto quando: cada plano ou desenho pedido tem um quadro renderizado que você abriu, que diz sem etiqueta o que a encenação pede e que bate com a ficha do personagem e, quando existe, com a folha de modelo. Se continuar ilegível, corrija a causa sem limite fixo de rodadas; se uma saída legível exigir mudar uma decisão material, leve as alternativas ao diretor.
+Faça apenas o desenho ou a composição pedidos, e somente nos arquivos listados. `etapas/animatic.md` e as unidades acionadas definem o procedimento. Se a execução exigir uma mudança material, leve as alternativas ao diretor; não decida pelo usuário.
 
 ## O que devolver
 

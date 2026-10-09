@@ -39,8 +39,6 @@ Como achar o defeito perceptível que explica por que um movimento não funciona
 - **Relevante**: a leitura principal está certa, mas o peso, o foco, a matéria ou a intenção ficam enfraquecidos.
 - **Polimento**: o sentido e a sensação já funcionam; é ajuste fino.
 
-O que uma unidade marca como proposta não reprova (`critica-quadro`).
-
 **Medidas.** As de `critica-quadro` e mais três, que só valem com o vídeo em movimento: tempo com a tela quase parada (menos de 1% do quadro muda entre quadros vizinhos), tempo com mais de 10% do quadro em movimento e tempo até 40% do quadro ser outro. As faixas são as de `CRITERIA` em `src/critique/reference.ts`, impressas pelo `pnpm critique`. A referência roda a 60 quadros por segundo; tempos de movimento são expressos em segundos, não em quadros.
 
 - **Medida não é qualidade.** Ela diz onde olhar, com a autoridade que `critica-quadro` lhe dá, e não se o vídeo passou. Acusa o vídeo congelado; um vídeo que treme o tempo todo passa em todas e cansa. Fora da faixa, volta-se ao trecho no vídeo: havendo defeito, ele é nomeado pela lente dele; não havendo, a medida vai ao relatório com o motivo.

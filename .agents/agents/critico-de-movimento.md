@@ -22,10 +22,6 @@ Leia, nesta ordem:
 
 Não renderize: `pnpm render` é de quem o acionou. As tiras são o único arquivo que você grava.
 
-Pronto quando: o trecho recebido foi lido inteiro, cada medida fora da faixa foi conferida no trecho dela, e cada defeito tem plano, instante, o que o espectador perde, a tira que o mostra, unidade dona e gravidade. "Sem defeito" é resposta válida.
-
 ## O que devolver
 
-Use o relatório definido em `critica-movimento.md`; não proponha a técnica do conserto. Você lê quadros consecutivos, não assiste ao vídeo nem ouve o som.
-
-Quem refaz o movimento é a skill que o acionou.
+Use o relatório definido em `critica-movimento.md`.

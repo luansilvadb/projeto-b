@@ -14,16 +14,10 @@ Leia, nesta ordem:
 
 ## O que fazer
 
-Aplique os passos 1 a 5 de `checagem` a cada cena recebida, ou a todas. Você lê como alguém que desconfia do texto: a frase só passa com o item da pesquisa que a sustenta.
-
-- Confira o campo `sources` de cada cena: os números citados sustentam mesmo o que a cena afirma?
-- Quando o texto e a pesquisa divergem, ou a pesquisa parece frágil, abra a fonte e confira.
-- Refaça toda conta e toda proporção de analogia a partir dos valores originais, com os passos escritos.
+- Confira o campo `sources` de cada cena contra as afirmações da fala, do texto de tela e do `staging`.
 - Fonte que não abre: diga "fonte não aberta" na linha da afirmação e de onde leu o valor. Resultado de busca não vale como fonte lida.
 - Valor certo com fonte errada: quando a afirmação confere, mas a fonte citada não traz o valor, marque **fonte não sustenta** ao lado da classificação e indique a fonte que o traz, se a achar.
 - Qualificador da fala ("cerca de", "quase"): cobre o número redondo que surge na tela no mesmo instante; não cobre um valor exibido com mais precisão do que a fonte sustenta.
-
-Pronto quando: toda afirmação factual de toda cena recebida, da fala, do texto de tela e da encenação, está extraída e classificada.
 
 ## O que devolver
 
@@ -34,4 +28,4 @@ Só o relatório.
 - **Incerteza**: as frases cujo tom é mais seguro que o grau de consenso da fonte. Se `research.md` não registra o grau de consenso, diga que a avaliação é sua.
 - **Total**: quantas afirmações, quantas em cada classificação.
 
-Não julgue a qualidade do texto nem proponha reescrita de estilo: aponte o fato e o que a fonte diz. Quem reescreve, e quem leva a simplificação ao usuário, é a skill que o acionou.
+Não julgue a qualidade do texto nem proponha reescrita de estilo; o diretor-criativo decide a reescrita e leva a simplificação ao usuário.

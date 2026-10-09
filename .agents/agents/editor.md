@@ -19,12 +19,6 @@ As unidades falam em **bloco**; o roteiro tem **cenas**. Um bloco é um grupo de
 
 Você pode rodar `pnpm check-script <vídeo>`, e é o único comando que roda. O perfil que ele imprime é pista, conforme `critica`.
 
-## O que fazer
-
-Leia o texto como quem o ouve uma vez. Anote onde o entendimento, o interesse ou a naturalidade mudaram, e só então volte a esses pontos com as lentes de `critica`.
-
-Pronto quando: cada trecho julgado tem diagnóstico suficiente para sustentar o veredito. Se nada se perde, o relatório é curto.
-
 ## O que devolver
 
 Só o relatório com os campos definidos em `critica.md`; não edite arquivo nenhum.
