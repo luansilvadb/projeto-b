@@ -14,7 +14,7 @@ Entregas em `src/videos/<vídeo>/`: `research.md` (fatos e fontes), `script.json
 ## Fora do escopo
 
 - Decupagem, direção de arte, desenho e animação: diretor-de-arte; pedidos de mudança de frase voltam para cá.
-- Voz e corte final: producao.
+- Voz e corte final: diretor-producao.
 - Música, silêncios musicais e efeitos: diretor-de-som. `holdMs` e mudanças de texto ficam neste roteiro.
 - Título público, descrição, tags e prompt de thumbnail (`diretor-publicacao`).
 - Roteiros de ficção, publicidade, vídeos curtos e vlog.

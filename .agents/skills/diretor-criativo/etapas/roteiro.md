@@ -82,7 +82,7 @@ O número em algarismos, o símbolo e a sigla vão para a tela, descritos na enc
 Além das regras do validador:
 
 - O modelo de voz gera uma frase por vez, com pausa entre elas, e o raciocínio picotado em frases curtas sai monótono e mal-humorado: o encadeamento de `escrita/narracao` pesa em dobro aqui.
-- A pontuação decide como a frase é falada; a tabela está em `etapas/narracao.md`, na skill `producao`.
+- A pontuação decide como a frase é falada; a tabela está em `etapas/narracao.md`, na skill `diretor-producao`.
 - A vírgula é uma pausa: o modelo de voz para em cada uma. Só ponha vírgula onde quem fala pararia. "E mesmo assim emagreciam", não "e, mesmo assim, emagreciam", que sai com duas pausas.
 - A grafia decide a pronúncia. Se o usuário ouvir uma palavra dita errado, escreva em `narration` como ela deve soar e deixe a grafia correta em `script.md`, na seção de grafias de pronúncia. O modelo lê "mal-humorado" ligando o "l" à vogal ("malumorado"); "mau-humorado" sai certo. O Whisper não acusa esse tipo de erro, só o ouvido.
 
@@ -176,4 +176,4 @@ Fica disponível, sem ser imposto: `script.json` com os planos, `art.md`, `resea
 - **Precisa do usuário?** Só quando muda uma decisão dele. A frase mais natural, o conectivo e a fusão local entram sem consulta, e `script.md` acompanha. A embalagem que vende a mesma promessa é do `diretor-publicacao`; se exigir outra promessa, volte ao usuário e registre a mudança aceita em `script.md`.
 - **Custa produção?** Sim, mesmo sendo refino: a frase alterada regera o áudio dela, desloca os tempos e pede conferir os planos. O custo não pede licença, e não segura o conserto: a frase que o animatic mostra que não se encena é reescrita, e o fato que se descobre errado é corrigido. Não se defende um erro para poupar a voz gerada.
 
-A reescrita volta ao `checador` quando altera uma afirmação, a força dela ou uma comparação; a que só troca a ordem das palavras, não. Quem depende do texto (a voz, os planos, a trilha) responde só à mudança no próprio artefato: a frase regerada, o plano conferido, a duração que mudou. A checagem do conjunto na montagem do arquivo final (skill `producao`) é a rede.
+A reescrita volta ao `checador` quando altera uma afirmação, a força dela ou uma comparação; a que só troca a ordem das palavras, não. Quem depende do texto (a voz, os planos, a trilha) responde só à mudança no próprio artefato: a frase regerada, o plano conferido, a duração que mudou. A checagem do conjunto na montagem do arquivo final (skill `diretor-producao`) é a rede.

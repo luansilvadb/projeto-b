@@ -11,8 +11,8 @@ Entregas: compromissos antecipados, quando necessários; mapa em `src/videos/<v�
 
 ## Fora do escopo
 
-- Geração, pronúncia e entonação da voz: producao.
-- Operar ferramentas de geração, baixar efeitos, renderizar e normalizar: producao.
+- Geração, pronúncia e entonação da voz: diretor-producao.
+- Operar ferramentas de geração, baixar efeitos, renderizar e normalizar: diretor-producao.
 - Escrever frases ou `holdMs`: diretor-criativo.
 - Desenho e animação: diretor-de-arte.
 - Use referências para método e medidas; não copie melodias, temas ou timbres reconhecíveis.

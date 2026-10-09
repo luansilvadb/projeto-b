@@ -12,7 +12,7 @@ Entregas: ficha visual (`art.md`), `shots` em `script.json`, folhas de modelo, q
 ## Fora do escopo
 
 - Tese, estrutura, narração e fontes: diretor-criativo.
-- Voz e corte final: producao.
+- Voz e corte final: diretor-producao.
 - Música, mixagem e efeitos: diretor-de-som; cenas não tocam som.
 - Arte final de thumbnail.
 - Use referências pelo método e mecanismo, sem copiar personagens, desenhos, cenários, composições, paletas ou movimentos reconhecíveis.

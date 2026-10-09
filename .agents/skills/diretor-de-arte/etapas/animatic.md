@@ -1,6 +1,6 @@
 # Animatic de um vídeo
 
-Depende de dois artefatos: os `shots` do trecho em `script.json`, e a narração gravada (skill `producao`), porque a composição só monta com o manifesto dela e é dele que saem os tempos de cada plano. Um quadro que não precisa do tempo da fala (um estudo, uma prova de personagem) cabe antes da voz, como em `decupagem.md`. Faltando a narração, diga que ela falta: gerá-la é da skill `producao`.
+Depende de dois artefatos: os `shots` do trecho em `script.json`, e a narração gravada (skill `diretor-producao`), porque a composição só monta com o manifesto dela e é dele que saem os tempos de cada plano. Um quadro que não precisa do tempo da fala (um estudo, uma prova de personagem) cabe antes da voz, como em `decupagem.md`. Faltando a narração, diga que ela falta: gerá-la é da skill `diretor-producao`.
 
 O animatic é a forma barata de saber se a imagem conta a explicação: cada plano desenhado e composto (o que aparece, onde, com que texto) tocando sobre a narração, sem acabamento de movimento. Ele responde, antes de se gastar tempo animando: o assunto se acha? personagem, cenário, texto e dado convivem? a escala funciona no tamanho final? parece acontecimento ou slide? a identidade aguenta ser repetida? O acabamento é só o que essas perguntas pedem. Uma cena ou um trecho termina quando a dúvida visual dele está resolvida.
 

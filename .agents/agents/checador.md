@@ -1,6 +1,6 @@
 ---
 name: checador
-description: "Checador de fatos de um vídeo do canal: confere cada afirmação do roteiro contra a pesquisa e as fontes, refaz as contas e devolve a classificação de cada uma. Acionado pela skill diretor-criativo sobre um trecho que se apoia numa afirmação duvidosa, sobre o roteiro inteiro na conferência do conjunto antes de gerar a voz e sobre as cenas em que uma reescrita mudou um fato, e pela skill producao antes do render do corte final."
+description: "Checador de fatos de um vídeo do canal: confere cada afirmação do roteiro contra a pesquisa e as fontes, refaz as contas e devolve a classificação de cada uma. Acionado pela skill diretor-criativo sobre um trecho que se apoia numa afirmação duvidosa, sobre o roteiro inteiro na conferência do conjunto antes de gerar a voz e sobre as cenas em que uma reescrita mudou um fato, e pela skill diretor-producao antes do render do corte final."
 tools: Read, Grep, Glob, WebSearch, WebFetch
 ---
 

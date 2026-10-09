@@ -39,7 +39,7 @@ As skills de produção e do OpenSpec SHALL estar disponíveis em `.agents/skill
 
 #### Scenario: Inventário de skills depois da migração
 - **WHEN** se inspeciona o diretório de skills locais usado pelo Codex
-- **THEN** estão presentes `creator`, `diretor-criativo`, `diretor-de-arte`, `diretor-de-som`, `grilling`, `producao` e as seis skills `openspec-*` já existentes
+- **THEN** estão presentes `creator`, `diretor-criativo`, `diretor-de-arte`, `diretor-de-som`, `grilling`, `diretor-producao` e as seis skills `openspec-*` já existentes
 - **AND** cada skill contém seu `SKILL.md` e os arquivos auxiliares que tinha antes da migração
 
 ### Requirement: Referências de manutenção apontam à fonte canônica

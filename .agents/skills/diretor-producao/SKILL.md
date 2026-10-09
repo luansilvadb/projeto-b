@@ -1,5 +1,5 @@
 ---
-name: producao
+name: diretor-producao
 description: "Operação de voz, trilha e efeitos sonoros já decididos, montagem do arquivo final e acervo. Use para gerar ou corrigir narração, gerar trilha, buscar e baixar efeitos, renderizar e arquivar o que foi publicado."
 ---
 

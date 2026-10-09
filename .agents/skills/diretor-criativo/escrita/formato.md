@@ -13,7 +13,7 @@ Que decisões atuais do texto precisam ficar registradas para outra etapa não t
 | `script.md` | os compromissos atuais que não se rederivam dos outros arquivos, o agrupamento das cenas em blocos e os registros operacionais que outra etapa consome |
 | `research.md` | fatos e fontes |
 | `art.md`, `score.md`, `sound.md` | as decisões atuais da imagem, do movimento e do som, das skills donas |
-| `voice.json` | as tomadas de voz escolhidas de ouvido, da skill `producao` |
+| `voice.json` | as tomadas de voz escolhidas de ouvido, da skill `diretor-producao` |
 | git | a história: o que a decisão era antes, o que saiu, como se chegou aqui |
 
 `script.md` nunca leva narração: uma frase copiada para cá envelhece na primeira reescrita.

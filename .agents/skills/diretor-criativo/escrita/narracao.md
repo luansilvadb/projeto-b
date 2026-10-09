@@ -40,7 +40,7 @@ O narrador conta em off: é alguém que apurou a história e a conta com calma, 
 
 ### A ferramenta de voz
 
-O modelo lê `narration` literalmente e gera uma frase por vez. O que ele recusa (números, unidades e siglas por extenso, o tamanho da frase, a pontuação final) e o que ele faz com a vírgula, o dois-pontos e a grafia estão em `etapas/roteiro.md` e na etapa `narracao` da skill `producao`. O que esta unidade guarda disso:
+O modelo lê `narration` literalmente e gera uma frase por vez. O que ele recusa (números, unidades e siglas por extenso, o tamanho da frase, a pontuação final) e o que ele faz com a vírgula, o dois-pontos e a grafia estão em `etapas/roteiro.md` e na etapa `narracao` da skill `diretor-producao`. O que esta unidade guarda disso:
 
 - O texto picotado em frases curtas saiu monótono e mal-humorado no áudio real: cada ponto é uma pausa do modelo. Aqui a ferramenta e o ouvido pedem a mesma coisa.
 - A pontuação escreve a pausa e a relação que a fala precisa. Pausa é ponto, e não reticências; o dois-pontos deixa a voz em suspenso antes de uma citação.
