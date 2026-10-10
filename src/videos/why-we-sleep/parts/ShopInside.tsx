@@ -5,7 +5,6 @@ import { Place } from "../../../components/Place";
 import { Wall } from "../../../components/Camera";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { apron, goods, person, shopInside } from "../palette";
-import { clamp01 } from "../../../components/timing";
 
 /** O chão da loja, onde tudo pousa. */
 export const FLOOR_Y = 900;
@@ -354,15 +353,12 @@ export const Keeper: React.FC<KeeperProps> = ({
 );
 
 const PER_SHELF = 7;
-const BIG_FROM = 44;
 
 type ShelfItem = {
   readonly x: number;
-  /** A tábua em que o item pousa; os que transbordam ficam no chão. */
+  /** A tábua em que o item pousa. */
   readonly y: number;
   readonly radius: number;
-  /** Os maiores e mais firmes: os que ficam. */
-  readonly big: boolean;
   readonly color: string;
 };
 
@@ -372,7 +368,6 @@ const shelfItem = (shelf: number, index: number, y: number): ShelfItem => {
     x: SHELVES.x + ((index + 0.5) / PER_SHELF) * SHELVES.width,
     y,
     radius,
-    big: radius >= BIG_FROM,
     color: goods.items[(shelf * 3 + index) % goods.items.length],
   };
 };
@@ -381,48 +376,18 @@ const shelfItem = (shelf: number, index: number, y: number): ShelfItem => {
 const SHELF_ITEMS: readonly ShelfItem[] = SHELVES.ys.flatMap((y, shelf) =>
   Array.from({ length: PER_SHELF }, (_, index) => shelfItem(shelf, index, y)),
 );
-/** O que não coube: empilhado por cima e caído no chão, em volta das prateleiras. */
-const OVERFLOW: readonly ShelfItem[] = [
-  ...Array.from({ length: PER_SHELF - 1 }, (_, index) => ({
-    ...shelfItem(3, index, SHELVES.ys[0] - 74),
-    x: SHELVES.x + ((index + 1) / PER_SHELF) * SHELVES.width,
-    big: false,
-  })),
-  ...[-70, 40, SHELVES.width + 20, SHELVES.width + 110].map((dx, index) => ({
-    ...shelfItem(4, index, FLOOR_Y),
-    x: SHELVES.x + dx,
-    big: false,
-  })),
-];
 
-type ShelfGoodsProps = {
-  /** As prateleiras transbordam: há itens por cima e no chão. */
-  readonly overflowing?: boolean;
-  /** Quanto do excesso já foi tirado, de 0 a 1: os pequenos somem, os grandes ficam. */
-  readonly trimmed?: number;
-};
-
-/** O que está nas prateleiras. A lojista tira o excesso; os itens grandes ficam onde estão. */
-export const ShelfGoods: React.FC<ShelfGoodsProps> = ({
-  overflowing = false,
-  trimmed = 0,
-}) => (
+/** A mercadoria nas três prateleiras, com tamanho e posição fixos. */
+export const ShelfGoods: React.FC = () => (
   <SvgLayer>
-    {[...SHELF_ITEMS, ...(overflowing ? OVERFLOW : [])].map((item, index) => {
-      // Cada item pequeno sai na sua vez, ao longo da arrumação.
-      const order = random(`trim-${index}`);
-      const gone = item.big
-        ? 0
-        : clamp01((trimmed - order * 0.7) / 0.3);
-      return gone >= 1 ? null : (
-        <circle
-          key={index}
-          cx={item.x}
-          cy={item.y - item.radius}
-          r={item.radius * (1 - gone)}
-          fill={item.color}
-        />
-      );
-    })}
+    {SHELF_ITEMS.map((item, index) => (
+      <circle
+        key={index}
+        cx={item.x}
+        cy={item.y - item.radius}
+        r={item.radius}
+        fill={item.color}
+      />
+    ))}
   </SvgLayer>
 );

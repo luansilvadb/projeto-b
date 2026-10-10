@@ -1,17 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { HEIGHT, WIDTH } from "../format";
-import { cameraBetween, framing } from "./Camera";
+import { cameraBetween, framing, seenAt } from "./Camera";
 
 const center = [WIDTH / 2, HEIGHT / 2] as const;
-
-/** Onde um ponto do plano do assunto aparece no quadro, como a camada de profundidade 1 o desenha. */
-const onScreen = (
-  point: readonly [number, number],
-  camera: { x: number; y: number; zoom: number },
-) => [
-  center[0] - camera.x + camera.zoom * (point[0] - center[0]),
-  center[1] - camera.y + camera.zoom * (point[1] - center[1]),
-];
 
 describe("framing", () => {
   it("não desloca a câmera para aproximar o centro do quadro", () => {
@@ -20,12 +11,12 @@ describe("framing", () => {
 
   it("leva o assunto ao centro do quadro", () => {
     const subject = [700, 800] as const;
-    expect(onScreen(subject, framing(subject, 2))).toEqual([...center]);
+    expect(seenAt(framing(subject, 2), subject)).toEqual([...center]);
   });
 
   it("leva o assunto ao ponto pedido do quadro", () => {
     const subject = [860, 716] as const;
-    expect(onScreen(subject, framing(subject, 3.2, [640, 700]))).toEqual([
+    expect(seenAt(framing(subject, 3.2, [640, 700]), subject)).toEqual([
       640, 700,
     ]);
   });

@@ -13,6 +13,13 @@ export const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as 
 export const clamp01 = (value: number): number =>
   Math.min(1, Math.max(0, value));
 
+/** Quanto do caminho já foi andado, de 0 a 1, com `t` de 0 a 1: reta, e uma freada no fim que termina parada. */
+export const walked = (t: number, brake = 0.75): number => {
+  const u = clamp01(t);
+  const stop = 1 / (1 - brake ** 2);
+  return u < brake ? 2 * stop * (1 - brake) * u : 1 - stop * (1 - u) ** 2;
+};
+
 const progress = (
   frame: number,
   at: number,

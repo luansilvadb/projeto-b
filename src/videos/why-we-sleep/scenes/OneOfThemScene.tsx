@@ -3,7 +3,6 @@ import {
   AbsoluteFill,
   Easing,
   interpolate,
-  interpolateColors,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -31,11 +30,12 @@ import {
   ramp,
   clamp,
   clamp01,
+  walked,
 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { markFor } from "../../../video/stage";
-import { elephant, idea, jellyfish, person, personInPajamas } from "../palette";
+import { elephant, idea, jellyfish, person, personInPajamas, blend } from "../palette";
 import { Bed, BED_SIZE } from "../parts/Bed";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import {
@@ -291,24 +291,13 @@ const LeavingSooner: React.FC<{ by: number; children: React.ReactNode }> = ({
   );
 };
 
-const PERSON_KEYS = Object.keys(person) as (keyof PersonColors)[];
-
 /** A roupa de dia virando o pijama: as cores passam de uma à outra enquanto ela se deita. */
 const dressed = (pajamas: number): PersonColors =>
   pajamas <= 0
     ? person
     : pajamas >= 1
       ? personInPajamas
-      : (Object.fromEntries(
-          PERSON_KEYS.map((key) => [
-            key,
-            interpolateColors(
-              pajamas,
-              [0, 1],
-              [person[key], personInPajamas[key]],
-            ),
-          ]),
-        ) as PersonColors);
+      : blend(person, personInPajamas, pajamas);
 
 // A elefanta entra andando pela esquerda: de quão longe vem (de fora do
 // quadro), em quanto tempo, e a partir de que ponto do caminho freia.
@@ -395,13 +384,6 @@ const RaisedArm: React.FC<RaisedArmProps> = ({ height, hand, bend, slump }) => {
       </g>
     </svg>
   );
-};
-
-/** Quanto do caminho já foi andado, de 0 a 1, com `t` de 0 a 1: reta até `brake`, e dali uma freada que termina parada. */
-const walked = (t: number, brake: number): number => {
-  const u = clamp01(t);
-  const stop = 1 / (1 - brake ** 2);
-  return u < brake ? 2 * stop * (1 - brake) * u : 1 - stop * (1 - u) ** 2;
 };
 
 type Cues = {

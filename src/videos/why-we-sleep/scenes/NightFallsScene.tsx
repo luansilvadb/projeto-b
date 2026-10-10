@@ -30,6 +30,7 @@ import {
   ramp,
   clamp01,
   clamp,
+  walked,
 } from "../../../components/timing";
 import { typography } from "../../../design/tokens";
 import type { SceneProps } from "../../../video/NarratedVideo";
@@ -590,15 +591,6 @@ const DuskThicket: React.FC<{ clock: number }> = ({ clock }) => {
 // Chegando, ele olha em volta uma vez antes de a noite descer: quanto a cabeça gira, em graus, e por quanto tempo.
 const ARRIVAL_LOOK = { degrees: -9, seconds: 0.7 };
 
-/** Quanto do caminho já foi andado, de 0 a 1, com `t` de 0 a 1: reta até `brake`, e dali uma freada que termina parada. */
-const walked = (t: number): number => {
-  const u = clamp01(t);
-  const stop = 1 / (1 - WALK.brake ** 2);
-  return u < WALK.brake
-    ? 2 * stop * (1 - WALK.brake) * u
-    : 1 - stop * (1 - u) ** 2;
-};
-
 type ShotClock = {
   /** O quadro do vídeo em que o plano começa: o relógio do cenário. */
   readonly clock: number;
@@ -616,7 +608,7 @@ const DuskShot: React.FC<DuskShotProps> = ({ walkAt, clock }) => {
   const length = useShotLength();
   const seconds = (clock + frame) / fps;
   const t = (frame - walkAt) / (WALK.seconds * fps);
-  const arrived = walked(t);
+  const arrived = walked(t, WALK.brake);
   // A passada encurta na freada, junto com a velocidade, e ele para com as quatro patas no chão.
   const slowing = clamp01((1 - t) / (1 - WALK.brake));
   const pace = WALK.pace * slowing;

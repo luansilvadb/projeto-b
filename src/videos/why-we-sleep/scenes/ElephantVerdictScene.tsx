@@ -3,15 +3,10 @@ import {
   AbsoluteFill,
   Easing,
   interpolate,
-  interpolateColors,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import {
-  Elephant,
-  STRIDE_LENGTH,
-  type ElephantColors,
-} from "../../../art/Elephant";
+import { Elephant, STRIDE_LENGTH } from "../../../art/Elephant";
 import {
   cameraBetween,
   framing,
@@ -28,7 +23,7 @@ import { cue, linear, mix, ramp, clamp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { leaveProgress, SCENERY_EXIT_FRAMES } from "../../../video/stage";
-import { elephant, elephantNight, ink } from "../palette";
+import { elephant, elephantNight, ink, blend } from "../palette";
 import {
   daylightAt,
   Herd,
@@ -298,8 +293,6 @@ const STAYS = { before: 20, frames: 18, brake: 16 };
 const DROWSE = { trunk: 0.8, lid: 0.4 };
 // O foco de luz pisca duas vezes sobre o contorno vazio: a que brilho desce e em quantos quadros.
 const FLICKER = { low: 0.25, frames: 16 };
-
-const ELEPHANT_KEYS = Object.keys(elephant) as (keyof ElephantColors)[];
 // A fase da orelha e da tromba e a do passo: as que ela tem na `Herd` da savana.
 const FRONT_PHASE = herdPhase(FIRST);
 const FRONT_GAIT = phaseOf(`gait-${FRONT.seed}`);
@@ -342,12 +335,7 @@ const Front: React.FC<FrontProps> = ({
     stride.pace * width * 0.012 * (0.5 - 0.5 * Math.cos(gait * Math.PI * 8));
   const nod = 0.07 * stride.pace * Math.sin(gait * Math.PI * 4);
   // A pintura passa da noite ao dia com o fundo, em vez de trocar num quadro.
-  const colors = Object.fromEntries(
-    ELEPHANT_KEYS.map((key) => [
-      key,
-      interpolateColors(lit, [0, 1], [elephantNight[key], elephant[key]]),
-    ]),
-  ) as ElephantColors;
+  const colors = blend(elephantNight, elephant, lit);
 
   return (
     <>

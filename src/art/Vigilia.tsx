@@ -28,7 +28,7 @@ const add = (a: Vec, b: Vec): Vec => [a[0] + b[0], a[1] + b[1]];
 const sub = (a: Vec, b: Vec): Vec => [a[0] - b[0], a[1] - b[1]];
 const mix = (from: number, to: number, u: number) => from + (to - from) * u;
 /** Gira um vetor, em graus, no sentido do relógio na tela. */
-const spin = ([x, y]: Vec, degrees: number): Vec => {
+export const spin = ([x, y]: Vec, degrees: number): Vec => {
   const cos = Math.cos(rad(degrees));
   const sin = Math.sin(rad(degrees));
   return [x * cos - y * sin, x * sin + y * cos];

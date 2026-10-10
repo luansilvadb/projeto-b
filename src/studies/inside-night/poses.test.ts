@@ -1,8 +1,19 @@
 import { describe, expect, it } from "vitest";
-import { bones, REACH, type Vec } from "../../art/Vigilia";
+import { bones, REACH, spin, type Vec } from "../../art/Vigilia";
 import { POSES, settle } from "./poses";
 
 const distance = (a: Vec, b: Vec) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+
+it.each([
+  [0, [3, 4]],
+  [90, [-4, 3]],
+  [-90, [4, -3]],
+  [180, [-3, -4]],
+] as const)("spin gira %s graus no sentido do relógio na tela", (angle, expected) => {
+  const [x, y] = spin([3, 4], angle);
+  expect(x).toBeCloseTo(expected[0], 12);
+  expect(y).toBeCloseTo(expected[1], 12);
+});
 
 describe("as oito poses da Vigília", () => {
   it("são oito, na ordem do número", () => {

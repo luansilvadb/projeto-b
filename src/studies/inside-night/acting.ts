@@ -20,7 +20,7 @@
 // Tudo no espaço das poses: a origem no chão embaixo do cubo, o chão plano, e
 // a alavanca do cenário menos `SLOPE`.
 
-import { bones, mixPose, type Vec } from "../../art/Vigilia";
+import { bones, mixPose, type Vec, spin } from "../../art/Vigilia";
 import { grip, LEVER as HUB, POSES, SLOPE, stand, type Pose } from "./poses";
 import { ACT, E, HIT, HOLD, key, KICK, leverAngle, mix, pulse, SIT, span, strain } from "./timing";
 
@@ -334,11 +334,6 @@ const along = (t: number, from: Pose, to: Pose) => (leverOf(t) - from.lever) / (
 /** Encostada na haste: a pose 3 e a pose 4 seguem o ângulo dela, cedendo e voltando juntas. */
 const pressed3 = (t: number) => mixPose(PUSH_FROM, PUSH_TO, along(t, PUSH_FROM, PUSH_TO));
 const pressed4 = (t: number) => mixPose(RAM_FROM, RAM_TO, along(t, RAM_FROM, RAM_TO));
-
-const spin = ([x, y]: Vec, degrees: number): Vec => {
-  const turn = (degrees * Math.PI) / 180;
-  return [x * Math.cos(turn) - y * Math.sin(turn), x * Math.sin(turn) + y * Math.cos(turn)];
-};
 /** Pose 5, pendurada na haste: o corpo inteiro gira com ela em volta do cubo, até o batente. */
 const carried = (t: number): Pose => {
   const turn = leverOf(t) - TAKEN.lever;

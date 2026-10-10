@@ -6,10 +6,16 @@ O job é montado por scripts/lib/voice-worker.ts e traz o modelo e a amostra de
 voz. Depois de carregar, o processo escreve {"ready": true} no stdout e passa
 a ler pedidos do stdin, um JSON por linha:
 
-    {"id": 1, "text": "...", "takes": [{"seed": 5, "output": "caminho.wav"}]}
+    {"text": "...", "takes": [{"seed": 5, "output": "caminho.wav"}]}
 
-Cada tomada gerada, medida e conferida vira uma linha JSON no stdout; o pedido
-termina com {"id": 1, "done": true}. Mensagens de progresso vão para o stderr.
+Cada tomada gerada, medida e conferida vira uma linha JSON no stdout:
+
+    {"seed": 5, "durationMs": 900, "cutOff": false, "pitchOffset": null,
+     "ending": null, "words": []}
+
+O pedido termina com {"done": true}, ou {"done": true, "error": "..."} se falhar.
+O cliente só envia o próximo pedido depois de done, por isso não há IDs.
+As tomadas saem na ordem pedida. Mensagens de progresso vão para o stderr.
 """
 
 import json
@@ -42,7 +48,6 @@ def main() -> None:
                 sf.write(take["output"], samples, model.sampling_rate, subtype="PCM_16")
                 hz = pitch.median_pitch(samples, model.sampling_rate, bounds)
                 result = {
-                    "id": request["id"],
                     "seed": take["seed"],
                     "durationMs": round(len(samples) * 1000 / model.sampling_rate),
                     # O silence.trim devolve um booleano do NumPy, que o json não escreve.
@@ -53,9 +58,9 @@ def main() -> None:
                     "words": stt.transcribe(whisper, suppress, take["output"]),
                 }
                 print(json.dumps(result), flush=True)
-            print(json.dumps({"id": request["id"], "done": True}), flush=True)
+            print(json.dumps({"done": True}), flush=True)
         except Exception as error:  # Quem pediu continua de pé e mostra o erro.
-            print(json.dumps({"id": request["id"], "done": True, "error": str(error)}), flush=True)
+            print(json.dumps({"done": True, "error": str(error)}), flush=True)
 
 
 if __name__ == "__main__":

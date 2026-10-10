@@ -1,3 +1,4 @@
+import { interpolateColors } from "remotion";
 import type { CassiopeaColors } from "../../art/Cassiopea";
 import type { AntelopeColors } from "../../art/Antelope";
 import type { ElephantColors } from "../../art/Elephant";
@@ -875,3 +876,26 @@ export const savannaNightSky = {
   moonGlow: "#fff4d3",
   cloudEdge: "#cdacff",
 } as const;
+
+/** As cores a caminho de uma paleta para a outra: cada tom interpola, e o halo só existe na que o tem. */
+export const blend = <Tones,>(from: Tones, to: Tones, t: number): Tones => {
+  if (typeof from === "string" && typeof to === "string") {
+    return interpolateColors(t, [0, 1], [from, to]) as Tones;
+  }
+  if (Array.isArray(from) && Array.isArray(to)) {
+    return from.map((tone, index) => blend(tone, to[index], t)) as Tones;
+  }
+  if (from && to && typeof from === "object") {
+    return Object.fromEntries(
+      Object.keys(from).map((key) => [
+        key,
+        blend(
+          (from as Record<string, unknown>)[key],
+          (to as Record<string, unknown>)[key],
+          t,
+        ),
+      ]),
+    ) as Tones;
+  }
+  return t < 0.5 ? from : to;
+};

@@ -33,6 +33,15 @@ export const framing = (
   zoom,
 });
 
+/** Onde um ponto do cenário aparece no quadro, visto por uma câmera: o inverso de `framing`. */
+export const seenAt = (
+  camera: CameraState,
+  point: readonly [number, number],
+): readonly [number, number] => [
+  WIDTH / 2 + camera.zoom * (point[0] - WIDTH / 2) - camera.x,
+  HEIGHT / 2 + camera.zoom * (point[1] - HEIGHT / 2) - camera.y,
+];
+
 /**
  * A câmera a meio caminho entre dois enquadramentos, com `t` de 0 a 1. A
  * aproximação interpola em escala geométrica, para a velocidade aparente ser

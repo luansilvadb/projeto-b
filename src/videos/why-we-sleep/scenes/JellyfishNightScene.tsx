@@ -4,6 +4,7 @@ import {
   cameraBetween,
   framing,
   type CameraState,
+  seenAt,
 } from "../../../components/Camera";
 import { useStage } from "../../../components/Cast";
 import { Grain } from "../../../components/Grain";
@@ -15,7 +16,7 @@ import { typography } from "../../../design/tokens";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { leaveStart } from "../../../video/stage";
-import { ink, jellyfish, lagoon } from "../palette";
+import { ink, jellyfish, lagoon, blend } from "../palette";
 import { LAB, TANK_CENTER } from "../parts/Laboratory";
 import { JELLYFISH_SPOT } from "../parts/Lagoon";
 import { FISH_WATCHING, LAGOON } from "../parts/lagoonCameras";
@@ -34,7 +35,7 @@ import {
   TankJellyfish,
   TankShot,
 } from "../parts/TankShot";
-import { INSIDE_END, InsideLeaving, blend, seenAt } from "./JellyfishScene";
+import { INSIDE_END, InsideLeaving } from "./JellyfishScene";
 import { NEVER, Prelude, Preluded, Standing } from "./MaybeBrainScene";
 
 // A câmera recua de "por dentro" do sino até o plano médio da lagoa, e o índigo abre para a noite dela: o

@@ -3,7 +3,6 @@ import {
   AbsoluteFill,
   Easing,
   interpolate,
-  interpolateColors,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -36,7 +35,7 @@ import {
 } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
-import { ink, person, personInPajamas, daylightTones } from "../palette";
+import { ink, person, personInPajamas, daylightTones, blend } from "../palette";
 import { Bed } from "../parts/Bed";
 import {
   DAY_STRIP,
@@ -421,24 +420,13 @@ const FACES: readonly (readonly [number, Expression])[] = [
 const faceAfter = (hours: number): Expression =>
   [...FACES].reverse().find(([from]) => hours >= from)?.[1] ?? "neutral";
 
-const PERSON_KEYS = Object.keys(person) as (keyof PersonColors)[];
-
 /** A roupa de dia virando o pijama: as cores passam de uma à outra enquanto ela se deita. */
 const dressed = (pajamas: number): PersonColors =>
   pajamas <= 0
     ? person
     : pajamas >= 1
       ? personInPajamas
-      : (Object.fromEntries(
-          PERSON_KEYS.map((key) => [
-            key,
-            interpolateColors(
-              pajamas,
-              [0, 1],
-              [person[key], personInPajamas[key]],
-            ),
-          ]),
-        ) as PersonColors);
+      : blend(person, personInPajamas, pajamas);
 
 type ThreeDaysShotProps = ShotClock & {
   /** Quadros do plano em que ela passa pelo meio da segunda, em que chega à cama e em que a quarta ganha nome. */

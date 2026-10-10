@@ -81,8 +81,6 @@ type PersonProps = {
   readonly heldInFront?: boolean;
   /** A piscada, de 0 (como a expressão manda) a 1 (fechado). */
   readonly blink?: number;
-  /** Figurante de mau humor: com o rosto de dois pontos, ganha sobrancelhas juntas e boca caída. */
-  readonly grumpy?: boolean;
   /** Óculos redondos: a cor da armação. */
   readonly glasses?: string;
   /**
@@ -518,7 +516,6 @@ export const Person: React.FC<PersonProps> = ({
   held,
   heldInFront = false,
   blink = 0,
-  grumpy = false,
   glasses,
   stride,
   lean: ownLean = 0,
@@ -758,29 +755,6 @@ export const Person: React.FC<PersonProps> = ({
                   fill={colors.pupil}
                 />
               ))}
-              {grumpy ? (
-                <g
-                  stroke={colors.hair}
-                  strokeWidth={8}
-                  strokeLinecap="round"
-                  fill="none"
-                >
-                  {[-1, 1].map((side) => (
-                    <line
-                      key={side}
-                      x1={side * (EYE.gap + 22)}
-                      y1={EYE.y - 40}
-                      x2={side * (EYE.gap - 14)}
-                      y2={EYE.y - 26}
-                    />
-                  ))}
-                  <path
-                    d={`M-16,${EYE.y + 56} Q0,${EYE.y + 46} 16,${EYE.y + 56}`}
-                    stroke={colors.mouth}
-                    strokeWidth={7}
-                  />
-                </g>
-              ) : null}
             </>
           ) : (
             <>

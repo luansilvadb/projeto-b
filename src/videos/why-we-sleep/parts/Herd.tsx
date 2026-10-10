@@ -17,6 +17,7 @@ import {
   ink,
   daylightTones,
   type TagTone,
+  blend,
 } from "../palette";
 import { SAVANNA_GROUND_Y, SavannaShadow } from "./savanna/RichTheme";
 import { Tag } from "./Tag";
@@ -65,20 +66,9 @@ const DUST = { lasts: 0.3, radius: 26, rise: 30 };
 const strideOf = (width: number): number =>
   (STRIDE_LENGTH * width) / ELEPHANT_UNITS;
 
-const ELEPHANT_KEYS = Object.keys(elephant) as (keyof ElephantColors)[];
-
 /** A pintura da elefanta entre a noite e o dia: as cores passam de uma à outra com a luz, em vez de trocar num quadro. */
 const elephantAt = (daylight: number): ElephantColors =>
-  Object.fromEntries(
-    ELEPHANT_KEYS.map((key) => [
-      key,
-      interpolateColors(
-        clamp01(daylight),
-        [0, 1],
-        [elephantNight[key], elephant[key]],
-      ),
-    ]),
-  ) as ElephantColors;
+  blend(elephantNight, elephant, clamp01(daylight));
 
 export type HerdMember = {
   /** Onde ela pisa: x no quadro, e y a partir do chão da savana (negativo é mais longe). */

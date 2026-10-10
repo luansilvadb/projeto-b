@@ -23,8 +23,8 @@ type GeneratedTake = {
 
 type WorkerLine =
   | { readonly ready: true }
-  | ({ readonly id: number } & GeneratedTake)
-  | { readonly id: number; readonly done: true; readonly error?: string };
+  | GeneratedTake
+  | { readonly done: true; readonly error?: string };
 
 export type VoiceWorker = {
   /** Resolve quando os modelos terminam de carregar. */
@@ -58,7 +58,6 @@ export const startVoiceWorker = (job: unknown): VoiceWorker => {
     },
   );
 
-  let nextId = 1;
   let stopped = false;
   let markReady: () => void = () => undefined;
   let failStart: (error: Error) => void = () => undefined;
@@ -66,14 +65,12 @@ export const startVoiceWorker = (job: unknown): VoiceWorker => {
     markReady = resolve;
     failStart = reject;
   });
-  const waiting = new Map<
-    number,
-    {
-      readonly takes: GeneratedTake[];
-      readonly resolve: (takes: GeneratedTake[]) => void;
-      readonly reject: (error: Error) => void;
-    }
-  >();
+  // A fila só envia outro pedido depois de done; as respostas dispensam IDs.
+  let pending: {
+    readonly takes: GeneratedTake[];
+    readonly resolve: (takes: GeneratedTake[]) => void;
+    readonly reject: (error: Error) => void;
+  } | undefined;
 
   createInterface({ input: child.stdout }).on("line", (line) => {
     if (!line.startsWith("{")) {
@@ -84,12 +81,12 @@ export const startVoiceWorker = (job: unknown): VoiceWorker => {
       markReady();
       return;
     }
-    const request = waiting.get(message.id);
+    const request = pending;
     if (!request) {
       return;
     }
     if ("done" in message) {
-      waiting.delete(message.id);
+      pending = undefined;
       if (message.error) {
         request.reject(new Error(message.error));
       } else {
@@ -113,10 +110,8 @@ export const startVoiceWorker = (job: unknown): VoiceWorker => {
     }
     const error = new Error(`O processo de voz terminou com código ${code}.`);
     failStart(error);
-    for (const request of waiting.values()) {
-      request.reject(error);
-    }
-    waiting.clear();
+    pending?.reject(error);
+    pending = undefined;
   });
 
   // Um pedido só começa quando o anterior termina: a placa de vídeo é uma.
@@ -125,9 +120,8 @@ export const startVoiceWorker = (job: unknown): VoiceWorker => {
     const run = queue.then(
       () =>
         new Promise<GeneratedTake[]>((resolve, reject) => {
-          const id = nextId++;
-          waiting.set(id, { takes: [], resolve, reject });
-          child.stdin.write(`${JSON.stringify({ id, text, takes })}\n`);
+          pending = { takes: [], resolve, reject };
+          child.stdin.write(`${JSON.stringify({ text, takes })}\n`);
         }),
     );
     queue = run.catch(() => undefined);

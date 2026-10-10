@@ -7,7 +7,7 @@ import {
 } from "remotion";
 import { Cassiopea } from "../../../art/Cassiopea";
 import { Elephant } from "../../../art/Elephant";
-import { cameraBetween, framing } from "../../../components/Camera";
+import { cameraBetween, framing, seenAt } from "../../../components/Camera";
 import {
   Cast,
   FlatStage,
@@ -24,7 +24,7 @@ import { WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { enterProgress, leaveStart, markFor } from "../../../video/stage";
-import { elephant, ink, jellyfish, lab } from "../palette";
+import { elephant, ink, jellyfish, lab, blend } from "../palette";
 import { CLIPBOARD, Clipboard, HELD_CLIPBOARD } from "../parts/Clipboard";
 import { IdeaBackdrop, IdeaShadow } from "../parts/IdeaBackdrop";
 import { Glove, TANK_CENTER } from "../parts/Laboratory";
@@ -46,7 +46,6 @@ import {
 } from "../parts/TankShot";
 import { VacantSign } from "../parts/VacantSign";
 import { ALARM_MAP_LEAD, AlarmMapPrelude } from "./ForcedAwakeScene";
-import { blend, seenAt } from "./JellyfishScene";
 import { Sooner, flash, useCastScale } from "./MaybeBrainScene";
 import { billSway } from "./SkipANightScene";
 import { Drift, driftZoom } from "./SleepDebtScene";

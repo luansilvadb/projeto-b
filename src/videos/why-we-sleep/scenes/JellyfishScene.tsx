@@ -1,7 +1,6 @@
 import {
   AbsoluteFill,
   interpolate,
-  interpolateColors,
   random,
   useCurrentFrame,
   useVideoConfig,
@@ -12,6 +11,7 @@ import {
   Build,
   cameraBetween,
   framing,
+  seenAt,
   type CameraState,
 } from "../../../components/Camera";
 import { Stay, useStage } from "../../../components/Cast";
@@ -29,10 +29,9 @@ import {
   shake,
   clamp,
 } from "../../../components/timing";
-import { HEIGHT, WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
-import { ink, jellyfish, lagoon } from "../palette";
+import { ink, jellyfish, lagoon, blend } from "../palette";
 import { InsideBackdrop } from "../parts/InsideBackdrop";
 import { JELLYFISH_SPOT } from "../parts/Lagoon";
 import { FISH_WATCHING, LAGOON } from "../parts/lagoonCameras";
@@ -287,38 +286,6 @@ const INSIDE_PUSH = 0.08;
 const NET_SECONDS = 1.2;
 // O contorno sai nos últimos quadros do plano: estes depois de a saída do palco começar.
 const OUTLINE_LEAVES = 10;
-
-/** Onde um ponto do cenário aparece no quadro, visto por uma câmera: o inverso de `framing`. */
-export const seenAt = (
-  camera: CameraState,
-  point: readonly [number, number],
-): readonly [number, number] => [
-  WIDTH / 2 + camera.zoom * (point[0] - WIDTH / 2) - camera.x,
-  HEIGHT / 2 + camera.zoom * (point[1] - HEIGHT / 2) - camera.y,
-];
-
-/** As cores dela a caminho de uma pintura para a outra: cada tom interpola, e o halo só existe na que o tem. */
-export const blend = <Tones,>(from: Tones, to: Tones, t: number): Tones => {
-  if (typeof from === "string" && typeof to === "string") {
-    return interpolateColors(t, [0, 1], [from, to]) as Tones;
-  }
-  if (Array.isArray(from) && Array.isArray(to)) {
-    return from.map((tone, index) => blend(tone, to[index], t)) as Tones;
-  }
-  if (from && to && typeof from === "object") {
-    return Object.fromEntries(
-      Object.keys(from).map((key) => [
-        key,
-        blend(
-          (from as Record<string, unknown>)[key],
-          (to as Record<string, unknown>)[key],
-          t,
-        ),
-      ]),
-    ) as Tones;
-  }
-  return t < 0.5 ? from : to;
-};
 
 type InsideViewProps = {
   /** O instante e a contagem de pulsos, no relógio do vídeo. */

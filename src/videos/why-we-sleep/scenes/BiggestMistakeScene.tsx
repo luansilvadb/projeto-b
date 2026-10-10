@@ -14,6 +14,7 @@ import {
   framing,
   Layer,
   type CameraState,
+  seenAt,
 } from "../../../components/Camera";
 import {
   Cast,
@@ -38,7 +39,7 @@ import {
   clamp,
 } from "../../../components/timing";
 import { typography } from "../../../design/tokens";
-import { HEIGHT, WIDTH } from "../../../format";
+import { HEIGHT } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { chalkboard, idea, ink, lab, tags } from "../palette";
@@ -232,15 +233,6 @@ type Pose = {
   readonly y: number;
   readonly height: number;
 };
-
-/** Onde um ponto do cenário vai parar no quadro, com a câmera dada: o inverso de `framing`. */
-const project = (
-  camera: CameraState,
-  point: readonly [number, number],
-): readonly [number, number] => [
-  WIDTH / 2 + camera.zoom * (point[0] - WIDTH / 2) - camera.x,
-  HEIGHT / 2 + camera.zoom * (point[1] - HEIGHT / 2) - camera.y,
-];
 
 /** Onde um ponto do quadro vai parar com a aproximação `zoom` em volta de `focus`. */
 const pushedPoint = (
@@ -760,7 +752,7 @@ const QuoteShot: React.FC<QuoteShotProps> = ({
   // A câmera ainda está chegando do corredor: ele vem de onde ela o deixou.
   const arrived = approached(frame);
   const camera = hallCamera(hall.length + frame, hall);
-  const feet = project(camera, [WALK.to, HALL.feet]);
+  const feet = seenAt(camera, [WALK.to, HALL.feet]);
   const him: Pose =
     arrived < 1
       ? { x: feet[0], y: feet[1], height: HALL.height * camera.zoom }

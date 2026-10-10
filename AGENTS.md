@@ -44,7 +44,7 @@ pnpm sound <vídeo> out/<vídeo>/<vídeo>.som.mp3   # só o som (voz, trilha e e
 - Código mudou desde a última validação: rode `pnpm lint` e `pnpm test`. Artefato de vídeo mudou: use o comando que o confere, na tabela do `README.md`.
 - `pnpm setup:tools` baixa cerca de 20 GB de modelos; `pnpm narrate`, `pnpm music` e `pnpm render` usam a GPU e levam minutos. `pnpm sfx` é o único comando que depende de serviço externo (`FREESOUND_API_KEY` no `.env`).
 - O `tsc` roda com `noUnusedLocals`: uma variável ou um import sem uso derruba o `pnpm lint`.
-- As versões de `remotion` e `@remotion/*` são fixas e iguais; atualize só com `pnpm run upgrade` (e a lista `minimumReleaseAgeExclude` em `pnpm-workspace.yaml` acompanha). O Dependabot ignora o Remotion por isso, e separa `torch` e `torchaudio` num PR à parte, porque mudam a voz gerada e pedem teste na GPU.
+- As versões de `remotion` e `@remotion/*` são fixas e iguais; atualize só com `pnpm run upgrade`. Exceções em `minimumReleaseAgeExclude` de `pnpm-workspace.yaml` eventualmente geradas pelo upgrade devem se limitar às versões necessárias; remova as entradas obsoletas. O Dependabot ignora o Remotion por isso, e separa `torch` e `torchaudio` num PR à parte, porque mudam a voz gerada e pedem teste na GPU.
 
 ## Arquitetura
 

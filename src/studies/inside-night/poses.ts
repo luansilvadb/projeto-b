@@ -13,15 +13,9 @@
 // de `base.tsx`, e a alavanca das poses é a do cenário menos `SLOPE`
 // (`cast.tsx`). O sinal dessa inclinação está trocado: veja o README.
 
-import { HOOF, type Vec, type VigiliaPose } from "../../art/Vigilia";
+import { HOOF, spin, type Vec, type VigiliaPose } from "../../art/Vigilia";
 
 const rad = (degrees: number) => (degrees * Math.PI) / 180;
-/** Gira um vetor, em graus, no sentido do relógio na tela. */
-const spin = ([x, y]: Vec, degrees: number): Vec => {
-  const cos = Math.cos(rad(degrees));
-  const sin = Math.sin(rad(degrees));
-  return [x * cos - y * sin, x * sin + y * cos];
-};
 
 // ---- A alavanca, no espaço das poses ----
 

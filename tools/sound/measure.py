@@ -132,17 +132,16 @@ def main() -> None:
         series[:frames] for series in (voice_m, music_m, music_s, effect_m)
     )
     seconds = np.arange(frames) / RATE
-    content = np.ones(frames, dtype=bool)
-    minutes = content.sum() / RATE / 60
+    minutes = frames / RATE / 60
 
-    voice = integrated(voice_m[content])
+    voice = integrated(voice_m)
     speaking = voice_m > voice - SPEECH_BELOW_DB
     # As pausas entre palavras não são silêncio: fecha os buracos de até 0,3 s.
     for start, end in runs(~speaking):
         if end - start <= 0.3 * RATE:
             speaking[start:end] = True
     gaps = [
-        (start, end) for start, end in runs(~speaking & content)
+        (start, end) for start, end in runs(~speaking)
         if end - start >= GAP_SECONDS * RATE
     ]
     in_gap = np.zeros(frames, dtype=bool)
@@ -151,26 +150,24 @@ def main() -> None:
         in_gap[start + 3:end - 3] = True
 
     below = voice - music_s
-    under_speech = below[speaking & content]
+    under_speech = below[speaking]
     in_gaps = (voice - music_m)[in_gap]
-    absent = (below > ABSENT_BELOW_DB) & content
+    absent = below > ABSENT_BELOW_DB
 
     # A dinâmica longa: o volume da música alisado em 10 s, só onde ela toca.
     smooth = np.convolve(music_s, np.ones(10 * RATE) / (10 * RATE), mode="same")
-    playing = content & ~absent
+    playing = ~absent
     turn = TURN_SECONDS * RATE
     before = np.convolve(music_s, np.ones(turn) / turn, mode="full")[:frames]
     jump = np.zeros(frames)
     jump[turn:-turn] = before[2 * turn:] - before[turn:-turn]
     turn_peaks, _ = find_peaks(np.abs(jump), height=TURN_DB, distance=2 * turn)
-    turn_peaks = turn_peaks[content[turn_peaks]]
 
     effect_peaks, properties = find_peaks(
         effect_m, height=voice - EFFECT_BELOW_DB, prominence=EFFECT_PROMINENCE_DB,
         distance=int(0.3 * RATE),
     )
-    kept = content[effect_peaks]
-    effect_peaks, effect_heights = effect_peaks[kept], properties["peak_heights"][kept]
+    effect_heights = properties["peak_heights"]
 
     # O conteúdo musical: as medidas abaixo leem a forma de onda da música.
     audio, _ = librosa.load(args.stems / "music.flac", sr=SAMPLE_RATE, mono=True)
@@ -188,7 +185,6 @@ def main() -> None:
 
     chroma = librosa.feature.chroma_stft(S=power, sr=SAMPLE_RATE)
     boundaries = section_boundaries(spectrum)
-    boundaries = boundaries[np.interp(boundaries, seconds, content.astype(float)) > 0.5]
     section_lengths = np.diff(np.concatenate([[0.0], boundaries, [frames / RATE]]))
 
     tempos, minor = [], []
@@ -204,16 +200,16 @@ def main() -> None:
     result = {
         "minutos": round(minutes, 2),
         "voz_lufs": round(voice, 1),
-        "fala_pct": round(100 * (speaking & content).sum() / content.sum(), 1),
+        "fala_pct": round(100 * speaking.sum() / frames, 1),
         "pausas_de_1s_por_minuto": round(len(gaps) / minutes, 2),
         "pausa_mediana_s": round(percentile(np.array([end - start for start, end in gaps]) / RATE, 50), 2),
         "pausa_maior_s": round(max((end - start for start, end in gaps), default=0) / RATE, 1),
-        "tempo_em_pausas_pct": round(100 * sum(end - start for start, end in gaps) / content.sum(), 1),
+        "tempo_em_pausas_pct": round(100 * sum(end - start for start, end in gaps) / frames, 1),
         "musica_sob_a_fala_db": round(percentile(under_speech, 50), 1),
         "musica_sob_a_fala_p10_db": round(percentile(under_speech, 10), 1),
         "musica_sob_a_fala_p90_db": round(percentile(under_speech, 90), 1),
         "musica_nas_pausas_db": round(percentile(in_gaps, 50), 1),
-        "musica_ausente_pct": round(100 * absent.sum() / content.sum(), 1),
+        "musica_ausente_pct": round(100 * absent.sum() / frames, 1),
         "trechos_sem_musica_por_minuto": round(len([r for r in runs(absent) if r[1] - r[0] >= RATE]) / minutes, 2),
         "dinamica_longa_db": round(percentile(smooth[playing], 90) - percentile(smooth[playing], 10), 1),
         "viradas_de_dinamica_por_minuto": round(len(turn_peaks) / minutes, 2),
@@ -233,14 +229,14 @@ def main() -> None:
         "efeitos_por_minuto": round(len(effect_peaks) / minutes, 1),
         "efeito_mediano_db": round(voice - percentile(effect_heights, 50), 1),
         "efeitos_durante_a_fala_pct": round(100 * float(np.mean(speaking[effect_peaks])), 0) if len(effect_peaks) else None,
-        "tempo_com_efeito_pct": round(100 * ((effect_m > voice - EFFECT_BELOW_DB) & content).sum() / content.sum(), 1),
+        "tempo_com_efeito_pct": round(100 * (effect_m > voice - EFFECT_BELOW_DB).sum() / frames, 1),
     }
 
     series = {
         "segundos_por_ponto": 1,
         "musica_sob_a_voz_db": [round(float(v), 1) for v in below[::RATE]],
         "fala": [int(v) for v in speaking[::RATE]],
-        "conteudo": [int(v) for v in content[::RATE]],
+        "conteudo": [1] * len(seconds[::RATE]),
         "secoes_s": [round(float(v), 1) for v in boundaries],
         "viradas_s": [round(float(v) / RATE, 1) for v in turn_peaks],
         "efeitos_s": [round(float(v) / RATE, 1) for v in effect_peaks],

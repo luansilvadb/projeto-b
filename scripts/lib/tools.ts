@@ -49,7 +49,6 @@ export const renderFrames = async (
   composition: string,
   frames: readonly number[],
   output: string,
-  env: NodeJS.ProcessEnv = {},
 ): Promise<void> => {
   rmSync(output, { recursive: true, force: true });
   await run(
@@ -64,7 +63,6 @@ export const renderFrames = async (
       // Sem áudio na composição: é ele que quebra o render de quadros avulsos.
       `--props=${JSON.stringify({ silent: true })}`,
     ],
-    env,
   );
 };
 

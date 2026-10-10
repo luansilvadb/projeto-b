@@ -14,7 +14,7 @@ import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { SvgLayer } from "../../../components/SvgLayer";
 import { clamp01 } from "../../../components/timing";
-import { shop, street } from "../palette";
+import { shop } from "../palette";
 import { ShopStreet, StreetShadow } from "./ShopStreet";
 
 /** A loja da analogia, de frente, no meio do quadro: o meio da calçada e a largura do toldo. */
@@ -49,11 +49,6 @@ type ShopFrontProps = {
    * clarão na calçada vai de um lado para o outro e tremula. Por padrão, 1.
    */
   readonly flicker?: number;
-  /**
-   * Alguém passa lá dentro: de 0 a 1, a travessia de uma sombra por trás da
-   * fresta, da esquerda para a direita. Sem valor, ninguém passa.
-   */
-  readonly passing?: number;
   /** Quanto a lâmpada da fachada está acesa, de 0 a 1. Por padrão, 1. */
   readonly lamp?: number;
   /** O toldo balança: o tempo, em ciclos, da onda que corre pela barra dele. Sem valor, parado. */
@@ -92,9 +87,6 @@ const Upright: React.FC<{ on: boolean; children: React.ReactNode }> = ({
   );
 };
 
-// A sombra de quem passa lá dentro: dois pés, que alternam, e a mancha deles no clarão da calçada.
-const PASSER = { foot: 46, gap: 34, steps: 5 };
-
 /** A fachada da loja na rua, de dia ou de noite: o molde de todo plano em que ela é vista de fora. */
 export const ShopFront: React.FC<ShopFrontProps> = ({
   time,
@@ -106,7 +98,6 @@ export const ShopFront: React.FC<ShopFrontProps> = ({
   clock = 0,
   built,
   flicker = 1,
-  passing,
   lamp,
   awning,
   doorOpen,
@@ -124,13 +115,6 @@ export const ShopFront: React.FC<ShopFrontProps> = ({
   const landed = standing ? clamp01(risen) ** 4 : 1;
   const night = daylight === undefined ? time === "night" : daylight < 0.5;
   const gapY = FRONT_OPENING.y + FRONT_OPENING.height - 14;
-  // Quem passa entra por uma ponta da fresta e sai pela outra, a velocidade constante.
-  const passerX =
-    passing === undefined
-      ? 0
-      : FRONT_OPENING.x -
-        PASSER.foot * 2 +
-        (FRONT_OPENING.width + PASSER.foot * 4) * passing;
 
   return (
     <AbsoluteFill>
@@ -191,48 +175,6 @@ export const ShopFront: React.FC<ShopFrontProps> = ({
                     fill={shop.night.lamp}
                     opacity={0.3 + 0.12 * flicker * wave(seconds, 0.7)}
                   />
-                  {passing === undefined ? null : (
-                    <g>
-                      {/* Os dois pés de quem anda lá dentro cortam a fresta, um depois do outro. */}
-                      {[0, 1].map((foot) => {
-                        const lifted = Math.max(
-                          0,
-                          Math.sin(
-                            (passing * PASSER.steps + foot * 0.5) * Math.PI * 2,
-                          ),
-                        );
-                        const x = passerX + (foot - 0.5) * PASSER.gap * 2;
-                        const from = Math.max(
-                          FRONT_OPENING.x,
-                          x - PASSER.foot / 2,
-                        );
-                        const to = Math.min(
-                          FRONT_OPENING.x + FRONT_OPENING.width,
-                          x + PASSER.foot / 2,
-                        );
-                        return to > from ? (
-                          <rect
-                            key={foot}
-                            x={from}
-                            y={gapY + 8 * lifted}
-                            width={to - from}
-                            height={14 - 8 * lifted}
-                            fill={street.night.contact}
-                          />
-                        ) : null;
-                      })}
-                      <ellipse
-                        cx={passerX}
-                        cy={FRONT.ground + 30}
-                        rx={PASSER.foot * 2.2}
-                        ry={30}
-                        fill={street.night.sidewalk}
-                        opacity={
-                          0.75 * Math.min(1, passing * 8, (1 - passing) * 8)
-                        }
-                      />
-                    </g>
-                  )}
                 </SvgLayer>
               ) : null}
             </AbsoluteFill>
