@@ -101,7 +101,9 @@ const NewWaterline: React.FC<Props> = ({ settleAt, ghostAt }) => {
 };
 
 export const AfterTheDustScene: React.FC<SceneProps> = ({ scene, shots }) => (
-  <Shot range={shots[0]} name="o mar assenta em outro lugar">
-    <NewWaterline settleAt={cue(scene, "assenta")} ghostAt={cue(scene, "não")} />
+  // O desenho da troca de experimento (a alavanca religada, depois baixada aos poucos) ainda
+  // não existe: até lá, o plano antigo cobre os dois do roteiro.
+  <Shot range={{ from: shots[0].from, to: shots[1].to }} name="o mar assenta em outro lugar">
+    <NewWaterline settleAt={cue(scene, "enfim")} ghostAt={cue(scene, "mar")} />
   </Shot>
 );

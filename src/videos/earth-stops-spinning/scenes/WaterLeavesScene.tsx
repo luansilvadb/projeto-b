@@ -130,12 +130,12 @@ const PolesPullMore: React.FC<CloserProps> = ({ nearAt, pullAt }) => {
 export const WaterLeavesScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="o calombo perde o apoio">
-      <LosesItsHold looseAt={cue(scene, "nada")} flowAt={cue(scene, "escorre")} />
+      <LosesItsHold looseAt={cue(scene, "sobra")} flowAt={cue(scene, "gravidade")} />
     </Shot>
     <Shot range={shots[1]} name="os polos puxam mais">
       <PolesPullMore
-        nearAt={cue(scene, "perto") - shots[1].from}
-        pullAt={cue(scene, "puxam") - shots[1].from}
+        nearAt={cue(scene, "polos") - shots[1].from}
+        pullAt={cue(scene, "escorre") - shots[1].from}
       />
     </Shot>
   </>

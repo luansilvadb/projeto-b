@@ -113,11 +113,11 @@ export const TheMoonBrakeScene: React.FC<SceneProps> = ({ scene, shots }) => (
       <Beside moonAt={cue(scene, "Lua")} />
     </Shot>
     <Shot range={shots[1]} name="a maré raspa como um freio">
-      <Scrape since={shots[1].from} brakeAt={cue(scene, "freio", 2) - shots[1].from} />
+      <Scrape since={shots[1].from} brakeAt={cue(scene, "atrito") - shots[1].from} />
     </Shot>
     <Shot range={shots[2]} name="o dia ganha uma lasca">
       <Longer
-        at={[cue(scene, "quase") - shots[2].from, cue(scene, "milésimos") - shots[2].from]}
+        at={[cue(scene, "menos") - shots[2].from, cue(scene, "milésimos") - shots[2].from]}
       />
     </Shot>
   </>

@@ -1,5 +1,7 @@
 # Pacote de publicação
 
+> O roteiro foi reescrito em 2026-10-10 (saíram o desenho dos ventos, o campo magnético, a energia da rotação e o terremoto; a placa da alavanca passou a dizer "rotação"). A descrição, os capítulos, as fontes citadas, as ressalvas e o conceito da thumbnail abaixo ainda são os do roteiro anterior e pedem revisão do `diretor-publicacao` depois da voz nova.
+
 ## Título público
 
 O que acontece se a Terra parar de girar?

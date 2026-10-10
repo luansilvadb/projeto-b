@@ -1,5 +1,7 @@
 # Som — O que acontece se a Terra parar de girar?
 
+> A narração foi reescrita em 2026-10-10 e ainda não foi gerada. Os tempos, a duração e os efeitos abaixo são da fala anterior: a cena `earthquake` saiu (e o efeito dela), e as âncoras de `the-rule` e `map-limit` mudaram de palavra em `script.json` ("pare" e "provisório"). A trilha pede `pnpm music` de novo depois da voz.
+
 ## Estado
 
 Hipótese de 2026-10-10, sobre a narração gravada (7 min 59 s). Nada aqui foi ouvido pelo usuário: a identidade da trilha neste vídeo, os níveis e os efeitos são propostas até a escuta do conjunto.

@@ -223,10 +223,10 @@ export const ByLatitudeScene: React.FC<SceneProps> = ({ scene, shots }) => (
       <ThreeRings at={[cue(scene, "lugar"), cue(scene, "perto"), cue(scene, "polos")]} />
     </Shot>
     <Shot range={shots[1]} name="São Paulo e o equador">
-      <TwoSpeeds numberAt={cue(scene, "uns") - shots[1].from} />
+      <TwoSpeeds numberAt={cue(scene, "cerca") - shots[1].from} />
     </Shot>
     <Shot range={shots[2]} name="no polo, zero">
-      <OnThePole zeroAt={cue(scene, "zero") - shots[2].from} />
+      <OnThePole zeroAt={cue(scene, "gira") - shots[2].from} />
     </Shot>
   </>
 );

@@ -22,7 +22,7 @@ type SimulationProps = {
   readonly brakeAt: number;
 };
 
-/** A tela do computador, com o mapa de hoje e o controle "giro" descendo devagar. */
+/** A tela do computador, com o mapa de hoje e o controle "rotação" descendo devagar. */
 const Simulation: React.FC<SimulationProps> = ({ tagAt, brakeAt }) => {
   const frame = useCurrentFrame();
   const length = useShotLength();
@@ -37,9 +37,9 @@ const Simulation: React.FC<SimulationProps> = ({ tagAt, brakeAt }) => {
           <rect x={320} y={170} width={1200} height={640} rx={44} fill={tags.light.fill} />
           <rect x={360} y={208} width={1120} height={530} rx={18} fill={ink.paper} />
           <MapWorld {...SCREEN_MAP} radius={14} />
-          {/* O controle "giro": o trilho, a parte ainda ligada e a manopla que desce. */}
+          {/* O controle "rotação": o trilho, a parte ainda ligada e a manopla que desce. */}
           <SvgText x={SLIDER.x} y={270} size="note" fill={tags.light.fill}>
-            giro
+            rotação
           </SvgText>
           <line
             x1={SLIDER.x}

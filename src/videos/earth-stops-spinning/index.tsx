@@ -9,10 +9,8 @@ import { AfterTheDustScene } from "./scenes/AfterTheDustScene";
 import { AnotherPlanetScene } from "./scenes/AnotherPlanetScene";
 import { ByLatitudeScene } from "./scenes/ByLatitudeScene";
 import { CoralsScene } from "./scenes/CoralsScene";
-import { EarthquakeScene } from "./scenes/EarthquakeScene";
 import { FeelNothingScene } from "./scenes/FeelNothingScene";
 import { HowFastScene } from "./scenes/HowFastScene";
-import { MagneticFieldScene } from "./scenes/MagneticFieldScene";
 import { MapLimitScene } from "./scenes/MapLimitScene";
 import { NeverScene } from "./scenes/NeverScene";
 import { NewMapScene } from "./scenes/NewMapScene";
@@ -22,7 +20,6 @@ import { OneTurnScene } from "./scenes/OneTurnScene";
 import { OnlyClueScene } from "./scenes/OnlyClueScene";
 import { SeaMovesScene } from "./scenes/SeaMovesScene";
 import { StillSpinningScene } from "./scenes/StillSpinningScene";
-import { StraightWindScene } from "./scenes/StraightWindScene";
 import { SubscribeScene } from "./scenes/SubscribeScene";
 import { SwitchOffScene } from "./scenes/SwitchOffScene";
 import { TheBulgeScene } from "./scenes/TheBulgeScene";
@@ -33,7 +30,6 @@ import { TheRuleScene } from "./scenes/TheRuleScene";
 import { TwoOceansScene } from "./scenes/TwoOceansScene";
 import { WaterLeavesScene } from "./scenes/WaterLeavesScene";
 import { WaterPiledScene } from "./scenes/WaterPiledScene";
-import { WhatSpinDoesScene } from "./scenes/WhatSpinDoesScene";
 import { WhyNotStopScene } from "./scenes/WhyNotStopScene";
 import { WindScene } from "./scenes/WindScene";
 import { YearLongDayScene } from "./scenes/YearLongDayScene";
@@ -48,7 +44,6 @@ const earthStopsSpinningScript = parseScript(script);
 // mediu, e não na cena inteira.
 const scenes: Readonly<Record<string, React.FC<SceneProps>>> = {
   "one-turn": OneTurnScene,
-  "what-spin-does": WhatSpinDoesScene,
   "switch-off": SwitchOffScene,
   "how-fast": HowFastScene,
   "feel-nothing": FeelNothingScene,
@@ -69,11 +64,8 @@ const scenes: Readonly<Record<string, React.FC<SceneProps>>> = {
   "year-long-day": YearLongDayScene,
   "the-moon-case": TheMoonCaseScene,
   "not-the-moon": NotTheMoonScene,
-  "straight-wind": StraightWindScene,
-  "magnetic-field": MagneticFieldScene,
   "why-not-stop": WhyNotStopScene,
   "another-planet": AnotherPlanetScene,
-  earthquake: EarthquakeScene,
   "the-moon-brake": TheMoonBrakeScene,
   corals: CoralsScene,
   never: NeverScene,

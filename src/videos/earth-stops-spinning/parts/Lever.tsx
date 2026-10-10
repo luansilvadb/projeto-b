@@ -5,7 +5,7 @@ import { onLever, STAND, Vig } from "./Actor";
 import { SvgText } from "./kit";
 
 /**
- * A alavanca "giro": o que separa o experimento mental do mundo de verdade.
+ * A alavanca "rotação": o que separa o experimento mental do mundo de verdade.
  * Ligada, a haste pende para a direita e a luz é verde; desligada, pende para
  * a esquerda (menos, para a manopla não cobrir quem a segura) e a luz é vermelha. Vai dentro de um SVG; (x, y) é o meio da base,
  * no chão dela.
@@ -60,8 +60,8 @@ const LeverBase: React.FC<LeverProps> = ({ x, y, on, scale = 1 }) => (
     <circle cx={0} cy={-LEVER_HUB} r={26} fill={colors.baseLight} />
     {/* A placa com o nome do que ela liga. */}
     <rect x={-74} y={-50} width={148} height={46} rx={10} fill={colors.plate} />
-    <SvgText x={0} y={-27} size={36} fill={colors.plateText}>
-      giro
+    <SvgText x={0} y={-27} size={28} fill={colors.plateText}>
+      rotação
     </SvgText>
     <circle cx={112} cy={-30} r={11} fill={interpolateColors(on, [0, 1], [colors.off, colors.on])} />
   </g>

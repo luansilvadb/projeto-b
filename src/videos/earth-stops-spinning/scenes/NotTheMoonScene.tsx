@@ -172,12 +172,15 @@ export const NotTheMoonScene: React.FC<SceneProps> = ({ scene, shots }) => (
     <Shot range={shots[0]} name="só a Terra tem ar">
       <OnlyEarthHasAir at={[cue(scene, "ar"), cue(scene, "calor")]} />
     </Shot>
-    <Shot range={shots[1]} name="termômetros sem número">
-      <NoNumbers askAt={cue(scene, "temperatura") - shots[1].from} />
+    <Shot range={shots[1]} name="os globos simulados">
+      {/*
+        A fileira já vem entrando no corte: o primeiro globo está inteiro no primeiro quadro.
+        A vaga do "dia de um ano" não entra aqui: a fala só chega nela no plano seguinte.
+      */}
+      <SimulatedRow at={[-9, Number.MAX_SAFE_INTEGER]} />
     </Shot>
-    <Shot range={shots[2]} name="os globos simulados e a vaga">
-      {/* A fileira já vem entrando no corte: o primeiro globo está inteiro no primeiro quadro. */}
-      <SimulatedRow at={[-9, cue(scene, "nenhum") - shots[2].from]} />
+    <Shot range={shots[2]} name="termômetros sem número">
+      <NoNumbers askAt={cue(scene, "número") - shots[2].from} />
     </Shot>
   </>
 );

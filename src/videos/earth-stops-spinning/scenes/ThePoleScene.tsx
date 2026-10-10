@@ -450,12 +450,12 @@ const MuteNumber: React.FC<MuteNumberProps> = ({ prepare, silence }) => {
 export const ThePoleScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="o arremesso encolhe até o polo">
-      <ShrinkingFlings from={cue(scene, "diminui")} to={cue(scene, "devagar")} />
+      <ShrinkingFlings from={cue(scene, "perto")} to={cue(scene, "devagar")} />
     </Shot>
     <Shot range={shots[1]} name="a dez quilômetros do polo">
       <TenKilometres
-        speedAt={cue(scene, "menos") - shots[1].from}
-        stepAt={cue(scene, "passo") - shots[1].from}
+        speedAt={cue(scene, "devagar", 2) - shots[1].from}
+        stepAt={cue(scene, "caminhando") - shots[1].from}
       />
     </Shot>
     <Shot range={shots[2]} name="número mudo: o tropeço">
@@ -463,8 +463,8 @@ export const ThePoleScene: React.FC<SceneProps> = ({ scene, shots }) => (
         prepare={[
           cue(scene, "parada") - shots[2].from,
           cue(scene, "tropeço") - shots[2].from,
-          cue(scene, "tranco", 2) - shots[2].from,
           cue(scene, "escapa") - shots[2].from,
+          cue(scene, "tranco") - shots[2].from,
         ]}
         silence={scene.holdFrames}
       />

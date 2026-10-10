@@ -390,12 +390,12 @@ export const CoralsScene: React.FC<SceneProps> = ({ scene, shots }) => (
       <Repeats />
     </Shot>
     <Shot range={shots[1]} name="o recife antigo">
-      <Reef tagAt={cue(scene, "quatrocentos") - shots[1].from} />
+      <Reef tagAt={cue(scene, "centenas") - shots[1].from} />
     </Shot>
     <Shot range={shots[2]} name="contando as linhas">
       <Counting
-        sweep={[cue(scene, "linhas") - shots[2].from, cue(scene, "quatrocentos", 2) - shots[2].from]}
-        todayAt={cue(scene, "trezentos") - shots[2].from}
+        sweep={[cue(scene, "linhas") - shots[2].from, cue(scene, "quatrocentas") - shots[2].from]}
+        todayAt={cue(scene, "trezentas") - shots[2].from}
       />
     </Shot>
     <Shot range={shots[3]} name="24 h e 22 h">

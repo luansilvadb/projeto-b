@@ -11,7 +11,6 @@ import { alive } from "../parts/EndAlive";
 import { Globe, House, landPoint, LatitudeRing, spinFor } from "../parts/Globe";
 import { Arrow, Frame, Push, SpaceBackdrop, Svg, Tag } from "../parts/kit";
 import { LeverStation } from "../parts/Lever";
-import { WindArrows } from "../parts/Wind";
 import { STAGE } from "./SwitchOffScene";
 
 const TURN_SECONDS = 14;
@@ -83,23 +82,21 @@ const EARTH = { cx: 960, cy: 540, r: 350 } as const;
 const HOME_TO = 62;
 
 type Props = {
-  /** O quadro em que cada coisa acende: o mar, o vento, a casinha e a velocidade dela. */
-  readonly at: readonly [number, number, number, number];
+  /** O quadro em que cada coisa acende: o mar, a casinha e a velocidade dela. */
+  readonly at: readonly [number, number, number];
 };
 
-/** O que o giro faz, de volta: o mar na cintura, o vento curvo e a casinha correndo para leste. */
+/** O que a rotação faz, de volta: o mar na cintura e a casinha correndo para leste. */
 const WhatItDoes: React.FC<Props> = ({ at }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
   // O globo gira no passo de sempre, e chega ao fim do plano com o chão da casinha no lugar dela.
   const spin = spinFor(HOME_TO) - (length - frame) / fps / TURN_SECONDS;
-  const blow = ramp(frame, at[1], 0.5 * fps);
-  const bend = ramp(frame, at[1] + 0.4 * fps, 0.8 * fps);
   // A casinha vai com o chão: presa à mancha de terra dela.
   const spot = landPoint(EARTH.r, spin);
   const house = { x: EARTH.cx + spot.x, y: EARTH.cy + spot.y };
-  const going = popOpacity(frame, at[2] + 0.2 * fps, 0.3 * fps);
+  const going = popOpacity(frame, at[1] + 0.2 * fps, 0.3 * fps);
   return (
     <Frame backdrop={<SpaceBackdrop light={[0.1, 0.1]} />}>
       {/* Chega de mais perto e assenta no enquadramento do gancho. */}
@@ -114,18 +111,17 @@ const WhatItDoes: React.FC<Props> = ({ at }) => {
               width={26}
               opacity={0.9 * popOpacity(frame, at[0], 0.4 * fps)}
             />
-            <WindArrows {...EARTH} curve={bend} drawn={blow} />
             {/* A seta do embalo, à frente da casinha, para leste. */}
             <Arrow
               from={[house.x + 56, house.y - 34]}
               to={[house.x + 150, house.y - 34]}
-              drawn={ramp(frame, at[2] + 0.2 * fps, 0.4 * fps)}
+              drawn={ramp(frame, at[1] + 0.2 * fps, 0.4 * fps)}
               opacity={going}
             />
-            <g opacity={popOpacity(frame, at[2], 0.3 * fps)}>
+            <g opacity={popOpacity(frame, at[1], 0.3 * fps)}>
               <House
                 {...house}
-                size={86 * popScale(frame, at[2], 0.3 * fps)}
+                size={86 * popScale(frame, at[1], 0.3 * fps)}
                 rotate={(spot.x / EARTH.r) * 70}
               />
             </g>
@@ -133,7 +129,7 @@ const WhatItDoes: React.FC<Props> = ({ at }) => {
         </Push>
       </Push>
       <Place x={1490} y={900}>
-        <Pop at={at[3]}>
+        <Pop at={at[2]}>
           <Tag on="dark">mais de 1.000 km/h</Tag>
         </Pop>
       </Place>
@@ -152,7 +148,6 @@ export const StillSpinningScene: React.FC<SceneProps> = ({ scene, shots }) => {
         <WhatItDoes
           at={[
             cue(scene, "mar") - from,
-            cue(scene, "entorta") - from,
             cue(scene, "leva") - from,
             cue(scene, "mais") - from,
           ]}

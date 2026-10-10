@@ -306,7 +306,7 @@ export const HowFastScene: React.FC<SceneProps> = ({ scene, shots }) => (
     <Shot range={shots[1]} name="a volta e o tempo">
       <Measured
         tapeAt={cue(scene, "quarenta") - shots[1].from}
-        clockAt={cue(scene, "volta") - shots[1].from}
+        clockAt={cue(scene, "percorre") - shots[1].from}
         hoursAt={cue(scene, "vinte") - shots[1].from}
       />
     </Shot>

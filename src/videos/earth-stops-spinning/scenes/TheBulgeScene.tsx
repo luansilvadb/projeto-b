@@ -59,9 +59,9 @@ export const TheBulgeScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <Shot range={shots[0]} name="a cintura e os dois raios">
     <TheWaist
       at={{
-        waist: cue(scene, "espalha"),
+        waist: cue(scene, "larga"),
         rays: cue(scene, "centro"),
-        swing: cue(scene, "equador"),
+        swing: cue(scene, "equador", 2),
         extra: cue(scene, "vinte"),
       }}
     />

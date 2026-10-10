@@ -14,11 +14,9 @@ import {
   Push,
   Question,
   SeaBackdrop,
-  SourceSeal,
   SpaceBackdrop,
   Svg,
   SvgText,
-  Tag,
 } from "../parts/kit";
 
 const SHEET = { x: 160, y: 90, width: 1600, height: 900 } as const;
@@ -152,44 +150,14 @@ const RoundsOff: React.FC<{ readonly quakeAt: number }> = ({ quakeAt }) => {
 };
 
 const LINE = { y: 640, from: 170, to: 1750 } as const;
-const FLAGS = { thousands: 330, millions: 1590 } as const;
 
-/** Uma bandeira fincada na linha do tempo, com a flâmula tremulando. */
-const Flag: React.FC<{ readonly x: number; readonly at: number; readonly seed: number }> = ({
-  x,
-  at,
-  seed,
-}) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const flutter = 12 * wave(frame / fps, 1.6, seed);
-  return (
-    <g
-      transform={`translate(${x} ${LINE.y}) scale(${popScale(frame, at, 0.3 * fps)})`}
-      opacity={popOpacity(frame, at, 0.3 * fps)}
-    >
-      <line x1={0} y1={0} x2={0} y2={-250} stroke={ink.dark} strokeWidth={14} strokeLinecap="round" />
-      <path
-        d={`M0,-246 Q70,${-240 + flutter} 150,${-196 + flutter} Q70,${-170 - flutter / 2} 0,-146 Z`}
-        fill={ink.accent}
-      />
-      <circle cx={0} cy={0} r={20} fill={ink.dark} />
-    </g>
-  );
-};
-
-type TimelineProps = {
-  /** Os quadros de cada bandeira. */
-  readonly at: { readonly thousands: number; readonly millions: number };
-};
-
-/** A linha do tempo com as duas bandeiras muito afastadas, e a interrogação entre elas. */
-const HowLong: React.FC<TimelineProps> = ({ at }) => {
+/** A linha do tempo sem marca nenhuma, com o marcador que não pousa e a interrogação por cima. */
+const HowLong: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const seconds = frame / fps;
-  // A linha se desenha ao longo da frase e fica pronta um pouco antes das bandeiras.
-  const drawnAt = Math.max(fps, at.thousands - 0.9 * fps);
+  // A fala não marca data nenhuma: a linha se desenha num tempo fixo, e o resto do plano é do marcador.
+  const drawnAt = 2 * fps;
   const tip = mix(LINE.from, LINE.to, ramp(frame, 0.2 * fps, drawnAt - 0.2 * fps));
   // O marcador vai na ponta que desenha; pronta a linha, volta e fica indo e vindo
   // no meio dela, sem pousar em data nenhuma.
@@ -211,8 +179,6 @@ const HowLong: React.FC<TimelineProps> = ({ at }) => {
               strokeLinecap="round"
               strokeDasharray="4 36"
             />
-            <Flag x={FLAGS.thousands} at={at.thousands} seed={0} />
-            <Flag x={FLAGS.millions} at={at.millions} seed={0.4} />
             {/* O marcador: paira um pouco acima da linha, com a sombra nela. */}
             <g>
               <ellipse cx={marker} cy={LINE.y + 4} rx={22} ry={6} fill={idea.lilac.contact} opacity={0.5} />
@@ -233,23 +199,8 @@ const HowLong: React.FC<TimelineProps> = ({ at }) => {
               <Question x={0} y={0} size={220} fill={ink.dark} color={ink.paper} />
             </g>
           </Svg>
-          <Place x={FLAGS.thousands + 115} y={LINE.y + 96}>
-            <Pop at={at.thousands + 4}>
-              <Tag on="light" size="note">
-                milhares de anos
-              </Tag>
-            </Pop>
-          </Place>
-          <Place x={FLAGS.millions - 115} y={LINE.y + 96}>
-            <Pop at={at.millions + 4}>
-              <Tag on="light" size="note">
-                milhões de anos
-              </Tag>
-            </Pop>
-          </Place>
         </Push>
       </Push>
-      <SourceSeal>Anderson e O&apos;Connell, 1967</SourceSeal>
     </Frame>
   );
 };
@@ -257,18 +208,13 @@ const HowLong: React.FC<TimelineProps> = ({ at }) => {
 export const MapLimitScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="o mapa é provisório">
-      <Provisional dashAt={cue(scene, "vale")} stampAt={cue(scene, "enquanto")} />
+      <Provisional dashAt={cue(scene, "mapa")} stampAt={cue(scene, "provisório")} />
     </Shot>
     <Shot range={shots[1]} name="a Terra se arredonda">
       <RoundsOff quakeAt={cue(scene, "terremotos") - shots[1].from} />
     </Shot>
     <Shot range={shots[2]} name="em quanto tempo">
-      <HowLong
-        at={{
-          thousands: cue(scene, "milhares") - shots[2].from,
-          millions: cue(scene, "milhões") - shots[2].from,
-        }}
-      />
+      <HowLong />
     </Shot>
   </>
 );

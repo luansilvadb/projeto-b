@@ -21,6 +21,7 @@ Foco de partida: a cadeia de consequências de uma parada da rotação, cada uma
 ### A parada súbita
 
 - É experimento mental: não há mecanismo plausível. Pararia a Terra só um torque enorme, como a colisão com outro planeta, que a destruiria ou mudaria o giro em vez de zerá-lo. [4] [9] [10] Estabelecido.
+- Inércia: um corpo em movimento segue em movimento, na mesma velocidade e em linha reta, até que uma força o faça mudar; a propriedade se chama inércia. [63] [64] Exemplo didático: o carro para de repente e o motorista segue na velocidade em que vinha, porque nenhuma força agiu sobre ele; é o que o cinto faz. [65] O passageiro de pé no ônibus que freia é o mesmo caso, montado pelo roteiro.
 - Se a Terra sólida para, o que está sobre ela segue por inércia para leste: a pessoa "sairia voando para leste a cerca de 1.040 milhas por hora", e a água sente a mesma aceleração. [10] Atmosfera e oceanos seguiriam girando. [11]
   Limite: são especialistas citados em divulgação, sem conta publicada.
 - Mesmo freando em um minuto, a desaceleração lateral no equador seria de três quartos de g, e o "para baixo" pareceria inclinado 38°. [11]
@@ -45,11 +46,15 @@ Foco de partida: a cadeia de consequências de uma parada da rotação, cada uma
   - Os dois oceanos não se comunicam e ficam em níveis diferentes, com 1.400 m de diferença (o cálculo deu 1.407 m). O do sul fica mais baixo porque a bacia do polo sul tem capacidade maior. [16]
   - As águas rasas de plataforma a sudeste da Ásia e ao norte da Austrália emergem. [16]
   - Submersas: as planícies do norte da Sibéria e do norte do Canadá. O texto não cita o Brasil. [16]
-  - Limite central: supõe que a Terra sólida mantém a forma elipsoidal de hoje e só a água se redistribui. O próprio artigo diz que a Terra iria se tornando mais esférica, com terremotos devastadores, e não modela esse reajuste. O mapa é um estado transitório. [16]
+  - Mecanismo, nas palavras do artigo: o nível do mar está em equilíbrio com a gravidade e com a força centrífuga da rotação; parada a Terra, os oceanos migram para os polos, onde "a gravidade da Terra parada é mais forte" (legenda de figura). A diferença entre o nível do mar no equador e nos polos, medida até o centro de massa, é de 21,4 km. Os "8 km" do bojo de água aparecem sem definição nem conta: só "segundo o autor". [16]
+  - Limite central: o mapa redistribui a água. Sobre a Terra sólida, o artigo diz só que o fim da força centrífuga traria "ajustes geológicos desastrosos (terremotos devastadores)"; a frase "a Terra está ficando cada vez mais esférica" fala da desaceleração real de hoje. A releitura de 10/10/2026 (por leitor intermediário) não achou frase dizendo que o modelo mantém o elipsoide de hoje: é o que o método implica, não o que o autor declara. Outra fonte de divulgação diz que, sem a força centrífuga, o planeta ficaria mais esférico. [66] O mapa é um estado transitório. [16]
+  - O autor não diz por que escolheu frear aos poucos. [16]
+  - Parada súbita e frenagem lenta: nenhuma fonte aberta compara o estado final dos oceanos nos dois cenários nem diz quanto tempo ar e água levariam para perder o movimento. Duas fontes de divulgação dizem, sem conta, que também na parada súbita a água tenderia aos polos. [66] [67] "O mar acaba no mesmo lugar" é inferência: o roteiro trata os dois como experimentos diferentes.
   - Prazo de reajuste da Terra sólida: em disputa por ordens de grandeza, de cerca de 3.000 anos a 10⁷ anos. [17] Fonte antiga, só o resumo lido.
-- Sem rotação e com a órbita mantida, um dia dura um ano: cerca de seis meses de luz e seis de escuro. [9] [16]
+- Sem rotação e com a órbita mantida, um dia dura um ano [16]: o dia dura meio ano, e a noite também. [9] [12]
   Conta: 1/dia solar = 1/período sideral − 1/período orbital; com período sideral infinito, o dia solar é 365,256 dias, cerca de 182,6 de luz e 182,6 de escuro. [1] Estabelecido como geometria.
-- Há outro "parar" que circula misturado: uma rotação por órbita (travamento de maré), com um lado sempre iluminado. [14] [18]
+  Por lugar (derivação geométrica desta pesquisa, sem fonte que a enuncie): com a orientação fixa nas estrelas, o Sol percorre a eclíptica para leste uma vez por ano [68], e o horizonte de qualquer lugar corta a eclíptica em dois pontos opostos; o Sol fica acima dele por metade da volta em todo lugar. As metades diferem por alguns dias, porque a órbita é elíptica (valor não buscado). Exceção: dois pontos, a 66,56° N e 66,56° S (90 − 23,44), onde o Sol circula rasante o ano inteiro. O que varia de um lugar para outro é a altura máxima do Sol e a data do nascer. O Sol nasceria na metade oeste do horizonte em quase toda a Terra (o análogo com fonte é Vênus [59]). O ciclo das estações se funde com o do dia. Nada disso vai à fala além de "em quase todo o planeta".
+- Há outro "parar" que circula misturado: uma rotação por órbita (travamento de maré), com um lado sempre iluminado. [18] Em [14] ele aparece como o destino de uma frenagem lenta, e não como um cenário à parte.
 - Temperatura: existe modelagem séria de Terras de rotação lenta, mas nenhuma do caso exato (dia solar de 365 dias cai entre as rodadas de 128 e 256 dias siderais). [18]
   - Com dias longos o oceano fica até 30 °C mais quente que a terra vizinha. [18]
   - Circulação nesses modelos: o ar sobe no lado diurno e desce no noturno; em altitude vai do lado quente para o frio e volta frio junto ao chão. [19] [10]
@@ -72,8 +77,8 @@ Foco de partida: a cadeia de consequências de uma parada da rotação, cada uma
   Conta: 365,25 × 24 = 8.766 h por ano; 8.766 ÷ 400 = 21,9 h por dia. Supõe o ano com a mesma duração.
 - Ritmitos de maré indicam dia de cerca de 18 h há 900 milhões de anos. [40]
 - A taxa atual não vale para o passado: projetada para trás, dá uma Lua jovem demais. [42]
-- O fim do freio de maré não é parar: é dia igual ao mês, cerca de 47 dias atuais. [51] [43]
-  Esse estado nunca será atingido: no ritmo atual seriam cerca de 100 bilhões de anos. [43] O Sol chega ao topo do ramo das gigantes vermelhas em cerca de 7,59 bilhões de anos e engole a Terra. [45]
+- O fim do freio de maré não é parar: é dia igual ao mês, cerca de 47 dias atuais. [51]
+  Esse estado nunca será atingido: no ritmo atual seriam cerca de 100 bilhões de anos [43]; a NASA dá cerca de 50 bilhões para o travamento. [33] O Sol chega ao topo do ramo das gigantes vermelhas em cerca de 7,59 bilhões de anos e engole a Terra. [45]
   Conta: 100 ÷ 7,59 ≈ 13. Os 100 bilhões são ordem de grandeza, por extrapolação.
 - Segundo intercalar: mantém o UTC a menos de 0,9 s do tempo da rotação; foram 27 desde 1972, o último em 31/12/2016. [46] Não haverá em dezembro de 2026. [47] A CGPM de 2022 decidiu aumentar a tolerância até 2035, sem extingui-lo. [48] A 28ª CGPM vota o tema em 15/10/2026. [49] [50]
 - O dia de 29/06/2022 foi 1,59 ms mais curto que 86.400 s, recorde desde os relógios atômicos. [44]
@@ -102,7 +107,7 @@ Foco de partida: a cadeia de consequências de uma parada da rotação, cada uma
 - O derretimento do gelo também freia a rotação [37] [38]: a Lua é o principal freio de longo prazo, não o único.
 - Posição do Brasil no mapa do Esri: o texto não cita; os mapas não foram lidos.
 - Temperatura do lado claro e do escuro com dia de um ano: sem número com conta. A checagem final viu que [11] diz que o planeta parado aqueceria "well over 100°C", sem conta e sem assinatura: não usar.
-- Rodadas dos modelos de rotação lenta: a checagem do corte final abriu [19] e leu rodadas de 1 a 256 dias siderais, entre elas 16, 64, 128 e 256 (dia solar de 191 e 848 dias nas duas últimas). É a fonte dos quatro globos da tela.
+- Rodadas dos modelos de rotação lenta: a checagem do corte final abriu [19] e leu rodadas de 1 a 256 dias siderais, entre elas 16, 64, 128 e 256 (dia solar de 196 e 848 dias nas duas últimas, pela conta e pela tabela 6; a legenda da tabela 2 traz 191). É a fonte dos quatro globos da tela.
 - Terremoto de 2011: [52] diz "magnitude 9.0".
 - Furacões: a checagem final leu em [23] que, sem o giro e a força de Coriolis, os furacões não se formariam; [6] diz o mesmo. A frase do roteiro sobre o furacão está sustentada.
 - Fontes que não abriram na checagem final (valores lidos deste arquivo): [16] (403), [20] e [24] (PDF ilegível), [18] (só o resumo).
@@ -177,3 +182,9 @@ Foco de partida: a cadeia de consequências de uma parada da rotação, cada uma
 60. NASA/NSSDCA, "Mercury Fact Sheet". https://nssdc.gsfc.nasa.gov/planetary/factsheet/mercuryfact.html (consultada em 10/10/2026)
 61. NASA Science, "Mercury Facts". https://science.nasa.gov/mercury/facts/ (consultada em 10/10/2026)
 62. Laskar et al., "Did atmospheric thermal tides cause a daylength locking in the Precambrian?", Sedimentologika, 2024. https://oap.unige.ch/journals/sdk/article/view/1271 (consultada em 10/10/2026)
+63. OpenStax, College Physics 2e, "4.2 Newton's First Law of Motion: Inertia". https://openstax.org/books/college-physics-2e/pages/4-2-newtons-first-law-of-motion-inertia (consultada em 10/10/2026)
+64. NASA Glenn Research Center, "Newton's Laws of Motion". https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/newtons-laws-of-motion/ (consultada em 10/10/2026)
+65. LibreTexts, Physics (Boundless), "4.3: Newton's Laws". https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/4:_The_Laws_of_Motion/4.3:_Newtons_Laws (consultada em 10/10/2026)
+66. E. Herrick-Gleason, "What happens if Earth stops rotating?", Astronomy.com, 2026 (divulgação). https://www.astronomy.com/science/what-happens-if-earth-stops-rotating/ (consultada em 10/10/2026)
+67. A. Helmenstine, "What Would Happen If the Earth Stopped Rotating", Science Notes (divulgação; credenciais não conferidas). https://sciencenotes.org/what-would-happen-if-the-earth-stopped-rotating/ (consultada em 10/10/2026)
+68. N. Strobel, Astronomy Notes, "Solar and Sidereal Day". https://www.astronomynotes.com/nakedeye/s7.htm (consultada em 10/10/2026)

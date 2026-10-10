@@ -382,7 +382,7 @@ export const WindScene: React.FC<SceneProps> = ({ scene, shots }) => {
   return (
     <>
       <Shot range={shots[0]} name="o ar sobre o chão parado">
-        <Sweep airAt={cue(scene, "ar")} runAt={cue(scene, "correr")} numberAt={cue(scene, "mil")} />
+        <Sweep airAt={cue(scene, "ar")} runAt={cue(scene, "correndo")} numberAt={cue(scene, "mil")} />
       </Shot>
       <Shot range={shots[1]} name="o recorde de rajada">
         <TheRecord

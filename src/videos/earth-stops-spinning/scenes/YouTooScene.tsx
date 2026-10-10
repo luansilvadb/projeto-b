@@ -344,7 +344,7 @@ const HouseTears: React.FC<{
 export const YouTooScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="o chão trava">
-      <FloorLocks lockAt={cue(scene, "solto")} />
+      <FloorLocks lockAt={cue(scene, "trava")} />
     </Shot>
     <Shot range={shots[1]} name="a rua sai para leste">
       <StreetGoes

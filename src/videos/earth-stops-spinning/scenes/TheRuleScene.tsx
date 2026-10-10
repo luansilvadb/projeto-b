@@ -309,7 +309,7 @@ const OnlyTheRock: React.FC<StopProps> = ({ stopAt, before }) => {
       </Push>
       <Place x={STAGE.earth.cx} y={928}>
         <Pop at={stopAt + 0.15 * fps}>
-          <Tag on="dark">só a rocha para</Tag>
+          <Tag on="dark">só a parte sólida para</Tag>
         </Pop>
       </Place>
     </Frame>
@@ -318,16 +318,17 @@ const OnlyTheRock: React.FC<StopProps> = ({ stopAt, before }) => {
 
 export const TheRuleScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
-    <Shot range={shots[0]} name="ela hesita">
+    {/* O plano do ônibus freando (shots[1]) ainda não tem desenho: até lá, a hesitação segura a tela. */}
+    <Shot range={{ from: shots[0].from, to: shots[1].to }} name="ela hesita">
       <Hesitate
-        tugAt={cue(scene, "parada")}
+        tugAt={cue(scene, "freada")}
         letGoAt={cue(scene, "Só")}
         lookAt={cue(scene, "planeta")}
-        backAt={cue(scene, "adiante")}
+        backAt={cue(scene, "assim")}
       />
     </Shot>
-    <Shot range={shots[1]} name="só a rocha para">
-      <OnlyTheRock stopAt={cue(scene, "para", 2) - shots[1].from} before={shots[1].from} />
+    <Shot range={shots[2]} name="só a parte sólida para">
+      <OnlyTheRock stopAt={cue(scene, "pare") - shots[2].from} before={shots[2].from} />
     </Shot>
   </>
 );

@@ -1,5 +1,7 @@
 # Partitura da animação — O que acontece se a Terra parar de girar?
 
+> A narração foi reescrita em 2026-10-10 e ainda não foi gerada. As deixas abaixo descrevem a execução sobre a fala anterior: quatro cenas saíram (`what-spin-does`, `straight-wind`, `magnetic-field`, `earthquake`), a ordem do bloco da parada mudou e várias palavras de deixa são outras. O que a imagem deve à fala nova está em `art.md`, "Pendências da reescrita"; esta partitura é refeita quando a voz nova existir.
+
 O que cada plano faz em movimento: o que entra, muda ou sai, e em que palavra. É o estado atual da execução, escrito depois de as cenas existirem; nenhuma linha daqui foi decidida pelo usuário ainda.
 
 ## Como ler

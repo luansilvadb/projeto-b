@@ -198,13 +198,13 @@ export const NotToSpaceScene: React.FC<SceneProps> = ({ scene, shots }) => (
     <Shot range={shots[1]} name="escape e giro na mesma régua">
       <TwoSpeeds
         escape={[
-          cue(scene, "passar") - shots[1].from,
-          cue(scene, "segundo") - shots[1].from + 12,
-          cue(scene, "onze") - shots[1].from,
+          cue(scene, "escapar") - shots[1].from,
+          cue(scene, "preciso") - shots[1].from + 12,
+          cue(scene, "gravidade") - shots[1].from,
         ]}
         spin={[
-          cue(scene, "giro") - shots[1].from,
-          cue(scene, "meio") - shots[1].from,
+          cue(scene, "solo", 2) - shots[1].from,
+          cue(scene, "gira") - shots[1].from,
           cue(scene, "equador") - shots[1].from,
         ]}
       />

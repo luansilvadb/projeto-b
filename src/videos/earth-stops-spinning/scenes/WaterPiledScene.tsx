@@ -213,13 +213,13 @@ const DrumBecomesEarth: React.FC<{ readonly pileAt: number }> = ({ pileAt }) => 
 export const WaterPiledScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="o mar veste a Terra">
-      <SeaWearsIt seaAt={cue(scene, "mar")} pushAt={cue(scene, "empurra")} />
+      <SeaWearsIt seaAt={cue(scene, "rotação")} pushAt={cue(scene, "escapar")} />
     </Shot>
     <Shot range={shots[1]} name="a máquina de lavar">
       <Washer pressAt={cue(scene, "roupa") - shots[1].from} />
     </Shot>
     <Shot range={shots[2]} name="o tambor vira a Terra">
-      <DrumBecomesEarth pileAt={cue(scene, "calombo") - shots[2].from} />
+      <DrumBecomesEarth pileAt={cue(scene, "segura") - shots[2].from} />
     </Shot>
   </>
 );

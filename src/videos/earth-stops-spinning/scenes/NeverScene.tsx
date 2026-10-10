@@ -103,7 +103,7 @@ const Ruler: React.FC<RulerProps> = ({ brake, noteAt, children }) => {
       />
       {/* A Lua na ponta diz de quem é a barra. */}
       <Moon cx={tip} cy={RULER.brakeY} r={50} night={-0.35} />
-      {(["dia do tamanho de um mês:", "uns 100 bilhões de anos (extrapolação)"] as const).map((line, index) => (
+      {(["dia de um mês e meio:", "pelo menos 50 bilhões de anos (extrapolação)"] as const).map((line, index) => (
         <SvgText
           key={line}
           x={RULER.x0}
@@ -213,11 +213,11 @@ export const NeverScene: React.FC<SceneProps> = ({ scene, shots }) => (
     <Shot range={shots[1]} name="a barra do freio">
       <BrakeBar
         doneAt={cue(scene, "bilhões") - shots[1].from}
-        noteAt={[cue(scene, "tamanho") - shots[1].from, cue(scene, "cem") - shots[1].from]}
+        noteAt={[cue(scene, "durar") - shots[1].from, cue(scene, "cinquenta") - shots[1].from]}
       />
     </Shot>
     <Shot range={shots[2]} name="a barra do Sol">
-      <SunBar at={[cue(scene, "incha") - shots[2].from, cue(scene, "menos") - shots[2].from]} />
+      <SunBar at={[cue(scene, "incha") - shots[2].from, cue(scene, "menos", 2) - shots[2].from]} />
     </Shot>
   </>
 );

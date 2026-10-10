@@ -162,14 +162,18 @@ const CalendarRing: React.FC<RingProps> = ({ nightAt, lap }) => {
 
 export const YearLongDayScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
-    <Shot range={shots[0]} name="o Sol parado na janela">
+    {/*
+      Os dois primeiros planos do roteiro (a Terra de hoje girando e os dois movimentos) ainda
+      não têm desenho: até lá, o Sol parado na janela cobre os dois.
+    */}
+    <Shot range={{ from: shots[0].from, to: shots[1].to }} name="o Sol parado na janela">
       <StuckSun />
     </Shot>
-    <Shot range={shots[1]} name="uma volta no Sol">
+    <Shot range={shots[2]} name="uma volta no Sol">
       <OneLap />
     </Shot>
-    <Shot range={shots[2]} name="o calendário em anel">
-      <CalendarRing nightAt={cue(scene, "seis", 2) - shots[2].from} lap={shots[1].to - shots[1].from} />
+    <Shot range={shots[3]} name="o calendário em anel">
+      <CalendarRing nightAt={cue(scene, "seis", 2) - shots[3].from} lap={shots[2].to - shots[2].from} />
     </Shot>
   </>
 );
