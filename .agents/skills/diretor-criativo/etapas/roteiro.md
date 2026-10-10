@@ -18,6 +18,15 @@ O roteiro cresce de prova para produto, e não de formulário para aprovação: 
 - **Outra skill entra por dúvida ou por dependência**: quando responde algo que esta não deve resolver, ou quando o próximo artefato depende concretamente da saída dela.
 - **Critique onde a cegueira custa, não onde o calendário manda** ("Instrumentos", abaixo).
 
+## A história antes das cenas
+
+O `earth-stops-spinning` chegou à voz e à animação com trinta e três cenas corretas e uma história que o ouvinte precisava adivinhar: o roteiro foi escrito cena a cena, e ninguém leu a narração inteira como quem não sabe nada. O que evita isso não é uma fase a mais, são quatro coisas que valem em qualquer ordem que o trabalho tome (decisão do usuário em 2026-10-10):
+
+- **A história existe antes de ser dividida.** Antes de expandir, você sabe dizer, em poucas linhas e sem termos da pesquisa: a pergunta do vídeo; o que quem assiste sabe ao chegar (`conceito/ouvinte`); a descoberta central; os acontecimentos sem os quais ela não se entende, na ordem em que um leva ao outro; e o que a pesquisa achou e este vídeo não conta (`estrutura/arco`). Isso é pensamento, e cabe na conversa; o que dele é decisão vai para a tese, a promessa e a tabela de `script.md`. Não se cria documento de planejamento.
+- **O mecanismo de que tudo depende é provado primeiro.** Se a história se apoia numa explicação difícil (a inércia, o formato da Terra, o freio da maré), ela é escrita sozinha e passa pelo teste do leigo e pela reconstrução (`conceito/ouvinte`, `escrita/explicacao`) antes de existirem trinta cenas em cima dela. É a prova de "Como o roteiro anda" com o alvo dito: a explicação que ainda não funciona para um leigo não é expandida.
+- **A narração é escrita como um texto só.** O texto corrido vem primeiro, de um bloco ao seguinte, com as passagens escritas junto; a divisão em cenas é feita depois, onde a fala já respira. A cena serve à história: uma explicação nunca é encurtada, partida ou fechada com frase de efeito para caber numa cena, e relido sem os `id`, o texto continua sendo uma história.
+- **Fala e imagem são conferidas juntas.** Depois da decupagem, cada bloco responde: a fala e a imagem dizem a mesma ideia? O que a narração deixou para a tela está num plano, e se lê de um jeito só? A imagem entra na palavra em que é preciso, e fica o tempo de a transformação ser percebida? A narração diz o necessário sem descrever o que já se vê? A imagem pode carregar parte da explicação; não conserta em silêncio a explicação que o texto não deu.
+
 ## O que tranca
 
 São as dependências reais. O resto da ordem é conveniência.
@@ -125,7 +134,9 @@ A faixa do canal, de 6 a 10 minutos, é referência do sinal. Sem `Duração-alv
 Dois subagentes que não viram o texto ser escrito, e é isso que eles valem: quem escreveu não julga o próprio texto. Passe o nome da pasta do vídeo e, na leitura parcial, as cenas.
 
 - `checador`: classifica cada afirmação da fala e da tela contra `research.md` (`pesquisa/checagem`).
-- `editor`: lê como quem ouve uma vez e devolve o que o ouvinte perde, ou diz que não há defeito (`revisao/critica`). Ele lê `script.md` para saber o que o vídeo quer dizer: antes de acioná-lo, o registro diz o vídeo atual e a tabela cobre as cenas que ele vai ler.
+- `editor`: lê como quem ouve uma vez e devolve o que o ouvinte perde, ou diz que não há defeito (`revisao/critica`). Começa pela leitura cega: só a narração, antes da pesquisa, de `script.md` e dos planos, e devolve a história que tirou dela. Por isso o pedido a ele leva o nome da pasta e as cenas, e mais nada: explicar a intenção, resumir o vídeo ou dizer o que mudou entrega a ele o que o espectador não tem. Depois ele lê `script.md` para saber o que o vídeo quer dizer: antes de acioná-lo, o registro diz o vídeo atual e a tabela cobre as cenas que ele vai ler.
+
+Compare a história que o `editor` reconstruiu com a que você quis contar. Onde as duas diferem, o texto falhou, mesmo que ele não tenha listado defeito ali.
 
 **No trecho, por risco.** O `checador` entra cedo quando a prova se apoia numa afirmação duvidosa, numa analogia de quantidade, num superlativo ou num mecanismo sensível: confere-se antes de construir em cima. O `editor`, quando uma dúvida de entendimento ou de continuidade não cede à sua leitura, ou quando o trecho vai sustentar muita expansão. O ajuste pequeno que você mesmo vê e sabe consertar é feito e relido por você.
 
@@ -136,13 +147,14 @@ Dois subagentes que não viram o texto ser escrito, e é isso que eles valem: qu
 | O que mudou | O que confere |
 |---|---|
 | a oralidade, com a mesma proposição | o validador e a sua leitura; o `editor`, só se era dele o defeito relevante |
+| uma explicação refeita para ser entendida (passos acrescentados, outra ordem, outra comparação) | o `editor`, nas cenas afetadas; o `checador`, porque a explicação mais simples pode ter mudado o mecanismo |
 | número, mecanismo, comparação ou grau de certeza | o `checador`, nas cenas afetadas |
 | blocos fundidos ou fora da ordem anterior | o `editor`, nas cenas afetadas e nas que dependem delas; o `checador`, só onde uma relação entre fatos mudou |
 | a tese ou o recorte | os dois, no conjunto, sobre a versão nova |
 
 "Sem defeito" e "tudo sustentado" encerram a lente: não se abre outra rodada para haver revisão.
 
-Eles julgam; quem decide e reescreve é você. Diante de cada defeito do `editor`, a pergunta é a de `conducao/entrevista`: o conserto preserva a decisão atual, ou pede uma nova? Se preserva, reescreva pela unidade dona, atacando a perda que o diagnóstico nomeia; se pede, leve ao usuário. A lista **Para o diretor de arte** vai à skill `diretor-de-arte`, que revê os planos apontados. O bloqueante é resolvido, e o relevante é corrigido enquanto o retorno paga (critérios de parada do `SKILL.md`).
+Eles julgam; quem decide e reescreve é você. Diante de cada defeito do `editor`, a pergunta é a de `conducao/entrevista`: o conserto preserva a decisão atual, ou pede uma nova? Se preserva, reescreva pela unidade dona, atacando a perda que o diagnóstico nomeia; se pede, leve ao usuário. Conserte na escala do defeito: o salto de raciocínio, o bloco que não se liga ao anterior e a ideia espremida são de estrutura, e trocar palavras neles só esconde o problema da próxima leitura. A lista **Para o diretor de arte** vai à skill `diretor-de-arte`, que revê os planos apontados. O bloqueante é resolvido, e o relevante é corrigido enquanto o retorno paga (critérios de parada do `SKILL.md`).
 
 ## Antes de gerar a voz do conjunto
 
@@ -153,7 +165,8 @@ O texto sustenta esse custo quando:
 - o texto completo existe, com um compromisso coerente, e `script.md` diz o vídeo atual;
 - os fatos da fala e da tela estão sustentados, sem afirmação *não verificada*;
 - todas as cenas têm `shots` válidos, as frases que a imagem já mostrou que não se encenam foram resolvidas, e o `pnpm check-script` passa;
-- a conferência independente do conjunto não deixou bloqueante, e os relevantes que ficaram custam mais do que devolvem ou vão relatados;
+- a conferência independente do conjunto não deixou bloqueante, e os relevantes que ficaram custam mais do que devolvem ou vão relatados; a história que o `editor` reconstruiu na leitura cega é a que o vídeo quer contar. O `pnpm check-script` passar não diz nada disso: um roteiro válido pode continuar confuso, e aí ainda não está pronto;
+- a duração é a que a história pediu: nada foi posto para encher, e nenhuma explicação foi encurtada para caber;
 - não há decisão aberta que obrigaria a regravar muito texto se mudasse: a tese, o recorte, a estrutura global, quem narra, a analogia que estrutura o vídeo, o fim, uma simplificação grande. Aberto pode ficar o que é execução: aberto ou médio, uma palavra ou outra, a cor, a transição.
 
 A voz não espera desenho final, folha de modelo, composição, movimento, trilha, efeitos nem thumbnail renderizada.

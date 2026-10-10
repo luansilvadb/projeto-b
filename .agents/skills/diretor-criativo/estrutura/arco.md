@@ -7,6 +7,8 @@ Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, d
 
 **Bloco.** A unidade da estrutura: um trecho que produz uma mudança reconhecível no que o ouvinte sabe, espera ou pergunta. Dois trechos que fazem a mesma mudança são um bloco; um trecho com duas mudanças independentes provavelmente são dois. Uma mudança visual real pode revelar uma fronteira, mas o que define o bloco é o que muda em quem ouve; quem divide em planos é a skill `diretor-de-arte`.
 
+**A pesquisa não é a pauta.** O vídeo não apresenta tudo o que a pesquisa achou: escolhe os acontecimentos e as explicações que cumprem a promessa, e dá a cada um o espaço de ser entendido. O que sobra continua valendo em `research.md`. Foi o defeito do `earth-stops-spinning`: velocidade por latitude, vento, mar, o formato da Terra, o mapa novo, o dia, a temperatura, o desenho do vento, o campo magnético, a energia, os terremotos, a Lua e os corais, em oito minutos. Cada ideia chegou, e nenhuma teve tempo de assentar. Menos blocos, mais desenvolvidos, ensinam mais; a duração sai do que a história precisa, e não do que a pesquisa rendeu.
+
 **O que precisa funcionar:**
 
 - **Cada bloco muda o estado.** Depois dele, quem ouve sabe, espera ou pergunta algo que não sabia, esperava ou perguntava antes: outro conhecimento, outra expectativa, outra escala, outro risco, outra leitura do que já viu. O bloco que não muda nada é candidato a corte, fusão ou outro lugar.
@@ -16,6 +18,7 @@ Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, d
 - **As ideias novas não disputam.** Um bloco não põe várias ideias novas e independentes para competir antes de uma assentar. Duas cabem quando uma explica a outra ou são partes de uma relação só; uma pode ser demais, se é abstrata e chega sem base. O termo técnico é apresentado uma vez e reutilizado igual.
 - **O motivo para continuar se renova** antes que a direção atual se esgote: uma pergunta nova, uma consequência, uma revelação, uma resposta parcial, uma mudança de escala.
 - **O que foi dito tem tempo de assentar.** Densidade contínua demais atropela o que acabou de chegar.
+- **A troca de premissa é uma fronteira à vista.** Quando o vídeo passa de um cenário a outro (da parada de repente à frenagem lenta, do caso medido à simulação, do que aconteceu ao que aconteceria), a troca é um momento da história, com o motivo dela, e não um detalhe embutido numa frase. O resultado obtido sob uma premissa não é contado como consequência da outra (`checagem`).
 - **A mudança de sentido tem espaço.** Quando o que se viu passa a significar outra coisa, a estrutura dá a quem ouve o tempo de perceber. Pode ser uma virada grande, várias pequenas ou uma mudança gradual.
 - **A promessa é do tamanho da entrega.** O vídeo não promete um escopo maior do que cumpre, e não gasta tudo antes do fim: sobra espaço para ele terminar de fato (`fechamento`).
 - **Todo bloco participa do percurso** que permite a promessa ser entregue. Contexto, contraste, preparação, ressalva e personagem participam sem mencionar a tese. O teste é o que o caminho perde sem o bloco.
@@ -23,14 +26,15 @@ Como organizar o vídeo para que cada trecho mude o entendimento de quem ouve, d
 **Três testes**, para achar a lista disfarçada de arco:
 
 - **Permutação.** Troque dois blocos de lugar. Se o entendimento não muda, há pouca dependência entre eles. Não é defeito por si, e é o melhor sinal de módulos independentes.
-- **Remoção.** Tire o bloco: o que deixa de funcionar? Falta uma causa, um contraste, a base de uma consequência, o sentido de um personagem, o fecho da promessa. "Perdemos um fato interessante" é resposta de sobra.
-- **Necessidade do próximo.** Depois de cada bloco: por que o ouvinte precisa do seguinte agora? A resposta não precisa ser uma pergunta, e precisa existir.
+- **Remoção.** Tire o bloco, ou leve-o para outro ponto: a compreensão da história muda? Falta uma causa, um contraste, a base de uma consequência, o sentido de um personagem, o fecho da promessa. "Perdemos um fato interessante" é resposta de sobra: o bloco é secundário, redundante ou ainda não foi integrado, e cada caso tem saída diferente (cortar, fundir, dar a ele a relação que falta).
+- **Necessidade do próximo.** Depois de cada bloco: por que o ouvinte precisa saber disto exatamente agora? A resposta não precisa ser uma pergunta, e precisa existir. Sem resposta convincente, revê-se a posição, a função ou a presença do trecho. "É o que a divulgação costuma perguntar" e "a pesquisa achou" não são respostas.
+- **Assimilação.** Onde está a ideia mais difícil do vídeo, e quanto espaço ela tem em relação às fáceis? A ideia abstrata espremida entre duas curiosidades é o sinal de que a seleção ainda não foi feita.
 
 **A estrutura é hipótese.** Ela acompanha a melhor explicação que o texto consegue realizar: um gancho escrito pode mostrar outra ordem, o fio pode fundir dois blocos, a crítica pode mostrar que uma progressão não existe. Um trecho representativo testa uma estrutura antes de ela ser expandida (o mecanismo e a quebra, dois degraus de uma escalada, uma hipótese e a consequência dela); quando testar é de `etapas/roteiro`. A estrutura que dá a mesma experiência é refinada pelo agente; entre duas válidas que dão experiências diferentes, a escolha é do usuário (`entrevista`).
 
 **Repertório.** Formas e recursos que ajudam a reconhecer e a construir a progressão que o material pede. Servem ao material: nomear a forma pode vir depois de um trecho escrito, e um vídeo pode misturar duas.
 
-*Fases recorrentes no estilo*, com a parcela observada na referência. São vocabulário para dizer o que um bloco faz, e não um esqueleto a preencher: um vídeo pode abrir já no mecanismo, ser quase todo uma história ou não ter escalada.
+*Fases recorrentes no estilo*, com a parcela observada na referência. São vocabulário para dizer o que um bloco faz, e não um esqueleto a preencher: um vídeo pode abrir já no mecanismo, ser quase todo uma história ou não ter escalada. O material decide a forma: escalada, suspense, virada e capítulo que não nascem dele deixam todos os vídeos com a cara do mesmo molde.
 
 | Fase | Função | Parcela observada |
 |---|---|---|

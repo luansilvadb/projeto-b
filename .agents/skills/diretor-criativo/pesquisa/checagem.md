@@ -24,7 +24,7 @@ A afirmação que o vídeo faz de fato, na fala, na tela ou na encenação, é s
 
 Dizer "não sabemos" é permitido e fortalece a credibilidade do resto, quando a base mostra que a questão é tratada como aberta.
 
-**A conclusão respeita o alcance da evidência.** O que sustenta associação não conclui causa; o que sustenta um experimento não conclui todos os casos; o que vale para uma espécie, uma população ou uma condição não é dito sem ela. É o núcleo desta unidade, e não cede à clareza nem à frase melhor. Quando a promessa ou o escopo dito pelo vídeo vai além da base, o diagnóstico sai daqui e o conserto é de `arco` e de `angulo`.
+**A conclusão respeita o alcance da evidência.** O que sustenta associação não conclui causa; o que sustenta um experimento não conclui todos os casos; o que vale para uma espécie, uma população ou uma condição não é dito sem ela; o resultado de um modelo sob uma premissa (a Terra freando aos poucos) não é contado como consequência de outra (a parada de repente). É o núcleo desta unidade, e não cede à clareza nem à frase melhor. Quando a promessa ou o escopo dito pelo vídeo vai além da base, o diagnóstico sai daqui e o conserto é de `arco` e de `angulo`.
 
 **Simplificação.** É aceitável quando um especialista diria "incompleto, mas não errado". Quando a omissão muda a conclusão, não é simplificação: é erro, e é corrigido.
 

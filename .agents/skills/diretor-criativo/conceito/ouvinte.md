@@ -5,9 +5,28 @@ O que o texto precisa fazer para que quem ouve uma vez não tenha de guardar con
 
 **Ouvinte.** Todo texto do vídeo (título, gancho, narração, fechamento, chamada e texto de tela) é escrito para quem assiste com TDAH (decisão do usuário em 2026-10-04). Isso diz que experiência o texto precisa dar, e não que técnica usar: pouca dependência de memória, relevância cedo, relações ditas quando fazem falta e progresso que se percebe.
 
+Esse ouvinte é um adulto curioso que nunca estudou o tema (decisão do usuário em 2026-10-10). Ele é inteligente e não precisa de tom de aula; o que ele não tem é o que o vídeo ainda não lhe deu. O roteiro constrói o conhecimento dele, e não demonstra o de quem pesquisou.
+
 **Premissa.** O texto é recebido em fluxo, uma vez, na velocidade do narrador. O que o ouvinte precisa para entender agora está disponível agora, ou se recupera sem esforço. Quem assiste não carrega sozinho o que o próprio texto pode manter vivo. E o vídeo tem imagem: o que continua na tela (um personagem, um objeto, uma cor, uma cartela) continua disponível; como isso é desenhado é da skill `diretor-de-arte`.
 
 Cada necessidade abaixo é o que precisa funcionar. As técnicas são repertório: cada uma resolve um problema, e a solução que dá a mesma experiência por outro caminho vale igual.
+
+**0. Nada é presumido.** O ouvinte só tem o que o vídeo disse ou mostrou até aqui. Quem pesquisou sabe mais, e é esse saber que completa em silêncio a frase incompleta: o texto parece claro a quem o escreveu justamente onde falta um pedaço. Foi o defeito do `earth-stops-spinning`: "a rocha para de repente, e tudo o que está solto em cima dela continua na velocidade que tinha" resume o experimento para quem já o entendeu, e para quem chega agora não diz que parte da Terra é "a rocha", o que está "solto", nem por que continuaria.
+
+- **A situação vem antes da abreviação.** O apelido que a pesquisa criou ("a rocha", "o giro", "o calombo", "a cintura") é termo novo para quem ouve. Primeiro a coisa dita por inteiro, numa situação que se imagina ("a parte sólida do planeta, o chão e tudo o que está preso a ele"); a forma curta vale depois, enquanto continua inequívoca.
+- **O que sustenta outra coisa foi estabelecido, e não só mencionado.** Uma ideia dita de passagem numa frase não aguenta três consequências em cima dela. Se vários acontecimentos dependem de um princípio (a inércia, a seleção natural, o juro composto), ele ganha uma situação concreta própria antes de ser usado.
+- **O regime é dito quando muda.** O ouvinte sabe se o que ouve é o mundo real, uma suposição do vídeo, uma comparação ou o resultado de uma simulação, e percebe quando uma premissa foi trocada no meio do caminho (parar de repente, e depois frear aos poucos, são dois experimentos).
+- **O que foi dito há minutos não está à mão.** Uma definição, um número ou uma regra de três minutos atrás volta junto com o que significa (a retomada do item 1), ou a frase é escrita sem depender dela.
+
+**Teste do leigo**, para o trecho em que há dúvida. Quem só ouviu até aqui:
+
+- sabe do que se está falando, e quem ou o que faz a ação?
+- entende o que está acontecendo, e por que uma coisa leva à outra?
+- sabe se é fato, hipótese, comparação ou simulação?
+- precisa de um conceito que não ficou estabelecido, ou de uma informação que ninguém deu?
+- conseguiria contar a ideia com as próprias palavras?
+
+Um "não" localiza o que falta; o conserto é da unidade dona (`explicacao` se é a relação, `narracao` se é a frase, `arco` se é a ordem). O teste é uma leitura simulada, e não o resultado de pessoas assistindo: não é relatado como tal.
 
 **1. O contexto está disponível.** O ouvinte entende esta frase com o que ainda está vivo na cabeça dele? Quando algo volta depois de ter saído da atenção, o texto o torna reconhecível, sem pedir que ele lembre sozinho. O que tira uma coisa da atenção não é só a distância: são as ideias que entraram no meio, quão parecidas são com ela, quanto ela vinha sendo usada, quão distinta ela é e se ficou na tela.
 
@@ -25,6 +44,7 @@ Cada necessidade abaixo é o que precisa funcionar. As técnicas são repertóri
 
 - Jeitos de dar a forma: o mapa dito ("há duas respostas"), capítulos com cartela, uma pergunta central que volta, uma moldura que se repete, a ordem cronológica, um protagonista que carrega o percurso, a progressão na tela.
 - Jeitos de ligar uma virada: a consequência, o contraste, a pergunta nova que nasce do que foi dito, a volta do refrão, a recapitulação de uma frase, a frase de posição ("essa era a primeira das três").
+- O salto de tempo, de lugar ou de escala é percebido: quem ouve sabe que saiu do primeiro instante e está anos depois, ou que deixou a rua e olha o planeta inteiro. O que melhor liga é o acontecimento anterior pedir o seguinte; a frase de navegação posta sobre dois trechos que não se pedem não cria a ligação (`fio`).
 - A boa orientação pode ser invisível. "Primeiro veremos", "como vimos" e "essa era a segunda" ajudam quando o caminho de fato se perde; em excesso, o vídeo vira aula.
 
 **4. O progresso se percebe.** Cada trecho deixa o entendimento diferente do que encontrou, e o ouvinte nota, quando isso importa, o que agora sabe, o que ficou resolvido, o que segue aberto e por que continuar. O defeito é o bloco que termina sem ter mudado nada: nem o que se entende, nem o que se espera, nem a pergunta.
@@ -37,7 +57,8 @@ Cada necessidade abaixo é o que precisa funcionar. As técnicas são repertóri
 
 - **Lista.** O que pesa é quantos itens ficam ativos de uma vez e quão parecidos são. Seis planetas mostrados um a um, na ordem do espaço, se acompanham; três proteínas de nome parecido numa frase, sem imagem, não. Agrupar, criar categorias, contrastar, mostrar e apresentar aos poucos são as técnicas; o corte que muda o que o vídeo afirma é decisão do usuário (`entrevista`).
 - **Processo.** O ouvinte reconstrói a ordem depois de ouvir uma vez? Contar na ordem em que acontece, um passo por frase, é o jeito mais seguro; dois passos pequenos e fáceis de imaginar cabem numa frase. Dizer antes quantos são ajuda quando a sequência é longa, os passos se parecem ou importa saber quanto falta; a cadeia em que cada passo causa o seguinte dispensa a contagem.
-- **Magnitude.** Quando a quantidade ou a duração pesa na conclusão, o ouvinte consegue dimensioná-la: uma unidade que se conta ("onze dias", "duas horas por noite"), uma comparação, uma proporção, um caso. "Muito tempo" e "bastante" servem ao que o argumento não usa.
+- **Magnitude.** Quando a quantidade ou a duração pesa na conclusão, o ouvinte consegue dimensioná-la: uma unidade que se conta ("onze dias", "duas horas por noite"), uma comparação, uma proporção, um caso. "Muito tempo" e "bastante" servem ao que o argumento não usa. O contrário também pesa: o número exato que o argumento não usa ocupa o lugar de uma ideia, e vários seguidos, em unidades diferentes, viram uma tarefa de comparação que ninguém pediu (`explicacao`).
+- **Tarefas simultâneas.** O que derruba o ouvinte raramente é uma dificuldade só: é lembrar um conceito de antes, receber um termo novo, acompanhar uma conta e descobrir a que um "isso" se refere, tudo na mesma frase. Quando duas ou mais competem, uma delas sai da frase: o termo é dado antes, a conta fica na pesquisa, o nome volta no lugar do pronome.
 - **Desvio.** O detalhe de personagem e o humor não sequestram o fio nem criam uma segunda coisa a guardar: a volta é imediata. O jeito mais seguro é uma oração dentro da frase que carrega o fato; o segundo assunto espera o bloco dele. O humor ou o detalhe que carrega a própria relação em curso não é desvio, e não tem volta a fazer.
 - **Figura e fato.** O ouvinte não precisa decidir se uma imagem é metáfora ou mecanismo. A coisa é dita pelo nome onde a explicação depende dela; a figura não substitui a explicação; e a analogia que poderia ser tomada por descrição literal é marcada como analogia (`analogias`).
 - **Hesitação com lastro.** "Talvez", "provavelmente" e "pode" entram onde a base de fatos registra a incerteza; as outras frases afirmam.
