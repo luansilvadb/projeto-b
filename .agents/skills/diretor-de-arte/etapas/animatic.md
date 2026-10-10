@@ -40,6 +40,8 @@ Quando há uma dúvida visual que pesa, comece por um trecho que atravessa tudo 
 - **Renderize cedo.** Com esse trecho de pé, renderize e abra, antes de existirem os outros personagens, cenários e cenas.
 - **Conserte ali antes de multiplicar.** Leia o trecho por `critica-quadro`, com as lentes que a dúvida chama, e acione o `critico-de-quadro` sobre ele.
 
+**Quadro-chave.** Quando a dúvida é o acabamento (um mundo novo, um registro novo, o lugar de um número mudo), o trecho começa por um quadro só, parado e no acabamento final. É ele que diz se a cara está certa antes de qualquer movimento, e é sobre ele que uma prova de movimento vai ao usuário (`entrevista-movimento`).
+
 Sem dúvida desse tamanho (um vídeo com elenco, lugar e linguagem já provados), não há trecho de prova: componha.
 
 ## Expandir
