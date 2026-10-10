@@ -37,7 +37,10 @@ O que faz um fato mudar o entendimento de quem assiste, em vez de ser só mais u
 - evidência: se a hipótese valesse, veríamos X; o estudo achou Y;
 - caso: isto aconteceu com alguém, e o mecanismo explica por quê;
 - eliminação: A não explica, B também não, sobra C;
-- escala: parte de uma referência familiar e avança.
+- escala: parte de uma referência familiar e avança;
+- tentativa: alguém quer X e vai pelo caminho que parece certo; o obstáculo aparece, e a virada mostra por que o caminho não dava.
+
+**A tentativa** é a forma que o canal prefere quando o bloco explica um mecanismo ou conta um caso (decisão do usuário em 2026-10-09): o texto acompanha alguém que quer uma coisa, em vez de enfileirar o que se descobriu. O intento é a expectativa que o ouvinte teria, o obstáculo é o mecanismo, e a virada é o fato. Quem tenta está na base de fatos (a pessoa, o bicho, os pesquisadores do estudo) ou é uma personificação que mantém o mecanismo certo (`analogias`). A narração apresenta o intento que a imagem vai encenar e frustrar (`humor`).
 
 **Repertório observado.** O que os nove vídeos de referência fazem (a lista está em "Base", abaixo), com o problema que cada padrão resolve. É o que esse conjunto mostrou: usa-se o padrão quando o problema aparece, e o bloco que dá entendimento por outro caminho não falha pela forma.
 
