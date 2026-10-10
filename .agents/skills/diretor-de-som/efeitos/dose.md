@@ -18,6 +18,10 @@ Não dão dono a um efeito: o espaço vago, a contagem baixa, a virada de capít
 
 **O tom.** Um efeito não transforma uma ação neutra em piada sem que o vídeo sustente essa leitura. Quando a pose, o timing ou a situação já fazem a piada, um som cômico pode completá-la, mesmo sem o roteiro escrever "humor". O defeito é o som acrescentar sozinho um tom que não foi decidido.
 
+**A linguagem do canal é a do cinema mudo** (decisão do usuário em 2026-10-09). A imagem do canal faz graça (`atuacao/pantomima`, na skill `diretor-de-arte`), e na reação e no número mudo o gesto pode ganhar um acento musical além da consequência física: o apito de êmbolo no que sobe, desce ou escorrega, o bloco de madeira na batida, no passo e na piscada. O acento segue o gesto, no instante e na direção, e continua tendo dono; fora da pantomima vale o teste de remoção de sempre. Os dois foram escolha de ouvido: a decisão "não é vídeo infantil" (`descricao`) não os corta pelo nome, e o que continua sendo dúvida de ouvido é o trecho soar como desenho para criança. A realização que o usuário ouviu é o Freesound 517633 (o apito) e o 692819 (o bloco), os dois CC0. O apito traz a subida e a descida no mesmo arquivo, e cada uso do catálogo toca um arquivo inteiro: ele entra cortado em dois, um por uso, pela skill `diretor-producao` (`etapas/efeitos-sonoros.md`), quando o primeiro mapa os pedir.
+
+**A voz inventada.** Quando um balão de rabiscos aparece (`quadro/texto`, na skill `diretor-de-arte`), a fala soa numa língua que não existe. É efeito, com o balão como dono, e não narração. O repositório ainda não tem ferramenta para ela: o primeiro vídeo com balão pede à skill `diretor-producao` o gerador e a entrada no catálogo. No rascunho que o usuário ouviu (proposta), eram sílabas sintetizadas de 85 a 140 ms, com a altura escorregando dentro de cada uma e cada personagem na sua altura: um grave e pausado, o outro agudo e curto.
+
 **Onde o efeito costuma fazer trabalho.** Repertório do que já serviu, sem ordem de obrigação:
 
 | Acontecimento | Exemplo |

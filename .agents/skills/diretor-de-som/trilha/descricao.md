@@ -18,7 +18,8 @@ Como pedir ao gerador a música de uma parte ou de um momento, e o que a descri�
 - a densidade ("sparse", "full"), o movimento ("steady pulse", "no pulse"), o registro ("low");
 - o caráter ("thoughtful", "wary", "tender", "restrained"), quando acrescenta uma direção que as propriedades ainda não dão;
 - o tipo de trilha ("cinematic science documentary score"), como pista de função que estreita o que o modelo escolhe;
-- poucos timbres nomeados, dois ou três, deram uma identidade mais controlável.
+- poucos timbres nomeados, dois ou três, deram uma identidade mais controlável;
+- (proposta) a descrição que deu o piano de cinema mudo que o usuário escolheu (`leito`): "playful silent film comedy score, solo upright piano, bouncy ragtime stride left hand, cheeky staccato melody, light and charming, comedic timing with small pauses, vintage 1920s cinema pianist, instrumental", a 104 bpm em dó maior. O piano é decisão; a descrição é só a que funcionou uma vez, em 42 s.
 
 Onde der, traduza a intenção em propriedades que um músico poderia tocar: "epic" e "emotional" devolvem a escolha ao modelo. As descrições são em inglês, a língua em que tudo isto foi testado.
 
@@ -28,7 +29,7 @@ Onde der, traduza a intenção em propriedades que um músico poderia tocar: "ep
 
 - **Comandos concorrentes.** "laboratory tension" com "sparkling", "peaceful night" com "bright": termos sem relação entre si, que puxam o modelo para lados que se anulam. Emoção composta não é isso: "tender but uneasy" é uma intenção, e o som diz se o modelo a realiza. O teste: os termos conseguem coexistir na mesma música?
 - **O termo que congela o que precisa variar.** "steady even dynamics" numa parte que tem momentos.
-- **Sinais de infantil.** O canal é ciência para todas as idades, decisão do usuário, que recusou uma trilha inteira: "não é vídeo infantil". O que viola a decisão é o resultado soar como desenho animado, pela soma de timbre de brinquedo, registro agudo, articulação saltitante e humor de cartum. Marimba, kalimba, caixinha de música, "playful" e "quirky" estavam naquela trilha: são sinais de risco, que pedem o ouvido, e nenhum reprova pelo nome. Adulto não é um gênero: energia, humor e leveza cabem.
+- **Sinais de infantil.** O canal é ciência para todas as idades, decisão do usuário, que recusou uma trilha inteira: "não é vídeo infantil". Aquela trilha somava timbre de brinquedo (marimba, kalimba, caixinha de música), registro agudo, e "playful" e "quirky" na descrição. Em 2026-10-09 ele escolheu de ouvido o piano de cinema mudo (`leito`), que é saltitante e cômico: a graça e a articulação não são o defeito. O que continua violando a decisão é o resultado soar como desenho para criança, e os sinais de risco são o timbre de brinquedo e o registro agudo: pedem o ouvido, e nenhum reprova pelo nome. Adulto não é um gênero: energia, humor e leveza cabem.
 
 Peça pelo que a música faz: "restrained, low register, sparse" em vez de "not playful", que põe no texto a palavra que se queria fora.
 

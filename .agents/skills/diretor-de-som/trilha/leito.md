@@ -5,6 +5,8 @@ O que faz a trilha soar como a música de um vídeo só, e em quantas partes ela
 
 **Princípio.** O **leito** é a identidade musical contínua do vídeo: a música pode mudar, e até ser gerada em mais de um arquivo, sem que quem assiste sinta que entrou outra trilha sem motivo. Continuidade é percebida, e não declarada pelos parâmetros: timbre, andamento e tom preveem, e o som gerado confirma.
 
+**A música do canal** (decisão do usuário em 2026-10-09, ouvindo duas versões do mesmo trecho). É o piano de cinema mudo, no vídeo inteiro: ao fundo sob a fala, e à frente nos números mudos (`silencio`), em que é ele que conduz a cena. A escolha foi feita num trecho de 12 s: como ele se sustenta sob minutos de fala é a primeira dúvida de identidade do próximo vídeo, levada ao ouvido cedo (`entrevista-som`): sob a fala, o piano acompanha ou cansa? Soa como cinema mudo, ou como desenho para criança? Os exemplos desta skill com piano de feltro, sintetizador e cordas são do vídeo do sono, anterior à decisão.
+
 **Parte e identidade.** Uma **parte** é um arquivo: a primeira geração e cada item de `music.parts`. É primeiro uma segmentação técnica, e só vira mudança que se ouve quando o vídeo pede. Um vídeo pode ter uma parte e uma identidade, várias partes e uma identidade ou, quando o produto pede mesmo, uma ruptura deliberada.
 
 **O que deu errado uma vez.** Um vídeo de 9 minutos com dez faixas, uma por capítulo, e o usuário ouviu "qualquer música ambiente posta para preencher espaço". O defeito não eram os dez arquivos nem os capítulos: cada trecho soava como uma música independente, e o vídeo perdeu a identidade e a sensação de trilha composta para ele. É a **playlist**, e ela é o defeito que esta unidade evita.
