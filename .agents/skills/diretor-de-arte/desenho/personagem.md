@@ -29,6 +29,8 @@ Como desenhar e posar uma figura com rosto?
 | Bicho real | o olho onde fica de verdade, com anel, pupila e brilho; a expressão vem da pálpebra, da inclinação do corpo e de orelhas, nadadeiras ou cauda |
 | Figurante | a mesma construção com menos formas: sem rosto ou com dois pontos, cores mais apagadas, ou silhueta de uma cor |
 
+No canal, quem personifica é a trupe (`elenco`), e os atores dela são chibi: a construção é a do mascote, com a cabeça e o corpo num volume só. As outras linhas ficam para a figura que nenhum ator veste. Com membros tão curtos, quem diz a pose é o volume inteiro (inclinar, achatar, esticar, sair do chão, encostar) e o rosto. A silhueta de um ator chibi muda pouco de uma pose para outra: o teste da cor só acusa menos nele, e pares parecidos se separam pela inclinação, pelo movimento e pelo rosto. No tamanho do plano, o que sobrevive é o olho, a inclinação e o deslocamento do corpo; sobrancelha e boca quase somem.
+
 O rosto da referência: olhos grandes e simples, afastados cerca de um olho entre si, na metade de baixo da cabeça, com um ponto de brilho do mesmo lado em cada um; sobrancelha em traço curto; boca em forma pequena, que troca; bochecha em mancha mais saturada; nariz mínimo ou nenhum. A pálpebra é uma forma da cor da pele que corta o olho: é a peça que muda a expressão sem redesenhar o olho.
 
 Como as partes combinam em algumas expressões. São exemplos do acordo entre rosto e corpo, não um catálogo de onde escolher:
