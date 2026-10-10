@@ -64,16 +64,23 @@ const main = () => {
     const sentences = splitUtterances(scene.narration).length;
     const pausesMs =
       PACING.leadMs + PACING.sentenceGapMs * (sentences - 1) + PACING.tailMs;
-    const seconds =
+    const spokenSeconds =
       scene.narration.length / CHARACTERS_PER_SECOND + pausesMs / 1000;
+    // O silêncio depois da fala conta na duração e fica todo no último plano:
+    // é o tempo do respiro e do número mudo, e sem ele a estimativa não mostra
+    // quanto texto a imagem tirou do vídeo.
+    const holdSeconds = (scene.holdMs ?? 0) / 1000;
+    const seconds = spokenSeconds + holdSeconds;
     totalSeconds += seconds;
     console.log(
-      `- ${scene.id}: ${sentences} frase(s), cerca de ${seconds.toFixed(1)} s`,
+      `- ${scene.id}: ${sentences} frase(s), cerca de ${seconds.toFixed(1)} s${holdSeconds > 0 ? `, ${holdSeconds.toFixed(1)} s sem fala no fim` : ""}`,
     );
 
     shotShares(scene.narration, scene.shots).forEach((share, index) => {
       const shot = scene.shots[index];
-      const shotSeconds = seconds * share;
+      const shotSeconds =
+        spokenSeconds * share +
+        (index === scene.shots.length - 1 ? holdSeconds : 0);
       const starts = shot.cue ? `em "${shot.cue}"` : "no começo";
       const long = shotSeconds > LONG_SHOT_SECONDS;
       shotCount++;

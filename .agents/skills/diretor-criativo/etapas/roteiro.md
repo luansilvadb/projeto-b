@@ -115,7 +115,7 @@ Rode quando a validade importa: depois de mexer em cenas, deixas ou na tabela de
 
 **Erro**, o que ele recusa: as regras do formato e da narração (`src/narration/script.ts`), listadas de uma vez, e `script.md` contra o roteiro, quando alguma cena está fora da tabela de estrutura, em dois blocos ou fora de ordem (sem `script.md`, só avisa). Corrija até passar.
 
-**Sinal**, o que ele só imprime: a duração estimada de cada cena, de cada plano e do vídeo, os planos longos, tratados na decupagem conforme a unidade `planos` da skill `diretor-de-arte`, e o **perfil da narração** contra os vídeos de referência. Medida FORA diz onde olhar e não reprova o texto: leia e ouça o trecho. O defeito que a leitura confirma é corrigido pela unidade dona (`escrita/explicacao` se é a relação, `escrita/fio` se é a continuidade, `escrita/narracao` se é a frase); sem defeito, o texto segue. O sinal é lido quando ajuda a diagnosticar, e não relatado a cada prova.
+**Sinal**, o que ele só imprime: a duração estimada de cada cena, de cada plano e do vídeo, já com o `holdMs` de cada cena, os planos longos, tratados na decupagem conforme a unidade `planos` da skill `diretor-de-arte`, e o **perfil da narração** contra os vídeos de referência. Medida FORA diz onde olhar e não reprova o texto: leia e ouça o trecho. O defeito que a leitura confirma é corrigido pela unidade dona (`escrita/explicacao` se é a relação, `escrita/fio` se é a continuidade, `escrita/narracao` se é a frase); sem defeito, o texto segue. O sinal é lido quando ajuda a diagnosticar, e não relatado a cada prova.
 
 A faixa do canal, de 6 a 10 minutos, é referência do sinal. Sem `Duração-alvo` em `script.md`, o roteiro que funciona não é alongado nem cortado para caber nela.
 
