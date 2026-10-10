@@ -150,6 +150,7 @@ CLAUDE.md           link relativo para AGENTS.md
 src/design/          direção de arte: paleta, tipografia, formas e movimento
 src/components/      primitivos visuais reutilizáveis
 src/art/             desenhos feitos em código
+src/studies/         estudos de imagem e de movimento, fora de qualquer vídeo
 src/audio/           mixagem da trilha e catálogo de efeitos sonoros
 src/critique/        medidas do render e as faixas dos vídeos de referência
 src/narration/       regras do roteiro e tempos da narração

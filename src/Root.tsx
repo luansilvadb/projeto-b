@@ -8,6 +8,8 @@ import { MOTION_SAMPLE_SECONDS, MotionSample } from "./design/MotionSample";
 import { FPS, HEIGHT, WIDTH } from "./format";
 import { Vignette } from "./vignette/Vignette";
 import { WhyWeSleep, whyWeSleepMetadata } from "./videos/why-we-sleep";
+import { InsideNight } from "./studies/inside-night/InsideNight";
+import { VigiliaSheet } from "./studies/inside-night/VigiliaSheet";
 import {
   SavannaAnimation,
   SavannaReference,
@@ -54,6 +56,24 @@ export const RemotionRoot: React.FC = () => {
           height={HEIGHT}
           fps={FPS}
           durationInFrames={8 * FPS}
+        />
+        {/* Estudo de movimento "A noite, por dentro": o mundo, a luz, a câmera e a atuação pose a pose da Vigília. */}
+        <Composition
+          id="inside-night"
+          component={InsideNight}
+          width={WIDTH}
+          height={HEIGHT}
+          fps={FPS}
+          durationInFrames={375}
+        />
+        {/* A folha da Vigília: as oito poses do número pintadas (quadro 0), em silhueta (1) e no tamanho do plano (2). */}
+        <Composition
+          id="vigilia"
+          component={VigiliaSheet}
+          width={WIDTH}
+          height={HEIGHT}
+          fps={FPS}
+          durationInFrames={3}
         />
         <Still
           id="identity-sheet"

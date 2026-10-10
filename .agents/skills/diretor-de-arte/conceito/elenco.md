@@ -14,7 +14,7 @@ Quem conduz o vídeo na tela, e o que ganha rosto?
 
 **Os atores são chibi** (decisão do usuário em 2026-10-09, que recusou um corpo de cabeça, tronco e membros compridos): um volume só, redondo e compacto, com o rosto no próprio corpo, braços e pernas curtos e grossos, mãos e pés pequenos, e sem chifres, que ele tirou ao ver o trecho animado. Como se desenham e posam é de `personagem`. As fichas:
 
-- **Vigília**: um ovo verde-água em pé, liso no alto, com mãos creme e cascos claros. O esforço dela é um olho apertado e os dentes cerrados, e nunca a sobrancelha em V, que a fazia ler como um diabinho bravo. Nunca fala.
+- **Vigília**: um ovo verde-água em pé, liso no alto, com mãos creme e cascos claros. O esforço dela é um olho apertado e os dentes cerrados, e nunca a sobrancelha em V, que a fazia ler como um diabinho bravo. Nunca fala. O desenho está em `src/art/Vigilia.tsx`, e a folha de modelo, na composição `vigilia`.
 
 O ator que ainda não tem ficha é desenhado nessa construção na prova do conceito visual (`etapas/decupagem.md`) e levado ao usuário antes de se decupar com ele. É o caso do segundo ator das provas de 2026-10-09, o de boné e óculos: o corpo dele é anterior à decisão.
 

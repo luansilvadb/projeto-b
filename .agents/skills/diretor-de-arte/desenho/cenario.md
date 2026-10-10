@@ -3,7 +3,7 @@ Como construir o fundo e a profundidade?
 
 ## RESPOSTA
 
-**O registro do canal** (decisão do usuário em 2026-10-09, sobre um quadro-chave e um trecho de prova). O lugar é um mundo: camadas a distâncias diferentes, uma luz que vem de algum ponto e toca as coisas, brilho, partículas só onde o meio as tem (a água, o que está por dentro), e personagens pequenos dentro dele. O que está por dentro (`cor`) é um lugar vasto, e não uma sala: escuro, e aceso por fontes de luz que se veem. O fundo liso fica para o palco em que se compara e mede (`dado`) e para o esquema.
+**O registro do canal** (decisão do usuário em 2026-10-09, sobre um quadro-chave e um trecho de prova). O lugar é um mundo: camadas a distâncias diferentes, uma luz que vem de algum ponto e toca as coisas, brilho, partículas só onde o meio as tem (a água, o que está por dentro), e personagens pequenos dentro dele. O que está por dentro (`cor`) é um lugar vasto, e não uma sala: escuro, e aceso por fontes de luz que se veem. O fundo liso fica para o palco em que se compara e mede (`dado`) e para o esquema. A prova aceita é o estudo `src/studies/inside-night/` (composição `inside-night`): é contra ele que se confere o acabamento de um mundo novo.
 
 **Um cenário serve quando:**
 
