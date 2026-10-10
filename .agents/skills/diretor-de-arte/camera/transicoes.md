@@ -59,6 +59,7 @@ Outra ponte (um casamento de cor, algo que passa na frente e cobre a troca, um c
 - entradas: fornece como entra o que a passagem acrescenta.
 
 ## LIMITES
+- Nenhuma íris de cinema mudo, nem para fechar o vídeo (decisão do usuário em 2026-10-09): o piano e a atuação já dizem isso.
 - Mudar a leitura dos dois planos (ruptura onde havia continuidade, ou o contrário) é decisão do usuário (`entrevista-movimento`). Trocar de técnica mantendo a mesma relação não é, e a entrada registrada acompanha a troca.
 
 ## EXEMPLO

@@ -3,10 +3,12 @@ Como construir o fundo e a profundidade?
 
 ## RESPOSTA
 
+**O registro do canal** (decisão do usuário em 2026-10-09, sobre um quadro-chave e um trecho de prova). O lugar é um mundo: camadas a distâncias diferentes, uma luz que vem de algum ponto e toca as coisas, brilho, partículas só onde o meio as tem (a água, o que está por dentro), e personagens pequenos dentro dele. O que está por dentro (`cor`) é um lugar vasto, e não uma sala: escuro, e aceso por fontes de luz que se veem. O fundo liso fica para o palco em que se compara e mede (`dado`) e para o esquema.
+
 **Um cenário serve quando:**
 
-- **O plano tem o lugar de que precisa, e não mais.** A pergunta é quanto contexto espacial este plano pede: isolar o assunto, situá-lo num lugar, mostrar que são muitos, ou uma mistura disso. O fundo pode ser quase nada quando o lugar não acrescenta.
-- **O assunto continua a coisa mais fácil de achar.** O fundo cede a ele em contraste, saturação e detalhe, e nada atrás dele disputa a silhueta: na savana do piloto, o morro atrás do assunto saiu a pedido do usuário. Atrás de um personagem o fundo fica quieto, porque é o vazio que deixa a figura falar: o mesmo piloto deixou o fundo de personagem só em degradê. Teste: com o assunto no lugar, ele ainda é o maior contraste do quadro?
+- **O plano tem o lugar de que precisa, e não mais.** A pergunta é quanto contexto espacial este plano pede: isolar o assunto, situá-lo num lugar, mostrar que são muitos, ou uma mistura disso. O fundo pode ser quase nada quando o lugar não acrescenta, como no dado e no esquema.
+- **O assunto continua a coisa mais fácil de achar.** O fundo cede a ele em contraste, saturação e detalhe, e nada atrás dele disputa a silhueta: na savana do piloto, o morro atrás do assunto saiu a pedido do usuário. Atrás de um personagem o mundo fica quieto: recua em valor, saturação e detalhe, e é a luz que solta a figura. Teste: com o assunto no lugar, ele ainda é o maior contraste do quadro?
 - **Cada coisa do ambiente tem um serviço**: dizer onde se está, dar escala, contar algo da situação ou enquadrar. O fundo não conserta um assunto pequeno ou fraco: isso se resolve em `composicao`, antes de qualquer enfeite.
 - **A profundidade se lê quando o plano depende dela.** O que está perto e o que está longe se distinguem sem esforço.
 - **A luz é coerente.** Sombras, brilhos e bordas de luz concordam com o lugar de onde a luz vem. Um lugar pode ter mais de uma fonte (o sol e a vitrine, o que brilha por dentro), desde que o espectador não receba sinais contrários.
@@ -25,8 +27,8 @@ Fundos:
 
 | Família | Serve para | Como costuma ser |
 |---|---|---|
-| Liso | isolar: dado, esquema, personagem sozinho, piada rápida | um degradê, de duas paradas atrás de um personagem |
-| Cenário | situar: abertura de bloco, lugar citado na fala, a vida de quem protagoniza | camadas a distâncias diferentes |
+| Liso | isolar o que se compara e mede: dado, esquema | um degradê |
+| Cenário | o lugar em que alguém vive ou age: é o registro do canal | camadas a distâncias diferentes, com a luz marcada |
 | Padrão | dizer "muitos": células, leitos, multidão | o mesmo elemento repetido até encher o quadro, com um diferente, que é o foco (a unidade repetida de `forma`) |
 
 Camadas de que um cenário pode ser feito, do fundo para a frente. Ele usa as que servem ao plano:
@@ -52,11 +54,12 @@ Outras saídas:
 | Dizer onde se está | poucos objetos de ambiente (uma janela, uma planta, uma placa), em dois ou três tons e com menos contraste que o assunto | não registrada |
 | Dizer de onde a luz vem | o brilho no céu, feixes diagonais translúcidos, a borda de luz nos objetos do lado dela | não registrada |
 | Que ponto de vista | frontal ou de perfil na maior parte; isométrica para um "mundo de esquema", com os objetos pousados num piso; de cima ou de baixo como variação | não registrada |
-| O fundo liso do palco em que se compara e mede (`dado`), ou do mundo por dentro | trama: grade em perspectiva, manchas do mesmo matiz | um vídeo de espaço, com o alcance corrigido pelo piloto |
+| O fundo liso do palco em que se compara e mede (`dado`) | trama: grade em perspectiva, manchas do mesmo matiz | um vídeo de espaço, com o alcance corrigido pelo piloto |
 | Dar ênfase a um plano | vinheta, ou raios saindo do centro | não registrada |
+| O mundo por dentro (`cor`) | um salão de arcos altos, com chão: os arcos distantes quase na cor do fundo, uma fonte de luz que se vê (a janela com o feixe, o reservatório que brilha), o assunto pequeno junto dela, uma mata de formas do tema com núcleos acesos, partículas do meio, e a moldura escura em dois cantos | quadro-chave aceito pelo usuário em 2026-10-09 |
 | O lugar do plano de espetáculo (`planos`) | **o lugar toma a cor do assunto** (proposta): o cenário inteiro na família de cor de quem emite a luz, com nuvens e manchas em três ou quatro tons dela, do quase preto ao saturado, e as mais escuras em primeiro plano cobrindo parte do assunto | o mesmo vídeo de espaço |
 
-**Medidas da referência** (evidência: situam e não reprovam por si). O fundo é liso em 61% do tempo, cenário construído em 33% e padrão em 5%. A área do quadro com desenho é de 48% nos planos de fundo liso, 72% nos de cenário e 81% nos de padrão, e fica entre 40% e 68% no vídeo inteiro; ocupação baixa é assunto de `composicao`.
+**Medidas da referência** (evidência: situam e não reprovam por si). O fundo é liso em 61% do tempo, cenário construído em 33% e padrão em 5%. A área do quadro com desenho é de 48% nos planos de fundo liso, 72% nos de cenário e 81% nos de padrão, e fica entre 40% e 68% no vídeo inteiro; ocupação baixa é assunto de `composicao`. A parcela de fundo liso descreve a referência medida, e não o alvo do canal.
 
 ## DEPENDÊNCIAS
 - cor: fornece o degradê e as cores de cada modo.

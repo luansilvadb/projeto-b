@@ -7,7 +7,7 @@ Como arrumar o quadro para o olho achar o assunto?
 
 - **O olho acha o que importa de primeira.** O **ponto focal** é o que o quadro manda ver antes de tudo (o rosto, a mão que age, o objeto de que a frase fala), e o resto cede a ele. Quando a relação entre dois é o próprio assunto (um confronto, uma comparação), o quadro pode ter dois polos, desde que se leia o que os liga.
 - **O quadro tem uma ordem de leitura.** Depois do ponto focal, o olho sabe para onde ir. Linhas do cenário, o olhar dos personagens e o gesto das mãos conduzem, inclusive para fora do quadro, quando é lá que está o que vem (o que chega, a ameaça, o plano seguinte). O defeito é a direção que tira o olho do assunto sem querer.
-- **O tamanho do assunto serve ao que o plano pede.** A escala vem de `planos`; aqui ela vira enquadramento. O erro que mais se repete é o assunto tímido: tudo em tamanho médio para pequeno, no centro, com sobra em volta. Se a escala pedida não funciona no quadro, o conflito volta a `planos`.
+- **O tamanho do assunto serve ao que o plano pede.** A escala vem de `planos`; aqui ela vira enquadramento. O erro que mais se repete é o assunto tímido: tudo em tamanho médio para pequeno, no centro, com sobra em volta. Personagem pequeno num mundo grande é outra coisa, e é o registro do canal no plano aberto (`cenario`): funciona quando a luz ou o contraste o isolam e a pose se lê nesse tamanho (`personagem`). A atuação que depende do rosto pede a câmera mais perto. Se a escala pedida não funciona no quadro, o conflito volta a `planos`.
 - **O vazio é composição, não sobra.** Espaço vazio isola, dá escala, deixa lugar para onde alguém olha ou anda, segura uma espera. Vazio que não faz nada disso é assunto que ficou pequeno.
 - **A posição mostra a relação.** O que pertence junto parece junto, por proximidade ou alinhamento, e o que é separado tem um vazio claro entre si. A distância também fala, quando ela é a relação.
 - **A figura se separa do fundo.** Como, em cor, é de `cor`; em lugar e profundidade, de `cenario`.
@@ -24,7 +24,7 @@ Como arrumar o quadro para o olho achar o assunto?
 | Onde pôr o assunto que está sozinho | no centro, grande | um vídeo sobre gordura, adotado pelo usuário e conferido em 72 quadros de quatro vídeos: de 35 com um assunto só, 30 o traziam no centro |
 | Dois no quadro (quem age e quem reage), ou um olhar que pede espaço | cada um num terço; sobra do lado para onde se olha ou se anda | referência |
 | A figura não se solta do fundo | some um sinal: valor (claro sobre escuro, ou o contrário), matiz distante do fundo, o assunto nítido sobre fundo simples, a borda de luz no lado da fonte | não registrada |
-| O que está por dentro não tem chão | as coisas flutuam, presas ao fundo por um halo de luz própria | o mesmo vídeo sobre gordura |
+| As partes de um esquema do que está por dentro não têm chão | flutuam, presas ao fundo por um halo de luz própria | o mesmo vídeo sobre gordura |
 | Confronto, causa e reação, dentro e fora | tela dividida em diagonal | referência |
 | Comparar dois casos | tela dividida na vertical | referência |
 | Mostrar outra escala ou o interior de algo | janela ou lente, em círculo ou forma orgânica | referência |
