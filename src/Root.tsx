@@ -2,6 +2,11 @@ import { AntelopeSheet } from "./videos/why-we-sleep/AntelopeSheet";
 import { ElephantSheet } from "./videos/why-we-sleep/ElephantSheet";
 import { JellyfishSheet } from "./videos/why-we-sleep/JellyfishSheet";
 import { PersonSheet } from "./videos/why-we-sleep/PersonSheet";
+import {
+  EarthStopsSpinning,
+  earthStopsSpinningMetadata,
+} from "./videos/earth-stops-spinning";
+import { CastSheet } from "./videos/earth-stops-spinning/CastSheet";
 import { Composition, Folder, Still } from "remotion";
 import { IdentitySheet } from "./design/IdentitySheet";
 import { MOTION_SAMPLE_SECONDS, MotionSample } from "./design/MotionSample";
@@ -39,6 +44,15 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         defaultProps={{ narration: null, music: null }}
         calculateMetadata={whyWeSleepMetadata}
+      />
+      <Composition
+        id="earth-stops-spinning"
+        component={EarthStopsSpinning}
+        width={WIDTH}
+        height={HEIGHT}
+        fps={30}
+        defaultProps={{ narration: null, music: null }}
+        calculateMetadata={earthStopsSpinningMetadata}
       />
       {/* Referência viva da direção de arte ativa em src/design/tokens.ts. */}
       <Folder name="design">
@@ -159,6 +173,15 @@ export const RemotionRoot: React.FC = () => {
           height={HEIGHT}
           fps={FPS}
           durationInFrames={2}
+        />
+        {/* A folha do "earth-stops-spinning": as poses dos dois atores (quadro 0), a cozinha (1), a Terra com a alavanca (2) e o polo (3). */}
+        <Composition
+          id="terra-elenco"
+          component={CastSheet}
+          width={WIDTH}
+          height={HEIGHT}
+          fps={FPS}
+          durationInFrames={4}
         />
         {/* A vinheta do canal sozinha, para ver e ajustar sem o vídeo em volta. */}
         <Composition
