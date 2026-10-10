@@ -24,6 +24,8 @@ O instante se acha pela função, e não por um lugar fixo do roteiro. O vídeo 
 
 **O silêncio de fala.** O limite é do runtime: de 1 a 8000 ms por cena. Também é do runtime o que a música faz hoje: na pausa de 2 s ou mais ela sobe sozinha ao primeiro plano; na mais curta, segue no nível em que estava, porque a rampa não termina de subir e o que se ouve é um soluço de volume. A pausa curta que cumpre a função está certa sem a música subir, e a existência de uma pausa não pede mudança de mixagem.
 
+**O respiro e o número mudo** (decisão do usuário em 2026-10-09). O canal tem dois silêncios de fala que vêm da imagem, e é lá que cada um tem a função, o tamanho e o teste de remoção (`atuacao/pantomima`, na skill `diretor-de-arte`): o respiro, curto, em que alguém reage, e o número mudo, em que a imagem carrega a cena. No respiro a música segue onde estava, porque ele não chega aos 2 s. No número ela vai à frente sozinha e conduz: é ali que o piano se ouve (`leito`), e os acentos marcam os gestos (`dose`).
+
 **O silêncio de música.** Vai da palavra de deixa ao fim da cena; a música some e volta em meio segundo. Como heurística, cobre uma frase (de 4 a 8 s); o que passa disso pede escuta, porque pode soar como defeito. O que vem depois dele é um bom lugar para a troca de leito (`leito`), porque a faixa nova entra sem cruzar com a anterior.
 
 **Em vez de silêncio.** Para um trecho que pede peso sem pedir ausência, um momento ralo (`momentos`) e o nível `recuo` (`niveis`): a música continua, quase parada.
@@ -31,7 +33,7 @@ O instante se acha pela função, e não por um lugar fixo do roteiro. O vídeo 
 **O que a referência faz** (sensor: chama a escuta, não reprova):
 
 - A música está ausente em 0,5% do tempo (de 0 a 2,4%; há vídeo com música em 100%), com no máximo um trecho de silêncio a cada cinco minutos.
-- A fala ocupa 96% do vídeo, com 0,2 pausa de 1 s por minuto.
+- A fala ocupa 96% do vídeo, com 0,2 pausa de 1 s por minuto. O canal fica fora dessa faixa por decisão: a fala espera a reação e para nos números. O que se confere é a função de cada pausa, e não a contagem.
 
 Um vídeo com outra contagem, em que cada ausência faz o seu trabalho e o som ouvido funciona, não está errado: a medida fora da faixa diz onde ouvir.
 
@@ -44,7 +46,7 @@ Um vídeo com outra contagem, em que cada ausência faz o seu trabalho e o som o
 
 ## LIMITES
 - `holdMs` é do roteiro: esta unidade pede, a skill `diretor-criativo` escreve, e ela também grava sozinha a pausa que nasce da imagem ou do texto.
-- Nenhum silêncio para "dar respiro" sem função que se perceba.
+- Nenhum silêncio sem função que se perceba: o respiro existe porque alguém reage nele.
 
 ## EXEMPLO
 > Silêncio de música: em `so-far`, da palavra "Para" ao fim da cena (7 s). "Nenhum animal estudado até hoje conseguiu parar de dormir" é dita sem música, e o leito B entra em seguida.

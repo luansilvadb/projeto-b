@@ -92,8 +92,9 @@ Uma cena é um trecho da narração que o áudio trata como um bloco e que ganha
 
 Uma cena pode pedir silêncio depois da fala com `holdMs` (até 8000): a imagem segue sem narração, só com a trilha. É assim que se faz a vinheta do título depois do gancho. Do som, é isto que o texto pode precisar antes da voz, porque muda a linha do tempo; timbre, leitos e desenho da música não seguram o texto nem a voz.
 
-- Quando o silêncio já é parte do sentido (a vinheta, a consequência que precisa assentar, a imagem que respira), grave o `holdMs`. Quando a dúvida é de som (quanto dura, onde a música precisa ser ouvida sozinha), acione a skill `diretor-de-som` (`etapas/arco-de-som.md`, na pasta dela). Sem silêncio pedido por ninguém, não se abre um passo para procurar um.
-- O silêncio local que preserva a experiência é execução: os 900 ms para uma consequência assentar não são pergunta. Vai ao usuário o que muda a experiência (a pausa longa que faz de um fim rápido um fim contemplativo), contraria uma duração-alvo registrada ou cria custo relevante (`conducao/entrevista`).
+- **O respiro e o número mudo** são do humor do canal (`escrita/humor`) e entram na escrita. O silêncio de fala só existe no fim da cena: toda cena já deixa 0,6 s depois da última palavra, a seguinte abre 0,4 s antes da primeira frase (`PACING`, em `src/narration/manifest.ts`), e o `holdMs` se soma a isso. A frase que pede respiro fecha a cena dela, com o `holdMs` que falta para a reação se ler no mesmo plano; a cena que abre um número leva o tempo dele. O roteiro marca o lugar de cada número, com a nota visual e um tempo provisório; a skill `diretor-de-arte` desenha o que acontece e confirma ou corrige o tempo. O tempo da imagem toma o lugar de texto (`estrutura/arco`): quando um pedido de tempo chega com o texto pronto, é o roteiro que decide o que cede.
+- Quando o silêncio já é parte do sentido (a vinheta, a consequência que precisa assentar, a imagem que respira), grave o `holdMs`. Quando a dúvida é de som (quanto dura, onde a música precisa ser ouvida sozinha), acione a skill `diretor-de-som` (`etapas/arco-de-som.md`, na pasta dela). Fora do respiro e do número mudo, sem silêncio pedido por ninguém, não se abre um passo para procurar um.
+- O silêncio local que preserva a experiência é execução: os 900 ms para uma consequência assentar e o respiro de uma reação não são pergunta. Vai ao usuário o que muda a experiência (a pausa longa que faz de um fim rápido um fim contemplativo), contraria uma duração-alvo registrada ou cria custo relevante (`conducao/entrevista`), e vão a ele os números mudos, numa lista só ("Antes de gerar a voz do conjunto", abaixo).
 - Depois da voz o `holdMs` ainda entra e sai: o áudio das frases vem do cache, e o que custa é o deslocamento de todos os quadros seguintes, com a imagem a conferir. Mais caro não é proibido: a pausa que um render mostra faltar é posta.
 
 ## Planos
@@ -162,8 +163,8 @@ A voz não espera desenho final, folha de modelo, composição, movimento, trilh
 - o roteiro em formato de leitura: a narração como texto corrido, na ordem, e não o JSON nem os campos de cada plano;
 - a duração estimada;
 - os compromissos de imagem que mudam sentido ou identidade (quem conduz, o que ganhou rosto, a forma da analogia, a relação que uma encenação afirma), resumidos pela intenção;
-- as simplificações e as incertezas que pesam, e a fonte que limita uma afirmação importante;
 - os números mudos, numa lista só, como a decupagem a devolve: onde cada um entra, o que acontece nele e quanto dura. Ele corta ou troca de uma vez, antes da voz e de qualquer animação. Se o número cortado deixava uma frase sem desfecho, a frase passa a dizê-lo;
+- as simplificações e as incertezas que pesam, e a fonte que limita uma afirmação importante;
 - os defeitos relevantes que ficaram de propósito;
 - a promessa que a embalagem deve expressar; o `diretor-publicacao` a transforma em título, conceito e prompt da thumbnail;
 - as decisões abertas, se houver.

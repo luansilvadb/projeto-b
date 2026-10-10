@@ -5,9 +5,10 @@ Como dividir a cena em planos de modo que a imagem acompanhe a fala?
 
 **Plano.** Uma composição: um enquadramento, um lugar, uma paleta e uma ação principal. Quando qualquer um deles muda, é outro plano. Plano não é corte: a maior parte das trocas de composição é contínua.
 
-**A decupagem está pronta quando** a coluna da encenação, lida de cima a baixo e sem a narração, conta a história. Quatro resultados a sustentam:
+**A decupagem está pronta quando** a coluna da encenação, lida de cima a baixo e sem a narração, conta a história. Cinco resultados a sustentam:
 
 - **A imagem responde à fala.** Quando a ideia, a ação ou o foco mudam, o espectador vê mudar: num plano novo ou dentro do mesmo, com cada mudança escrita na encenação. Toda troca de composição tem um motivo na fala.
+- **O plano dura o que a atuação pede.** Quem age tem tempo de querer, fazer e reagir antes de a imagem trocar: o plano de atuação não é dividido para acompanhar a taxa de trocas da referência, e o número mudo (`pantomima`) é um plano só, que evolui.
 - **A distância segue o momento.** A escala vem do que o trecho pede (situar, agir, sentir, estranhar), e por isso varia.
 - **A entrada diz quanto mudou.** O corte anuncia outro lugar ou outra ideia; dentro da mesma ideia, a imagem muda sem romper.
 - **O que volta, volta igual:** mesmo desenho, mesmo lado do quadro, mesma direção do olhar e do movimento.
@@ -23,11 +24,12 @@ Como dividir a cena em planos de modo que a imagem acompanhe a fala?
 
 - O `pnpm check-script` marca o plano como longo (mais de 8 segundos estimados): a imagem muda lá dentro, e a encenação diz como?
 - O plano dura menos de 2 segundos: dá tempo de ler? Reação e impacto dão.
+- O plano troca logo depois da ação: quem estava em cena teve tempo de reagir, e a reação, de ser lida?
 - Uma oração passa sem que nada mude na tela: o que o espectador olha enquanto ela é dita?
 - A mesma escala se repete por vários planos, ou o bloco inteiro não chega perto de nada: a distância está seguindo o momento?
 - Tudo entra por corte: o bloco se lê como um lugar e uma ideia, ou como uma fila de quadros?
 
-**Medidas da referência** (evidência: situam a decupagem e não reprovam por si). A composição troca cerca de 13 vezes por minuto, uma a cada 4 ou 5 segundos, e o corte seco acontece 5 vezes por minuto; composição parada por mais de 8 segundos é rara. Escalas: aberto 24%, médio 59%, close 14%, detalhe 2%.
+**Medidas da referência** (evidência: situam a decupagem e não reprovam por si). A composição troca cerca de 13 vezes por minuto, uma a cada 4 ou 5 segundos, e o corte seco acontece 5 vezes por minuto; composição parada por mais de 8 segundos é rara. Escalas: aberto 24%, médio 59%, close 14%, detalhe 2%. A taxa de trocas não é meta: o vídeo do sono trocava a cada 4,2 s, com perto de 1 s gasto em cada troca, e o usuário sentiu pressa (2026-10-09), porque não sobrava tempo de olhar o desenho nem de alguém reagir.
 
 **Heurísticas**, para quando o problema delas aparece:
 
