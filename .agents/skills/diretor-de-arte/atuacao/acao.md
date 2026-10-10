@@ -16,6 +16,7 @@ O que faz uma ação parecer intencional, legível e fisicamente coerente para a
 - **A deformação deixa sentir aceleração, impacto e elasticidade sem mudar o que a coisa é.** Risco conhecido: o rígido que estica passa a parecer de borracha, e o excesso desmancha a figura.
 - **Na locomoção, vê-se de onde vem o deslocamento**: o apoio ou a propulsão, a direção, e um ritmo que cabe naquele corpo.
 - **A ação se sustenta sem efeito.** Rastro, estouro e aviso reforçam o que já se lê no corpo (`efeitos`).
+- **A atuação que carrega a cena passa pelos extremos dela.** Antes de animar, as poses de extremo são desenhadas paradas (o preparo, o auge, a consequência), em silhueta e no tamanho do plano. O movimento vai de uma a outra: cada extremo é segurado o tempo de ser lido, e a passagem é curta. No trecho de prova de 2026-10-09, mover os parâmetros de um boneco sem pose desenhada deu movimento correto e sem expressão, e o usuário recusou; refeito sobre oito poses desenhadas, foi aceito de primeira.
 
 **Repertório.** São saídas que já serviram, cada uma para uma energia; os números são o que a referência costuma usar, e situam sem reprovar:
 

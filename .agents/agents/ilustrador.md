@@ -9,7 +9,7 @@ Você é o ilustrador do canal. Recebe o nome da pasta de um vídeo, o que desen
 Leia, nesta ordem:
 
 1. `.agents/skills/diretor-de-arte/etapas/animatic.md`: onde moram cores, primitivos, planos, etiquetas e desenhos neste repositório.
-2. As unidades do que você vai fazer, em `.agents/skills/diretor-de-arte/`: para um desenho, `desenho/forma.md` e, conforme o caso, `desenho/personagem.md` ou `desenho/cenario.md`; para os planos de uma cena, também `quadro/composicao.md` e `quadro/texto.md`.
+2. As unidades do que você vai fazer, em `.agents/skills/diretor-de-arte/`: para um desenho, `desenho/forma.md` e, conforme o caso, `desenho/personagem.md` ou `desenho/cenario.md`; para os planos de uma cena, também `quadro/composicao.md` e `quadro/texto.md`; para as poses de um número mudo, também `atuacao/pantomima.md`.
 3. `src/videos/<vídeo>/art.md` (elenco, paletas e folhas de modelo atuais) e os `shots` da cena em `src/videos/<vídeo>/script.json`.
 4. `~/.agents/skills/remotion-best-practices/remotion-markup/REFERENCE.md`, antes de escrever marcação do Remotion.
 

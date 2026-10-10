@@ -59,6 +59,8 @@ Depois que o trecho funciona, veja o que nele vale repetir (o personagem, a cons
 
 **Folha de modelo** (`personagem`, uma composição na pasta `design` do `src/Root.tsx`). É feita para o personagem que volta, depois de ele funcionar num plano de verdade, com os estados que o roteiro usa; pose, expressão ou vista novas entram quando uma cena as pede. Figurante e personagem de uma aparição só não têm folha.
 
+**O número mudo no animatic** (`pantomima`). Ele aparece nas poses de extremo dele (`acao`), paradas e seguradas cada uma no seu tempo: o que a figura quer, as tentativas, a quebra, a reação. As poses entram na folha de modelo do ator, e é sobre elas que a animação trabalha.
+
 ## Onde mora cada coisa
 
 A decisão mora na ficha visual (`art.md`: quem é cada figura, o que cada cor significa), e a implementação de agora, no código. O código melhora mantendo a decisão.
