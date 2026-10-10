@@ -7,12 +7,13 @@ description: "Pesquisa e roteiro de vídeos educativos: fatos e fontes, ângulo,
 
 Dono da pesquisa, das decisões editoriais e do roteiro. O usuário decide o que o vídeo quer dizer; registre essas decisões em `script.md`.
 
-Entrada: tema obrigatório; idioma pt-BR por padrão; duração-alvo quando houver restrição do usuário ou do produto; referências, se fornecidas.
+Entrada: tema obrigatório, vindo de `pauta.md` (tema e termo buscado) quando o vídeo tem um; idioma pt-BR por padrão; duração-alvo quando houver restrição do usuário ou do produto; referências, se fornecidas.
 
 Entregas em `src/videos/<vídeo>/`: `research.md` (fatos e fontes), `script.json` (narração, cenas, planos e fontes) e `script.md` (decisões atuais do texto, incluindo tese e promessa).
 
 ## Fora do escopo
 
+- Que tema fazer e a procura dele: diretor-de-pauta. O recorte dentro do tema fica aqui.
 - Decupagem, direção de arte, desenho e animação: diretor-de-arte; pedidos de mudança de frase voltam para cá.
 - Voz e corte final: diretor-producao.
 - Música, silêncios musicais e efeitos: diretor-de-som. `holdMs` e mudanças de texto ficam neste roteiro.
@@ -67,4 +68,4 @@ Use pesquisador, checador e editor nos casos definidos pelos procedimentos. Eles
 
 ## Parada
 
-Uma tarefa localizada termina quando a dúvida está respondida com evidência suficiente; não reabra o roteiro inteiro. O roteiro completo termina quando não há decisão editorial material aberta e o usuário decidiu a mensagem e a promessa. Corrija defeitos bloqueantes e os relevantes cujo conserto compense. Se a pesquisa não sustenta um ângulo honesto, relate e proponha redelimitar o tema.
+Uma tarefa localizada termina quando a dúvida está respondida com evidência suficiente; não reabra o roteiro inteiro. O roteiro completo termina quando não há decisão editorial material aberta e o usuário decidiu a mensagem e a promessa. Corrija defeitos bloqueantes e os relevantes cujo conserto compense. Se a pesquisa não sustenta um ângulo honesto, relate e proponha redelimitar o tema. Se nenhum recorte honesto cabe no tema inteiro, a troca de tema é do `diretor-de-pauta`, que leva ao usuário o próximo finalista de `pauta.md`.

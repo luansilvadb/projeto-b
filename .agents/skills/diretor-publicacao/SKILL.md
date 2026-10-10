@@ -11,6 +11,7 @@ Leia `embalagem/titulo-e-thumbnail.md` ao criar ou revisar o par título-thumbna
 
 ## Entradas
 
+- `pauta.md`, quando existe: o termo buscado, que o título procura carregar sem deixar de passar no teste do vídeo imaginado.
 - `script.md`: promessa, idioma, capítulos internos e simplificações atuais.
 - `script.json`: fala atual e fontes citadas por cena. `title` é só o título interno do roteiro; o título público vive em `publication.md`.
 - `research.md`: fontes e limites das afirmações.
