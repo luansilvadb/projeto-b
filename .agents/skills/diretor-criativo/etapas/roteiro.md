@@ -101,7 +101,7 @@ Uma cena pode pedir silêncio depois da fala com `holdMs` (até 8000): a imagem 
 Um plano é uma composição: o que fica na tela enquanto um trecho da cena é falado. Os planos vêm da skill `diretor-de-arte` (`etapas/decupagem.md`, na pasta dela), que entra de dois modos, por motivos diferentes:
 
 - **Prova visual, por risco.** Quando o vídeo depende de uma imagem que pode não funcionar (uma personificação, uma comparação de espaço, uma analogia difícil de ver), peça a menor prova sobre o trecho em que ela pesa, antes do roteiro inteiro. Se ela muda a interpretação, isso se resolve antes de expandir. Havendo solução visual plausível e nada de estrutural pendurado nela, não há prova a pedir.
-- **Decupagem completa, por dependência.** Antes da voz, todas as cenas recebem `shots`: o tipo exige, e é quando a imagem ainda pede outra frase sem regerar áudio. Ela devolve os planos, a ficha visual em `art.md`, os compromissos visuais assumidos, as frases que a imagem pediu para mudar e as hipóteses que o animatic vai testar.
+- **Decupagem completa, por dependência.** Antes da voz, todas as cenas recebem `shots`: o tipo exige, e é quando a imagem ainda pede outra frase sem regerar áudio. Ela devolve os planos, a ficha visual em `art.md`, os compromissos visuais assumidos, a lista dos números mudos, as frases que a imagem pediu para mudar e as hipóteses que o animatic vai testar.
 
 Os planos que seguem para a voz são hipótese de construção, e não imagem decidida: escala, paleta, entrada, enquadramento, desenho e movimento continuam sendo descobertos no animatic e na animação. Os campos de `shots` e o que o validador aceita em cada um estão no passo 2 de `decupagem.md`: `entry` é texto, e `cut` e `camera`, no exemplo acima, são o costume.
 
@@ -163,13 +163,14 @@ A voz não espera desenho final, folha de modelo, composição, movimento, trilh
 - a duração estimada;
 - os compromissos de imagem que mudam sentido ou identidade (quem conduz, o que ganhou rosto, a forma da analogia, a relação que uma encenação afirma), resumidos pela intenção;
 - as simplificações e as incertezas que pesam, e a fonte que limita uma afirmação importante;
+- os números mudos, numa lista só, como a decupagem a devolve: onde cada um entra, o que acontece nele e quanto dura. Ele corta ou troca de uma vez, antes da voz e de qualquer animação. Se o número cortado deixava uma frase sem desfecho, a frase passa a dizê-lo;
 - os defeitos relevantes que ficaram de propósito;
 - a promessa que a embalagem deve expressar; o `diretor-publicacao` a transforma em título, conceito e prompt da thumbnail;
 - as decisões abertas, se houver.
 
 Fica disponível, sem ser imposto: `script.json` com os planos, `art.md`, `research.md` com as fontes de cada cena e o relatório do `checador`. Uma medida entra no relato quando está fora da referência e vale o usuário saber dela antes da voz, ou quando confirmou uma dúvida; fora da faixa sem defeito, é uma linha, e não pendência.
 
-**O que a decisão dele fixa:** o que o vídeo diz, a experiência global, os compromissos visuais que mudam sentido e a promessa que a embalagem expressa. **O que ela não fixa:** a redação, a duração exata, a escala, a paleta e a entrada de cada plano, a composição, o movimento e a mixagem. A promessa fica em `script.md` (`escrita/formato`); título, conceito e prompt públicos ficam em `publication.md`, do `diretor-publicacao`.
+**O que a decisão dele fixa:** o que o vídeo diz, a experiência global, os compromissos visuais que mudam sentido, os números mudos que ficaram (registrados em `score.md`, pela skill `diretor-de-arte`) e a promessa que a embalagem expressa. **O que ela não fixa:** a redação, a duração exata, a escala, a paleta e a entrada de cada plano, a composição, o movimento e a mixagem. A promessa fica em `script.md` (`escrita/formato`); título, conceito e prompt públicos ficam em `publication.md`, do `diretor-publicacao`.
 
 **Depois da voz**, duas perguntas que não se misturam:
 

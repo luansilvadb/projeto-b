@@ -45,7 +45,7 @@ O que faz uma ação parecer intencional, legível e fisicamente coerente para a
 - personagem: fornece as poses e as expressões, e o que as torna legíveis.
 
 ## LIMITES
-- Ação que o texto não pede e que acrescenta sentido é decisão do usuário (`entrevista-movimento`).
+- Ação que o texto não pede e que acrescenta sentido é decisão do usuário (`entrevista-movimento`); a reação cômica ao que a cena já estabeleceu não acrescenta.
 - Como a pose se desenha e se lê pertence a `personagem`; aqui se decide como as poses se sucedem.
 - Os recursos de ênfase pertencem a `efeitos`.
 - Quando a recuperação deixa de ser consequência da ação e vira estado sustentado, ela passa a `pausa-viva`.

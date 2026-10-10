@@ -3,7 +3,16 @@ Quando o humor acrescenta algo ao vídeo sem disputar com o entendimento, distor
 
 ## RESPOSTA
 
-**Humor** é uma mudança deliberada de leitura que acrescenta valor a uma ideia sem tirar dela a verdade nem o peso que ela pede. Pode aliviar a carga, tornar um contraste memorável, revelar um absurdo que já existe, dar corpo a uma escala, dar ritmo, carregar uma relação, pôr uma segunda camada na imagem. Nenhuma dessas funções é obrigatória, e não usar humor também é uma solução: um vídeo excelente pode não ter uma piada, e continua sendo do canal (`voz`).
+**Humor** é uma mudança deliberada de leitura que acrescenta valor a uma ideia sem tirar dela a verdade nem o peso que ela pede. Pode aliviar a carga, tornar um contraste memorável, revelar um absurdo que já existe, dar corpo a uma escala, dar ritmo, carregar uma relação, pôr uma segunda camada na imagem. Nenhuma dessas funções é obrigatória na fala: a piada dita é opcional, e um trecho grave pode não ter graça nenhuma.
+
+**O humor do canal mora na imagem** (decisão do usuário em 2026-10-09). A narração segue séria, e quem faz a graça são os personagens, com o corpo, como no cinema mudo: uma reação colada à frase, que é a base do vídeo inteiro, e alguns **números mudos**, em que a fala para e a imagem carrega a cena. Realizar os dois é da skill `diretor-de-arte` (`atuacao/pantomima`), e o som deles, da `diretor-de-som`. O que o texto faz por eles:
+
+- **Deixa tempo.** O respiro depois da frase forte (de 1 a 1,5 s) e o tempo de cada número (de 5 a 8 s) são reservados na escrita, como `holdMs` (`etapas/roteiro.md`), e tomam o lugar de texto (`arco`).
+- **Marca o lugar do número.** O roteiro propõe onde a fala para, com a nota visual do que precisa ficar entendido. O que acontece em cena é da arte, que confirma o tempo. A reação não pede nota.
+- **Arma o número.** A frase anterior apresenta o intento que a imagem vai encenar e frustrar (a tentativa, em `explicacao`), e pode parar antes do desfecho (`indicacao-visual`).
+- **Não comenta.** A narração não anuncia, não explica e não repete a piada da tela.
+
+A graça da imagem passa pelos mesmos testes da piada dita: valor, verdade, alvo e peso.
 
 **O que precisa funcionar:**
 
@@ -32,7 +41,7 @@ Quando o humor acrescenta algo ao vídeo sem disputar com o entendimento, distor
 | **Falsa comemoração**: celebrar a solução e deixá-la cair na frase seguinte (o lado cômico da falsa vitória de `arco`) | faz a virada se perceber | fabricar uma solução obviamente ruim só para a piada |
 
 - **Respiro**: uma observação seca depois de um trecho de carga alta libera a atenção sem abrir assunto (`arco`).
-- **Na imagem**: a narração segue séria e a tela faz a piada, sem gastar fala. A graça também nasce do contraste entre fala e imagem. A nota visual registra a intenção (`indicacao-visual`); a realização é da skill `diretor-de-arte`, e a que depende de pausa ou de efeito, da `diretor-de-som`.
+- **Contraste entre fala e imagem**: a tela contradiz, exagera ou leva ao pé da letra o que o narrador disse a sério, sem gastar fala.
 - **A piada que volta** passa a ser fio: cada volta acrescenta, ou ela sai (`fio`).
 
 **A ironia e a voz sintética.** A frase que diz o contrário do fato e depende do tom para ser entendida é arriscada aqui: o modelo de voz pode deixar o tom ambíguo. O contexto precisa tornar a ironia inequívoca sem a entonação, com mais cuidado em saúde, política, comportamento de risco e ciência disputada.
@@ -48,7 +57,7 @@ Quando o humor acrescenta algo ao vídeo sem disputar com o entendimento, distor
 
 Na dúvida, compara-se o trecho com a piada, sem ela e com outra formulação, lendo o bloco no fluxo.
 
-**Quando vai ao usuário** (`entrevista`, `voz`): ter ou não a piada, a formulação, o lugar e o tamanho são do agente enquanto o vídeo continua com a mesma voz e o mesmo peso. Vai a ele a escolha entre opções válidas que mudam a postura do vídeo: humor como traço ou como exceção, sóbrio ou irreverente, tratamento cômico ou grave de um assunto sensível, um fim que passaria de sóbrio a irreverente.
+**Quando vai ao usuário** (`entrevista`, `voz`): ter ou não a piada, a formulação, o lugar e o tamanho são do agente enquanto o vídeo continua com a mesma voz e o mesmo peso. Vai a ele a escolha entre opções válidas que mudam a postura do vídeo: sóbrio ou irreverente na fala, tratamento cômico ou grave de um assunto sensível, um fim que passaria de sóbrio a irreverente. E vai a ele, antes da voz, a lista dos números mudos (`etapas/roteiro.md`).
 
 ## DEPENDÊNCIAS
 - voz: fornece quanto de leveza o vídeo comporta e o registro do narrador.
@@ -57,7 +66,7 @@ Na dúvida, compara-se o trecho com a piada, sem ela e com outra formulação, l
 
 ## LIMITES
 - Humor não conserta texto genérico nem texto montado: isso é de `fio`, `explicacao`, `narracao` e `voz`. Texto montado com piada continua montado.
-- Não há dose a cumprir: nenhuma piada por minuto, por bloco, no gancho ou no fim.
+- Não há dose a cumprir, na fala nem na imagem: nenhuma piada por minuto, por bloco, no gancho ou no fim, e nenhum número mudo por bloco. O número existe onde o trecho tem uma tentativa a encenar.
 - Se uma piada custou entendimento, fio, peso ou confiança, e quanto, é de `critica`.
 
 ## EXEMPLO

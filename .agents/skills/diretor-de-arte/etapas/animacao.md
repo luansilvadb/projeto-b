@@ -26,6 +26,8 @@ Ela é escrita aos poucos, por trecho, por cena ou por família de movimento, e 
 - **o que acontece e com que intenção** ("a moeda bate na porta, e o impacto precisa ser sentido"; "a câmera revela que há muitos outros"; "ela percebe o perigo antes de correr");
 - **a causa**: a deixa de cada mudança (`sincronia`), e as relações de tempo que importam.
 
+O número mudo que o usuário aceitou na lista (`entrevista-movimento`) já chega escrito na seção da cena, e é animado sobre as poses de extremo dele (`etapas/animatic.md`).
+
 Os tempos das palavras vêm de `public/videos/<vídeo>/narration.json`; `scripts/check-script.ts` mostra a duração de cada plano. A deixa é âncora, não coreografia palavra por palavra: a imagem acompanha o sentido da fala.
 
 Tempos, curvas, técnica de passagem, amplitude e ênfase são o estado atual da execução. Nascem no render e são escritos depois dele. Quando a animação acha coisa melhor que o escrito (o movimento de 0,4 s que funciona em 0,8 s, a varredura que vira transformação mantendo a mesma relação), fica o que funciona e a partitura é atualizada: não se conserta o vídeo para obedecer ao documento. O que muda a intenção vai ao usuário (`entrevista-movimento`).

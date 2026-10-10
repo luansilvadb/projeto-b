@@ -40,6 +40,8 @@ Unidades `encenacao`, `planos` e `dado`. Para cada cena de `script.json`, encene
 
 A deixa e a encenação são o que o plano precisa dizer. A escala, a paleta e a entrada registram a solução de agora: a escala é a intenção de distância, a paleta é o nome de um modo, e não um valor de cor, e a entrada é a relação com o plano anterior. No animatic, o médio que vira close dizendo a mesma coisa é refino (`entrevista-imagem`), e o campo acompanha.
 
+O número mudo (`pantomima`) é escrito na encenação do último plano da cena: o que acontece depois que a fala termina. O roteiro pode já trazer o lugar dele, com a nota visual e um tempo provisório; a decupagem desenha o que acontece, confirma ou corrige o tempo, e pode propor um número que o roteiro não marcou. Todo pedido de tempo, do número ou do respiro de uma reação, volta ao `diretor-criativo` (`sincronia`), que grava o `holdMs` e decide o que o texto cede.
+
 Quando a encenação pede outra frase, o pedido volta ao `diretor-criativo`, com a oração, o que a imagem não consegue mostrar e a frase que resolveria. Isso se pede diante de um problema que apareceu, não por prevenção.
 
 Pronto quando: toda cena tem `shots`, cada trecho tem uma encenação concreta que dá para construir, todo plano depois do primeiro tem `cue`, e cada `palette` existe em `art.md`.
@@ -62,6 +64,7 @@ Devolva ao `diretor-criativo`:
 
 - os planos de cada cena e o tempo médio por plano que o comando imprime;
 - os compromissos visuais assumidos, e as provas que sustentam uma direção;
+- os números mudos, na forma da lista que vai ao usuário (`entrevista-movimento`);
 - as frases que a imagem pediu para mudar;
 - o que ainda é decisão do usuário, e as hipóteses que o animatic vai testar.
 

@@ -18,7 +18,7 @@ O que a imagem não pode escolher livremente sem mudar o que o vídeo diz, e qua
 - **Uma relação visual é indispensável.** Uma comparação de escala que a imagem carrega se faz pela mesma referência; num percurso, continua claro onde se está e de onde chega o que chega. Como isso se resolve é de `dado` e `encenacao`, na skill `diretor-de-arte`.
 - **Uma identidade precisa ser reconhecida.** Quando uma analogia volta, a mesma coisa continua representando a mesma coisa ("o quarto do bloco 2 é a memória de trabalho, agora mais cheio"), conforme `analogias`. Vale para quem ou o que o raciocínio depende de se reconhecer como o mesmo.
 - **A origem precisa aparecer.** Quando `procedencia` pede a origem visível, a nota diz que fonte precisa ser identificável, e durante qual afirmação.
-- **A relação entre fala e imagem é o sentido.** A imagem contradiz o que o narrador acabou de supor, ou faz a piada enquanto a fala segue séria (`humor`).
+- **A relação entre fala e imagem é o sentido.** A imagem contradiz o que o narrador acabou de supor. A reação colada à frase é da arte e não pede nota (`humor`).
 - **Um texto é obrigatório pelo conteúdo**: um número, um nome, uma grafia. Como ele entra na tela é de `texto`, na skill `diretor-de-arte`.
 
 A nota que só reescreve a narração com substantivos visuais ("mostrar a estrela explodindo") não acrescenta nada. O capítulo já está na estrutura, e a cartela dele não precisa de nota.

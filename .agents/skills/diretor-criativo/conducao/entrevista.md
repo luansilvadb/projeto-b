@@ -27,7 +27,7 @@ Quando o agente explora, escreve, compara e escolhe sozinho, e quando duas alter
 
 - **defendem ou prometem coisas diferentes**: outra tese, outra promessa, outro recorte do tema (o sono como necessidade de todo bicho, como problema moderno ou como mistério da biologia são três vídeos).
 - **tomam outra posição ou outro grau de certeza**: de que lado o vídeo fica numa disputa de valores, e as formas honestas de apresentar o que não se sabe. A simplificação que omite uma nuance que pesa, quando as duas saídas são defensáveis (a precisa perde clareza, a clara perde a ressalva), é uma troca explícita, do usuário, e fica registrada como simplificação. A que leva a uma conclusão falsa não é levada: é corrigida.
-- **mudam quem narra**: sóbrio ou irreverente, íntimo ou distante, analítico ou moralizante, humor como traço ou como exceção.
+- **mudam quem narra**: sóbrio ou irreverente, íntimo ou distante, analítico ou moralizante.
 - **dão a quem assiste outra experiência**: entrar pelo mecanismo ou por uma história real, contar em ordem ou como mistério, entregar a resposta cedo ou guardá-la para a virada, medo ou curiosidade na abertura.
 - **mudam a relação que uma analogia estruturante afirma**, quando o vídeo tem uma: dívida ou vício afirmam causas e juízos diferentes. A frase e o exemplo que a dizem são do agente.
 - **mudam o que o fim deixa**: a sensação, a moral, o que o vídeo sugere fazer.

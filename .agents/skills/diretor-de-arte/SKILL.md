@@ -61,6 +61,7 @@ Use ilustrador, motion-designer e os críticos nos casos definidos pelos procedi
 | `tempo/entradas` | Como algo aparece, muda ou sai? |
 | `atuacao/pausa-viva` | O que mantém a pausa coerente? |
 | `atuacao/acao` | Como a ação fica legível e coerente? |
+| `atuacao/pantomima` | Como a imagem faz graça sem palavra? |
 | `camera/movimento` | Quando e como mover a câmera? |
 | `camera/transicoes` | O que liga dois planos? |
 | `enfase/efeitos` | Que propriedade do movimento pede ênfase? |

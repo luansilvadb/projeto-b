@@ -14,6 +14,7 @@ Quem é o narrador do canal diante do assunto e de quem assiste, e que diferenç
 - **Não julga quem assiste**, nem quem acredita na ideia errada que o vídeo corrige.
 - **Opinião é lida como opinião.** Quando avalia ou toma posição, não a apresenta como achado científico. A formulação pode deixar isso claro sem "na nossa opinião". Onde não há posição a tomar, ele não inventa uma para ter personalidade.
 - **Em off, em português do Brasil, sem "eu"** e sem gíria passageira (decisões do usuário em 2026-10-04). O registro frase a frase é de `narracao`.
+- **Conta a sério o que a tela faz com graça.** O humor é traço do canal e mora na imagem (decisão do usuário em 2026-10-09): o narrador não vira comediante nem comenta a piada da tela. O que o texto faz por ela é de `humor`.
 
 **A mesma pessoa muda de tom sem virar outra.** A extinção a deixa mais grave, o experimento mental absurdo, mais lúdica, a descoberta, mais curiosa, o sofrimento real, mais contida. O assunto muda a expressão, e não os compromissos. O tom não contradiz o peso real do assunto nem a promessa do vídeo; e o tom se adapta ao fato, nunca o contrário.
 
@@ -37,7 +38,7 @@ Enquanto o narrador continua o mesmo, o agente escreve, critica e escolhe o tom 
 - **"Nós".** O teste: quem é "nós" (a humanidade, o canal, narrador e espectador), e por que essa inclusão importa? "Nós destruímos o ecossistema" sem dono claro piora a voz.
 - **Autor visível.** Quando a posição, o interesse ou uma escolha de produção muda como uma afirmação deve ser recebida, o narrador não finge neutralidade ("para este vídeo, escolhemos a estimativa mais conservadora"). Quando não muda, a autoria fica invisível.
 - **Humildade de escala.** Diante do cosmos, da evolução ou do tempo profundo, o humano é pequeno, e isso é tratado com espanto, e não com desprezo. É uma posição para temas de escala; um vídeo sobre apostas ou sono não a tem.
-- **Leveza.** A voz comporta humor seco que alivia a densidade sem virar o assunto. Um vídeo grave sem piada nenhuma continua sendo do canal.
+- **Leveza.** A voz comporta humor seco que alivia a densidade sem virar o assunto. A piada dita é opcional: a graça do canal está na imagem.
 - **"Soa assim / não soa assim."** Uma oposição que diz um ajuste difícil de descrever ("curioso, não professoral"). Uma pode bastar.
 
 **Amostra de voz.** Quando há dúvida real de identidade, distância, peso ou registro, um trecho curto sobre o próprio tema mostra mais que a tabela: quatro frases de abertura, um parágrafo de 60 a 80 palavras, um bloco. Duas amostras só quando as duas posições são válidas, mudam quem fala e a diferença é difícil de julgar em abstrato. Quando a voz do canal já resolve o assunto, escreve-se o texto.

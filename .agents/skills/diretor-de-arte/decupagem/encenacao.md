@@ -34,7 +34,7 @@ Perguntas que destravam um trecho: quem age (e, se o sujeito é abstrato, quem o
 | O mapa do vídeo ("há três respostas") | uma forma ou ícone por parte, que volta na cartela da parte dela |
 | O narrador fala com "você" | o protagonista (`elenco`) vive a frase |
 | Uma ideia termina, ou a fala para antes de uma virada | alguém reage num plano curto; ou o quadro esvazia e para pelo tempo da pausa |
-| Cabe uma piada | ela vive na imagem (um balão curto, uma placa, um detalhe no fundo), sem repetir a narração nem disputar o assunto do plano |
+| A graça do trecho | vive no corpo de quem está em cena: a reação colada à frase, ou o número mudo (`pantomima`). Uma placa ou um detalhe no fundo também servem, sem repetir a narração nem disputar o assunto do plano |
 
 **Medidas da referência** (evidência: situam e não reprovam por si). Dos planos lidos, 48% são um personagem em cena, 19% um objeto ou organismo ilustrado, 8% um ambiente e 20% um diagrama ou dado; o diagrama vai de 3% a 37% dos planos de um vídeo.
 
