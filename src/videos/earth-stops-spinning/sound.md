@@ -1,6 +1,6 @@
 # Som — O que acontece se a Terra parar de girar?
 
-> A narração foi reescrita em 2026-10-10 e ainda não foi gerada. Os tempos, a duração e os efeitos abaixo são da fala anterior: a cena `earthquake` saiu (e o efeito dela), e as âncoras de `the-rule` e `map-limit` mudaram de palavra em `script.json` ("pare" e "provisório"). A trilha pede `pnpm music` de novo depois da voz.
+> A narração foi reescrita e regerada em 2026-10-10: agora tem 11 min 13 s (eram 7 min 59 s). A trilha em disco é a antiga, de 8 minutos, com a troca de parte em 2:59: o mapa abaixo (leitos, tempos e a pergunta sobre os 8 minutos de piano) precisa ser refeito e a trilha, gerada de novo com `pnpm music`. A cena `earthquake` saiu, com o efeito dela.
 
 ## Estado
 
@@ -43,17 +43,18 @@ Só usos que o catálogo já tem (`src/audio/sfx.ts`); nenhum arquivo novo foi b
 
 | Cena | Acontecimento | Uso | Nível | Âncora |
 |---|---|---|---|---|
-| `the-rule` | a rocha trava com um tranco | `boxDrop` | normal | a segunda "para" |
-| `you-too` | a Vigília é arremessada | `whoosh` | normal | "arremessado" |
+| `the-rule` | a parte sólida trava com um tranco | `boxDrop` | normal | "pare" |
+| `you-too` | a Vigília é arremessada | `whoosh` | normal | "arremessado", 0,13 s depois (o arremesso espera 8 quadros para a rua ser vista) |
 | `the-pole` | o solavanco do tranco, no número mudo | `headTap` | normal | 6,4 s antes do fim da cena (0,6 s de silêncio) |
 | `the-pole` | o gole da caneca cai na neve | `splash` | leve | 5,9 s antes do fim da cena |
 | `new-map` | o navio assenta na lama | `softLanding` | leve | "vira", 0,2 s depois |
-| `map-limit` | o carimbo "provisório" bate | `stamp` | normal | "enquanto" |
+| `map-limit` | o carimbo "provisório" bate | `stamp` | normal | "vale" |
 | `another-planet` | a batida do outro planeta | `boxDrop` | normal | "batida" |
-| `earthquake` | o tapa do tremor | `headTap` | normal | "violentas" |
 | `subscribe` | o clique no botão | `headTap` | leve | "inscreva" |
 
 O `boxDrop` parte 0,68 s antes da palavra: o arquivo tem 0,55 s de quase silêncio antes do impacto.
+
+Acontecimentos novos da reescrita, ainda sem decisão de som: em `the-rule`, a freada do ônibus ("freia"), o café na parede (0,3 s antes de "segure") e a batida amortecida ("segure"); a alavanca voltando ("repetir") e descendo em cinco dentes em `after-the-dust`; a sapata se soltando em `never`.
 
 Pendentes, sem som no catálogo: a vinheta (`switch-off`), a fita e o ponteiro de `how-fast`, o anemômetro e o vento de `wind`, o tranco na cozinha e a casa se soltando em `you-too`, a alavanca (em `the-rule` e `why-not-stop`), a centrífuga de `water-piled`, o freio raspando de `the-moon-brake`, e os dois acentos do cinema mudo (o apito de êmbolo e o bloco de madeira, Freesound 517633 e 692819), que o número mudo do polo pediria. Entram quando forem baixados e ouvidos.
 

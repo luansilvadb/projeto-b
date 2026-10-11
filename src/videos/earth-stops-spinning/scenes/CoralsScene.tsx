@@ -338,6 +338,21 @@ const Counting: React.FC<CountingProps> = ({ sweep, todayAt }) => {
               <Tag on="light">{counted < 1 ? Math.round(400 * counted) : "cerca de 400 dias"}</Tag>
             </Pop>
           </Place>
+          {/* O nome da faixa entre os dois riscos: é ela que diz que o coral também marca o ano. */}
+          <Place x={OLD.x + OLD.w + 80} y={590} style={{ translate: "0 -50%" }}>
+            <Pop at={0.3 * fps}>
+              <Tag on="note" size="seal">
+                1 ano
+              </Tag>
+            </Pop>
+          </Place>
+          <Place x={NOW.x - 80} y={730} style={{ translate: "-100% -50%" }}>
+            <Pop at={todayAt + 0.15 * fps}>
+              <Tag on="note" size="seal">
+                1 ano
+              </Tag>
+            </Pop>
+          </Place>
           <Place x={NOW.x - 80} y={610} style={{ translate: "-100% -50%" }}>
             <Pop at={todayAt + 0.15 * fps}>
               <Tag on="light">365</Tag>
@@ -394,7 +409,8 @@ export const CoralsScene: React.FC<SceneProps> = ({ scene, shots }) => (
     </Shot>
     <Shot range={shots[2]} name="contando as linhas">
       <Counting
-        sweep={[cue(scene, "linhas") - shots[2].from, cue(scene, "quatrocentas") - shots[2].from]}
+        // A contagem corre enquanto a fala vai de "cada ano de crescimento" até o número.
+        sweep={[cue(scene, "ano") - shots[2].from, cue(scene, "quatrocentas") - shots[2].from]}
         todayAt={cue(scene, "trezentas") - shots[2].from}
       />
     </Shot>

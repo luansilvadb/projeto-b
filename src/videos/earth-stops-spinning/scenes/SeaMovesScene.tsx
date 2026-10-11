@@ -1,13 +1,14 @@
 import { useId } from "react";
 import { useCurrentFrame, useVideoConfig } from "remotion";
 import { wave } from "../../../components/Idle";
-import { popOpacity, popScale } from "../../../components/Pop";
+import { Place } from "../../../components/Place";
+import { Pop, popOpacity, popScale } from "../../../components/Pop";
 import { cue, linear, mix, settle } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { ink, storm, tags } from "../palette";
 import { Globe } from "../parts/Globe";
-import { Arrow, Frame, Push, Question, StormBackdrop, Svg } from "../parts/kit";
+import { Arrow, Frame, Push, Question, StormBackdrop, Svg, Tag } from "../parts/kit";
 
 const EARTH = { cx: 960, cy: 545, r: 390 } as const;
 // A terra firme deste plano, em unidades do disco (raio 100): uma ponta de
@@ -20,7 +21,10 @@ const LAND = [
 const SLIDE = 17;
 
 /** A Terra parada, de lado: o oceano inteiro segue para leste sobre o fundo e sobe na borda do continente. */
-const OceanSlides: React.FC<{ readonly eastAt: number }> = ({ eastAt }) => {
+const OceanSlides: React.FC<{ readonly eastAt: number; readonly speedAt: number }> = ({
+  eastAt,
+  speedAt,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
@@ -93,6 +97,12 @@ const OceanSlides: React.FC<{ readonly eastAt: number }> = ({ eastAt }) => {
             />
           ))}
         </Svg>
+        {/* A velocidade do vento, agora na água: pequena, entre as setas, andando com elas. */}
+        <Place x={EARTH.cx - 72 + slid * k * 0.6} y={EARTH.cy - 70}>
+          <Pop at={speedAt}>
+            <Tag on="warm">1.670 km/h</Tag>
+          </Pop>
+        </Place>
       </Push>
     </Frame>
   );
@@ -108,12 +118,15 @@ const REACH = { from: 720, to: 872 } as const;
 // areia, e de quanto em quanto tempo vem uma. Cada uma molha a régua até uma marca diferente.
 const SURGES = [50, 112, 76, 142, 62, 124, 90] as const;
 const SURGE = { arrive: 1.2, seconds: 1.5, climb: 2 } as const;
+// A água chega ao lugar da régua enquanto a fala diz "avança sobre os continentes", antes da metade do plano:
+// a régua só é fincada depois, em "onde", já na areia molhada.
+const ARRIVE_SHARE = 0.4;
 
-/** A altura da beira da água na linha da régua, a `seconds` do começo do plano. */
-const reachAt = (seconds: number): number => {
-  const since = (seconds - SURGE.arrive) / SURGE.seconds;
+/** A altura da beira da água na linha da régua, a `seconds` do começo do plano; ela chega em `arrive` segundos. */
+const reachAt = (seconds: number, arrive: number): number => {
+  const since = (seconds - arrive) / SURGE.seconds;
   if (since < 0) {
-    const t = seconds / SURGE.arrive;
+    const t = seconds / arrive;
     return mix(REACH.from, REACH.to, t * t * (3 - 2 * t));
   }
   const surge = SURGES[Math.floor(since) % SURGES.length];
@@ -141,17 +154,30 @@ const foamEdge = (reach: number, seconds: number): string => {
   }).join(" ");
 };
 
-/** A praia: a régua de nível na areia, a água chegando, e a escala em branco. */
-const BlankRuler: React.FC<{ readonly askAt: number }> = ({ askAt }) => {
+/**
+ * A praia: a água chegando e, quando a fala pergunta "até onde", a régua de nível fincada na areia, com a
+ * escala em branco e a interrogação no lugar do número: é a conta que ainda não foi feita.
+ */
+const BlankRuler: React.FC<{ readonly rulerAt: number }> = ({ rulerAt }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const length = useShotLength();
   const seconds = frame / fps;
   const [rx, ry] = BEACH.ruler;
+  const arrive = Math.min(SURGE.arrive, (ARRIVE_SHARE * length) / fps);
+  // A régua cresce do pé, e a interrogação entra com a palavra, um nada depois dela.
+  const planted = popScale(frame, rulerAt, 0.35 * fps, 0);
+  const askAt = rulerAt + 0.3 * fps;
   // A água chega ao pé da régua e não assenta: cada onda sobe até uma marca diferente e recua.
-  const reach = reachAt(seconds);
+  const reach = reachAt(seconds, arrive);
   const level = levelOf(reach);
-  // A régua fica molhada até onde a onda mais alta já foi.
-  const wet = Math.max(...Array.from({ length: frame + 1 }, (_, past) => levelOf(reachAt(past / fps))));
+  // A régua fica molhada até onde a onda mais alta já foi desde que foi fincada.
+  const wet = Math.max(
+    0,
+    ...Array.from({ length: Math.max(0, frame + 1 - rulerAt) }, (_, since) =>
+      levelOf(reachAt((rulerAt + since) / fps, arrive)),
+    ),
+  );
   const edge = foamEdge(reach, seconds);
   const asked = popScale(frame, askAt, 0.3 * fps);
   return (
@@ -192,6 +218,10 @@ const BlankRuler: React.FC<{ readonly askAt: number }> = ({ askAt }) => {
               strokeLinejoin="round"
             />
             {/* A régua, fincada: os traços da escala, e nenhum número. */}
+            <g
+              transform={`translate(${rx} ${ry + 10}) scale(1 ${planted}) translate(${-rx} ${-ry - 10})`}
+              opacity={popOpacity(frame, rulerAt, 0.2 * fps)}
+            >
             <ellipse cx={rx} cy={ry + 4} rx={120} ry={20} fill={storm.dustDeep} opacity={0.4} />
             <rect x={rx - 42} y={BEACH.top} width={84} height={ry - BEACH.top + 10} rx={12} fill={storm.fixed} />
             <rect x={rx + 20} y={BEACH.top} width={22} height={ry - BEACH.top + 10} rx={10} fill={storm.dust} />
@@ -213,6 +243,7 @@ const BlankRuler: React.FC<{ readonly askAt: number }> = ({ askAt }) => {
                 <rect x={rx - 54} y={ry + 4 - level} width={108} height={12} rx={6} fill={ink.paper} />
               </>
             ) : null}
+            </g>
             {/* Onde o número estaria: a marca aponta para uma interrogação. */}
             <g opacity={popOpacity(frame, askAt, 0.3 * fps)}>
               <path
@@ -235,10 +266,10 @@ const BlankRuler: React.FC<{ readonly askAt: number }> = ({ askAt }) => {
 export const SeaMovesScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="o mar segue para leste">
-      <OceanSlides eastAt={cue(scene, "leste")} />
+      <OceanSlides eastAt={cue(scene, "leste")} speedAt={cue(scene, "vento")} />
     </Shot>
     <Shot range={shots[1]} name="a régua em branco">
-      <BlankRuler askAt={cue(scene, "conta") - shots[1].from} />
+      <BlankRuler rulerAt={cue(scene, "onde") - shots[1].from} />
     </Shot>
   </>
 );

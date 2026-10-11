@@ -3,15 +3,17 @@ import { useId } from "react";
 import { typography } from "../../../design/tokens";
 import { blockSea, earth, ink, tags, type TagTone } from "../palette";
 import { Globe } from "./Globe";
+import { Arrow } from "./kit";
 
 /**
  * A Terra em corte, de lado: a metade de lá (a oeste) é o planeta visto de
  * fora, girando; a de cá mostra a rocha por dentro. A camada de mar, quando
- * existe, veste as duas metades. Os dois raios (`CutRays`) e a água que
- * escorre (`SeaFlow`) vão por cima, no mesmo SVG, com as mesmas medidas.
+ * existe, veste as duas metades. Os dois raios (`CutRays`), a tentativa de
+ * escapar (`EscapeArrows`) e a água que escorre (`SeaFlow`) vão por cima, no
+ * mesmo SVG, com as mesmas medidas.
  *
- * A cintura alargada e o calombo são exagero de desenho: a diferença real é
- * de 21 km em 6.378. Todo plano que usa este desenho leva a etiqueta "exagerado".
+ * A cintura alargada é exagero de desenho: a diferença real é de 21 km em
+ * 6.378. Todo plano que usa este desenho leva a etiqueta "exagerado".
  */
 
 /**
@@ -45,14 +47,23 @@ export const Caveat: React.FC<{ readonly on: TagTone; readonly children: string 
 /** Quanto a cintura alarga no desenho, em fração do raio do polo. */
 export const CUT_BULGE = 0.22;
 
-/** A espessura da camada de mar, em fração do raio: no equador e nos polos. */
+/**
+ * Até onde a superfície do mar passa da rocha, em fração do raio do polo: no
+ * equador e nos polos. Negativo no equador, a água não chega lá: a rocha fica
+ * de fora, seca.
+ */
 export type SeaLayer = { readonly equator: number; readonly pole: number };
 
-/** O mar que só veste a Terra, o calombo do giro e a água já nos polos. */
+/**
+ * Com a Terra girando, a superfície do mar acompanha o formato da rocha, por
+ * igual: o mar não é mais espesso no equador, é o planeta inteiro que é mais
+ * largo ali. Parada, a superfície vira um círculo em volta do centro (a mesma
+ * altura em toda parte): cobre os polos, que ficam mais perto do centro, e não
+ * alcança a cintura.
+ */
 export const SEA = {
-  even: { equator: 0.09, pole: 0.07 },
-  piled: { equator: 0.2, pole: 0.05 },
-  polar: { equator: 0.03, pole: 0.24 },
+  even: { equator: 0.08, pole: 0.08 },
+  polar: { equator: -0.08, pole: 0.14 },
 } as const satisfies Record<string, SeaLayer>;
 
 /** A camada a caminho de `from` para `to`, com `t` de 0 a 1. */
@@ -88,6 +99,10 @@ export const CutEarth: React.FC<CutEarthProps> = ({
 }) => {
   const id = useId();
   const rx = r * (1 + bulge);
+  // Até que altura a cintura fica fora da água, quando a superfície do mar não a alcança: é onde as duas elipses se cruzam.
+  const reach = sea ? ((1 + bulge) / (1 + bulge + sea.equator)) ** 2 : 1;
+  const dry =
+    sea && sea.equator < 0 ? r * Math.sqrt((1 - reach) / (1 / (1 + sea.pole) ** 2 - reach)) : 0;
   const layer = (scale: number, fill: string) => (
     <ellipse cx={cx} cy={cy} rx={rx * scale} ry={r * scale} fill={fill} />
   );
@@ -115,6 +130,18 @@ export const CutEarth: React.FC<CutEarthProps> = ({
       ) : null}
       <g clipPath={`url(#${id}-out)`}>
         <Globe cx={cx} cy={cy} r={r} spin={spin} bulge={bulge} shade={0.2} />
+        {/* Na metade vista de fora, a faixa do equador que secou: o fundo do mar, na cor da rocha. */}
+        {dry > 0 ? (
+          <rect
+            x={cx - rx}
+            y={cy - dry}
+            width={rx}
+            height={dry * 2}
+            fill={earth.rock}
+            opacity={0.88}
+            clipPath={`url(#${id}-rock)`}
+          />
+        ) : null}
       </g>
       <g clipPath={`url(#${id}-cut)`}>
         {layer(1, earth.rockShade)}
@@ -206,6 +233,60 @@ export const CutRays: React.FC<CutRaysProps> = ({
   );
 };
 
+type EscapeArrowsProps = CutProps & {
+  /** A superfície de onde as setas saem: a do mar, quando há. */
+  readonly sea?: SeaLayer;
+  /** Quanto da tentativa de escapar ainda existe, de 0 (a Terra parada) a 1. */
+  readonly strength: number;
+  /** Quanto as setas se afastam da superfície, em pixels: é o que as faz pulsar. */
+  readonly beat?: number;
+};
+
+// As latitudes que levam seta. Nos polos não há nenhuma: ali a tentativa é nula.
+const ESCAPE_LATITUDES = [0, 38, -38, 64, -64] as const;
+
+/**
+ * A tentativa de escapar para fora, no corte de lado: setas em tracejado (o
+ * mesmo tracejado da reta que a roupa tentava seguir) que apontam para longe
+ * do eixo, e não do centro. O tamanho acompanha a volta que cada latitude dá:
+ * a maior no equador, nenhuma nos polos.
+ */
+export const EscapeArrows: React.FC<EscapeArrowsProps> = ({
+  cx,
+  cy,
+  r,
+  bulge = CUT_BULGE,
+  sea = { equator: 0, pole: 0 },
+  strength,
+  beat = 0,
+}) => {
+  const a = r * (1 + bulge + sea.equator);
+  const b = r * (1 + sea.pole);
+  return (
+    <g>
+      {([-1, 1] as const).flatMap((side) =>
+        ESCAPE_LATITUDES.map((lat) => {
+          const phi = (lat * Math.PI) / 180;
+          const from = cx + side * (a * Math.cos(phi) + 40 + beat);
+          const y = cy - b * Math.sin(phi);
+          const length = r * 0.8 * Math.cos(phi) * strength;
+          // Seta curta demais é só a ponta: some antes disso.
+          return length < 40 ? null : (
+            <Arrow
+              key={`${side}${lat}`}
+              from={[from, y]}
+              to={[from + side * length, y]}
+              color={ink.paper}
+              width={12}
+              dashed
+            />
+          );
+        }),
+      )}
+    </g>
+  );
+};
+
 type SeaFlowProps = CutProps & {
   readonly sea: SeaLayer;
   /** O tempo do plano, em segundos: as marcas correm com ele. */
@@ -213,7 +294,7 @@ type SeaFlowProps = CutProps & {
   readonly opacity: number;
 };
 
-/** A água escorrendo da cintura para os polos: marcas que sobem e descem pela camada de mar, dos dois lados. */
+/** A água descendo da cintura para os polos: marcas que correm rente à superfície, dos dois lados, nos dois sentidos. */
 export const SeaFlow: React.FC<SeaFlowProps> = ({
   cx,
   cy,
@@ -226,9 +307,9 @@ export const SeaFlow: React.FC<SeaFlowProps> = ({
   if (opacity <= 0) {
     return null;
   }
-  // O meio da camada, por onde as marcas correm.
-  const a = r * (1 + bulge) + (sea.equator * r) / 2 + 6;
-  const b = r + (sea.pole * r) / 2 + 6;
+  // Por fora da superfície, do mar ou da rocha que ficou seca: sobre o índigo, as marcas se leem sempre.
+  const a = r * (1 + bulge + Math.max(0, sea.equator)) + 26;
+  const b = r * (1 + sea.pole) + 26;
   return (
     <g>
       {([-1, 1] as const).flatMap((sx) =>
@@ -243,10 +324,10 @@ export const SeaFlow: React.FC<SeaFlowProps> = ({
             return (
               <path
                 key={`${sx}${sy}${k}`}
-                d="M-9,-13 L9,0 L-9,13"
+                d="M-12,-18 L12,0 L-12,18"
                 fill="none"
-                stroke={ink.paper}
-                strokeWidth={9}
+                stroke={earth.waterLight}
+                strokeWidth={11}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 opacity={opacity * Math.sin(Math.PI * t)}

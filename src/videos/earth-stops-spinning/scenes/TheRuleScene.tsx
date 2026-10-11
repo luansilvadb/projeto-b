@@ -1,16 +1,32 @@
 import { useId } from "react";
-import { useCurrentFrame, useVideoConfig } from "remotion";
-import { blink } from "../../../components/Idle";
+import { AbsoluteFill, Freeze, useCurrentFrame, useVideoConfig } from "remotion";
+import { bones, mixPose, type VigiliaPose } from "../../../art/Vigilia";
+import { blink, wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
-import { cue, mix, ramp, settle, shake } from "../../../components/timing";
+import { ALREADY_SHOWN, clamp01, cue, linear, mix, ramp, settle, shake } from "../../../components/timing";
+import { HEIGHT, WIDTH } from "../../../format";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot } from "../../../video/Shot";
-import { earth, ink } from "../palette";
-import { Globe, House } from "../parts/Globe";
+import { earth, home, ink } from "../palette";
+import { CUP, Cup, STARTLED, Vig } from "../parts/Actor";
+import {
+  Bus,
+  BUS_CAVEAT,
+  BUS_GAUGE,
+  BUS_SPEED,
+  BUS_VIEW,
+  busPoint,
+  Flow,
+  FLOW_LENGTH,
+  roofMid,
+} from "../parts/Bus";
+import { Caveat } from "../parts/CutEarth";
+import { Gauge } from "../parts/Gauge";
+import { Globe, House, landPoint, spinFor } from "../parts/Globe";
+import { KITCHEN } from "../parts/Kitchen";
 import { Frame, Push, SpaceBackdrop, Svg, Tag } from "../parts/kit";
 import { LeverStation } from "../parts/Lever";
-import { Arrive } from "../parts/SpeedKit";
 import { STAGE } from "./SwitchOffScene";
 
 const TURN_SECONDS = 14;
@@ -62,6 +78,302 @@ const Hesitate: React.FC<HesitateProps> = ({ tugAt, letGoAt, lookAt, backAt }) =
             shadow={ink.dark}
           />
         </Svg>
+      </Push>
+    </Frame>
+  );
+};
+
+// O tamanho dela na cozinha.
+const SIZE = 3.4;
+// O corpo segue e os cascos ficam: ela passa do pé, a xícara à frente. É o gesto de `you-too`,
+// quando o chão trava (`LURCH`, em `YouTooScene`): a mesma regra, o mesmo desenho.
+const LURCH: VigiliaPose = {
+  ...STARTLED,
+  hip: [20, -30],
+  lean: 26,
+  farHand: [98, -50],
+  nearHand: [-44, -84],
+  nearFoot: 24,
+  farFoot: 12,
+};
+// "Nada segurou o corpo": a mão de cá procura atrás algo em que se agarrar, e o olhar vai junto.
+const GRASP: VigiliaPose = {
+  ...LURCH,
+  lean: 19,
+  turn: 0.2,
+  gaze: [-0.9, 0.3],
+  nearHand: [-84, -46],
+  nearElbow: 1,
+  mouth: [12, 0.5, -0.4],
+};
+// O café saiu da xícara e vai ao lado dela, no mesmo passo: ela repara.
+const WATCH: VigiliaPose = {
+  ...LURCH,
+  nod: -0.4,
+  gaze: [0.9, -0.7],
+  nearBrow: [0, 8],
+  farBrow: [0, 9],
+  mouth: [8, 0.35, 0],
+};
+// A parede da frente vem chegando: o corpo recua, os cascos vão adiante, a xícara sobe para fora do caminho.
+const BRACE: VigiliaPose = {
+  ...STARTLED,
+  hip: [0, -28],
+  lean: -12,
+  stretch: 1.06,
+  turn: 0.9,
+  gaze: [0.9, 0],
+  farHand: [40, -92],
+  nearHand: [58, -56],
+  nearElbow: 1,
+  nearAnkle: [6, -6.2],
+  farAnkle: [36, -6.2],
+  nearFoot: -18,
+  farFoot: -22,
+};
+// Segurada: o ovo achata contra a parede, a mão de cá espalmada nela, os olhos fechados. É cartum: amortece.
+const SQUASHED: VigiliaPose = {
+  ...BRACE,
+  hip: [16, -22],
+  lean: 12,
+  stretch: 0.84,
+  turn: 0.6,
+  faceSize: 1.1,
+  farHand: [30, -104],
+  nearLid: 1,
+  farLid: 1,
+  squint: 0.8,
+  nearBrow: [0.4, -2],
+  farBrow: [0.4, -2],
+  mouth: [14, 0.2, -0.3],
+  grit: 1,
+  nearFoot: 0,
+  farFoot: 0,
+};
+// Parada, inteira: de pé, olhando o que sobrou na xícara.
+const HELD: VigiliaPose = {
+  ...CUP,
+  turn: 0.7,
+  nod: 0.3,
+  gaze: [0.5, 0.6],
+  nearLid: 0.05,
+  farLid: 0.05,
+  nearBrow: [-0.4, 4],
+  farBrow: [-0.4, 5],
+  mouth: [9, 0.15, -0.3],
+};
+// Onde a xícara vai enquanto ela desliza, no espaço da pose: o café que sai dela parte dali.
+const CUP_AT = bones(LURCH).farArm.end;
+// A seta do corpo dela, nas medidas da cozinha: logo acima da cabeça, onde não cruza a xícara nem o vapor.
+// Na altura do peito ela passava por trás do corpo e saía cortada pela xícara e pela cortina.
+const BODY_ARROW = { back: -70, y: 325 } as const;
+// A seta dela incha e volta em cada "continua" da fala.
+const PULSE = { grow: 0.22, seconds: 0.5 } as const;
+// A frente do ônibus, por dentro, é o que a segura: a face da parede, onde ela para encostada nela,
+// e quanto volta depois de amortecer.
+const HOLD = { wall: WIDTH - 15, x: 1650, bounce: 44 } as const;
+// A câmera lenta do deslize, em quadros: ela sai na velocidade do ônibus (`lead`), o tempo desacelera
+// (`ramp`), e volta ao normal a tempo de ela chegar à parede na velocidade em que o ônibus vinha (`tail`).
+// O ônibus é curto e a fala é longa: sem a câmera lenta ela atravessaria a cozinha em 2 s e a frase
+// inteira da regra ficaria sobre uma figura parada.
+const SLOW = { lead: 8, ramp: 10, tail: 8 } as const;
+
+/**
+ * Quantos quadros de tempo de verdade já correram desde a freada, com a câmera lenta no meio: o
+ * quanto ela desacelera é o que faz o corpo, andando sempre a `BUS_SPEED`, vencer `distance` e
+ * chegar à parede exatamente em `hitAt`. Depois disso o relógio dela para: ela foi segurada.
+ */
+const slideClock = (frame: number, brakeAt: number, hitAt: number, distance: number): number => {
+  const slowed = (at: number) =>
+    linear(at, brakeAt + SLOW.lead, SLOW.ramp) - linear(at, hitAt - SLOW.tail - SLOW.ramp, SLOW.ramp);
+  let whole = 0;
+  let sofar = 0;
+  for (let at = brakeAt; at < hitAt; at++) {
+    whole += slowed(at);
+    sofar += at < frame ? slowed(at) : 0;
+  }
+  const cut = (hitAt - brakeAt - distance / BUS_SPEED) / whole;
+  return Math.min(Math.max(frame, brakeAt), hitAt) - brakeAt - cut * sofar;
+};
+
+type BrakeProps = {
+  /** O quadro em que o ônibus freia. */
+  readonly brakeAt: number;
+  /** Os quadros em que a fala diz "continua": a seta dela pulsa em cada um. */
+  readonly goOnAt: readonly number[];
+  /** Os quadros em que ela procura onde se agarrar, o café sai da xícara, ela repara nele e vê a parede chegando. */
+  readonly graspAt: number;
+  readonly allAt: number;
+  readonly sameAt: number;
+  readonly seesAt: number;
+  /** O quadro em que a frente do ônibus a segura, e o em que a palavra "inércia" entra. */
+  readonly hitAt: number;
+  readonly wordAt: number;
+};
+
+/**
+ * O ônibus-cozinha na estrada: freia de uma vez, as rodas travam e a estrada para de passar.
+ * A seta do ônibus some; a dela continua, e ela e o café seguem pelo piso, em câmera lenta, na
+ * velocidade em que o ônibus vinha, deixando o caminho pontilhado. A parede da frente a segura:
+ * a seta dela acaba ali, e o caminho fica.
+ */
+const Brake: React.FC<BrakeProps> = ({ brakeAt, goOnAt, graspAt, allAt, sameAt, seesAt, hitAt, wordAt }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const view = BUS_VIEW.road;
+  const lid = Math.max(CUP.nearLid, blink(frame / fps, "vigilia"));
+  const calm: VigiliaPose = { ...CUP, nearLid: lid, farLid: lid };
+  const stopped = settle(frame, brakeAt, 0.2 * fps);
+  const clock = slideClock(frame, brakeAt, hitAt, HOLD.x - KITCHEN.stand[0]);
+  // O relógio do que está solto na cozinha (a cortina, o vapor, os traços da seta): corre junto com
+  // o dela, e é por ele ficar lento que a câmera lenta se vê.
+  const loose = Math.min(frame, brakeAt) + clock + Math.max(0, frame - hitAt);
+  const reached = KITCHEN.stand[0] + BUS_SPEED * clock;
+  const x = reached - HOLD.bounce * ramp(frame, hitAt + 4, 0.35 * fps);
+
+  // O susto vem depois do tranco, e só então o corpo vai.
+  const startled = settle(frame, brakeAt + 2, 0.15 * fps);
+  const going = ramp(frame, brakeAt + 0.25 * fps, 0.5 * fps);
+  const grasp = ramp(frame, graspAt, 0.5 * fps) - ramp(frame, graspAt + 1.4 * fps, 0.6 * fps);
+  const watch = ramp(frame, sameAt, 0.4 * fps);
+  const sees = ramp(frame, seesAt, 0.35 * fps);
+  const squashed = linear(frame, hitAt - 1, 2);
+  const held = ramp(frame, hitAt + 5, 0.4 * fps);
+  // Enquanto desliza ela se equilibra: o corpo oscila devagar, no passo da câmera lenta.
+  const sway = going * (1 - sees) * wave(frame / fps, 2.6);
+  const sliding = [GRASP, WATCH, BRACE, SQUASHED].reduce(
+    (pose, next, index) => mixPose(pose, next, [grasp, watch, sees, squashed][index]),
+    mixPose(mixPose(calm, STARTLED, startled), LURCH, going),
+  );
+  const pose = mixPose({ ...sliding, lean: sliding.lean + 3 * sway }, { ...HELD, nearLid: lid * 0.3, farLid: lid * 0.3 }, held);
+
+  // O café continua indo: sobe do lado da frente e balança até assentar inclinado; na parede, balança de novo e assenta.
+  const slosh =
+    -24 * (stopped - ramp(frame, hitAt, 0.6 * fps)) +
+    shake(loose, brakeAt, 0.9 * fps, 14, 3) +
+    shake(frame, hitAt, 0.7 * fps, 16, 3);
+  // Um gole sai da xícara em "Tudo" e vai ao lado dela, no mesmo passo. Ele não esbarra no corpo:
+  // chega à parede um nada antes, e é a parede que o segura também.
+  const lifted = ramp(frame, allAt, 1.2 * fps);
+  const drop = [
+    KITCHEN.stand[0] + BUS_SPEED * (clock + Math.max(0, frame - hitAt)) + SIZE * (CUP_AT[0] + 2 + 12 * lifted),
+    KITCHEN.stand[1] + SIZE * (CUP_AT[1] - 24 - 34 * lifted + 3 * wave(loose / fps, 0.9)),
+  ] as const;
+  const spilled = drop[0] - (HOLD.wall - 12);
+  const stain = clamp01(spilled / (3 * BUS_SPEED));
+  const drip = ramp(spilled / BUS_SPEED, 6, 1.6 * fps);
+
+  const pulse =
+    1 +
+    PULSE.grow *
+      goOnAt.reduce((sum, at) => sum + Math.sin(Math.PI * linear(frame, at, PULSE.seconds * fps)), 0);
+  // A seta vai com ela, e não atravessa a parede: encurta contra ela e acaba quando ela é segurada.
+  const arrowX = reached + BODY_ARROW.back;
+  const arrowLength =
+    Math.min(FLOW_LENGTH, HOLD.wall - 10 - arrowX) * (1 - settle(frame, hitAt, 0.25 * fps));
+  // O meio da seta: é em volta dele que ela incha.
+  const arrowMid = arrowX + FLOW_LENGTH / 2;
+  // O caminho que ela fez desde a freada: do lugar em que a seta estava até onde ela foi segurada.
+  const trailFrom = KITCHEN.stand[0] + BODY_ARROW.back;
+  const trailTip = settle(frame, hitAt + 0.2 * fps, 0.25 * fps);
+  const word = busPoint(view, (trailFrom + HOLD.x + BODY_ARROW.back) / 2, BODY_ARROW.y - 110);
+  const caveat = busPoint(view, ...BUS_CAVEAT);
+  return (
+    <Frame
+      backdrop={<AbsoluteFill style={{ background: `linear-gradient(${home.sky[0]}, ${home.sky[1]})` }} />}
+    >
+      <Push focus={[WIDTH / 2, HEIGHT * 0.6]} to={1.03}>
+        <Bus
+          view={view}
+          wheels={1}
+          // A estrada passa até a freada, e para: as rodas travam no ângulo em que estavam.
+          travelled={BUS_SPEED * Math.min(frame, brakeAt)}
+          pitch={
+            0.8 * (settle(frame, brakeAt, 0.12 * fps) - ramp(frame, brakeAt + 0.15 * fps, 0.45 * fps)) +
+            // O ônibus é rígido: quando ela bate na frente dele, ele treme.
+            shake(frame, hitAt, 0.4 * fps, 0.4, 2)
+          }
+          // A cortina é o ar lá de dentro: também segue para a frente, e balança no relógio lento.
+          curtain={
+            -9 * settle(loose, brakeAt, 0.3 * fps) +
+            shake(loose, brakeAt, fps, 6, 3) +
+            shake(frame, hitAt, 0.7 * fps, 4, 2)
+          }
+          over={
+            // A seta do ônibus: encolhe até sumir quando ele para.
+            <Flow
+              x={WIDTH / 2 - FLOW_LENGTH / 2}
+              y={roofMid(1)}
+              at={ALREADY_SHOWN}
+              length={FLOW_LENGTH * (1 - stopped)}
+            />
+          }
+        >
+          <Gauge x={BUS_GAUGE.x} y={BUS_GAUGE.y} r={BUS_GAUGE.r} value={BUS_GAUGE.value * (1 - stopped)} lit />
+          {/* O café que chegou à parede: a mancha, e o fio que escorre dela. */}
+          {stain > 0 ? (
+            <g fill={home.coffee}>
+              <rect x={HOLD.wall - 14} y={drop[1]} width={9} height={30 + 60 * drip} rx={4.5} />
+              <ellipse cx={HOLD.wall - 6} cy={drop[1]} rx={14 * stain} ry={44 * stain} />
+              <circle cx={HOLD.wall - 22} cy={drop[1] - 52} r={7 * stain} />
+              <circle cx={HOLD.wall - 26} cy={drop[1] + 40} r={5 * stain} />
+            </g>
+          ) : null}
+          {/* O caminho pontilhado, e a ponta que ele ganha quando ela para: vira a seta do trajeto. */}
+          <g opacity={0.6}>
+            <line
+              x1={trailFrom}
+              y1={BODY_ARROW.y}
+              x2={arrowX}
+              y2={BODY_ARROW.y}
+              stroke={ink.dark}
+              strokeWidth={12}
+              strokeLinecap="round"
+              strokeDasharray="1 30"
+            />
+            <path
+              d="M34,0 L-14,-24 L-14,24 Z"
+              fill={ink.dark}
+              transform={`translate(${arrowX + 20} ${BODY_ARROW.y}) scale(${trailTip})`}
+            />
+          </g>
+          <Vig
+            x={x}
+            y={KITCHEN.stand[1]}
+            scale={SIZE}
+            pose={pose}
+            shadow={home.contact}
+            held={<Cup slosh={slosh} steam={loose / 9} />}
+          />
+          {lifted > 0 && spilled <= 0 ? (
+            <g fill={home.coffee} opacity={Math.min(1, lifted * 4)}>
+              <ellipse cx={drop[0]} cy={drop[1]} rx={26} ry={19} />
+              <circle cx={drop[0] - 40} cy={drop[1] + 20 * (1 - lifted) + 22} r={10} />
+              <circle cx={drop[0] + 38} cy={drop[1] - 18} r={7} />
+            </g>
+          ) : null}
+          {/* A seta dela: a mesma de antes da freada, e é a que fica. Os traços correm no relógio lento. */}
+          <g
+            transform={`translate(${arrowMid} ${BODY_ARROW.y}) scale(${pulse}) translate(${-arrowMid} ${-BODY_ARROW.y})`}
+          >
+            <Freeze frame={loose}>
+              <Flow x={arrowX} y={BODY_ARROW.y} at={ALREADY_SHOWN} length={arrowLength} />
+            </Freeze>
+          </g>
+        </Bus>
+        <Place x={caveat[0]} y={caveat[1]}>
+          <Pop at={0.2 * fps}>
+            <Caveat on="light">comparação</Caveat>
+          </Pop>
+        </Place>
+        {/* Presa ao caminho que o corpo fez sem ninguém empurrar: é o nome disso. */}
+        <Place x={word[0]} y={word[1]}>
+          <Pop at={wordAt}>
+            <Tag on="light" size="label">
+              inércia
+            </Tag>
+          </Pop>
+        </Place>
       </Push>
     </Frame>
   );
@@ -139,8 +451,17 @@ const RING_TILT = 0.16;
 const LIFT = 1.17;
 // A volta das camadas (e da rocha, até travar), em segundos: depressa o bastante para se ver quem parou e quem não.
 const LAYER_TURN_SECONDS = 5;
-// A casca azul sai da rocha neste tempo, depois de um instante com a Terra do plano anterior.
-const PEEL = { at: 0.15, seconds: 0.5 } as const;
+// A casca azul sai da rocha neste tempo.
+const PEEL_SECONDS = 0.5;
+// A ponte com o plano anterior: o ônibus abre o plano sobre a Terra, neste tamanho, encolhe e pousa
+// onde a casinha de quem assiste fica. A Terra é o ônibus em que ela já viaja.
+const BRIDGE = { scale: 0.36, landed: 0.04, seconds: 0.7, house: 76 } as const;
+// As setas para leste sobre a Terra: as de `feel-nothing`, no amarelo que lê sobre o espaço.
+// A da casinha vai com ela; as das camadas saem da ponta de leste de cada faixa, fora do disco:
+// em cima da rocha elas diziam que era a rocha que seguia.
+const EAST = { house: 200, layer: 130, gap: 16 } as const;
+// A casinha atravessa este trecho da frente do disco (em unidades de raio 100) entre o pouso e a saída da casca.
+const RIDE = { from: -80, to: 10 } as const;
 // O solavanco da rocha quando trava, quadro a quadro: passa do ponto para leste e volta.
 const ROCK_JOLT = [16, -10, 4] as const;
 
@@ -244,16 +565,23 @@ const LAYERS = [
 ] as const;
 
 type StopProps = {
+  /** O quadro em que o ônibus começa a encolher sobre a Terra. */
+  readonly swapAt: number;
+  /** O quadro em que a casca azul sai e deixa a parte sólida à vista. */
+  readonly peelAt: number;
   /** O quadro em que a rocha trava: a alavanca chega ao fim do curso nele. */
   readonly stopAt: number;
-  /** Quantos quadros a cena já tinha quando o plano começou: a Terra azul entra no giro em que estava. */
-  readonly before: number;
+  /** O quadro em que cada camada ganha a seta de quem continua: o ar, o mar, as casinhas. */
+  readonly goOnAt: readonly [number, number, number];
 };
 
 const PULL_SECONDS = 0.35;
 
-/** A casca azul sai e deixa a rocha à vista; ela puxa a alavanca, a rocha trava de uma vez, e o ar, o mar e as casinhas continuam para leste. */
-const OnlyTheRock: React.FC<StopProps> = ({ stopAt, before }) => {
+/**
+ * O ônibus do plano anterior pousa na Terra e vira a casinha, que já viaja para leste. A casca azul sai e
+ * deixa a rocha à vista; ela puxa a alavanca, a rocha trava de uma vez, e o ar, o mar e as casinhas continuam.
+ */
+const OnlyTheRock: React.FC<StopProps> = ({ swapAt, peelAt, stopAt, goOnAt }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const turns = (at: number) => at / fps / LAYER_TURN_SECONDS;
@@ -262,50 +590,92 @@ const OnlyTheRock: React.FC<StopProps> = ({ stopAt, before }) => {
   const after = ramp(frame, stopAt + 0.2 * fps, 0.4 * fps);
   const effort = pulled * (1 - after);
   const spin = turns(frame);
-  // A mesma Terra do plano anterior, no mesmo giro: a casca cresce, some, e vira as três camadas.
-  const peeled = ramp(frame, PEEL.at * fps, PEEL.seconds * fps);
+  const peeled = ramp(frame, peelAt, PEEL_SECONDS * fps);
   const { cx, cy, r } = STAGE.earth;
+  // A Terra azul gira no passo que leva a casinha de um lado ao outro do trecho dela entre o pouso e a
+  // saída da casca: assim a seta dela fica sempre sobre o disco, qualquer que seja o tempo da fala.
+  const landAt = swapAt + BRIDGE.seconds * fps;
+  const blueSpin = spinFor(mix(RIDE.from, RIDE.to, (frame - landAt) / Math.max(1, peelAt - landAt)));
+  const spot = landPoint(r, blueSpin);
+  const house = [cx + spot.x, cy + spot.y] as const;
+  const shrunk = ramp(frame, swapAt, BRIDGE.seconds * fps);
+  const scale = mix(BRIDGE.scale, BRIDGE.landed, shrunk);
+  const at = [mix(cx, house[0], shrunk), mix(cy, house[1] - BRIDGE.house / 2, shrunk)] as const;
+  const landed = linear(frame, landAt - 4, 5);
   return (
     <Frame backdrop={<SpaceBackdrop light={[0.05, 0.1]} />}>
       <Push focus={[STAGE.earth.cx, STAGE.earth.cy]} to={1.03}>
-        <Arrive from={NEAR.to} focus={NEAR.focus}>
-          <Svg>
-            <g opacity={peeled}>
-              {LAYERS.map((layer) => (
-                <Belt key={layer.lat} {...layer} spin={spin} lifted={peeled} half="back" />
-              ))}
+        <Svg>
+          <g opacity={peeled}>
+            {LAYERS.map((layer) => (
+              <Belt key={layer.lat} {...layer} spin={spin} lifted={peeled} half="back" />
+            ))}
+          </g>
+          <Rock spin={turns(Math.min(frame, stopAt))} jolt={ROCK_JOLT[frame - stopAt] ?? 0} />
+          {peeled < 1 ? (
+            <g opacity={1 - peeled}>
+              <Globe cx={cx} cy={cy} r={r * mix(1, LIFT, peeled)} spin={blueSpin} />
+              {/* O ônibus, pousado: a casinha de quem assiste, que já vai para leste com o chão. */}
+              <House x={house[0]} y={house[1]} size={BRIDGE.house} opacity={landed} />
+              <Flow
+                x={house[0] + 44}
+                y={house[1] - BRIDGE.house / 2}
+                // Entra com o pouso: quando a fala chega em "já está viajando", ela já está lá.
+                at={landAt + 0.15 * fps}
+                length={EAST.house}
+                color={ink.accent}
+              />
             </g>
-            <Rock spin={turns(Math.min(frame, stopAt))} jolt={ROCK_JOLT[frame - stopAt] ?? 0} />
-            {peeled < 1 ? (
-              <g opacity={1 - peeled}>
-                <Globe cx={cx} cy={cy} r={r * mix(1, LIFT, peeled)} spin={(before + frame) / fps / TURN_SECONDS} />
-              </g>
-            ) : null}
-            <g opacity={peeled}>
-              {LAYERS.map((layer) => (
-                <Belt key={layer.lat} {...layer} spin={spin} lifted={peeled} half="front" />
-              ))}
-            </g>
-            <LeverStation
-              {...STAGE.lever}
-              on={1 - pulled}
-              hands={1}
-              grip={{
-                turn: mix(0.9, 0.3, after),
-                gaze: [mix(0.6, -0.8, after), -0.4],
-                grit: effort,
-                squint: 0.6 * effort,
-                pupil: mix(1, 0.75, after),
-                nearLid: 0.12 * (1 - after),
-                farLid: 0.12 * (1 - after),
-                nearBrow: [-0.5 * after, 6 * after],
-                farBrow: [-0.5 * after, 7 * after],
-                mouth: [11, 0.5 * after, 0.1 * (1 - after)],
-              }}
-              shadow={ink.dark}
+          ) : null}
+          <g opacity={peeled}>
+            {LAYERS.map((layer) => (
+              <Belt key={layer.lat} {...layer} spin={spin} lifted={peeled} half="front" />
+            ))}
+          </g>
+          {/* Quem continua leva a seta; a rocha, parada, não tem nenhuma. */}
+          {LAYERS.map((layer, index) => {
+            const phi = (layer.lat * Math.PI) / 180;
+            return (
+              <Flow
+                key={layer.lat}
+                x={cx + r * LIFT * Math.cos(phi) + layer.width / 2 + EAST.gap}
+                y={cy - r * LIFT * Math.sin(phi)}
+                at={goOnAt[index]}
+                length={EAST.layer}
+                color={ink.accent}
+              />
+            );
+          })}
+          <LeverStation
+            {...STAGE.lever}
+            on={1 - pulled}
+            hands={1}
+            grip={{
+              turn: mix(0.9, 0.3, after),
+              gaze: [mix(0.6, -0.8, after), -0.4],
+              grit: effort,
+              squint: 0.6 * effort,
+              pupil: mix(1, 0.75, after),
+              nearLid: 0.12 * (1 - after),
+              farLid: 0.12 * (1 - after),
+              nearBrow: [-0.5 * after, 6 * after],
+              farBrow: [-0.5 * after, 7 * after],
+              mouth: [11, 0.5 * after, 0.1 * (1 - after)],
+            }}
+            shadow={ink.dark}
+          />
+        </Svg>
+        {/* O ônibus-cozinha de antes, sem ela: agora ela está na alavanca. */}
+        {landed < 1 ? (
+          <AbsoluteFill style={{ opacity: 1 - landed }}>
+            <Bus
+              view={{ scale, left: at[0] - (scale * WIDTH) / 2, top: at[1] - (scale * HEIGHT) / 2 }}
+              wheels={1}
+              travelled={BUS_SPEED * frame}
+              afloat
             />
-          </Svg>
-        </Arrive>
+          </AbsoluteFill>
+        ) : null}
       </Push>
       <Place x={STAGE.earth.cx} y={928}>
         <Pop at={stopAt + 0.15 * fps}>
@@ -316,19 +686,39 @@ const OnlyTheRock: React.FC<StopProps> = ({ stopAt, before }) => {
   );
 };
 
-export const TheRuleScene: React.FC<SceneProps> = ({ scene, shots }) => (
-  <>
-    {/* O plano do ônibus freando (shots[1]) ainda não tem desenho: até lá, a hesitação segura a tela. */}
-    <Shot range={{ from: shots[0].from, to: shots[1].to }} name="ela hesita">
-      <Hesitate
-        tugAt={cue(scene, "freada")}
-        letGoAt={cue(scene, "Só")}
-        lookAt={cue(scene, "planeta")}
-        backAt={cue(scene, "assim")}
-      />
-    </Shot>
-    <Shot range={shots[2]} name="só a parte sólida para">
-      <OnlyTheRock stopAt={cue(scene, "pare") - shots[2].from} before={shots[2].from} />
-    </Shot>
-  </>
-);
+export const TheRuleScene: React.FC<SceneProps> = ({ scene, shots }) => {
+  const bus = (word: string, occurrence = 1) => cue(scene, word, occurrence) - shots[1].from;
+  const later = (word: string, occurrence = 1) => cue(scene, word, occurrence) - shots[2].from;
+  return (
+    <>
+      <Shot range={shots[0]} name="ela hesita">
+        <Hesitate
+          tugAt={cue(scene, "freada")}
+          letGoAt={cue(scene, "só")}
+          lookAt={cue(scene, "planeta")}
+          backAt={cue(scene, "assim")}
+        />
+      </Shot>
+      <Shot range={shots[1]} name="o ônibus freia">
+        <Brake
+          brakeAt={bus("freia")}
+          goOnAt={[bus("continua"), bus("continua", 2)]}
+          graspAt={bus("nada", 2)}
+          allAt={bus("Tudo")}
+          sameAt={bus("mesma")}
+          seesAt={bus("até")}
+          hitAt={bus("segure")}
+          wordAt={bus("inércia")}
+        />
+      </Shot>
+      <Shot range={shots[2]} name="só a parte sólida para">
+        <OnlyTheRock
+          swapAt={later("troque")}
+          peelAt={later("Suponha")}
+          stopAt={later("pare")}
+          goOnAt={[later("ar"), later("água"), later("você", 2)]}
+        />
+      </Shot>
+    </>
+  );
+};

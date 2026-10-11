@@ -2,7 +2,7 @@ import { useCurrentFrame, useVideoConfig } from "remotion";
 import { Place } from "../../../components/Place";
 import { Pop, popOpacity, popScale } from "../../../components/Pop";
 import { ALREADY_SHOWN } from "../../../components/timing";
-import { ink, space, tags } from "../palette";
+import { ink, space } from "../palette";
 import { Globe } from "./Globe";
 import { Svg, Tag } from "./kit";
 
@@ -51,40 +51,42 @@ export const SimGlobe: React.FC<{
   </Globe>
 );
 
-// Os quatro casos que a fileira resume e, entre os dois últimos, a vaga do
-// dia de um ano (365 fica entre 128 e 256). As etiquetas alternam em cima e
-// embaixo para caberem no tamanho de nota.
+// Os quatro casos que a fileira resume, do giro mais rápido ao mais lento. O
+// dia de um ano não tem vaga aqui: a fala diz antes que ninguém o testou, e a
+// fileira só mostra o que foi rodado.
 export const GLOBE_ROW = {
-  y: 540,
-  r: 115,
+  y: 520,
+  r: 150,
   slots: [
-    { x: 410, days: 16, label: "giro de 16 dias", below: true },
-    { x: 705, days: 64, label: "64 dias", below: false },
-    { x: 1000, days: 128, label: "128 dias", below: true },
-    { x: 1295, days: null, label: "dia de um ano", below: false },
-    { x: 1590, days: 256, label: "256 dias", below: true },
+    { x: 375, days: 16, label: "giro de 16 dias" },
+    { x: 765, days: 64, label: "64 dias" },
+    { x: 1155, days: 128, label: "128 dias" },
+    { x: 1545, days: 256, label: "256 dias" },
   ],
 } as const;
+
+/**
+ * O globo que cresce para mostrar a circulação: o de 128 dias. Nos modelos, o
+ * ar só atravessa do lado claro ao escuro a partir de giros de 64 dias; o de
+ * 16 ainda não mostra isso.
+ */
+export const GROWING_SLOT = GLOBE_ROW.slots[2];
 
 // Em quantos segundos de tela o globo de 16 dias dá uma volta; os outros, na proporção.
 const FASTEST_TURN_SECONDS = 5;
 
 type GlobeRowProps = {
-  /**
-   * O relógio do giro, em quadros. A fileira aparece em dois planos seguidos:
-   * um conta para trás do próprio fim e o outro, do zero, para o giro não
-   * pular no corte.
-   */
+  /** O relógio do giro, em quadros. */
   readonly clock: number;
   /** O quadro do plano em que cada posição entra; sem valor, já estão lá. */
   readonly enter?: readonly number[];
   /** A opacidade das etiquetas. */
   readonly labels?: number;
-  /** A opacidade de tudo o que não é o último globo. */
+  /** A opacidade de tudo o que não é o globo que cresce. */
   readonly rest?: number;
 };
 
-/** A fileira de globos simulados, do giro mais rápido ao mais lento, com a vaga vazia. */
+/** A fileira de globos simulados, do giro mais rápido ao mais lento. */
 export const GlobeRow: React.FC<GlobeRowProps> = ({ clock, enter, labels = 1, rest = 1 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -92,42 +94,21 @@ export const GlobeRow: React.FC<GlobeRowProps> = ({ clock, enter, labels = 1, re
   return (
     <>
       <Svg>
-        {slots.map(({ x, days }, index) => {
+        {slots.map((slot, index) => {
           const at = enter?.[index] ?? ALREADY_SHOWN;
           return (
             <g
-              key={x}
-              opacity={popOpacity(frame, at, 0.3 * fps) * (index === slots.length - 1 ? 1 : rest)}
-              transform={`translate(${x} ${y}) scale(${popScale(frame, at, 0.3 * fps)})`}
+              key={slot.x}
+              opacity={popOpacity(frame, at, 0.3 * fps) * (slot === GROWING_SLOT ? 1 : rest)}
+              transform={`translate(${slot.x} ${y}) scale(${popScale(frame, at, 0.3 * fps)})`}
             >
-              {days === null ? (
-                <>
-                  <circle r={r - 6} fill={ink.paper} opacity={0.16} />
-                  <circle
-                    r={r - 6}
-                    fill="none"
-                    stroke={tags.light.fill}
-                    strokeWidth={10}
-                    strokeLinecap="round"
-                    strokeDasharray="26 24"
-                    // O tracejado anda devagar: a vaga está viva, à espera.
-                    strokeDashoffset={-clock * 0.5}
-                  />
-                </>
-              ) : (
-                <SimGlobe
-                  cx={0}
-                  cy={0}
-                  r={r}
-                  spin={clock / fps / ((FASTEST_TURN_SECONDS * days) / 16)}
-                />
-              )}
+              <SimGlobe cx={0} cy={0} r={r} spin={clock / fps / ((FASTEST_TURN_SECONDS * slot.days) / 16)} />
             </g>
           );
         })}
       </Svg>
-      {slots.map(({ x, label, below }, index) => (
-        <Place key={label} x={x} y={y + (below ? 1 : -1) * (r + 78)} style={{ opacity: labels }}>
+      {slots.map(({ x, label }, index) => (
+        <Place key={label} x={x} y={y + r + 78} style={{ opacity: labels }}>
           <Pop at={(enter?.[index] ?? ALREADY_SHOWN) + 0.15 * fps}>
             <Tag on="light">{label}</Tag>
           </Pop>

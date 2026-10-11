@@ -132,7 +132,8 @@ const OnTheGround: React.FC<GroundProps> = ({ at }) => {
 export const TheMoonCaseScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="a Lua, dia e noite">
-      <TwoHalves at={[cue(scene, "dia"), cue(scene, "noite")]} moonAt={cue(scene, "Lua")} />
+      {/* O primeiro "dia" da fala é o da Terra ("um dia tão longo"); o da Lua é o segundo. */}
+      <TwoHalves at={[cue(scene, "dia", 2), cue(scene, "noite")]} moonAt={cue(scene, "Lua")} />
     </Shot>
     <Shot range={shots[1]} name="o termômetro no chão da Lua">
       <OnTheGround

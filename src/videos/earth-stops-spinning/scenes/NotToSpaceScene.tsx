@@ -127,13 +127,15 @@ type TwoSpeedsProps = {
   readonly escape: readonly [from: number, to: number, label: number];
   /** O quadro em que o toco do giro sai, o do número dele, e o quadro em que ele desiste de crescer. */
   readonly spin: readonly [from: number, label: number, rest: number];
+  /** O quadro em que a razão entre as duas aparece. */
+  readonly timesAt: number;
 };
 
 // De quanto em quanto tempo o toco toma impulso, em segundos, e quanto recua para tomá-lo.
 const STRAIN = { seconds: 0.9, back: 0.3 } as const;
 
 /** As duas velocidades na mesma régua: a de escape, comprida, e a do giro, um toco. */
-const TwoSpeeds: React.FC<TwoSpeedsProps> = ({ escape, spin }) => {
+const TwoSpeeds: React.FC<TwoSpeedsProps> = ({ escape, spin, timesAt }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   // O toco tenta crescer: recua, investe, treme na marca dele e não passa. Em "equador", desiste.
@@ -179,6 +181,14 @@ const TwoSpeeds: React.FC<TwoSpeedsProps> = ({ escape, spin }) => {
           </Tag>
         </Pop>
       </Place>
+      {/* A razão fica entre as duas setas, no vão entre a régua e o toco: é a leitura das duas juntas. */}
+      <Place x={RULE.zero + 8 * RULE.perKm} y={(rows.rule + rows.spin) / 2}>
+        <Pop at={timesAt}>
+          <Tag on="light" size="label">
+            mais de 20 vezes
+          </Tag>
+        </Pop>
+      </Place>
       <Place x={RULE.zero + 330} y={rows.spin}>
         <Pop at={spin[1]}>
           <Tag on="light" size="label">
@@ -193,7 +203,7 @@ const TwoSpeeds: React.FC<TwoSpeedsProps> = ({ escape, spin }) => {
 export const NotToSpaceScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="para leste, não para cima">
-      <LowCurve spaceAt={cue(scene, "nunca")} strikeAt={cue(scene, "espaço")} />
+      <LowCurve spaceAt={cue(scene, "cima")} strikeAt={cue(scene, "espaço")} />
     </Shot>
     <Shot range={shots[1]} name="escape e giro na mesma régua">
       <TwoSpeeds
@@ -207,6 +217,7 @@ export const NotToSpaceScene: React.FC<SceneProps> = ({ scene, shots }) => (
           cue(scene, "gira") - shots[1].from,
           cue(scene, "equador") - shots[1].from,
         ]}
+        timesAt={cue(scene, "vinte") - shots[1].from}
       />
     </Shot>
   </>

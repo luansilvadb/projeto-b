@@ -4,7 +4,7 @@ import { Pop, popOpacity, popScale } from "../../../components/Pop";
 import { cue, mix, ramp, settle, shake } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
-import { earth, ink } from "../palette";
+import { earth, ink, space } from "../palette";
 import { mixPose, type VigiliaPose } from "../../../art/Vigilia";
 import { STAND } from "../parts/Actor";
 import { alive } from "../parts/EndAlive";
@@ -75,48 +75,51 @@ const HandsOff: React.FC<{ readonly releaseAt: number }> = ({ releaseAt }) => {
   );
 };
 
-// A composição do gancho (`WhatSpinDoesScene`): a mesma Terra, no mesmo lugar e tamanho.
 const EARTH = { cx: 960, cy: 540, r: 350 } as const;
 // Onde a casinha está no fim do plano, em unidades de raio 100: a leste do meio, ainda de frente.
 // De onde ela parte sai da conta, porque ela vai com o chão dela (`HOME_LAND`) e o tempo do plano é o da fala.
 const HOME_TO = 62;
+// A noite é a fatia de oeste do disco, e o Sol fica a leste: quem é levado para leste sai do
+// escuro e amanhece, e a casinha termina o plano (e o vídeo) no claro. A linha entre os dois
+// lados é a meia elipse desta largura, em unidades de raio 100.
+const NIGHT_WIDTH = 30;
+const NIGHT = `M0,${-EARTH.r} A${EARTH.r},${EARTH.r} 0 0 0 0,${EARTH.r} A${(NIGHT_WIDTH * EARTH.r) / 100},${EARTH.r} 0 0 1 0,${-EARTH.r} Z`;
+// Onde a linha passa na altura da casinha.
+const DAWN = -NIGHT_WIDTH * 0.95;
 
 type Props = {
-  /** O quadro em que cada coisa acende: o mar, a casinha e a velocidade dela. */
-  readonly at: readonly [number, number, number];
+  /** O quadro em que cada coisa acontece: o mar acende, a noite aparece com a casinha nela, a casinha cruza a linha, o embalo, a velocidade. */
+  readonly at: readonly [number, number, number, number, number];
 };
 
-/** O que a rotação faz, de volta: o mar na cintura e a casinha correndo para leste. */
+/** O que a rotação faz, de volta: o mar na cintura, o dia e a noite se alternando, e a casinha correndo para leste. */
 const WhatItDoes: React.FC<Props> = ({ at }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
-  // O globo gira no passo de sempre, e chega ao fim do plano com o chão da casinha no lugar dela.
-  const spin = spinFor(HOME_TO) - (length - frame) / fps / TURN_SECONDS;
+  // O globo gira num passo só, amarrado à fala: o chão da casinha está na linha do dia e da noite
+  // quando a fala passa de um para a outra, e no lugar dele no fim do plano.
+  const turned = (frame - at[2]) / Math.max(1, length - at[2]);
+  const spin = mix(spinFor(DAWN), spinFor(HOME_TO), turned);
   // A casinha vai com o chão: presa à mancha de terra dela.
   const spot = landPoint(EARTH.r, spin);
   const house = { x: EARTH.cx + spot.x, y: EARTH.cy + spot.y };
-  const going = popOpacity(frame, at[1] + 0.2 * fps, 0.3 * fps);
+  const going = popOpacity(frame, at[3] + 0.2 * fps, 0.3 * fps);
+  const night = ramp(frame, at[1] - 0.2 * fps, 0.4 * fps);
   return (
-    <Frame backdrop={<SpaceBackdrop light={[0.1, 0.1]} />}>
-      {/* Chega de mais perto e assenta no enquadramento do gancho. */}
+    <Frame backdrop={<SpaceBackdrop light={[0.9, 0.1]} />}>
+      {/* Chega de mais perto e assenta na Terra inteira. */}
       <Push focus={[EARTH.cx, EARTH.cy]} from={1.22} to={1} progress={settle(frame, 0, 0.6 * fps)}>
         <Push focus={[EARTH.cx, EARTH.cy]} to={1.04}>
           <Svg>
-            <Globe {...EARTH} spin={spin} />
+            {/* A sombra de volume do disco dá lugar à noite: as duas juntas liam como duas linhas. */}
+            <Globe {...EARTH} spin={spin} lightFrom={1} shade={0.32 * (1 - night)} />
             <LatitudeRing
               {...EARTH}
               lat={0}
               color={earth.waterLight}
               width={26}
               opacity={0.9 * popOpacity(frame, at[0], 0.4 * fps)}
-            />
-            {/* A seta do embalo, à frente da casinha, para leste. */}
-            <Arrow
-              from={[house.x + 56, house.y - 34]}
-              to={[house.x + 150, house.y - 34]}
-              drawn={ramp(frame, at[1] + 0.2 * fps, 0.4 * fps)}
-              opacity={going}
             />
             <g opacity={popOpacity(frame, at[1], 0.3 * fps)}>
               <House
@@ -125,11 +128,25 @@ const WhatItDoes: React.FC<Props> = ({ at }) => {
                 rotate={(spot.x / EARTH.r) * 70}
               />
             </g>
+            {/* A noite por cima do mar e da casinha: ela escurece enquanto está nela e acende ao cruzar a linha. */}
+            <path
+              d={NIGHT}
+              transform={`translate(${EARTH.cx} ${EARTH.cy})`}
+              fill={space.sky[0]}
+              opacity={0.7 * night}
+            />
+            {/* A seta do embalo, à frente da casinha, para leste. */}
+            <Arrow
+              from={[house.x + 56, house.y - 34]}
+              to={[house.x + 150, house.y - 34]}
+              drawn={ramp(frame, at[3] + 0.2 * fps, 0.4 * fps)}
+              opacity={going}
+            />
           </Svg>
         </Push>
       </Push>
       <Place x={1490} y={900}>
-        <Pop at={at[2]}>
+        <Pop at={at[4]}>
           <Tag on="dark">mais de 1.000 km/h</Tag>
         </Pop>
       </Place>
@@ -148,6 +165,10 @@ export const StillSpinningScene: React.FC<SceneProps> = ({ scene, shots }) => {
         <WhatItDoes
           at={[
             cue(scene, "mar") - from,
+            // Em "alterna", e não em "dia": com a fala real, "dia" cai meio segundo antes de "noite", e a
+            // casinha aparecia já em cima da linha, sem tempo de ser vista no escuro.
+            cue(scene, "alterna") - from,
+            cue(scene, "noite") - from,
             cue(scene, "leva") - from,
             cue(scene, "mais") - from,
           ]}

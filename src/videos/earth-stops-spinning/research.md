@@ -15,6 +15,7 @@ Foco de partida: a cadeia de consequências de uma parada da rotação, cada uma
 - A rotação é 4,2% da velocidade de escape (0,4651 ÷ 11,186): ninguém seria lançado ao espaço. [1] [9]
   Para um objeto ficar sem peso no equador seriam precisos cerca de 7,91 km/s, um dia de uns 84 minutos; a Terra teria de girar cerca de 17 vezes mais rápido (23,93 h ÷ 1,41 h). [3]
 - A aceleração centrífuga no equador é 0,0337 m/s², 0,34% da gravidade. [3] [31]
+  Pela inércia: o que gira tende a seguir em linha reta, e é a parede (numa centrífuga) ou a gravidade (na Terra) que o obriga a fazer a curva. [63] [69] Sem rotação e com a Terra no formato de hoje, a gravidade nos polos seria cerca de 0,018 m/s² (0,19%) maior que no equador, só pelo formato (0,052 de hoje menos 0,034 da rotação).
   Sem rotação, o peso no equador subiria nessa proporção: cerca de 0,25 kg na balança para quem pesa 70 kg (0,35% × 70). Nos polos, nada muda.
 - Diferença de gravidade entre polo e equador hoje: 9,832 − 9,780 = 0,052 m/s², 0,53%. [1]
 
@@ -78,7 +79,7 @@ Foco de partida: a cadeia de consequências de uma parada da rotação, cada uma
 - Ritmitos de maré indicam dia de cerca de 18 h há 900 milhões de anos. [40]
 - A taxa atual não vale para o passado: projetada para trás, dá uma Lua jovem demais. [42]
 - O fim do freio de maré não é parar: é dia igual ao mês, cerca de 47 dias atuais. [51]
-  Esse estado nunca será atingido: no ritmo atual seriam cerca de 100 bilhões de anos [43]; a NASA dá cerca de 50 bilhões para o travamento. [33] O Sol chega ao topo do ramo das gigantes vermelhas em cerca de 7,59 bilhões de anos e engole a Terra. [45]
+  Esse estado nunca será atingido: no ritmo atual seriam cerca de 100 bilhões de anos só para a rotação cair até o mês de hoje, de cerca de 27 dias, e mais até a sincronia [43]; a NASA dá cerca de 50 bilhões para o travamento. [33] A condição do freio: a rotação do planeta precisa ser mais rápida que o movimento orbital da lua. [43] Conta linear a 1,8 ms por século até 47 dias: cerca de 220 bilhões de anos. Depois da sincronia a maré do Sol seguiria agindo (avaliação da checagem, sem fonte aberta). O Sol chega ao topo do ramo das gigantes vermelhas em cerca de 7,59 bilhões de anos e engole a Terra. [45]
   Conta: 100 ÷ 7,59 ≈ 13. Os 100 bilhões são ordem de grandeza, por extrapolação.
 - Segundo intercalar: mantém o UTC a menos de 0,9 s do tempo da rotação; foram 27 desde 1972, o último em 31/12/2016. [46] Não haverá em dezembro de 2026. [47] A CGPM de 2022 decidiu aumentar a tolerância até 2035, sem extingui-lo. [48] A 28ª CGPM vota o tema em 15/10/2026. [49] [50]
 - O dia de 29/06/2022 foi 1,59 ms mais curto que 86.400 s, recorde desde os relógios atômicos. [44]
@@ -188,3 +189,4 @@ Foco de partida: a cadeia de consequências de uma parada da rotação, cada uma
 66. E. Herrick-Gleason, "What happens if Earth stops rotating?", Astronomy.com, 2026 (divulgação). https://www.astronomy.com/science/what-happens-if-earth-stops-rotating/ (consultada em 10/10/2026)
 67. A. Helmenstine, "What Would Happen If the Earth Stopped Rotating", Science Notes (divulgação; credenciais não conferidas). https://sciencenotes.org/what-would-happen-if-the-earth-stopped-rotating/ (consultada em 10/10/2026)
 68. N. Strobel, Astronomy Notes, "Solar and Sidereal Day". https://www.astronomynotes.com/nakedeye/s7.htm (consultada em 10/10/2026)
+69. OpenStax, College Physics 2e, "6.4 Fictitious Forces and Non-inertial Frames: The Coriolis Force" (a centrífuga: sem a parede, o que gira seguiria em linha reta). https://openstax.org/books/college-physics-2e/pages/6-4-fictitious-forces-and-non-inertial-frames-the-coriolis-force (consultada em 10/10/2026)

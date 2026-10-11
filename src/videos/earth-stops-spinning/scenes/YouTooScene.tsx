@@ -183,16 +183,9 @@ const Car: React.FC = () => (
   </g>
 );
 
-/** A caixa de correio, sem o poste: o meio da base fica na origem. */
-const Mailbox: React.FC = () => (
-  <g>
-    <path d="M-52,0 L-52,-44 Q-52,-74 -20,-74 L52,-74 L52,0 Z" fill={storm.carried} />
-    <rect x={30} y={-104} width={10} height={44} fill={storm.carried} />
-    <rect x={30} y={-104} width={34} height={22} fill={storm.dustDeep} />
-  </g>
-);
-
-const STREET = { ground: 800, house: 400, post: 930, car: 1370, door: 560 } as const;
+// Nada fincado no chão entra na rua além da casa: a fala só diz o que acontece com o que não está preso,
+// e a fonte não diz o que é do poste ou da caixa de correio.
+const STREET = { ground: 800, house: 400, car: 1240, door: 560 } as const;
 
 // O que é levado: sai acelerando para leste, com um pouco de subida e de giro, e deixa o quadro.
 const flight = (frame: number, at: number, frames: number) => {
@@ -200,7 +193,7 @@ const flight = (frame: number, at: number, frames: number) => {
   return { dx: 2300 * gone, lift: Math.sin(Math.min(1, gone * 1.6) * Math.PI * 0.5), gone };
 };
 
-/** A rua dela: o que não é rocha sai para leste, e o chão fica. */
+/** A rua dela: o que não está preso ao solo (ela, a xícara, o carro) sai para leste, e o chão fica. */
 const StreetGoes: React.FC<{ readonly flingAt: number; readonly speedAt: number }> = ({
   flingAt,
   speedAt,
@@ -209,7 +202,6 @@ const StreetGoes: React.FC<{ readonly flingAt: number; readonly speedAt: number 
   const { fps } = useVideoConfig();
   const blowing = ramp(frame, flingAt - 4, 0.3 * fps);
   const her = flight(frame, flingAt, 1.1 * fps);
-  const box = flight(frame, flingAt + 2, 0.9 * fps);
   const car = flight(frame, flingAt + 5, 1.2 * fps);
   return (
     <Frame backdrop={<StormBackdrop wind={mix(0.15, 1, blowing)} />}>
@@ -229,13 +221,6 @@ const StreetGoes: React.FC<{ readonly flingAt: number; readonly speedAt: number 
           ) : null}
           <g transform={`rotate(${shake(frame, flingAt, 0.6 * fps, 1.6, 4)} ${STREET.house} ${STREET.ground})`}>
             <StormHouse x={STREET.house} y={STREET.ground} scale={0.98} />
-          </g>
-          {/* O poste da caixa de correio fica; a caixa vai. */}
-          <rect x={STREET.post - 9} y={STREET.ground - 150} width={18} height={170} rx={6} fill={storm.fixed} />
-          <g
-            transform={`translate(${STREET.post + box.dx} ${STREET.ground - 150 - 70 * box.lift}) rotate(${260 * box.gone})`}
-          >
-            <Mailbox />
           </g>
           <g
             transform={`translate(${STREET.car + car.dx} ${STREET.ground - 50 * car.lift}) rotate(${-16 * car.lift + 30 * car.gone} 0 -70)`}
@@ -283,7 +268,10 @@ const StreetGoes: React.FC<{ readonly flingAt: number; readonly speedAt: number 
 
 const HOME = { x: 900, ground: 850, scale: 1.55 } as const;
 
-/** A casa: a fundação fica presa ao chão; as paredes e o telhado se soltam e seguem para leste. */
+/**
+ * A casa: a fundação fica presa ao chão; as paredes e o telhado rangem e racham enquanto a fala diz que
+ * "pode se rasgar", e só se soltam no fim dela, em "seguir".
+ */
 const HouseTears: React.FC<{
   readonly holdAt: number;
   readonly crackAt: number;
@@ -348,7 +336,9 @@ export const YouTooScene: React.FC<SceneProps> = ({ scene, shots }) => (
     </Shot>
     <Shot range={shots[1]} name="a rua sai para leste">
       <StreetGoes
-        flingAt={cue(scene, "arremessado") - shots[1].from}
+        // O plano abre na própria palavra: sem estes quadros ela já estava no ar no corte, e não se via
+        // de onde saiu nem o carro parado. Um quarto de segundo de rua inteira, e então tudo vai.
+        flingAt={cue(scene, "arremessado") - shots[1].from + 8}
         speedAt={cue(scene, "cerca") - shots[1].from}
       />
     </Shot>
@@ -356,7 +346,7 @@ export const YouTooScene: React.FC<SceneProps> = ({ scene, shots }) => (
       <HouseTears
         holdAt={cue(scene, "fundação") - shots[2].from}
         crackAt={cue(scene, "resto") - shots[2].from}
-        tearAt={cue(scene, "rasgar") - shots[2].from}
+        tearAt={cue(scene, "seguir") - shots[2].from}
       />
     </Shot>
   </>

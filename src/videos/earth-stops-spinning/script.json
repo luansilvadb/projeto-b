@@ -38,7 +38,7 @@
     },
     {
       "id": "how-fast",
-      "narration": "Antes de desligar, vale saber a que velocidade você está indo neste momento. Na linha do equador, que divide o planeta ao meio, a volta completa em torno da Terra tem quarenta mil quilômetros. Quem mora ali percorre essa volta inteira a cada vinte e quatro horas, levado pelo solo, que gira para leste. Isso dá mil seiscentos e setenta quilômetros por hora: quase dezessete vezes a velocidade de um carro a cem por hora na estrada.",
+      "narration": "Antes de desligar, vale saber a que velocidade você está indo neste momento. Na linha do equador, que divide o planeta ao meio, a volta completa em torno da Terra tem quarenta mil quilômetros. Quem mora ali percorre essa volta inteira em um dia, levado pelo solo, que gira para leste. Isso dá mil seiscentos e setenta quilômetros por hora. Um carro a cem por hora, sem parar, levaria quase dezessete dias para dar a mesma volta.",
       "shots": [
         {
           "staging": "A Vigília parada na cozinha, de xícara na mão. Ao lado dela, um velocímetro apagado, com uma interrogação.",
@@ -55,7 +55,7 @@
         },
         {
           "cue": "Isso",
-          "staging": "Um boneco em pé na linha do equador é levado pela volta inteira. O velocímetro acende e sobe até \"1.670 km/h\". Ao lado, um carrinho numa estrada, com o velocímetro dele em \"100 km/h\", ficando para trás.",
+          "staging": "Um boneco em pé na linha do equador é levado pela volta inteira. O velocímetro acende e sobe até \"1.670 km/h\". Em \"carro\", um carrinho parte do mesmo ponto, pela mesma linha do equador, com a etiqueta \"100 km/h\": quando o boneco completa a volta, o carrinho mal saiu do lugar. Um contador ao lado dele: \"quase 17 dias\".",
           "scale": "medium",
           "palette": "espaco",
           "entry": "camera"
@@ -114,7 +114,7 @@
     },
     {
       "id": "the-rule",
-      "narration": "É essa freada que vamos imaginar, e só imaginar: nada conhecido faz um planeta parar assim. Quando um ônibus freia de repente, quem está de pé lá dentro continua indo para a frente, porque nada segurou o corpo. Tudo o que está em movimento continua em movimento, na mesma velocidade, até que alguma coisa o segure. Isso se chama inércia. Agora troque o ônibus pela Terra. Suponha que a parte sólida do planeta, o solo e toda a rocha debaixo dele, pare de girar de um instante para o outro. O ar, a água dos mares e você não estão presos a ela, e continuam.",
+      "narration": "É essa freada que vamos imaginar, e só imaginar: nada conhecido faz um planeta parar assim. Quando um ônibus freia de repente, quem está de pé lá dentro continua indo para a frente, porque nada segurou o corpo. Tudo o que está em movimento continua em movimento, na mesma velocidade, até que alguma coisa o segure. Isso se chama inércia. Agora troque o ônibus pela Terra. Você já está viajando nela, e ela é um ônibus muito mais rápido. Suponha que a parte sólida do planeta, o solo e toda a rocha debaixo dele, pare de girar de um instante para o outro. O ar, a água dos mares e você estão soltos sobre ela, e continuam na velocidade em que vinham.",
       "shots": [
         {
           "staging": "A Vigília com as duas mãos na alavanca \"rotação\", ao lado da Terra. Ela hesita.",
@@ -149,7 +149,7 @@
     },
     {
       "id": "you-too",
-      "narration": "Comece por você, em São Paulo. O solo trava debaixo dos seus pés, e o seu corpo segue na velocidade em que vinha: você é arremessado para leste a cerca de mil e quinhentos quilômetros por hora, junto com tudo o que não está preso ao solo. Estar dentro de casa não ajuda. A fundação fica presa, e o resto da construção pode se rasgar e seguir viagem.",
+      "narration": "Comece por você, supondo que esteja em São Paulo. O solo trava debaixo dos seus pés, e o seu corpo segue na velocidade em que vinha: você é arremessado para leste a cerca de mil e quinhentos quilômetros por hora, junto com tudo o que está solto sobre o solo. Estar dentro de casa não ajuda. A fundação está presa ao solo, mas o resto da construção pode se rasgar e seguir viagem.",
       "shots": [
         {
           "staging": "A Vigília na cozinha, de xícara na mão. O chão trava debaixo dela; o café se inclina na xícara.",
@@ -159,14 +159,14 @@
         },
         {
           "cue": "arremessado",
-          "staging": "A rua dela, vista de fora: a Vigília, a xícara, o carro e a caixa de correio saem para leste; o chão fica. \"cerca de 1.500 km/h\".",
+          "staging": "A rua dela, vista de fora: a Vigília, a xícara e o carro saem para leste; o chão fica. \"cerca de 1.500 km/h\".",
           "scale": "wide",
           "palette": "tempestade",
           "entry": "cut"
         },
         {
           "cue": "Estar",
-          "staging": "A casa dela: a fundação fica presa ao chão; as paredes e o telhado se soltam e seguem para leste, com a moldura da janela onde ela estava.",
+          "staging": "A casa dela: a fundação fica presa ao chão; as paredes e o telhado rangem e racham, e no fim da fala se soltam e seguem para leste, com a moldura da janela onde ela estava.",
           "scale": "medium",
           "palette": "tempestade",
           "entry": "camera"
@@ -180,7 +180,7 @@
     },
     {
       "id": "not-to-space",
-      "narration": "Arremessado para leste, rente ao solo, e nunca para o espaço. Para escapar da gravidade da Terra seria preciso ir mais de vinte vezes mais rápido do que o solo gira no equador.",
+      "narration": "Arremessado para leste, rente ao solo, e não para cima, rumo ao espaço. Para escapar da gravidade da Terra seria preciso ir mais de vinte vezes mais rápido do que o solo gira no equador.",
       "shots": [
         {
           "staging": "A Terra de lado: a Vigília e a xícara saem numa curva baixa para leste, rente ao chão. Uma seta pontilhada para cima, rumo ao espaço, é riscada.",
@@ -203,7 +203,7 @@
     },
     {
       "id": "wind",
-      "narration": "O ar também não está preso, e continua correndo para leste por cima do solo parado. Para o que ficou preso, árvores, postes e o que sobrou das construções, isso é um vento. No equador, é um vento de mil seiscentos e setenta quilômetros por hora, a mesma velocidade que o solo tinha. A rajada mais forte já medida perto do solo, fora de um tornado, passou por pouco de quatrocentos quilômetros por hora, num ciclone na Austrália. O vento da parada seria quatro vezes mais rápido.",
+      "narration": "O ar também está solto, e continua correndo para leste por cima do solo parado. Para o que ficou preso, árvores, postes e o que sobrou das construções, isso é um vento. No equador, é um vento de mil seiscentos e setenta quilômetros por hora, a mesma velocidade que o solo tinha. A rajada mais forte já medida perto do solo, fora de um tornado, passou por pouco de quatrocentos quilômetros por hora, num ciclone na Austrália. O vento da parada seria quatro vezes mais rápido.",
       "shots": [
         {
           "staging": "O chão do equador, parado. O ar passa por cima dele varrendo palmeiras, telhas e poeira, tudo para leste: \"1.670 km/h\".",
@@ -235,17 +235,17 @@
     },
     {
       "id": "sea-moves",
-      "narration": "A água dos mares faz o mesmo: continua indo para leste e avança sobre os continentes. Até onde ela chegaria é uma conta que não encontramos feita em lugar nenhum.",
+      "narration": "A água dos mares faz o mesmo: sai para leste na velocidade que o solo tinha, tão rápida quanto aquele vento, e avança sobre os continentes. Até onde, é a parte desta história que ainda não tem conta feita.",
       "shots": [
         {
-          "staging": "A Terra de lado: o oceano inteiro desliza para leste sobre o fundo parado e encosta na borda de um continente.",
+          "staging": "A Terra de lado: o oceano inteiro desliza para leste sobre o fundo parado, na velocidade que o solo tinha, e sobe pela borda de um continente.",
           "scale": "wide",
           "palette": "tempestade",
           "entry": "cut"
         },
         {
-          "cue": "Até",
-          "staging": "Na praia, uma régua de nível fincada na areia, com a água chegando. A escala dela está em branco, com uma interrogação no lugar do número.",
+          "cue": "avança",
+          "staging": "Na praia, a água avança terra adentro. Em \"onde\", uma régua de nível fincada na areia, com a escala em branco e uma interrogação no lugar do número.",
           "scale": "medium",
           "palette": "tempestade",
           "entry": "camera"
@@ -259,7 +259,7 @@
     },
     {
       "id": "the-pole",
-      "narration": "Só perto dos polos quase não se sente nada, porque lá o solo já andava devagar. A dez quilômetros de um polo, ele se movia mais devagar do que uma pessoa caminhando. Ali a parada é um tropeço, e quem está lá escapa pelo menos do tranco.",
+      "narration": "Só perto dos polos quase nada se sente, porque lá o solo já andava devagar. A dez quilômetros de um polo, ele se movia mais devagar do que uma pessoa caminhando. Ali a parada é um tropeço, e quem está lá escapa pelo menos do tranco.",
       "shots": [
         {
           "staging": "A Terra de lado com os três círculos de antes. As setas do arremesso encolhem do equador para o polo, até sumir.",
@@ -291,7 +291,7 @@
     },
     {
       "id": "after-the-dust",
-      "narration": "Parar de uma vez só mostra destruição. Para descobrir o que a rotação faz pelo planeta, vale repetir o experimento com mais cuidado. Desta vez a Terra não trava: vai perdendo a rotação aos poucos, ao longo de décadas, devagar o bastante para ninguém ser arremessado. Quando ela enfim para de girar, a mudança que mais aparece no mapa é a do mar.",
+      "narration": "Parar de repente mostra apenas destruição. Para descobrir o que a rotação faz pelo planeta, vale repetir o experimento com mais cuidado. Desta vez a Terra não trava: vai perdendo a rotação aos poucos, ao longo de décadas, devagar o bastante para ninguém ser arremessado. Quando ela enfim para de girar, a mudança que mais aparece é a do mar: a água sai da região do equador e se junta em volta dos polos.",
       "shots": [
         {
           "staging": "A Terra parada, com a poeira baixando; a alavanca \"rotação\" desligada ao lado. A Vigília olha o estrago e devolve a alavanca para ligado: a Terra volta inteira, girando, como no começo. Etiqueta: \"de novo\".",
@@ -314,7 +314,7 @@
     },
     {
       "id": "the-bulge",
-      "narration": "O motivo está no formato da Terra. Ela não é uma bola perfeita: é um pouco mais larga no equador. Do centro do planeta até o equador, a distância é vinte e um quilômetros maior do que do centro até os polos.",
+      "narration": "O motivo está no formato da Terra. Ela parece uma bola perfeita, mas é um pouco mais larga no equador. Do centro do planeta até o equador, a distância é vinte e um quilômetros maior do que do centro até os polos.",
       "shots": [
         {
           "staging": "A Terra girando, em corte, com a cintura alargada de propósito. Etiqueta: \"exagerado\". Dois raios saem do centro, na mesma régua: o do polo e o do equador, que passa dele. O pedaço a mais acende: \"21 km\".",
@@ -330,24 +330,25 @@
     },
     {
       "id": "water-piled",
-      "narration": "Quem deixou a Terra assim foi a rotação. Tudo o que gira tende a escapar para fora: é o que cola a roupa na parede do tambor quando a máquina de lavar centrifuga. No planeta esse efeito é muito mais fraco, mas existe. É ele que alarga a Terra no equador, e é ele que segura o mar ali em volta, na parte mais afastada do centro.",
+      "narration": "Quem deixou a Terra assim foi a rotação. Pense na roupa dentro da máquina de lavar, quando o tambor gira depressa. A roupa tenta seguir em frente, em linha reta, e é a parede do tambor que a obriga a fazer a curva. Por isso ela fica espremida contra a parede, o mais para fora que consegue. É a inércia de novo. Na Terra não há parede: quem obriga tudo a fazer a curva é a gravidade. Só que fazer a curva gasta um pouco da força dela, e gasta mais no equador, onde o solo mais corre. Em cima dos polos, não gasta nada. No equador, então, a gravidade segura a rocha e a água um pouco menos, e elas ficam um pouco mais afastadas do centro. É por isso que a Terra é mais larga ali.",
       "shots": [
         {
-          "staging": "No mesmo corte, a Terra girando: setas pequenas apontam para longe do eixo da rotação, maiores no equador e nulas nos polos. Etiqueta: \"exagerado\".",
+          "staging": "A Terra em corte, girando, com o equador mais largo, como na cena anterior. Etiqueta: \"exagerado\".",
           "scale": "medium",
           "palette": "espaco",
           "entry": "camera"
         },
         {
-          "cue": "cola",
-          "staging": "A máquina de lavar da Vigília centrifugando: a roupa colada na parede do tambor. A Vigília espia pela escotilha. Etiqueta: \"comparação\".",
+          "cue": "Pense",
+          "staging": "A máquina de lavar da Vigília centrifugando, vista de frente: uma peça de roupa tenta seguir reto, em tracejado, e a parede do tambor a obriga a fazer a curva; a roupa fica espremida contra a parede. A Vigília espia pela escotilha. Etiqueta: \"comparação\".",
           "scale": "close",
           "palette": "casa",
           "entry": "cut"
         },
         {
-          "cue": "planeta",
-          "staging": "O tambor vira a Terra girando: as mesmas setas para longe do eixo, agora pequenas. A parte sólida alarga no equador, e a superfície do mar acompanha esse formato, mais longe do centro no equador do que nos polos. Etiqueta: \"exagerado\".",
+          "cue": "Terra",
+          "occurrence": 2,
+          "staging": "O tambor vira a Terra girando, vista de cima do polo: no lugar da parede, as setas da gravidade, apontando para dentro; um ponto no equador tenta sair pela reta, em tracejado, e é trazido de volta. Em \"equador\", a vista passa ao corte de lado: a tentativa de seguir reto é grande no equador, que dá a volta maior, e não existe nos polos. A rocha e a água ficam um pouco mais afastadas do centro no equador; a superfície do mar acompanha o formato, por igual, sem engrossar. Etiqueta: \"exagerado\".",
           "scale": "medium",
           "palette": "espaco",
           "entry": "transform"
@@ -355,22 +356,24 @@
       ],
       "sources": [
         3,
-        16
+        16,
+        63,
+        69
       ]
     },
     {
       "id": "water-leaves",
-      "narration": "Sem a rotação, sobra só a gravidade, que puxa tudo para o centro da Terra. E a água sempre corre para o lugar mais baixo, que num planeta é o lugar mais perto do centro. Os polos ficam vinte e um quilômetros mais perto do centro do que o equador: para a água, são eles a parte baixa. Ela escorre do equador para lá.",
+      "narration": "Sem a rotação, não há mais curva a fazer: a gravidade volta a segurar tudo por inteiro, e nada mais mantém a água afastada do centro. A parte sólida do planeta continua, por enquanto, mais larga no equador. A água, que é líquida, não. Com a Terra nesse formato, o equador passa a ser o lugar alto para a água. Os polos, vinte e um quilômetros mais perto do centro, passam a ser o lugar baixo. E a água faz o que sempre faz: desce.",
       "shots": [
         {
-          "staging": "A Terra em corte para de girar, e as setas para longe do eixo somem. Sobram as setas da gravidade, todas apontando para o centro. A água do equador perde o apoio. Etiqueta: \"exagerado\".",
+          "staging": "A Terra em corte vai parando de girar, e a reta em tracejado do ponto no equador some: não há mais para onde escapar. A parte sólida fica como estava, larga no equador; a superfície do mar começa a se desfazer ali. Etiqueta: \"exagerado\".",
           "scale": "medium",
           "palette": "espaco",
           "entry": "camera"
         },
         {
-          "cue": "polos",
-          "staging": "Os dois raios de antes voltam: o polo fica \"21 km mais perto do centro\". A água corre do equador para os polos, para cima e para baixo, como quem desce uma ladeira. Etiqueta: \"exagerado\".",
+          "cue": "formato",
+          "staging": "Os dois raios de antes voltam: o polo fica \"21 km mais perto do centro\". Uma régua de altura, medida a partir do centro, marca o equador como \"alto\" e os dois polos como \"baixo\". A água deixa o equador e se junta em volta dos dois polos; o equador vai ficando seco. Etiqueta: \"exagerado\".",
           "scale": "close",
           "palette": "espaco",
           "entry": "camera"
@@ -378,6 +381,7 @@
       ],
       "sources": [
         1,
+        11,
         16
       ]
     },
@@ -427,7 +431,7 @@
     },
     {
       "id": "map-limit",
-      "narration": "Esse mapa é provisório. Ele mostra para onde a água iria, mas a parte sólida do planeta também mudaria: o autor da simulação fala em ajustes desastrosos, com terremotos devastadores. Sem a rotação que a alargava no equador, a Terra tenderia a ficar mais redonda. Em quanto tempo, e como ficaria o mapa depois, não encontramos resposta.",
+      "narration": "Esse mapa vale enquanto a parte sólida guardar o formato de hoje, e ela não guardaria para sempre. Sem a rotação, a rocha também tende a perder a largura do equador e a ficar mais redonda. O autor da simulação fala em terremotos devastadores nesse ajuste. Quanto tempo esse ajuste levaria é questão em aberto: as hipóteses vão de milhares a milhões de anos. A simulação vai só até aqui: o retrato de um planeta em que a água já mudou de lugar, e a rocha ainda não.",
       "shots": [
         {
           "staging": "O mapa esquemático dos dois oceanos ganha contorno tracejado e um carimbo: \"provisório\".",
@@ -436,18 +440,18 @@
           "entry": "cut"
         },
         {
-          "cue": "sólida",
+          "cue": "Sem",
           "staging": "A Terra em corte se ajusta: a largura a mais no equador afunda, com rachaduras e tremores na rocha. Etiqueta: \"exagerado\".",
           "scale": "medium",
           "palette": "espaco",
           "entry": "cut"
         },
         {
-          "cue": "quanto",
-          "staging": "Uma linha do tempo que some para a direita, sem marcas, com uma interrogação. Respiro no silêncio.",
-          "scale": "medium",
-          "palette": "ideia",
-          "entry": "camera"
+          "cue": "retrato",
+          "staging": "O mapa esquemático dos dois oceanos de novo, inteiro: o continente único em volta do equador e um oceano em cada polo. Etiqueta: \"simulação\", com o carimbo \"provisório\" ainda nele. Selo da fonte: \"Fraczek, Esri\". Respiro no silêncio.",
+          "scale": "wide",
+          "palette": "mar",
+          "entry": "cut"
         }
       ],
       "sources": [
@@ -459,7 +463,7 @@
     },
     {
       "id": "year-long-day",
-      "narration": "A outra mudança é no dia. Hoje o dia e a noite se alternam porque a Terra gira: cada lugar passa pelo lado iluminado pelo Sol e depois pelo lado escuro. Só que a Terra faz dois movimentos. Além de girar em torno de si mesma, ela dá uma volta em torno do Sol, e essa volta leva um ano. O experimento desligou só o primeiro. Sem a rotação, cada lugar da Terra fica virado sempre para o mesmo lado do espaço, enquanto o planeta segue sua volta em torno do Sol. Durante metade da volta, esse lugar fica de frente para o Sol, e na outra metade, de costas. O Sol continua nascendo, mas uma vez por ano. Em quase todo o planeta, são cerca de seis meses de luz e depois seis meses de noite.",
+      "narration": "A rotação decide mais do que o lugar do mar. Decide também o dia. Hoje o dia e a noite se alternam porque a Terra gira: cada lugar passa pelo lado iluminado pelo Sol e depois pelo lado escuro. Só que a Terra faz dois movimentos. Além de girar em torno de si mesma, ela dá uma volta em torno do Sol, e essa volta leva um ano. O experimento desligou só o primeiro. Sem a rotação, a Terra não vira mais. Um lugar que aponta para uma certa estrela continua apontando para ela o ano inteiro. E o planeta segue sua volta em torno do Sol. Durante metade dessa volta, o lugar fica de frente para o Sol, e na outra metade, de costas. O Sol continua nascendo, só que uma vez por ano: são cerca de seis meses de luz e depois seis meses de noite.",
       "shots": [
         {
           "staging": "A Terra de hoje, girando, com metade iluminada pelo Sol e metade escura. A casinha da Vigília passa do claro para o escuro e volta ao claro, uma vez por volta.",
@@ -476,7 +480,7 @@
         },
         {
           "cue": "Sem",
-          "staging": "A Terra, sem rotação, leva uma bandeirinha que aponta sempre para o mesmo lado do quadro enquanto dá a volta no Sol: meia volta com a bandeira no claro, meia no escuro.",
+          "staging": "A Terra, sem rotação, leva uma bandeirinha fincada num lugar. A bandeirinha aponta sempre para a mesma estrela, marcada na borda do quadro, enquanto a Terra dá a volta no Sol: em meia volta a bandeira está no lado claro, na outra meia, no escuro.",
           "scale": "wide",
           "palette": "espaco",
           "entry": "camera"
@@ -491,6 +495,7 @@
       ],
       "sources": [
         9,
+        11,
         12,
         16,
         68
@@ -498,7 +503,7 @@
     },
     {
       "id": "the-moon-case",
-      "narration": "E a temperatura? Existe um lugar aqui perto onde o dia e a noite já são longos, de duas semanas cada: a Lua. Lá o solo chega a cento e vinte graus durante o dia e cai a cento e trinta abaixo de zero durante a noite.",
+      "narration": "Um dia tão longo mexe com a temperatura. Existe um lugar aqui perto onde o dia e a noite já são longos, de duas semanas cada: a Lua. Lá o solo chega a cento e vinte graus durante o dia e cai a cento e trinta abaixo de zero durante a noite.",
       "shots": [
         {
           "staging": "A Lua, metade clara e metade escura, com a linha da sombra andando devagar. Duas etiquetas: \"dia: 2 semanas\", \"noite: 2 semanas\".",
@@ -520,31 +525,31 @@
     },
     {
       "id": "not-the-moon",
-      "narration": "Na Terra a conta é outra, porque ela tem o que a Lua não tem: ar, que carrega calor do lado claro para o lado escuro. Simulações de clima com planetas parecidos com a Terra, girando bem devagar, mostram esse ar levando calor de um lado para o outro. Mostram também nuvens espessas se formando no lado iluminado e fazendo sombra bem onde o Sol bate. Falta o número: entre as simulações que encontramos, nenhuma testou um dia de um ano.",
+      "narration": "Os números da Lua não servem para a Terra, porque a Terra tem o que a Lua não tem: ar. E nenhuma simulação de clima que encontramos testou um dia de um ano, então o número certo fica em aberto. Mas dá para dizer para que lado a coisa vai. O dia longo deve esquentar, e a noite longa esfriar, bem mais do que hoje. E simulações com planetas parecidos com a Terra, girando bem devagar, mostram duas coisas amenizando esse contraste. O ar leva calor do lado claro para o lado escuro. E nuvens espessas tendem a se formar no lado iluminado, fazendo sombra bem onde o Sol bate mais forte. A Terra parada seria um planeta de extremos, mas não os da Lua.",
       "shots": [
         {
-          "staging": "A Lua e a Terra parada lado a lado, sob a mesma luz. Só a Terra tem a camada de ar, que leva manchas de calor do lado claro para o escuro.",
+          "staging": "A Lua e a Terra parada lado a lado, sob a mesma luz. Só a Terra tem a camada de ar. O termômetro da Lua, com os dois números, ao lado de dois termômetros da Terra sem marcação: no lugar dos números, interrogações.",
           "scale": "wide",
           "palette": "espaco",
           "entry": "cut"
         },
         {
-          "cue": "Simulações",
-          "staging": "Uma fileira de globos simulados, cada um com a etiqueta do giro dele em relação às estrelas: \"giro de 16 dias\", \"64 dias\", \"128 dias\" e \"256 dias\". Neles, o ar sobe no lado claro e desce no escuro; em \"nuvens\", um escudo de nuvens espessas cobre o ponto onde o Sol bate. Selo da fonte: \"Way et al., 2018; Guzewich et al., 2020\".",
-          "scale": "medium",
-          "palette": "ideia",
-          "entry": "cut"
-        },
-        {
-          "cue": "Falta",
-          "staging": "O termômetro da Lua, com os dois números, ao lado de dois termômetros da Terra sem marcação: no lugar dos números, interrogações. Em \"nenhuma\", a fileira de globos volta pequena, com uma vaga vazia em tracejado: \"dia de um ano pelo Sol\".",
+          "cue": "lado",
+          "staging": "A Terra parada, de perto: o lado claro esquenta e o escuro esfria, mostrados só por cor, sem número. Setas de \"mais quente\" e \"mais frio\" em relação a hoje.",
           "scale": "medium",
           "palette": "espaco",
+          "entry": "camera"
+        },
+        {
+          "cue": "simulações",
+          "staging": "Uma fileira de globos simulados, cada um com a etiqueta do giro dele: \"giro de 16 dias\", \"64 dias\", \"128 dias\" e \"256 dias\". O de \"128 dias\" cresce: em \"ar\", o ar sobe no lado claro, atravessa por cima e desce no escuro; em \"nuvens\", um escudo de nuvens espessas cobre o ponto onde o Sol bate. Selo da fonte: \"Way et al., 2018\".",
+          "scale": "medium",
+          "palette": "ideia",
           "entry": "cut"
         }
       ],
       "sources": [
-        18,
+        9,
         19,
         20
       ]
@@ -629,7 +634,7 @@
     },
     {
       "id": "corals",
-      "narration": "Parece nada, mas esse freio age há muito tempo, e deixou registro. Certos corais crescem uma linha fina por dia. Em corais que viveram há centenas de milhões de anos, contando as linhas de um ano, dá perto de quatrocentas, em vez das trezentas e sessenta e cinco de hoje. Supondo que o ano durasse o mesmo, cada dia tinha umas vinte e duas horas.",
+      "narration": "Parece nada, mas esse freio age há muito tempo, e deixou registro. Certos corais crescem uma linha fina por dia. Em corais que viveram há centenas de milhões de anos, cada ano de crescimento tem perto de quatrocentas dessas linhas, em vez das trezentas e sessenta e cinco de hoje. Supondo que o ano durasse o mesmo, cada dia tinha umas vinte e duas horas.",
       "shots": [
         {
           "staging": "A lasca do relógio se repete numa fila que some no fim de uma linha do tempo.",
@@ -645,7 +650,7 @@
           "entry": "cut"
         },
         {
-          "cue": "contando",
+          "cue": "cada",
           "staging": "O coral em corte. A mão da Vigília, com uma lupa, conta as linhas dentro da faixa de um ano: \"cerca de 400 dias\". Ao lado, um coral de hoje: \"365\". Selo da fonte: \"Wells, 1963, via Florida Museum\".",
           "scale": "close",
           "palette": "mar",
@@ -665,7 +670,7 @@
     },
     {
       "id": "never",
-      "narration": "Então um dia a Lua para a Terra? Não. Esse freio só age enquanto a Terra gira mais depressa do que a Lua dá a volta em torno dela. Quando um único dia durar o mesmo que essa volta, mais de um mês inteiro, a Terra deixa de girar por baixo da água levantada, e o freio acaba. E, no ritmo de hoje, até isso levaria pelo menos cinquenta bilhões de anos. Antes disso, pelos modelos, em menos de oito bilhões de anos, o Sol incha e engole a Terra.",
+      "narration": "E um dia a Lua faz a Terra parar? Não. O freio da Lua existe porque a Terra gira mais depressa do que a Lua dá a volta em torno dela. Se um dia os dois movimentos se igualassem, a água levantada passaria a acompanhar a Terra, sem atrito, e o freio da Lua deixaria de agir. A Terra continuaria girando: bem devagar, com dias que durariam semanas, mas girando. E nem isso chega a acontecer. Levaria, no mínimo, dezenas de bilhões de anos, e bem antes disso, pelos modelos, o Sol incha e engole a Terra.",
       "shots": [
         {
           "staging": "A Lua com a sapata de freio encostada na Terra, que continua girando.",
@@ -674,18 +679,18 @@
           "entry": "cut"
         },
         {
-          "cue": "Quando",
-          "staging": "Uma régua de tempo. A barra do freio atravessa o quadro e sai dele: \"dia de um mês e meio: pelo menos 50 bilhões de anos (extrapolação)\". No fim dela, a Terra ainda gira, devagar, com a Lua parada sobre o mesmo ponto.",
+          "cue": "Se",
+          "staging": "A Terra e a Lua, vistas de cima, com um ponto marcado na Terra e a elevação da maré virada para a Lua. A Terra gira cada vez mais devagar, até dar uma volta no mesmo tempo em que a Lua dá a volta nela: o ponto marcado passa a ficar sempre de frente para a Lua, a água levantada acompanha a Terra, e a sapata do freio se solta. A Terra continua girando, devagar. Etiquetas: \"sincronizadas, não parada\" e \"1 dia = 47 dias de hoje\".",
+          "scale": "wide",
+          "palette": "espaco",
+          "entry": "camera"
+        },
+        {
+          "cue": "nem",
+          "staging": "Uma régua de tempo com duas barras que partem do mesmo zero. A do freio atravessa o quadro e sai dele: \"no mínimo, dezenas de bilhões de anos (extrapolação)\". A do Sol, curta: \"menos de 8 bilhões\". Em \"incha\", no fim da barra curta, o Sol cresce, vermelho, e alcança a Terra. Selo da fonte: \"Schröder e Smith, 2008\".",
           "scale": "wide",
           "palette": "ideia",
           "entry": "cut"
-        },
-        {
-          "cue": "Antes",
-          "staging": "Na mesma régua, a barra do Sol, curta: \"menos de 8 bilhões\". No fim dela, o Sol incha, vermelho, e alcança a Terra. Selo da fonte: \"Schröder e Smith, 2008\".",
-          "scale": "wide",
-          "palette": "ideia",
-          "entry": "camera"
         }
       ],
       "sources": [
@@ -779,7 +784,7 @@
     {
       "scene": "you-too",
       "cue": "arremessado",
-      "offsetMs": -133,
+      "offsetMs": 134,
       "name": "whoosh"
     },
     {
@@ -804,7 +809,7 @@
     },
     {
       "scene": "map-limit",
-      "cue": "provisório",
+      "cue": "vale",
       "offsetMs": 100,
       "name": "stamp"
     },
