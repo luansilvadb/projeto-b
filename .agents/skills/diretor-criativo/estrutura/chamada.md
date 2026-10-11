@@ -26,7 +26,7 @@ Como fazer o único pedido do vídeo depois que a entrega terminou, sem transfor
 
 Na referência, os dois vídeos de `fechamento` fazem ponte, pedido, motivo e agradecimento, nessa ordem; a chamada deles tem 127 palavras porque também apresenta produtos, e por isso não serve de medida para a do canal.
 
-**No repositório.** A chamada é a última cena do roteiro, e é uma cena própria porque é a cena anterior que leva o silêncio (`holdMs`) que deixa o fim assentar; a duração dele é da skill `diretor-de-som`. Na tabela de estrutura de `script.md`, por convenção, ela é o último bloco, "(chamada)".
+**No repositório.** A chamada é a última cena do roteiro, e é uma cena própria porque é a cena anterior que leva o silêncio (`holdMs`) que deixa o fim assentar. Esse silêncio é proposto aqui, como hipótese narrativa: o tempo que este fim pede antes do pedido, gravado em `script.json` antes de haver som para ouvir. A skill `diretor-de-som` o confere com o áudio e a mixagem reais (`etapas/som.md`, na pasta dela) e, se a pausa atropela o fim ou sobra, devolve a cena, os milissegundos e o motivo. Quem altera o `holdMs` é sempre esta skill, que também diz não ao pedido que desfaz o sentido do fechamento; o que a música faz dentro da pausa (segue, vai à frente, some) é do som, e ele altera sem passar por aqui. Na tabela de estrutura de `script.md`, por convenção, ela é o último bloco, "(chamada)".
 
 **Quando volta ao usuário** (`entrevista`): quando muda o que se pede (comentar, compartilhar), quantos pedidos há, a intensidade, ou entra apoio financeiro, produto, patrocínio ou a promessa fixa de um próximo vídeo. A redação, a ponte, o motivo, o agradecimento e o tamanho são do agente.
 

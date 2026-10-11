@@ -25,6 +25,7 @@ As views vêm antes da nota do painel porque a nota mede a busca, e as views, qu
 # <tema>
 
 - Termo buscado: <o termo que o título vai carregar>
+- Quem busca espera: <o que a pessoa quer encontrar ao digitar o termo, com a evidência; ou "não levantado">
 - Escolhido em: <data>
 - Motivo: <uma ou duas linhas; recorte possível, se anotado, marcado como não pesquisado>
 
@@ -41,6 +42,8 @@ As views vêm antes da nota do painel porque a nota mede a busca, e as views, qu
 
 <vazio até um tema cair>
 ```
+
+**Quem busca espera.** É a expectativa que a oferta mostrou (`medida`: os títulos e o formato dos resultados que já respondem o termo dizem o que a pessoa foi procurar), em uma linha e com a evidência ao lado: "a consequência física, passo a passo; doze dos quinze títulos são 'o que acontece se'". Quando os resultados não mostram uma expectativa clara, ou se dividem entre duas, a linha diz isso ou fica "não levantado": intenção não é deduzida do termo nem inventada para preencher o campo. A linha segue com o tema para o `diretor-criativo`, que a usa como evidência ao formular a promessa (`conceito/angulo`, na pasta dele); ela não escolhe o recorte.
 
 O nome da pasta é curto, em inglês, e diz o tema (`why-we-sleep`). Vídeo escolhido antes desta skill fica sem `pauta.md`: nenhum é escrito de trás para frente.
 

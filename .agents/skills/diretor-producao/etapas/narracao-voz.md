@@ -4,7 +4,9 @@ Os casos que o fluxo normal de `narracao.md` não percorre, uma seção por caso
 
 ## Editar uma frase à mão no estúdio
 
-Em "editar à mão" de cada frase: editar o texto (vai direto para `script.json`; a página recusa a edição que deixaria o roteiro inválido e diz por quê), gerar tomadas, ouvir cada uma sozinha ou em contexto, usar a que soou certa e colar a frase na seguinte, o que encurta a pausa de 0,35 s (ou de 1 s, entre duas cenas) para 0,12 s.
+Em "editar à mão" de cada frase, a produção usa o que é execução: gerar tomadas, ouvir cada uma sozinha ou em contexto, usar a que soou certa e colar a frase na seguinte, o que encurta a pausa de 0,35 s (ou de 1 s, entre duas cenas) para 0,12 s.
+
+O campo de texto da página grava direto em `script.json` e só recusa a edição que deixaria o roteiro inválido: ele não confere sentido, fato nem oralidade. Por isso a produção não muda palavra, pontuação nem redação por ali. A mudança de texto volta ao `diretor-criativo` e só entra em `script.json` depois da tabela de reteste de `etapas/roteiro.md`, pelo caminho de "Quem mexe no texto", em `narracao.md`; o campo serve para digitar o texto que já voltou de lá.
 
 ## Onde ficam as escolhas e as tomadas
 
@@ -26,4 +28,4 @@ Pronto quando: o `text` de `voice/reference.json` diz o que a amostra diz, palav
 
 ## Mudar o ritmo
 
-As pausas entre frases e entre cenas estão em `PACING`, em `src/narration/manifest.ts`. Valem para todos os vídeos; mexa ali só se o ritmo geral do canal precisar mudar, e avise o usuário. Para mudar o ritmo de um trecho, mude o texto: frases mais curtas, ou uma cena dividida em duas. O `speed` de `VOICE_MODEL` muda a velocidade da fala, mas existe para a frase caber inteira (`narracao-diagnostico.md`); mudar ele regera a narração de todos os vídeos.
+As pausas entre frases e entre cenas estão em `PACING`, em `src/narration/manifest.ts`. Valem para todos os vídeos; mexa ali só se o ritmo geral do canal precisar mudar, e avise o usuário. Para o ritmo de um trecho, parta do texto do roteiro como está e do `narracao-diagnostico.md`, que diz o que medir antes de mexer: da execução saem outra tomada e a frase colada na seguinte. Se a medida aponta o texto (a frase, a pontuação, a divisão em cenas), devolva o trecho ao `diretor-criativo` com ela, pelo caminho de "Quem mexe no texto", em `narracao.md`; o tamanho da frase é decisão dele. O `speed` de `VOICE_MODEL` muda a velocidade da fala, mas existe para a frase caber inteira (`narracao-diagnostico.md`); mudar ele regera a narração de todos os vídeos.

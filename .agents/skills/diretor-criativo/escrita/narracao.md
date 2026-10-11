@@ -10,7 +10,7 @@ O que uma frase precisa fazer para ser entendida, soar natural e se ligar à seg
 - **O ouvido**: o que a frase precisa fazer para ser entendida. Manda.
 - **O registro do canal**: decisões do usuário sobre quem narra. Mandam, e são dele.
 - **A ferramenta de voz**: o que o modelo atual consegue dizer. É restrição de produção, obedecida enquanto a ferramenta for esta, e não uma teoria de boa escrita.
-- **O perfil das referências**: medidas. Dizem onde ouvir de novo, e nada mais.
+- **O perfil das referências**: medidas. Dizem onde conferir de novo, e nada mais.
 
 ### O ouvido
 
@@ -47,20 +47,22 @@ O modelo lê `narration` literalmente e gera uma frase por vez. O que ele recusa
 
 - O texto picotado em frases curtas saiu monótono e mal-humorado no áudio real: cada ponto é uma pausa do modelo. Aqui a ferramenta e o ouvido pedem a mesma coisa.
 - A pontuação escreve a pausa e a relação que a fala precisa. Pausa é ponto, e não reticências; o dois-pontos deixa a voz em suspenso antes de uma citação.
-- A grafia que faz o modelo pronunciar certo é adaptação para a produção, com a grafia correta guardada para a tela e para o registro; não é a escrita melhor. O erro de pronúncia só o ouvido pega.
+- A grafia que faz o modelo pronunciar certo é adaptação para a produção, com a grafia correta guardada para a tela e para o registro; não é a escrita melhor. O erro de pronúncia só o ouvido do usuário pega: o texto não o mostra, e o agente não escuta o áudio.
 - Uma frase boa que o modelo atual não consegue dizer é reescrita para ele, e continua sendo uma frase boa: a restrição é da ferramenta. A troca feita por pronúncia não pode custar clareza: se a palavra que o modelo diz certo é menos exata ou menos familiar que a original, tenta-se antes a grafia de pronúncia, outra tomada ou outra construção da frase.
 
 ### Testes
 
-- **Uma escuta.** Ouvida uma vez, dá para dizer quem fez o quê sem reconstruir a frase? A frase que só funciona relida, ou explicada por quem a escreveu, é reescrita. Se não, a causa escolhe o conserto (o sujeito longe do verbo, a oração encaixada, o referente ambíguo, números demais, a abstração sem corpo, a informação antes da base), e nem sempre é dividir.
+Os quatro primeiros são feitos no texto: simulam a escuta lendo a frase uma vez, na ordem, sem voltar. Conferem estrutura e fluidez, e são relatados como simulação textual. Não comprovam como a voz soa.
+
+- **Uma escuta.** Lida uma vez, como seria ouvida, dá para dizer quem fez o quê sem reconstruir a frase? A frase que só funciona relida, ou explicada por quem a escreveu, é reescrita. Se não, a causa escolhe o conserto (o sujeito longe do verbo, a oração encaixada, o referente ambíguo, números demais, a abstração sem corpo, a informação antes da base), e nem sempre é dividir.
 - **Ligação.** Dá para dizer como esta frase se liga à anterior?
 - **Referência.** Cada "ele", "isso" e "essa" aponta para uma coisa só?
 - **Boca.** O narrador diria isso?
-- **Ouvir de verdade.** Na dúvida de ritmo, ar ou pronúncia, a evidência é o som, pela mais barata primeiro: ler em voz alta, comparar duas formulações, gerar o menor trecho na voz. O ouvido real vale mais que a regra.
+- **Ouvir de verdade.** É do usuário: o agente não escuta áudio. Na dúvida de ritmo, respiração, pronúncia ou naturalidade da voz, o texto vai até onde vai (comparar duas formulações, apontar a frase longa para um fôlego, a vírgula que vira pausa), e o que sai disso é hipótese, dita como hipótese. A evidência é o som: o usuário ouve o menor trecho que responde à dúvida, no `pnpm voice <vídeo>` ou no áudio da cena em `public/videos/<vídeo>/narration/`, e diz na conversa a cena, a frase e o que ouviu (a pausa fora do lugar, o ar que faltou, a palavra dita errado, o tom que não é o do narrador). Peça com a pergunta pronta: qual trecho, e o que escutar nele. Sem áudio do trecho, gerá-lo é da skill `diretor-producao`. O ouvido real vale mais que a regra e que a simulação.
 
 ### Sensores
 
-Medidas das referências. Respondem "onde vale ouvir de novo?", quando o texto soa picotado, monótono, formal, distante ou carregado de números. Nunca se escreve para preencher uma: frase curta, pergunta, conectivo ou "você" postos porque faltavam são o texto calibrado que o ouvinte reconhece.
+Medidas das referências. Respondem "onde vale conferir de novo?", quando o texto soa picotado, monótono, formal, distante ou carregado de números. Nunca se escreve para preencher uma: frase curta, pergunta, conectivo ou "você" postos porque faltavam são o texto calibrado que o ouvinte reconhece.
 
 - As cinco medidas do `pnpm check-script` (palavras por frase, frases de até 6 palavras, frases de 25 ou mais, "você" e "nós", conectivos), com as faixas em `PROFILE_CRITERIA`, `src/narration/profile.ts`.
 - Uma frase muito curta a cada nove ou dez, na referência. A de uma ou duas palavras ("Ah. Ah, não.") marca a reviravolta, e por isso é rara.
@@ -81,7 +83,8 @@ Medidas das referências. Respondem "onde vale ouvir de novo?", quando o texto s
 - Citação só leva as palavras que a fonte disse. O que foi condensado é dito como resumo, sem aspas.
 - O arredondamento e a simplificação da fala passam por `checagem`.
 - O que o validador recusa é erro, e não estilo: é corrigido sempre (`etapas/roteiro.md`).
-- Analogias, humor e notas visuais têm unidades próprias; quando escrever, ouvir e revisar é de `etapas/roteiro`.
+- Analogias, humor e notas visuais têm unidades próprias; quando escrever, conferir e revisar é de `etapas/roteiro`.
+- O agente não escuta o áudio. O que ele diz de ritmo, respiração, pronúncia e naturalidade da voz sai do texto e é identificado como simulação textual; a escuta real é o retorno do usuário sobre um trecho de áudio ("Ouvir de verdade"). Sem ela, o relato diz que a voz não foi ouvida. Esse retorno não é aprovação nem pré-condição de nada.
 
 ## EXEMPLO
 > Antes: "A fotossíntese, processo pelo qual os organismos autotróficos convertem energia luminosa em energia química, é fundamental para a manutenção da vida."

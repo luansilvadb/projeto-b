@@ -2,7 +2,7 @@
 
 Aqui o vídeo ganha a música e os efeitos, ou tem o som revisto. Comece pela pergunta: **que artefato a dúvida atual exige?**
 
-- A identidade da música: a intenção do vídeo e o roteiro; às vezes uma amostra da narração.
+- A identidade da música: a intenção do vídeo, como `script.md` a registra, e o roteiro; às vezes uma amostra da narração.
 - A música sincronizada: a duração real de cada cena, que vem da narração gravada.
 - O nível contra a voz: a voz e um render do som.
 - O efeito numa ação: a ação e o instante dela, na partitura ou na animação.
@@ -18,7 +18,15 @@ Uma dúvida local termina quando se resolve. Só um pedido que abrange todo o so
 
 Parta dos compromissos que houver na seção "Arco" de `sound.md` (pode ser uma linha, e o arquivo pode não existir), da duração de cada cena (`public/videos/<vídeo>/narration.json`; `pnpm check-script <vídeo>` a imprime) e da partitura da animação (`score.md`). O que o arco deixou em aberto é completado aqui, e a intenção que ele registrou sem realização ganha a sua. A duração que pede mais de uma parte é restrição da geração (`leito`).
 
-1. **A maior incerteza.** O que, se estiver errado, joga fora o resto? Num vídeo novo costuma ser a identidade da trilha: se o leito pertence ao vídeo.
+Leia também `src/videos/<vídeo>/script.md`, o registro da direção criativa: a identidade da trilha parte dele, e não do zero. Três coisas vêm de lá, e são do roteiro:
+
+- **A voz**: a seção "Voz", com o tom que este vídeo ajusta (mais grave, mais lúdico, mais contido). O leito não contradiz quem narra.
+- **A virada narrativa**: o bloco que a tabela "Estrutura" marca como virada, e as cenas dele. É onde o que se viu passa a significar outra coisa, e o som não a atravessa como se nada tivesse mudado.
+- **O compromisso do fechamento**: a linha "Fechamento" e o último bloco antes da chamada, com o que o fim promete e o que não promete (um fim que não promete perigo não ganha música de ameaça).
+
+O som lê essas três como intenção e não as reescreve: a que parecer errada volta à skill `diretor-criativo`. A tradução é daqui, inteira: se a virada pede troca de parte, momento, recuo, silêncio de música ou nada, e que timbre, andamento e nível dizem o tom, decide-se pelo ciclo, com o som para ouvir. `script.md` não prescreve mixagem, e a linha dele que tentar fazê-lo vale como intenção.
+
+1. **A maior incerteza.** O que, se estiver errado, joga fora o resto? Num vídeo novo costuma ser a identidade da trilha: se o leito pertence ao vídeo, isto é, à voz, à virada e ao fechamento que `script.md` registra.
 2. **O mapa que basta.** Escreva em `sound.md` e em `script.json` só o que essa dúvida pede (`leito`, `descricao`). Para a identidade, o leito sozinho: o `caption` que basta para gerar e, de `bpm` e `keyScale`, só o que a hipótese precisa, sem momentos, níveis nem efeitos. Num vídeo que não cabe numa parte, também as trocas (`parts`), que o comando exige: cada uma numa cena em que a costura se defende, e o som gerado pode mudá-la de lugar.
 3. **O menor som.** Peça à skill `diretor-producao` só o que a dúvida pede: a trilha ainda sem momentos (`pnpm music <vídeo>`; o leito sozinho se ouve em `public/videos/<vídeo>/music.wav`), mais tarde uma parte só (`pnpm music <vídeo> <semente> <parte>`, com as outras já geradas) e, quando a dúvida é contra a voz, o som do vídeo.
 4. **Medir e consertar.** O que o contrato e o estado provam como defeito (o `pnpm check-script` recusa, o comando falha, `sound.md` e `script.json` divergem, a parte não cobre o trecho dela) é consertado antes de qualquer escuta, sem pergunta. A medida fora da referência abre uma investigação, e não cria conserto sozinha (`critica-som`).
@@ -28,6 +36,16 @@ Parta dos compromissos que houver na seção "Arco" de `sound.md` (pode ser uma 
 O ciclo começa na dúvida atual, e não no passo 1 de um vídeo novo: trocar um efeito não volta ao leito, e investigar uma costura não redesenha os níveis. A ordem das camadas é dependência: os momentos são refeitos sobre o leito em que caem, os efeitos são julgados contra o conjunto em que tocam, e o nível depende da música real quando a densidade pesa. Um efeito ou um silêncio que seja a maior incerteza pode ser testado antes. Duas versões que passam e fazem cenas diferentes vão ao usuário em A e B, em `out/rascunho/`; a escolhida entra no mapa.
 
 Um vídeo simples pode fechar em um leito gerado e só nas camadas que pedir; um leito sem momento ou efeito é correto. Um difícil dá mais voltas, cada uma puxada por uma medida ou escuta, não por uma lista.
+
+### O silêncio antes da chamada
+
+A última cena do fechamento leva um `holdMs` que deixa o fim assentar antes do pedido (`estrutura/chamada`, na pasta da skill `diretor-criativo`). Ele chega aqui como hipótese narrativa: a skill `diretor-criativo` o propôs sem ter o som para ouvir. Com o áudio e a mixagem reais, o som confere se a pausa faz o que o fechamento pede: o fim assenta, ou a chamada o atropela, ou a pausa sobra e vira espera (`silencio`).
+
+- **A duração** é corrigida por pedido: entregue à skill `diretor-criativo` a cena, os milissegundos e o que se ouviu. Ela grava o campo em `script.json` e atualiza `script.md`; o som não edita `holdMs`.
+- **O que a música faz na pausa** é do som, e ele altera sozinho: segue, vai à frente, some (`music.silences`), ou a parte da chamada entra ali (`"at": "hold"`), em `music` e em `sound.md`.
+- A correção que muda o peso ou o tom do fim, ou contraria uma duração que o usuário decidiu, vai a ele antes (`entrevista-som`).
+
+Mudado o `holdMs`, os quadros seguintes se deslocam e os instantes da trilha caem em outro lugar: a trilha é gerada de novo sobre a duração nova.
 
 ## O mapa
 

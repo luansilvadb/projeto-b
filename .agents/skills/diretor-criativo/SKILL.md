@@ -65,6 +65,7 @@ Use pesquisador, checador e editor nos casos definidos pelos procedimentos. Eles
 - Toda afirmação factual do roteiro tem fonte em `research.md`; exemplos nas unidades não são evidência.
 - Uma decisão sonora que muda o tempo pertence ao roteiro como `holdMs`; timbre, nível e desenho musical ficam com diretor-de-som.
 - Use das referências os mecanismos e métodos; não transplante frases, metáforas, exemplos ou bordões.
+- O agente não escuta áudio. O que ele confere da fala é feito no texto e relatado como simulação textual, com esse nome: estrutura, fluidez, referência e encadeamento da frase. Ritmo, respiração, pronúncia e naturalidade da voz só são comprovados pelo usuário, que ouve o trecho (no `pnpm voice <vídeo>` ou no áudio da cena em `public/videos/<vídeo>/narration/`) e diz na conversa a cena, a frase e o que ouviu. Sem esse retorno, o relato diz que a escuta não foi feita; nunca descreve como o áudio soou. Esse retorno é evidência, e não aprovação: nada espera por ele.
 
 ## Parada
 

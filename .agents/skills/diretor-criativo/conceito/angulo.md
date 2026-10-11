@@ -17,6 +17,8 @@ Que compromisso transforma um tema amplo num vídeo específico: o que ele escol
 
 **O foco da pesquisa não é o compromisso do vídeo.** A pesquisa parte de um foco que orienta as primeiras perguntas; o compromisso emerge da base de fatos e dos primeiros artefatos, e pode não ser o que se esperava. "O tema não sustenta o recorte imaginado" é resultado válido: não se salva a ideia original, e a pergunta mais forte que a evidência mostrou toma o lugar dela.
 
+**A expectativa de quem busca é evidência, quando existe.** Se `pauta.md` traz a linha "Quem busca espera", ela entra na formulação da promessa: quem digitou o termo e encontrou este vídeo recebe o que foi procurar, ou o vídeo deixa claro cedo que entrega outra coisa, e por que ela vale mais? Ela não escolhe o recorte nem o estreita ao que os outros vídeos já fazem: o recorte pode responder a busca por um caminho que ninguém tomou. O que não pode é a promessa ignorar a expectativa em silêncio, porque aí título e vídeo se desencontram na embalagem, depois da voz. Quando a promessa se afasta dela de propósito, isso é dito ao usuário junto com o compromisso. Sem a linha, com "não levantado" ou sem `pauta.md`, nada se supõe: o compromisso é testado pelo resto desta unidade, e a intenção de quem busca não é inventada.
+
 **O que precisa valer:**
 
 - **Sustentação.** A base de fatos sustenta o que o vídeo pretende estabelecer, no grau usado. Não se pede consenso para toda tese: o vídeo pode ser sobre uma disputa, uma hipótese ou um desconhecimento, desde que prometa e conclua de acordo. "Uma hipótese é que..." e "a ciência provou que..." sobre a mesma base são um compromisso válido e um inválido. O grau é o de `checagem`; o ângulo não o infla.
@@ -51,12 +53,14 @@ Que compromisso transforma um tema amplo num vídeo específico: o que ele escol
 - **Corte.** Escolha um fato interessante: sem ele, a entrega fica pior?
 - **Troca.** Trocada esta formulação por outra, o vídeo passa a investigar, afirmar ou prometer outra coisa? Se não, é redação.
 - **Trecho real.** Escrito um trecho, o compromisso produz uma relação que interessa, ou só a descrição abstrata de um tema? O que só funciona como slogan é revisto.
-- **Título provisório.** Dá para dizer em poucas palavras, com honestidade, o que o vídeo entrega? Não conseguir sugere compromisso difuso; conseguir não prova o ângulo.
+- **Título provisório.** Dá para dizer em poucas palavras, com honestidade, o que o vídeo entrega? Não conseguir sugere compromisso difuso; conseguir não prova o ângulo. É esse título, ainda provisório, que se compara com o gancho antes da voz do conjunto (`etapas/roteiro.md`, "Antes de gerar a voz do conjunto"); o título público é do `diretor-publicacao`.
+- **Busca.** Havendo "Quem busca espera" em `pauta.md`: a promessa paga essa expectativa, ou se afasta dela às claras?
 
 **Registro.** As linhas `Tese` e `Promessa` de `script.md` (`formato`) guardam o compromisso atual, na melhor formulação que ele tem.
 
 ## DEPENDÊNCIAS
 - levantamento: fornece a evidência e as incertezas que permitem testar o compromisso atual.
+- `pauta.md` do vídeo, quando existe: o termo buscado e a expectativa de quem busca, registrados pelo `diretor-de-pauta`.
 - checagem: fornece o grau de consenso, que limita o que se promete e conclui.
 
 ## REFERÊNCIAS
