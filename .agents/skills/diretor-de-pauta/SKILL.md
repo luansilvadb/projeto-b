@@ -1,6 +1,6 @@
 ---
 name: diretor-de-pauta
-description: "Ponto de partida de um vídeo ou curta: o briefing, o tema do canal escolhido pela procura (nicho, o que o público busca, quem já responde) ou a premissa de ficção de um jam, e o registro da escolha. Use quando faltar ideia, para abrir um projeto com briefing, comparar temas ou premissas ou medir a procura de um tema."
+description: "Ponto de partida de um vídeo ou curta: o briefing (modo, destino, prazo, duração, recursos e regras do evento) e a escolha do registro em pauta.md. No modo canal, o tema sai da procura (nicho, candidatos, oferta e volume); no modo jam, a premissa de ficção sai dos filtros do briefing, sem procura. Use para abrir um projeto com briefing, comparar temas ou premissas, ou medir a procura de um termo no modo canal."
 ---
 
 ## Papel e entregas
@@ -52,7 +52,7 @@ Não há medida de procura neste modo, mesmo com `youtube` no destino: ela só �
 | `premissa` | Como um curta de ficção começa por uma premissa? | O modo é `jam`. |
 | `nicho` | Este tema é do canal? | Modo `canal`: um candidato aparece, antes de medi-lo. |
 | `candidatos` | De onde saem os temas a medir? | Modo `canal`: o levantamento começa. |
-| `medida` | O que cada número diz, e qual não vale? | For ler a oferta, pedir o volume ou interpretar um painel. |
+| `medida` | O que cada número diz, e qual não vale? | Para ler a oferta, pedir o volume ou interpretar um painel. |
 | `escolha` | Qual tema ganha, e o que fica registrado? | Modo `canal`: houver candidatos medidos, ou um tema escolhido cair na pesquisa. |
 
 ## Transição e qualidade
@@ -61,6 +61,8 @@ O protocolo comum da equipe (frase de intenção, donos, handoff, gravidade e ro
 
 - **Passa adiante**: `pauta.md` ao `diretor-criativo`, dizendo o que é decisão do usuário (o tema ou a premissa, os campos do briefing) e o que ficou "não fornecido". Sempre que o briefing traz prazo ou regras de evento, em qualquer modo, eles vão também à `diretor-producao` e ao `diretor-publicacao`, que não esperam o roteiro para lê-los: vale igual para o vídeo do canal que tem prazo (`escolha`).
 - **Confere antes de passar**: cada número tem data e fonte; cada regra do evento tem a fonte que o usuário deu; nenhum campo foi preenchido por suposição; a premissa passa nos seis filtros com os recursos do briefing.
+- **Passagem pontual**: uma mudança de um campo (o prazo, uma regra do evento, o destino) vai com a data, a fonte e os artefatos que a leem (`diretor-producao`, `diretor-publicacao`, `diretor-criativo`). Não reabre a escolha do tema ou da premissa, salvo se o campo mudado a invalida; nesse caso, o registro diz qual e por quê.
+- **Informação ausente**: "não fornecido" fica no campo, e a pergunta vai ao usuário com o que depende dela. O trabalho que não depende do campo segue.
 
 ## Parada
 

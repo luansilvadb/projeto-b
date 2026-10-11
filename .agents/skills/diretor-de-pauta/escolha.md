@@ -5,17 +5,17 @@ Qual tema ganha entre os candidatos medidos, e o que fica registrado?
 
 Vale no modo `canal`. No modo `jam`, a escolha e o registro são de `premissa`; daqui só se usa "Quando o tema cai".
 
-**Um corte fixo.** Sai o candidato com o menor nível de volume, depois de medida a versão curta quando a oferta dele é forte (`medida`). Nenhum outro número mínimo: a comparação é entre os candidatos, lado a lado.
+**Um corte, uma vez, antes do ranking.** Sai o candidato com o menor nível de volume entre os medidos, depois de medida a versão curta quando a oferta dele é forte (`medida`). O corte é aplicado uma única vez: sem novo limiar, sem descarte de grupo, sem repetir até sobrar um número. Se a medição não permitir apontar um único candidato de menor volume (empate, ou dado faltando), explicite a incerteza e não elimine por suposição. Nenhum outro número mínimo: a comparação é entre os candidatos, lado a lado.
 
-**Ordem de peso (proposta, de 2026-10-10; vira regra quando um vídeo escolhido por ela for publicado e render, e sai se não render):**
+**Ordem de peso sobre os remanescentes (proposta; vira regra quando um vídeo escolhido por ela for publicado e render, e sai se não render):**
 
 1. **Views dos vídeos que já respondem o termo**, contados só os do nicho.
 2. **Ponto fora da curva de canal pequeno.**
-3. **Volume e competição do painel.**
+3. **Volume e competição do painel**: a mesma medição do corte, útil agora para comparar os restantes.
 4. **Brecha no formato.**
 5. **Desempate:** encaixe na trupe por dentro e reaproveitamento de desenhos.
 
-As views vêm antes da nota do painel porque a nota mede a busca, e as views, quanto o assunto rende: um candidato com cinco pontos a menos e quatro vezes mais views pode levar a recomendação, com a razão dita.
+As views vêm antes da nota do painel porque a nota mede a busca, e as views, quanto o assunto rende: entre os remanescentes, um candidato com cinco pontos a menos e quatro vezes mais views pode levar a recomendação, com a razão dita. Essa comparação não desfaz o corte.
 
 **Base, conferida antes de apresentar.** Para cada finalista, uma busca rápida responde a uma pergunta: a resposta central é estabelecida (revisão, livro-texto), ou é disputa? É conferência leve: não abre `research.md` nem registra fonte por afirmação, que é trabalho do `diretor-criativo`. O finalista de base disputada no centro sai pelo `nicho`.
 

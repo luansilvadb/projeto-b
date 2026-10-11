@@ -5,11 +5,11 @@ O que faz a trilha soar como a música de um vídeo só, e em quantas partes ela
 
 **Princípio.** O **leito** é a identidade musical contínua do vídeo: a música pode mudar, e até ser gerada em mais de um arquivo, sem que quem assiste sinta que entrou outra trilha sem motivo. Continuidade é percebida, e não declarada pelos parâmetros: timbre, andamento e tom preveem, e o som gerado confirma.
 
-**A música do canal** (decisão do usuário em 2026-10-09, ouvindo duas versões do mesmo trecho). Vale no modo `canal`; no modo `jam` a identidade sai da intenção de som do filme e do briefing. É o piano de cinema mudo, no vídeo inteiro: ao fundo sob a fala, e à frente nos números mudos (`silencio`), em que é ele que conduz a cena. A escolha foi feita num trecho de 12 s: como ele se sustenta sob minutos de fala é a primeira dúvida de identidade do próximo vídeo, levada ao ouvido cedo (`entrevista-som`): sob a fala, o piano acompanha ou cansa? Soa como cinema mudo, ou como desenho para criança? Os exemplos desta skill com piano de feltro, sintetizador e cordas são do vídeo do sono, anterior à decisão.
+**A música do canal** (decisão do usuário, ouvindo duas versões do mesmo trecho). Vale no modo `canal`; no modo `jam` a identidade sai da intenção de som do filme e do briefing. É o piano de cinema mudo, no vídeo inteiro: ao fundo sob a fala, e à frente nos números mudos (`silencio`), em que é ele que conduz a cena. A escolha foi feita num trecho de 12 s: como ele se sustenta sob minutos de fala é a primeira dúvida de identidade do próximo vídeo, levada ao ouvido cedo (`entrevista-som`): sob a fala, o piano acompanha ou cansa? Soa como cinema mudo, ou como desenho para criança? Os exemplos desta skill com piano de feltro, sintetizador e cordas são de uma versão anterior à decisão.
 
 **Parte e identidade.** Uma **parte** é um arquivo: a primeira geração e cada item de `music.parts`. É primeiro uma segmentação técnica, e só vira mudança que se ouve quando o vídeo pede. Um vídeo pode ter uma parte e uma identidade, várias partes e uma identidade ou, quando o produto pede mesmo, uma ruptura deliberada.
 
-**O que deu errado uma vez.** Um vídeo de 9 minutos com dez faixas, uma por capítulo, e o usuário ouviu "qualquer música ambiente posta para preencher espaço". O defeito não eram os dez arquivos nem os capítulos: cada trecho soava como uma música independente, e o vídeo perdeu a identidade e a sensação de trilha composta para ele. É a **playlist**, e ela é o defeito que esta unidade evita.
+**Defeito conhecido.** Uma faixa por capítulo soou ao usuário como "qualquer música ambiente posta para preencher espaço". O defeito não eram os arquivos nem os capítulos: cada trecho soava como uma música independente, e o vídeo perdeu a identidade e a sensação de trilha composta para ele. É a **playlist**, e ela é o defeito que esta unidade evita.
 
 **O teste**, em cada fronteira em que a música muda: parece que a música se desenvolveu, ou que alguém trocou a faixa?
 
@@ -20,7 +20,7 @@ A identidade sobrevive por várias pistas (a família de timbres, o tipo de puls
 
 O agente não ouve. Quando a unidade é uma dúvida que pesa, gere o trecho em volta da fronteira e leve-o ao usuário com a pergunta do teste (`entrevista-som`); se a ruptura era intencional, a pergunta é se ela realiza a transformação que o vídeo pede. O número de partes, o andamento e o tom não são perguntados.
 
-**Quantas partes.** O limite é da ferramenta: o `pnpm music` recusa a parte cuja duração planejada passa de 440 s (7 minutos e 20 s), os 480 s que o ACE-Step gera nesta máquina menos a sobra cortada das pontas. A duração planejada inclui o cruzamento com a parte seguinte ou a cauda do fim do vídeo: quem diz se a divisão cabe é o comando.
+**Quantas partes.** O limite é da ferramenta: o `pnpm music` recusa a parte cuja duração planejada passa de 440 s (7 minutos e 20 s), os 480 s que o ACE-Step gera com a configuração instalada, menos a sobra cortada das pontas. A duração planejada inclui o cruzamento com a parte seguinte ou a cauda do fim do vídeo: quem diz se a divisão cabe é o comando.
 
 - Se o vídeo cabe numa parte, comece com uma parte.
 - Não cabe: quantas o limite exigir, duas, três ou mais.
@@ -47,7 +47,7 @@ São ferramentas: escondem a borda de volume, e não fazem de duas identidades u
 
 Comece por uma identidade e pelo menor número de partes que a ferramenta permite, preserve explicitamente alguns sinais dela entre as gerações e só aumente a ruptura quando o vídeo ou o som mostrar que ela melhora a experiência.
 
-**Sensores.** Na referência a música toca em 99,5% do tempo (de 97,6% a 100%), o timbre varia 0,23 oitava do começo ao fim (de 0,15 a 0,32, pelo centro do espectro em janelas de 30 s) e a música muda de seção a cada 20 s, mais ou menos (de 15 a 49 s): muda muito, dentro de uma identidade. O piloto das dez faixas mediu 0,61. A variação alta diz em que fronteira ouvir. Ela não sabe o que é playlist: sobe com um silêncio longo e com uma transformação legítima, e pode ficar na faixa numa trilha que o ouvido acha desconexa. Quando a medida e o ouvido discordam, vale o ouvido.
+**Sensores.** Na referência a música toca em 99,5% do tempo (de 97,6% a 100%), o timbre varia 0,23 oitava do começo ao fim (de 0,15 a 0,32, pelo centro do espectro em janelas de 30 s) e a música muda de seção a cada 20 s, mais ou menos (de 15 a 49 s): muda muito, dentro de uma identidade. Um teste de dez faixas mediu 0,61. A variação alta diz em que fronteira ouvir. Ela não sabe o que é playlist: sobe com um silêncio longo e com uma transformação legítima, e pode ficar na faixa numa trilha que o ouvido acha desconexa. Quando a medida e o ouvido discordam, vale o ouvido.
 
 **Pronto quando:**
 

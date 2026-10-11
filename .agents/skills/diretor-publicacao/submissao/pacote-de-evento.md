@@ -26,15 +26,15 @@ O que entra no pacote de submissão de um curta a um evento ou jam, e de onde ve
 
 | Elemento | Onde conferir |
 |---|---|
-| Voz | a narração é gerada com voz clonada pelo OmniVoice, de pesos de uso não comercial (CC-BY-NC), a partir da amostra em `voice/`; de quem é a voz da amostra, o usuário diz |
+| Voz | a narração é gerada com voz clonada pelo OmniVoice, a partir da amostra em `voice/`; a nota local do projeto (`README.md`) registra os pesos como de uso não comercial (CC-BY-NC), aviso que não substitui a licença oficial: a conferir na fonte oficial vigente, para os pesos e para a saída, com fonte e data no momento do uso; de quem é a voz da amostra, o usuário diz |
 | Música | gerada pelo ACE-Step a partir de `music` em `script.json`; a licença de uso da saída é conferida na fonte oficial do modelo, na versão instalada |
 | Efeitos | os de `sfx` em `script.json`, pelo catálogo `src/audio/sfx.ts`; o `pnpm sfx` só busca CC0 no Freesound, e o id de cada arquivo permite conferir |
 | Imagem | desenhada em código para o projeto; fonte tipográfica e qualquer imagem de fora têm licença própria, a conferir |
 | Texto | escrito para o filme; citação, personagem, marca ou pessoa real que o `diretor-criativo` apontou |
 
-Cada linha termina num de três estados: **conferido**, com a fonte; **a conferir**, com quem confere; **em conflito** com uma regra fornecida. O conflito é bloqueante (`diretor-producao/equipe/protocolo.md`): vai ao usuário na hora, com o elemento, a regra e as saídas (trocar o elemento, pedir esclarecimento ao evento, desistir do destino). Esta skill não declara que um uso é permitido: mostra a licença, a regra e onde as duas se encontram.
+Para voz, música e efeitos, registre a origem e a licença conferida na fonte, com a data da consulta. Cada linha termina num de três estados: **conferido**, com a fonte; **a conferir**, com quem confere; **em conflito** com uma regra fornecida. O conflito é bloqueante (`diretor-producao/equipe/protocolo.md`): vai ao usuário na hora, com o elemento, a regra e as saídas (trocar o elemento, pedir esclarecimento ao evento, desistir do destino). Esta skill não declara que um uso é permitido: mostra a licença, a regra e onde as duas se encontram.
 
-**Dois destinos.** O que é comum (título, sinopse, créditos, inventário) é escrito uma vez e usado nos dois; o que é de um destino só fica na seção dele. A descrição do YouTube pode abrir pela sinopse e levar os créditos; ela ganha os campos do Studio, e o evento, as declarações. Uma regra do evento sobre publicação anterior ou exclusividade, se fornecida, decide a ordem dos envios, e vai dita ao usuário; se não foi fornecida, isso é perguntado antes de ele publicar no YouTube.
+**Dois destinos.** O que é comum (título, sinopse, créditos, inventário) é escrito uma vez, na seção `## Comum`, e usado nos dois; o que é de um destino só fica na seção dele. A descrição do YouTube pode abrir pela sinopse e levar os créditos; ela ganha os campos do Studio, e o evento, as declarações. Uma regra do evento sobre publicação anterior ou exclusividade, se fornecida, decide a ordem dos envios, e vai dita ao usuário; se não foi fornecida, isso é perguntado antes de ele publicar no YouTube.
 
 **A pessoa envia.** O pacote termina no texto pronto para copiar e nos caminhos dos arquivos. Preencher o formulário, aceitar termos e enviar são do usuário.
 

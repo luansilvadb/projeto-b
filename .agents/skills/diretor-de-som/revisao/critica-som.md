@@ -28,11 +28,11 @@ Como distinguir, no som de um render, o defeito técnico, o sinal de medida e a 
 **Instrumentos**, pelo que cada um pode afirmar:
 
 1. **O estado e o contrato** provam: `sound.md`, os campos `music` e `sfx` do roteiro, o `pnpm check-script`, as linhas "Som:" da partitura, os arquivos da trilha e do catálogo. É por aqui que a crítica começa.
-2. **As medidas do vídeo** (`pnpm critique <vídeo> som`) localizam: o som é separado em voz, música e efeitos, e cada camada é comparada com a referência.
+2. **As medidas do vídeo** (`pnpm critique <vídeo> som`, ou `pnpm critique <arquivo.mp3> som`) localizam: o som é separado em voz, música e efeitos, e cada camada é comparada com a referência.
 3. **As séries segundo a segundo**, gravadas junto, dizem onde: a distância da música à voz, a fala, as mudanças de seção, as viradas de volume, os efeitos. São lidas quando há uma pergunta, no trecho dela; nenhuma linha do mapa precisa de um número que a confirme.
 4. **O ouvido do usuário** percebe, e é o único que fecha o que é de percepção.
 
-**Origem das faixas.** O estudo de 2026-10-05 mediu 12 vídeos do Kurzgesagt, sem patrocínio (123 minutos), separados em voz, música e efeitos. `CRITERIA` em `src/critique/sound.ts` é a fonte atual; a calibração e os testes do ACE-Step estão em `out/referencias/kurzgesagt/som/ESTUDO.md`. A geração foi testada com ACE-Step Turbo numa RTX 2060 SUPER; mudar modelo ou placa pede repetir os testes.
+**Origem das faixas.** As faixas vêm de um estudo de 12 vídeos de referência, medidos em 2026-10-05 (123 minutos), separados em voz, música e efeitos. `CRITERIA` em `src/critique/sound.ts` é a fonte atual que o comando usa: esta skill lê as faixas dali, e não abre arquivos da referência. A geração foi testada com o ACE-Step Turbo; mudar modelo ou placa pede repetir os testes.
 
 **Sensores.** Todas as medidas são sensores. `out` na saída do comando quer dizer "fora da faixa configurada", e nada além disso.
 
@@ -66,7 +66,7 @@ O que pesa ao ler um sensor:
 - **Presença** (`niveis`), quando a distância sai da referência ou varia muito, ou o usuário perde a fala, deixa de ouvir a música ou a ouve bombear. A relação entre fala e música funciona naquele trecho? Não "está entre 9 e 15?".
 - **Efeitos** (`dose`, `escolha`), quando a densidade ou o pico são extremos, um efeito está fora da âncora, ou o usuário ouve massa ou uma ação muda. Cada efeito tem dono e acrescenta consequência sem disputar? O instante sai da partitura e é técnico; o tamanho e a falta são de ouvido. Não há piso, teto nem cota.
 
-**Gravidade**, pela perda, e só depois de ela estar demonstrada:
+**Gravidade**, pela perda, e só depois de ela estar demonstrada, na escala comum da equipe (`diretor-producao/equipe/protocolo.md`). Nesta crítica:
 
 - **Bloqueante**: perde-se algo indispensável. A fala deixa de ser entendida; o áudio esperado some por falha técnica; a identidade quebra a ponto de o vídeo parecer montagem de músicas; um efeito muda a leitura de uma ação crucial; mapa e roteiro divergem numa decisão indispensável.
 - **Relevante**: o vídeo se entende, e perde identidade, peso, naturalidade, continuidade, materialidade, presença ou clareza.

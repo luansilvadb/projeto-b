@@ -1,6 +1,6 @@
 ---
 name: diretor-publicacao
-description: "Pacote de saída de um vídeo ou curta, pelo destino: publicação no YouTube (título público, descrição, tags, capítulos, conceito e prompt de thumbnail, campos de envio) e submissão a evento ou jam (sinopse, créditos, direitos e licenças, especificações fornecidas pelo evento). Use para criar ou revisar esses materiais."
+description: "Pacote de saída de um vídeo ou curta, em publication.md, pelo destino do briefing: youtube (título público, descrição, tags, capítulos, conceito e prompt da thumbnail, checklist do Studio) ou jam (sinopse, créditos, direitos e licenças, declarações e envio conforme as regras que o evento forneceu). Decide a promessa e o conceito da imagem; a imagem em si é do diretor-de-arte. Use para criar ou revisar esses materiais."
 ---
 
 ## Papel e entrega
@@ -9,13 +9,17 @@ Dono de `src/videos/<vídeo>/publication.md`: o pacote que a pessoa usa para lev
 
 O destino vem do campo "Destino" do briefing (`diretor-de-pauta/briefing.md`). Sem briefing, é o YouTube, e nada muda para os vídeos do canal.
 
+O destino é o campo "Destino" do briefing, com um destes valores canônicos: `youtube`, `jam` ou `jam e youtube`. Ao ler um briefing antigo, "evento" vale como `jam` e "os dois" como `jam e youtube`; ao escrever, use o canônico.
+
 | Destino | Pacote | Leia |
 |---|---|---|
 | `youtube` | título, descrição, tags do Studio, conceito e prompt de thumbnail, capítulos com tempos reais e uma checklist curta de envio | "Procedimento do YouTube", abaixo, e `embalagem/titulo-e-thumbnail.md` para o par título-thumbnail |
 | `jam` | título, sinopse, relação com o tema, ficha técnica, créditos, direitos e licenças, declarações e checklist, conforme as regras que o evento forneceu | `submissao/pacote-de-evento.md` |
-| os dois | uma seção por destino em `publication.md`, com o que é comum escrito uma vez | os dois caminhos; "Dois destinos", em `submissao/pacote-de-evento.md` |
+| `jam e youtube` | `## Comum`, escrita uma vez, mais as seções `## YouTube` e `## Jam` de `publication.md` | os dois caminhos; "Dois destinos", em `submissao/pacote-de-evento.md` |
 
-A imagem do cartaz ou da thumbnail é feita pelo `diretor-de-arte` (`quadro/cartaz`, na pasta dele), a partir do conceito fixado aqui. Esta skill fica com o conceito, o texto da imagem, o prompt, a organização e a entrega.
+**Organização de `publication.md`.** `## Comum` (título do filme, sinopse, créditos e inventário de direitos, escritos uma vez) é a seção compartilhada; as de destino vêm depois, nesta ordem, e só as que o destino pede: `## YouTube` (título público, conceito e prompt da thumbnail, descrição pronta para copiar, tags, capítulos e checklist do Studio) e `## Jam` (relação com o tema, ficha técnica, declarações e os itens do evento, na ordem do formulário quando foi fornecido, e a checklist de envio). Não há campo novo no `script.json`: `title` continua sendo o título interno. Pacotes já feitos (`why-we-sleep`, `earth-stops-spinning`) mantêm os títulos de seção que têm; um pedido pontual muda só o campo pedido, e o arquivo só se reorganiza com pedido.
+
+**Quem decide a imagem.** Esta skill decide o que a imagem afirma: o conceito, o texto exato e a expectativa que ela cria junto do título. O `diretor-de-arte` executa a imagem (`quadro/cartaz`, na pasta dele) no desenho do filme e devolve o PNG. Se a arte acha uma imagem mais forte e verdadeira, propõe a mudança aqui, e o conceito é atualizado; a arte não muda sozinha o que a imagem afirma.
 
 ## Entradas
 
@@ -52,6 +56,8 @@ O protocolo comum da equipe (frase de intenção, donos, handoff, gravidade e ro
 - **Passa adiante**: o conceito e o texto da imagem ao `diretor-de-arte`; à `diretor-producao`, cedo, o que as regras do destino exigem do arquivo e das licenças; ao usuário, o pacote pronto para copiar e a checklist. Cada passagem diz o que está conferido, o que é "não fornecido" e o que só ele decide.
 - **Confere antes de passar**: cada afirmação do pacote contra o roteiro e a pesquisa; cada regra citada contra a fonte vigente ou fornecida; o par título-thumbnail pelos testes de `embalagem/titulo-e-thumbnail.md`; o inventário de direitos sem linha em conflito sem decisão.
 - **Com prazo no briefing**: o pacote é escrito em paralelo, assim que o roteiro existe, e fechado quando o arquivo de entrega é medido. O que as regras exigem é bloqueante e não cede ao prazo; o acabamento do texto, sim (`diretor-producao/etapas/plano.md`).
+- **Passagem pontual**: uma mudança de um campo (o título, uma tag, a sinopse depois de um corte) vai com o campo, o motivo e as seções que ele afeta; o outro destino não é reescrito sem pedido. Uma regra do evento que chega depois entra no briefing com a data e é dita à `diretor-producao` e ao usuário.
+- **Informação ausente**: o item fica "não fornecido" no pacote e a pergunta vai ao usuário com o que depende dela. O resto do pacote segue.
 
 ## Limites
 

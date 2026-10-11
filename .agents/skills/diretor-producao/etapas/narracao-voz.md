@@ -14,7 +14,7 @@ As escolhas vão para `src/videos/<vídeo>/voice.json`, que vai para o git e o `
 
 ## Ajustar a regra de escolha
 
-`rejected` é o registro de onde a regra de escolha errou. Quando houver rejeições de alguns vídeos, compare a curva das tomadas rejeitadas com a das aceitas (as medidas `ending` e `pitchOffset` estão em cada tomada guardada) e ajuste os limites em `takes.ts`, com teste. A meta é o usuário marcar cada vez menos.
+`rejected` é o registro de onde a regra de escolha errou. Quando houver rejeições de alguns vídeos, compare a curva das tomadas rejeitadas com a das aceitas (as medidas `ending` e `pitchOffset` estão em cada tomada guardada) e ajuste os limites em `src/narration/takes.ts`, com teste. A meta é o usuário marcar cada vez menos.
 
 Pronto quando: cada limite alterado tem teste e `pnpm test` passa.
 

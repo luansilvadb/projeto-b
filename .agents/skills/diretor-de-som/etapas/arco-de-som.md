@@ -37,7 +37,7 @@ A escolha chega no menor artefato que mostra a troca: o trecho do texto, ou o an
 
 ## O registro
 
-`sound.md` guarda o estado atual, como `script.md`: os compromissos de som que o trabalho seguinte não deve redescobrir. Nasce parcial e guarda sempre a linha da intenção ("A intenção, cedo"), que pode ser a única; o mapa mais detalhado (a pausa, a relação de som de uma cena) só é registrado quando há uma decisão específica que precisa sobreviver. Sem campo vazio, decisão prevista, alternativa recusada nem história: o histórico é o git. `src/videos/why-we-sleep/sound.md` guarda também a história do piloto e não é modelo de quantidade.
+`sound.md` guarda o estado atual, como `script.md`: os compromissos de som que o trabalho seguinte não deve redescobrir. Nasce parcial e guarda sempre a linha da intenção ("A intenção, cedo"), que pode ser a única; o mapa mais detalhado (a pausa, a relação de som de uma cena) só é registrado quando há uma decisão específica que precisa sobreviver. Sem campo vazio, decisão prevista, alternativa recusada nem história: o histórico é o git. `src/videos/why-we-sleep/sound.md` guarda também o histórico de decisões e não é modelo de quantidade.
 
 Entra na seção "Arco" o que muda a linha do tempo ou uma relação de som que faz parte do sentido, e que, esquecido, mudaria o vídeo. A intenção pode ficar sem a realização; "a trilha acompanha a emoção" não é compromisso.
 

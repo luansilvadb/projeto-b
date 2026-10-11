@@ -3,7 +3,7 @@ Este tema é do canal, ou sai antes de ser medido?
 
 ## RESPOSTA
 
-Vale no modo `canal`; no modo `jam` não há nicho, e quem filtra é `premissa`. O nicho é definido por condições, e não por uma lista de assuntos (decisão do usuário em 2026-10-10). O tema entra quando cumpre as três, e sai quando cai numa das exclusões. O filtro vem antes de qualquer medição: volume alto não resgata tema de fora.
+Vale no modo `canal`; no modo `jam` não há nicho, e quem filtra é `premissa`. O nicho é definido por condições, e não por uma lista de assuntos (decisão do usuário). O tema entra quando cumpre as três, e sai quando cai numa das exclusões. O filtro vem antes de qualquer medição: volume alto não resgata tema de fora.
 
 **Cumpre:**
 

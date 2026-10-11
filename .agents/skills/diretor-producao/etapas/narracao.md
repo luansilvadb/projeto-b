@@ -14,7 +14,7 @@ A produção não edita `narration`: palavra, pontuação e redação são do `d
 
 Quando o defeito é do texto, devolva ao `diretor-criativo` a frase, o que o usuário ouviu, a medida ou o aviso que localiza o defeito e, se houver, a sugestão. Ele reescreve pela unidade dona e confere a mudança pela tabela de reteste de `etapas/roteiro.md` (na pasta dele, "Depois de corrigir, reteste o risco que a mudança pode ter reintroduzido"); só então o texto entra em `script.json`, e o `pnpm narrate` regera só a frase que mudou. Não é uma etapa nova nem um aceite: é o mesmo caminho de qualquer correção do roteiro.
 
-Antes da primeira geração de um vídeo, diga ao usuário que os pesos do OmniVoice são de uso não comercial (CC-BY-NC): monetizar um vídeo narrado com ele foge da licença, e trocar de modelo depois não muda os vídeos já publicados. Se o vídeo é para monetizar, seguir com esta voz é decisão dele, tomada antes de gerar. Se vai a um evento, o que as regras fornecidas no briefing dizem sobre voz gerada, IA e licença é conferido pelo `diretor-publicacao` antes da primeira geração (`diretor-publicacao/submissao/pacote-de-evento.md`); regra que o briefing não traz é perguntada ao usuário, e não suposta.
+Antes da primeira geração de um vídeo, diga ao usuário que a nota local do projeto (`README.md`) registra os pesos do OmniVoice como de uso não comercial (CC-BY-NC). Essa nota é um aviso, não a licença oficial: antes do uso, quem opera a etapa confere na fonte oficial vigente se a restrição vale para os pesos e para a saída, e registra a fonte, a data e as pendências. Até lá, não diga que a licença foi verificada. Monetizar um vídeo narrado com ele pode contrariar essa restrição; a permissão comercial não se deduz da nota, e a licença da saída não se deduz automaticamente da dos pesos. Trocar de modelo depois não muda os vídeos já publicados. Se o vídeo é para monetizar, seguir com esta voz é decisão dele, tomada antes de gerar. Se vai a um evento, o que as regras fornecidas no briefing dizem sobre voz gerada, IA e licença é conferido pelo `diretor-publicacao` antes da primeira geração (`diretor-publicacao/submissao/pacote-de-evento.md`); regra que o briefing não traz é perguntada ao usuário, e não suposta.
 
 ## 1. Gerar
 
@@ -39,7 +39,7 @@ Pronto quando: cada frase acusada foi ouvida pelo usuário, e corrigida ou regis
 
 O modelo só recebe texto, e a entonação muda de uma geração para outra. Os limites da escolha automática (`src/narration/takes.ts`) ainda não foram calibrados contra o ouvido do usuário, então a narração passa por uma conferência dele, feita para custar uns dez minutos por vídeo.
 
-`pnpm voice <vídeo>` abre uma página em `http://localhost:4747`, com o modelo de voz e o Whisper carregados uma vez (cerca de 7,6 GB dos 8 GB da placa; feche com Ctrl+C). O fluxo do usuário:
+`pnpm voice <vídeo>` abre uma página em `http://localhost:4747`, com o modelo de voz e o Whisper carregados uma vez (ocupam cerca de 7,6 GB de memória de GPU: feche outros programas que usem a GPU antes de abrir; feche com Ctrl+C). O fluxo do usuário:
 
 1. **Ouvir tudo**: o botão toca o vídeo inteiro, frase a frase, com as pausas que ele vai ter. A frase que está tocando fica destacada.
 2. **Marcar**: na frase que soou errada, a tecla M (ou "✗ soou errado"). A escuta não para.

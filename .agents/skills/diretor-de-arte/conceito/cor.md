@@ -13,9 +13,9 @@ Que paletas o vídeo usa, e quando troca de uma para outra?
 - **Quem volta é reconhecido pela cor.** Cada figura do elenco tem as suas, registradas, e elas funcionam em todo modo em que a figura aparece.
 - **Toda cor vem das paletas registradas.** Cor escrita solta num desenho quebra a constância no plano seguinte.
 
-**Modo.** Uma paleta com significado: um conjunto de cores que volta e diz ao espectador onde ele está, em que estado ou em que camada da explicação. Ele o aprende cedo, e o modo só troca quando o lugar ou o sentido troca. Os dois que a referência alterna, e que o canal já usou:
+**Modo** é o sentido de uma paleta: o que ela diz ao espectador sobre onde ele está, em que estado ou em que camada da explicação. A paleta é o conjunto de cores registrado em `art.md` que realiza um modo. O espectador aprende o modo cedo, e ele só troca quando o lugar ou o sentido troca; dentro dele, o estado pode pedir outra paleta sem mudar o sentido (a lagoa de dia e a de noite). Os dois que a referência alterna, e que o canal já usou:
 
-- **Mundo**: o que se vê de fora. Fundo claro, pastel saturado, luz do dia.
+- **Mundo**: o que se vê de fora. Costuma ter fundo claro, pastel saturado e luz do dia; a noite de um lugar também é mundo.
 - **Por dentro**: o mecanismo, o microscópico, o pensamento. Fundo escuro em índigo ou roxo, formas em cor de néon, coisas que brilham.
 
 O que define o modo é o que ele separa, não a claridade: o mundo de noite é escuro, e o assunto pode pedir outros modos (a analogia, o dado, o sonho).
@@ -52,10 +52,10 @@ O que define o modo é o que ele separa, não a claridade: o mundo de noite é e
 - Se a figura continua reconhecível entre modos é conferido em `personagem`.
 
 ## EXEMPLO
-> Vídeo sobre por que dormimos, três modos:
+> Vídeo sobre por que dormimos: duas paletas do modo Mundo, e a da analogia.
 >
 > | Modo | Quando | Fundo | Assunto | Acento |
 > |---|---|---|---|---|
-> | lagoa de dia | a água-viva acordada | ciano claro a azul médio | coral e creme | amarelo |
-> | lagoa de noite | ela dorme | índigo a azul profundo | coral apagado, brilho ciano | amarelo pálido |
-> | a loja | a analogia do sono | lilás claro, depois roxo quando fecha | azul e listras coral | luz amarela da vitrine |
+> | Mundo, paleta de dia | a lagoa, com a água-viva acordada | ciano claro a azul médio | coral e creme | amarelo |
+> | Mundo, paleta de noite | a lagoa, com ela dormindo | índigo a azul profundo | coral apagado, brilho ciano | amarelo pálido |
+> | Analogia | a loja, na analogia do sono | lilás claro, depois roxo quando fecha | azul e listras coral | luz amarela da vitrine |

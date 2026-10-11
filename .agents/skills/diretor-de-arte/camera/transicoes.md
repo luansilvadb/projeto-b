@@ -27,21 +27,21 @@ O que continua, o que muda e quanto se sente a passagem entre dois planos?
 
 | A relação | Uma saída | Costuma | De onde vem |
 |---|---|---|---|
-| Outro lugar, outra ideia, ou uma batida nova na mesma cena | corte: o último quadro de um plano e o primeiro do seguinte, sem nada entre eles | instantâneo | referência; "um corte de verdade", aceito no piloto do vídeo do sono |
+| Outro lugar, outra ideia, ou uma batida nova na mesma cena | corte: o último quadro de um plano e o primeiro do seguinte, sem nada entre eles | instantâneo | referência; "um corte de verdade", aceito em render |
 | O mesmo lugar, outro enquadramento | a câmera vai do enquadramento anterior ao novo, sem trocar de cenário | 0,5 a 1 s | referência |
-| O mesmo lugar, outro estado (o dia e a noite da lagoa) | a mesma geometria pintada duas vezes, e uma borda que revela a outra pintura: como nada mais muda, lê-se de imediato que o lugar é o mesmo. A borda pode ser diagonal, vertical ou um círculo que cresce, pode levar uma faixa de brilho, e pode vir junto com a câmera | 0,25 a 0,4 s | referência; a noite que desce na savana enquanto a câmera chega ao bicho, aceita no piloto do vídeo do sono |
+| O mesmo lugar, outro estado (o dia e a noite da lagoa) | a mesma geometria pintada duas vezes, e uma borda que revela a outra pintura: como nada mais muda, lê-se de imediato que o lugar é o mesmo. A borda pode ser diagonal, vertical ou um círculo que cresce, pode levar uma faixa de brilho, e pode vir junto com a câmera | 0,25 a 0,4 s | referência; a noite que desce na savana enquanto a câmera chega ao bicho, aceita em render |
 | Outro fundo e outro personagem de uma vez | metade da tela entra varrendo pela lateral | 0,25 a 0,4 s | referência |
 | Dois lugares ligados por uma passagem | atravessar um objeto (uma janela, um olho, uma porta): ele é o último do plano antigo e o primeiro do novo | 0,4 a 0,8 s | referência |
-| Uma forma que vira outra | um estado intermediário que o olho reconhece: uma silhueta clara, na cor do brilho do vídeo, por 4 quadros | 0,4 a 0,8 s | referência; usada no vídeo do sono num plano ainda sem aceite |
-| O plano inteiro vira parte do seguinte | o quadro encolhe até virar um painel, mantendo a proporção | 0,4 a 0,8 s | referência; o laboratório que encolhe, no vídeo do sono |
-| Planos vizinhos que dividem elenco ou cenário | palco contínuo: o fundo novo toma a cor sobre o anterior, o que está solto encolhe no próprio ponto e o novo entra crescendo, o cenário comum não sai da tela, e nenhuma troca deixa a tela vazia | | decisão do usuário no vídeo do sono, aceita no piloto |
+| Uma forma que vira outra | um estado intermediário que o olho reconhece: uma silhueta clara, na cor do brilho do vídeo, por 4 quadros | 0,4 a 0,8 s | referência; usada em render num plano ainda sem aceite |
+| O plano inteiro vira parte do seguinte | o quadro encolhe até virar um painel, mantendo a proporção | 0,4 a 0,8 s | referência; o laboratório que encolhe, em render validado |
+| Planos vizinhos que dividem elenco ou cenário | palco contínuo: o fundo novo toma a cor sobre o anterior, o que está solto encolhe no próprio ponto e o novo entra crescendo, o cenário comum não sai da tela, e nenhuma troca deixa a tela vazia | | decisão do usuário, aceita em render |
 | Texto, etiqueta ou balão na passagem | esperar a imagem assentar é o ponto de partida. Também servem: viajar com o objeto, ficar de um lado ao outro, ou ser a própria ponte | | referência: o balão só aparece depois que a tela assenta |
 
 Outra ponte (um casamento de cor, algo que passa na frente e cobre a troca, um clarão) serve pelo mesmo teste.
 
 **A direção de uma revelação** é legível e tem relação com o que muda. Ela pode vir da causa (a noite desce de cima; a lateral empurra de um lado), do movimento anterior, de uma linha da composição ou do sentido da leitura.
 
-**Dissolução** (um quadro que some sobre o outro). A referência não usa, e o vídeo do sono foi aceito sem ela: é ausência observada, não teste que ela perdeu. O risco é conhecido: formas chapadas sobrepostas a meia opacidade formam um terceiro quadro, que não é nenhum dos dois estados e borra a relação entre eles. Não é o primeiro recurso; quando resolver uma passagem que as outras saídas não resolvem, entra como proposta, com o resultado levado ao usuário.
+**Dissolução** (um quadro que some sobre o outro). A referência não usa, e os renders aceitos pelo usuário ficaram sem ela: é ausência observada, não teste que ela perdeu. O risco é conhecido: formas chapadas sobrepostas a meia opacidade formam um terceiro quadro, que não é nenhum dos dois estados e borra a relação entre eles. Não é o primeiro recurso; quando resolver uma passagem que as outras saídas não resolvem, entra como proposta, com o resultado levado ao usuário.
 
 **Sinais de falha.** Cada um é uma pergunta sobre a passagem, e "está certo assim" é resposta válida, com o motivo:
 
@@ -59,7 +59,7 @@ Outra ponte (um casamento de cor, algo que passa na frente e cobre a troca, um c
 - entradas: fornece como entra o que a passagem acrescenta.
 
 ## LIMITES
-- **Do canal**: nenhuma íris de cinema mudo, nem para fechar o vídeo (decisão do usuário em 2026-10-09): o piano e a atuação já dizem isso. Vale no modo `canal`; no modo `jam` é repertório, e não regra (`SKILL.md`, "Modos"), e a íris é julgada como qualquer passagem, pelo teste do princípio.
+- **Do canal**: nenhuma íris de cinema mudo, nem para fechar o vídeo (decisão do usuário): o piano e a atuação já dizem isso. Vale no modo `canal`; no modo `jam` é repertório, e não regra (`SKILL.md`, "Modos"), e a íris é julgada como qualquer passagem, pelo teste do princípio.
 - Mudar a leitura dos dois planos (ruptura onde havia continuidade, ou o contrário) é decisão do usuário (`entrevista-movimento`). Trocar de técnica mantendo a mesma relação não é, e a entrada registrada acompanha a troca.
 
 ## EXEMPLO

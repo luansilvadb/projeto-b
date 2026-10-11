@@ -3,15 +3,15 @@ O que o texto precisa fazer para que quem ouve uma vez não tenha de guardar con
 
 ## RESPOSTA
 
-**Ouvinte.** Todo texto do vídeo (título, gancho, narração, fechamento, chamada e texto de tela) é escrito para quem assiste com TDAH (decisão do usuário em 2026-10-04). Isso diz que experiência o texto precisa dar, e não que técnica usar: pouca dependência de memória, relevância cedo, relações ditas quando fazem falta e progresso que se percebe.
+**Ouvinte.** Todo texto do vídeo (título, gancho, narração, fechamento, chamada e texto de tela) é escrito para quem assiste com TDAH (decisão do usuário). Isso diz que experiência o texto precisa dar, e não que técnica usar: pouca dependência de memória, relevância cedo, relações ditas quando fazem falta e progresso que se percebe.
 
-Esse ouvinte é um adulto curioso que nunca estudou o tema (decisão do usuário em 2026-10-10). Ele é inteligente e não precisa de tom de aula; o que ele não tem é o que o vídeo ainda não lhe deu. O roteiro constrói o conhecimento dele, e não demonstra o de quem pesquisou.
+Esse ouvinte é um adulto curioso que nunca estudou o tema (decisão do usuário). Ele é inteligente e não precisa de tom de aula; o que ele não tem é o que o vídeo ainda não lhe deu. O roteiro constrói o conhecimento dele, e não demonstra o de quem pesquisou.
 
 **Premissa.** O texto é recebido em fluxo, uma vez, na velocidade do narrador. O que o ouvinte precisa para entender agora está disponível agora, ou se recupera sem esforço. Quem assiste não carrega sozinho o que o próprio texto pode manter vivo. E o vídeo tem imagem: o que continua na tela (um personagem, um objeto, uma cor, uma cartela) continua disponível; como isso é desenhado é da skill `diretor-de-arte`.
 
 Cada necessidade abaixo é o que precisa funcionar. As técnicas são repertório: cada uma resolve um problema, e a solução que dá a mesma experiência por outro caminho vale igual.
 
-**0. Nada é presumido.** O ouvinte só tem o que o vídeo disse ou mostrou até aqui. Quem pesquisou sabe mais, e é esse saber que completa em silêncio a frase incompleta: o texto parece claro a quem o escreveu justamente onde falta um pedaço. Foi o defeito do `earth-stops-spinning`: "a rocha para de repente, e tudo o que está solto em cima dela continua na velocidade que tinha" resume o experimento para quem já o entendeu, e para quem chega agora não diz que parte da Terra é "a rocha", o que está "solto", nem por que continuaria.
+**0. Nada é presumido.** O ouvinte só tem o que o vídeo disse ou mostrou até aqui. Quem pesquisou sabe mais, e é esse saber que completa em silêncio a frase incompleta: o texto parece claro a quem o escreveu justamente onde falta um pedaço. Exemplo do defeito: "a rocha para de repente, e tudo o que está solto em cima dela continua na velocidade que tinha" resume o experimento para quem já o entendeu, e para quem chega agora não diz que parte da Terra é "a rocha", o que está "solto", nem por que continuaria.
 
 - **A situação vem antes da abreviação.** O apelido que a pesquisa criou ("a rocha", "o giro", "o calombo", "a cintura") é termo novo para quem ouve. Primeiro a coisa dita por inteiro, numa situação que se imagina ("a parte sólida do planeta, o chão e tudo o que está preso a ele"); a forma curta vale depois, enquanto continua inequívoca.
 - **O que sustenta outra coisa foi estabelecido, e não só mencionado.** Uma ideia dita de passagem numa frase não aguenta três consequências em cima dela. Se vários acontecimentos dependem de um princípio (a inércia, a seleção natural, o juro composto), ele ganha uma situação concreta própria antes de ser usado.
@@ -63,7 +63,7 @@ Um "não" localiza o que falta; o conserto é da unidade dona (`explicacao` se �
 - **Figura e fato.** O ouvinte não precisa decidir se uma imagem é metáfora ou mecanismo. A coisa é dita pelo nome onde a explicação depende dela; a figura não substitui a explicação; e a analogia que poderia ser tomada por descrição literal é marcada como analogia (`analogias`).
 - **Hesitação com lastro.** "Talvez", "provavelmente" e "pode" entram onde a base de fatos registra a incerteza; as outras frases afirmam.
 
-**6. Um pedido só.** O único gesto que o vídeo pede é o da `chamada`, feito na hora (decisão do usuário em 2026-10-04). É compromisso do canal, além de cuidado com o ouvinte: entre entender e fazer há um atrito, e pedido espalhado pelo vídeo morre nele. Como e onde a chamada é dita é de `chamada`.
+**6. Um pedido só.** O único gesto que o vídeo pede é o da `chamada`, feito na hora (decisão do usuário). É compromisso do canal, além de cuidado com o ouvinte: entre entender e fazer há um atrito, e pedido espalhado pelo vídeo morre nele. Como e onde a chamada é dita é de `chamada`.
 
 **Carga real.** Antes de contar palavras ou itens, as perguntas são: quantas coisas precisam estar ativas ao mesmo tempo? Quão parecidas são? Há apoio na tela? Uma leva naturalmente à outra? Alguma pode ser esquecida sem prejuízo? O texto recupera o que faz falta?
 

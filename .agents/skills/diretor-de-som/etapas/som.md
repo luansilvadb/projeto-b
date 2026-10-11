@@ -58,7 +58,7 @@ A seção "Mapa" de `sound.md` tem uma tabela por camada que já existe, e só c
 - **Níveis e silêncios**: a cena, o nível, por quê.
 - **Efeitos**: a cena e o plano, o acontecimento, o uso, o nível; só os que existem; e, à parte, os usos que o catálogo não tem.
 
-Sem descrição recusada, semente tentada nem alternativa perdida. O que o usuário decidiu leva essa marca na linha, para a iteração seguinte não desfazê-lo. `src/videos/why-we-sleep/sound.md` mostra o formato das tabelas; a história do piloto que ele guarda não é modelo.
+Sem descrição recusada, semente tentada nem alternativa perdida. O que o usuário decidiu leva essa marca na linha, para a iteração seguinte não desfazê-lo. `src/videos/why-we-sleep/sound.md` mostra o formato das tabelas; o histórico que ele guarda não é modelo.
 
 ## O roteiro
 

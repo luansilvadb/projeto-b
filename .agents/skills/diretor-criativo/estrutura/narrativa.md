@@ -51,7 +51,7 @@ O narrador do curta fica inteiro na seção `## Voz` de `script.md`, e não como
 
 **Conferência.** A leitura cega do `editor` vale igual: a história que ele reconstrói só com a narração é a que o filme quer contar? No curta a imagem carrega parte da história de propósito, então o que a leitura cega não acha é conferido contra os `shots`: está num plano, e se lê de um jeito só? Com `youtube` no destino, a conferência de título e abertura de `etapas/roteiro.md` vale para o título do filme; sem ele, não há título provisório a testar.
 
-**Registro em `script.md`**: `Intenção`, `Idioma`, `Duração-alvo` quando o briefing a dá, `## Voz` com quem narra, `## Fio` com a regra do mundo ou o objeto que volta, e a tabela `## Estrutura`.
+**Registro em `script.md`**: `Intenção`, com a frase de intenção e, na mesma linha, depois de um travessão, a pergunta dramática que a história abre e o fim responde (é o lugar único das duas, no lugar de `Tese` e `Promessa`; sem campo novo no JSON); `Idioma`; `Duração-alvo` quando o briefing a dá, `## Voz` com quem narra, `## Fio` com a regra do mundo ou o objeto que volta, e a tabela `## Estrutura`.
 
 Pronto quando a história se reconstrói da narração e dos planos, a frase de intenção é a que o usuário decidiu, a duração estimada cabe no briefing, e não há afirmação sobre o mundo real sem fonte.
 

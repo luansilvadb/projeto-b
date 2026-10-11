@@ -21,17 +21,17 @@ O que faz um elemento aparecer, mudar ou sair de modo que se entenda de onde vei
 
 | O que acontece | Uma saída | Costuma | De onde vem |
 |---|---|---|---|
-| Um objeto surge no lugar | cresce de 0,6 do tamanho, passa a 1,06 e volta a 1, com a opacidade acompanhando só os primeiros quadros. Também servem: desacelerar sem ultrapassar, esticar e achatar, ou só aparecer, quando a cena pede secura | 0,25 a 0,35 s | referência; aceita no piloto do vídeo do sono, junto com "nada que tem forma entra só por opacidade" |
+| Um objeto surge no lugar | cresce de 0,6 do tamanho, passa a 1,06 e volta a 1, com a opacidade acompanhando só os primeiros quadros. Também servem: desacelerar sem ultrapassar, esticar e achatar, ou só aparecer, quando a cena pede secura | 0,25 a 0,35 s | referência; aceita em render, junto com "nada que tem forma entra só por opacidade" |
 | Uma etiqueta, um selo ou um número aparece | estoura de 0,7 a 1,08 e assenta; a linha que a prende desenha-se do objeto para ela, junto, com a ponta primeiro | 0,25 s | referência |
 | Uma figura chega de fora | entra pelo movimento que a ação pede, a partir de fora do quadro | o tempo de uma travessia | referência |
 | Algo nasce de uma causa (partícula, bolha, faísca) | nasce pequeno onde a causa está e cresce enquanto se afasta | | referência |
 | Um texto de cartela aparece | as letras em sequência, por máscara que abre ou por espaçamento largo que fecha. Também servem: escala, escrita à vista, opacidade, vir junto com o objeto | 0,35 s por linha | referência, onde texto quase não entra por opacidade |
 | Um ambiente muda dentro do plano | acende, escurece, alaga ou se constrói parte a parte | 0,8 a 1,5 s | referência |
-| A mesma coisa muda de estado | cor e tamanho interpolam; a forma passa por um estado intermediário que o olho reconhece (a contração do sino, a porta a meio) | 0,4 a 1,2 s; o quadro inteiro escurecer leva mais que um olho fechar | referência; no piloto do vídeo do sono, de andamento contido, nada troca de estado num quadro |
+| A mesma coisa muda de estado | cor e tamanho interpolam; a forma passa por um estado intermediário que o olho reconhece (a contração do sino, a porta a meio) | 0,4 a 1,2 s; o quadro inteiro escurecer leva mais que um olho fechar | referência; em render de andamento contido, nada troca de estado num quadro |
 | Uma forma vira outra, e a passagem direta ficaria ambígua | uma silhueta clara de 4 quadros entre as duas | | referência; sem plano nosso aceito |
 | Uma quantidade cresce | a barra cresce em cascata, com o número contando junto | | referência |
 | Vários entram como sequência (os três selos, os cinco bichos, as moedas) | cascata, na ordem em que a fala ou o olho os percorre | 0,1 a 0,3 s entre si; numa fila que a fala acompanha, de 0,3 a 1 s | referência |
-| Os dois lados de uma tela dividida | existem desde a divisão, apagados, e cada um acende na sua palavra | | piloto do vídeo do sono |
+| Os dois lados de uma tela dividida | existem desde a divisão, apagados, e cada um acende na sua palavra | | validado em render |
 | Algo sai | o caminho inverso ao da entrada, mais rápido. Também servem: ser empurrado pelo que entra, ser coberto, atravessar a borda, virar outra coisa, ficar e perder importância, ou ir com a transição | 0,2 s | referência, onde pouca coisa sai antes de o plano acabar |
 
 Os tempos situam e não reprovam. Pesam o tamanho do que muda, a complexidade, a importância, a energia da cena e a distância entre os dois estados. Quando o que ficou acumulado passa a poluir o quadro, quem julga é `composicao`.

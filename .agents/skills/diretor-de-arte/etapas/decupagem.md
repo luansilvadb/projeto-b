@@ -40,7 +40,7 @@ Unidades `encenacao`, `planos` e `dado`. Para cada cena de `script.json`, encene
 | `palette` | a paleta do plano | um nome de `art.md` |
 | `entry` | a entrada: como a imagem anterior vira esta | texto; o costume é `cut` (corte), `camera` (câmera), `transform` (transformação) ou `wipe` (varredura), e a passagem que não cabe neles é dita em poucas palavras |
 
-A deixa e a encenação são o que o plano precisa dizer. A escala, a paleta e a entrada registram a solução de agora: a escala é a intenção de distância, a paleta é o nome de um modo, e não um valor de cor, e a entrada é a relação com o plano anterior. No animatic, o médio que vira close dizendo a mesma coisa é refino (`entrevista-imagem`), e o campo acompanha.
+A deixa e a encenação são o que o plano precisa dizer. A escala, a paleta e a entrada registram a solução de agora: a escala é a intenção de distância, a paleta é o nome de uma paleta registrada em `art.md`, que realiza um modo, e não um valor de cor, e a entrada é a relação com o plano anterior. No animatic, o médio que vira close dizendo a mesma coisa é refino (`entrevista-imagem`), e o campo acompanha.
 
 O número mudo (`pantomima`) é escrito na encenação do último plano da cena: o que acontece depois que a fala termina. O roteiro pode já trazer o lugar dele, com a nota visual e um tempo provisório; a decupagem desenha o que acontece, confirma ou corrige o tempo, e pode propor um número que o roteiro não marcou. Todo pedido de tempo, do número ou do respiro de uma reação, volta ao `diretor-criativo` (`sincronia`), que grava o `holdMs` e decide o que o texto cede.
 

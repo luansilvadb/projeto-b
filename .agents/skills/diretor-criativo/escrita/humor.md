@@ -5,7 +5,7 @@ Quando o humor acrescenta algo ao vídeo sem disputar com o entendimento, distor
 
 **Humor** é uma mudança deliberada de leitura que acrescenta valor a uma ideia sem tirar dela a verdade nem o peso que ela pede. Pode aliviar a carga, tornar um contraste memorável, revelar um absurdo que já existe, dar corpo a uma escala, dar ritmo, carregar uma relação, pôr uma segunda camada na imagem. Nenhuma dessas funções é obrigatória na fala: a piada dita é opcional, e um trecho grave pode não ter graça nenhuma.
 
-**O humor do canal mora na imagem** (decisão do usuário em 2026-10-09). A narração segue séria, e quem faz a graça são os personagens, com o corpo, como no cinema mudo: uma reação colada à frase, que é a base do vídeo inteiro, e alguns **números mudos**, em que a fala para e a imagem carrega a cena. Realizar os dois é da skill `diretor-de-arte` (`atuacao/pantomima`), e o som deles, da `diretor-de-som`. O que o texto faz por eles:
+**O humor do canal mora na imagem** (decisão do usuário). A narração segue séria, e quem faz a graça são os personagens, com o corpo, como no cinema mudo: uma reação colada à frase, que é a base do vídeo inteiro, e alguns **números mudos**, em que a fala para e a imagem carrega a cena. Realizar os dois é da skill `diretor-de-arte` (`atuacao/pantomima`), e o som deles, da `diretor-de-som`. O que o texto faz por eles:
 
 - **Deixa tempo.** O respiro depois da frase forte (de 1 a 1,5 s) e o tempo de cada número (de 5 a 8 s) são reservados na escrita, como `holdMs` (`etapas/roteiro.md`), e tomam o lugar de texto (`arco`).
 - **Marca o lugar do número.** O roteiro propõe onde a fala para, com a nota visual do que precisa ficar entendido. O que acontece em cena é da arte, que confirma o tempo. A reação não pede nota.

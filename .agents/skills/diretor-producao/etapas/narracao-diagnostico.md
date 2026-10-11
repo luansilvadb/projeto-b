@@ -6,7 +6,7 @@ Pronto quando: a mudança proposta cita a medida que a justifica, e o usuário o
 
 ## Se a voz soar sem energia ou mal-humorada
 
-Aconteceu no primeiro vídeo, e as causas foram três, nesta ordem de peso:
+As causas já observadas, nesta ordem de peso:
 
 - **O texto.** Roteiro picotado em frases curtas sai como uma fila de afirmações que caem no fim, porque cada frase é gerada à parte e separada por uma pausa. Antes de mexer na voz, confira o perfil de frase do roteiro (etapa `roteiro` da skill `diretor-criativo`).
 - **A amostra.** O modelo copia o humor da gravação junto com o timbre. A primeira amostra era uma frase de conto lida de forma contemplativa (altura mediana de 92 Hz, entonação de 5,0 semitons); a atual é um trecho da leitura animada do próprio roteiro (149 Hz na gravação inteira, 6,5 semitons no recorte). A gravação completa do usuário fica em `voice/voz_propria.wav`, e `voice/reference.wav` é um recorte de 9,6 s dela; a amostra antiga está em `voice/reference-contemplativa.wav`.
@@ -37,4 +37,4 @@ Peça também a palavra, e meça o fim do arquivo. O que já se sabe:
 - O OmniVoice gera cada frase com uma duração fixa, que ele estima pelo número de letras do texto em relação à amostra. Quando a fala não cabe, ela vai até o último instante do áudio e a última sílaba sai cortada. É defeito conhecido do modelo (issue 245 do repositório `k2-fsa/OmniVoice`), sem correção na versão 0.2.1.
 - O sinal de que a frase saiu inteira é o áudio cru do modelo terminar em silêncio (`tools/narration/silence.py`). Só essas gerações entram na escolha.
 - `speed` abaixo de 1 em `VOICE_MODEL` dá folga à duração e deixa a fala mais lenta (0,9 dá uns 7%). Hoje o valor é 1, por escolha de ouvido do usuário: a folga saiu, e o que protege contra o corte é descartar as gerações cortadas. Numa avaliação com 16 frases, terminaram inteiras 38% das gerações sem folga, 66% com 0,9 e 78% com 0,85 (fala 11% mais lenta); com 0,8 não melhora.
-- O pós-processamento padrão do OmniVoice aplica um fade de 0,1 s no fim do áudio, que apagava a última sílaba das gerações cortadas. O `tts.py` pede o áudio cru e corta ele mesmo o silêncio das pontas.
+- O pós-processamento padrão do OmniVoice aplica um fade de 0,1 s no fim do áudio, que apagava a última sílaba das gerações cortadas. O `tools/narration/tts.py` pede o áudio cru e corta ele mesmo o silêncio das pontas.

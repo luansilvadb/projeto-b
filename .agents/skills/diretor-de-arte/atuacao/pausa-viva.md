@@ -13,7 +13,7 @@ Quando nada novo acontece, o que faz o quadro continuar parecendo intencional e 
 - **Ele não vira ação.** Nenhuma intenção, escolha ou reação nasce na pausa. O olhar fica onde a atenção do personagem está, e muda quando ela muda: pupila que passeia para animar faz um personagem inquieto sem motivo. O que diz algo novo é de `acao`.
 - **Ele cede ao foco.** Em amplitude, contraste e frequência, o que se mexe na periferia fica abaixo do que o plano pede para acompanhar (`composicao`).
 - **O que é independente não se move como cópia.** Três bichos respirando em uníssono viram um mecanismo. Movem-se juntos os que têm uma causa comum: a mesma onda, o mesmo impacto, uma marcha, uma máquina.
-- **A partícula pertence ao meio ou ao fenômeno.** Ela existe na água e por dentro do corpo (plâncton, grãos no tecido). No ar do mundo (savana, rua, laboratório, fundo liso), cinza translúcido flutuando lê como sujeira: saiu no piloto da elefanta.
+- **A partícula pertence ao meio ou ao fenômeno.** Ela existe na água e por dentro do corpo (plâncton, grãos no tecido). No ar do mundo (savana, rua, laboratório, fundo liso), cinza translúcido flutuando lê como sujeira, como se viu em render.
 - **A luz varia quando a fonte é instável.** A chama e a lâmpada velha tremulam; a fonte estável não precisa pulsar para parecer acesa. Halo que respira em quem não emite luz lê como enfeite gerado (`forma`).
 
 **O que o repositório fixa.** A variação (fase, intervalo, posição) é sorteada por semente fixa: cada quadro é renderizado sozinho, e sorteio livre faz o movimento tremer de um quadro para o outro. Os primitivos estão em `etapas/animacao`. Existir um primitivo não é motivo para usá-lo.
@@ -25,21 +25,21 @@ Quando nada novo acontece, o que faz o quadro continuar parecendo intencional e 
 | Pessoa em pé | respira: o tronco sobe e os ombros abrem; o peso troca de pé | 2% a 3% da altura | 3 a 5 s | referência |
 | Pessoa | pisca: a pálpebra fecha e abre. Não cabe no olhar fixo, no choque nem no close muito curto | 4 quadros | a cada 2 a 5 s, sorteado | referência |
 | Pessoa | um microajuste do olhar, sem trocar de alvo | poucos pixels | a cada 1,5 a 3 s | referência |
-| Quem dorme | respira mais devagar e fundo; a cabeça pende um pouco mais a cada expiração; "z" que sobem e crescem. A pose e o lugar também dizem o sono | | 4 a 6 s | vídeo do sono |
+| Quem dorme | respira mais devagar e fundo; a cabeça pende um pouco mais a cada expiração; "z" que sobem e crescem. A pose e o lugar também dizem o sono | | 4 a 6 s | validado em render |
 | Quem espera | segura a intenção até a próxima mudança: imóvel, olhando, respirando, ou numa coisa pequena e lenta (o peso, a cabeça, a cauda) | | | referência: numa pausa de reação de 1,5 s, a figura respira e troca o peso de pé |
 | Bicho que nada | o corpo ondula, as nadadeiras batem, o corpo sobe e desce | 3% a 6% da altura | 1,5 a 3 s | referência |
 | Bicho que voa | as asas batem, ou o corpo plana com inclinação que varia | 4° a 8° | 1 a 2 s | referência |
-| Água-viva | pulsa, cada braço com a própria fase | 5% a 10% | 2 a 6 s | vídeo do sono |
+| Água-viva | pulsa, cada braço com a própria fase | 5% a 10% | 2 a 6 s | validado em render |
 | Planta ou alga, onde há vento ou corrente | balança, cada folha com a própria fase | 5% a 10% | 2 a 6 s | referência |
 | Ambiente com um processo em curso | o capim ao vento, a água que ondula, as estrelas que cintilam | 1 a 3 pixels | contínuo | referência |
-| Partículas do meio | derivam atrás do assunto, opacas, um tom acima do fundo | 1 a 3 pixels | contínuo | referência; a restrição ao meio vem do piloto da elefanta |
+| Partículas do meio | derivam atrás do assunto, opacas, um tom acima do fundo | 1 a 3 pixels | contínuo | referência; a restrição ao meio veio de render |
 | Fonte de luz instável | o halo respira; a chama ou a lâmpada tremula | 10% a 20% da opacidade | 1 a 4 s | referência |
 | Superfície viva (proposta) | as faixas e manchas correm por dentro da silhueta, que fica parada; as bolhas da borda nascem, crescem e estouram, cada uma na sua fase | o espalhamento anda de 1% a 2% do diâmetro por segundo | contínuo | um vídeo de espaço |
 
 **Medidas** (evidência: dizem onde esse estilo vive, e não são meta).
 
 - Na referência, dos dez planos lidos que pareciam parados em três quadros, oito tinham de 5% a 10% do quadro em movimento o tempo todo, e o vídeo inteiro fica quase parado só 10% do tempo. Um plano pode ter zero e estar certo.
-- No piloto do vídeo do sono, o usuário aceitou pausa viva em todo plano, sem dois quadros iguais em nenhum trecho, com a tela quase parada em 7% do tempo. É decisão daquele vídeo, em que quase todo o elenco é bicho vivo ou gente dormindo.
+- Num vídeo que o usuário aceitou, a pausa viva ficou em todo plano, sem dois quadros iguais em nenhum trecho, com a tela quase parada em 7% do tempo. É decisão daquele vídeo, em que quase todo o elenco é bicho vivo ou gente dormindo.
 
 ## DEPENDÊNCIAS
 - sincronia: fornece o trecho sem novidade e a função dele.

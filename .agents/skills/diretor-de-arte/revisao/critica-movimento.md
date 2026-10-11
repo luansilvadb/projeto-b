@@ -34,7 +34,7 @@ Como achar o defeito perceptível que explica por que um movimento não funciona
 - **Ênfase** (`efeitos`), quando um recurso distrai, engana ou parece gratuito. Sabe-se que propriedade da ação ele reforça, e sem ele a ação ainda se entende? A forma e o tamanho são os do fenômeno? Ele muda o que a coisa parece ser, disputa com o foco ou repete outro?
 - **Quadro no tempo** (`composicao`, `texto`), quando o que se lia parado deixa de se ler em movimento. Os estados importantes de cada plano continuam cumprindo a composição? O texto continua legível e preso ao que nomeia enquanto a câmera ou o objeto se movem? O quadro parado, em si, é de `critica-quadro`.
 
-**Gravidade**, pelo que o espectador perde:
+**Gravidade**, pelo que o espectador perde, na escala comum da equipe (`diretor-producao/equipe/protocolo.md`). Nesta crítica:
 
 - **Bloqueante**: ele entende algo errado, ou deixa de entender o que o plano precisava dizer. A causa invertida, a ação que não se lê, a ponte quebrada, o contato que não houve, a coisa que deixa de ser reconhecida, a animação que travou.
 - **Relevante**: a leitura principal está certa, mas o peso, o foco, a matéria ou a intenção ficam enfraquecidos.

@@ -1,6 +1,6 @@
 ---
 name: diretor-criativo
-description: "Pesquisa e roteiro de vídeos educativos e de curtas narrativos com narração em off: fatos e fontes, ângulo ou frase de intenção, história, estrutura, narração e cenas. Use para pesquisar, checar afirmações, desenvolver uma premissa, escrever ou revisar esses materiais."
+description: "Pesquisa e roteiro de vídeos educativos (modo canal) e de curtas de ficção com narração em off (modo jam): fatos e fontes, tese e promessa ou frase de intenção, história, estrutura, narração, holdMs e cenas. Use para pesquisar uma afirmação, checar fatos, desenvolver uma premissa em história, ou escrever e revisar research.md, script.json e script.md."
 ---
 
 ## Papel e entregas
@@ -23,7 +23,7 @@ O modo vem do briefing (`diretor-de-pauta/briefing.md`); sem briefing, é `canal
 - Que tema fazer e a procura dele: diretor-de-pauta. O recorte dentro do tema fica aqui.
 - Decupagem, direção de arte, desenho e animação: diretor-de-arte; pedidos de mudança de frase voltam para cá.
 - Voz e corte final: diretor-producao.
-- Música, silêncios musicais e efeitos: diretor-de-som. `holdMs` e mudanças de texto ficam neste roteiro.
+- Música, silêncios musicais e efeitos: diretor-de-som. Este roteiro é dono da narração e do `holdMs`: o som e a arte pedem a pausa, e quem grava o campo é esta skill.
 - Título público, descrição, tags, sinopse, créditos e prompt de thumbnail (`diretor-publicacao`).
 - A premissa de um curta e o briefing: `diretor-de-pauta`. A história dentro da premissa fica aqui.
 - Publicidade e vlog. Ficção só entra pelo modo `jam`.
@@ -84,7 +84,9 @@ O protocolo comum da equipe (frase de intenção, donos, handoff, gravidade e ro
 - **Passa adiante**: o trecho ou o texto ao `diretor-de-arte`, para prova ou decupagem; o roteiro válido, com `shots`, à `diretor-producao`, para a voz; a promessa ou a intenção, as fontes e as simplificações ao `diretor-publicacao`. Cada passagem diz o que é decisão do usuário, o que é hipótese e o que ficou aberto, com a gravidade.
 - **Confere antes de passar**: `pnpm check-script`; `checador` e `editor` nos casos de `etapas/roteiro.md`; e que a frase de intenção, ou a tese e a promessa, está em `script.md`, com as viradas na tabela `## Estrutura`, porque é dali que arte e som tiram as suas.
 - **Com prazo no briefing**: o nível de polimento e o limite de rodadas vêm do plano (`diretor-producao/etapas/plano.md`). O bloqueante é resolvido sempre; quando o tempo falta, corta-se um acontecimento da história, e não a clareza do que fica.
+- **Passagem pontual**: um pedido localizado (uma frase, um `holdMs`, uma tabela de viradas) vai com o trecho, o que se perde e a saída proposta, e não reabre o roteiro. A tabela de reteste de `etapas/roteiro.md` diz o que conferir de novo depois.
+- **Informação ausente**: uma pergunta de fato vai à pesquisa; uma pergunta de decisão, ao usuário, com o que depende dela. O trabalho que não depende dela segue, e o campo fica "não fornecido" ou em aberto em `script.md`.
 
 ## Parada
 
-Uma tarefa localizada termina quando a dúvida está respondida com evidência suficiente; não reabra o roteiro inteiro. O roteiro completo termina quando não há decisão editorial material aberta e o usuário decidiu a mensagem e a promessa. Corrija defeitos bloqueantes e os relevantes cujo conserto compense. Se a pesquisa não sustenta um ângulo honesto, relate e proponha redelimitar o tema. Se nenhum recorte honesto cabe no tema inteiro, ou nenhuma história cabe na premissa, a troca é do `diretor-de-pauta`, que leva ao usuário o próximo finalista de `pauta.md`.
+Uma tarefa localizada termina quando a dúvida está respondida com evidência suficiente; não reabra o roteiro inteiro. O roteiro completo termina quando não há decisão editorial material aberta e o usuário decidiu a mensagem e a promessa. Corrija defeitos bloqueantes e os relevantes cujo conserto compense. Se a pesquisa não sustenta um ângulo honesto, relate e proponha redelimitar o tema. Se nenhum recorte honesto cabe no tema inteiro, ou nenhuma história cabe na premissa, a troca é do `diretor-de-pauta`, que leva ao usuário o próximo finalista de `pauta.md`. Sem prazo, a régua é a qualidade do texto: o bloqueante é resolvido, e um impasse que não cede a outra hipótese vai ao usuário com o defeito que resta, sem prometer melhora contínua.

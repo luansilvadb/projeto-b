@@ -33,7 +33,7 @@ Quando um recurso gráfico ajuda o espectador a sentir ou entender uma proprieda
 | Uma forma vira outra, e a passagem direta ficaria ambígua | a silhueta clara: é de `entradas` e `transicoes` | | |
 | O extremo de uma ação de corpo mole | esticar e achatar: é de `acao` | | |
 
-**Medidas e heurísticas** (evidência e pontos de partida: situam e não reprovam por si). Na referência nenhum recurso aparece sozinho, cada um acompanha uma ação; costuma haver um por ação, dois quando se completam, e até dois momentos com recurso num plano de 5 s. Na cor, o ponto de partida é o estouro na cor do acento ou do objeto, o rastro na cor do objeto e a luz na cor de brilho do modo, sem branco puro sobre fundo claro nem preto. Na partitura do vídeo do sono, o plano em que os ratos morrem fica sem estouro e sem tremor, de propósito.
+**Medidas e heurísticas** (evidência e pontos de partida: situam e não reprovam por si). Na referência nenhum recurso aparece sozinho, cada um acompanha uma ação; costuma haver um por ação, dois quando se completam, e até dois momentos com recurso num plano de 5 s. Na cor, o ponto de partida é o estouro na cor do acento ou do objeto, o rastro na cor do objeto e a luz na cor de brilho do modo, sem branco puro sobre fundo claro nem preto. Numa partitura de vídeo, o plano em que os ratos morrem fica sem estouro e sem tremor, de propósito.
 
 ## DEPENDÊNCIAS
 - acao: fornece a ação que o recurso reforça e os quadros do extremo dela.

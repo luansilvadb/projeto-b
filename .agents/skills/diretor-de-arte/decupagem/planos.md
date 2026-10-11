@@ -16,7 +16,7 @@ Como dividir a cena em planos de modo que a imagem acompanhe a fala?
 **O que o repositório exige:**
 
 - **Deixa.** Todo plano, menos o primeiro da cena, começa numa palavra da narração: aquela em que o espectador já precisa estar vendo a imagem nova. A palavra ocorre uma vez só na cena, ou o registro diz qual ocorrência.
-- **Registro.** Cada plano leva a deixa, a encenação (quem faz o quê e onde, o que muda lá dentro e o texto de tela), a escala, a paleta (o modo de cor e o matiz do fundo) e a entrada.
+- **Registro.** Cada plano leva a deixa, a encenação (quem faz o quê e onde, o que muda lá dentro e o texto de tela), a escala, a paleta (a registrada em `art.md` e o matiz do fundo) e a entrada.
 - **Escala:** aberto (o lugar inteiro, o assunto pequeno), médio (a figura inteira ou da cintura para cima), close (o rosto, a mão, o objeto) ou detalhe (um olho, uma textura enchendo o quadro).
 - **Entrada:** como a imagem anterior vira esta, em texto livre. O costume são quatro nomes: corte (troca seca), câmera (o enquadramento muda dentro do mesmo cenário), transformação (a imagem anterior vira a nova) e varredura (uma borda atravessa o quadro e revela a nova imagem). A passagem que não cabe neles é dita em poucas palavras.
 
@@ -29,7 +29,7 @@ Como dividir a cena em planos de modo que a imagem acompanhe a fala?
 - A mesma escala se repete por vários planos, ou o bloco inteiro não chega perto de nada: a distância está seguindo o momento?
 - Tudo entra por corte: o bloco se lê como um lugar e uma ideia, ou como uma fila de quadros?
 
-**Medidas da referência** (evidência: situam a decupagem e não reprovam por si). A composição troca cerca de 13 vezes por minuto, uma a cada 4 ou 5 segundos, e o corte seco acontece 5 vezes por minuto; composição parada por mais de 8 segundos é rara. Escalas: aberto 24%, médio 59%, close 14%, detalhe 2%. A taxa de trocas não é meta: o vídeo do sono trocava a cada 4,2 s, com perto de 1 s gasto em cada troca, e o usuário sentiu pressa (2026-10-09), porque não sobrava tempo de olhar o desenho nem de alguém reagir.
+**Medidas da referência** (evidência: situam a decupagem e não reprovam por si). A composição troca cerca de 13 vezes por minuto, uma a cada 4 ou 5 segundos, e o corte seco acontece 5 vezes por minuto; composição parada por mais de 8 segundos é rara. Escalas: aberto 24%, médio 59%, close 14%, detalhe 2%. A taxa de trocas não é meta: uma versão trocava a cada 4,2 s, com perto de 1 s gasto em cada troca, e o usuário sentiu pressa, porque não sobrava tempo de olhar o desenho nem de alguém reagir.
 
 **Heurísticas**, para quando o problema delas aparece:
 

@@ -3,9 +3,9 @@ O que faz uma sequência soar contada como uma coisa só, em vez de uma coleçã
 
 ## RESPOSTA
 
-**O defeito que esta unidade evita.** Um roteiro pode cumprir `explicacao`, passar em todas as medidas do `pnpm check-script` e ainda soar como texto de IA. Foi o que aconteceu com a quinta versão do `why-we-sleep`: cada achado era tratado como uma unidade fechada, com uma frase polida e um fecho de efeito; o texto mudava de assunto antes que alguma coisa ganhasse continuidade; e as frases de efeito fabricavam uma importância que a sequência ainda não tinha construído. O ouvinte reconhece a fila. Os números desta unidade vieram depois, para ajudar a ver isso.
+**O defeito que esta unidade evita.** Um roteiro pode cumprir `explicacao`, passar em todas as medidas do `pnpm check-script` e ainda soar como texto de IA. É o que acontece com um roteiro em que cada achado é tratado como uma unidade fechada, com uma frase polida e um fecho de efeito; o texto mudava de assunto antes que alguma coisa ganhasse continuidade; e as frases de efeito fabricavam uma importância que a sequência ainda não tinha construído. O ouvinte reconhece a fila. Os números desta unidade vieram depois, para ajudar a ver isso.
 
-**Base.** Dois vídeos indicados pelo usuário em 2026-10-04: "A história não contada da JBS", do Spotniks, e "O que as BETS fazem com o seu CÉREBRO", do Ciência Todo Dia. O primeiro é um narrador em off que conta, e dá o tom do canal. O segundo é um apresentador que conversa, e dá os mecanismos de argumento.
+**Base.** Dois vídeos indicados pelo usuário: "A história não contada da JBS", do Spotniks, e "O que as BETS fazem com o seu CÉREBRO", do Ciência Todo Dia. O primeiro é um narrador em off que conta, e dá o tom do canal. O segundo é um apresentador que conversa, e dá os mecanismos de argumento.
 
 **Fio** é o que continua ativo de um trecho para o seguinte e faz o próximo soar como consequência, continuação ou transformação do que já estava acontecendo. Pode ser uma pergunta, uma pessoa, um objeto, uma relação, uma hipótese, uma palavra, uma comparação, um conflito, um caso, uma imagem que volta. Um vídeo pode ter dois que se cruzam. `arco` pergunta por que este bloco vem depois daquele; `fio` pergunta o que daquele bloco ainda está vivo quando este começa. Um bloco pode explicar perfeitamente e ser um episódio isolado: é esse o espaço desta unidade.
 
@@ -55,9 +55,9 @@ O que faz uma sequência soar contada como uma coisa só, em vez de uma coleçã
 
 Numa cadeia causal que se carrega sozinha, a seção fica de fora: não se inventa refrão, promessa nem personagem para preenchê-la.
 
-**Sensores.** O que a referência e o caso do `why-we-sleep` mostraram. Servem para localizar troca rápida de assunto, fecho em excesso ou elementos demais, e não aprovam nem reprovam o fio.
+**Sensores.** O que a referência mostrou. Servem para localizar troca rápida de assunto, fecho em excesso ou elementos demais, e não aprovam nem reprovam o fio.
 
-- Cerca de 150 palavras por ideia nova, e de seis a oito ideias num vídeo de oito minutos. A versão recusada tinha uma frase de efeito a cada 60 palavras.
+- Cerca de 150 palavras por ideia nova, e de seis a oito ideias num vídeo de oito minutos. Uma versão recusada tinha uma frase de efeito a cada 60 palavras.
 - Cerca de 150 palavras de fato concreto entre uma frase de efeito e a seguinte; na referência, uma a cada 180.
 - Refrão com três a cinco voltas, numa frase de até oito palavras.
 - De uma a três promessas plantadas, com um a dez minutos entre plantar e cobrar.
@@ -72,7 +72,7 @@ Numa cadeia causal que se carrega sozinha, a seção fica de fora: não se inven
 - checagem: confere o detalhe de cada personagem, as contas e o que cada concessão afirma.
 
 ## LIMITES
-- O narrador do canal conta em off e não diz "eu" (decisão do usuário em 2026-10-04). As retomadas viram "lembra de...", "essa distinção volta", "vamos voltar a...".
+- O narrador do canal conta em off e não diz "eu" (decisão do usuário). As retomadas viram "lembra de...", "essa distinção volta", "vamos voltar a...".
 - Nome estrangeiro vai escrito como se pronuncia; quem aparece uma vez pode ficar só no selo da tela (`procedencia`).
 - Quando escrever e quando parar é de `etapas/roteiro`; se o texto soa montado, e com que gravidade, é de `critica`.
 

@@ -1,6 +1,6 @@
 ---
 name: diretor-de-arte
-description: "Direção de imagem e movimento para vídeos e curtas: intenção visual, elenco, paleta, planos, desenho, composição, animação e a imagem do cartaz ou da thumbnail. Use para criar ou ajustar cenas, storyboards e animatics, animar movimentos, fazer o cartaz ou a thumbnail ou revisar quadros e renders."
+description: "Direção de imagem e movimento para vídeos e curtas: intenção visual, elenco, paleta, decupagem em planos, desenho, composição, animação e a imagem do cartaz ou da thumbnail, que executa o conceito fixado por diretor-publicacao sem mudar o que a imagem afirma. Use para criar ou ajustar cenas, storyboards e animatics, animar, produzir o PNG do cartaz ou da thumbnail, ou revisar quadros e renders."
 ---
 
 ## Papel e entregas
@@ -40,7 +40,7 @@ Se a animação exigir outra composição, volte ao animatic. Se faltar artefato
 
 Refinamentos de execução ficam com o agente. Confirme com o usuário mudanças materiais de sentido, identidade ou compromisso e registre-as em `art.md` ou `score.md`. Leia a entrevista de imagem ou movimento quando uma alternativa válida puder mudar uma dessas decisões. Críticas apontam a perda para o espectador e a evidência, sem julgar por gosto.
 
-Use ilustrador, motion-designer e os críticos nos casos definidos pelos procedimentos. Eles trazem evidência; esta skill decide. Paralelize tarefas com listas de arquivos sem interseção; altere em série arquivos compartilhados de componentes, tokens, paleta, composição e registro no `Root.tsx`.
+Use ilustrador, motion-designer e os críticos nos casos definidos pelos procedimentos. Eles trazem evidência; esta skill decide. Paralelize tarefas com listas de arquivos sem interseção; altere em série arquivos compartilhados de componentes, tokens, paleta, composição e registro no `src/Root.tsx`.
 
 ## Índice de unidades
 
@@ -85,6 +85,8 @@ O protocolo comum da equipe (frase de intenção, donos, handoff, gravidade e ro
 - **Passa adiante**: os planos, os pedidos de frase e de tempo ao `diretor-criativo`; ao `diretor-de-som`, a linha "Intenção visual" de `art.md` e, em `score.md`, o instante de cada ação e o que muda na imagem em cada virada, para o som responder às mesmas; as cenas à `diretor-producao`; o PNG do cartaz ou da thumbnail ao `diretor-publicacao`. Cada passagem diz o que é compromisso, o que é hipótese e o que ficou aberto, com a gravidade.
 - **Coordena com o som nas viradas**: a metáfora que a imagem desenha é a que a fala usa, e o que acelera, para ou muda de cor numa virada é dito antes de o som ser desenhado em cima. Quando imagem e som puxam para lados opostos, as duas direções resolvem contra a frase de intenção.
 - **Confere antes de passar**: o quadro e a sequência renderizados, pelas críticas de quadro e de movimento; a história visual lida sem a narração (`etapas/decupagem.md`, passo 3).
+- **Passagem pontual**: um quadro, uma cena ou uma nota visual que muda vai com o plano, o que muda na imagem e o artefato atualizado (`shots`, `art.md`, `score.md`); o resto do filme não é redesenhado. Se a mudança pede outra frase, ela volta ao `diretor-criativo` com a oração e a imagem que não se consegue mostrar.
+- **Informação ausente**: uma ficha, uma narração gravada ou um conceito de cartaz que falta é dito com o dono (`art.md`, `diretor-producao`, `diretor-publicacao`); o trabalho que não depende dele segue.
 - **Com prazo no briefing**: o nível de polimento vem do plano (`diretor-producao/etapas/plano.md`) e vale para o filme inteiro. No nível essencial, toda cena tem a composição final e o movimento mínimo; atuação e câmera vão primeiro para as viradas.
 
 ## Restrições e parada

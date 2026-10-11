@@ -11,7 +11,7 @@ Quando uma decisão de movimento é do agente, e quando ela muda intenção, sen
 - se uma pausa se mexe ou fica imóvel, e se um recurso de ênfase entra ou não;
 - a técnica de uma passagem, enquanto a relação entre os dois planos continua a mesma: uma varredura que não funciona pode virar transformação;
 - a atuação de que a ação precisa para ser lida: respirar, mudar o apoio, seguir com os olhos o que já é o foco;
-- a reação cômica colada à frase (`pantomima`): o humor na imagem é traço do canal (decisão do usuário em 2026-10-09), e a piada física e a que volta não pedem licença uma a uma;
+- a reação cômica colada à frase (`pantomima`): o humor na imagem é traço do canal (decisão do usuário), e a piada física e a que volta não pedem licença uma a uma;
 - todo defeito da crítica cujo conserto preserva a intenção.
 
 Dúvida técnica não é pergunta de produto: havendo critério para experimentar e comparar, experimenta-se antes de perguntar. Medida fora da faixa sem defeito à vista não é decisão de ninguém.
@@ -38,7 +38,7 @@ Dúvida técnica não é pergunta de produto: havendo critério para experimenta
 
 - **Explorar antes.** Não se pergunta sobre o que ainda não foi testado, nem se oferecem quatro passagens antes de saber se alguma funciona.
 - **No artefato, do tamanho da decisão.** Ritmo, peso e passagem se decidem em vídeo: o plano, ou os dois vizinhos quando é uma passagem. A leitura de um instante cabe numa tira, e uma direção inicial pode caber numa prova menor. Dois segundos que resolvem dispensam duas cenas inteiras.
-- **Sobre um quadro que ele já aceitou.** A prova de tempo, de atuação ou de câmera que vai ao usuário usa um acabamento que ele já aceitou. Quando o acabamento também é novo, vai primeiro o quadro parado (o quadro-chave de `etapas/animatic.md`): sobre um quadro abaixo do padrão ele julga o quadro, e a dúvida de movimento fica sem resposta. Em 2026-10-09, duas de três provas animadas sobre desenho improvisado foram recusadas pelo desenho, e a feita sobre um quadro-chave aceito teve o mundo, a luz e a câmera aceitos de primeira.
+- **Sobre um quadro que ele já aceitou.** A prova de tempo, de atuação ou de câmera que vai ao usuário usa um acabamento que ele já aceitou. Quando o acabamento também é novo, vai primeiro o quadro parado (o quadro-chave de `etapas/animatic.md`): sobre um quadro abaixo do padrão ele julga o quadro, e a dúvida de movimento fica sem resposta. Numa rodada de provas, duas de três animadas sobre desenho improvisado foram recusadas pelo desenho, e a feita sobre um quadro-chave já aceito teve o mundo, a luz e a câmera aceitos de primeira.
 - **Só alternativas de verdade.** Há A e B quando as duas funcionam e a diferença é uma troca real. Quando uma saída é claramente melhor e reversível, ela é feita e mostrada, sem escolha de fachada.
 - **Com recomendação**: o que ela ganha e o principal custo.
 - **Com a profundidade que a decisão pede.** Uma escolha local é uma pergunta, com a comparação ao lado. A entrevista ramo a ramo da skill `grilling` fica para o que é ambíguo, tem várias dependências ou mexe na identidade.

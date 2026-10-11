@@ -5,16 +5,16 @@ Como construir qualquer coisa em formas chapadas, em SVG?
 
 **Linguagem de forma.** É ofício do projeto, e vale inteira nos dois modos, `canal` e `jam` (`SKILL.md`, "Modos"). Foi lida em recortes da referência em resolução nativa, como método, e não como traço a reproduzir: as formas se separam por cor e por valor, sem linha de contorno; cantos arredondados e curvas; preenchimento chapado, com o volume vindo de formas empilhadas (a base, uma sombra e, às vezes, um brilho). Degradê fica para fundo, céu, água, chão e brilho de luz.
 
-**O que o projeto já provou.** As quatro regras abaixo vieram de defeito nosso, visto em render e corrigido até o usuário aprovar (o piloto da elefanta, da pessoa e do antílope: seis renders e quatro críticas). Têm mais peso que qualquer coisa lida na referência.
+**O que o projeto já provou.** As quatro regras abaixo vieram de defeitos nossos, vistos em render e corrigidos até o usuário aprovar, em cenas de pessoa e de antílope (num desses casos, foram seis renders e quatro críticas). Têm mais peso que qualquer coisa lida na referência.
 
-**1. Construção antes do acabamento.** Nenhum acabamento conserta a construção: no piloto, três rodadas de acabamento sobre uma silhueta fraca deram um desenho carregado e ainda fraco. A construção se julga na silhueta: numa cor só contra o fundo, na pose que a cena pede (a pose é de `personagem`), ela ainda diz o que é. Ela parte de como a coisa é de verdade, pelos traços que a tornam reconhecível. Numa figura viva, quatro coisas separaram o bicho do boneco de blocos:
+**1. Construção antes do acabamento.** Nenhum acabamento conserta a construção: três rodadas de acabamento sobre uma silhueta fraca deram um desenho carregado e ainda fraco. A construção se julga na silhueta: numa cor só contra o fundo, na pose que a cena pede (a pose é de `personagem`), ela ainda diz o que é. Ela parte de como a coisa é de verdade, pelos traços que a tornam reconhecível. Numa figura viva, quatro coisas separaram o bicho do boneco de blocos:
 
 - **Junção em curva.** Onde duas partes se encontram (tromba e testa, perna e barriga, pescoço e ombro), o contorno de uma vira o da outra, sem quina e sem uma forma encostada na outra.
 - **Membro nasce de uma massa**: a perna de trás sai de uma coxa, a da frente de um ombro. Membro que sai de um ponto é palito espetado.
 - **O que se repete não é cópia.** As quatro pernas, os dois braços, as folhas: cada um com largura, ângulo ou curva própria; os do lado de lá aparecem de verdade, deslocados mais de meia largura, ou somem.
 - **A linha de cima tem acontecimentos**: sobe, afunda e cai (a testa, a nuca, o ombro, a sela, a garupa). Um arco só é um balão.
 
-**2. Registro: o acabamento vem do que a coisa é.** Trocar um registro pelo outro foi o erro mais caro do piloto: o acabamento de quem emite luz (aro, textura, prega, borda de luz, halo), posto num personagem sem uma luz na cena que o peça, lê como enfeite gerado.
+**2. Registro: o acabamento vem do que a coisa é.** Trocar um registro pelo outro foi o erro mais caro visto em render: o acabamento de quem emite luz (aro, textura, prega, borda de luz, halo), posto num personagem sem uma luz na cena que o peça, lê como enfeite gerado.
 
 - **Personagem e mundo** (pessoa, bicho, objeto de cena, lugar). A riqueza vem da cor e do desenho da curva: poucas formas, grandes, de superfície lisa, e a cor separando as partes, cada uma numa família saturada. O personagem inteiro numa família só lê como desenho sem tinta. O sol e a lua de um cenário do mundo ficam simples, um disco com um brilho leve: com anéis em volta, foram recusados pelo usuário.
 - **Por dentro, e o que emite luz** (célula, tecido, tumor, astro, brasa, o que acende). A riqueza vem da repetição e do brilho: o que emite luz parece fonte de luz, com o centro mais claro que a borda, e o que é muitos se lê de uma vez, como massa, com um diferente dos outros, que é o foco.
@@ -53,10 +53,10 @@ Bem abaixo, confira se o desenho virou ícone; acima, confira no recorte se o de
 | Problema | Uma saída | De onde vem |
 |---|---|---|
 | A silhueta saiu em blocos | `path` com curvas Bézier no lugar de elipse mais retângulos; o tubo que afina (braço, caule, tentáculo, cauda) já existe em `taperPath`, de `src/art/shapes.ts` | código do projeto |
-| A sombra ou o padrão vazam da parte | `clipPath` com a silhueta da parte. Repetir a silhueta deslocada dá a faixa de largura constante | piloto |
+| A sombra ou o padrão vazam da parte | `clipPath` com a silhueta da parte. Repetir a silhueta deslocada dá a faixa de largura constante | validado em render |
 | O brilho pesa no render | halo em degradê radial; desfoque grande custa caro | código do projeto |
 | O corpo não tem hierarquia | de duas a cinco massas em curvas contínuas, de proporção desigual: uma grande, uma média, uma pequena | referência |
-| A figura pequena some | membro de 16 a 24 pixels num quadro de 1080, com ponta redonda | piloto |
+| A figura pequena some | membro de 16 a 24 pixels num quadro de 1080, com ponta redonda | validado em render |
 | O assunto não prende o olho | um acento: um detalhe pequeno de matiz oposto (o brinco, a unha, o olho) perto do ponto focal | referência |
 | Quantas cores no personagem | de quatro a seis famílias no assunto | referência |
 | Padrão e detalhe | poucos, grandes e agrupados, em três ou quatro tons vizinhos, perto do ponto focal | referência |
@@ -75,5 +75,5 @@ Bem abaixo, confira se o desenho virou ícone; acima, confira no recorte se o de
 ## EXEMPLO
 > Elefanta de perfil.
 > Fraco: uma elipse, um círculo, quatro retângulos e um traço para a tromba.
-> Carregado: a mesma silhueta, com aro, textura na pele, borda de luz e halo. Foi o piloto antes da correção.
+> Carregado: a mesma silhueta, com aro, textura na pele, borda de luz e halo. Foi a versão antes da correção.
 > Construído: a testa em domo, a sela e a garupa na linha de cima; a tromba fundida à testa; as pernas saindo de uma coxa e de um ombro, as do lado de lá deslocadas; a orelha como forma própria, em outra família de cor; uma sombra desenhada por parte.

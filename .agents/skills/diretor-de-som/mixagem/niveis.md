@@ -42,7 +42,7 @@ Quando a mesma música precisa ficar mais perto ou mais longe da voz, e qual pre
 **Os três defeitos**, que são de escuta, e não de número:
 
 1. **A fala ficou difícil**: quem ouve se esforça, perde uma palavra ou tem a atenção puxada sem intenção.
-2. **A música não faz o trabalho dela**: some, ou vira massa. A 18 dB da voz, num piloto, ela virou "uma massa que qualquer faixa preencheria". Onde deve existir, precisa estar presente o bastante para cumprir a função.
+2. **A música não faz o trabalho dela**: some, ou vira massa. A 18 dB da voz, num teste, ela virou "uma massa que qualquer faixa preencheria". Onde deve existir, precisa estar presente o bastante para cumprir a função.
 3. **Ouve-se a operação do volume**: a mudança de presença é percebida como alguém mexendo no botão, e não como consequência do vídeo. Subindo 8 dB em cada pausa longa da fala, o usuário ouviu "um som que abre e abafa o tempo todo". O defeito é a modulação sem função ou nervosa, e não o volume fazer trabalho: aproximar a música quando a imagem assume, ou recuá-la sob uma fala delicada, é uso legítimo.
 
 **Teste de remoção**, para cada mudança: se ela sair e o trecho ficar em `leito`, o que piora? Se nada que se perceba, ela sai.

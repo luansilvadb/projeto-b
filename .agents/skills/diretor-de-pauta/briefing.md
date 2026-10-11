@@ -5,7 +5,7 @@ Que produto é este, para onde vai e com que tempo e recursos, e o que disso pre
 
 **O briefing é dado de partida, e não estado.** Ele guarda o que o usuário pediu e o que o destino impõe, na seção `## Briefing` de `src/videos/<vídeo>/pauta.md`. As seis direções o leem; só o usuário o muda. Nada nele registra andamento, etapa, aceite ou tempo gasto: o que já existe se vê nos artefatos, e o tempo que resta se calcula do prazo e do relógio (`diretor-producao/etapas/plano.md`).
 
-**Modo.** É a primeira linha, e decide que regras valem (decisão do usuário em 2026-10-11):
+**Modo.** É a primeira linha, e decide que regras valem (decisão do usuário):
 
 | Modo | Produto | Como começa | Regras próprias |
 |---|---|---|---|
@@ -30,10 +30,10 @@ Sem briefing, o modo é `canal`: o fluxo dos vídeos do canal segue como sempre 
 - Referências: <a obra e o que se tira dela>
 ```
 
-- **Destino** decide o pacote de saída (`diretor-publicacao`) e o arquivo de entrega (`diretor-producao/etapas/corte-final.md`). Continua selecionável até a entrega: mudar de `jam` para `jam e youtube` acrescenta um pacote, e não refaz o filme.
+- **Destino** decide o pacote de saída (`diretor-publicacao`) e o arquivo de entrega (`diretor-producao/etapas/corte-final.md`). Grave sempre um dos três valores canônicos: `jam`, `youtube` ou `jam e youtube`. Ao ler um briefing antigo, aceite "evento" como `jam`, e "os dois" como `jam e youtube`; ao reescrever o campo, troque pelo canônico. Continua selecionável até a entrega: mudar de `jam` para `jam e youtube` acrescenta um pacote, e não refaz o filme.
 - **Prazo e duração** são dados. O prazo ajusta o nível de polimento (`plano`), e não dispensa requisito bloqueante.
 - **Regras do evento** são transcritas, e não interpretadas: a regra ambígua ou ausente volta ao usuário como pergunta, com o que depende dela. Nenhuma direção deduz regulamento, prazo, licença ou permissão.
-- **Narração em off é obrigatória no modo `jam`** (decisão do usuário em 2026-10-11): a composição só monta com a narração gravada, e o tempo de toda cena sai dela.
+- **Narração em off é obrigatória no modo `jam`** (decisão do usuário): a composição só monta com a narração gravada, e o tempo de toda cena sai dela.
 
 **O que nasce com o briefing.** A pasta `src/videos/<vídeo>/`, com nome curto em inglês, e `pauta.md` com o briefing e a escolha (o tema, por `escolha`, ou a premissa, por `premissa`). Pronto quando o modo e o destino estão ditos, o que o usuário forneceu está transcrito com a fonte e o que falta está marcado "não fornecido", com a pergunta feita quando outro trabalho depende da resposta.
 

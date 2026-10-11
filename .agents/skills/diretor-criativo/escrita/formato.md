@@ -59,7 +59,7 @@ O que entra quando existe, e onde:
 
 | Onde | O quê | Quando |
 |---|---|---|
-| cabeçalho | `Intenção` | a frase de intenção: o que quem assiste deve entender ou sentir ao fim, e por qual meio (`diretor-producao/equipe/protocolo.md`). No modo `jam` ela ocupa o lugar de `Tese` e de `Promessa` na base do cabeçalho (`narrativa`); no modo `canal` só entra quando diz algo que tese e promessa não dizem. |
+| cabeçalho | `Intenção` | a frase de intenção: o que quem assiste deve entender ou sentir ao fim, e por qual meio (`diretor-producao/equipe/protocolo.md`). No modo `jam` ela ocupa o lugar de `Tese` e de `Promessa` na base do cabeçalho (`narrativa`), e a pergunta dramática da história entra na mesma linha, depois de um travessão; no modo `canal` só entra quando diz algo que tese e promessa não dizem. |
 | cabeçalho | `Duração-alvo` | o usuário, o produto ou o briefing impôs um tamanho. A faixa do canal e a duração medida são sensores, e não vêm para cá. |
 | cabeçalho | `Molde / Forma de arco` | o nome mantém a coerência ou evita uma regressão (`moldes`, `arco`) |
 | cabeçalho | `Tensão` | há uma contradição ou pergunta específica que a reescrita precisa preservar |

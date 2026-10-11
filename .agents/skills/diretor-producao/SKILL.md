@@ -1,6 +1,6 @@
 ---
 name: diretor-producao
-description: "Operação e gestão da produção de vídeos e curtas: plano de tempo, recursos e contingência pelo prazo do briefing, voz, trilha e efeitos sonoros já decididos, montagem do arquivo de entrega e acervo. Use para planejar o prazo, gerar ou corrigir narração, gerar trilha, buscar e baixar efeitos, renderizar e arquivar o que foi publicado ou enviado."
+description: "Operação da produção de vídeos e curtas: plano de tempo e recursos pelo prazo do briefing, geração de narração e trilha, busca e download de efeitos, montagem e normalização do arquivo de entrega e acervo do publicado. Opera ferramentas sobre artefatos decididos pelas outras direções e não decide conteúdo. Use para planejar o prazo, gerar ou corrigir a voz, gerar trilha, buscar efeitos, renderizar, montar o arquivo final ou arquivar."
 ---
 
 ## Papel e entregas
@@ -55,6 +55,7 @@ O modo vem do briefing; sem briefing, é `canal`, e nada muda nele. No modo `jam
 - **Passa adiante**: a narração e os tempos a `diretor-de-arte` e `diretor-de-som`; a frase que não soa ao `diretor-criativo`; o som renderizado ao `diretor-de-som`; o arquivo de entrega e as medidas ao usuário e ao `diretor-publicacao`. Cada passagem leva o caminho, as medidas e o que só o usuário julga.
 - **Confere antes de passar**: os avisos do `pnpm narrate`; as verificações de `etapas/corte-final.md`; e, contra o briefing, a duração e a especificação do arquivo.
 - **Com prazo no briefing**: o plano diz os marcos, o nível de polimento e a ordem de corte. Ele é recalculado dos artefatos e do relógio, e não fica guardado como estado.
+- **Passagem pontual**: um pedido localizado (regerar uma frase, gerar uma parte da trilha, renderizar duas cenas) leva o trecho, o motivo e o artefato que muda, e não reabre o plano. Se falta um artefato, diga qual e quem o produz; o trabalho que não depende dele segue.
 
 ## Limites de operação
 

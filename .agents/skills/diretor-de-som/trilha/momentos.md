@@ -56,10 +56,10 @@ A forma não decide para nenhum lado. O momento que obedece à descrição e est
 **Sensores.** Dizem onde investigar, e não se passa ou falha:
 
 - **A música da referência muda de seção a cada 20 s**, mais ou menos. Descreve a música, e não a quantidade de repaints: uma faixa gerada muda por dentro sem momento nenhum.
-- **A dose do piloto**: de três a sete momentos num vídeo de 9 minutos. É a realização daquele vídeo. Dois não pedem um terceiro; oito chamam atenção e não reprovam.
+- **Dose observada**: de três a sete momentos num vídeo de 9 minutos, na realização de um vídeo do projeto. Dois não pedem um terceiro; oito chamam atenção e não reprovam.
 - **A parte do vídeo refeita.** Perto ou além da metade, pergunte: estou corrigindo um trecho, ou redesenhando a música por remendos? Momento não é remendo de base ruim: o que pede outro pulso, outra textura ou outra densidade quase por inteiro acusa a descrição da parte, a identidade ou a falta de uma parte nova. A porcentagem não reprova.
 - **O salto nas bordas e a variação de timbre** (`critica-som`). O número isolado não condena o que soa natural.
-- **Volume e custo, observados nesta máquina**: cada repaint baixou a faixa inteira em cerca de 1 dB, que o comando mede e a mixagem corrige pelo valor real, e custa de três a quatro minutos de GPU. Podem mudar com o modelo e a configuração. São razão para testar a menor região e não gerar momento sem função.
+- **Volume e custo, observados numa geração de teste**: cada repaint baixou a faixa inteira em cerca de 1 dB, que o comando mede e a mixagem corrige pelo valor real, e custa de três a quatro minutos de GPU. Podem mudar com o modelo e a configuração. São razão para testar a menor região e não gerar momento sem função.
 
 **Vizinhos.** Dois momentos colados são válidos: o segundo é composto com o primeiro como contexto. Vale perguntar se ainda são dois (funções diferentes, o segundo depende do primeiro) ou se a região virou fragmento.
 

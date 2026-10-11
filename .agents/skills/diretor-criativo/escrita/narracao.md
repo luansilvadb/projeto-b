@@ -32,7 +32,7 @@ O que uma frase precisa fazer para ser entendida, soar natural e se ligar à seg
 
 ### O registro do canal
 
-O narrador conta em off: é alguém que apurou a história e a conta com calma, e não um apresentador conversando com a câmera. Português do Brasil escrito direto em português, falado e sem gíria (decisões do usuário em 2026-10-04; o tom é o do vídeo da JBS, base de `fio`). Quem ele é (temperatura, distância, humor) é de `voz`; aqui está como isso atravessa frases que se ouvem.
+O narrador conta em off: é alguém que apurou a história e a conta com calma, e não um apresentador conversando com a câmera. Português do Brasil escrito direto em português, falado e sem gíria (decisões do usuário; o tom é o do vídeo da JBS, base de `fio`). Quem ele é (temperatura, distância, humor) é de `voz`; aqui está como isso atravessa frases que se ouvem.
 
 - O teste: um bom narrador de documentário brasileiro diria isso, com essas palavras? Ele se responde com o que dá para apontar: a palavra existe na fala, a construção tropeça, soa a tradução, o registro muda sem motivo.
 - Entre duas palavras que dizem o mesmo com a mesma precisão, a que soa natural na boca dele: "dá" e não "resulta em", "tem" e não "possui", "todo mundo" e não "a totalidade". O termo técnico necessário fica.

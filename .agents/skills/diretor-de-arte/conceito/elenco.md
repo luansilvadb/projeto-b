@@ -12,11 +12,11 @@ Quem conduz o vídeo na tela, e o que ganha rosto?
 
 **Elenco fixo do canal.** Vale no modo `canal`; no modo `jam` o elenco sai do briefing e da história, pelos critérios acima, e a trupe só entra se o usuário a trouxer. O canal tem uma trupe (decisão do usuário em 2026-10-09): um elenco pequeno, de corpo inteiro e feito para atuar, que volta em todo vídeo e encena os papéis de cada vídeo com fantasia e objeto de cena, em vez de personagens novos a cada tema. Ela entra primeiro: protagonista, personificação e testemunha, abaixo, são papéis que os atores dela vestem, e por dentro de um mecanismo são eles que encenam as partes (`pantomima`). Uma figura nova só nasce para o que nenhum deles veste sem falsear: o bicho real, a pessoa real.
 
-**Os atores são chibi** (decisão do usuário em 2026-10-09, que recusou um corpo de cabeça, tronco e membros compridos): um volume só, redondo e compacto, com o rosto no próprio corpo, braços e pernas curtos e grossos, mãos e pés pequenos, e sem chifres, que ele tirou ao ver o trecho animado. Como se desenham e posam é de `personagem`. As fichas:
+**Os atores são chibi** (decisão do usuário, que recusou um corpo de cabeça, tronco e membros compridos): um volume só, redondo e compacto, com o rosto no próprio corpo, braços e pernas curtos e grossos, mãos e pés pequenos, e sem chifres, que ele tirou ao ver o trecho animado. Como se desenham e posam é de `personagem`. As fichas:
 
 - **Vigília**: um ovo verde-água em pé, liso no alto, com mãos creme e cascos claros. O esforço dela é um olho apertado e os dentes cerrados, e nunca a sobrancelha em V, que a fazia ler como um diabinho bravo. Nunca fala. O desenho está em `src/art/Vigilia.tsx`, e a folha de modelo, na composição `vigilia`.
 
-O ator que ainda não tem ficha é desenhado nessa construção na prova do conceito visual (`etapas/decupagem.md`) e levado ao usuário antes de se decupar com ele. É o caso do segundo ator das provas de 2026-10-09, o de boné e óculos: o corpo dele é anterior à decisão.
+O ator que ainda não tem ficha é desenhado nessa construção na prova do conceito visual (`etapas/decupagem.md`) e levado ao usuário antes de se decupar com ele. Um ator sem ficha é desenhado antes de se decupar com ele e levado ao usuário.
 
 **Papéis.** São maneiras de dar função a uma figura, sem quantidade fixa: um vídeo pode não ter protagonista, e uma figura pode cumprir dois papéis.
 
@@ -29,16 +29,16 @@ O ator que ainda não tem ficha é desenhado nessa construção na prova do conc
 
 Um ponto de partida que costuma bastar: um protagonista, uma personificação por processo que a narração nomeia e uma testemunha. Quem procurar no roteiro: os sujeitos das frases com verbo de ação e os processos invisíveis.
 
-**Onde o rosto costuma entrar.** São as saídas que o canal já usou, cada uma sujeita à pergunta acima:
+**Onde o rosto costuma entrar.** São as saídas que o canal já usou, cada uma sujeita à pergunta acima; a linha do rosto de passagem é proposta, e não regra:
 
 | Caso | Uma saída | De onde vem |
 |---|---|---|
 | O que age com intenção na explicação (decide, procura, ataca, protege, erra) | ganha olhos | não registrada |
-| O que participa de um mecanismo por dentro (órgão, célula, molécula, a máquina de uma analogia) | um ator da trupe o opera ou o veste, e a coisa em si fica sem rosto; ela só ganha olhos quando nenhum ator a representa | decisão do usuário em 2026-10-09 |
-| Bicho sem olhos (água-viva, esponja, planta) | sem rosto, com uma testemunha ao lado: fiel, e emociona menos. Ou um rosto inventado: dá empatia e arrisca falsear. É decisão do usuário | o vídeo do sono |
+| O que participa de um mecanismo por dentro (órgão, célula, molécula, a máquina de uma analogia) | um ator da trupe o opera ou o veste, e a coisa em si fica sem rosto; ela só ganha olhos quando nenhum ator a representa | decisão do usuário |
+| Bicho sem olhos (água-viva, esponja, planta) | sem rosto, com uma testemunha ao lado: fiel, e emociona menos. Ou um rosto inventado: dá empatia e arrisca falsear. É decisão do usuário | validado em render |
 | Objeto de cena do mundo, dado e diagrama | sem rosto; um personagem pode estar dentro do diagrama, operando ou reagindo | não registrada |
 | Tema grave (morte, doença, sofrimento) | a doença no corpo em silhueta ou símbolo; o rosto aflito do protagonista em close, por um plano | não registrada |
-| O objeto que é assunto de um bloco e a fala lhe dá um desejo ou uma perda ("queria ser estrela", "não conseguiu") | **rosto de passagem** (proposta): os olhos abrem sobre a própria superfície só nessa batida, reagem e somem, e o objeto volta a ser objeto; se a fala retoma o sentimento, eles voltam no estado novo | um vídeo de comparação de estrelas: os olhos ficavam de 3 a 5 segundos, uma vez por bloco, e foram os dois instantes mais comentados pelo público |
+| O objeto que é assunto de um bloco e a fala lhe dá um desejo ou uma perda ("queria ser estrela", "não conseguiu") | **rosto de passagem** (proposta): os olhos abrem sobre a própria superfície só nessa batida, reagem e somem, e o objeto volta a ser objeto; se a fala retoma o sentimento, eles voltam no estado novo | um vídeo de comparação de estrelas, em que os olhos ficavam de 3 a 5 segundos, uma vez por bloco, e foram o que o público mais comentou; vira regra só quando um trecho feito com ela for aceito de primeira |
 
 **Ficha de personagem.** A identidade de cada figura com papel, registrada na ficha visual:
 

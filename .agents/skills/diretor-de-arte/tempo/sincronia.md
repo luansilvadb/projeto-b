@@ -14,7 +14,7 @@ Quando cada coisa acontece em relação à narração?
 - **A imagem acompanha o sentido da fala**, não a gramática dela: muda quando a ideia, a ação ou o foco mudam (`planos`). Uma oração pode sustentar o que já está na tela, e outra pode pedir várias mudanças.
 - **O tempo sem novidade tem função.** Um **buraco** é o trecho em que nada novo acontece: ele serve a uma reação, a uma espera, à leitura, à contemplação. O que mantém a imagem viva dentro dele é de `pausa-viva`. Buraco que não serve a nada é o plano que morreu.
 - **A última informação tem tempo de ser percebida** antes de o plano acabar, a não ser quando ela continua no plano seguinte ou é a própria transição.
-- **A reação tem o tempo dela** (decisão do usuário em 2026-10-09: a fala espera). Depois da frase forte, quem está em cena olha, entende e reage no mesmo plano, antes de a frase ou o plano seguinte chegar. No vídeo do sono as pausas dentro da cena tinham meio segundo, e a troca de cena caía em cima da pausa maior: ninguém reagia, e o usuário sentiu pressa.
+- **A reação tem o tempo dela** (decisão do usuário: a fala espera). Depois da frase forte, quem está em cena olha, entende e reage no mesmo plano, antes de a frase ou o plano seguinte chegar. Numa versão, as pausas dentro da cena tinham meio segundo, e a troca de cena caía em cima da pausa maior: ninguém reagia, e o usuário sentiu pressa.
 - **O plano que evolui tem marcos.** Cada mudança que a encenação escreve cai na deixa dela. Uma transformação contínua pode atravessar várias palavras, com os marcos dela no sentido da fala.
 - **O texto chega com o que nomeia**: o nome quando a coisa é apresentada, o número quando a quantidade vira assunto. Quanto tempo ele fica é de `texto`.
 

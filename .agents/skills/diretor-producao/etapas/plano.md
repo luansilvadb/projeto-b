@@ -9,13 +9,13 @@ O plano é uma conta, e não um estado. Ele é dito na conversa e refeito do zer
 Antes de dividir o tempo, liste os requisitos bloqueantes do briefing e do destino: a duração máxima, o formato do arquivo, o crédito exigido, os direitos e as licenças, a narração em off no modo `jam`. Cada um diz de que artefato depende e quem é o dono. Dois se conferem na primeira hora, porque descobertos tarde custam o filme:
 
 - **Formato.** O projeto renderiza em 1920×1080 a 30 fps (`src/format.ts`). O que o `ffmpeg` converte sem mudar a imagem (contêiner, codec, taxa, volume, resolução menor na mesma proporção) é da montagem. Outra proporção ou outra taxa de quadros é mudança de código e de toda composição: diga isso ao usuário antes de qualquer cena ser desenhada.
-- **Direitos.** A voz gerada é de uso não comercial (`narracao.md`), a trilha é gerada e os efeitos vêm do catálogo. Se o briefing traz regra sobre IA, licença ou autoria, o `diretor-publicacao` confere o inventário contra ela antes de a voz ser gerada (`diretor-publicacao/submissao/pacote-de-evento.md`); se o briefing não a traz, a pergunta vai ao usuário.
+- **Direitos.** A voz gerada tem a restrição de uso não comercial que a nota local do projeto (`README.md`) registra (CC-BY-NC): é aviso, e a licença oficial, com sua aplicação aos pesos e à saída, está a conferir na fonte oficial vigente, com fonte e data registradas antes do uso (`narracao.md`); a trilha é gerada e os efeitos vêm do catálogo. Se o briefing traz regra sobre IA, licença ou autoria, o `diretor-publicacao` confere o inventário contra ela antes de a voz ser gerada (`diretor-publicacao/submissao/pacote-de-evento.md`); se o briefing não a traz, a pergunta vai ao usuário.
 
 Regra que o briefing não fornece não é suposta: fica como pergunta aberta, com o que depende dela.
 
 ## 2. O que custa
 
-Os custos de máquina medidos neste repositório:
+Os custos medidos neste repositório são ordens de grandeza, e mudam com a máquina: refaça a conta com o tempo que o próprio primeiro trabalho levou.
 
 | Trabalho | Custo |
 |---|---|
@@ -23,7 +23,7 @@ Os custos de máquina medidos neste repositório:
 | conferência da voz no `pnpm voice` | cerca de dez minutos do usuário por vídeo, e 30 s por rodada de frase regerada |
 | `pnpm music` | de quatro a cinco minutos por leito, de três a quatro por momento |
 | `pnpm scene` | segundos por cena |
-| `pnpm render` | cerca de 10 quadros por segundo: três vezes a duração do filme |
+| `pnpm render` | depende da GPU e do processador; a taxa do primeiro render, em quadros por segundo, dá o tempo do resto (ela muda com a máquina, e a conta sai da taxa do próprio primeiro render) |
 | `pnpm sfx` | depende da internet e do ouvido do usuário para cada som novo |
 
 `pnpm setup:tools` baixa cerca de 20 GB: as ferramentas já precisam estar instaladas quando o relógio começa. O recurso mais escasso é a atenção do usuário, e não a GPU: voz, música e conjunto só ele julga. Junte o que pede ouvido ou decisão dele em poucas paradas, com hora combinada, em vez de interrompê-lo a cada geração.

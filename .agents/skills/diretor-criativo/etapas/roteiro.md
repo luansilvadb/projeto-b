@@ -22,7 +22,7 @@ O roteiro cresce de prova para produto, e não de formulário para aprovação: 
 
 ## A história antes das cenas
 
-O `earth-stops-spinning` chegou à voz e à animação com trinta e três cenas corretas e uma história que o ouvinte precisava adivinhar: o roteiro foi escrito cena a cena, e ninguém leu a narração inteira como quem não sabe nada. O que evita isso não é uma fase a mais, são quatro coisas que valem em qualquer ordem que o trabalho tome (decisão do usuário em 2026-10-10):
+Um roteiro escrito cena a cena, sem que ninguém leia a narração inteira como quem não sabe nada, pode chegar à voz e à animação com cenas corretas e uma história que o ouvinte precisa adivinhar. O que evita isso não é uma fase a mais, são quatro coisas que valem em qualquer ordem que o trabalho tome (decisão do usuário):
 
 - **A história existe antes de ser dividida.** Antes de expandir, você sabe dizer, em poucas linhas e sem termos da pesquisa: a pergunta do vídeo; o que quem assiste sabe ao chegar (`conceito/ouvinte`); a descoberta central; os acontecimentos sem os quais ela não se entende, na ordem em que um leva ao outro; e o que a pesquisa achou e este vídeo não conta (`estrutura/arco`). Isso é pensamento, e cabe na conversa; o que dele é decisão vai para a tese, a promessa e a tabela de `script.md`. Não se cria documento de planejamento.
 - **O mecanismo de que tudo depende é provado primeiro.** Se a história se apoia numa explicação difícil (a inércia, o formato da Terra, o freio da maré), ela é escrita sozinha e passa pelo teste do leigo e pela reconstrução (`conceito/ouvinte`, `escrita/explicacao`) antes de existirem trinta cenas em cima dela. É a prova de "Como o roteiro anda" com o alvo dito: a explicação que ainda não funciona para um leigo não é expandida.

@@ -13,8 +13,8 @@ Quem é o narrador do canal diante do assunto e de quem assiste, e que diferenç
 - **Sem pânico e sem consolo falso.** Ele não aumenta a emoção do tema além do que os fatos sustentam, para o medo nem para o conforto. Isso não obriga a terminar otimista: um tema pode pedir maravilhamento, gravidade, desconforto ou clareza sem consolo.
 - **Não julga quem assiste**, nem quem acredita na ideia errada que o vídeo corrige.
 - **Opinião é lida como opinião.** Quando avalia ou toma posição, não a apresenta como achado científico. A formulação pode deixar isso claro sem "na nossa opinião". Onde não há posição a tomar, ele não inventa uma para ter personalidade.
-- **Em off, em português do Brasil, sem "eu"** e sem gíria passageira (decisões do usuário em 2026-10-04). O registro frase a frase é de `narracao`.
-- **Conta a sério o que a tela faz com graça.** O humor é traço do canal e mora na imagem (decisão do usuário em 2026-10-09): o narrador não vira comediante nem comenta a piada da tela. O que o texto faz por ela é de `humor`.
+- **Em off, em português do Brasil, sem "eu"** e sem gíria passageira (decisões do usuário). O registro frase a frase é de `narracao`.
+- **Conta a sério o que a tela faz com graça.** O humor é traço do canal e mora na imagem (decisão do usuário): o narrador não vira comediante nem comenta a piada da tela. O que o texto faz por ela é de `humor`.
 
 **A mesma pessoa muda de tom sem virar outra.** A extinção a deixa mais grave, o experimento mental absurdo, mais lúdica, a descoberta, mais curiosa, o sofrimento real, mais contida. O assunto muda a expressão, e não os compromissos. O tom não contradiz o peso real do assunto nem a promessa do vídeo; e o tom se adapta ao fato, nunca o contrário.
 

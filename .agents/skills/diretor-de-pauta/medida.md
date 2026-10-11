@@ -35,7 +35,7 @@ A estrutura da página muda sem aviso. Se a leitura falhar, diga isso e peça a 
 - **O que devolver:** volume, competição, views máximas e médias, e "In Title" (em quantos dos primeiros resultados o termo está no título; baixo com volume razoável é procura sem vídeo com esse nome).
 - **O que ignorar:** a média de assinantes. Deu 282 milhões numa busca e 73 milhões em outra; campo com valor implausível sai da comparação de todos os candidatos, e o descarte é dito.
 
-**Versão curta quando a oferta discorda** (decisão do usuário em 2026-10-10). Termo com o menor nível de volume e oferta também fraca sai direto: as duas medidas concordam ("por que a lua não cai na terra", com a maioria dos vídeos abaixo de 240 mil views). Com o menor volume e oferta forte, a frase provavelmente não é a que as pessoas digitam, e o termo é medido de novo encurtado ("o que aconteceria se os humanos sumissem da terra", com 1,3 mi de média, vira "e se os humanos sumissem"). Volume mínimo também na forma curta é assunto sem procura na busca.
+**Versão curta quando a oferta discorda** (decisão do usuário). Termo com o menor nível de volume e oferta também fraca sai direto: as duas medidas concordam ("por que a lua não cai na terra", com a maioria dos vídeos abaixo de 240 mil views). Com o menor volume e oferta forte, a frase provavelmente não é a que as pessoas digitam, e o termo é medido de novo encurtado ("o que aconteceria se os humanos sumissem da terra", com 1,3 mi de média, vira "e se os humanos sumissem"). Volume mínimo também na forma curta é assunto sem procura na busca.
 
 **Os níveis do painel são estimativa de terceiro.** Servem para comparar candidatos entre si no mesmo dia, nunca como número absoluto. Toda medição é anotada com a data.
 

@@ -7,7 +7,7 @@ Como desenhar e posar uma figura com rosto?
 
 **Um personagem funciona quando:**
 
-- **A pose conta a cena** sem cor nem rosto: quem dorme pende, quem espera apoia o peso num lado. Uma figura só parada, de olho fechado, não dorme. O corpo se inclina inteiro, dos pés à cabeça: o tronco dobrado sobre pernas a prumo, com o rosto descansado, lê como coluna quebrada. Uma inclinação mora num lugar só, no desenho ou na cena; nos dois, elas se somam. Vem do piloto da pessoa e da elefanta. O teste: pinte a figura de uma cor só. A ação ainda se lê?
+- **A pose conta a cena** sem cor nem rosto: quem dorme pende, quem espera apoia o peso num lado. Uma figura só parada, de olho fechado, não dorme. O corpo se inclina inteiro, dos pés à cabeça: o tronco dobrado sobre pernas a prumo, com o rosto descansado, lê como coluna quebrada. Uma inclinação mora num lugar só, no desenho ou na cena; nos dois, elas se somam. Vem de renders de pessoa e de elefanta. O teste: pinte a figura de uma cor só. A ação ainda se lê?
 - **O corpo e o rosto dizem a mesma coisa.** A expressão é o acordo entre a pose, o olhar, a pálpebra, a sobrancelha e a boca, diante do que acontece na cena. Rosto que muda sobre um corpo que não muda é máscara.
 - **A pose tem gesto.** Quando a cena pede vida, a figura não lê como boneco: há uma curva dos pés à cabeça, o peso está em algum lugar e um lado não espelha o outro. Rigidez e simetria ficam para a cena que as pede (o susto, a formalidade, o sentido).
 - **O olhar aponta para o que importa no quadro.** O espectador segue.
