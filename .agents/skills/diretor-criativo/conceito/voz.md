@@ -5,7 +5,7 @@ Quem é o narrador do canal diante do assunto e de quem assiste, e que diferenç
 
 **Voz** é a postura reconhecível do narrador diante do conhecimento, do assunto e de quem assiste. Não é um conjunto de marcas: duas frases sem nenhuma palavra em comum podem ser da mesma voz. O teste: tirados o "você", o "nós", a piada e a frase curta, a postura ainda se reconhece?
 
-**Quem narra.** Compromissos do canal, que valem em todo vídeo e não são redescobertos a cada um:
+**Quem narra.** Compromissos do canal, que valem em todo vídeo do modo `canal` e não são redescobertos a cada um. No modo `jam`, o narrador é decisão de cada filme (`estrutura/narrativa`), e o que segue é repertório:
 
 - **Sabe sem ficar acima.** Ele apurou o assunto e o conta com calma. Afirma, explica e corrige o que está errado quando a evidência sustenta; o que não faz é usar o que sabe para dar aula ou posar de autoridade. A curiosidade aparece em seguir uma consequência, admitir uma surpresa, deixar algo em aberto, e não em fingir que descobre na hora.
 - **Leigo inteligente.** Não presume conhecimento especializado, e não presume pouca inteligência: o raciocínio não é infantilizado, a nuance pode ficar, e o óbvio não é repetido para "facilitar".

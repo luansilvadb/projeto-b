@@ -16,7 +16,7 @@ Uma dúvida local termina quando se resolve. Só um pedido que abrange todo o so
 
 ## O ciclo
 
-Parta dos compromissos que houver na seção "Arco" de `sound.md` (pode ser uma linha, e o arquivo pode não existir), da duração de cada cena (`public/videos/<vídeo>/narration.json`; `pnpm check-script <vídeo>` a imprime) e da partitura da animação (`score.md`). O que o arco deixou em aberto é completado aqui, e a intenção que ele registrou sem realização ganha a sua. A duração que pede mais de uma parte é restrição da geração (`leito`).
+Parta dos compromissos que houver na seção "Arco" de `sound.md` (o arquivo sempre guarda a linha da intenção, e pode ter só ela: o mapa detalhado e os instantes podem não ser necessários num som mínimo), da duração de cada cena (`public/videos/<vídeo>/narration.json`; `pnpm check-script <vídeo>` a imprime) e da partitura da animação (`score.md`). O que o arco deixou em aberto é completado aqui, e a intenção que ele registrou sem realização ganha a sua. A duração que pede mais de uma parte é restrição da geração (`leito`).
 
 Leia também `src/videos/<vídeo>/script.md`, o registro da direção criativa: a identidade da trilha parte dele, e não do zero. Três coisas vêm de lá, e são do roteiro:
 
@@ -38,6 +38,8 @@ O ciclo começa na dúvida atual, e não no passo 1 de um vídeo novo: trocar um
 Um vídeo simples pode fechar em um leito gerado e só nas camadas que pedir; um leito sem momento ou efeito é correto. Um difícil dá mais voltas, cada uma puxada por uma medida ou escuta, não por uma lista.
 
 ### O silêncio antes da chamada
+
+Só no modo `canal`: o curta do modo `jam` não tem chamada e termina no fim da história (`estrutura/narrativa`, na pasta da skill `diretor-criativo`).
 
 A última cena do fechamento leva um `holdMs` que deixa o fim assentar antes do pedido (`estrutura/chamada`, na pasta da skill `diretor-criativo`). Ele chega aqui como hipótese narrativa: a skill `diretor-criativo` o propôs sem ter o som para ouvir. Com o áudio e a mixagem reais, o som confere se a pausa faz o que o fechamento pede: o fim assenta, ou a chamada o atropela, ou a pausa sobra e vira espera (`silencio`).
 

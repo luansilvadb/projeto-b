@@ -14,7 +14,7 @@ A produção não edita `narration`: palavra, pontuação e redação são do `d
 
 Quando o defeito é do texto, devolva ao `diretor-criativo` a frase, o que o usuário ouviu, a medida ou o aviso que localiza o defeito e, se houver, a sugestão. Ele reescreve pela unidade dona e confere a mudança pela tabela de reteste de `etapas/roteiro.md` (na pasta dele, "Depois de corrigir, reteste o risco que a mudança pode ter reintroduzido"); só então o texto entra em `script.json`, e o `pnpm narrate` regera só a frase que mudou. Não é uma etapa nova nem um aceite: é o mesmo caminho de qualquer correção do roteiro.
 
-Antes da primeira geração de um vídeo, diga ao usuário que os pesos do OmniVoice são de uso não comercial (CC-BY-NC): monetizar um vídeo narrado com ele foge da licença, e trocar de modelo depois não muda os vídeos já publicados. Se o vídeo é para monetizar, seguir com esta voz é decisão dele, tomada antes de gerar.
+Antes da primeira geração de um vídeo, diga ao usuário que os pesos do OmniVoice são de uso não comercial (CC-BY-NC): monetizar um vídeo narrado com ele foge da licença, e trocar de modelo depois não muda os vídeos já publicados. Se o vídeo é para monetizar, seguir com esta voz é decisão dele, tomada antes de gerar. Se vai a um evento, o que as regras fornecidas no briefing dizem sobre voz gerada, IA e licença é conferido pelo `diretor-publicacao` antes da primeira geração (`diretor-publicacao/submissao/pacote-de-evento.md`); regra que o briefing não traz é perguntada ao usuário, e não suposta.
 
 ## 1. Gerar
 

@@ -3,6 +3,8 @@ Qual tema ganha entre os candidatos medidos, e o que fica registrado?
 
 ## RESPOSTA
 
+Vale no modo `canal`. No modo `jam`, a escolha e o registro são de `premissa`; daqui só se usa "Quando o tema cai".
+
 **Um corte fixo.** Sai o candidato com o menor nível de volume, depois de medida a versão curta quando a oferta dele é forte (`medida`). Nenhum outro número mínimo: a comparação é entre os candidatos, lado a lado.
 
 **Ordem de peso (proposta, de 2026-10-10; vira regra quando um vídeo escolhido por ela for publicado e render, e sai se não render):**
@@ -28,6 +30,10 @@ As views vêm antes da nota do painel porque a nota mede a busca, e as views, qu
 - Quem busca espera: <o que a pessoa quer encontrar ao digitar o termo, com a evidência; ou "não levantado">
 - Escolhido em: <data>
 - Motivo: <uma ou duas linhas; recorte possível, se anotado, marcado como não pesquisado>
+
+## Briefing
+
+<opcional: só quando o vídeo do canal tem prazo ou outro dado de partida; os campos de `briefing` que o usuário deu, com `Modo: canal`. Sem eles, a seção não existe>
 
 ## Medições
 

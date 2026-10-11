@@ -4,6 +4,12 @@ Abre quando uma decisão de som ainda não realizada pode mudar um artefato caro
 
 Não é um marco: nada espera por ele, e ele não cria aprovação nenhuma.
 
+## A intenção, cedo
+
+Quando `script.md` já tem a frase de intenção, ou a tese e a promessa, escreva a primeira linha da seção "Arco" de `sound.md`: o que o som faz por essa intenção, e o que acontece com ele em cada virada da tabela `## Estrutura` (abre, recua, cala, entra um efeito), ou que nada muda de propósito. Leia antes a linha "Intenção visual" de `art.md`, quando existe: som e imagem respondem às mesmas viradas (`diretor-producao/equipe/protocolo.md`).
+
+É a intenção, e não o desenho: sem timbre, andamento, tom nem nível, que continuam esperando o som para ouvir. É a mesma hipótese barata que a regra abaixo permite ("A intenção pode ficar sem a realização"), e não uma pausa inventada: a linha não pede `holdMs`, não vai ao usuário como pergunta e muda quando a voz ou a imagem real mostrarem outra coisa. No modo `jam`, ela respeita o que o briefing limita, como o número de leitos.
+
 ## A dúvida
 
 Comece pela dúvida que foi trazida, e não por campos a preencher: **o próximo artefato caro (a voz, e a animação sobre ela) depende desta decisão agora?**
@@ -12,7 +18,7 @@ Comece pela dúvida que foi trazida, e não por campos a preencher: **o próximo
 - **Depende, quando muda a experiência que o próximo artefato materializa.** É a exceção: duas versões válidas do mesmo trecho que fazem vídeos diferentes (a frase dita em voz nua, como choque, ou sobre a música, contemplativa), com evidência que já basta para escolher.
 - **Não depende: adie.** "Vai ser preciso escolher um dia" não é dependência, mesmo que o campo exista em `sound.md`. Decisão que só o ouvido julga não melhora por ser tomada no papel: espera o som.
 
-Se a dúvida se desfaz na análise (o `holdMs` que o roteiro já tem resolve; o efeito é da imagem e não do som), o arco termina ali, sem arquivo e sem pedido. O som não inventa pausa para justificar a entrada: um vídeo pode ir até o fim com zero `holdMs` pedidos pelo som no arco, sem `sound.md` e sem nenhuma pergunta de som ao usuário.
+Se a dúvida se desfaz na análise (o `holdMs` que o roteiro já tem resolve; o efeito é da imagem e não do som), o arco termina ali, sem outro registro além da linha da intenção e sem pedido. O som não inventa pausa para justificar a entrada: um vídeo pode ir até o fim com zero `holdMs` pedidos pelo som no arco e sem nenhuma pergunta de som ao usuário, tendo em `sound.md` só a linha da intenção.
 
 ## O `holdMs`
 
@@ -31,13 +37,14 @@ A escolha chega no menor artefato que mostra a troca: o trecho do texto, ou o an
 
 ## O registro
 
-`sound.md` guarda o estado atual, como `script.md`: os compromissos de som que o trabalho seguinte não deve redescobrir. Nasce parcial, e pode ser uma linha só; não nasce quando nada precisa sobreviver. Sem campo vazio, decisão prevista, alternativa recusada nem história: o histórico é o git. `src/videos/why-we-sleep/sound.md` guarda também a história do piloto e não é modelo de quantidade.
+`sound.md` guarda o estado atual, como `script.md`: os compromissos de som que o trabalho seguinte não deve redescobrir. Nasce parcial e guarda sempre a linha da intenção ("A intenção, cedo"), que pode ser a única; o mapa mais detalhado (a pausa, a relação de som de uma cena) só é registrado quando há uma decisão específica que precisa sobreviver. Sem campo vazio, decisão prevista, alternativa recusada nem história: o histórico é o git. `src/videos/why-we-sleep/sound.md` guarda também a história do piloto e não é modelo de quantidade.
 
 Entra na seção "Arco" o que muda a linha do tempo ou uma relação de som que faz parte do sentido, e que, esquecido, mudaria o vídeo. A intenção pode ficar sem a realização; "a trilha acompanha a emoção" não é compromisso.
 
 ```markdown
 ## Arco
 
+- Intenção de som: a trilha é curiosa até o resultado e perde o chão quando ele chega; o fim não ganha ameaça.
 - `the-question`: 5 s sem fala depois da pergunta, para a vinheta.
 - `rats-result`: quando o resultado chega, o som perde impulso. Recuo, silêncio ou música rala: decide-se com o som para ouvir.
 ```

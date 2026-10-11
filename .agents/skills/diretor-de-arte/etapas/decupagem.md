@@ -8,9 +8,11 @@ A decupagem não fecha a direção de arte. Escala de verdade, personagem no cen
 
 ## Passo 1: conceito visual
 
-Unidades `entrevista-imagem`, `elenco` e `cor`. Parta de `script.md` (as decisões atuais do vídeo, com a analogia condutora e as notas visuais que houver) e de `research.md` (como as coisas são de verdade).
+Unidades `entrevista-imagem`, `elenco` e `cor`. Parta de `script.md` (as decisões atuais do vídeo, com a analogia condutora e as notas visuais que houver) e de `research.md` (como as coisas são de verdade). No modo `jam`, `research.md` só existe quando o filme afirma algo sobre o mundo real: sem ele, parta do roteiro e da frase de intenção, e a afirmação factual que aparecer sem pesquisa é lacuna a devolver ao `diretor-criativo` (`encenacao`, "A base, no curta de ficção").
 
 Elenco, cor, analogia e planos se descobrem juntos, e um corrige o outro: uma encenação pode mostrar que o protagonista não funciona, um personagem pode pedir outro modo de cor, e uma figura pode nem precisar existir. Avance com o bastante para testar, e volte quando a imagem mostrar coisa melhor.
+
+**Intenção visual, cedo.** Assim que há frase de intenção, ou tese e promessa, em `script.md`, escreva em `art.md` a linha "Intenção visual": a metáfora ou a imagem central que carrega a ideia, e o que muda na tela em cada virada da tabela `## Estrutura` (a cor, a escala, a luz, quem ocupa o quadro), ou que nada muda de propósito. É hipótese de uma linha, e não marco: muda quando a prova mostrar coisa melhor, e ninguém espera por ela. O `diretor-de-som` a lê para responder às mesmas viradas (`diretor-producao/equipe/protocolo.md`). No modo `jam`, elenco e cor partem do briefing, e não da trupe nem da identidade do canal.
 
 **Prova.** Diante de uma incerteza grande (a personificação funciona? a analogia se entende, ou vira slide? a paleta aguenta personagem e dado?), desenhe a menor imagem que a responde: um quadro, dois ou três planos do trecho em que ela pesa. Sem incerteza desse tamanho, não há prova a fazer. A prova é descartável: fica como estudo (os de `src/studies/` são o modelo) ou em `out/rascunho/`, sem componente novo em `src/components/`, token ou convenção. O que ela provar é construído direito no animatic.
 
@@ -23,7 +25,7 @@ Não se produz variação de personagem, paleta alternativa ou folha de modelo s
 
 As alternativas recusadas não ficam na ficha: o histórico é o git.
 
-Pronto quando: `art.md` diz quem conduz o vídeo, o que as cores significam e que forma a analogia condutora tem, quando há uma, as decisões que eram do usuário foram tomadas por ele, e o que ficou em aberto é dúvida de execução.
+Pronto quando: `art.md` diz a intenção visual, quem conduz o vídeo, o que as cores significam e que forma a analogia condutora tem, quando há uma, as decisões que eram do usuário foram tomadas por ele, e o que ficou em aberto é dúvida de execução.
 
 ## Passo 2: planos
 
@@ -54,7 +56,7 @@ pnpm check-script <vídeo>
 
 Ele recusa plano sem deixa ou com deixa que não está na narração, e isso é erro. Também estima a duração de cada plano e marca os longos, e isso é sinal: a marca diz onde olhar (`planos`), e o plano em que a imagem muda lá dentro segue como está.
 
-Depois leia só a coluna da encenação, de cima a baixo e sem a narração: a história visual acompanha a explicação? Aprofunde, pelas lentes de encenação e de decupagem de `critica-quadro`, onde a imagem depende de etiqueta, uma relação não se vê, vários planos fazem a mesma coisa, uma virada da fala não tem resposta na tela ou o comando deixou uma marca. A lente de fidelidade entra onde a encenação pode afirmar um fato. Aqui não há subagente, nem crítica de composição ou de desenho: ainda não existe imagem para abrir.
+Depois leia só a coluna da encenação, de cima a baixo e sem a narração: a história visual acompanha a explicação? Aprofunde, pelas lentes de encenação e de decupagem de `critica-quadro`, onde a imagem depende de etiqueta, uma relação não se vê, vários planos fazem a mesma coisa, uma virada da fala não tem resposta na tela ou o comando deixou uma marca. A lente de fidelidade entra onde a encenação pode afirmar um fato sobre o mundo real. Aqui não há subagente, nem crítica de composição ou de desenho: ainda não existe imagem para abrir.
 
 Pronto quando: o comando não acusa erro, e não segue adiante nenhuma encenação que já se sabe que não diz o que a oração afirma.
 
@@ -67,5 +69,7 @@ Devolva ao `diretor-criativo`:
 - os números mudos, na forma da lista que vai ao usuário (`entrevista-movimento`);
 - as frases que a imagem pediu para mudar;
 - o que ainda é decisão do usuário, e as hipóteses que o animatic vai testar.
+
+Ao `diretor-de-som` vai a linha "Intenção visual", com o que muda na imagem em cada virada: é o que ele precisa para declarar a intenção de som sem esperar a animação.
 
 Quem mostra o roteiro ao usuário é ele, dono do texto. O que o usuário decide ali é o que o texto e a imagem querem dizer e os compromissos visuais que já importam, que ficam em `art.md`; a execução continua evoluindo. Se o animatic mostrar que um personagem, uma cor ou um plano não funciona, ele é revisto ali: o que só refina fica com o agente, e o que muda sentido ou identidade vai ao usuário (`entrevista-imagem`).

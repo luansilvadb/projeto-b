@@ -23,7 +23,7 @@ O que continua, o que muda e quanto se sente a passagem entre dois planos?
 
 **O que o repositório fixa.** O registro de cada plano leva a entrada dele, em texto livre (`planos`). Corte, câmera, transformação e varredura são os nomes de costume: nomeiam famílias e não fecham o repertório. A passagem é julgada pelo que o espectador percebe, e a que não cabe em nenhum dos quatro é dita com as palavras dela.
 
-**Repertório.** Parte-se da relação entre os dois planos; a técnica é uma saída possível, e os números são o que a referência costuma usar:
+**Repertório.** Parte-se da relação entre os dois planos; a técnica é uma saída possível, e os números são o que a referência costuma usar (situam, e não reprovam uma passagem, em nenhum dos dois modos):
 
 | A relação | Uma saída | Costuma | De onde vem |
 |---|---|---|---|
@@ -59,7 +59,7 @@ Outra ponte (um casamento de cor, algo que passa na frente e cobre a troca, um c
 - entradas: fornece como entra o que a passagem acrescenta.
 
 ## LIMITES
-- Nenhuma íris de cinema mudo, nem para fechar o vídeo (decisão do usuário em 2026-10-09): o piano e a atuação já dizem isso.
+- **Do canal**: nenhuma íris de cinema mudo, nem para fechar o vídeo (decisão do usuário em 2026-10-09): o piano e a atuação já dizem isso. Vale no modo `canal`; no modo `jam` é repertório, e não regra (`SKILL.md`, "Modos"), e a íris é julgada como qualquer passagem, pelo teste do princípio.
 - Mudar a leitura dos dois planos (ruptura onde havia continuidade, ou o contrário) é decisão do usuário (`entrevista-movimento`). Trocar de técnica mantendo a mesma relação não é, e a entrada registrada acompanha a troca.
 
 ## EXEMPLO

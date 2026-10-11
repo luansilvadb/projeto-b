@@ -3,7 +3,7 @@ Como construir qualquer coisa em formas chapadas, em SVG?
 
 ## RESPOSTA
 
-**Linguagem de forma.** A identidade do canal, lida em recortes da referência em resolução nativa: as formas se separam por cor e por valor, sem linha de contorno; cantos arredondados e curvas; preenchimento chapado, com o volume vindo de formas empilhadas (a base, uma sombra e, às vezes, um brilho). Degradê fica para fundo, céu, água, chão e brilho de luz.
+**Linguagem de forma.** É ofício do projeto, e vale inteira nos dois modos, `canal` e `jam` (`SKILL.md`, "Modos"). Foi lida em recortes da referência em resolução nativa, como método, e não como traço a reproduzir: as formas se separam por cor e por valor, sem linha de contorno; cantos arredondados e curvas; preenchimento chapado, com o volume vindo de formas empilhadas (a base, uma sombra e, às vezes, um brilho). Degradê fica para fundo, céu, água, chão e brilho de luz.
 
 **O que o projeto já provou.** As quatro regras abaixo vieram de defeito nosso, visto em render e corrigido até o usuário aprovar (o piloto da elefanta, da pessoa e do antílope: seis renders e quatro críticas). Têm mais peso que qualquer coisa lida na referência.
 
@@ -46,7 +46,7 @@ Como construir qualquer coisa em formas chapadas, em SVG?
 | Objeto ou figura de apoio | 8 a 20 |
 | Figurante e fundo | 3 a 8 |
 
-Bem abaixo, confira se o desenho virou ícone; acima, confira no recorte se o detalhe compete com a leitura, que é o lado para o qual o projeto mais errou. Quem decide é a contenção, não a contagem. A unidade repetida e o espalhamento contam como uma forma só, lida de uma vez.
+Bem abaixo, confira se o desenho virou ícone; acima, confira no recorte se o detalhe compete com a leitura, que é o lado para o qual o projeto mais errou. Quem decide é a contenção, não a contagem: a faixa é medida da referência do canal, e no modo `jam` é só contexto, que não reprova o desenho de um curta. A unidade repetida e o espalhamento contam como uma forma só, lida de uma vez.
 
 **Técnicas e evidência**, para quando o problema delas aparece. São possibilidades, com a origem de cada uma:
 

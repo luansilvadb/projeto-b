@@ -23,7 +23,7 @@ Que expectativa título e thumbnail criam juntos antes do clique, e ela correspo
 
 **Na thumbnail, foco, e não contagem.** O olho entende o que comparar, reconhecer ou estranhar, na escala em que ela é vista? Uma relação pode pedir dois ou três elementos (Sol e Terra lado a lado são a própria comparação), e um objeto só pode ser confuso. Tensão, perigo, algo fora do lugar, rosto, seta e círculo são recursos, e nenhum é requisito: a imagem também funciona por beleza, escala, reconhecimento, transformação ou simplicidade, e não se fabrica conflito nem personagem humano que o vídeo não pede. O texto na imagem é recurso também: identifica o que não se reconhece, dá um número, cria um contraste, estabelece uma relação que a imagem sozinha não entrega. Cada palavra sobrevive ao tamanho pequeno e acrescenta algo ao par; pouco texto é consequência disso, e zero é resposta válida. Quando a imagem só funciona depois de uma sentença lida, o conceito visual provavelmente trabalha pouco, salvo quando o texto é o assunto (uma citação, um dado, um documento).
 
-**Conceito e prompt.** O conceito fixa a relação ou a afirmação que a imagem precisa fazer e o texto que o sentido exige. O prompt escolhe uma composição para realizar esse conceito; não muda o que a imagem afirma. Use `art.md` como referência para elenco, desenho e paleta do vídeo, e escolha enquadramento, foco, luz e acabamento que mantenham a leitura clara em tela pequena. Esta skill entrega texto pronto para um gerador, não o PNG final. Como em `indicacao-visual`, um conceito bom admite várias soluções visuais:
+**Conceito e prompt.** O conceito fixa a relação ou a afirmação que a imagem precisa fazer e o texto que o sentido exige. O prompt escolhe uma composição para realizar esse conceito; não muda o que a imagem afirma. Use `art.md` como referência para elenco, desenho e paleta do vídeo, e escolha enquadramento, foco, luz e acabamento que mantenham a leitura clara em tela pequena. Esta skill entrega o conceito e o texto pronto para um gerador, não o PNG final: a imagem é do `diretor-de-arte` (`quadro/cartaz`, na pasta dele), que a faz no desenho do vídeo a partir do conceito, ou confere contra `art.md` a que o usuário gerou pelo prompt. Como em `indicacao-visual`, um conceito bom admite várias soluções visuais:
 
 > Composição: "personagem no canto inferior esquerdo, buraco negro ocupando 72% do quadro, luz laranja."
 > Conceito: "escala desproporcional entre uma pessoa reconhecível e o buraco negro; ela está sendo esticada na direção do centro."
@@ -57,7 +57,8 @@ Que expectativa título e thumbnail criam juntos antes do clique, e ela correspo
 - `diretor-criativo/conducao/entrevista.md`: fronteira entre refinamento e decisão material do usuário.
 
 ## LIMITES
-- O prompt pode dirigir composição, paleta e luz a partir de `art.md`; o arquivo final da imagem está fora do escopo.
+- O prompt pode dirigir composição, paleta e luz a partir de `art.md`; o arquivo final da imagem é do `diretor-de-arte`, que não muda o que o conceito afirma.
+- O cartaz de um evento segue os mesmos testes do par, com o formato que o briefing transcreve; formato não fornecido é perguntado.
 - Sem isca: o par que o vídeo não cumpre é reprovado, por mais atraente que seja.
 - Medida fora do perfil não é defeito: lê-se o par, e sem perda de reconhecimento o título segue.
 

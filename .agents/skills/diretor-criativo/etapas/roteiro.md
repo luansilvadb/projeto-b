@@ -4,6 +4,8 @@ O roteiro é o arquivo `src/videos/<vídeo>/script.json`, a fonte de tudo que se
 
 Um trabalho de roteiro termina quando a dúvida pedida está resolvida: um trecho reescrito e conferido, um gancho que funciona, o texto completo que sustenta o custo da voz.
 
+No modo `jam` (`diretor-de-pauta/briefing.md`), leia antes `estrutura/narrativa`: o procedimento é este, com a frase de intenção no lugar da tese e da promessa, fonte só para o que a ficção afirma do mundo real, e sem título provisório quando o destino não inclui o YouTube. Com prazo no briefing, quanto se prova, critica e reescreve segue o nível do plano (`diretor-producao/etapas/plano.md`); o que tranca, abaixo, continua trancando.
+
 ## Como o roteiro anda
 
 O roteiro cresce de prova para produto, e não de formulário para aprovação: **produza a menor evidência que resolve a maior incerteza atual, expanda o que funcionou, e só uma dependência real obriga a ordem.** A pergunta que volta o tempo todo é qual incerteza ainda pode invalidar trabalho caro.

@@ -3,7 +3,7 @@ Como fazer o único pedido do vídeo depois que a entrega terminou, sem transfor
 
 ## RESPOSTA
 
-**Compromisso do canal.** Todo vídeo termina com uma chamada, que pede para curtir e se inscrever (decisão do usuário em 2026-10-04). É o único momento de pedido do vídeo (`ouvinte`): curtir e se inscrever vão juntos, uma vez, no fim. Isso não se pergunta de novo a cada vídeo.
+**Compromisso do canal.** No modo `jam` o filme não leva chamada (`narrativa`); o pedido, se o destino inclui o YouTube, fica na descrição, do `diretor-publicacao`. Todo vídeo do canal termina com uma chamada, que pede para curtir e se inscrever (decisão do usuário em 2026-10-04). É o único momento de pedido do vídeo (`ouvinte`): curtir e se inscrever vão juntos, uma vez, no fim. Isso não se pergunta de novo a cada vídeo.
 
 **O que precisa funcionar:**
 
