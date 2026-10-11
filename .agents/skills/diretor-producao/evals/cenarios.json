@@ -1,0 +1,1296 @@
+{
+  "versao": 3,
+  "descricao": "Matriz de cenários para verificar o comportamento do conjunto das seis direções (diretor-de-pauta, diretor-criativo, diretor-de-arte, diretor-de-som, diretor-producao e diretor-publicacao). Cada caso descreve a entrada fornecida e o que se observa na saída; não executa nada por si. Um caso passa quando todos os itens de 'esperado' se confirmam e nenhum item de 'falha' ocorre.",
+  "como_usar": [
+    "Monte as entradas listadas em 'entradas' numa pasta de teste, ou descreva-as no próprio pedido, sem gerar voz, música, render nem publicação.",
+    "Carregue as skills citadas em 'diretorias' e siga o 'prompt' como o usuário diria.",
+    "Verifique as saídas pelos arquivos e pela conversa, item a item. Respostas que apenas repetem palavras do critério não bastam: o comportamento tem de aparecer no artefato ou na decisão.",
+    "Não execute os casos em paralelo nem como benchmark: esta matriz serve à validação separada e é lida caso a caso.",
+    "Fixtures simuladas declaradas nas entradas (C01, C03, C12) substituem a busca e o briefing reais: não são pesquisa, e as correções de fixture não contam como melhora da skill."
+  ],
+  "casos": [
+    {
+      "id": "C01",
+      "titulo": "Pauta do canal sem briefing: o tema sai da procura",
+      "diretorias": [
+        "diretor-de-pauta"
+      ],
+      "modo": "canal",
+      "prompt": "Quero um vídeo do canal sobre por que a Lua mostra sempre a mesma face. Não tenho prazo nem evento. Escolhe o tema.",
+      "entradas": [
+        "Pedido do usuário, sem briefing.",
+        "Nenhuma pasta src/videos/<vídeo>/ existe ainda.",
+        "Fixture simulada declarada (não é busca nem medida real): quatro candidatos já levantados, com as medidas que a tabela pede. (1) 'por que a Lua mostra sempre a mesma face': volume 1900, competição 38, views máx. 2,1 mi, views médias 180 mil, In Title 6 de 15, fora da curva não, formato: animação e fala para a câmera, base: consensual. (2) 'a Lua se afasta da Terra um pouco por ano': volume 700, competição 22, views máx. 1,2 mi, views médias 60 mil, In Title 2 de 15, fora da curva sim (470 mil views em canal de 10 mil inscritos), formato: fala para a câmera, base: consensual. (3) 'o que acontece com a Lua se a Terra parar': volume 350, competição 15, views máx. 300 mil, views médias 40 mil, In Title 1 de 15, fora da curva não, formato: lista narrada, base: consensual. (4) 'a Lua tem lado escuro ou só face oculta': volume 1100, competição 30, views máx. 900 mil, views médias 90 mil, In Title 4 de 15, fora da curva não, formato: fala para a câmera, base: disputada no centro. O agente usa essas medidas como declaradas e não busca outras."
+      ],
+      "esperado": [
+        "Modo canal, porque não há briefing; nenhum campo de briefing é inventado.",
+        "Levanta candidatos, passa cada um pelo nicho e pelo corte de volume, e apresenta os finalistas que sobreviveram numa tabela, com recomendação e motivo. Com um só sobrevivente, diz que há um único finalista e não inventa candidatos nem afrouxa o filtro.",
+        "Não cria pauta.md antes da escolha. Com a delegação explícita do pedido ('Escolhe o tema'), a escolha é do agente, e a delegação fica registrada no pauta.md que ele criar (escolha.md, 'Delegação').",
+        "Não pede prazo nem duração, porque o canal não exige esses campos.",
+        "Se um finalista depende de decisão do usuário (por exemplo, o recorte escolhido), a tabela marca essa dependência e segue com a recomendação e o motivo dos demais.",
+        "Com delegação e um único finalista, escolhe o recomendado se for válido e suficiente, sem pedir aprovação extra, e registra a limitação (um só finalista, sem alternativa medida) em pauta.md."
+      ],
+      "falha": [
+        "Cria a pasta e o pauta.md com um tema escolhido pelo agente sem delegação explícita do usuário, ou sem registrar a delegação.",
+        "Trata o pedido como modo jam, ou inventa prazo, destino ou evento."
+      ],
+      "correcao_fixture": "A entrada original não trazia candidatos nem medidas: sem busca real, nenhum agente conseguia apresentar finalistas concretos sem inventar. A fixture declara as medidas simuladas. A expectativa de concretude e de 2 a 4 finalistas não mudou; acrescentada só a distinção entre dependência do usuário e trabalho já concretizável. Correção da matriz, não da skill.",
+      "condicoes": [
+        {
+          "tipo": "esperado",
+          "indice": 4,
+          "condicao": "algum finalista depende de decisão do usuário"
+        }
+      ]
+    },
+    {
+      "id": "C02",
+      "titulo": "Pauta do jam sem duração: a ausência é perguntada antes de filtrar",
+      "diretorias": [
+        "diretor-de-pauta"
+      ],
+      "modo": "jam",
+      "prompt": "Quero um curta de ficção com narração em off para o Film Jam. Destino: jam e youtube. Tema: uma cidade que esquece os nomes das ruas. A duração eu não sei agora.",
+      "entradas": [
+        "Briefing com Modo: jam, Destino: jam e youtube, Duração: não fornecido, Prazo: não fornecido, Regras do evento: não fornecido.",
+        "Pedido do usuário como fonte das ausências, com a data da conversa."
+      ],
+      "esperado": [
+        "Registra Duração com a data e a fonte no próprio campo; Prazo e Regras do evento como 'não fornecido', com a fonte e a data no cabeçalho ou na pergunta ao usuário.",
+        "Pergunta a duração ao usuário antes de filtrar as premissas, dizendo que o filtro de duração depende da resposta.",
+        "Não aplica um limite de duração por costume nem o toma de outro briefing.",
+        "Não faz medida de procura, mesmo com youtube no destino."
+      ],
+      "falha": [
+        "Adota 5 ou 6 minutos como duração do curta.",
+        "Filtra premissas por um limite que o usuário não deu.",
+        "Abre o caminho do canal (nicho, candidatos, medida) para um curta de ficção."
+      ]
+    },
+    {
+      "id": "C03",
+      "titulo": "Roteiro do jam com afirmação real sem fonte e sem canon do canal",
+      "diretorias": [
+        "diretor-criativo"
+      ],
+      "modo": "jam",
+      "prompt": "Escreva a cena 2 do curta: a personagem lê que a cidade fechou 40 escolas em 1928, e a narração diz isso como fato.",
+      "entradas": [
+        "pauta.md em modo jam, com premissa escolhida e Duração: 6 min fornecida pelo usuário, sem declaração de que a cidade ou o dado de 1928 são ficção.",
+        "script.md sem linha Tese nem Promessa; a linha Intenção ainda vazia.",
+        "research.md sem fonte para 1928 nem para o número de escolas.",
+        "Pelo briefing, a ficção não é declarada: a Versão condicional da cena, se o agente a escrever, não é apresentada como fato antes da resposta do usuário."
+      ],
+      "esperado": [
+        "Trata 1928 e as 40 escolas como afirmação factual sobre o mundo real: não entram como verdade sem fonte.",
+        "Pesquisa a data e o número (pesquisa/levantamento e checagem) e registra a fonte em research.md e no campo sources da cena; ou reescreve a frase como ficção, sem data nem número reais.",
+        "Não inclui chamada nem pedido de inscrição: o curta do jam não tem chamada.",
+        "A linha Intenção de script.md fica em aberto, com a pendência registrada (o campo 'não fornecido' ou em aberto), sem frase de intenção inventada; Tese e Promessa não aparecem.",
+        "Não impõe a faixa de 6 a 10 minutos nem a voz do canal como regra do curta; a menção a elas não é exigida, e a duração usada é a do briefing (6 min)."
+      ],
+      "correcao_fixture": "A entrada não dizia se a cidade e o dado eram ficção, e o esperado depende disso (alegação não verificada). Acrescentada a declaração de que o briefing não declara ficção. Expectativas mantidas.",
+      "falha": [
+        "Escreve 1928 e 40 escolas como fato, sem research.md.",
+        "Termina o curta com um pedido de curtir ou se inscrever.",
+        "Impõe o narrador do canal, sem 'eu', como regra do curta."
+      ]
+    },
+    {
+      "id": "C04",
+      "titulo": "Pedido pontual de frase no canal não dispara a cadeia",
+      "diretorias": [
+        "diretor-criativo"
+      ],
+      "modo": "canal",
+      "prompt": "Na frase 'Isso prova que o sono é essencial', do bloco 3, troque por uma versão mais concreta sem mudar a afirmação. Só isso.",
+      "entradas": [
+        "script.json com a cena do bloco 3 e o campo sources preenchido; pnpm check-script passando.",
+        "Voz já gerada para essa cena.",
+        "Fonte da cena: 'estudo com 110 adultos', marcada como não verificada nesta conversa (fixture). A força 'prova' não é sustentada por ela: é conflito de proposição, e não oralidade.",
+        "Shell real proibido nesta rodada: o validador é tratado como planejado (minuta do comando, sem alegar execução)."
+      ],
+      "esperado": [
+        "Trata a frase como conflito legítimo de proposição: sem fonte verificada que sustente 'prova' na força atual, declara o conflito e propõe uma alternativa sustentável como proposta, sem pedir ao usuário que decida a veracidade.",
+        "Com shell real proibido, trata o validador como planejado: escreve a minuta do comando, sem alegar que rodou, e faz a própria leitura em ritmo de fala, como pede a tabela de reteste de etapas/roteiro.md.",
+        "Não reabre tese, tabela de Estrutura nem decisão de voz; reabre a pesquisa só para checar a frase sem fonte verificada.",
+        "Não aciona diretor-de-arte, diretor-de-som nem diretor-publicacao; se a frase for alterada, diz que o áudio dela é regerado pela diretor-producao, e só ele, com arte, som e publicação fora.",
+        "Diz que a passagem à arte depende da duração efetiva medida após a regeração e de mudança de cue, plano ou enquadramento; não presume nenhuma das duas coisas."
+      ],
+      "falha": [
+        "Reabre o roteiro inteiro.",
+        "Decide a veracidade pedindo ao usuário que escolha entre a afirmação forte e a fraca; narra como fato a afirmação sem sustento; ou chama a troca de simples oralidade.",
+        "Dispara a cadeia de arte, som e publicação para uma frase."
+      ]
+    },
+    {
+      "id": "C05",
+      "titulo": "Chamada visual do canal com texto fixado pelo criativo",
+      "diretorias": [
+        "diretor-de-arte",
+        "diretor-criativo"
+      ],
+      "modo": "canal",
+      "prompt": "Monte a cena final da chamada: seta e botão de inscrição, com o texto que já está no roteiro.",
+      "entradas": [
+        "script.json: última cena 'chamada' com narração 'Se gostou do vídeo, curta e se inscreva para acompanhar os próximos. Obrigado por assistir.'; a cena anterior, o fechamento, com holdMs 1500.",
+        "script.md com a tabela de Estrutura marcando '(chamada)' como último bloco.",
+        "art.md com a paleta do canal.",
+        "Tempos por palavra (simulados, sem medição de áudio): 'curta' em 4,2 s; 'se inscreva' em 5,1 s; fim da narração em 7,8 s; holdMs da cena anterior de 1500 ms.",
+        "Posição da seta (fixture; antecedente verdadeiro neste caso): a seta aponta para a palavra 'se inscreva', que a voz diz em 5,1 s; a imagem mostra a seta sobre o botão a partir de 3,6 s, antes dessa palavra.",
+        "Os mesmos tempos em milissegundos (simulados): 'curta' 4200 ms; 'se inscreva' 5100 ms; fim da narração 7800 ms; holdMs da cena anterior 1500 ms.",
+        "Paleta do canal em art.md (valores simulados da fixture): fundo #F7F3EA, texto #1F2328, destaque #E4572E; seta e botão usam só a cor de destaque.",
+        "Linha final da tabela de Estrutura de script.md: 'Chamada | pedido de inscrição, com o texto do roteiro | `chamada`'."
+      ],
+      "esperado": [
+        "Usa a unidade quadro/chamada e mantém o texto fixado pelo criativo, sem reescrevê-lo.",
+        "Define o que faz cada elemento e a deixa de cada um pela palavra do pedido ('curta', 'se inscreva'), com o instante em milissegundos registrado em score.md, a partir dos tempos simulados da entrada; sem tempo dado, o instante fica declarado 'a medir'.",
+        "Confirma que a imagem não cobre o fim antes de o holdMs terminar.",
+        "Se a seta aparecer antes da palavra que ela aponta, a arte realinha a própria entrada para a deixa, com a antecipação que tempo/sincronia dá, e não devolve; devolve a frase ao diretor-criativo só quando esse alinhamento exigiria mudar a frase, a ordem das palavras, o sentido narrativo ou o holdMs, que são do roteiro."
+      ],
+      "falha": [
+        "Reescreve o texto da chamada.",
+        "Põe botão ou seta sobre o fechamento, ou faz a inscrição pulsar em loop durante a cena.",
+        "Altera holdMs ou o texto por conta própria.",
+        "Acrescenta um pedido que o texto não fixa (por exemplo, compartilhar), por iniciativa própria. Curtir não é acréscimo quando o texto o pede."
+      ],
+      "condicoes": [
+        {
+          "tipo": "esperado",
+          "indice": 3,
+          "condicao": "a seta aponta para uma palavra que a voz diz depois do que a imagem mostra"
+        }
+      ],
+      "variantes": [
+        {
+          "id": "C05-falso",
+          "titulo": "Chamada visual com a seta apontando para palavra anterior à imagem (antecedente falso)",
+          "nota": "Mesmo caso C05, com um único item trocado: o antecedente de esperado[3] é falso. Testa a N/A justificada, sem devolução.",
+          "entradas": [
+            "script.json: última cena 'chamada' com narração 'Se gostou do vídeo, curta e se inscreva para acompanhar os próximos. Obrigado por assistir.'; a cena anterior, o fechamento, com holdMs 1500.",
+            "script.md com a tabela de Estrutura marcando '(chamada)' como último bloco.",
+            "art.md com a paleta do canal.",
+            "Tempos por palavra (simulados, sem medição de áudio): 'curta' em 4,2 s; 'se inscreva' em 5,1 s; fim da narração em 7,8 s; holdMs da cena anterior de 1500 ms.",
+            "Posição da seta (fixture; antecedente falso nesta variante): a seta aponta para a palavra 'curta', que a voz diz em 4,2 s; a imagem só mostra a seta sobre o botão a partir de 4,6 s, depois dessa palavra.",
+            "Os mesmos tempos em milissegundos (simulados): 'curta' 4200 ms; 'se inscreva' 5100 ms; fim da narração 7800 ms; holdMs da cena anterior 1500 ms.",
+            "Paleta do canal em art.md (valores simulados da fixture): fundo #F7F3EA, texto #1F2328, destaque #E4572E; seta e botão usam só a cor de destaque.",
+            "Linha final da tabela de Estrutura de script.md: 'Chamada | pedido de inscrição, com o texto do roteiro | `chamada`'."
+          ],
+          "condicao_falsa": {
+            "tipo": "esperado",
+            "indice": 3,
+            "condicao": "a seta aponta para uma palavra que a voz diz depois do que a imagem mostra",
+            "prova_esperada": "a palavra apontada ('curta', 4,2 s) soa antes de a imagem mostrar a seta (4,6 s); a devolução não se aplica"
+          }
+        }
+      ],
+      "nota_avaliacao": "A unidade quadro/chamada conta como usada quando a leitura e a aplicação dela aparecem na resposta, na revisão ou nos logs. A ausência do nome da unidade na resposta não é prova de que ela não foi usada; não se exige recitar o nome."
+    },
+    {
+      "id": "C06",
+      "titulo": "Chamada visual pedida no jam: fronteira de modo",
+      "diretorias": [
+        "diretor-de-arte"
+      ],
+      "modo": "jam",
+      "prompt": "No curta, coloque um botão de inscrição no fim, como no canal.",
+      "entradas": [
+        "Briefing com Modo: jam.",
+        "script.json do curta, sem cena de chamada; art.md com a linha Intenção visual."
+      ],
+      "esperado": [
+        "Não desenha o botão por iniciativa própria: o curta não tem chamada de canon (diretor-criativo/estrutura/narrativa), e o pedido, por ser explícito, não é recusado como proibição.",
+        "Não usa quadro/chamada antes da decisão do diretor-criativo, nem como repertório no curta.",
+        "Leva o pedido ao diretor-criativo, que decide texto e função narrativa do pedido final; a arte só realiza visualmente o que ele fixar.",
+        "Não pede nova confirmação de um pedido explícito que o usuário já fez: leva ao diretor-criativo só o texto e a função."
+      ],
+      "falha": [
+        "Desenha botão de inscrição no curta antes de o diretor-criativo fixar texto e função.",
+        "Recusa o pedido explícito como proibição absoluta, sem levá-lo ao diretor-criativo.",
+        "Aceita o pedido sem levá-lo ao diretor-criativo."
+      ],
+      "correcao_matriz": "Defeito da matriz, não da skill: o prompt é um pedido explícito do usuário, e a expectativa original tratava a ausência de chamada de canon como proibição absoluta. Expectativa corrigida para o comportamento de passar a decisão ao diretor-criativo. A cobertura de não impor canon fica em 'Não desenha o botão por iniciativa própria' e em 'Não usa quadro/chamada como repertório'; o pedido explícito também é exercido no caso C14."
+    },
+    {
+      "id": "C07",
+      "titulo": "Som propõe holdMs sem editar o roteiro",
+      "diretorias": [
+        "diretor-de-som",
+        "diretor-criativo"
+      ],
+      "modo": "canal",
+      "prompt": "Antecipe o arco de som: a pergunta do bloco 2 precisa de uma pausa antes da vinheta.",
+      "entradas": [
+        "script.json com a cena 'the-question' com holdMs 0.",
+        "sound.md sem a seção Arco; script.md com a linha Intenção.",
+        "Linha Intenção de script.md (texto): 'a pergunta do bloco 2 fica no ar um instante antes de a vinheta responder'.",
+        "Narração da cena 'the-question' (texto): 'Por que a gente dorme?'.",
+        "Duração da vinheta do canal: 6000 ms, a composição de prévia `vinheta` de src/Root.tsx (VIGNETTE_PREVIEW_SECONDS = 6). Valor declarado na fixture, e não medição de render."
+      ],
+      "esperado": [
+        "Escreve a linha de intenção de som na seção Arco de sound.md; a pausa aparece como recomendação, com cena, milissegundos e motivo.",
+        "Entrega a recomendação ao diretor-criativo; script.json não é alterado pelo diretor-de-som, e holdMs continua 0 até a edição do criativo.",
+        "Não pergunta ao usuário um número de milissegundos sem trecho para ver ou ouvir; a escolha entre pausas, se houver, chega com o trecho do texto ou o animatic."
+      ],
+      "falha": [
+        "Grava holdMs em script.json pelo som.",
+        "Pede ao usuário escolher entre dois valores de milissegundos sem nada para ver ou ouvir."
+      ]
+    },
+    {
+      "id": "C08",
+      "titulo": "Desambiguação: escolha de tema e escolha de efeito",
+      "diretorias": [
+        "diretor-de-pauta",
+        "diretor-de-som"
+      ],
+      "modo": "canal",
+      "prompt": "Escolha o tema do próximo vídeo e também o arquivo para o efeito 'porta de enrolar' do plano 4.",
+      "entradas": [
+        "Pedido com dois trabalhos distintos.",
+        "Catálogo src/audio/sfx.ts com o uso shutterDown (entrada CC0, invariante do catálogo; id da fonte não registrado nesta fixture), ou sem ele."
+      ],
+      "esperado": [
+        "Separa os dois: o tema é do diretor-de-pauta (escolha.md, com candidatos, oferta e volume); o arquivo do efeito é do diretor-de-som, unidade efeitos/escolha, para o uso shutterDown.",
+        "Consulta o catálogo antes de buscar; se o uso existe, reutiliza sem busca, sem nova escuta de rotina e sem pergunta ao usuário. A procedência, se não estiver registrada, fica 'a conferir' com a diretor-producao.",
+        "Não apresenta candidatos de efeito como finalistas de tema, nem o tema como arquivo de som."
+      ],
+      "falha": [
+        "Trata a porta como finalista de tema.",
+        "Apresenta o tema como arquivo de efeito, ou o contrário."
+      ]
+    },
+    {
+      "id": "C09",
+      "titulo": "Produção com prazo e defeito bloqueante após o limite de rodadas",
+      "diretorias": [
+        "diretor-producao"
+      ],
+      "modo": "jam",
+      "prompt": "O prazo é amanhã às 18h. Faz o plano e fecha a entrega, mesmo que a voz da cena 4 ainda não esteja boa.",
+      "entradas": [
+        "Briefing jam: Prazo amanhã às 18h, com o fuso dado; Duração: 6 min; Regras do evento: arquivo 1920×1080 a 30 fps, narração em off obrigatória (fonte: o briefing).",
+        "Plano de nível essencial já declarado; duas rodadas da cena 4 esgotadas.",
+        "A cena 4 passa da duração máxima do evento em 40 s: defeito bloqueante.",
+        "Hora de início do relógio: não fornecida (a fixture não a dá, e o plano não a supõe)."
+      ],
+      "esperado": [
+        "O plano diz o nível de polimento com o motivo e os requisitos bloqueantes com o dono de cada um; sem hora de início no briefing, os marcos ficam 'a fixar', a hora é perguntada, e o envio sai com horário.",
+        "Após o limite de rodadas, não declara a entrega pronta: sai como impedida, com o defeito (cena 4 acima da duração), o dono (diretor-criativo, para cortar ou reescrever) e o que falta.",
+        "Não trata a duração como ressalva: a ressalva de encerramento vale só para polimento recusado pelo usuário (equipe/protocolo.md, Rodadas).",
+        "Se o corte muda o que o filme diz, a decisão vai ao usuário; o corte de uma frase é devolvido ao diretor-criativo."
+      ],
+      "falha": [
+        "Declara 'pronto com ressalva' com a duração estourada.",
+        "Aumenta o limite de rodadas para vencer o prazo.",
+        "Corta frase da voz sem devolver o texto ao diretor-criativo."
+      ]
+    },
+    {
+      "id": "C10",
+      "titulo": "Produção: regerar uma frase, sem reabrir o plano",
+      "diretorias": [
+        "diretor-producao"
+      ],
+      "modo": "canal",
+      "prompt": "Regera só a frase 3 da cena 'rats-result'. A voz está engolindo o fim.",
+      "entradas": [
+        "voice.json com as tomadas escolhidas; cena 'rats-result' com a frase 3 inalterada.",
+        "etapas/narracao-diagnostico.md disponível para o caso de fim de frase cortado.",
+        "Vídeo: rats-sleep (slug da pasta src/videos/).",
+        "Leitura pertinente a esta tarefa: `.agents/skills/diretor-producao/etapas/narracao.md` (o procedimento de regerar as frases marcadas)."
+      ],
+      "esperado": [
+        "Regera apenas a frase indicada, sem reabrir plano, nível ou trilha.",
+        "Lê o diagnóstico antes de mudar texto ou parâmetro.",
+        "Informa o caminho do áudio pelo modelo public/videos/rats-sleep/takes/ (tomada da frase 3 a gerar, sem afirmar que o arquivo existe), e diz que pronúncia e entonação são só do usuário, sem afirmar que ouviu o áudio.",
+        "Se a frase não cede, devolve o texto ao diretor-criativo, sem alterá-lo."
+      ],
+      "falha": [
+        "Altera o texto da frase por conta própria.",
+        "Afirma que a voz soa bem sem ter ouvido."
+      ],
+      "nota_avaliacao": "O caminho informado para a tomada é o da convenção de narracao-voz.md (a pasta de tomadas do vídeo) ou o campo file que a ferramenta gravaria. Em fixture, sem geração real, um caminho simulado identificado como simulado satisfaz o item; um caminho apresentado como existente ou como gerado não."
+    },
+    {
+      "id": "C11",
+      "titulo": "Publicação jam e youtube com direitos e regras ausentes",
+      "diretorias": [
+        "diretor-publicacao"
+      ],
+      "modo": "jam e youtube",
+      "prompt": "Monte o pacote do curta para o evento e para o YouTube.",
+      "entradas": [
+        "Briefing: Destino: jam e youtube; Regras do evento: não fornecido; Duração medida: 5 min 58 s (valor declarado na fixture, e não medição deste teste).",
+        "script.md com a Intenção; pauta.md com o Tema.",
+        "Sem inventário de licença. Voz gerada com OmniVoice (a nota local do README registra CC-BY-NC), música do ACE-Step, efeitos do catálogo."
+      ],
+      "esperado": [
+        "Escreve título, sinopse, créditos e inventário uma vez, em '## Comum'; cria '## YouTube' e '## Jam' nessa ordem, com cabeçalhos de nível 2 (sem '###' e sem '## ##'); a ficha técnica fica em '## Jam', como manda submissao/pacote-de-evento.md, e o YouTube a referencia quando precisa.",
+        "Marca as regras do evento, as declarações e a checklist do evento como 'não fornecido' e pergunta ao usuário o que depende delas; não deduz regulamento nem prazo.",
+        "No inventário, a voz fica 'a conferir' (ou 'em conflito', se uma regra fornecida a proibir), com fonte e data a registrar; não declara uso permitido.",
+        "A descrição do YouTube abre pela sinopse e não inventa capítulos."
+      ],
+      "falha": [
+        "Declara a voz liberada para o evento sem regra fornecida.",
+        "Preenche créditos ou declarações por suposição.",
+        "Escreve regulamento ou prazo de evento."
+      ]
+    },
+    {
+      "id": "C12",
+      "titulo": "Alteração da duração que invalida decisão anterior",
+      "diretorias": [
+        "diretor-de-pauta",
+        "diretor-criativo",
+        "diretor-publicacao"
+      ],
+      "modo": "jam",
+      "prompt": "Mudei a duração: agora é 3 minutos, e não 6. Atualiza o que for preciso.",
+      "entradas": [
+        "pauta.md em modo jam, com Duração: 6 min fornecida pelo usuário, sem dizer se é alvo ou limite, e a premissa escolhida (Escolhida em: data), com cinco blocos planejados.",
+        "script.md com Intenção e tabela de Estrutura de cinco blocos.",
+        "Ids das cenas, por bloco (fixture simulada): b1 = s1-a, s1-b; b2 = s2-a, s2-b; b3 = s3-a, s3-b; b4 = s4-a, s4-b; b5 = s5-a, s5-b. Duração de cada bloco não medida; o impacto do novo tempo fica pendente de medição.",
+        "Premissa escolhida (pauta.md, Escolhida em: 2026-10-02), texto: 'Uma mulher que dorme mal há dez anos decide registrar cada noite e descobre que o cérebro reorganiza a memória durante o sono, mas os registros só mostram a noite em que tudo mudou.'",
+        "Próximo finalista na pauta, ainda não escolhido (texto): 'Um pescador que não consegue dormir no mar aprende com os golfinhos a dormir pela metade.'",
+        "Nomes dos cinco blocos em script.md: b1 'a pergunta'; b2 'o mecanismo'; b3 'o caso'; b4 'a virada'; b5 'o fecho'.",
+        "Estimativa de duração de cada bloco (fixture, não medida): b1 60 s; b2 80 s; b3 90 s; b4 70 s; b5 60 s; total 360 s, que é a duração de 6 min. Nenhuma voz nem trilha foi medida.",
+        "Já gerados para a versão de 6 min: narração e trilha, com os tempos de 6 min. Nada foi regerado nem recalculado."
+      ],
+      "esperado": [
+        "Atualiza o campo Duração do briefing com a data e a fonte (o usuário), e diz quais artefatos o leem: diretor-producao, diretor-publicacao e diretor-criativo.",
+        "Verifica se a premissa cabe em 3 minutos; se não cabe, não reabre o tema, mas leva ao usuário o que precisa ceder ou o próximo finalista.",
+        "Marca em script.md os blocos e as cenas que a duração invalida, pelo número do bloco e pelo id da cena, sem reescrever o roteiro inteiro; um mesmo bloco ou cena não aparece como afetado e preservado no mesmo aspecto (tempo).",
+        "Informa que o tempo da voz e da trilha já gerados fica invalidado para o que mudou.",
+        "Como o briefing não diz se 3 min é alvo ou limite, o impacto da duração fica pendente no script.md e a pergunta vai ao usuário, sem apresentar corte como aprovado."
+      ],
+      "falha": [
+        "Reabre a escolha do tema sem um campo que a invalide.",
+        "Corta blocos do roteiro sem levar a decisão de corte ao usuário.",
+        "Apresenta corte como aprovado enquanto a resposta sobre alvo ou limite está pendente.",
+        "Marca o mesmo bloco ou cena como invalidado e preservado no mesmo aspecto (tempo). Preservar o texto de um bloco enquanto o tempo é recalculado não é falha."
+      ],
+      "correcao_fixture": "A entrada não dizia se a duração era alvo ou limite, e a regra nova depende disso. Acrescentada essa informação à fixture e uma expectativa de impacto pendente; as expectativas anteriores foram mantidas."
+    },
+    {
+      "id": "C13",
+      "titulo": "Publicação do canal: troca pontual de um campo",
+      "diretorias": [
+        "diretor-publicacao"
+      ],
+      "modo": "canal",
+      "prompt": "O título está prometendo demais. Troque só o título, mantendo a thumbnail.",
+      "entradas": [
+        "publication.md com título, conceito, prompt da thumbnail, descrição, tags e capítulos.",
+        "pauta.md com o termo buscado.",
+        "Campos atuais de publication.md (texto): Título: 'Isto vai mudar para sempre a forma como você dorme'. Conceito: 'o sono como limpeza do cérebro, explicado em dois passos'. Prompt da thumbnail: 'pessoa de olhos fechados diante de uma cidade acesa à noite, com a palavra SONO em caixa alta'.",
+        "Promessa decidida em script.md (Tese e Promessa, decisão do criativo): 'Você entende por que o sono apaga o que não serve, e como isso protege a memória.'",
+        "Descrição, tags e capítulos atuais de publication.md (texto): descrição 'Um vídeo sobre sono e memória, com dados de pesquisa.'; tags 'sono, memória, cérebro'; capítulos '0:00 Abertura; 1:10 O mecanismo; 3:40 O que fazer'.",
+        "script.json, campo title: 'Por que a gente dorme' (não alterar nesta tarefa).",
+        "Limite oficial do título, registrado pelo coordenador na fixture (consulta do coordenador, 2026-10-11; o executor não consulta fonte): máximo de 100 caracteres; UTF-8 é aceito, exceto os caracteres < e >. Fonte verificada pelo estrategista nesta sessão: https://developers.google.com/youtube/v3/docs/videos#snippet.title, seção snippet.title (contrato da API de vídeo, não de playlist). Observação datada: vale como dado desta fixture, e não como regra permanente da skill.",
+        "Termo buscado em pauta.md (texto): 'o que acontece no sono'."
+      ],
+      "esperado": [
+        "Altera apenas o campo Título, validando o limite e o teste do vídeo imaginado, sem mexer em tags, descrição ou capítulos.",
+        "Testa o par título e thumbnail: se a mudança conflita com a thumbnail, relata o conflito sem alterar a thumbnail.",
+        "Não altera script.md, script.json.title nem a promessa."
+      ],
+      "falha": [
+        "Reescreve descrição, tags ou capítulos.",
+        "Altera script.json.title."
+      ]
+    },
+    {
+      "id": "C14",
+      "titulo": "Pedido final explícito no jam: o criativo decide, a arte realiza",
+      "diretorias": [
+        "diretor-de-arte",
+        "diretor-criativo"
+      ],
+      "modo": "jam",
+      "prompt": "No curta, quero um botão de inscrição no fim, é pedido meu.",
+      "entradas": [
+        "Briefing com Modo: jam.",
+        "script.json do curta, sem cena de chamada; script.md com a linha Intenção preenchida e sem Tese nem Promessa.",
+        "art.md com a linha Intenção visual."
+      ],
+      "esperado": [
+        "Não recusa o pedido como proibição: o curta não tem chamada de canon, mas o pedido do usuário é explícito.",
+        "Leva a decisão de texto e função do pedido final ao diretor-criativo (estrutura/narrativa) antes de desenhar o botão.",
+        "Depois dessa decisão, realiza o botão com quadro/chamada só como realização visual, sem ponte, motivo, curtir ou compartilhar do canal.",
+        "Não altera script.json; o texto do pedido, se houver, é decisão do diretor-criativo."
+      ],
+      "falha": [
+        "Recusa o pedido como proibição absoluta, sem levá-lo ao diretor-criativo.",
+        "Desenha o botão antes de o diretor-criativo fixar texto e função.",
+        "Acrescenta curtir, compartilhar ou a ponte do canal ao pedido do usuário."
+      ]
+    },
+    {
+      "id": "C15",
+      "titulo": "Pauta do canal sem briefing e sem delegação: apresenta as opções (dois finalistas)",
+      "diretorias": [
+        "diretor-de-pauta"
+      ],
+      "modo": "canal",
+      "versao_introduzida": 2,
+      "prompt": "Quero um vídeo do canal sobre por que a Lua mostra sempre a mesma face. Não tenho prazo nem evento. Me mostra as opções e eu escolho.",
+      "entradas": [
+        "Pedido do usuário, sem briefing e sem delegação: o usuário quer escolher.",
+        "Nenhuma pasta src/videos/<vídeo>/ existe ainda.",
+        "Fixture simulada declarada (não é busca nem medida real): cinco candidatos já levantados, com as medidas que a tabela pede. (1) 'por que a Lua mostra sempre a mesma face': volume 1900, competição 38, views máx. 2,1 mi, views médias 180 mil, In Title 6 de 15, fora da curva não, formato: animação e fala para a câmera, base: consensual. (2) 'a Lua se afasta da Terra um pouco por ano': volume 700, competição 22, views máx. 1,2 mi, views médias 60 mil, In Title 2 de 15, fora da curva sim (470 mil views em canal de 10 mil inscritos), formato: fala para a câmera, base: consensual. (3) 'o que acontece com a Lua se a Terra parar': volume 350, competição 15, views máx. 300 mil, views médias 40 mil, In Title 1 de 15, fora da curva não, formato: lista narrada, base: consensual. (4) 'a Lua tem lado escuro ou só face oculta': volume 1100, competição 30, views máx. 900 mil, views médias 90 mil, In Title 4 de 15, fora da curva não, formato: fala para a câmera, base: disputada no centro. (5) 'por que a Lua não tem atmosfera': volume 800, competição 25, views máx. 700 mil, views médias 70 mil, In Title 3 de 15, fora da curva não, formato: fala para a câmera, base: firme. O agente usa essas medidas como declaradas e não busca outras."
+      ],
+      "esperado": [
+        "Modo canal, porque não há briefing; nenhum campo de briefing é inventado.",
+        "Passa cada candidato pelo nicho: sai o (2), por forma (afirmação, e não pergunta de curiosidade), e o (4), de base disputada no centro, cada saída com o motivo dito.",
+        "Aplica o corte de volume uma vez entre os remanescentes: sai o (3), de menor volume (350), com o motivo dito.",
+        "Apresenta os dois finalistas que restaram, (1) e (5), numa tabela, com recomendação e motivo, e para na escolha do usuário; não escolhe por conta própria.",
+        "Não cria pauta.md antes de o usuário escolher.",
+        "Não pede prazo nem duração, porque o canal não exige esses campos.",
+        "Se um finalista depende de decisão do usuário (por exemplo, o recorte escolhido), a tabela marca essa dependência e segue com a recomendação e o motivo dos demais."
+      ],
+      "falha": [
+        "Cria a pasta e o pauta.md antes de o usuário escolher.",
+        "Trata o pedido como modo jam, ou inventa prazo, destino ou evento.",
+        "Mantém candidato reprovado no nicho ou no corte ((2), (3) ou (4)) como finalista, ou afrouxa o filtro para completar a tabela.",
+        "Apresenta um só finalista, ou mais de quatro, sem a regra que o exige."
+      ],
+      "condicoes": [
+        {
+          "tipo": "esperado",
+          "indice": 6,
+          "condicao": "algum finalista depende de decisão do usuário"
+        }
+      ]
+    },
+    {
+      "id": "C16",
+      "titulo": "Pauta do canal com escolha delegada e dois finalistas: escolhe e registra a delegação",
+      "diretorias": [
+        "diretor-de-pauta"
+      ],
+      "modo": "canal",
+      "versao_introduzida": 2,
+      "prompt": "Quero um vídeo do canal sobre por que a Lua mostra sempre a mesma face. Não tenho prazo nem evento. Escolhe o tema, o que você achar melhor.",
+      "entradas": [
+        "Pedido do usuário, sem briefing. Delegação explícita: 'Escolhe o tema, o que você achar melhor.'",
+        "Nenhuma pasta src/videos/<vídeo>/ existe ainda.",
+        "Fixture simulada declarada (não é busca nem medida real): cinco candidatos já levantados, com as medidas que a tabela pede. (1) 'por que a Lua mostra sempre a mesma face': volume 1900, competição 38, views máx. 2,1 mi, views médias 180 mil, In Title 6 de 15, fora da curva não, formato: animação e fala para a câmera, base: consensual. (2) 'a Lua se afasta da Terra um pouco por ano': volume 700, competição 22, views máx. 1,2 mi, views médias 60 mil, In Title 2 de 15, fora da curva sim (470 mil views em canal de 10 mil inscritos), formato: fala para a câmera, base: consensual. (3) 'o que acontece com a Lua se a Terra parar': volume 350, competição 15, views máx. 300 mil, views médias 40 mil, In Title 1 de 15, fora da curva não, formato: lista narrada, base: consensual. (4) 'a Lua tem lado escuro ou só face oculta': volume 1100, competição 30, views máx. 900 mil, views médias 90 mil, In Title 4 de 15, fora da curva não, formato: fala para a câmera, base: disputada no centro. (5) 'por que a Lua não tem atmosfera': volume 800, competição 25, views máx. 700 mil, views médias 70 mil, In Title 3 de 15, fora da curva não, formato: fala para a câmera, base: firme. O agente usa essas medidas como declaradas e não busca outras."
+      ],
+      "esperado": [
+        "Modo canal, sem briefing; nenhum campo de briefing é inventado.",
+        "Aplica nicho e corte como em C15 (sai o (2) e o (4) pelo nicho; o (3) pelo corte), com o motivo de cada saída.",
+        "Escolhe o finalista recomendado entre (1) e (5), com o motivo, sem pedir aprovação extra da escolha que o usuário delegou.",
+        "Registra a escolha por delegação no pauta.md: 'Escolhido por' com a frase do usuário e a data, o motivo, e os finalistas que perderam com o motivo; as medições ficam na tabela.",
+        "Mantém a tabela de dois finalistas antes da escolha; não reduz a um nem acrescenta candidato reprovado.",
+        "Não pede prazo nem duração."
+      ],
+      "falha": [
+        "Pede ao usuário que aprove a escolha que ele já delegou.",
+        "Escolhe (2), (3) ou (4), reprovados no nicho ou no corte.",
+        "Registra a escolha sem a delegação (sem a frase, a data ou a fonte)."
+      ]
+    },
+    {
+      "id": "C17",
+      "titulo": "Pedido pontual de frase com proposição e fonte já verificadas: oralidade, sem reabrir a cadeia",
+      "diretorias": [
+        "diretor-criativo"
+      ],
+      "modo": "canal",
+      "versao_introduzida": 2,
+      "prompt": "Na frase 'Isso prova que o sono é essencial', do bloco 3, troque por uma versão mais concreta sem mudar a afirmação. Só isso.",
+      "entradas": [
+        "script.json com a cena do bloco 3, com o campo sources preenchido; research.md com a fonte verificada nesta conversa, que sustenta a proposição 'o sono é essencial' na força da frase atual (fixture).",
+        "Voz já gerada para essa cena. Shell real proibido nesta rodada: o validador é tratado como planejado.",
+        "Dado e fonte, copiados integralmente de src/videos/why-we-sleep/research.md (fixture): linha 21: «A revisão de Cirelli e Tononi testa a hipótese de que o sono não seria essencial, que prevê três coisas: animais que não dormem, animais que não precisam compensar o sono perdido e falta de sono sem consequência séria. Nenhuma das três se confirma. O sono de recuperação aparece como mais tempo de sono, sono mais profundo ou sono menos interrompido. (estabelecido; relido em 04/10/2026) [20]\r» Linha 108: «20. Cirelli e Tononi, \"Is Sleep Essential?\", PLOS Biology, 2008. https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0060216 (consultada em 03/10/2026)\r»"
+      ],
+      "esperado": [
+        "Reescreve apenas a frase, mantendo a mesma proposição e as mesmas fontes.",
+        "Com shell proibido, trata o validador como planejado (minuta do comando, sem alegar execução) e faz a própria leitura, como pede a tabela de etapas/roteiro.md.",
+        "Não reabre a pesquisa, a tese, a tabela de Estrutura nem a decisão de voz.",
+        "Não aciona diretor-de-arte, diretor-de-som nem diretor-publicacao; diz que a frase alterada regera só o áudio dela, pela diretor-producao.",
+        "Diz que a passagem à arte depende da duração efetiva medida após a regeração e de mudança de cue, plano ou enquadramento; não presume nenhuma das duas coisas."
+      ],
+      "falha": [
+        "Reabre o roteiro inteiro ou a pesquisa.",
+        "Leva a tese ou a promessa ao usuário como decisão.",
+        "Dispara a cadeia de arte, som e publicação para uma frase.",
+        "Chama de oralidade uma troca que muda a proposição ou a força sem fonte que a sustente."
+      ]
+    },
+    {
+      "id": "C18",
+      "titulo": "Produção com relógio simulado: marcos concretos com horário",
+      "diretorias": [
+        "diretor-producao"
+      ],
+      "modo": "jam",
+      "versao_introduzida": 2,
+      "prompt": "O prazo é amanhã às 18h. Faz o plano e me diz os marcos com horário.",
+      "entradas": [
+        "Briefing jam: Prazo amanhã às 18h, com o fuso dado; Duração: 6 min; Regras do evento: arquivo 1920×1080 a 30 fps, narração em off obrigatória (fonte: o briefing).",
+        "Hora de início do relógio: hoje às 9h, simulada nesta fixture (não é medida real; o agente usa essa hora como declarada).",
+        "Nenhum defeito bloqueante declarado; a voz da cena 4 ainda não está pronta, e nenhuma rodada está esgotada."
+      ],
+      "esperado": [
+        "Usa a hora de início simulada (hoje, 9h) e o prazo (amanhã, 18h, com o fuso dado) e conta de trás para a frente, com cada marco dito como horário concreto.",
+        "Os marcos seguem a ordem de etapas/plano.md (envio, congelamento, filme montável, voz conferida, texto pronto para a voz, premissa e intenção), e não passam do prazo.",
+        "Diz o nível de polimento com o motivo e os requisitos bloqueantes com o dono de cada um.",
+        "Os horários saem da fixture: nenhuma hora diferente da simulada é inventada, e a conta do tempo disponível aparece."
+      ],
+      "falha": [
+        "Deixa os marcos como 'a fixar' mesmo com a hora de início dada.",
+        "Inventa outra hora de início, ou ignora o fuso do prazo.",
+        "Declara o plano pronto sem nível de polimento ou sem requisitos bloqueantes com dono."
+      ]
+    },
+    {
+      "id": "C19",
+      "titulo": "Continuação do pedido final no jam: texto e função já fixados, a arte realiza",
+      "diretorias": [
+        "diretor-de-arte",
+        "diretor-criativo"
+      ],
+      "modo": "jam",
+      "versao_introduzida": 2,
+      "prompt": "No curta, o botão de inscrição no fim já tem o texto e a função decididos. Desenha o botão.",
+      "entradas": [
+        "Briefing com Modo: jam.",
+        "script.json do curta com a cena final 'chamada' já criada (fixture simulada): narração 'Se quiser o próximo curta, inscreva-se.'; a cena anterior, 'fechamento', com holdMs 1200; a chamada tem um plano só, de 0 a 4,5 s, com a seta e o botão de inscrição (o pedido fixado). Tempos simulados, sem medição de áudio: 'inscreva-se' em 3,0 s; fim da narração em 4,5 s.",
+        "art.md com a linha Intenção visual. Nenhum render foi feito.",
+        "script.md com a linha Intenção preenchida e a decisão do pedido final fixada pelo diretor-criativo (fixture): texto 'Se quiser o próximo curta, inscreva-se.' e função de convite à continuação, decidida pelo usuário antes desta conversa.",
+        "Intenção visual de art.md (texto): 'o curta termina no escuro, e o convite aparece como uma porta aberta, sem cor de marca'.",
+        "Scaffold simulado do plano da chamada (declarado, não renderizado): quadro 1920×1080; fundo escuro da cena; botão de inscrição na área inferior central; seta curta apontando para o botão; sem animação fixada no scaffold."
+      ],
+      "esperado": [
+        "Realiza o botão com quadro/chamada, sem ponte, motivo, curtir ou compartilhar do canal, com a palavra 'inscreva-se' como deixa, e o instante 'a medir' até o render.",
+        "Não pergunta de novo se o curta deve ter o botão, nem reabre o texto ou a função já fixados.",
+        "Não altera script.json; declara o desenho como pronto para o render, e não como renderizado nem conferido.",
+        "Diz a unidade que apoia a realização (quadro/chamada) e a passagem: o quadro com o pedido completo vai ao critico-de-quadro, ou à revisão do quadro, depois do render."
+      ],
+      "falha": [
+        "Acrescenta curtir, compartilhar ou a ponte do canal ao pedido fixado.",
+        "Declara o botão pronto ou conferido antes do render.",
+        "Reabre a decisão de texto ou função, ou pergunta de novo se o curta deve ter o botão."
+      ],
+      "nota_avaliacao": "Este caso demonstra uma realização concreta (quadro, partitura e minuta) para render em ambiente simulado, sobre os tempos fornecidos na entrada. A validação real, com medição de áudio e render, fica pendente e não é afirmada. Os tempos da entrada são declarados, não medidos: o instante fica 'a medir' até o render, como manda quadro/chamada.md. O requisito de tempo medido não é afrouxado por este caso."
+    }
+  ],
+  "descricao_versao": "Versão 3: fixtures residuais completas. C05 ganhou o antecedente de esperado[3] (verdadeiro no caso) e a variante C05-falso (N/A justificado); C07 a duração da vinheta; C12 a premissa, o próximo finalista, os blocos e os tempos simulados; C13 o título, o par conceito/thumbnail, a promessa e o limite oficial datado (consulta do coordenador, 2026-10-11); C16 a fixture de C15 expandida; C19 a cena de chamada e o scaffold simulado. Os enunciados de expectativa e falha não mudaram. Versão 2: correções de expectativa e fixture com histórico (campo 'historico'), e casos C15–C19 acrescentados. Os casos C01–C14 mantêm o id e o prompt originais (verificado pelo gerador de versão). Correções de matriz não contam como ganho da skill. Ajuste 3.1, sem rodada nova (posterior à descrição acima): só o enunciado de C05 esperado[3] mudou (texto anterior em historico, com a regra de realinhamento da deixa); C05, C10 e C19 ganharam nota_avaliacao; C10 ganhou a leitura de etapas/narracao.md; C17 ganhou o dado e a fonte integrais de research.md. Correções de matriz não contam como ganho da skill.",
+  "como_avaliar": [
+    "Julgue ação e artefato, não recitação: um item passa quando o comportamento aparece no artefato ou na decisão.",
+    "Um item condicional pode ser N/A somente com condicao_verdadeira=false e prova_condicao (a evidência de que a condição é falsa). N/A sem essa prova é falha.",
+    "Condição verdadeira com N/A é falha. Condição não avaliada é falha.",
+    "Nenhum comando, busca, áudio, métrica ou arquivo real pode ser inventado por simulação: o que é simulado é declarado como tal.",
+    "O agregador exclui o N/A justificado do total aplicável e reprova falso ou incompleto."
+  ],
+  "historico": [
+    {
+      "versao": 2,
+      "caso": "C01",
+      "campo": "esperado",
+      "indice": 1,
+      "anterior": "Levanta candidatos, passa cada um pelo nicho e apresenta de dois a quatro finalistas numa tabela, com recomendação e motivo.",
+      "novo": "Levanta candidatos, passa cada um pelo nicho e pelo corte de volume, e apresenta os finalistas que sobreviveram numa tabela, com recomendação e motivo. Com um só sobrevivente, diz que há um único finalista e não inventa candidatos nem afrouxa o filtro.",
+      "justificativa": "Na fixture original, só (1) sobrevive: a expectativa de 2 a 4 finalistas exigia dois aprovados inexistentes. A correção não reduz a exigência de concretude nem de nicho e corte.",
+      "regra_ou_pedido": "S4: um sobrevivente é dito como tal, sem invenção (diretor-de-pauta/escolha.md, 'Um sobrevivente, nenhum')."
+    },
+    {
+      "versao": 2,
+      "caso": "C01",
+      "campo": "esperado",
+      "indice": 2,
+      "anterior": "Não cria pauta.md antes de o usuário escolher um finalista.",
+      "novo": "Não cria pauta.md antes da escolha. Com a delegação explícita do pedido ('Escolhe o tema'), a escolha é do agente, e a delegação fica registrada no pauta.md que ele criar (escolha.md, 'Delegação').",
+      "justificativa": "A expectativa dizia 'antes de o usuário escolher', o que ignorava a delegação explícita do pedido.",
+      "regra_ou_pedido": "S4: escolha delegada dispensa nova confirmação."
+    },
+    {
+      "versao": 2,
+      "caso": "C01",
+      "campo": "esperado",
+      "indice": 5,
+      "anterior": null,
+      "novo": "Com delegação e um único finalista, escolhe o recomendado se for válido e suficiente, sem pedir aprovação extra, e registra a limitação (um só finalista, sem alternativa medida) em pauta.md.",
+      "justificativa": "Caso novo do N=1 delegado: verifica a decisão autorizada e a limitação, sem exigir dois aprovados.",
+      "regra_ou_pedido": "S4: registro de delegação e de limitação."
+    },
+    {
+      "versao": 2,
+      "caso": "C01",
+      "campo": "falha",
+      "indice": 0,
+      "anterior": "Cria a pasta e o pauta.md com um tema escolhido pelo agente.",
+      "novo": "Cria a pasta e o pauta.md com um tema escolhido pelo agente sem delegação explícita do usuário, ou sem registrar a delegação.",
+      "justificativa": "Escolher pelo agente deixou de ser falha quando há delegação explícita; a falha passa a ser escolher sem delegação ou não registrá-la.",
+      "regra_ou_pedido": "S4."
+    },
+    {
+      "versao": 2,
+      "caso": "C02",
+      "campo": "esperado",
+      "indice": 0,
+      "anterior": "Registra Duração, Prazo e Regras do evento como 'não fornecido', com a fonte e a data.",
+      "novo": "Registra Duração com a data e a fonte no próprio campo; Prazo e Regras do evento como 'não fornecido', com a fonte e a data no cabeçalho ou na pergunta ao usuário.",
+      "justificativa": "A expectativa exigia fonte e data em cada campo; a regra exige a data na Duração (no jam) e 'não fornecido' nos demais, sem fonte por campo.",
+      "regra_ou_pedido": "briefing.md (Campos; Prazo e duração são dados, a duração fica registrada com a data)."
+    },
+    {
+      "versao": 2,
+      "caso": "C03",
+      "campo": "esperado",
+      "indice": 3,
+      "anterior": "Registra a frase de intenção na linha Intenção de script.md, com a pergunta dramática depois de travessão, e não usa Tese e Promessa.",
+      "novo": "A linha Intenção de script.md fica em aberto, com a pendência registrada (o campo 'não fornecido' ou em aberto), sem frase de intenção inventada; Tese e Promessa não aparecem.",
+      "justificativa": "A frase de intenção é decisão do usuário (narrativa.md: 'formulada com o usuário'). A expectativa anterior exigia a frase, o que induzia a inventá-la.",
+      "regra_ou_pedido": "narrativa.md (frase de intenção) e diretor-criativo/SKILL.md (pendência em script.md)."
+    },
+    {
+      "versao": 2,
+      "caso": "C03",
+      "campo": "esperado",
+      "indice": 4,
+      "anterior": "Trata a faixa de 6 a 10 minutos e a voz do canal como repertório, não como regra do curta.",
+      "novo": "Não impõe a faixa de 6 a 10 minutos nem a voz do canal como regra do curta; a menção a elas não é exigida, e a duração usada é a do briefing (6 min).",
+      "justificativa": "A regra só proíbe impor: a faixa e a voz do canal são sensores, e não medem um curta. Exigir que a resposta as mencione não é regra.",
+      "regra_ou_pedido": "narrativa.md (sensores do canal, 'não medem um curta')."
+    },
+    {
+      "versao": 2,
+      "caso": "C03",
+      "campo": "entradas",
+      "indice": 3,
+      "anterior": null,
+      "novo": "Pelo briefing, a ficção não é declarada: a Versão condicional da cena, se o agente a escrever, não é apresentada como fato antes da resposta do usuário.",
+      "justificativa": "Residual de C03 esperado/falha[0] da rodada: o PASS dependia dessa leitura condicional, que a fixture não dizia.",
+      "regra_ou_pedido": "narrativa.md (até a resposta, a cena não apresenta o dado como verdade)."
+    },
+    {
+      "versao": 2,
+      "caso": "C04",
+      "campo": "entradas",
+      "indice": 2,
+      "anterior": null,
+      "novo": "Fonte da cena: 'estudo com 110 adultos', marcada como não verificada nesta conversa (fixture). A força 'prova' não é sustentada por ela: é conflito de proposição, e não oralidade.",
+      "justificativa": "A fixture anterior tratava a fonte como 'mesma proposição, mesmas fontes', o que contradizia o conflito que a checagem trata.",
+      "regra_ou_pedido": "S2; pesquisa/checagem.md ('Força sem sustento')."
+    },
+    {
+      "versao": 2,
+      "caso": "C04",
+      "campo": "entradas",
+      "indice": 3,
+      "anterior": null,
+      "novo": "Shell real proibido nesta rodada: o validador é tratado como planejado (minuta do comando, sem alegar execução).",
+      "justificativa": "Permite validador planejado quando o shell real é proibido, sem alegar execução real.",
+      "regra_ou_pedido": "Correção de matriz (prepara o teste; não é ganho da skill)."
+    },
+    {
+      "versao": 2,
+      "caso": "C04",
+      "campo": "esperado",
+      "indice": 0,
+      "anterior": "Reescreve apenas a frase, mantendo a mesma proposição e as mesmas fontes.",
+      "novo": "Trata a frase como conflito legítimo de proposição: sem fonte verificada que sustente 'prova' na força atual, declara o conflito e propõe uma alternativa sustentável como proposta, sem pedir ao usuário que decida a veracidade.",
+      "justificativa": "Com fonte não verificada, 'reescrever mantendo as mesmas fontes' é impossível. O pedido exige manter a afirmação, e a evidência não a sustenta: o conflito é declarado.",
+      "regra_ou_pedido": "S2: conflito legítimo; a veracidade não é decisão do usuário."
+    },
+    {
+      "versao": 2,
+      "caso": "C04",
+      "campo": "esperado",
+      "indice": 1,
+      "anterior": "Confere o validador e a própria leitura, como pede a tabela de reteste de etapas/roteiro.md para uma mudança de oralidade com a mesma proposição.",
+      "novo": "Com shell real proibido, trata o validador como planejado: escreve a minuta do comando, sem alegar que rodou, e faz a própria leitura em ritmo de fala, como pede a tabela de reteste de etapas/roteiro.md.",
+      "justificativa": "A leitura própria é exigência real (roteiro.md: simular a fluidez lendo no ritmo da fala); o validador só é 'planejado' quando não há shell.",
+      "regra_ou_pedido": "diretor-criativo/etapas/roteiro.md (tabela de reteste; 'O ouvido é do usuário')."
+    },
+    {
+      "versao": 2,
+      "caso": "C04",
+      "campo": "esperado",
+      "indice": 2,
+      "anterior": "Não reabre a pesquisa, a tese, a tabela de Estrutura nem a decisão de voz.",
+      "novo": "Não reabre tese, tabela de Estrutura nem decisão de voz; reabre a pesquisa só para checar a frase sem fonte verificada.",
+      "justificativa": "Com fonte não verificada, a checagem da frase é devida. O que não se reabre é a tese e a estrutura.",
+      "regra_ou_pedido": "S2; pesquisa/checagem.md ('quando uma mudança altera um fato, a força dele')."
+    },
+    {
+      "versao": 2,
+      "caso": "C04",
+      "campo": "esperado",
+      "indice": 3,
+      "anterior": "Não aciona diretor-de-arte, diretor-de-som nem diretor-publicacao; informa que a frase alterada regera só o áudio dela (diretor-producao).",
+      "novo": "Não aciona diretor-de-arte, diretor-de-som nem diretor-publicacao; se a frase for alterada, diz que o áudio dela é regerado pela diretor-producao, e só ele, com arte, som e publicação fora.",
+      "justificativa": "A atribuição de dono precisa ser explícita (roteiro.md: 'regera o áudio dela', dono diretor-producao).",
+      "regra_ou_pedido": "diretor-criativo/etapas/roteiro.md (Depois da voz)."
+    },
+    {
+      "versao": 2,
+      "caso": "C04",
+      "campo": "falha",
+      "indice": 0,
+      "anterior": "Reabre o roteiro inteiro ou a pesquisa.",
+      "novo": "Reabre o roteiro inteiro.",
+      "justificativa": "Reabrir a pesquisa é o que a checagem exige quando a fonte não sustenta a frase. A falha que resta é reabrir o roteiro.",
+      "regra_ou_pedido": "S2: 'Uma mudança apenas de oralidade com proposição e fontes verificadas não reabre pesquisa'."
+    },
+    {
+      "versao": 2,
+      "caso": "C04",
+      "campo": "falha",
+      "indice": 1,
+      "anterior": "Leva a tese ou a promessa ao usuário como decisão.",
+      "novo": "Decide a veracidade pedindo ao usuário que escolha entre a afirmação forte e a fraca; narra como fato a afirmação sem sustento; ou chama a troca de simples oralidade.",
+      "justificativa": "Fatos não são escolha do usuário; alegação sem sustento não vira oralidade. A falha anterior ('levar a tese ou a promessa como decisão') não cobria isso e estava em conflito com a checagem.",
+      "regra_ou_pedido": "S2; conducao/entrevista.md ('Fato não é opção')."
+    },
+    {
+      "versao": 2,
+      "caso": "C05",
+      "campo": "entradas",
+      "indice": 3,
+      "anterior": null,
+      "novo": "Tempos por palavra (simulados, sem medição de áudio): 'curta' em 4,2 s; 'se inscreva' em 5,1 s; fim da narração em 7,8 s; holdMs da cena anterior de 1500 ms.",
+      "justificativa": "F5: sem tempo, o instante em milissegundos era impossível. O teste não gera áudio, e por isso os tempos são declarados como simulados.",
+      "regra_ou_pedido": "quadro/chamada.md (partitura com a deixa e o instante); não exigir medir áudio que o teste não gera."
+    },
+    {
+      "versao": 2,
+      "caso": "C05",
+      "campo": "esperado",
+      "indice": 1,
+      "anterior": "Define o que faz cada elemento e a deixa de cada um pela palavra do pedido ('curta', 'se inscreva'), com o instante registrado em score.md.",
+      "novo": "Define o que faz cada elemento e a deixa de cada um pela palavra do pedido ('curta', 'se inscreva'), com o instante em milissegundos registrado em score.md, a partir dos tempos simulados da entrada; sem tempo dado, o instante fica declarado 'a medir'.",
+      "justificativa": "O instante só é exigido em ms quando há tempo dado (F5).",
+      "regra_ou_pedido": "quadro/chamada.md (partitura)."
+    },
+    {
+      "versao": 2,
+      "caso": "C05",
+      "campo": "falha",
+      "indice": 3,
+      "anterior": "Acrescenta um segundo gesto, como botão de curtir ou de compartilhar, por iniciativa própria, além da inscrição.",
+      "novo": "Acrescenta um pedido que o texto não fixa (por exemplo, compartilhar), por iniciativa própria. Curtir não é acréscimo quando o texto o pede.",
+      "justificativa": "A falha anterior ('além da inscrição') apagava o curtir, que o texto fixa ('curta e se inscreva'). Regra de um gesto que apagava pedido fixado foi substituída.",
+      "regra_ou_pedido": "S9: cada elemento representa um pedido que o texto fixa, sem acréscimo por iniciativa da arte."
+    },
+    {
+      "versao": 2,
+      "caso": "C06",
+      "campo": "esperado",
+      "indice": 1,
+      "anterior": "Não usa quadro/chamada como repertório no curta.",
+      "novo": "Não usa quadro/chamada antes da decisão do diretor-criativo, nem como repertório no curta.",
+      "justificativa": "A expectativa anterior ('não usa como repertório') é mantida, e a realização visual depois da fixação passa a ser o comportamento esperado, como pede o pedido explícito e quadro/chamada.md (Escopo).",
+      "regra_ou_pedido": "S1; quadro/chamada.md (Escopo)."
+    },
+    {
+      "versao": 2,
+      "caso": "C06",
+      "campo": "esperado",
+      "indice": 3,
+      "anterior": null,
+      "novo": "Não pede nova confirmação de um pedido explícito que o usuário já fez: leva ao diretor-criativo só o texto e a função.",
+      "justificativa": "D1 da rodada: a resposta perguntou de novo se o curta deve ter inscrição, ao que o usuário já pediu.",
+      "regra_ou_pedido": "S1; conducao/entrevista-imagem.md (ainda é a mesma decisão?)."
+    },
+    {
+      "versao": 2,
+      "caso": "C08",
+      "campo": "entradas",
+      "indice": 1,
+      "anterior": "Catálogo src/audio/sfx.ts com o uso shutterDown, ou sem ele.",
+      "novo": "Catálogo src/audio/sfx.ts com o uso shutterDown (entrada CC0, invariante do catálogo; id da fonte não registrado nesta fixture), ou sem ele.",
+      "justificativa": "F7: a fixture dizia 'licença não declarada', o que contradiz a invariante CC0 do catálogo. A procedência desconhecida fica registrada como 'a conferir'.",
+      "regra_ou_pedido": "diretor-producao/etapas/efeitos-sonoros.md (CC0, invariante do catálogo)."
+    },
+    {
+      "versao": 2,
+      "caso": "C08",
+      "campo": "esperado",
+      "indice": 1,
+      "anterior": "Consulta o catálogo antes de buscar; se o uso existe, reutiliza sem nova consulta.",
+      "novo": "Consulta o catálogo antes de buscar; se o uso existe, reutiliza sem busca, sem nova escuta de rotina e sem pergunta ao usuário. A procedência, se não estiver registrada, fica 'a conferir' com a diretor-producao.",
+      "justificativa": "A regra é clara (efeitos/escolha.md:10 e efeitos-sonoros.md:7); a resposta anterior deixou a licença para o usuário, o que é falha de execução, e não de skill.",
+      "regra_ou_pedido": "diretor-de-som/efeitos/escolha.md:10; diretor-producao/etapas/efeitos-sonoros.md:7."
+    },
+    {
+      "versao": 2,
+      "caso": "C09",
+      "campo": "esperado",
+      "indice": 0,
+      "anterior": "O plano diz os marcos com horário, o nível de polimento com o motivo e os requisitos bloqueantes com o dono de cada um.",
+      "novo": "O plano diz o nível de polimento com o motivo e os requisitos bloqueantes com o dono de cada um; sem hora de início no briefing, os marcos ficam 'a fixar', a hora é perguntada, e o envio sai com horário.",
+      "justificativa": "F8/S6: a fixture não dá hora de início; exigir marcos com horário inventava o relógio. A pendência é a resposta correta.",
+      "regra_ou_pedido": "S6: diretor-producao/etapas/plano.md ('Sem hora de início no briefing')."
+    },
+    {
+      "versao": 2,
+      "caso": "C09",
+      "campo": "entradas",
+      "indice": 3,
+      "anterior": null,
+      "novo": "Hora de início do relógio: não fornecida (a fixture não a dá, e o plano não a supõe).",
+      "justificativa": "F8: caso de informação ausente explícito. A variante com relógio simulado é o caso C18.",
+      "regra_ou_pedido": "briefing.md (campos não fornecidos não são supostos)."
+    },
+    {
+      "versao": 2,
+      "caso": "C10",
+      "campo": "entradas",
+      "indice": 2,
+      "anterior": null,
+      "novo": "Vídeo: rats-sleep (slug da pasta src/videos/).",
+      "justificativa": "F9: o modelo de caminho pede o slug do vídeo; sem ele o caminho não se monta.",
+      "regra_ou_pedido": "diretor-producao/etapas/narracao-voz.md (takes em public/videos/<vídeo>/takes/)."
+    },
+    {
+      "versao": 2,
+      "caso": "C10",
+      "campo": "esperado",
+      "indice": 2,
+      "anterior": "Informa o caminho do áudio e diz que pronúncia e entonação são só do usuário, sem afirmar que ouviu o áudio.",
+      "novo": "Informa o caminho do áudio pelo modelo public/videos/rats-sleep/takes/ (tomada da frase 3 a gerar, sem afirmar que o arquivo existe), e diz que pronúncia e entonação são só do usuário, sem afirmar que ouviu o áudio.",
+      "justificativa": "F9: 'entregue o caminho e as medidas' (diretor-producao/SKILL.md:62) e o modelo de caminho existem; exige-se o modelo, não um arquivo real gerado.",
+      "regra_ou_pedido": "diretor-producao/SKILL.md:62; etapas/narracao-voz.md:13."
+    },
+    {
+      "versao": 2,
+      "caso": "C11",
+      "campo": "esperado",
+      "indice": 0,
+      "anterior": "Escreve título, sinopse e ficha uma vez, em '## Comum'; cria '## Jam' e '## YouTube'.",
+      "novo": "Escreve título, sinopse, créditos e inventário uma vez, em '## Comum'; cria '## YouTube' e '## Jam' nessa ordem, com cabeçalhos de nível 2 (sem '###' e sem '## ##'); a ficha técnica fica em '## Jam', como manda submissao/pacote-de-evento.md, e o YouTube a referencia quando precisa.",
+      "justificativa": "S7: o contrato da ficha em Jam é mantido. A expectativa 'ficha em Comum' era incompatível com publication/SKILL.md:20 e pacote-de-evento.md:10,17. Os cabeçalhos são o que a skill prevê; a minuta anterior falhou nisso.",
+      "regra_ou_pedido": "S7; diretor-publicacao/SKILL.md:18,20 ('nesta ordem'); submissao/pacote-de-evento.md:10,17."
+    },
+    {
+      "versao": 2,
+      "caso": "C12",
+      "campo": "entradas",
+      "indice": 2,
+      "anterior": null,
+      "novo": "Ids das cenas, por bloco (fixture simulada): b1 = s1-a, s1-b; b2 = s2-a, s2-b; b3 = s3-a, s3-b; b4 = s4-a, s4-b; b5 = s5-a, s5-b. Duração de cada bloco não medida; o impacto do novo tempo fica pendente de medição.",
+      "justificativa": "F11: sem ids, a marcação por bloco e cena não podia ser feita (roteiro.md, 'pelo número do bloco e pelo id').",
+      "regra_ou_pedido": "diretor-criativo/etapas/roteiro.md (Quando a duração do briefing muda)."
+    },
+    {
+      "versao": 2,
+      "caso": "C12",
+      "campo": "esperado",
+      "indice": 2,
+      "anterior": "Marca em script.md os blocos e cenas que a duração invalida, sem reescrever o roteiro inteiro.",
+      "novo": "Marca em script.md os blocos e as cenas que a duração invalida, pelo número do bloco e pelo id da cena, sem reescrever o roteiro inteiro; um mesmo bloco ou cena não aparece como afetado e preservado no mesmo aspecto (tempo).",
+      "justificativa": "D2 da rodada: o b5 aparecia como afetado e como preservado. A expectativa passa a proibir essa contradição, sem impedir preservar o texto.",
+      "regra_ou_pedido": "roteiro.md (reescreva só o que a duração afeta)."
+    },
+    {
+      "versao": 2,
+      "caso": "C12",
+      "campo": "falha",
+      "indice": 3,
+      "anterior": null,
+      "novo": "Marca o mesmo bloco ou cena como invalidado e preservado no mesmo aspecto (tempo). Preservar o texto de um bloco enquanto o tempo é recalculado não é falha.",
+      "justificativa": "D2: a proibição é só do aspecto contraditório.",
+      "regra_ou_pedido": "roteiro.md (Quando a duração do briefing muda)."
+    },
+    {
+      "versao": 2,
+      "caso": "C15",
+      "campo": "caso",
+      "indice": null,
+      "anterior": null,
+      "novo": "acrescentado",
+      "justificativa": "Caso novo da versão 2: cobre o pedido ou a variante que a rodada não exercitou.",
+      "regra_ou_pedido": "Pauta do canal sem briefing e sem delegação: apresenta as opções (dois finalistas)"
+    },
+    {
+      "versao": 2,
+      "caso": "C16",
+      "campo": "caso",
+      "indice": null,
+      "anterior": null,
+      "novo": "acrescentado",
+      "justificativa": "Caso novo da versão 2: cobre o pedido ou a variante que a rodada não exercitou.",
+      "regra_ou_pedido": "Pauta do canal com escolha delegada e dois finalistas: escolhe e registra a delegação"
+    },
+    {
+      "versao": 2,
+      "caso": "C17",
+      "campo": "caso",
+      "indice": null,
+      "anterior": null,
+      "novo": "acrescentado",
+      "justificativa": "Caso novo da versão 2: cobre o pedido ou a variante que a rodada não exercitou.",
+      "regra_ou_pedido": "Pedido pontual de frase com proposição e fonte já verificadas: oralidade, sem reabrir a cadeia"
+    },
+    {
+      "versao": 2,
+      "caso": "C18",
+      "campo": "caso",
+      "indice": null,
+      "anterior": null,
+      "novo": "acrescentado",
+      "justificativa": "Caso novo da versão 2: cobre o pedido ou a variante que a rodada não exercitou.",
+      "regra_ou_pedido": "Produção com relógio simulado: marcos concretos com horário"
+    },
+    {
+      "versao": 2,
+      "caso": "C19",
+      "campo": "caso",
+      "indice": null,
+      "anterior": null,
+      "novo": "acrescentado",
+      "justificativa": "Caso novo da versão 2: cobre o pedido ou a variante que a rodada não exercitou.",
+      "regra_ou_pedido": "Continuação do pedido final no jam: texto e função já fixados, a arte realiza"
+    },
+    {
+      "versao": 2,
+      "caso": "C01",
+      "campo": "condicoes",
+      "indice": 4,
+      "anterior": null,
+      "novo": "condição 'algum finalista depende de decisão do usuário'",
+      "justificativa": "Expectativa condicional: a fixture não tem finalista dependente. Sem estado N/A a matriz contava falha; a condição, com prova, passa a ser N/A justificado.",
+      "regra_ou_pedido": "Estado N/A do avaliador (regra de como_avaliar)."
+    },
+    {
+      "versao": 3,
+      "caso": "C05",
+      "campo": "entradas",
+      "indice": 4,
+      "anterior": null,
+      "novo": "Posição da seta (fixture; antecedente verdadeiro neste caso): a seta aponta para a palavra 'se inscreva', que a voz diz em 5,1 s; a imagem mostra a seta sobre o botão a partir de 3,6 s, antes dessa palavra.",
+      "justificativa": "Fixture residual da v3: a entrada faltava (tempos em ms, paleta e linha da tabela) ou era a condição de esperado[3] sem antecedente.",
+      "regra_ou_pedido": "Matriz v3: a condição de esperado[3] precisa de antecedente declarado para ser testada; sem ele a expectativa ficava sem N/A nem teste."
+    },
+    {
+      "versao": 3,
+      "caso": "C05",
+      "campo": "entradas",
+      "indice": 5,
+      "anterior": null,
+      "novo": "Os mesmos tempos em milissegundos (simulados): 'curta' 4200 ms; 'se inscreva' 5100 ms; fim da narração 7800 ms; holdMs da cena anterior 1500 ms.",
+      "justificativa": "Fixture residual da v3: a entrada faltava (tempos em ms, paleta e linha da tabela) ou era a condição de esperado[3] sem antecedente.",
+      "regra_ou_pedido": "Matriz v3: a condição de esperado[3] precisa de antecedente declarado para ser testada; sem ele a expectativa ficava sem N/A nem teste."
+    },
+    {
+      "versao": 3,
+      "caso": "C05",
+      "campo": "entradas",
+      "indice": 6,
+      "anterior": null,
+      "novo": "Paleta do canal em art.md (valores simulados da fixture): fundo #F7F3EA, texto #1F2328, destaque #E4572E; seta e botão usam só a cor de destaque.",
+      "justificativa": "Fixture residual da v3: a entrada faltava (tempos em ms, paleta e linha da tabela) ou era a condição de esperado[3] sem antecedente.",
+      "regra_ou_pedido": "Matriz v3: a condição de esperado[3] precisa de antecedente declarado para ser testada; sem ele a expectativa ficava sem N/A nem teste."
+    },
+    {
+      "versao": 3,
+      "caso": "C05",
+      "campo": "entradas",
+      "indice": 7,
+      "anterior": null,
+      "novo": "Linha final da tabela de Estrutura de script.md: 'Chamada | pedido de inscrição, com o texto do roteiro | `chamada`'.",
+      "justificativa": "Fixture residual da v3: a entrada faltava (tempos em ms, paleta e linha da tabela) ou era a condição de esperado[3] sem antecedente.",
+      "regra_ou_pedido": "Matriz v3: a condição de esperado[3] precisa de antecedente declarado para ser testada; sem ele a expectativa ficava sem N/A nem teste."
+    },
+    {
+      "versao": 3,
+      "caso": "C05",
+      "campo": "condicoes",
+      "indice": 3,
+      "anterior": null,
+      "novo": "a seta aponta para uma palavra que a voz diz depois do que a imagem mostra",
+      "justificativa": "Condição declarada para esperado[3], que era conditional sem condicao na matriz (relatório rodada-v2, C05 esperado[3]).",
+      "regra_ou_pedido": "Como_avaliar: condição verdadeira com N/A é falha; N/A só com condicao_verdadeira=false e prova."
+    },
+    {
+      "versao": 3,
+      "caso": "C05",
+      "campo": "variantes",
+      "indice": null,
+      "anterior": null,
+      "novo": "C05-falso (antecedente falso de esperado[3])",
+      "justificativa": "A condição de esperado[3] tem os dois ramos; um caso só com o antecedente verdadeiro não testaria a N/A justificada.",
+      "regra_ou_pedido": "Como_avaliar: N/A só com condicao_verdadeira=false e prova; a variante é o ramo falso, no mesmo caso, sem novo caso."
+    },
+    {
+      "versao": 3,
+      "caso": "C07",
+      "campo": "entradas",
+      "indice": 2,
+      "anterior": null,
+      "novo": "Linha Intenção de script.md (texto): 'a pergunta do bloco 2 fica no ar um instante antes de a vinheta responder'.",
+      "justificativa": "Fixture residual da v3: sem a duração da vinheta, esperado[0] (milissegundos) ficava pendente por falta de dado.",
+      "regra_ou_pedido": "Relatório rodada-v2, C07 esperado[0]: acrescentar a duração da vinheta à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C07",
+      "campo": "entradas",
+      "indice": 3,
+      "anterior": null,
+      "novo": "Narração da cena 'the-question' (texto): 'Por que a gente dorme?'.",
+      "justificativa": "Fixture residual da v3: sem a duração da vinheta, esperado[0] (milissegundos) ficava pendente por falta de dado.",
+      "regra_ou_pedido": "Relatório rodada-v2, C07 esperado[0]: acrescentar a duração da vinheta à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C07",
+      "campo": "entradas",
+      "indice": 4,
+      "anterior": null,
+      "novo": "Duração da vinheta do canal: 6000 ms, a composição de prévia `vinheta` de src/Root.tsx (VIGNETTE_PREVIEW_SECONDS = 6). Valor declarado na fixture, e não medição de render.",
+      "justificativa": "Fixture residual da v3: sem a duração da vinheta, esperado[0] (milissegundos) ficava pendente por falta de dado.",
+      "regra_ou_pedido": "Relatório rodada-v2, C07 esperado[0]: acrescentar a duração da vinheta à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C12",
+      "campo": "entradas",
+      "indice": 3,
+      "anterior": null,
+      "novo": "Premissa escolhida (pauta.md, Escolhida em: 2026-10-02), texto: 'Uma mulher que dorme mal há dez anos decide registrar cada noite e descobre que o cérebro reorganiza a memória durante o sono, mas os registros só mostram a noite em que tudo mudou.'",
+      "justificativa": "Fixture residual da v3: sem a premissa, os tempos e o próximo finalista, 'cabe em 3 min' e o que é invalidado não podiam ser verificados (C12 esperado[1] e esperado[0] da rodada-v2).",
+      "regra_ou_pedido": "Relatório rodada-v2, C12 esperado[1]: acrescentar o texto da premissa e o próximo finalista à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C12",
+      "campo": "entradas",
+      "indice": 4,
+      "anterior": null,
+      "novo": "Próximo finalista na pauta, ainda não escolhido (texto): 'Um pescador que não consegue dormir no mar aprende com os golfinhos a dormir pela metade.'",
+      "justificativa": "Fixture residual da v3: sem a premissa, os tempos e o próximo finalista, 'cabe em 3 min' e o que é invalidado não podiam ser verificados (C12 esperado[1] e esperado[0] da rodada-v2).",
+      "regra_ou_pedido": "Relatório rodada-v2, C12 esperado[1]: acrescentar o texto da premissa e o próximo finalista à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C12",
+      "campo": "entradas",
+      "indice": 5,
+      "anterior": null,
+      "novo": "Nomes dos cinco blocos em script.md: b1 'a pergunta'; b2 'o mecanismo'; b3 'o caso'; b4 'a virada'; b5 'o fecho'.",
+      "justificativa": "Fixture residual da v3: sem a premissa, os tempos e o próximo finalista, 'cabe em 3 min' e o que é invalidado não podiam ser verificados (C12 esperado[1] e esperado[0] da rodada-v2).",
+      "regra_ou_pedido": "Relatório rodada-v2, C12 esperado[1]: acrescentar o texto da premissa e o próximo finalista à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C12",
+      "campo": "entradas",
+      "indice": 6,
+      "anterior": null,
+      "novo": "Estimativa de duração de cada bloco (fixture, não medida): b1 60 s; b2 80 s; b3 90 s; b4 70 s; b5 60 s; total 360 s, que é a duração de 6 min. Nenhuma voz nem trilha foi medida.",
+      "justificativa": "Fixture residual da v3: sem a premissa, os tempos e o próximo finalista, 'cabe em 3 min' e o que é invalidado não podiam ser verificados (C12 esperado[1] e esperado[0] da rodada-v2).",
+      "regra_ou_pedido": "Relatório rodada-v2, C12 esperado[1]: acrescentar o texto da premissa e o próximo finalista à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C12",
+      "campo": "entradas",
+      "indice": 7,
+      "anterior": null,
+      "novo": "Já gerados para a versão de 6 min: narração e trilha, com os tempos de 6 min. Nada foi regerado nem recalculado.",
+      "justificativa": "Fixture residual da v3: sem a premissa, os tempos e o próximo finalista, 'cabe em 3 min' e o que é invalidado não podiam ser verificados (C12 esperado[1] e esperado[0] da rodada-v2).",
+      "regra_ou_pedido": "Relatório rodada-v2, C12 esperado[1]: acrescentar o texto da premissa e o próximo finalista à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C13",
+      "campo": "entradas",
+      "indice": 2,
+      "anterior": null,
+      "novo": "Campos atuais de publication.md (texto): Título: 'Isto vai mudar para sempre a forma como você dorme'. Conceito: 'o sono como limpeza do cérebro, explicado em dois passos'. Prompt da thumbnail: 'pessoa de olhos fechados diante de uma cidade acesa à noite, com a palavra SONO em caixa alta'.",
+      "justificativa": "Fixture residual da v3: o título atual, o par conceito/thumbnail, a promessa e o limite faltavam, e a lacuna declarada na v2 não permitia conferir o par nem o limite.",
+      "regra_ou_pedido": "Relatório rodada-v2, C13 esperado[0] e esperado[1]: acrescentar o título, o conceito, a thumbnail e a promessa à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C13",
+      "campo": "entradas",
+      "indice": 3,
+      "anterior": null,
+      "novo": "Promessa decidida em script.md (Tese e Promessa, decisão do criativo): 'Você entende por que o sono apaga o que não serve, e como isso protege a memória.'",
+      "justificativa": "Fixture residual da v3: o título atual, o par conceito/thumbnail, a promessa e o limite faltavam, e a lacuna declarada na v2 não permitia conferir o par nem o limite.",
+      "regra_ou_pedido": "Relatório rodada-v2, C13 esperado[0] e esperado[1]: acrescentar o título, o conceito, a thumbnail e a promessa à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C13",
+      "campo": "entradas",
+      "indice": 4,
+      "anterior": null,
+      "novo": "Descrição, tags e capítulos atuais de publication.md (texto): descrição 'Um vídeo sobre sono e memória, com dados de pesquisa.'; tags 'sono, memória, cérebro'; capítulos '0:00 Abertura; 1:10 O mecanismo; 3:40 O que fazer'.",
+      "justificativa": "Fixture residual da v3: o título atual, o par conceito/thumbnail, a promessa e o limite faltavam, e a lacuna declarada na v2 não permitia conferir o par nem o limite.",
+      "regra_ou_pedido": "Relatório rodada-v2, C13 esperado[0] e esperado[1]: acrescentar o título, o conceito, a thumbnail e a promessa à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C13",
+      "campo": "entradas",
+      "indice": 5,
+      "anterior": null,
+      "novo": "script.json, campo title: 'Por que a gente dorme' (não alterar nesta tarefa).",
+      "justificativa": "Fixture residual da v3: o título atual, o par conceito/thumbnail, a promessa e o limite faltavam, e a lacuna declarada na v2 não permitia conferir o par nem o limite.",
+      "regra_ou_pedido": "Relatório rodada-v2, C13 esperado[0] e esperado[1]: acrescentar o título, o conceito, a thumbnail e a promessa à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C13",
+      "campo": "entradas",
+      "indice": 6,
+      "anterior": null,
+      "novo": "Limite oficial do título, registrado pelo coordenador na fixture (consulta do coordenador, 2026-10-11; o executor não consulta fonte): máximo de 100 caracteres; UTF-8 é aceito, exceto os caracteres < e >. Fonte verificada pelo estrategista nesta sessão: https://developers.google.com/youtube/v3/docs/videos#snippet.title, seção snippet.title (contrato da API de vídeo, não de playlist). Observação datada: vale como dado desta fixture, e não como regra permanente da skill.",
+      "justificativa": "Fixture residual da v3: o título atual, o par conceito/thumbnail, a promessa e o limite faltavam, e a lacuna declarada na v2 não permitia conferir o par nem o limite.",
+      "regra_ou_pedido": "Relatório rodada-v2, C13 esperado[0]: confirmar o limite na página oficial e registrar a observação datada. Consulta feita pelo coordenador (ver rodada-v3/consultas)."
+    },
+    {
+      "versao": 3,
+      "caso": "C13",
+      "campo": "entradas",
+      "indice": 7,
+      "anterior": null,
+      "novo": "Termo buscado em pauta.md (texto): 'o que acontece no sono'.",
+      "justificativa": "Fixture residual da v3: o título atual, o par conceito/thumbnail, a promessa e o limite faltavam, e a lacuna declarada na v2 não permitia conferir o par nem o limite.",
+      "regra_ou_pedido": "Relatório rodada-v2, C13 esperado[0] e esperado[1]: acrescentar o título, o conceito, a thumbnail e a promessa à fixture."
+    },
+    {
+      "versao": 3,
+      "caso": "C16",
+      "campo": "entradas",
+      "indice": 2,
+      "anterior": "Mesma fixture de C15: cinco candidatos, com as medidas declaradas como simuladas.",
+      "novo": "Fixture simulada declarada (não é busca nem medida real): cinco candidatos já levantados, com as medidas que a tabela pede. (1) 'por que a Lua mostra sempre a mesma face': volume 1900, competição 38, views máx. 2,1 mi, views médias 180 mil, In Title 6 de 15, fora da curva não, formato: animação e fala para a câmera, base: consensual. (2) 'a Lua se afasta da Terra um pouco por ano': volume 700, competição 22, views máx. 1,2 mi, views médias 60 mil, In Title 2 de 15, fora da curva sim (470 mil views em canal de 10 mil inscritos), formato: fala para a câmera, base: consensual. (3) 'o que acontece com a Lua se a Terra parar': volume 350, competição 15, views máx. 300 mil, views médias 40 mil, In Title 1 de 15, fora da curva não, formato: lista narrada, base: consensual. (4) 'a Lua tem lado escuro ou só face oculta': volume 1100, competição 30, views máx. 900 mil, views médias 90 mil, In Title 4 de 15, fora da curva não, formato: fala para a câmera, base: disputada no centro. (5) 'por que a Lua não tem atmosfera': volume 800, competição 25, views máx. 700 mil, views médias 70 mil, In Title 3 de 15, fora da curva não, formato: fala para a câmera, base: firme. O agente usa essas medidas como declaradas e não busca outras.",
+      "justificativa": "Expansão literal: o pacote do executor não recebeu a fixture de C15 e, por remissão, ficou sem os cinco candidatos (rodada-v2, C16 esperado[1]–[4]).",
+      "regra_ou_pedido": "Pacote autocontido: cada caso carrega as próprias entradas, sem remissão a outro caso."
+    },
+    {
+      "versao": 3,
+      "caso": "C19",
+      "campo": "entradas",
+      "indice": 1,
+      "anterior": "script.json do curta, sem cena de chamada; script.md com a linha Intenção preenchida e a decisão do pedido final fixada pelo diretor-criativo (fixture): texto 'Se quiser o próximo curta, inscreva-se.' e função de convite à continuação, decidida pelo usuário antes desta conversa.",
+      "novo": "script.json do curta com a cena final 'chamada' já criada (fixture simulada): narração 'Se quiser o próximo curta, inscreva-se.'; a cena anterior, 'fechamento', com holdMs 1200; a chamada tem um plano só, de 0 a 4,5 s, com a seta e o botão de inscrição (o pedido fixado). Tempos simulados, sem medição de áudio: 'inscreva-se' em 3,0 s; fim da narração em 4,5 s.",
+      "justificativa": "A fixture dizia 'sem cena de chamada', o que tornava impossível realizar o botão com quadro/chamada e declarar pronto para o render (rodada-v2, C19 esperado[2]). Agora a cena existe.",
+      "regra_ou_pedido": "Contexto completo da cena para a realização visual, depois da fixação do criativo; não altera script.json."
+    },
+    {
+      "versao": 3,
+      "caso": "C19",
+      "campo": "entradas",
+      "indice": 3,
+      "anterior": null,
+      "novo": "script.md com a linha Intenção preenchida e a decisão do pedido final fixada pelo diretor-criativo (fixture): texto 'Se quiser o próximo curta, inscreva-se.' e função de convite à continuação, decidida pelo usuário antes desta conversa.",
+      "justificativa": "Contexto da realização: a linha de script.md, a intenção visual e o scaffold simulado eram necessários para realizar o botão sem inventar a cena.",
+      "regra_ou_pedido": "Contexto completo da cena ou scaffold simulado para uma realização visual concreta, depois da fixação do criativo."
+    },
+    {
+      "versao": 3,
+      "caso": "C19",
+      "campo": "entradas",
+      "indice": 4,
+      "anterior": null,
+      "novo": "Intenção visual de art.md (texto): 'o curta termina no escuro, e o convite aparece como uma porta aberta, sem cor de marca'.",
+      "justificativa": "Contexto da realização: a linha de script.md, a intenção visual e o scaffold simulado eram necessários para realizar o botão sem inventar a cena.",
+      "regra_ou_pedido": "Contexto completo da cena ou scaffold simulado para uma realização visual concreta, depois da fixação do criativo."
+    },
+    {
+      "versao": 3,
+      "caso": "C19",
+      "campo": "entradas",
+      "indice": 5,
+      "anterior": null,
+      "novo": "Scaffold simulado do plano da chamada (declarado, não renderizado): quadro 1920×1080; fundo escuro da cena; botão de inscrição na área inferior central; seta curta apontando para o botão; sem animação fixada no scaffold.",
+      "justificativa": "Contexto da realização: a linha de script.md, a intenção visual e o scaffold simulado eram necessários para realizar o botão sem inventar a cena.",
+      "regra_ou_pedido": "Contexto completo da cena ou scaffold simulado para uma realização visual concreta, depois da fixação do criativo."
+    },
+    {
+      "versao": 3,
+      "caso": "C11",
+      "campo": "entradas",
+      "indice": 0,
+      "anterior": "Briefing: Destino: jam e youtube; Regras do evento: não fornecido; Duração medida: 5 min 58 s.",
+      "novo": "Briefing: Destino: jam e youtube; Regras do evento: não fornecido; Duração medida: 5 min 58 s (valor declarado na fixture, e não medição deste teste).",
+      "justificativa": "Rótulo de origem do número: a duração de 5 min 58 s é dado declarado da fixture, e o pacote do executor não pode lê-la como medição real deste teste (nenhuma medição é real na rodada).",
+      "regra_ou_pedido": "Nenhum valor de render ou medição é tratado como real; a matriz declara o que é simulado ou declarado."
+    },
+    {
+      "versao": 3,
+      "ajuste": "3.1",
+      "caso": "C05",
+      "campo": "esperado",
+      "indice": 3,
+      "anterior": "Se a seta apontasse para uma palavra que a voz diz depois do que a imagem mostra, devolve a frase ao diretor-criativo; não altera holdMs, que é do roteiro.",
+      "novo": "Se a seta aparecer antes da palavra que ela aponta, a arte realinha a própria entrada para a deixa, com a antecipação que tempo/sincronia dá, e não devolve; devolve a frase ao diretor-criativo só quando esse alinhamento exigiria mudar a frase, a ordem das palavras, o sentido narrativo ou o holdMs, que são do roteiro.",
+      "justificativa": "Ambiguidade entre o gatilho de devolução e a regra de deixa (auditoria final, C05 E3). A regra de quadro/chamada manda a arte realinhar a própria entrada dentro da antecipação de tempo/sincronia, e devolver só quando o alinhamento exige mudar frase, ordem, sentido ou holdMs. Os dois ramos ficam no mesmo item, sem novo índice. A adjudicação anterior (FAIL) fica em resultados.json e não é reescrita.",
+      "regra_ou_pedido": "diretor-de-arte/quadro/chamada.md ('Ida e volta', 'A deixa é a palavra'); diretor-de-arte/tempo/sincronia.md (antecipação)."
+    },
+    {
+      "versao": 3,
+      "ajuste": "3.1",
+      "caso": "C05",
+      "campo": "nota_avaliacao",
+      "indice": null,
+      "anterior": null,
+      "novo": "A unidade quadro/chamada conta como usada quando a leitura e a aplicação dela aparecem na resposta, na revisão ou nos logs. A ausência do nome da unidade na resposta não é prova de que ela não foi usada; não se exige recitar o nome.",
+      "justificativa": "Evidência de uso de unidade: a ausência do nome na resposta não prova que a unidade não foi lida ou aplicada.",
+      "regra_ou_pedido": "Decisão do estrategista (validação da auditoria final, item 2)."
+    },
+    {
+      "versao": 3,
+      "ajuste": "3.1",
+      "caso": "C10",
+      "campo": "entradas",
+      "indice": 3,
+      "anterior": null,
+      "novo": "Leitura pertinente a esta tarefa: `.agents/skills/diretor-producao/etapas/narracao.md` (o procedimento de regerar as frases marcadas).",
+      "justificativa": "A fixture não dava a rota da regeração: a leitura de etapas/narracao.md não estava no pacote, e a convenção das tomadas só estava em narracao-voz.md.",
+      "regra_ou_pedido": "Decisão do estrategista (item 1, roteamento de C10)."
+    },
+    {
+      "versao": 3,
+      "ajuste": "3.1",
+      "caso": "C10",
+      "campo": "nota_avaliacao",
+      "indice": null,
+      "anterior": null,
+      "novo": "O caminho informado para a tomada é o da convenção de narracao-voz.md (a pasta de tomadas do vídeo) ou o campo file que a ferramenta gravaria. Em fixture, sem geração real, um caminho simulado identificado como simulado satisfaz o item; um caminho apresentado como existente ou como gerado não.",
+      "justificativa": "Define o que vale como caminho em fixture, sem afirmar arquivo existente.",
+      "regra_ou_pedido": "Decisão do estrategista (item 1)."
+    },
+    {
+      "versao": 3,
+      "ajuste": "3.1",
+      "caso": "C17",
+      "campo": "entradas",
+      "indice": 2,
+      "anterior": null,
+      "novo": "Dado e fonte, copiados integralmente de src/videos/why-we-sleep/research.md (fixture): linha 21: «A revisão de Cirelli e Tononi testa a hipótese de que o sono não seria essencial, que prevê três coisas: animais que não dormem, animais que não precisam compensar o sono perdido e falta de sono sem consequência séria. Nenhuma das três se confirma. O sono de recuperação aparece como mais tempo de sono, sono mais profundo ou sono menos interrompido. (estabelecido; relido em 04/10/2026) [20]\r» Linha 108: «20. Cirelli e Tononi, \"Is Sleep Essential?\", PLOS Biology, 2008. https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0060216 (consultada em 03/10/2026)\r»",
+      "justificativa": "A fixture dizia que a fonte estava verificada, mas não trazia o fato, o valor nem a fonte. Acrescentados o trecho da linha 21 e a referência da linha 108, copiados do arquivo.",
+      "regra_ou_pedido": "Decisão do estrategista (C17: dado e fonte integrais no pacote)."
+    },
+    {
+      "versao": 3,
+      "ajuste": "3.1",
+      "caso": "C19",
+      "campo": "nota_avaliacao",
+      "indice": null,
+      "anterior": null,
+      "novo": "Este caso demonstra uma realização concreta (quadro, partitura e minuta) para render em ambiente simulado, sobre os tempos fornecidos na entrada. A validação real, com medição de áudio e render, fica pendente e não é afirmada. Os tempos da entrada são declarados, não medidos: o instante fica 'a medir' até o render, como manda quadro/chamada.md. O requisito de tempo medido não é afrouxado por este caso.",
+      "justificativa": "Separa a demonstração em ambiente simulado da medição real, sem afrouxar o requisito de tempo.",
+      "regra_ou_pedido": "Decisão do estrategista (item 3)."
+    },
+    {
+      "versao": 3,
+      "ajuste": "3.1",
+      "caso": "C19",
+      "campo": "regra (quadro/chamada.md, Qualidade verificável)",
+      "indice": null,
+      "anterior": "com o instante em milissegundos quando há tempos da narração; sem tempo medido, ...",
+      "novo": "com o instante em milissegundos quando há tempos medidos da narração; sem tempo medido, ... Tempo simulado ou declarado à mão não é medido.",
+      "justificativa": "'Tempos da narração' podia ler-se como tempo simulado (auditoria, C19 E0). A distinção entre simulado e medido fica explícita na skill.",
+      "regra_ou_pedido": "diretor-de-arte/quadro/chamada.md, 'Qualidade verificável'."
+    }
+  ]
+}

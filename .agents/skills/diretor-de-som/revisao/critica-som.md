@@ -34,17 +34,19 @@ Como distinguir, no som de um render, o defeito técnico, o sinal de medida e a 
 
 **Origem das faixas.** As faixas vêm de um estudo de 12 vídeos de referência, medidos em 2026-10-05 (123 minutos), separados em voz, música e efeitos. `CRITERIA` em `src/critique/sound.ts` é a fonte atual que o comando usa: esta skill lê as faixas dali, e não abre arquivos da referência. A geração foi testada com o ACE-Step Turbo; mudar modelo ou placa pede repetir os testes.
 
-**Sensores.** Todas as medidas são sensores. `out` na saída do comando quer dizer "fora da faixa configurada", e nada além disso.
+**Sensores.** Todas as medidas são sensores. `out` na saída do comando quer dizer "fora da faixa configurada", e nada além disso. Os valores da tabela são o que a referência mostrou, e não metas: a mediana não vira alvo, e o valor fora dela é pergunta de escuta, não defeito.
 
 | Medida | Referência | Pode ajudar a localizar |
 |---|---|---|
-| Música abaixo da voz, sob a fala | 9 a 15 dB | uma dúvida sobre a fala (abaixo) ou sobre a presença da música (acima) |
-| Do trecho mais presente ao mais recuado | até 9,6 dB | regiões em que a automação pode chamar atenção |
-| Tempo sem música | até 2,4% | ausências e costuras a conferir contra o estado |
-| Viradas de volume por minuto | até 1,1 | modulação frequente a investigar |
+| Música abaixo da voz, sob a fala | 13 dB, de 9 a 15 dB entre os vídeos | uma dúvida sobre a fala (abaixo) ou sobre a presença da música (acima) |
+| Do trecho mais presente ao mais recuado | faixa de 7 dB (de 4,5 a 9,6 dB) | regiões em que a automação pode chamar atenção |
+| Tempo da música sob a fala | 80% do tempo | a presença da música sob a fala, a comparar com a função dela no trecho |
+| Tempo sem música | 0,5% do tempo (de 0 a 2,4%; há vídeo com música em 100%), com no máximo um trecho de silêncio a cada cinco minutos | ausências e costuras a conferir contra o estado |
+| Fala no vídeo | 96% do vídeo, com 0,2 pausa de 1 s por minuto | a função de cada pausa, e não a contagem |
+| Viradas de volume por minuto | 0,6 (de 0,3 a 1,1) | modulação frequente a investigar |
 | Variação de timbre ao longo do vídeo | até 0,32 oitava | a fronteira de identidade a ouvir |
-| Efeitos que se ouvem, por minuto | 4,4 a 12,3 (o comando só marca abaixo) | acontecimentos sem consequência sonora, ou efeitos acumulados, a comparar com a imagem |
-| Pico do efeito abaixo da voz | 11,5 a 14,7 dB | o efeito que pode sumir ou disputar com a voz |
+| Efeitos que se ouvem, por minuto | 8,4 na mediana (de 4,4 a 12,3; 12,3 é o maior valor medido), cerca de um a cada 7 s, mais de nove em cada dez por cima da fala; o comando só marca abaixo da faixa | acontecimentos sem consequência sonora, ou efeitos acumulados, a comparar com a imagem |
+| Pico do efeito abaixo da voz | 13,4 dB (de 11,5 a 14,7 dB) | o efeito que pode sumir ou disputar com a voz |
 
 O que pesa ao ler um sensor:
 
@@ -64,7 +66,7 @@ O que pesa ao ler um sensor:
 - **Continuidade e ausência** (`leito`, `silencio`), quando há música ausente, uma parte que morre cedo, uma entrada que demora, ou o usuário nota um buraco. Primeiro o que se prova: o estado pede silêncio ali? O arquivo cobre o trecho? Com a falha comprovada, defeito técnico. Sem ela, a pergunta é de ouvido: a ausência faz trabalho, ou parece falha?
 - **Momento** (`momentos`), quando o detector mostra pouca mudança ou mudança demais, a borda tem salto, ou o usuário diz "ficou igual" ou "virou outra música". O estado local que o momento precisava produzir aconteceu, e voltou integrado ao leito? Há evidência de que ele não realizou a intenção? Detector que não vê é sinal.
 - **Presença** (`niveis`), quando a distância sai da referência ou varia muito, ou o usuário perde a fala, deixa de ouvir a música ou a ouve bombear. A relação entre fala e música funciona naquele trecho? Não "está entre 9 e 15?".
-- **Efeitos** (`dose`, `escolha`), quando a densidade ou o pico são extremos, um efeito está fora da âncora, ou o usuário ouve massa ou uma ação muda. Cada efeito tem dono e acrescenta consequência sem disputar? O instante sai da partitura e é técnico; o tamanho e a falta são de ouvido. Não há piso, teto nem cota.
+- **Efeitos** (`dose`, `efeitos/escolha`), quando a densidade ou o pico são extremos, um efeito está fora da âncora, ou o usuário ouve massa ou uma ação muda. Cada efeito tem dono e acrescenta consequência sem disputar? O instante sai da partitura e é técnico; o tamanho e a falta são de ouvido. Não há piso, teto nem cota.
 
 **Gravidade**, pela perda, e só depois de ela estar demonstrada, na escala comum da equipe (`diretor-producao/equipe/protocolo.md`). Nesta crítica:
 
@@ -82,7 +84,7 @@ O defeito técnico recebe gravidade sem ouvido, pelo trabalho que o mapa dava à
 - **Sensores**: a tabela com o valor e a referência, como diagnóstico coletado, e não como aprovado ou reprovado.
 
 ## REFERÊNCIAS
-- Leia só a unidade dona da lente acionada: `leito`, `descricao`, `momentos`, `niveis`, `silencio`, `dose` ou `escolha`.
+- Leia só a unidade dona da lente acionada: `leito`, `descricao`, `momentos`, `niveis`, `silencio`, `dose` ou `efeitos/escolha`.
 - entrevista-som: só se houver dúvida de ouvido que precise voltar ao usuário.
 
 ## LIMITES

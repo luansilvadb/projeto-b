@@ -14,7 +14,7 @@ Não dão dono a um efeito: o espaço vago, a contagem baixa, a virada de capít
 **Dois testes, para cada efeito:**
 
 - **Remoção.** Sem este som, o que o acontecimento perde? Peso, tamanho, velocidade, contato, conclusão, materialidade, causalidade, timing, comicidade, surpresa, a clareza de que algo aconteceu. Se nada que se perceba, o efeito sai.
-- **Inverso.** Com o som, o acontecimento ganha uma leitura que a imagem não sustenta? Uma explosão pesada num objeto leve mente sobre escala, material e força (`escolha`). Uma mola numa queda dramática faz dela uma gag.
+- **Inverso.** Com o som, o acontecimento ganha uma leitura que a imagem não sustenta? Uma explosão pesada num objeto leve mente sobre escala, material e força (`efeitos/escolha`). Uma mola numa queda dramática faz dela uma gag.
 
 **O tom.** Um efeito não transforma uma ação neutra em piada sem que o vídeo sustente essa leitura. Quando a pose, o timing ou a situação já fazem a piada, um som cômico pode completá-la, mesmo sem o roteiro escrever "humor". O defeito é o som acrescentar sozinho um tom que não foi decidido.
 
@@ -56,26 +56,26 @@ A função manda, e não a linha da tabela. Um impacto pode ficar sem som: a ima
 
 **O instante.** O efeito toca no acontecimento percebido; a palavra, o plano e a cena são só as âncoras disponíveis. A imagem é a autoridade: se a palavra soa num instante e a moeda bate 900 ms depois, o som cai na batida.
 
-- **Que parte do acontecimento o som representa?** O contato cai no contato. O movimento (o whoosh da passagem, a porta rolando enquanto desce) começa com ele, antes do contato final. O impacto instantâneo e a ação com duração são usos diferentes, e o arquivo de cada um é de `escolha`.
+- **Que parte do acontecimento o som representa?** O contato cai no contato. O movimento (o whoosh da passagem, a porta rolando enquanto desce) começa com ele, antes do contato final. O impacto instantâneo e a ação com duração são usos diferentes, e o arquivo de cada um é de `efeitos/escolha`.
 - **A partitura já sabe o instante**: a deixa, a duração e quanto depois dela o acontecimento se dá. Use-a em vez de sincronizar a olho.
 - **As âncoras** (`SfxSpec`, em `src/narration/script.ts`): `scene` é obrigatório; `cue` ancora na palavra (com `occurrence` quando ela se repete) e `shot`, no começo do plano, nunca os dois; sem nenhum, o efeito ancora no começo da cena. `offsetMs`, inteiro, desloca da âncora ao acontecimento.
 - **Heurística de percepção:** o som que antecipa o impacto tende a denunciar a dessincronia; um atraso pequeno costuma passar. Não há contagem de quadros que aprove ou reprove: vale a sincronia que se percebe.
 - **Ações ligadas ao fim:** `at: "end"` ancora no fim do plano `shot`, ou da cena sem `shot`, sem combinar com `cue`. O deslocamento negativo acompanha a duração atual, em vez de guardar um instante medido desde o começo.
 - **Sem instante claro, sem efeito ainda.** Não invente o offset: a dúvida volta à partitura ou à cena. Medir o instante no código é execução; só vai ao usuário se a animação precisar mudar de verdade.
 
-**O que a referência faz, e o que deu errado aqui.** A referência tem 8,4 efeitos audíveis por minuto na mediana (de 4,4 a 12,3), cerca de um a cada 7 s, mais de nove em cada dez por cima da fala, com o pico 13,4 dB abaixo da voz (de 11,5 a 14,7). Numa primeira versão, a regra "só quando importa" marcou 12 efeitos num vídeo de 9 minutos (1,3 por minuto) e colocou 5: a imagem se mexia em silêncio, e a música ficou sozinha com a tarefa de ligar som e vídeo. A lição é que a animação fica sonoramente descolada quando nenhum acontecimento ganha consequência, e que a referência sonoriza bem mais do que aquela versão. Os números são sensores, e não meta:
+**O que deu errado aqui.** Numa primeira versão, a regra "só quando importa" marcou 12 efeitos num vídeo de 9 minutos (1,3 por minuto) e colocou 5: a imagem se mexia em silêncio, e a música ficou sozinha com a tarefa de ligar som e vídeo. A referência sonoriza bem mais do que aquela versão (a densidade e o pico de referência estão em `critica-som`). A lição é que a animação fica sonoramente descolada quando nenhum acontecimento ganha consequência. Os números são sensores, e não meta:
 
 - **Não há piso.** A densidade muito baixa chama uma pergunta: há acontecimentos que perderam materialidade porque a imagem ficou muda? Se não há, a medida fica fora da faixa. Nenhum efeito entra para subir o número. Zero efeito é válido num vídeo, num trecho ou num capítulo: capítulo é estrutura editorial, e não unidade sonora, e a dose não é distribuída para igualar regiões.
-- **Não há teto.** 12,3 é o maior valor medido, e não um limite: uma sequência rápida pode ter mais. O defeito é o congestionamento: sons que se mascaram, que ninguém sabe a que pertencem, que disputam com a fala ou a música. Também não há cota por plano nem para acontecimentos simultâneos. A pergunta é se cada som ainda tem dono e espaço para ser percebido: quatro num plano curto podem passar, e dois que se mascaram, não.
+- **Não há teto.** O maior valor medido na referência não é um limite: uma sequência rápida pode ter mais. O defeito é o congestionamento: sons que se mascaram, que ninguém sabe a que pertencem, que disputam com a fala ou a música. Também não há cota por plano nem para acontecimentos simultâneos. A pergunta é se cada som ainda tem dono e espaço para ser percebido: quatro num plano curto podem passar, e dois que se mascaram, não.
 - **A contagem mede mal.** A separação deixa vazar música e voz no canal de efeitos, e um vídeo sem efeito nenhum mede perto de 2 por minuto. Uma versão com nove efeitos mediu 2,0, e a medida era o vazamento, e não eles. A densidade localiza um possível problema de cobertura; não conta os efeitos que existem.
-- **A faixa de nível é do vídeo inteiro.** `forte`, a 9 dB, e `leve`, a 17, ficam fora dos 11,5 a 14,7 por projeto. A medida localiza efeitos que somem ou que disputam, e não reprova um preset.
+- **A faixa de nível é do vídeo inteiro.** `forte`, a 9 dB, e `leve`, a 17, ficam fora dos 11,5 a 14,7 de `critica-som` por projeto. A medida localiza efeitos que somem ou que disputam, e não reprova um preset.
 
 **Procedimento:**
 
 1. Leia a partitura e veja o vídeo animado.
 2. Localize os acontecimentos cuja percepção perde algo sem som. Com muitos candidatos, comece onde o som acrescenta mais (contato, impacto, transformação, movimento com materialidade, ação que pede confirmação) e só depois veja se os gestos pequenos precisam. A lista de candidatos não é meta: de 40 ações, o mapa pode ficar com 12 ou com 35.
 3. Para cada um: o que o efeito acrescenta, o uso (pelo que acontece: "porta de enrolar desce"), o preset e a âncora no acontecimento real. O mesmo acontecimento que se repete aponta para o mesmo uso.
-4. Use o que o catálogo tem e liste os usos que faltam (`escolha`). Nenhum uso novo é criado para engordar o mapa.
+4. Use o que o catálogo tem e liste os usos que faltam (`efeitos/escolha`). Nenhum uso novo é criado para engordar o mapa.
 5. Renderize o som e meça.
 6. Passe os três testes do conjunto:
    - **remoção**, efeito a efeito: sai o que não acrescenta;

@@ -3,9 +3,9 @@ O que o texto precisa fazer para que quem ouve uma vez não tenha de guardar con
 
 ## RESPOSTA
 
-**Ouvinte.** Todo texto do vídeo (título, gancho, narração, fechamento, chamada e texto de tela) é escrito para quem assiste com TDAH (decisão do usuário). Isso diz que experiência o texto precisa dar, e não que técnica usar: pouca dependência de memória, relevância cedo, relações ditas quando fazem falta e progresso que se percebe.
+**Ouvinte.** *Identidade do canal:* todo texto do vídeo do canal (título, gancho, narração, fechamento, chamada e texto de tela) é escrito para quem assiste com TDAH (decisão do usuário). Isso diz que experiência o texto precisa dar, e não que técnica usar: pouca dependência de memória, relevância cedo, relações ditas quando fazem falta e progresso que se percebe. No modo `jam`, quem assiste é o que o briefing e o usuário disserem, e o princípio abaixo vale como repertório (`estrutura/narrativa`).
 
-Esse ouvinte é um adulto curioso que nunca estudou o tema (decisão do usuário). Ele é inteligente e não precisa de tom de aula; o que ele não tem é o que o vídeo ainda não lhe deu. O roteiro constrói o conhecimento dele, e não demonstra o de quem pesquisou.
+*Identidade do canal:* esse ouvinte é um adulto curioso que nunca estudou o tema (decisão do usuário). Ele é inteligente e não precisa de tom de aula; o que ele não tem é o que o vídeo ainda não lhe deu. O roteiro constrói o conhecimento dele, e não demonstra o de quem pesquisou. No curta, esse retrato não se aplica por padrão.
 
 **Premissa.** O texto é recebido em fluxo, uma vez, na velocidade do narrador. O que o ouvinte precisa para entender agora está disponível agora, ou se recupera sem esforço. Quem assiste não carrega sozinho o que o próprio texto pode manter vivo. E o vídeo tem imagem: o que continua na tela (um personagem, um objeto, uma cor, uma cartela) continua disponível; como isso é desenhado é da skill `diretor-de-arte`.
 
@@ -63,7 +63,7 @@ Um "não" localiza o que falta; o conserto é da unidade dona (`explicacao` se �
 - **Figura e fato.** O ouvinte não precisa decidir se uma imagem é metáfora ou mecanismo. A coisa é dita pelo nome onde a explicação depende dela; a figura não substitui a explicação; e a analogia que poderia ser tomada por descrição literal é marcada como analogia (`analogias`).
 - **Hesitação com lastro.** "Talvez", "provavelmente" e "pode" entram onde a base de fatos registra a incerteza; as outras frases afirmam.
 
-**6. Um pedido só.** O único gesto que o vídeo pede é o da `chamada`, feito na hora (decisão do usuário). É compromisso do canal, além de cuidado com o ouvinte: entre entender e fazer há um atrito, e pedido espalhado pelo vídeo morre nele. Como e onde a chamada é dita é de `chamada`.
+**6. Um pedido só.** *Identidade do canal:* o único gesto que o vídeo do canal pede é o da `chamada`, feito na hora (decisão do usuário). É compromisso do canal, além de cuidado com o ouvinte: entre entender e fazer há um atrito, e pedido espalhado pelo vídeo morre nele. Como e onde a chamada é dita é de `chamada`. O curta do modo `jam` não tem chamada.
 
 **Carga real.** Antes de contar palavras ou itens, as perguntas são: quantas coisas precisam estar ativas ao mesmo tempo? Quão parecidas são? Há apoio na tela? Uma leva naturalmente à outra? Alguma pode ser esquecida sem prejuízo? O texto recupera o que faz falta?
 

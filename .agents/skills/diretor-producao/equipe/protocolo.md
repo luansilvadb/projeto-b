@@ -36,7 +36,7 @@ A linha é hipótese barata, e não marco: nasce com o que já se sabe, muda qua
 
 O pedido de mudança que volta ao dono leva o trecho, o que se perde e a saída que resolveria. Nada disso é gravado em arquivo de estado: o compromisso mora no arquivo do dono, e o resto vale só para a passagem.
 
-**Gravidade.** É a das críticas (`diretor-criativo/revisao/critica.md`, `diretor-de-arte/revisao/critica-quadro.md` e `critica-movimento.md`, `diretor-de-som/revisao/critica-som.md`), com o mesmo nome em toda direção:
+**Gravidade.** É a das críticas (`diretor-criativo/revisao/critica.md`, `diretor-de-arte/revisao/critica-quadro.md` e `diretor-de-arte/revisao/critica-movimento.md`, `diretor-de-som/revisao/critica-som.md`), com o mesmo nome em toda direção:
 
 - **Bloqueante**: perde-se o indispensável. Além do que cada crítica lista, é bloqueante o que descumpre um requisito do briefing ou do destino (a duração máxima, o formato pedido, o crédito obrigatório, o direito de uso que não está assegurado), o erro de fato em não ficção e o que quebra uma ferramenta. É resolvido sempre: consertando, simplificando ou cortando o trecho. Prazo nenhum o dispensa.
 - **Relevante**: o filme funciona, com perda de força, clareza ou naturalidade. É corrigido enquanto o retorno paga e o plano comporta; o que fica vai dito na entrega.
@@ -51,6 +51,8 @@ O pedido de mudança que volta ao dono leva o trecho, o que se perde e a saída 
 | polido | a regra do repositório | a linha de parada |
 
 Atingido o limite, em qualquer nível, diga que a linha chegou, explicite o defeito que resta e proponha ao usuário o encerramento, com a ressalva dita na conversa, como manda o `AGENTS.md`: o ajuste não é encerrado em silêncio.
+
+A ressalva serve à recusa de polimento: o usuário não quer mais uma rodada, e o que resta é relevante ou de polimento. Ela não serve ao bloqueante. Um bloqueante ainda pendente quando o limite chega não vira entrega pronta com ressalva: a entrega sai como **impedida**, com o defeito, o dono, o que o resolveria (trocar o elemento, uma decisão do usuário, uma ferramenta, um corte) e o que falta. Se o bloqueante não cabe no plano, a saída é simplificar ou cortar o trecho, como a tabela diz; declarar o ajuste encerrado não resolve.
 
 A rodada que não resolve defeito nenhum não se repete: troca-se a hipótese ou simplifica-se. O limite mede esforço de polimento, e nunca autoriza entregar com bloqueante.
 

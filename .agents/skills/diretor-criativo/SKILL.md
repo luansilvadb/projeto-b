@@ -7,7 +7,7 @@ description: "Pesquisa e roteiro de vídeos educativos (modo canal) e de curtas 
 
 Dono da pesquisa, das decisões editoriais, da história e do roteiro. O usuário decide o que o vídeo quer dizer; registre essas decisões em `script.md`.
 
-Entrada: tema ou premissa obrigatório, vindo de `pauta.md` quando o vídeo tem um (tema e termo buscado no modo `canal`; briefing e premissa no modo `jam`); idioma pt-BR por padrão; duração-alvo quando houver restrição do usuário, do produto ou do briefing; referências, se fornecidas.
+Entrada: tema ou premissa obrigatório, vindo de `pauta.md` quando o vídeo tem um (tema e termo buscado no modo `canal`; briefing e premissa no modo `jam`); idioma pt-BR por padrão; duração do briefing no modo `jam`, que é requisito (se estiver "não fornecido", pergunte ao usuário antes de dimensionar a história); no modo `canal`, duração-alvo só quando houver restrição do usuário, do produto ou do briefing; referências, se fornecidas.
 
 Entregas em `src/videos/<vídeo>/`: `research.md` (fatos e fontes, quando há afirmação factual), `script.json` (narração, cenas, planos e fontes) e `script.md` (decisões atuais do texto, incluindo tese e promessa, ou a frase de intenção).
 
@@ -58,7 +58,7 @@ Use pesquisador, checador e editor nos casos definidos pelos procedimentos. Eles
 | `estrutura/arco` | Como cada trecho muda o entendimento? |
 | `estrutura/gancho` | O que a abertura promete? |
 | `estrutura/fechamento` | O que o fim entrega? |
-| `estrutura/chamada` | Que pedido cabe depois da entrega? Só no modo `canal`. |
+| `estrutura/chamada` | Que pedido cabe depois da entrega? No `canal`. No `jam`, o pedido final explícito de um curta está em `estrutura/narrativa`. |
 | `escrita/explicacao` | Como o fato muda o entendimento? |
 | `escrita/fio` | O que liga os blocos? |
 | `escrita/narracao` | A frase funciona ao ser ouvida? |

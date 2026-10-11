@@ -19,11 +19,11 @@ Como pedir ao gerador a música de uma parte ou de um momento, e o que a descri�
 - o caráter ("thoughtful", "wary", "tender", "restrained"), quando acrescenta uma direção que as propriedades ainda não dão;
 - o tipo de trilha ("cinematic science documentary score"), como pista de função que estreita o que o modelo escolhe;
 - poucos timbres nomeados, dois ou três, deram uma identidade mais controlável;
-- (proposta) a descrição que deu o piano de cinema mudo que o usuário escolheu (`leito`): "playful silent film comedy score, solo upright piano, bouncy ragtime stride left hand, cheeky staccato melody, light and charming, comedic timing with small pauses, vintage 1920s cinema pianist, instrumental", a 104 bpm em dó maior. O piano é decisão; a descrição é só a que funcionou uma vez, em 42 s.
+- (proposta; identidade do canal, que no modo `jam` é repertório) a descrição que deu o piano de cinema mudo que o usuário escolheu (`leito`): "playful silent film comedy score, solo upright piano, bouncy ragtime stride left hand, cheeky staccato melody, light and charming, comedic timing with small pauses, vintage 1920s cinema pianist, instrumental", a 104 bpm em dó maior. O piano é decisão; a descrição é só a que funcionou uma vez, em 42 s.
 
 Onde der, traduza a intenção em propriedades que um músico poderia tocar: "epic" e "emotional" devolvem a escolha ao modelo. As descrições são em inglês, a língua em que tudo isto foi testado.
 
-**O sufixo** é a técnica de estabilização: o conjunto mínimo de sinais que o gerador deve tratar como a identidade do vídeo (timbres, textura, tipo de produção, pulso, o que os testes mostrarem útil), repetido com as mesmas palavras. Três descrições de climas diferentes, com o mesmo sufixo, saíram a 0,21 oitava uma da outra; sem ele, a 0,64. Enquanto a intenção é a mesma, repetir a formulação é o caminho de menor risco conhecido: "warm analog synth" que já dá o mundo certo não vira "soft electronic pads" para variar a redação. A descrição que pede uma transformação pode mudá-lo. Texto estável é controle provável, e não unidade comprovada: duas descrições iguais podem gerar sons que derivam, e duas diferentes, uma evolução que pertence ao vídeo (`leito`).
+**O sufixo** é a técnica de estabilização: o conjunto mínimo de sinais que o gerador deve tratar como a identidade do vídeo (timbres, textura, tipo de produção, pulso, o que os testes mostrarem útil), repetido com as mesmas palavras. Três descrições de climas diferentes, com o mesmo sufixo, saíram a 0,21 oitava uma da outra; sem ele, a 0,64. Enquanto a intenção é a mesma, repetir a formulação é o caminho de menor risco conhecido: "o timbre de base" que já dá o mundo certo não vira outro nome para variar a redação. A descrição que pede uma transformação pode mudá-lo. Texto estável é controle provável, e não unidade comprovada: duas descrições iguais podem gerar sons que derivam, e duas diferentes, uma evolução que pertence ao vídeo (`leito`).
 
 **Onde uma descrição costuma falhar**, três causas diferentes:
 
@@ -60,8 +60,9 @@ Quando a descrição for a causa provável, a propriedade pedida pode estar erra
 - A forma não aprova nem reprova. A descrição com sufixo, timbres e tipo de trilha que gera um som infantil, desconexo ou genérico falhou; a de quatro palavras que gera o que o vídeo pede passou.
 
 ## EXEMPLO
-> Parte: "curious forward-moving theme, gentle steady pulse, clear melody, thoughtful wonder, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
-> Momento no laboratório, com o sufixo repetido: "the same theme tightening, ticking staccato strings ostinato, low felt piano, restrained urgency, felt piano, warm analog synth, string ensemble, cinematic science documentary score, instrumental"
+> Parte: "curious forward-moving theme, gentle steady pulse, clear melody, thoughtful wonder, <timbre de base>, <textura de apoio>, <tipo de trilha>, instrumental"
+> Momento no laboratório, com o sufixo repetido: "the same theme tightening, ticking staccato strings ostinato, low <timbre de base>, restrained urgency, <timbre de base>, <textura de apoio>, <tipo de trilha>, instrumental"
+> Os três marcadores são do vídeo: o timbre, a textura e o tipo de trilha saem da intenção de som e do que o briefing permite, nunca de um timbre de costume (`leito`).
 > Outra parte, curta, que também vale: "restrained low strings, sparse steady pulse, uneasy"
 >
 > O usuário ouve a primeira e diz "está infantil". Hipótese: "clear melody" com "wonder" levou a melodia ao agudo. Muda só isso: "low unhurried melody" no lugar dos dois termos. O resto da descrição fica, e a mesma pergunta volta ao ouvido.

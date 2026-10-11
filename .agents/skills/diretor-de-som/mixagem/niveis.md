@@ -47,12 +47,7 @@ Quando a mesma música precisa ficar mais perto ou mais longe da voz, e qual pre
 
 **Teste de remoção**, para cada mudança: se ela sair e o trecho ficar em `leito`, o que piora? Se nada que se perceba, ela sai.
 
-**O que a referência faz** (sensor: chama a escuta, não reprova):
-
-- A música fica 13 dB abaixo da voz (de 9 a 15 entre os vídeos).
-- Dentro de um vídeo, passa 80% do tempo sob a fala numa faixa de 7 dB (de 4,5 a 9,6), com 0,6 virada de volume por minuto (de 0,3 a 1,1). Ela não sobe nas pausas da fala.
-
-Os dados sustentam o padrão conservador: presença estável, sem nível escrito onde nada pede. Fora da faixa, as perguntas são: a fala ficou difícil? a música sumiu? há razão local? a separação mediu direito? As faixas são do vídeo inteiro, e não de um trecho: `recuo`, a 17 dB, fica fora dos 9 a 15 por projeto, e ir de `presente` a `recuo` já percorre 7 dB. `presente`, a 10 dB, está dentro da faixa e ainda assim pode disputar numa faixa densa. A quantidade de mudanças não reprova: zero, uma ou sete podem estar certas; muitas só aumentam a chance de se ouvir a operação, ou de o mapa estar compensando uma música errada.
+**O que a referência faz**: presença estável, sem nível escrito onde nada pede; a música não sobe nas pausas da fala. Os valores estão em `critica-som` (as linhas "Música abaixo da voz, sob a fala", "Do trecho mais presente ao mais recuado" e "Viradas de volume por minuto") e são sensores: chamam a escuta, não reprovam. Fora da faixa, as perguntas são: a fala ficou difícil? a música sumiu? há razão local? a separação mediu direito? As faixas são do vídeo inteiro, e não de um trecho: `recuo`, a 17 dB, fica fora dos 9 a 15 por projeto, e ir de `presente` a `recuo` já percorre 7 dB. `presente`, a 10 dB, está dentro da faixa e ainda assim pode disputar numa faixa densa. A quantidade de mudanças não reprova: zero, uma ou sete podem estar certas; muitas só aumentam a chance de se ouvir a operação, ou de o mapa estar compensando uma música errada.
 
 **Procedimento:**
 

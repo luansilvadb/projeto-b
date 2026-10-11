@@ -5,9 +5,9 @@ description: "Ponto de partida de um vídeo ou curta: o briefing (modo, destino,
 
 ## Papel e entregas
 
-Dono do ponto de partida: o briefing e a escolha do tema ou da premissa. O usuário escolhe; esta skill leva a ele finalistas com a evidência que o modo pede.
+Dono do ponto de partida: o briefing e a escolha do tema ou da premissa. O usuário escolhe, ou delega a escolha explicitamente; esta skill leva a ele finalistas com a evidência que o modo pede.
 
-Entrada: o pedido do usuário e, quando há evento, as regras que ele forneceu. Nada mais: nenhum outro artefato precisa existir.
+Entrada: o pedido do usuário e, quando há evento, as regras que ele forneceu. Nada mais: nenhum outro artefato precisa existir. No modo `jam`, a duração do briefing é entrada que os filtros usam: se faltar, a pergunta vem antes de qualquer filtro de premissa.
 
 Entrega em `src/videos/<vídeo>/pauta.md`. A pasta do vídeo nasce aqui, com nome em inglês, que vira o id da composição e o primeiro argumento de todo comando.
 
@@ -33,7 +33,7 @@ Sem briefing, o modo é `canal` e nada muda para os vídeos do canal. As regras 
 2. **Oferta.** Leia quem já responde cada candidato e marque os pontos fora da curva. Pronto quando cada candidato tem views, canal, inscritos, idade e formato dos primeiros resultados, ou a limitação dita.
 3. **Volume.** Peça ao usuário o volume e a competição dos até cinco melhores, um termo por busca. Pronto quando cada um tem os dois níveis, e o que deu o menor volume com oferta forte foi medido de novo na versão curta.
 4. **Base.** Confira se cada finalista tem resposta estabelecida. Pronto quando cada um está marcado "firme" ou saiu.
-5. **Escolha.** Apresente de dois a quatro finalistas numa tabela, com a recomendação e o motivo, e pare. Pronto quando o usuário escolheu e `pauta.md` existe.
+5. **Escolha.** Apresente de dois a quatro finalistas numa tabela, com a recomendação e o motivo, e pare. Com delegação explícita do usuário, escolha o recomendado e registre a delegação (`escolha`). Pronto quando há escolha, do usuário ou delegada, e `pauta.md` existe.
 
 Os passos 1, 2 e 4 são do agente e vêm antes de qualquer pedido ao usuário além do volume. Um candidato que reprova no nicho ou no corte de volume sai sem consulta, com o motivo dito. Pedido localizado ("mede a procura deste termo", "esse tema é do canal?") vai direto à unidade dele.
 
@@ -66,4 +66,4 @@ O protocolo comum da equipe (frase de intenção, donos, handoff, gravidade e ro
 
 ## Parada
 
-A escolha termina quando o usuário escolheu um finalista e `pauta.md` está escrito; daí o tema ou a premissa segue para o `diretor-criativo`. No modo `canal`, se nenhum candidato passa no nicho e no corte de volume, diga isso e levante outra rodada de sementes, em vez de afrouxar o filtro. No modo `jam`, se nenhuma premissa cabe no briefing, diga qual filtro reprovou todas e leve ao usuário o campo do briefing que precisaria ceder.
+A escolha termina quando o usuário escolheu um finalista e `pauta.md` está escrito; daí o tema ou a premissa segue para o `diretor-criativo`. No modo `canal`, se nenhum candidato passa no nicho e no corte de volume, diga isso e levante outra rodada de sementes, em vez de afrouxar o filtro; com um único sobrevivente, o caminho é o de `escolha` ("Um sobrevivente, nenhum"). No modo `jam`, se nenhuma premissa cabe no briefing, diga qual filtro reprovou todas e leve ao usuário o campo do briefing que precisaria ceder.

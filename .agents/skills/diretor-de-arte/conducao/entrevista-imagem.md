@@ -40,14 +40,9 @@ O que a imagem pede ao texto (outra frase, outro fato, outra analogia de conceit
 
 **Depois de uma crítica**, a pergunta desta unidade é uma só: o conserto do defeito preserva as decisões atuais, ou pede uma decisão nova? O diagnóstico é de `critica-quadro`.
 
-**Como levar uma decisão:**
+**Como levar uma decisão.** O método geral (explorar antes, só alternativas de verdade, recomendação com o custo, a profundidade que a decisão pede) é o de `diretor-criativo/conducao/entrevista.md`, "Como levar uma decisão". Aqui, primeiro se elimina o que não funciona. Só chegam ao usuário alternativas aceitáveis: nunca o legível contra o ilegível, o fiel contra o falso, ou o que a crítica já recusou contra o que passou. A troca vai no tamanho em que a imagem será usada: um recorte, uma silhueta, um quadro, dois estados, a folha do personagem, uma faixa de paleta. Descrição em palavras só para o que ainda não dá para desenhar sem a própria decisão, e mesmo aí a alternativa recomendada vai com um esboço renderizado. A recomendação diz o que ganha e o custo no nível do desenho, da paleta aplicada ou da lista de planos, nunca "algo mais colorido".
 
-- **Explorar antes.** Primeiro se elimina o que não funciona. Só chegam ao usuário alternativas aceitáveis: nunca o legível contra o ilegível, o fiel contra o falso, ou o que a crítica já recusou contra o que passou.
-- **No menor artefato que deixa ver a troca**, no tamanho em que será usado: um recorte, uma silhueta, um quadro, dois estados, a folha do personagem, uma faixa de paleta. Descrição em palavras só para o que ainda não dá para desenhar sem a própria decisão, e mesmo aí a alternativa recomendada vai com um esboço renderizado.
-- **Só alternativas de verdade.** Há A e B quando as duas funcionam e a diferença é uma troca real. Quando uma saída é claramente melhor e reversível, ela é feita, criticada e mostrada, sem votação.
-- **Com recomendação**: o que ela ganha e o principal custo, no nível do desenho, da paleta aplicada ou da lista de planos, nunca "algo mais colorido".
-- **Com a profundidade que a decisão pede.** Uma escolha local é uma pergunta, com a comparação ao lado. A entrevista ramo a ramo da skill `grilling` fica para o que é ambíguo, define identidade, cria regra que se repete ou tem várias dependências.
-- **Sabendo o que precisa estar sabido.** Para compor uma cena é preciso saber quem está nela, e para julgar um desenho, a direção de cor. Isso informa a pergunta e não tranca o que veio antes: um teste de cena pode mostrar que o elenco não funciona, e um personagem pode pedir outra paleta.
+Para compor uma cena é preciso saber quem está nela, e para julgar um desenho, a direção de cor. Isso informa a pergunta e não tranca o que veio antes: um teste de cena pode mostrar que o elenco não funciona, e um personagem pode pedir outra paleta.
 
 Uma decisão está resolvida quando a intenção ou a identidade escolhida está clara, a troca foi aceita e há o bastante para produzir. Não se continua perguntando sobre sombra, posição ou detalhe, que os princípios resolvem.
 

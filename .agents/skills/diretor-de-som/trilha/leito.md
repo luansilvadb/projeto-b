@@ -66,5 +66,5 @@ Comece por uma identidade e pelo menor número de partes que a ferramenta permit
 ## EXEMPLO
 > Vídeo de 9 min 32 s: uma parte não cabe, duas bastam.
 > Hipótese: a troca depois do silêncio em que a resposta do vídeo é dita, aos 6:50. A música já muda ali (o tema curioso passa a resolvido e quente), e a parte nova entra sem cruzar.
-> Sinais preservados entre as duas descrições: piano de feltro, sintetizador analógico quente, cordas; 96 bpm nas duas.
+> Sinais preservados entre as duas descrições: o timbre de base, a textura de apoio e o tipo de trilha, que são os do vídeo (aqui, `<timbre de base>` e `<textura de apoio>`); 96 bpm nas duas.
 > A medida não acusa buraco nem salto na costura. Ao usuário, com o trecho de 6:30 a 7:20: "aqui a música se desenvolveu, ou começou outra?"

@@ -1,6 +1,6 @@
 ---
 name: diretor-publicacao
-description: "Pacote de saída de um vídeo ou curta, em publication.md, pelo destino do briefing: youtube (título público, descrição, tags, capítulos, conceito e prompt da thumbnail, checklist do Studio) ou jam (sinopse, créditos, direitos e licenças, declarações e envio conforme as regras que o evento forneceu). Decide a promessa e o conceito da imagem; a imagem em si é do diretor-de-arte. Use para criar ou revisar esses materiais."
+description: "Pacote de saída de um vídeo ou curta, em publication.md, pelo destino do briefing (youtube, jam ou jam e youtube). No youtube: título público, descrição, tags, capítulos, conceito e prompt da thumbnail, checklist do Studio. No jam: sinopse, créditos, direitos e licenças, declarações e envio conforme as regras que o evento forneceu. Decide a promessa e o conceito da imagem; a imagem em si é do diretor-de-arte. Use para criar ou revisar publication.md, ou o título, a thumbnail, a descrição, os capítulos ou a submissão de um vídeo ou curta."
 ---
 
 ## Papel e entrega

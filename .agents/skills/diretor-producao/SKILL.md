@@ -62,3 +62,4 @@ O modo vem do briefing; sem briefing, é `canal`, e nada muda nele. No modo `jam
 - O agente não ouve nem assiste ao vídeo. Entregue o caminho e as medidas; pronúncia, entonação, música, ritmo e publicação ficam para o usuário.
 - Cada procedimento define sua conclusão. Se faltar entrada, diga qual artefato falta e seu dono; não contorne a dependência.
 - O prazo ajusta o nível de polimento, e nunca dispensa um requisito bloqueante: o que descumpre o briefing, o destino ou a ferramenta é resolvido ou cortado, e o que sai é dito ao usuário.
+- Quando o limite de rodadas chega com um bloqueante ainda pendente, a entrega sai **impedida**, com o defeito, o dono e o que falta. A ressalva de encerramento só vale para polimento que o usuário recusou (`equipe/protocolo.md`, "Rodadas"); ela não declara pronto um bloqueante.

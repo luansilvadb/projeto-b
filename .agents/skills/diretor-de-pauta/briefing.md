@@ -31,7 +31,7 @@ Sem briefing, o modo é `canal`: o fluxo dos vídeos do canal segue como sempre 
 ```
 
 - **Destino** decide o pacote de saída (`diretor-publicacao`) e o arquivo de entrega (`diretor-producao/etapas/corte-final.md`). Grave sempre um dos três valores canônicos: `jam`, `youtube` ou `jam e youtube`. Ao ler um briefing antigo, aceite "evento" como `jam`, e "os dois" como `jam e youtube`; ao reescrever o campo, troque pelo canônico. Continua selecionável até a entrega: mudar de `jam` para `jam e youtube` acrescenta um pacote, e não refaz o filme.
-- **Prazo e duração** são dados. O prazo ajusta o nível de polimento (`plano`), e não dispensa requisito bloqueante.
+- **Prazo e duração** são dados. O prazo ajusta o nível de polimento (`plano`), e não dispensa requisito bloqueante. No `jam`, a duração "não fornecido" não é suposta: a pergunta vai ao usuário antes de se filtrar qualquer premissa por ela (`premissa`), e o campo fica registrado com a data.
 - **Regras do evento** são transcritas, e não interpretadas: a regra ambígua ou ausente volta ao usuário como pergunta, com o que depende dela. Nenhuma direção deduz regulamento, prazo, licença ou permissão.
 - **Narração em off é obrigatória no modo `jam`** (decisão do usuário): a composição só monta com a narração gravada, e o tempo de toda cena sai dela.
 
@@ -39,4 +39,4 @@ Sem briefing, o modo é `canal`: o fluxo dos vídeos do canal segue como sempre 
 
 ## LIMITES
 - O briefing não guarda o plano de tempo nem a frase de intenção: o plano é da `diretor-producao`, calculado na conversa, e a intenção fica em `script.md`, do `diretor-criativo` (`diretor-producao/equipe/protocolo.md`).
-- Regra do evento que chega depois entra no briefing com a data, e vai dita a quem ela afeta; não se reescreve o que já foi feito sem dizer.
+- Regra do evento que chega depois entra no briefing com a data, e vai dita a quem ela afeta; não se reescreve o que já foi feito sem dizer. A duração que muda segue a mesma regra: o campo `Duração` ganha a entrada nova com a data e a fonte, e vai dita a `diretor-criativo`, `diretor-producao` e `diretor-publicacao`, que a leem. Se o briefing não diz se o novo número é alvo ou limite, o campo fica com essa pergunta aberta.

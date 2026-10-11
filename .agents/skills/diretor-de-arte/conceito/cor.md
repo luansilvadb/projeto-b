@@ -20,7 +20,7 @@ Que paletas o vídeo usa, e quando troca de uma para outra?
 
 O que define o modo é o que ele separa, não a claridade: o mundo de noite é escuro, e o assunto pode pedir outros modos (a analogia, o dado, o sonho).
 
-**Identidade do canal.** A cor é saturada e tem matiz nos dois extremos: o escuro é azul profundo, índigo ou roxo, e o claro é pastel (ciano, amarelo quente, menta, rosa). Preto, cinza e branco puros ficam para o assunto que os pede, como o espaço. Um tema grave não troca essa linguagem por cor lavada.
+**Identidade do canal.** Vale no modo `canal`; no `jam`, a paleta sai da frase de intenção e do que o briefing permite, e esta linguagem é repertório. A cor do canal é saturada e tem matiz nos dois extremos: o escuro é azul profundo, índigo ou roxo, e o claro é pastel (ciano, amarelo quente, menta, rosa). Preto, cinza e branco puros ficam para o assunto que os pede, como o espaço. Um tema grave não troca essa linguagem por cor lavada, no canal.
 
 **Papéis da cor num plano.** Um vocabulário para ler o quadro, não uma cota a preencher:
 

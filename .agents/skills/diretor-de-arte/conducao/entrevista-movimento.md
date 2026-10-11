@@ -34,15 +34,9 @@ Dúvida técnica não é pergunta de produto: havendo critério para experimenta
 
 **Depois de uma crítica**, a pergunta desta unidade é uma só: o conserto do defeito preserva as decisões atuais, ou pede uma decisão nova? O diagnóstico é de `critica-movimento`.
 
-**Como levar uma decisão:**
+**Como levar uma decisão.** O método geral (explorar antes, só alternativas de verdade, recomendação com o custo, a profundidade que a decisão pede) é o de `diretor-criativo/conducao/entrevista.md`, "Como levar uma decisão". Aqui, duas coisas são do movimento. A decisão vai no artefato do tamanho dela: o plano, ou os dois vizinhos quando é uma passagem; a leitura de um instante cabe numa tira, e dois segundos que resolvem dispensam duas cenas inteiras. E a prova de tempo, atuação ou câmera que vai ao usuário usa um acabamento que ele já aceitou. Quando o acabamento também é novo, vai primeiro o quadro parado (o quadro-chave de `etapas/animatic.md`): sobre um quadro abaixo do padrão ele julga o quadro, e a dúvida de movimento fica sem resposta. Numa rodada de provas, duas de três animadas sobre desenho improvisado foram recusadas pelo desenho, e a feita sobre um quadro-chave já aceito teve o mundo, a luz e a câmera aceitos de primeira.
 
-- **Explorar antes.** Não se pergunta sobre o que ainda não foi testado, nem se oferecem quatro passagens antes de saber se alguma funciona.
-- **No artefato, do tamanho da decisão.** Ritmo, peso e passagem se decidem em vídeo: o plano, ou os dois vizinhos quando é uma passagem. A leitura de um instante cabe numa tira, e uma direção inicial pode caber numa prova menor. Dois segundos que resolvem dispensam duas cenas inteiras.
-- **Sobre um quadro que ele já aceitou.** A prova de tempo, de atuação ou de câmera que vai ao usuário usa um acabamento que ele já aceitou. Quando o acabamento também é novo, vai primeiro o quadro parado (o quadro-chave de `etapas/animatic.md`): sobre um quadro abaixo do padrão ele julga o quadro, e a dúvida de movimento fica sem resposta. Numa rodada de provas, duas de três animadas sobre desenho improvisado foram recusadas pelo desenho, e a feita sobre um quadro-chave já aceito teve o mundo, a luz e a câmera aceitos de primeira.
-- **Só alternativas de verdade.** Há A e B quando as duas funcionam e a diferença é uma troca real. Quando uma saída é claramente melhor e reversível, ela é feita e mostrada, sem escolha de fachada.
-- **Com recomendação**: o que ela ganha e o principal custo.
-- **Com a profundidade que a decisão pede.** Uma escolha local é uma pergunta, com a comparação ao lado. A entrevista ramo a ramo da skill `grilling` fica para o que é ambíguo, tem várias dependências ou mexe na identidade.
-- **Sabendo o que precisa estar sabido.** Para julgar a câmera é preciso saber o foco; para julgar a passagem, os dois estados. Isso informa a pergunta e não impõe ordem ao trabalho: uma ideia de câmera pode pedir outra atuação, e uma passagem pode resolver o que a partitura descrevia de outro jeito.
+Para julgar a câmera é preciso saber o foco; para julgar a passagem, os dois estados. Isso informa a pergunta e não impõe ordem ao trabalho: uma ideia de câmera pode pedir outra atuação, e uma passagem pode resolver o que a partitura descrevia de outro jeito.
 
 Uma decisão está resolvida quando a intenção escolhida está clara, a troca foi aceita e há o bastante para agir. Não se continua perguntando sobre o que os princípios resolvem.
 

@@ -36,7 +36,7 @@ Na referência, os dois vídeos de `fechamento` fazem ponte, pedido, motivo e ag
 - voz, narracao: fornecem quem fala e como a frase soa.
 
 ## LIMITES
-- Botões, setas e animação de inscrição pertencem à skill `diretor-de-arte`.
+- Botões, setas e animação de inscrição pertencem à skill `diretor-de-arte`, na unidade `quadro/chamada`. Esta skill entrega a ela o texto fixado da cena, as palavras de deixa e o `holdMs` que antecede o pedido; a arte devolve a cena renderizada e diz se a imagem pede outra frase, que volta aqui.
 - Patrocínio, loja e apoio financeiro ficam fora até o usuário decidir que o canal os tem.
 
 ## EXEMPLO

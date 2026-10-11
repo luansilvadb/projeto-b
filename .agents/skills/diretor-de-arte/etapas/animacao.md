@@ -8,12 +8,7 @@ Leia a skill `remotion-best-practices` (regras de `remotion-markup`) antes de es
 
 ## Começar pelo trecho de maior risco
 
-Quando há uma dúvida de movimento que pesa, comece pelo menor trecho que a concentra, com tudo o que nela interage: a fala, a atuação, a pausa, a câmera, a passagem, a ênfase. Câmera testada sem a atuação, ou efeito sem o impacto, não responde nada.
-
-- **Escolha pelo risco, não pela ordem**: a primeira atuação importante do protagonista, a passagem mais difícil, o plano em que câmera e personagem se mexem juntos, a ação que precisa parecer pesada, o momento que define o andamento.
-- **Do menor tamanho que contém a causa, a mudança e a consequência**: um plano, dois, três segundos, quinze. Não se anima uma cena inteira só porque o arquivo é uma cena.
-- **Renderize cedo**, com `pnpm scene`, enquanto mudar a linguagem de movimento ainda é barato, e leia o trecho como `critica-movimento` descreve.
-- **Conserte ali antes de multiplicar.** É nesse trecho que se descobre que as ações estão rígidas, que tudo usa a mesma curva, que a câmera não para, que as figuras deslizam ou que as pausas foram preenchidas sem causa.
+Quando há uma dúvida de movimento que pesa, o método é o de `etapas/animatic.md`, "Começar pelo trecho de maior risco": o menor trecho que a concentra, renderizado cedo, consertado antes de multiplicar. Aqui o trecho reúne tudo o que nele interage (a fala, a atuação, a pausa, a câmera, a passagem, a ênfase) e a causa, a mudança e a consequência: câmera testada sem a atuação, ou efeito sem o impacto, não responde nada. Escolha o trecho pelo risco de movimento: a primeira atuação importante do protagonista, a passagem mais difícil, a ação que precisa parecer pesada, o momento que define o andamento. Renderize com `pnpm scene` enquanto a linguagem de movimento ainda é barata, e leia o trecho como `critica-movimento` descreve. É nele que aparecem as falhas próprias do movimento: ações rígidas, uma curva igual para tudo, câmera que não para, figuras que deslizam, pausas preenchidas sem causa.
 
 Sem dúvida desse tamanho (a linguagem de movimento já foi provada num trecho aceito do mesmo vídeo), não há trecho de prova: anime.
 

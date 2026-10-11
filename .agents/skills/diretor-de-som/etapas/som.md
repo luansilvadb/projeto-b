@@ -39,7 +39,7 @@ Um vídeo simples pode fechar em um leito gerado e só nas camadas que pedir; um
 
 ### O silêncio antes da chamada
 
-Só no modo `canal`: o curta do modo `jam` não tem chamada e termina no fim da história (`estrutura/narrativa`, na pasta da skill `diretor-criativo`).
+Só no modo `canal`: o curta do modo `jam` não tem chamada de canon. Se o usuário pede um pedido final, o texto e a função dele são do `diretor-criativo` (`estrutura/narrativa`, na pasta da skill `diretor-criativo`); sem esse pedido, o curta termina no fim da história.
 
 A última cena do fechamento leva um `holdMs` que deixa o fim assentar antes do pedido (`estrutura/chamada`, na pasta da skill `diretor-criativo`). Ele chega aqui como hipótese narrativa: a skill `diretor-criativo` o propôs sem ter o som para ouvir. Com o áudio e a mixagem reais, o som confere se a pausa faz o que o fechamento pede: o fim assenta, ou a chamada o atropela, ou a pausa sobra e vira espera (`silencio`).
 
@@ -92,7 +92,7 @@ Para uma ação calculada a partir do fim, use `at: "end"`: com `shot`, ancora n
 
 ## Sons que faltam
 
-Unidade `escolha`. O catálogo guarda o arquivo que hoje realiza cada uso. O uso que ele já tem é reutilizado, sem consulta, e nenhum uso novo nasce para aumentar a quantidade de efeitos. Entregue à skill `diretor-producao` (`etapas/efeitos-sonoros.md`) a lista dos que faltam, com a ação de cada um; ela busca, filtra, leva ao ouvido do usuário o candidato ou os candidatos que sobram e devolve o `name`. Um efeito sem som no catálogo fica fora de `sfx` e anotado em `sound.md` como pendente.
+Unidade `efeitos/escolha`. O catálogo guarda o arquivo que hoje realiza cada uso. O uso que ele já tem é reutilizado, sem consulta, e nenhum uso novo nasce para aumentar a quantidade de efeitos. Entregue à skill `diretor-producao` (`etapas/efeitos-sonoros.md`) a lista dos que faltam, com a ação de cada um; ela busca, filtra, leva ao ouvido do usuário o candidato ou os candidatos que sobram e devolve o `name`. Um efeito sem som no catálogo fica fora de `sfx` e anotado em `sound.md` como pendente.
 
 ## O conjunto
 

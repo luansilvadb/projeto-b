@@ -92,7 +92,7 @@ Junto da entrega, faça três perguntas curtas ao usuário, ou ao primeiro ouvin
 A resposta é comparada com `script.md`: a ideia repetida, com a tese, ou com a frase de intenção no curta; o fim lembrado, com a linha "Fechamento". O retorno vai ao dono pela causa, e não pela pergunta:
 
 - **Roteiro ou gancho** (a abertura não cria razão para ficar, a ideia repetida não é a tese, o fim não diz nada que fique): skill `diretor-criativo`.
-- **Execução ou mixagem** (o texto diz e não se ouve ou não se vê): a música cobre a frase ou, só no modo `canal` (o curta do modo `jam` não tem chamada), o silêncio antes da chamada não deixa o fim assentar, ou a chamada o atropela, é da `diretor-de-som`; a voz, o render e o volume, daqui.
+- **Execução ou mixagem** (o texto diz e não se ouve ou não se vê): a música cobre a frase ou, só no modo `canal` (o curta do modo `jam` não tem chamada de canon, salvo um pedido final explícito), o silêncio antes da chamada não deixa o fim assentar, ou a chamada o atropela, é da `diretor-de-som`; a voz, o render e o volume, daqui.
 - Na dúvida entre as duas causas, leia a frase em `script.json`: se a ideia está clara no texto, o defeito é de execução.
 
 É diagnóstico: a escuta de uma pessoa, que mostra onde olhar. Não pede analytics, não é amostra estatística e não prova retenção; também não é etapa nem aprovação, e o arquivo final não espera por ela. Sem resposta, a entrega vale igual.

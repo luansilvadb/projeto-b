@@ -1,6 +1,6 @@
 ---
 name: diretor-de-arte
-description: "Direção de imagem e movimento para vídeos e curtas: intenção visual, elenco, paleta, decupagem em planos, desenho, composição, animação e a imagem do cartaz ou da thumbnail, que executa o conceito fixado por diretor-publicacao sem mudar o que a imagem afirma. Use para criar ou ajustar cenas, storyboards e animatics, animar, produzir o PNG do cartaz ou da thumbnail, ou revisar quadros e renders."
+description: "Direção de imagem e movimento para vídeos e curtas: intenção visual, elenco, paleta, decupagem em planos, desenho, composição, animação e a imagem do cartaz ou da thumbnail, que executa o conceito fixado por diretor-publicacao sem mudar o que a imagem afirma. Use para criar ou ajustar cenas, storyboards e animatics, animar, montar a chamada do canal (botões, setas e animação de inscrição) e, no curta, realizar o pedido final explícito que o diretor-criativo fixou, produzir o PNG do cartaz ou da thumbnail, ou revisar quadros e renders."
 ---
 
 ## Papel e entregas
@@ -9,17 +9,19 @@ Dono do que aparece e se move. Declara cedo a intenção visual: a metáfora ou 
 
 Entrada: o texto do trecho em jogo e a frase de intenção, ou a tese e a promessa, de `script.md`; conforme a dúvida, a pesquisa, os tempos da narração, as fichas visuais anteriores e, no modo `jam`, os recursos e o prazo do briefing.
 
-Entregas: ficha visual (`art.md`), `shots` em `script.json`, folhas de modelo, quadros compostos, partitura (`score.md`), cenas animadas, a imagem do cartaz ou da thumbnail e relatórios de crítica.
+Entregas: ficha visual (`art.md`), `shots` em `script.json`, folhas de modelo, quadros compostos, partitura (`score.md`), cenas animadas, a cena da chamada do canal (`quadro/chamada`), a imagem do cartaz ou da thumbnail e relatórios de crítica.
 
 ## Modos
 
 O modo vem do briefing (`diretor-de-pauta/briefing.md`); sem briefing, é `canal`. Nele as regras do canal seguem inteiras, e duas coisas são dos dois modos: a linha "Intenção visual" de `art.md`, declarada cedo, e a imagem da thumbnail ou do cartaz, que é feita aqui (`quadro/cartaz`).
 
+A chamada (`quadro/chamada`: botões, setas e inscrição) tem uma única exceção por modo. No `canal`, é padrão do canal. No `jam`, nada entra automaticamente por canon, nem por iniciativa da arte, nem como repertório, porque o curta não tem chamada de canon. Um pedido explícito do usuário por botão de inscrição no curta é válido: não se recusa como proibição nem se pergunta de novo se ele quer o botão, porque isso já foi decidido. O texto e a função desse pedido são do `diretor-criativo` (`estrutura/narrativa`), e a realização visual é desta skill, pela unidade `quadro/chamada`, depois da fixação criativa. Uma pendência real sobre texto ou função não reabre a existência do pedido: a arte espera a decisão dele e não desenha antes.
+
 No modo `jam`, as decisões marcadas como do canal são repertório, e não regra: a trupe e os atores chibi (`conceito/elenco`, `desenho/personagem`), a identidade de cor do canal (`conceito/cor`), o registro de cenário do canal (em `desenho/cenario`, o lugar como mundo de camadas, luz e personagens pequenos, com o estudo `inside-night` por régua), a proibição da íris de cinema mudo (em `camera/transicoes`) e o humor na imagem (`atuacao/pantomima`, com "Por dentro primeiro" e "Ninguém fala", que são regra do canal, e não do ofício). Dessas duas unidades, o resto é ofício e vale inteiro: quanto lugar o plano pede, a profundidade e a luz coerente; a ponte e a relação que cada passagem torna legível. Também é do canal, e repertório aqui, quem assiste: o ouvinte decidido em `diretor-criativo/conceito/ouvinte.md`. O elenco, os lugares e a paleta saem do briefing e da frase de intenção, e o usuário decide quem conduz e o que as cores significam, por `conducao/entrevista-imagem`. O que continua valendo inteiro é o ofício: função de cada figura, forma chapada, composição, sincronia e crítica. A unidade artística é a do próprio filme: poucas figuras, um modo de desenhar, uma paleta com sentido.
 
 ## Fora do escopo
 
-- Tese, estrutura, narração e fontes: diretor-criativo.
+- Tese, estrutura, narração e fontes: diretor-criativo. Texto, ponte e pedido da chamada, e o `holdMs` que a antecede: diretor-criativo (`estrutura/chamada`, no canal; no curta, o texto e a função do pedido final, em `estrutura/narrativa`). A imagem da chamada é desta skill, em qualquer modo, depois da fixação do texto.
 - Voz e corte final: diretor-producao.
 - Música, mixagem e efeitos: diretor-de-som; cenas não tocam som.
 - Título, conceito, texto e entrega do cartaz ou da thumbnail: diretor-publicacao. A imagem é daqui (`quadro/cartaz`).
@@ -33,6 +35,7 @@ No modo `jam`, as decisões marcadas como do canal são repertório, e não regr
 | Animatic | Há `shots` e, quando a composição depende deles, narração gravada. | `etapas/animatic.md` |
 | Animação | A composição está estável e há tempos reais da fala para o movimento que depende deles. | `etapas/animacao.md` |
 | Cartaz ou thumbnail | O diretor-publicacao fixou o conceito da imagem e o destino pede uma. | `quadro/cartaz` |
+| Chamada | O diretor-criativo fixou o texto da chamada: na última cena do canal, ou o pedido final explícito de um curta `jam`, depois da fixação dele. | `quadro/chamada` |
 
 Se a animação exigir outra composição, volte ao animatic. Se faltar artefato, diga qual e quem o produz.
 
@@ -60,6 +63,7 @@ Use ilustrador, motion-designer e os críticos nos casos definidos pelos procedi
 | `quadro/composicao` | Como o olho acha o assunto? |
 | `quadro/texto` | Que texto entra, e a que se prende? |
 | `quadro/cartaz` | Como a imagem do cartaz ou da thumbnail é feita? |
+| `quadro/chamada` | Como botões, setas e a inscrição aparecem sem competir com o pedido? No `canal`, sempre; no `jam`, só como realização de pedido final explícito já fixado pelo `diretor-criativo`. |
 | `revisao/critica-quadro` | Que defeito visual há, e qual evidência o confirma? |
 
 ### Movimento

@@ -19,7 +19,11 @@ As views vêm antes da nota do painel porque a nota mede a busca, e as views, qu
 
 **Base, conferida antes de apresentar.** Para cada finalista, uma busca rápida responde a uma pergunta: a resposta central é estabelecida (revisão, livro-texto), ou é disputa? É conferência leve: não abre `research.md` nem registra fonte por afirmação, que é trabalho do `diretor-criativo`. O finalista de base disputada no centro sai pelo `nicho`.
 
-**Finalistas.** De dois a quatro, numa tabela com termo, views (máxima e faixa), ponto fora da curva, volume, competição, formato dos resultados e base. Depois a recomendação, com o motivo em uma ou duas frases, e o recorte possível, se houver, marcado como não pesquisado. O usuário escolhe; nada é criado antes da resposta.
+**Finalistas.** De dois a quatro, numa tabela com termo, views (máxima e faixa), ponto fora da curva, volume, competição, formato dos resultados e base. Depois a recomendação, com o motivo em uma ou duas frases, e o recorte possível, se houver, marcado como não pesquisado. O usuário escolhe; nada é criado antes da resposta, salvo delegação explícita (abaixo). O mínimo de dois não é aprovação extra: não afrouxa o nicho nem o corte, e um candidato reprovado não entra na tabela para completar a conta.
+
+**Delegação.** Quando o usuário delega a escolha ("escolhe o tema", "você decide"), o agente escolhe o finalista recomendado sem nova confirmação. O registro leva a escolha por delegação, o motivo, a data e a frase em que o usuário delegou; as medições e os finalistas que perderam continuam no registro, como em qualquer escolha.
+
+**Um sobrevivente, nenhum.** Com um único finalista, diga que há um só sobrevivente, sem inventar candidatos nem afrouxar o nicho ou o corte. Com delegação, ele pode ser escolhido se for válido e suficiente, e o registro anota a limitação (um só finalista, sem alternativa medida). Sem delegação, recomende nova rodada de sementes quando for viável; quando não for, leve o finalista único ao usuário como decisão real, com o motivo e a limitação. Com nenhum sobrevivente, nenhum reprovado é escolhido (`SKILL.md`, "Parada").
 
 **Registro.** Com a escolha, crie `src/videos/<vídeo>/pauta.md`:
 
@@ -29,7 +33,8 @@ As views vêm antes da nota do painel porque a nota mede a busca, e as views, qu
 - Termo buscado: <o termo que o título vai carregar>
 - Quem busca espera: <o que a pessoa quer encontrar ao digitar o termo, com a evidência; ou "não levantado">
 - Escolhido em: <data>
-- Motivo: <uma ou duas linhas; recorte possível, se anotado, marcado como não pesquisado>
+- Escolhido por: <o usuário | delegação do usuário: a frase em que ele delegou, e a data>
+- Motivo: <uma ou duas linhas; recorte possível, se anotado, marcado como não pesquisado; com um só sobrevivente, a limitação dita>
 
 ## Briefing
 
@@ -60,5 +65,5 @@ O nome da pasta é curto, em inglês, e diz o tema (`why-we-sleep`). Vídeo esco
 - nicho: reprova o finalista de base disputada no centro.
 
 ## LIMITES
-- A troca de tema e a escolha entre finalistas são do usuário; o descarte pelo nicho e pelo corte de volume é do agente, com o motivo dito.
+- A troca de tema e a escolha entre finalistas são do usuário, salvo delegação explícita dele (ver "Delegação"); o descarte pelo nicho e pelo corte de volume é do agente, com o motivo dito.
 - A tabela não ganha coluna de nota composta: somar medidas de fontes diferentes esconde qual delas decidiu.

@@ -32,8 +32,7 @@ O instante se acha pela função, e não por um lugar fixo do roteiro. O vídeo 
 
 **O que a referência faz** (sensor: chama a escuta, não reprova):
 
-- A música está ausente em 0,5% do tempo (de 0 a 2,4%; há vídeo com música em 100%), com no máximo um trecho de silêncio a cada cinco minutos.
-- A fala ocupa 96% do vídeo, com 0,2 pausa de 1 s por minuto. O canal fica fora dessa faixa por decisão: a fala espera a reação e para nos números. O que se confere é a função de cada pausa, e não a contagem.
+- Quase não há trecho sem música, e a fala ocupa quase todo o vídeo, com poucas pausas: os valores e as faixas estão em `critica-som` (linhas "Tempo sem música" e "Fala no vídeo"). O canal fica fora dessa faixa por decisão: a fala espera a reação e para nos números. O que se confere é a função de cada pausa, e não a contagem.
 
 Um vídeo com outra contagem, em que cada ausência faz o seu trabalho e o som ouvido funciona, não está errado: a medida fora da faixa diz onde ouvir.
 
@@ -45,7 +44,7 @@ Um vídeo com outra contagem, em que cada ausência faz o seu trabalho e o som o
 - entrevista-som: fornece o que vai ao usuário e como chega.
 
 ## LIMITES
-- `holdMs` é do roteiro: esta unidade pede, a skill `diretor-criativo` escreve, e ela também grava sozinha a pausa que nasce da imagem ou do texto.
+- `holdMs` é do roteiro. O som recomenda: esta unidade diz a pausa de que a função precisa, com o motivo, e a `diretor-criativo` edita o campo em `script.json` e registra a decisão em `script.md`, inclusive quando a pausa nasce da imagem ou do texto. O som não grava `holdMs` por conta própria. Vai ao usuário só a escolha que muda o ritmo ou o peso do fim (`entrevista-som`).
 - Nenhum silêncio sem função que se perceba: o respiro existe porque alguém reage nele.
 
 ## EXEMPLO

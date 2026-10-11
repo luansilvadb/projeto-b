@@ -45,6 +45,8 @@ O modelo só recebe texto, e a entonação muda de uma geração para outra. Os 
 2. **Marcar**: na frase que soou errada, a tecla M (ou "✗ soou errado"). A escuta não para.
 3. **Regerar marcadas**: a escolha automática decide de novo cada frase marcada, deixando de fora a tomada rejeitada e gerando uma rodada nova quando preciso (cerca de 30 s por rodada). A página passa a mostrar só as regeradas, para ouvir de novo. Repita até não marcar nenhuma.
 
+   As tomadas geradas por essa regeração ficam em `public/videos/<vídeo>/takes/`, fora do git (convenção de `narracao-voz.md`, "Onde ficam as escolhas e as tomadas"). O caminho que você informa para cada tomada é o campo `file` que a ferramenta gravou nela, e não um caminho de memória: sem esse campo, não há arquivo a citar.
+
 A frase que o usuário diz estar mal escrita volta ao `diretor-criativo` na primeira vez, sem gastar tomadas nela: outra tomada não conserta o texto. A frase com três tomadas rejeitadas ganha o aviso "pede reescrita", que é o mesmo retorno para o caso em que ninguém tinha apontado o texto. Nos dois, o caminho é o de "Quem mexe no texto", e o usuário fica sabendo o que mudou.
 
 Pronto quando: o usuário ouviu o vídeo inteiro e a última escuta terminou sem frase marcada.

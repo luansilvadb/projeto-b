@@ -30,7 +30,7 @@ Os custos medidos neste repositório são ordens de grandeza, e mudam com a máq
 
 ## 3. Os marcos
 
-Conte de trás para a frente, a partir do prazo, e diga cada marco como um horário:
+Conte de trás para a frente, a partir do prazo, e diga cada marco como um horário. Sem hora de início no briefing, o relógio não é suposto: os marcos ficam "a fixar", a hora de início é perguntada ao usuário, e o envio, que vem com a data e a hora do prazo, segue com horário.
 
 1. **Envio**: o prazo, menos a margem. O upload e o formulário são do usuário e levam o tempo dele.
 2. **Congelamento**: daqui em diante só entra conserto de bloqueante. Montagem, verificações e pacote cabem depois dele.
