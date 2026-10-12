@@ -117,7 +117,7 @@ export const TheMoonBrakeScene: React.FC<SceneProps> = ({ scene, shots }) => (
     </Shot>
     <Shot range={shots[2]} name="o dia ganha uma lasca">
       <Longer
-        at={[cue(scene, "menos") - shots[2].from, cue(scene, "milésimos") - shots[2].from]}
+        at={[cue(scene, "fica") - shots[2].from, cue(scene, "milésimos") - shots[2].from]}
       />
     </Shot>
   </>

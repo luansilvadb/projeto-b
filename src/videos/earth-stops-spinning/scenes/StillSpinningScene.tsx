@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { useCurrentFrame, useVideoConfig } from "remotion";
 import { Place } from "../../../components/Place";
 import { Pop, popOpacity, popScale } from "../../../components/Pop";
@@ -97,6 +98,7 @@ const WhatItDoes: React.FC<Props> = ({ at }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
+  const clipId = useId();
   // O globo gira num passo só, amarrado à fala: o chão da casinha está na linha do dia e da noite
   // quando a fala passa de um para a outra, e no lugar dele no fim do plano.
   const turned = (frame - at[2]) / Math.max(1, length - at[2]);
@@ -114,13 +116,20 @@ const WhatItDoes: React.FC<Props> = ({ at }) => {
           <Svg>
             {/* A sombra de volume do disco dá lugar à noite: as duas juntas liam como duas linhas. */}
             <Globe {...EARTH} spin={spin} lightFrom={1} shade={0.32 * (1 - night)} />
-            <LatitudeRing
-              {...EARTH}
-              lat={0}
-              color={earth.waterLight}
-              width={26}
-              opacity={0.9 * popOpacity(frame, at[0], 0.4 * fps)}
-            />
+            {/* O mar na cintura é uma cinta, e não um fio: um aro fino sumia no azul do próprio mar.
+                O recorte segura as pontas redondas do traço dentro do disco. */}
+            <clipPath id={clipId}>
+              <circle cx={EARTH.cx} cy={EARTH.cy} r={EARTH.r} />
+            </clipPath>
+            <g clipPath={`url(#${clipId})`}>
+              <LatitudeRing
+                {...EARTH}
+                lat={0}
+                color={earth.waterLight}
+                width={80}
+                opacity={0.9 * popOpacity(frame, at[0], 0.4 * fps)}
+              />
+            </g>
             <g opacity={popOpacity(frame, at[1], 0.3 * fps)}>
               <House
                 {...house}

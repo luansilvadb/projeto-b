@@ -266,7 +266,7 @@ const BlankRuler: React.FC<{ readonly rulerAt: number }> = ({ rulerAt }) => {
 export const SeaMovesScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="o mar segue para leste">
-      <OceanSlides eastAt={cue(scene, "leste")} speedAt={cue(scene, "vento")} />
+      <OceanSlides eastAt={cue(scene, "leste")} speedAt={cue(scene, "velocidade")} />
     </Shot>
     <Shot range={shots[1]} name="a régua em branco">
       <BlankRuler rulerAt={cue(scene, "onde") - shots[1].from} />

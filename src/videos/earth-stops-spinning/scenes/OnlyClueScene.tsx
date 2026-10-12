@@ -57,7 +57,7 @@ const SameWindow: React.FC<Props> = ({ coffeeAt, sunAt, quietAt }) => {
 };
 
 export const OnlyClueScene: React.FC<SceneProps> = ({ scene, shots }) => (
-  <Shot range={shots[0]} name="a única pista">
+  <Shot range={shots[0]} name="uma das pistas mais visíveis">
     <SameWindow
       coffeeAt={cue(scene, "liso")}
       sunAt={cue(scene, "Sol")}

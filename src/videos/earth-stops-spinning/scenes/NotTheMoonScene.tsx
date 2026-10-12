@@ -279,9 +279,15 @@ const CROWN: readonly (readonly [number, number, number])[] = [
   [0, 1.1, 76],
 ];
 
+// A Lua da última frase, à direita do globo que cresceu.
+const MOON_AT = { cx: 1610, cy: 440, r: 150 } as const;
+
 type RowProps = {
-  /** Os quadros da fala: o globo cresce, o lado claro e o escuro, o ar sobe, chega ao escuro, as nuvens, a sombra. */
-  readonly at: readonly [number, number, number, number, number, number];
+  /**
+   * Os quadros da fala: o globo cresce, o lado claro e o escuro, o ar sobe, chega ao escuro, as nuvens, a
+   * sombra e a Lua da última frase.
+   */
+  readonly at: readonly [number, number, number, number, number, number, number];
 };
 
 /**
@@ -302,7 +308,14 @@ const Simulated: React.FC<RowProps> = ({ at }) => {
     (1 - HOT_ACROSS) * ramp(frame, at[3], 0.4 * fps);
   // Com a fala real sobra 1 s entre "escuro" e "nuvens": o frio fecha o laço antes de as nuvens entrarem.
   const cold = ramp(frame, at[3] + 0.3 * fps, 0.7 * fps);
-  const shade = ramp(frame, at[5], 0.7 * fps);
+  // A sombra se espalha durante "bem onde o Sol bate mais forte", e não de uma vez.
+  const shade = ramp(frame, at[5], 1.8 * fps);
+  // A última frase só lembra que a Lua é o caso sem ar: ela volta à direita, com as cores de dia e de noite,
+  // sem número e sem escala contra o globo. Nenhuma fonte compara os extremos de uma Terra parada com os da Lua.
+  const moon = popScale(frame, at[6], 0.4 * fps, 0);
+  // "Tendem a se formar": as nuvens incham do meio para as pontas durante toda a frase, de "nuvens" até
+  // "sombra", e não de uma vez; a de cima começa um pouco depois da barriga.
+  const forming = Math.max(fps, at[5] - at[4]);
   const puff = (list: typeof BELLY, fill: string, delay: number) =>
     list.map(([degrees, far, r], index) => {
       const angle = (degrees * Math.PI) / 180;
@@ -313,8 +326,15 @@ const Simulated: React.FC<RowProps> = ({ at }) => {
           key={`${fill}-${index}`}
           cx={GROWN.cx - out * Math.cos(angle)}
           cy={GROWN.cy + out * Math.sin(angle)}
-          // Incham do meio para as pontas, e depois só respiram.
-          r={r * popScale(frame, at[4] + delay + Math.abs(index - (list.length - 1) / 2) * 2, 0.5 * fps, 0)}
+                    r={
+            r *
+            popScale(
+              frame,
+              at[4] + delay * forming + (Math.abs(index - (list.length - 1) / 2) / (list.length / 2)) * 0.8 * forming,
+              0.9 * fps,
+              0,
+            )
+          }
           fill={fill}
         />
       );
@@ -356,12 +376,24 @@ const Simulated: React.FC<RowProps> = ({ at }) => {
           {/* Com as nuvens em cena o laço recua, mas fica: são as duas coisas juntas. */}
           <AirLoop hot={hot} cold={cold} seconds={seconds} opacity={1 - 0.6 * ramp(frame, at[4], 0.5 * fps)} />
           {puff(BELLY, blockDay.cloudShade, 0)}
-          {puff(CROWN, ink.paper, 3)}
+          {puff(CROWN, ink.paper, 0.12)}
+          {/* A Lua do primeiro plano, de volta: o mesmo lado claro e o mesmo escuro, sem número. */}
+          <g transform={`translate(${MOON_AT.cx} ${MOON_AT.cy}) scale(${moon}) translate(${-MOON_AT.cx} ${-MOON_AT.cy})`}>
+            {/* O ar de cada lado, como em `StillEarth`: laranja sobre o mar daria cinza, e a cor vai no halo. */}
+            <Half {...MOON_AT} r={MOON_AT.r * AIR} side={-1} fill={ink.hot} opacity={0.85} />
+            <Half {...MOON_AT} r={MOON_AT.r * AIR} side={1} fill={ink.cold} opacity={0.85} />
+            <Moon {...MOON_AT} night={0} />
+          </g>
         </Svg>
+        <Place x={MOON_AT.cx} y={MOON_AT.cy + MOON_AT.r + 78}>
+          <Pop at={at[6] + 0.15 * fps}>
+            <Tag on="light">Lua: sem ar</Tag>
+          </Pop>
+        </Place>
         {/* O globo crescido continua sendo o modelo de 128 dias, e não a Terra parada: a etiqueta fica. */}
         <Place x={GROWN.cx} y={GROWN.cy + GROWN.r + 84}>
           <Pop at={at[0] + 0.9 * fps}>
-            <Tag on="light">giro de 128 dias</Tag>
+            <Tag on="light">modelo: giro de 128 dias</Tag>
           </Pop>
         </Place>
       </Push>
@@ -373,7 +405,7 @@ const Simulated: React.FC<RowProps> = ({ at }) => {
 export const NotTheMoonScene: React.FC<SceneProps> = ({ scene, shots }) => (
   <>
     <Shot range={shots[0]} name="a Lua com números, a Terra sem">
-      <MoonAndStillEarth at={[cue(scene, "ar"), cue(scene, "nenhuma"), cue(scene, "número")]} />
+      <MoonAndStillEarth at={[cue(scene, "ar"), cue(scene, "nenhuma"), cue(scene, "temperatura")]} />
     </Shot>
     <Shot range={shots[1]} name="para que lado vai">
       <WhichWay at={[cue(scene, "esquentar") - shots[1].from, cue(scene, "esfriar") - shots[1].from]} />
@@ -387,6 +419,7 @@ export const NotTheMoonScene: React.FC<SceneProps> = ({ scene, shots }) => (
           cue(scene, "escuro") - shots[2].from,
           cue(scene, "nuvens") - shots[2].from,
           cue(scene, "sombra") - shots[2].from,
+          cue(scene, "Lua", 3) - shots[2].from,
         ]}
       />
     </Shot>

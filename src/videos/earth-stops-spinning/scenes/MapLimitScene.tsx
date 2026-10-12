@@ -98,7 +98,7 @@ const Provisional: React.FC<ProvisionalProps> = ({ dashAt, stampAt, portrait = f
 // A Terra fica acima do centro: a faixa do prazo ocupa a base do quadro.
 const EARTH = { cx: 960, cy: 470, r: 300 } as const;
 // A faixa do prazo: o texto, a linha sem marca nenhuma e a interrogação na ponta.
-const SPAN = { y: 900, from: 600, to: 1240 } as const;
+const SPAN = { y: 840, from: 600, to: 1240 } as const;
 // As rachaduras na cintura, em unidades de raio 100: três do lado do corte, duas do lado de fora.
 const CRACKS = [
   "M 99 -8 L 86 -2 L 90 9 L 74 12 L 80 25 L 64 27",
@@ -109,17 +109,21 @@ const CRACKS = [
 ] as const;
 
 type RoundCues = {
-  /** Os quadros em que a cintura começa a afundar, em que acaba, em que a rocha treme e em que a faixa do prazo entra. */
+  /** Os quadros em que a cintura começa a afundar, em que acaba, em que a rocha treme, em que a faixa do prazo entra e em que entra o estudo da Terra de hoje. */
   readonly round: number;
   readonly settled: number;
   readonly quake: number;
   readonly span: number;
+  readonly study: number;
 };
 
 /**
  * A Terra em corte perde a largura do equador e fica mais redonda, com
- * rachaduras e tremores na rocha. O prazo não tem número: a faixa de baixo
- * diz o intervalo da fala e fica com a interrogação.
+ * rachaduras e tremores na rocha. O prazo desta Terra não tem número: a faixa
+ * de baixo fica com a interrogação, e o único número, o de 1967, é a escala de
+ * tempo com que a rocha da Terra de hoje se acomoda a um excesso de largura:
+ * vem rotulado como isso, e não como prazo da Terra parada.
+ * ("de milhares a milhões de anos" saiu: a fonte não sustentava a disputa.)
  */
 const RoundsOff: React.FC<{ readonly at: RoundCues }> = ({ at }) => {
   const frame = useCurrentFrame();
@@ -129,6 +133,7 @@ const RoundsOff: React.FC<{ readonly at: RoundCues }> = ({ at }) => {
   const tremor =
     shake(frame, at.round + 0.2 * fps, 0.6 * fps, 9, 5) + shake(frame, at.quake, 1.2 * fps, 16, 9);
   const spanned = ramp(frame, at.span, 0.6 * fps);
+  const studied = popOpacity(frame, at.study, 0.4 * fps);
   return (
     <Frame backdrop={<SpaceBackdrop light={[0.08, 0.1]} />}>
       <Push focus={[EARTH.cx, EARTH.cy]} to={1.05}>
@@ -169,7 +174,7 @@ const RoundsOff: React.FC<{ readonly at: RoundCues }> = ({ at }) => {
             <g opacity={spanned}>
               {/* A letra fica entre o selo (32) e a nota (56), como a da etiqueta "exagerado": a 56 a faixa disputava o plano com a Terra. */}
               <SvgText x={(SPAN.from + SPAN.to) / 2} y={SPAN.y} size={44}>
-                de milhares a milhões de anos
+                o prazo, nenhuma fonte que achamos diz
               </SvgText>
               <line
                 x1={SPAN.from}
@@ -182,9 +187,15 @@ const RoundsOff: React.FC<{ readonly at: RoundCues }> = ({ at }) => {
                 strokeDasharray="4 30"
                 opacity={0.7}
               />
-              <Question x={SPAN.to + 90} y={SPAN.y + 14} size={90} />
+              <Question x={SPAN.to + 290} y={SPAN.y + 14} size={90} />
             </g>
           ) : null}
+          {/* O que existe é de outro caso, e fica rotulado como tal. */}
+          <g opacity={studied}>
+            <SvgText x={(SPAN.from + SPAN.to) / 2} y={SPAN.y + 110} size={44}>
+              Terra de hoje: escala de 3 mil anos, não o prazo
+            </SvgText>
+          </g>
         </Svg>
         {/* Encostada no contorno do formato de hoje, que é o exagerado. */}
         <Place x={EARTH.cx - 400} y={EARTH.cy - 270}>
@@ -208,7 +219,8 @@ export const MapLimitScene: React.FC<SceneProps> = ({ scene, shots }) => (
           round: cue(scene, "perder") - shots[1].from,
           settled: cue(scene, "ajuste") - shots[1].from,
           quake: cue(scene, "terremotos") - shots[1].from,
-          span: cue(scene, "milhares") - shots[1].from,
+          span: cue(scene, "quanto") - shots[1].from,
+          study: cue(scene, "três") - shots[1].from,
         }}
       />
     </Shot>

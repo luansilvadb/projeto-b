@@ -119,7 +119,7 @@ const OnTheGround: React.FC<GroundProps> = ({ at }) => {
           </Svg>
           <Place x={1300} y={900}>
             <Pop at={0.5 * fps}>
-              <Tag on="dark">perto do equador</Tag>
+              <Tag on="dark">exemplo medido</Tag>
             </Pop>
           </Place>
         </Push>

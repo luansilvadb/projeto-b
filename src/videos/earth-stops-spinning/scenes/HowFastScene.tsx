@@ -225,8 +225,9 @@ const EastArrow: React.FC<{ readonly drawn: number }> = ({ drawn }) => {
 };
 
 type MeasuredProps = {
-  /** O quadro em que a fita sai, o do número dela, o em que o relógio entra, o em que o número dele aparece e o da seta de leste. */
+  /** O quadro em que a fita sai, o em que ela fecha a volta, o do número dela, o em que o relógio entra, o em que o número dele aparece e o da seta de leste. */
   readonly tapeAt: number;
+  readonly tapeEnd: number;
   readonly lengthAt: number;
   readonly clockAt: number;
   readonly hoursAt: number;
@@ -234,7 +235,7 @@ type MeasuredProps = {
 };
 
 /** A Terra de lado: a fita dá a volta no equador, o relógio quase completa a volta, e a seta diz para onde o solo vai. */
-const Measured: React.FC<MeasuredProps> = ({ tapeAt, lengthAt, clockAt, hoursAt, eastAt }) => {
+const Measured: React.FC<MeasuredProps> = ({ tapeAt, tapeEnd, lengthAt, clockAt, hoursAt, eastAt }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   return (
@@ -242,7 +243,7 @@ const Measured: React.FC<MeasuredProps> = ({ tapeAt, lengthAt, clockAt, hoursAt,
       <Push>
         <Svg>
           <Globe {...MEASURED} spin={frame / fps / 24} />
-          <Tape around={ramp(frame, tapeAt, 1.4 * fps)} />
+          <Tape around={linear(frame, tapeAt, Math.max(1, tapeEnd - tapeAt))} />
           <EastArrow drawn={settle(frame, eastAt, 0.5 * fps)} />
           {/* O relógio já está ali, zerado: o ponteiro só anda quando a fala chega na volta. */}
           <g transform={`translate(${CLOCK.x} ${CLOCK.y}) scale(${popScale(frame, clockAt, 0.3 * fps, 1, 1.06)})`}>
@@ -426,8 +427,10 @@ export const HowFastScene: React.FC<SceneProps> = ({ scene, shots }) => (
     </Shot>
     <Shot range={shots[1]} name="a volta e o tempo">
       <Measured
-        // A fita dá a volta enquanto a fala diz "a volta completa em torno da Terra", e o número cai na palavra dele.
-        tapeAt={cue(scene, "volta") - shots[1].from}
+        // A fita sai em "equador" e se desenrola a passo constante pela frase inteira ("a volta completa em
+        // torno da Terra"), fechando na palavra do número, que cai em "quarenta".
+        tapeAt={cue(scene, "equador") - shots[1].from}
+        tapeEnd={cue(scene, "quarenta") - shots[1].from}
         lengthAt={cue(scene, "quarenta") - shots[1].from}
         clockAt={cue(scene, "percorre") - shots[1].from}
         hoursAt={cue(scene, "dia") - shots[1].from}

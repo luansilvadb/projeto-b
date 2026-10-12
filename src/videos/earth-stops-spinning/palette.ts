@@ -147,7 +147,9 @@ export const vigilia: VigiliaColors = {
   lid: "#0e9692",
   line: "#073c54",
   cold: "#bafff3",
-  warm: "#ffe3a0",
+  // Sem borda quente: o crescente creme na lateral do ovo lia-se como uma aba solta.
+  // "none" apaga o caminho sem tocar o desenho compartilhado nem a barriga embaixo dele.
+  warm: "none",
   hand: "#fff4dc",
   hoof: "#fff4dc",
   hoofFar: "#f0dcb4",
@@ -167,7 +169,7 @@ export const explorer: VigiliaColors = {
   lid: "#E2543A",
   line: "#7A1E10",
   cold: "#FFD0C0",
-  warm: "#FFE3A0",
+  warm: "none",
   hand: "#3A2A5C",
 };
 

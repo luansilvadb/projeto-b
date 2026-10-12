@@ -125,24 +125,39 @@ const Speed: React.FC<{
 type TwoSpeedsProps = {
   /** Os quadros entre os quais a seta de escape cresce, e o do número dela. */
   readonly escape: readonly [from: number, to: number, label: number];
-  /** O quadro em que o toco do giro sai, o do número dele, e o quadro em que ele desiste de crescer. */
-  readonly spin: readonly [from: number, label: number, rest: number];
+  /** O quadro em que o toco do giro sai e o do número dele. */
+  readonly spin: readonly [from: number, label: number];
   /** O quadro em que a razão entre as duas aparece. */
   readonly timesAt: number;
 };
 
-// De quanto em quanto tempo o toco toma impulso, em segundos, e quanto recua para tomá-lo.
-const STRAIN = { seconds: 0.9, back: 0.3 } as const;
+// As investidas do toco: quantos km/s ele estica além da marca dele antes de voltar, e em quantos quadros (a ponta
+// esticada para antes da etiqueta "0,47 km/s", que fica à direita dela).
+// A segunda é menor: ele desiste. Com a ponta esticada o toco ganha corpo e lê-se como seta; a marca dele
+// (0,47) mal passa de uma ponta de seta, e encolher ou tremer nela não se via.
+const TRIES = [
+  { reach: 1.2, frames: 13 },
+  { reach: 0.7, frames: 13 },
+] as const;
+
+/** Quanto o toco passa da marca dele, em km/s, `since` quadros depois de começar a tentar. */
+const stretch = (since: number): number => {
+  let start = 0;
+  for (const { reach, frames } of TRIES) {
+    if (since >= start && since < start + frames) {
+      return reach * Math.sin((Math.PI * (since - start)) / frames);
+    }
+    start += frames;
+  }
+  return 0;
+};
 
 /** As duas velocidades na mesma régua: a de escape, comprida, e a do giro, um toco. */
 const TwoSpeeds: React.FC<TwoSpeedsProps> = ({ escape, spin, timesAt }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  // O toco tenta crescer: recua, investe, treme na marca dele e não passa. Em "equador", desiste.
-  const trying = frame >= spin[0] + 0.3 * fps && frame < spin[2];
-  const beat = trying ? Math.sin((((frame - spin[0]) / fps / STRAIN.seconds) % 1) * Math.PI * 2) : 0;
-  const stub = RULE.spin * settle(frame, spin[0], 0.3 * fps) * (1 - STRAIN.back * Math.max(0, beat));
-  const shiver = 4 * Math.max(0, -beat) * Math.sin(frame * 2.6);
+  // O toco tenta crescer: estica duas vezes, a segunda menos, e volta à marca dele. Desiste ao fim de "equador".
+  const stub = RULE.spin * settle(frame, spin[0], 0.3 * fps) + stretch(frame - (spin[0] + 0.3 * fps));
   const rows = { escape: 390, rule: 590, spin: 790 } as const;
   const colors = idea.lilac;
   return (
@@ -170,7 +185,7 @@ const TwoSpeeds: React.FC<TwoSpeedsProps> = ({ escape, spin, timesAt }) => {
           {/* O giro: a Terra rodando, e o toco que ele dá. */}
           <Globe cx={210} cy={rows.spin} r={96} spin={frame / fps / 6} shade={0.2} />
           <LatitudeRing cx={210} cy={rows.spin} r={96} lat={0} color={ink.accent} width={7} runner={frame / fps / 6} />
-          <Speed y={rows.spin + shiver} value={stub} color={ink.stop} />
+          <Speed y={rows.spin} value={stub} color={ink.stop} />
           <rect x={RULE.zero - 5} y={rows.escape - 90} width={10} height={rows.spin - rows.escape + 180} rx={5} fill={earth.shade} opacity={0.55} />
         </Svg>
       </Push>
@@ -189,7 +204,7 @@ const TwoSpeeds: React.FC<TwoSpeedsProps> = ({ escape, spin, timesAt }) => {
           </Tag>
         </Pop>
       </Place>
-      <Place x={RULE.zero + 330} y={rows.spin}>
+      <Place x={RULE.zero + 470} y={rows.spin}>
         <Pop at={spin[1]}>
           <Tag on="light" size="label">
             0,47 km/s
@@ -215,7 +230,6 @@ export const NotToSpaceScene: React.FC<SceneProps> = ({ scene, shots }) => (
         spin={[
           cue(scene, "solo", 2) - shots[1].from,
           cue(scene, "gira") - shots[1].from,
-          cue(scene, "equador") - shots[1].from,
         ]}
         timesAt={cue(scene, "vinte") - shots[1].from}
       />

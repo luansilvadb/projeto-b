@@ -293,6 +293,10 @@ type EarthCues = {
   readonly poles: number;
   readonly keeps: number;
   readonly water: number;
+  /** Os quadros em que a distância do polo é marcada, a rocha é apontada e ela termina de ceder. */
+  readonly ruler: number;
+  readonly rock: number;
+  readonly soft: number;
 };
 
 /**
@@ -316,6 +320,11 @@ const DrumBecomesEarth: React.FC<{ readonly at: EarthCues; readonly from: number
   // As setas pulsam: a gravidade puxando, e depois a tentativa de escapar empurrando.
   const beat = 10 * wave(seconds, 1.1);
   const sea = mixSea(NO_SEA, SEA.even, ramp(frame, at.water, 0.8 * fps));
+  // A rocha também: a cintura dela, além do círculo do polo, acende e vai sendo coberta aos poucos,
+  // no ritmo lento de quem cede ("num tempo muito longo"), da palavra "rocha" até "mole".
+  const ruler = ramp(frame, at.ruler, 0.4 * fps);
+  const yielding = ramp(frame, at.rock, Math.max(fps, at.soft - at.rock));
+  const reach = SIDE.r * (1 + CUT_BULGE);
   return (
     <Frame backdrop={<SpaceBackdrop light={[0.08, 0.1]} />}>
       {/* Continua do enquadramento em que a máquina ficou, e chega mais perto. */}
@@ -379,6 +388,32 @@ const DrumBecomesEarth: React.FC<{ readonly at: EarthCues; readonly from: number
                 // Quando a fala diz o que ela mantém, as setas empurram mais.
                 beat={beat * (0.5 + ramp(frame, at.keeps, 0.4 * fps))}
               />
+              {/* A mesma distância do polo em toda parte, em tracejado: a régua de "afastada do centro". */}
+              <circle
+                cx={SIDE.cx}
+                cy={SIDE.cy}
+                r={SIDE.r}
+                fill="none"
+                stroke={ink.paper}
+                strokeWidth={6}
+                strokeDasharray="6 16"
+                strokeLinecap="round"
+                opacity={0.7 * ruler}
+              />
+              {/* O pedaço da rocha que passa da régua, nas duas pontas da cintura. */}
+              {([-1, 1] as const).map((end) => (
+                <line
+                  key={end}
+                  x1={SIDE.cx + end * SIDE.r}
+                  y1={SIDE.cy}
+                  x2={SIDE.cx + end * (SIDE.r + (reach - SIDE.r) * yielding)}
+                  y2={SIDE.cy}
+                  stroke={ink.accent}
+                  strokeWidth={22}
+                  strokeLinecap="round"
+                  opacity={yielding > 0 ? 1 : 0}
+                />
+              ))}
               {/* Em cima dos polos, nenhuma seta: a marca leva o olho até lá para ver que não há. */}
               {([-1, 1] as const).map((pole) => (
                 <circle
@@ -433,6 +468,9 @@ export const WaterPiledScene: React.FC<SceneProps> = ({ scene, shots }) => {
             poles: planet("polos"),
             keeps: planet("segura"),
             water: planet("água"),
+            ruler: planet("afastada"),
+            rock: planet("rocha"),
+            soft: planet("mole"),
           }}
         />
       </Shot>

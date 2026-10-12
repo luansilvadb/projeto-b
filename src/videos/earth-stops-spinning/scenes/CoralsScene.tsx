@@ -3,7 +3,7 @@ import { useCurrentFrame, useVideoConfig } from "remotion";
 import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop, popOpacity, popScale } from "../../../components/Pop";
-import { clamp01, cue, mix, ramp, settle } from "../../../components/timing";
+import { clamp01, cue, linear, mix, ramp, settle } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { blockBrake, ink, sea, space, vigilia } from "../palette";
@@ -134,8 +134,8 @@ const Repeats: React.FC = () => {
 const PASSES = 6;
 const START_BANDS = 13;
 
-/** Um recife antigo: um coral cresce uma linha fina a cada passagem do Sol. */
-const Reef: React.FC<{ readonly tagAt: number }> = ({ tagAt }) => {
+/** Um recife: um coral cresce uma linha fina a cada passagem do Sol. A idade só entra na fala depois, com o corte. */
+const Reef: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const length = useShotLength();
@@ -170,11 +170,6 @@ const Reef: React.FC<{ readonly tagAt: number }> = ({ tagAt }) => {
           <rect width={WIDTH} height={HEIGHT} fill={sea.deep} opacity={0.26 * (1 - light)} />
           <Coral x={760} y={925} bands={START_BANDS + Math.floor(day) + ramp(pass, 0.3, 0.35)} seconds={seconds} />
         </Svg>
-        <Place x={1380} y={470}>
-          <Pop at={tagAt}>
-            <Tag on="light">há 400 milhões de anos</Tag>
-          </Pop>
-        </Place>
       </Push>
     </Frame>
   );
@@ -254,6 +249,10 @@ const YearBracket: React.FC<{ readonly x: number; readonly year: readonly [numbe
 );
 
 type CountingProps = {
+  /** O quadro em que a fala nomeia o ano de crescimento: a faixa ganha o nome. */
+  readonly yearAt: number;
+  /** O quadro em que a fala diz a idade dos corais antigos. */
+  readonly agedAt: number;
   /** A lupa começa a descer pela faixa; chega ao fim dela. */
   readonly sweep: readonly [number, number];
   /** O coral de hoje entra. */
@@ -261,11 +260,13 @@ type CountingProps = {
 };
 
 /** O coral em corte: a mão da Vigília, com uma lupa, conta as linhas dentro da faixa de um ano. */
-const Counting: React.FC<CountingProps> = ({ sweep, todayAt }) => {
+const Counting: React.FC<CountingProps> = ({ yearAt, agedAt, sweep, todayAt }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const id = useId();
-  const counted = ramp(frame, sweep[0], Math.max(sweep[1] - sweep[0], fps));
+  // O número sobe a passo constante e só chega a 400 no meio da palavra "quatrocentas" (a deixa vem
+  // 4 quadros antes dela): com a curva suave ele marcava 400 meio segundo antes de a fala dizer.
+  const counted = linear(frame, sweep[0], Math.max(sweep[1] + 0.5 * fps - sweep[0], fps));
   const lens = { x: OLD.x + OLD.w / 2, y: mix(OLD.year[0] + 50, OLD.year[1] - 50, counted) };
   const reach = LENS.r * Math.SQRT1_2;
   const hand = { x: lens.x - reach - 92, y: lens.y + reach + 92 };
@@ -335,12 +336,18 @@ const Counting: React.FC<CountingProps> = ({ sweep, todayAt }) => {
           </Svg>
           <Place x={OLD.x + OLD.w + 80} y={470} style={{ translate: "0 -50%" }}>
             <Pop at={sweep[0]}>
-              <Tag on="light">{counted < 1 ? Math.round(400 * counted) : "cerca de 400 dias"}</Tag>
+              <Tag on="light">{counted < 1 ? Math.round(400 * counted) : "cerca de 400 linhas"}</Tag>
+            </Pop>
+          </Place>
+          {/* A idade chega com a palavra: o corte da faixa é o do coral antigo. */}
+          <Place x={OLD.x + OLD.w + 80} y={350} style={{ translate: "0 -50%" }}>
+            <Pop at={agedAt}>
+              <Tag on="light">há 400 milhões de anos</Tag>
             </Pop>
           </Place>
           {/* O nome da faixa entre os dois riscos: é ela que diz que o coral também marca o ano. */}
           <Place x={OLD.x + OLD.w + 80} y={590} style={{ translate: "0 -50%" }}>
-            <Pop at={0.3 * fps}>
+            <Pop at={yearAt}>
               <Tag on="note" size="seal">
                 1 ano
               </Tag>
@@ -355,7 +362,7 @@ const Counting: React.FC<CountingProps> = ({ sweep, todayAt }) => {
           </Place>
           <Place x={NOW.x - 80} y={610} style={{ translate: "-100% -50%" }}>
             <Pop at={todayAt + 0.15 * fps}>
-              <Tag on="light">365</Tag>
+              <Tag on="light">365 linhas</Tag>
             </Pop>
           </Place>
         </Push>
@@ -405,10 +412,12 @@ export const CoralsScene: React.FC<SceneProps> = ({ scene, shots }) => (
       <Repeats />
     </Shot>
     <Shot range={shots[1]} name="o recife antigo">
-      <Reef tagAt={cue(scene, "centenas") - shots[1].from} />
+      <Reef />
     </Shot>
     <Shot range={shots[2]} name="contando as linhas">
       <Counting
+        yearAt={cue(scene, "ano") - shots[2].from}
+        agedAt={cue(scene, "centenas") - shots[2].from}
         // A contagem corre enquanto a fala vai de "cada ano de crescimento" até o número.
         sweep={[cue(scene, "ano") - shots[2].from, cue(scene, "quatrocentas") - shots[2].from]}
         todayAt={cue(scene, "trezentas") - shots[2].from}

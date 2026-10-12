@@ -347,7 +347,7 @@ const TheRecord: React.FC<RecordProps> = ({ barAt, recordAt, nameAt }) => {
           />
         </Svg>
       </Push>
-      <SourceSeal>Courtney et al., 2012</SourceSeal>
+      <SourceSeal>WMO; Courtney et al., 2012</SourceSeal>
     </Frame>
   );
 };
@@ -372,7 +372,7 @@ const FourTimes: React.FC<{ readonly growAt: number }> = ({ growAt }) => {
         </Svg>
       </Arrive>
       {/* A barra do recorde continua à vista: o selo dela também. */}
-      <SourceSeal>Courtney et al., 2012</SourceSeal>
+      <SourceSeal>WMO; Courtney et al., 2012</SourceSeal>
     </Frame>
   );
 };

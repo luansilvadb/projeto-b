@@ -26,7 +26,7 @@ Calmo, de quem conta. A energia sobe só na parada (`the-rule` 1 a `you-too`) e 
 ## how-fast
 
 - 0: em "velocidade" o velocímetro apagado entra na parede, e ela se vira para ele.
-- 1: em "volta" a fita dá a volta no equador em 1,4 s, e "40.000 km" entra em "quarenta"; em "percorre" o ponteiro do relógio varre e para antes de fechar; "quase 24 h" em "dia"; em "solo", a seta curva sobre o equador, e a etiqueta "leste" 0,5 s depois, um nada antes da palavra (fica 1,5 s na tela). Som: a fita correndo.
+- 1: em "equador" a fita sai e se desenrola a passo constante, pela frase inteira, fechando a volta em "quarenta", quando "40.000 km" entra; em "percorre" o ponteiro do relógio varre e para antes de fechar; "quase 24 h" em "dia"; em "solo", a seta curva sobre o equador, e a etiqueta "leste" 0,5 s depois, um nada antes da palavra (fica 1,5 s na tela). Som: a fita correndo.
 - 2: o boneco dá a volta com a Terra; no segundo "dá" o velocímetro acende e sobe até "1.670 km/h". Em "carro" o carrinho vermelho entra no ponto de largada, com "100 km/h", e os dois partem juntos: a linha fica branca por onde o boneco passou e vermelha por onde o carro passou. De "levaria" a "dezessete" o contador sobe de "1 dia" a "quase 17 dias". Som: o ponteiro subindo.
 
 ## by-latitude
@@ -37,7 +37,7 @@ Calmo, de quem conta. A energia sobe só na parada (`the-rule` 1 a `you-too`) e 
 
 ## feel-nothing
 
-- 0: quatro setas iguais para leste entram em "solo", "ar", "mar" e "casa"; em "mesma" o velocímetro pulsa; em "sem" ela olha o café, liso. Em "ônibus" a casa sobe, ganha rodas, cabine e estrada, e o quadro abre; "comparação" entra 0,4 s depois. Em "café" ela confere o café de novo; em "freia" ergue os olhos e olha para a frente.
+- 0: em "sente" ela toma um gole de café, tranquila (sobe em 0,5 s, fica, desce), e fica parada até "solo": é o "não sente nada". Quatro setas iguais para leste entram em "solo", "ar", "mar" e "casa"; em "mesma" o velocímetro pulsa; em "sem" ela olha o café, liso. Em "ônibus" a casa ganha rodas (0,9 s), cabine e estrada, o quadro abre em 1,2 s e a estrada pega velocidade em 1,2 s; "comparação" entra quando o quadro termina de abrir. Em "café" ela confere o café de novo; em "freia" ergue os olhos e olha para a frente.
 
 ## the-rule
 
@@ -54,7 +54,7 @@ Calmo, de quem conta. A energia sobe só na parada (`the-rule` 1 a `you-too`) e 
 ## not-to-space
 
 - 0: ela sai numa curva baixa, rente ao chão, e o caminho fica pontilhado; a seta para cima entra em "cima" e é riscada em "espaço".
-- 1: a seta de escape cresce de "escapar" até "preciso" ("11 km/s" em "gravidade"); "mais de 20 vezes" em "vinte"; o toco da rotação sai no segundo "solo" ("0,47 km/s" em "gira") e investe, treme e não passa da marca dele até "equador".
+- 1: a seta de escape cresce de "escapar" até "preciso" ("11 km/s" em "gravidade"); "mais de 20 vezes" em "vinte"; o toco da rotação sai no segundo "solo" ("0,47 km/s" em "gira") e estica duas vezes além da marca dele, a segunda menor (1,2 e 0,7 km/s, 13 quadros cada, a primeira 0,3 s depois da saída), e volta a ela: desiste, com a ponta parando antes da etiqueta.
 
 ## wind
 
@@ -64,7 +64,7 @@ Calmo, de quem conta. A energia sobe só na parada (`the-rule` 1 a `you-too`) e 
 
 ## sea-moves
 
-- 0: o oceano desliza para leste sobre o fundo parado e sobe na borda do continente; as setas entram em "leste"; em "vento", "1.670 km/h" pequeno, andando com a água.
+- 0: o oceano desliza para leste sobre o fundo parado e sobe na borda do continente; as setas entram em "leste"; em "velocidade", "1.670 km/h" pequeno, andando com a água (4 s na tela antes do corte, e não 0,9 s).
 - 1: a água avança pela areia e chega ao lugar da régua em 1,2 s; em "onde" a régua cresce do pé, com a escala em branco, e a interrogação entra 0,3 s depois; as ondas seguem subindo e descendo nela até o corte.
 
 ## the-pole
@@ -76,7 +76,7 @@ Calmo, de quem conta. A energia sobe só na parada (`the-rule` 1 a `you-too`) e 
 ## after-the-dust
 
 - 0: a Terra parada sob o véu de poeira, luz vermelha, a Vigília olhando o estrago. Ela põe as mãos na haste e, em "repetir", a alavanca vai a ligado em 0,5 s: a poeira some, a luz fica verde, a Terra retoma o giro; "de novo" 0,5 s depois. Som: a alavanca.
-- 1: de "perdendo" em diante a alavanca desce em cinco dentes e a Terra freia sem tranco; "aos poucos, em décadas" em "décadas"; no terceiro "para" a alavanca chega a desligado e a Terra para. Em "mar" a câmera aproxima, o contorno antigo fica em tracejado, a terra seca muda em 2,6 s e duas setas se desenham do equador para os polos. Som: os dentes da alavanca.
+- 1: de "perdendo" em diante a alavanca desce em cinco dentes e a Terra freia sem tranco; "aos poucos, em décadas" em "décadas"; no terceiro "para" a alavanca chega a desligado e a Terra para. Em "mar" a câmera aproxima e o contorno antigo fica em tracejado. A terra seca muda de contorno e duas setas se desenham do equador para os polos em passo constante, de "sai" (23,8 s) até 0,5 s depois de "polos" (27,2 s da cena), junto com a frase; a imagem não fica parada até o corte. Som: os dentes da alavanca.
 
 ## the-bulge
 
@@ -86,7 +86,7 @@ Calmo, de quem conta. A energia sobe só na parada (`the-rule` 1 a `you-too`) e 
 
 - 0: a Terra em corte, larga no equador, com "exagerado"; a seta do giro se desenha acima do polo de "foi" a "rotação".
 - 1: em "depressa" o tambor acelera e a roupa vai para a parede. Em "tenta", câmera lenta: as outras peças cedem, e a reta tracejada sai da peça coral e atravessa a parede; em "parede" o trecho da parede à frente dela acende; em "espremida" o tambor volta a correr, a roupa se achata, e a Vigília se espanta. Som: a centrífuga.
-- 2: o tambor funde na Terra vista do polo, e a peça vira um ponto no equador, com a reta. Em "gravidade", oito setas apontam para dentro, no lugar da parede. Em "equador", fusão de 0,35 s para o corte de lado, com as setas tracejadas para longe do eixo e "exagerado"; em "nula", uma marca sem seta em cada polo; em "mantém" as setas pulsam; em "água" o mar aparece, com a mesma espessura em toda a volta.
+- 2: o tambor funde na Terra vista do polo, e a peça vira um ponto no equador, com a reta. Em "gravidade", oito setas apontam para dentro, no lugar da parede. Em "equador", fusão de 0,35 s para o corte de lado, com as setas tracejadas para longe do eixo e "exagerado"; em "nula", uma marca sem seta em cada polo; em "mantém" as setas pulsam; em "água" o mar aparece, com a mesma espessura em toda a volta; em "afastada" entra o círculo tracejado do polo; em "rocha" a cintura da rocha, além do círculo, acende devagar até "mole": a rocha também está mais para fora.
 
 ## water-leaves
 
@@ -106,7 +106,7 @@ Calmo, de quem conta. A energia sobe só na parada (`the-rule` 1 a `you-too`) e 
 ## map-limit
 
 - 0: o contorno do mapa fica tracejado em "mapa", e o carimbo "provisório" bate em "vale" e quica uma vez. Som: o carimbo.
-- 1: de "perder" a "ajuste" a largura do equador afunda, com o contorno de hoje em tracejado e as rachaduras crescendo; o tremor maior em "terremotos"; em "milhares", a faixa "de milhares a milhões de anos", com a linha pontilhada e a interrogação.
+- 1: de "perder" a "ajuste" a largura do equador afunda, com o contorno de hoje em tracejado e as rachaduras crescendo; o tremor maior em "terremotos"; em "quanto", a faixa "o prazo, nenhuma fonte que achamos diz", com a linha pontilhada e a interrogação; em "três", a nota "Terra de hoje: escala de 3 mil anos, não o prazo".
 - 2: o mapa inteiro de novo, com "simulação", "provisório" e o selo; a câmera se afasta devagar. No segundo de silêncio, só a câmera.
 
 ## year-long-day
@@ -123,9 +123,9 @@ Calmo, de quem conta. A energia sobe só na parada (`the-rule` 1 a `you-too`) e 
 
 ## not-the-moon
 
-- 0: a Lua já abre com o termômetro e os dois números; em "ar" a camada de ar surge só na Terra; em "nenhuma" os dois termômetros vazios da Terra crescem do pé; as interrogações em "número".
+- 0: a Lua já abre com o termômetro e os dois números; em "ar" a camada de ar surge só na Terra; em "nenhuma" os dois termômetros vazios da Terra crescem do pé; as interrogações em "temperatura".
 - 1: a câmera leva a Terra ao centro; em "esquentar" o ar do lado claro fica laranja e entra "mais quente que hoje"; em "esfriar" o do lado escuro fica azul e entra "mais frio que hoje".
-- 2: a fileira de quatro globos já vem entrando no corte; em "mostram" o de 128 dias cresce, e os vizinhos saem; em "contraste" o Sol entra pela esquerda e o lado escuro aparece; no segundo "ar" o traço quente sobe e atravessa por cima até "escuro", desce, e 0,3 s depois o frio volta por baixo, em 0,7 s, fechando o laço antes das nuvens; em "nuvens" o escudo incha na borda virada para o Sol; em "sombra" a sombra cai atrás dele.
+- 2: a fileira de quatro globos já vem entrando no corte; em "mostram" o de 128 dias cresce, e os vizinhos saem; em "contraste" o Sol entra pela esquerda e o lado escuro aparece; no segundo "ar" o traço quente sobe e atravessa por cima até "escuro", desce, e 0,3 s depois o frio volta por baixo, em 0,7 s, fechando o laço antes das nuvens; em "nuvens" o escudo começa a inchar, do meio para as pontas, e termina perto de "sombra"; em "sombra" a sombra se espalha atrás dele em cerca de 1,8 s. Na última frase só a Lua volta à direita, em "Lua" (a terceira), com halo de dia e de noite, sem número e com a etiqueta "Lua: sem ar"; o globo não ganha halo.
 
 ## why-not-stop
 
@@ -135,19 +135,19 @@ Calmo, de quem conta. A energia sobe só na parada (`the-rule` 1 a `you-too`) e 
 
 - 0: o outro planeta espia pelo canto e avança em "outro", crescendo.
 - 1: o outro planeta continua vindo pelo mesmo canto e encosta na Terra em "batida": riscos de impacto, um tranco, e a Terra tomba para longe da batida e passa a girar em outro eixo, marcado em tracejado; o planeta recua e vira contorno tracejado. Som: a batida.
-- 2: ela ergue os olhos da xícara, que para no ar, enquanto o planeta enche o vidro. No silêncio, respira e pisca.
+- 2: em "girando" ela ergue os olhos da xícara, que segura na mão, enquanto o planeta enche o vidro. No silêncio, respira e pisca.
 
 ## the-moon-brake
 
 - 0: a Lua chega pela direita e está no lugar em "Lua".
 - 1: o mar sobe em dois calombos; em "atrito" cada um vira sapata, com a haste saindo da Lua e faíscas nas pontas. Som: o freio raspando.
-- 2: na lupa, em "menos", a lasca vem de fora e encosta depois do risco do fim; a medida entra em "milésimos".
+- 2: na lupa, em "fica", a lasca vem de fora e encosta depois do risco do fim; a medida entra em "milésimos".
 
 ## corals
 
 - 0: as lascas partem do relógio em arco e pousam numa fila que diminui até sumir.
-- 1: o Sol cruza o recife seis vezes, e o coral ganha uma linha por passagem; a etiqueta entra em "centenas".
-- 2: a mão com a lupa desce pela faixa "1 ano" de "ano" a "quatrocentas", enquanto a etiqueta conta até "cerca de 400 dias"; em "trezentas" a câmera abre e entra o coral de hoje, "365".
+- 1: o Sol cruza o recife seis vezes, e o coral ganha uma linha por passagem; sem etiqueta de idade (a fala ainda não a disse).
+- 2: o corte abre em "contar", com a mão e a lupa; a faixa ganha "1 ano" em "ano"; em "centenas" entra "há 400 milhões de anos"; a lupa desce pela faixa a passo constante de "ano" até o meio de "quatrocentas" (0,5 s depois da deixa), e a etiqueta conta junto e só marca 400 aí, "cerca de 400 linhas"; em "trezentas" a câmera abre e entra o coral de hoje, "365 linhas".
 - 3: os dois ponteiros andam juntos, uma volta só; o do coral para em 22 h, o de hoje fecha 24 h, e os dois ficam assim até o corte.
 
 ## never
@@ -159,7 +159,7 @@ Calmo, de quem conta. A energia sobe só na parada (`the-rule` 1 a `you-too`) e 
 ## still-spinning
 
 - 0: em "continuar" ela tira as mãos da haste, bate uma na outra, recua um passo e olha a Terra girar, com um aceno de cabeça.
-- 1: o anel do mar acende no equador em "mar"; em "alterna" a noite aparece, uma fatia a oeste, com a casinha dentro; em "noite" a casinha está em cima da linha e sai para o claro; em "leva" a seta para leste; "mais de 1.000 km/h" em "mais".
+- 1: o mar acende no equador em "mar", como uma cinta larga (80 px, recortada no disco) e não um fio; em "alterna" a noite aparece, uma fatia a oeste, com a casinha dentro; em "noite" a casinha está em cima da linha e sai para o claro; em "leva" a seta para leste; "mais de 1.000 km/h" em "mais".
 
 ## only-clue
 

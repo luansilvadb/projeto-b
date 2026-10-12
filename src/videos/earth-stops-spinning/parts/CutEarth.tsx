@@ -103,6 +103,23 @@ export const CutEarth: React.FC<CutEarthProps> = ({
   const reach = sea ? ((1 + bulge) / (1 + bulge + sea.equator)) ** 2 : 1;
   const dry =
     sea && sea.equator < 0 ? r * Math.sqrt((1 - reach) / (1 / (1 + sea.pole) ** 2 - reach)) : 0;
+  // A linha d'água do fundo seco, na metade vista de fora: a mesma latitude, com a ondulação da margem.
+  const shore = (side: -1 | 1, edge: number, closed = false) => {
+    const steps = 40;
+    const point = (index: number, sign: 1 | -1) => {
+      const x = cx - rx + (rx * index) / steps;
+      const y = cy + sign * edge + 0.035 * r * Math.sin(index * 0.9 + (sign === 1 ? 1.7 : 0));
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    };
+    const sign = side === 1 ? 1 : -1;
+    const line = Array.from({ length: steps + 1 }, (_, index) => `${index === 0 ? "M" : "L"}${point(index, sign)}`).join(" ");
+    if (!closed) {
+      return line;
+    }
+    const back = Array.from({ length: steps + 1 }, (_, index) => `L${point(steps - index, 1)}`).join(" ");
+    const top = Array.from({ length: steps + 1 }, (_, index) => `${index === 0 ? "M" : "L"}${point(index, -1)}`).join(" ");
+    return `${top} ${back} Z`;
+  };
   const layer = (scale: number, fill: string) => (
     <ellipse cx={cx} cy={cy} rx={rx * scale} ry={r * scale} fill={fill} />
   );
@@ -132,15 +149,18 @@ export const CutEarth: React.FC<CutEarthProps> = ({
         <Globe cx={cx} cy={cy} r={r} spin={spin} bulge={bulge} shade={0.2} />
         {/* Na metade vista de fora, a faixa do equador que secou: o fundo do mar, na cor da rocha. */}
         {dry > 0 ? (
-          <rect
-            x={cx - rx}
-            y={cy - dry}
-            width={rx}
-            height={dry * 2}
-            fill={earth.rock}
-            opacity={0.88}
-            clipPath={`url(#${id}-rock)`}
-          />
+          <g clipPath={`url(#${id}-rock)`}>
+            <path d={shore(-1, dry, true)} fill={earth.rock} opacity={0.88} />
+            {/* A orla de água rasa: a linha d'água não é régua, vai e volta, e o fundo seco não acaba num corte. */}
+            <path
+              d={`${shore(-1, dry)} ${shore(1, dry)}`}
+              fill="none"
+              stroke={earth.waterLight}
+              strokeWidth={9}
+              strokeLinecap="round"
+              opacity={0.75}
+            />
+          </g>
         ) : null}
       </g>
       <g clipPath={`url(#${id}-cut)`}>

@@ -2,7 +2,7 @@ import { random, useCurrentFrame, useVideoConfig } from "remotion";
 import { wave } from "../../../components/Idle";
 import { Place } from "../../../components/Place";
 import { Pop } from "../../../components/Pop";
-import { clamp01, cue, mix, ramp } from "../../../components/timing";
+import { clamp01, cue, linear, mix, ramp } from "../../../components/timing";
 import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot } from "../../../video/Shot";
 import { earth, ink, storm } from "../palette";
@@ -189,16 +189,19 @@ type SlowProps = {
   /** Os quadros em que ela começa a baixar a alavanca e em que a Terra para. */
   readonly easeAt: number;
   readonly stopAt: number;
-  /** Os quadros da etiqueta e do mar. */
+  /** Os quadros da etiqueta e do mar: a câmera chega e o contorno antigo fica à vista. */
   readonly tagAt: number;
   readonly seaAt: number;
+  /** Os quadros em que a água começa a sair do equador ("sai") e em que ela chega aos polos ("polos"). */
+  readonly leaveAt: number;
+  readonly polesAt: number;
 };
 
 /**
  * O segundo experimento: a alavanca desce dente por dente, e a Terra perde o giro por igual, sem
  * poeira e sem tranco, até parar. Só então o mar começa a sair do contorno antigo.
  */
-const SlowDown: React.FC<SlowProps> = ({ spin, easeAt, stopAt, tagAt, seaAt }) => {
+const SlowDown: React.FC<SlowProps> = ({ spin, easeAt, stopAt, tagAt, seaAt, leaveAt, polesAt }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   // Cada dente é um movimento curto e uma espera: a mão é cuidadosa, e a Terra não sente o degrau.
@@ -209,10 +212,13 @@ const SlowDown: React.FC<SlowProps> = ({ spin, easeAt, stopAt, tagAt, seaAt }) =
       0,
     ) / NOTCHES;
   const stopped = ramp(frame, stopAt, 0.5 * fps);
-  const moved = ramp(frame, seaAt, 2.6 * fps);
+  // O deslocamento corre junto com a frase: sai do equador em "sai" e termina logo depois de
+  // "polos", em vez de acabar antes de a fala chegar nele e deixar a imagem parada até o corte.
+  const run = polesAt + 0.5 * fps - leaveAt;
+  const moved = linear(frame, leaveAt, run);
   // A câmera chega perto da Terra quando o assunto passa a ser o mar.
   const close = ramp(frame, seaAt - 0.4 * fps, 1.4 * fps);
-  const flow = ramp(frame, seaAt + 0.3 * fps, 1.2 * fps);
+  const flow = linear(frame, leaveAt, run);
   const globe = STAGE.earth;
   const k = globe.r / 100;
   // O vão de mar no meio do disco, onde as setas cabem sem cobrir terra.
@@ -285,6 +291,8 @@ export const AfterTheDustScene: React.FC<SceneProps> = ({ scene, shots }) => {
           stopAt={stopAt}
           tagAt={cue(scene, "décadas") - second.from}
           seaAt={cue(scene, "mar") - second.from}
+          leaveAt={cue(scene, "sai") - second.from}
+          polesAt={cue(scene, "polos") - second.from}
         />
       </Shot>
     </>
