@@ -204,12 +204,6 @@ describe("parseScript, planos", () => {
       parseShots([validShot, { ...validShot, cue: "A" }]),
     ).toThrowError(/plano 2: a deixa "A" precisa vir depois/);
   });
-
-  it("avisa que o campo antigo deu lugar aos planos", () => {
-    expect(() =>
-      parseShots(undefined, { visual: "Sol grande à esquerda." }),
-    ).toThrowError(/cena 1 \(sun\): "visual" deu lugar a "shots"/);
-  });
 });
 
 describe("o som no roteiro", () => {

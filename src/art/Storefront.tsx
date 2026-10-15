@@ -24,21 +24,14 @@ export type StorefrontColors = {
   readonly lampGlow: string | null;
 };
 
-/** O que a placa mostra: a lua do sono, ou o bicho dono da loja. */
-type StorefrontSign =
-  "moon" | "trunk" | "fin" | "wing" | "bell" | "mouse";
-
 type StorefrontProps = {
   /** Largura da loja, de uma ponta à outra do toldo, em pixels do quadro. */
   readonly width: number;
   readonly colors: StorefrontColors;
   /** Quanto a porta de enrolar desceu, de 0 (aberta) a 1 (fechada). */
   readonly shutter?: number;
-  readonly sign?: StorefrontSign;
   /** Quanto a lâmpada está acesa, de 0 a 1; só faz diferença quando as cores têm brilho de lâmpada. */
   readonly lamp?: number;
-  /** A porta de enrolar desce só sobre a vitrine: metade da loja fecha, a porta fica. */
-  readonly half?: boolean;
   /** A porta aberta: um vão escuro com o balcão do caixa, onde alguém pode ficar. */
   readonly doorOpen?: boolean;
   /**
@@ -51,63 +44,10 @@ type StorefrontProps = {
 // A loja cabe nesta caixa, com a calçada no meio da base.
 const VIEW = { width: 520, height: 510 };
 const OPENING = { x: -206, y: -306, width: 412, height: 270 };
-/** A vitrine, dentro da abertura: a metade que fecha quando só metade da loja fecha. */
-const WINDOW = { x: -206, y: -306, width: 252, height: 214 };
 /** A porta, dentro da abertura: onde o funcionário fica quando ela está aberta. */
 const DOOR = { x: 74, y: -306, width: 132, height: 270 };
 const STRIPES = 8;
 const SLAT = 18;
-
-const SIGNS: Record<StorefrontSign, React.ReactNode> = {
-  moon: (
-    <>
-      <path d="M-6,-486 A26,26 0 1 0 22,-448 A20,20 0 1 1 -6,-486 Z" />
-      <circle cx={-52} cy={-470} r={5} />
-      <circle cx={60} cy={-452} r={4} />
-      <circle cx={48} cy={-478} r={3} />
-    </>
-  ),
-  // Tromba de elefante, erguida.
-  trunk: (
-    <path d="M-34,-440 C-36,-470 -14,-490 12,-486 C34,-482 44,-462 34,-448 C28,-440 16,-442 14,-452 C12,-462 22,-466 22,-466 C6,-474 -10,-462 -8,-440 Z" />
-  ),
-  // Barbatana de golfinho, cortando a água.
-  fin: (
-    <>
-      <path d="M-30,-442 C-16,-476 8,-490 30,-490 C20,-474 20,-456 32,-442 Z" />
-      <path
-        d="M-58,-436 Q-44,-446 -30,-436 Q-16,-426 -2,-436 Q12,-446 26,-436 Q40,-426 54,-436"
-        fill="none"
-        strokeWidth={6}
-        strokeLinecap="round"
-      />
-    </>
-  ),
-  // Asa longa de fragata.
-  wing: (
-    <path d="M-60,-452 C-40,-478 -20,-482 0,-462 C20,-482 40,-478 60,-452 C40,-464 22,-462 6,-446 L0,-434 L-6,-446 C-22,-462 -40,-464 -60,-452 Z" />
-  ),
-  // O sino da água-viva, de lado, com os braços para cima.
-  bell: (
-    <>
-      <path d="M-40,-448 C-36,-432 36,-432 40,-448 Z" />
-      <path
-        d="M-24,-452 L-30,-484 M-8,-452 L-10,-490 M8,-452 L10,-490 M24,-452 L30,-484"
-        fill="none"
-        strokeWidth={7}
-        strokeLinecap="round"
-      />
-    </>
-  ),
-  // Cabeça de camundongo: as duas orelhas redondas.
-  mouse: (
-    <>
-      <circle cx={-28} cy={-478} r={17} />
-      <circle cx={28} cy={-478} r={17} />
-      <circle cy={-454} r={26} />
-    </>
-  ),
-};
 
 /**
  * A loja da analogia do sono: uma loja de bairro vista de frente, com toldo
@@ -118,16 +58,14 @@ export const Storefront: React.FC<StorefrontProps> = ({
   width,
   colors,
   shutter = 0,
-  sign = "moon",
   lamp = 1,
-  half = false,
   doorOpen = false,
   awning,
 }) => {
   const id = useId();
   const scale = width / VIEW.width;
   const shutterHeight = OPENING.height * shutter;
-  const shutterWidth = half ? WINDOW.width : OPENING.width;
+  const shutterWidth = OPENING.width;
 
   return (
     <svg
@@ -332,7 +270,10 @@ export const Storefront: React.FC<StorefrontProps> = ({
         fill={colors.sign}
       />
       <g fill={colors.signIcon} stroke={colors.signIcon} strokeWidth={0}>
-        {SIGNS[sign]}
+        <path d="M-6,-486 A26,26 0 1 0 22,-448 A20,20 0 1 1 -6,-486 Z" />
+        <circle cx={-52} cy={-470} r={5} />
+        <circle cx={60} cy={-452} r={4} />
+        <circle cx={48} cy={-478} r={3} />
       </g>
 
       {colors.lampGlow && lamp > 0 ? (

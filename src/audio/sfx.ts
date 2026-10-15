@@ -1,4 +1,5 @@
 import type { Script, SfxSpec } from "../narration/script";
+import { gainBelowVoice } from "./ducking";
 import {
   cueFrame,
   shotRanges,
@@ -87,7 +88,6 @@ export const sfxEvents = (
       name: effect.name,
       file,
       frame: Math.max(0, scene.from + anchor + offset),
-      // Nunca amplifica: um som gravado baixo demais fica como está.
-      volume: Math.min(1, 10 ** ((voiceLufs - below - peakLufs) / 20)),
+      volume: gainBelowVoice(voiceLufs, peakLufs, below),
     };
   });

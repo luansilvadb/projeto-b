@@ -19,7 +19,10 @@ Não há processo de propostas nem de validação formal: uma mudança que alter
 
 | Página | Conteúdo |
 | ------ | -------- |
-| [diretrizes/tema.md](diretrizes/tema.md) | Escolha do tema do canal pela procura, filtro do nicho, medição e registro em `pauta.md` |
+| [nicho.md](../.agents/skills/diretor-de-pauta/nicho.md) | Escolha do tema do canal: filtro do nicho |
+| [candidatos.md](../.agents/skills/diretor-de-pauta/candidatos.md) | Escolha do tema do canal: de onde saem os candidatos |
+| [medida.md](../.agents/skills/diretor-de-pauta/medida.md) | Escolha do tema do canal: o que cada medição da procura diz |
+| [escolha.md](../.agents/skills/diretor-de-pauta/escolha.md) | Escolha do tema do canal: comparação, escolha e registro em `pauta.md` |
 | [diretrizes/narracao.md](diretrizes/narracao.md) | Narração sem repetição: cada ideia, número, pessoa e regra dita uma vez |
 | [diretrizes/desenhos.md](diretrizes/desenhos.md) | Construção única de personagens e cenários; rosto da pessoa |
 | [diretrizes/som.md](diretrizes/som.md) | Efeitos no instante da ação; música no fundo e com uma identidade só |

@@ -94,14 +94,7 @@ export const startVoiceWorker = (job: unknown): VoiceWorker => {
       }
       return;
     }
-    request.takes.push({
-      seed: message.seed,
-      durationMs: message.durationMs,
-      cutOff: message.cutOff,
-      pitchOffset: message.pitchOffset,
-      ending: message.ending,
-      words: message.words,
-    });
+    request.takes.push(message);
   });
   child.on("close", (code) => {
     rmSync(folder, { recursive: true, force: true });

@@ -12,8 +12,6 @@ type BrainProps = {
   readonly folds?: boolean;
   /** Preenche o cérebro: é o corpo de um personagem, e não só um contorno. */
   readonly fill?: string;
-  /** Os olhos do cérebro personificado: a cor do olho e a da pupila. */
-  readonly eyes?: readonly [string, string];
 };
 
 const VIEW_WIDTH = 200;
@@ -29,7 +27,6 @@ export const Brain: React.FC<BrainProps> = ({
   dashed = false,
   folds = false,
   fill,
-  eyes,
 }) => {
   // Traço e tracejado em pixels do quadro, qualquer que seja o tamanho do desenho.
   const toView = VIEW_WIDTH / width;
@@ -67,15 +64,6 @@ export const Brain: React.FC<BrainProps> = ({
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      {/* De olhos arregalados: a pupila pequena no meio do olho grande. */}
-      {eyes
-        ? [72, 128].map((x) => (
-            <g key={x}>
-              <circle cx={x} cy={78} r={17} fill={eyes[0]} />
-              <circle cx={x} cy={80} r={7} fill={eyes[1]} />
-            </g>
-          ))
-        : null}
     </svg>
   );
 };

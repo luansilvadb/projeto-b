@@ -4,29 +4,19 @@ export type FrigatebirdColors = {
   readonly body: string;
   readonly shade: string;
   readonly light: string;
-  /** O peito claro da fêmea, que foi a acompanhada no estudo. */
-  readonly breast: string;
   readonly beak: string;
   readonly eye: string;
   readonly pupil: string;
 };
 
 type FrigatebirdProps = {
-  /** Envergadura planando, ou comprimento do bico à cauda pousada, em pixels do quadro. */
+  /** Envergadura, em pixels do quadro. */
   readonly width: number;
   readonly colors: FrigatebirdColors;
-  /** Planando, vista de cima, com as asas abertas em W; pousada, vista de lado, com as asas recolhidas. */
-  readonly pose?: "gliding" | "perched";
-  /** Quanto a pálpebra cobre o olho, de 0 a 1: o cochilo em pleno voo. */
-  readonly lid?: number;
-  /** Planando: quanto as asas se inclinam para trás, de -1 a 1, como quem ajusta o voo. */
-  readonly sweep?: number;
 };
 
-// Planando: vista de cima, voando para a esquerda; a origem é o centro do corpo.
+// Vista de cima, voando para a esquerda; a origem é o centro do corpo.
 const GLIDING = { x: -360, y: -380, width: 720, height: 760, span: 680 };
-// Pousada: de lado, olhando para a esquerda; a origem é onde os pés agarram o galho.
-const PERCHED = { x: -200, y: -300, width: 400, height: 320, length: 360 };
 
 const eye = (
   at: Point,
@@ -50,27 +40,21 @@ const eye = (
 
 /**
  * A fragata: corpo em fuso preto-azulado, asas longas e anguladas em W, cauda
- * em forquilha, bico comprido com a ponta em gancho. Planando é vista de cima,
- * como quem a olha do alto; pousada, de lado.
+ * em forquilha, bico comprido com a ponta em gancho. Vista de cima, como
+ * quem a olha do alto.
  */
 export const Frigatebird: React.FC<FrigatebirdProps> = ({
   width,
   colors,
-  pose = "gliding",
-  lid = 0.1,
-  sweep = 0,
 }) => {
-  if (pose === "perched") {
-    return <Perched width={width} colors={colors} lid={lid} />;
-  }
   const scale = width / GLIDING.span;
 
   // Cada asa sai do ombro para fora em dois trechos: até o punho, à frente, e dali até a ponta afilada, para trás.
   const wing = (side: 1 | -1) => {
-    const wrist: Point = [-70 + 30 * sweep, side * 140];
-    const tip: Point = [120 + 70 * sweep, side * 330];
+    const wrist: Point = [-70, side * 140];
+    const tip: Point = [120, side * 330];
     const arm = taperPath([0, side * 20], [-50, side * 80], wrist, 96, 56);
-    const hand = taperPath(wrist, [-20 + 30 * sweep, side * 250], tip, 56, 6);
+    const hand = taperPath(wrist, [-20, side * 250], tip, 56, 6);
     return (
       <g key={side}>
         <path d={arm} fill={colors.body} />
@@ -140,67 +124,7 @@ export const Frigatebird: React.FC<FrigatebirdProps> = ({
         fill={colors.shade}
         opacity={0.4}
       />
-      {eye([-124, -16], 9, lid, colors, colors.body)}
-    </svg>
-  );
-};
-
-type PerchedProps = {
-  readonly width: number;
-  readonly colors: FrigatebirdColors;
-  readonly lid: number;
-};
-
-/** Pousada: de lado, asas recolhidas ao longo do corpo, agarrada a um galho. */
-const Perched: React.FC<PerchedProps> = ({ width, colors, lid }) => {
-  const scale = width / PERCHED.length;
-
-  return (
-    <svg
-      width={PERCHED.width * scale}
-      height={PERCHED.height * scale}
-      viewBox={`${PERCHED.x} ${PERCHED.y} ${PERCHED.width} ${PERCHED.height}`}
-      overflow="visible"
-    >
-      {/* Cauda em forquilha, caída atrás. */}
-      <path
-        d="M60,-150 C100,-130 150,-90 190,-30 C160,-60 130,-80 110,-90 C120,-60 130,-30 150,10 C110,-40 80,-90 50,-130 Z"
-        fill={colors.shade}
-      />
-      {/* Corpo em fuso inclinado, peito claro à frente. */}
-      <path
-        d="M-120,-200 C-90,-250 -20,-260 40,-230 C90,-204 100,-150 70,-110 C40,-70 -40,-60 -90,-90 C-130,-114 -140,-160 -120,-200 Z"
-        fill={colors.body}
-      />
-      <path
-        d="M-120,-190 C-110,-130 -70,-90 -10,-80 C-50,-70 -100,-90 -118,-130 Z"
-        fill={colors.breast}
-      />
-      {/* A asa recolhida ao longo do dorso. */}
-      <path
-        d="M-60,-230 C-10,-250 50,-230 90,-190 C130,-150 160,-110 180,-70 C140,-100 100,-120 60,-130 C20,-140 -30,-170 -60,-230 Z"
-        fill={colors.shade}
-      />
-      <path
-        d="M-40,-224 C10,-236 60,-214 96,-180 C60,-196 20,-206 -40,-224 Z"
-        fill={colors.light}
-        opacity={0.5}
-      />
-      {/* Cabeça e bico. */}
-      <circle cx={-134} cy={-250} r={30} fill={colors.body} />
-      <path
-        d="M-156,-258 C-196,-264 -236,-262 -268,-252 C-280,-248 -284,-240 -276,-234 C-266,-238 -256,-240 -246,-240 L-158,-234 Z"
-        fill={colors.beak}
-      />
-      {eye([-130, -260], 9, lid, colors, colors.body)}
-      {/* Pés agarrados ao galho. */}
-      {[-40, -10].map((x) => (
-        <path
-          key={x}
-          d={taperPath([x, -80], [x - 6, -40], [x - 10, -4], 14, 8)}
-          fill={colors.beak}
-        />
-      ))}
+      {eye([-124, -16], 9, 0.1, colors, colors.body)}
     </svg>
   );
 };

@@ -232,11 +232,6 @@ const findShotsProblems = (
   scene: Record<string, unknown>,
   label: string,
 ): string[] => {
-  if (scene.visual !== undefined) {
-    return [
-      `${label}: "visual" deu lugar a "shots", a lista de planos da cena`,
-    ];
-  }
   if (!Array.isArray(scene.shots) || scene.shots.length === 0) {
     return [`${label}: "shots" precisa ter ao menos um plano`];
   }

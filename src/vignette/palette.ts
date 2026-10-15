@@ -104,7 +104,6 @@ export const bird: FrigatebirdColors = {
   body: "#232A4D",
   shade: "#161B38",
   light: "#4A5486",
-  breast: "#F2F5FA",
   beak: "#8E9BC0",
   eye: "#FFFFFF",
   pupil: "#0B0E22",
