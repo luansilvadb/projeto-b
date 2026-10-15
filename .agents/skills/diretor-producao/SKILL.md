@@ -41,7 +41,7 @@ Para exceções à narração normal, leia só o apoio do caso:
 | `etapas/narracao-voz.md` | Edição manual, escolhas de tomada, regra de escolha, troca da amostra ou ritmo. |
 | `etapas/narracao-diagnostico.md` | Reclamação de energia, naturalidade ou fim de frase cortado, antes de mudar texto ou parâmetro. |
 
-`pnpm scene`, `pnpm sound` e `pnpm stills` não têm procedimento próprio; os comandos estão no `AGENTS.md`.
+`pnpm scene`, `pnpm sound` e `pnpm stills` não têm procedimento próprio; os comandos estão em `docs/comandos.md`.
 
 ## Modos e equipe
 

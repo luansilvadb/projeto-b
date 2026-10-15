@@ -12,7 +12,7 @@ Confira antes do render pesado: descobrir um artefato faltando depois de meia ho
 - **Cenas**: as de `out/<vídeo>/cenas/` existem e têm a duração atual. O `pnpm join` acusa a que falta e a que ficou com a duração antiga: renderize essas com `pnpm scene`.
 - **Som**: o que o roteiro pede existe? Com `music` no roteiro, `public/videos/<vídeo>/music.json` e os arquivos da trilha, gerados sobre a duração atual da narração (`trilha.md`); sem eles o vídeo renderiza sem música. Os efeitos de `sfx` já estão cobertos pelo `check-script`, que recusa o uso fora do catálogo.
 - **Fatos**: acione o subagente `checador` com o nome da pasta do vídeo. Ele confere cada afirmação da fala e da tela contra `research.md`. Nenhuma pode voltar *não verificada*: a que voltar é do texto, cujo dono é a skill `diretor-criativo`. No curta de ficção sem afirmação sobre o mundo real, não há `research.md` e o `checador` não é acionado (`diretor-criativo/estrutura/narrativa.md`).
-- **Código**: se o código mudou desde a última validação, rode `pnpm lint` e `pnpm test` (`AGENTS.md`).
+- **Código**: se o código mudou desde a última validação, rode `pnpm lint` e `pnpm test` (`docs/comandos.md`).
 - **Erro técnico conhecido**: nada que já se sabe quebrado (um render que falha, uma cena sem componente) segue para a montagem.
 
 Pronto quando: cada artefato existe e corresponde ao estado atual. O que falta é dito com o dono dele (a frase, a cena, a trilha), e a montagem espera por esse artefato, e não por um aceite.

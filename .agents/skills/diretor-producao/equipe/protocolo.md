@@ -42,7 +42,7 @@ O pedido de mudança que volta ao dono leva o trecho, o que se perde e a saída 
 - **Relevante**: o filme funciona, com perda de força, clareza ou naturalidade. É corrigido enquanto o retorno paga e o plano comporta; o que fica vai dito na entrega.
 - **Polimento**: o trecho já funciona. Só com folga.
 
-**Rodadas.** A regra do repositório é a linha de parada do `AGENTS.md`: depois de duas recusas do usuário no mesmo ajuste, a terceira entrega encerra com a ressalva dita. Com prazo no briefing, o limite aperta com o nível de polimento do plano (`etapas/plano.md`), e vale também para as rodadas de crítica dos subagentes:
+**Rodadas.** A regra do repositório é a linha de parada de `docs/convencoes.md` ("Como um ajuste é feito"): depois de duas recusas do usuário no mesmo ajuste, a terceira entrega encerra com a ressalva dita. Com prazo no briefing, o limite aperta com o nível de polimento do plano (`etapas/plano.md`), e vale também para as rodadas de crítica dos subagentes:
 
 | Nível do plano | O que cada rodada conserta | Rodadas por ajuste |
 |---|---|---|
@@ -50,7 +50,7 @@ O pedido de mudança que volta ao dono leva o trecho, o que se perde e a saída 
 | acabado | bloqueante e o relevante que o plano comporta | duas |
 | polido | a regra do repositório | a linha de parada |
 
-Atingido o limite, em qualquer nível, diga que a linha chegou, explicite o defeito que resta e proponha ao usuário o encerramento, com a ressalva dita na conversa, como manda o `AGENTS.md`: o ajuste não é encerrado em silêncio.
+Atingido o limite, em qualquer nível, diga que a linha chegou, explicite o defeito que resta e proponha ao usuário o encerramento, com a ressalva dita na conversa, como manda `docs/convencoes.md`: o ajuste não é encerrado em silêncio.
 
 A ressalva serve à recusa de polimento: o usuário não quer mais uma rodada, e o que resta é relevante ou de polimento. Ela não serve ao bloqueante. Um bloqueante ainda pendente quando o limite chega não vira entrega pronta com ressalva: a entrega sai como **impedida**, com o defeito, o dono, o que o resolveria (trocar o elemento, uma decisão do usuário, uma ferramenta, um corte) e o que falta. Se o bloqueante não cabe no plano, a saída é simplificar ou cortar o trecho, como a tabela diz; declarar o ajuste encerrado não resolve.
 

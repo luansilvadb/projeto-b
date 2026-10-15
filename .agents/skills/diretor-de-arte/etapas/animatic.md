@@ -81,7 +81,7 @@ Mantenha texto importante dentro da margem `shape.safeArea` e nos tamanhos de `t
 
 ## Ver e conferir
 
-Valide o código pela regra de `AGENTS.md`. Para conferir quadro, cena e animatic:
+Valide o código pela regra de `docs/comandos.md` (Validação). Para conferir quadro, cena e animatic:
 
 ```bash
 pnpm stills <vídeo> 30 120       # os quadros pedidos, em out/<vídeo>/stills/

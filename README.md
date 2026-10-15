@@ -22,9 +22,9 @@ Para buscar efeitos sonoros no [Freesound](https://freesound.org), copie `.env.e
 
 Para narrar com a sua voz, grave de 5 a 10 segundos em ambiente silencioso e salve em `voice/reference.wav`. Sem esse arquivo a narração não roda.
 
-### Links simbólicos no Windows
+### Link simbólico no Windows
 
-Os caminhos de compatibilidade dos agentes são links relativos: `.claude` aponta para `.agents`, e `CLAUDE.md` aponta para `AGENTS.md`. No Windows, habilite o Modo de Desenvolvedor nas configurações do sistema ou use uma conta com permissão para criar links simbólicos. O Git também precisa de `core.symlinks=true` ao materializar o checkout.
+`.claude` é um link simbólico relativo para `.agents` (o Claude Code procura skills e subagentes em `.claude/`; o link evita uma segunda cópia). No Windows, habilite o Modo de Desenvolvedor nas configurações do sistema ou use uma conta com permissão para criar links simbólicos, e use `core.symlinks=true` ao materializar o checkout.
 
 Para um clone novo, substitua `URL_DO_REPOSITORIO` pelo endereço do repositório:
 
@@ -32,88 +32,16 @@ Para um clone novo, substitua `URL_DO_REPOSITORIO` pelo endereço do repositóri
 git -c core.symlinks=true clone URL_DO_REPOSITORIO projeto-b
 Set-Location projeto-b
 git config --local core.symlinks true
-Get-Item -Force -LiteralPath .claude,CLAUDE.md | Select-Object Name,LinkType,Target
+Get-Item -Force -LiteralPath .claude | Select-Object Name,LinkType,Target
 ```
 
-O resultado deve mostrar `SymbolicLink` com destinos `.agents` e `AGENTS.md`, sem caminho absoluto. A configuração local vale só para este checkout; não é necessário alterar a configuração global do Git.
-
-Se o clone foi feito com suporte a symlinks desabilitado, os dois caminhos podem ser arquivos de texto contendo apenas seus destinos. Habilitar a opção depois não os converte automaticamente. Na raiz do checkout, confira primeiro que `.agents` e `AGENTS.md` contêm o conhecimento completo. O trecho abaixo só remove os dois arquivos de texto com os destinos esperados; interrompe se encontrar diretórios, links existentes ou outro conteúdo:
-
-```powershell
-$ErrorActionPreference = 'Stop'
-if (-not (Test-Path -LiteralPath .agents -PathType Container) -or
-    -not (Test-Path -LiteralPath AGENTS.md -PathType Leaf)) {
-    throw 'Os destinos canônicos precisam existir antes da recuperação.'
-}
-foreach ($entry in @(
-    @{ Path = '.claude'; Target = '.agents' }
-    @{ Path = 'CLAUDE.md'; Target = 'AGENTS.md' }
-)) {
-    $item = Get-Item -Force -LiteralPath $entry.Path
-    if ($item.PSIsContainer -or $item.LinkType -or
-        (Get-Content -Raw -LiteralPath $entry.Path).Trim() -ne $entry.Target) {
-        throw "Preserve $($entry.Path): não é o arquivo de texto esperado."
-    }
-}
-git config --local core.symlinks true
-Remove-Item -LiteralPath .claude,CLAUDE.md
-New-Item -ItemType SymbolicLink -Path .claude -Target .agents
-New-Item -ItemType SymbolicLink -Path CLAUDE.md -Target AGENTS.md
-Get-Item -Force -LiteralPath .claude,CLAUDE.md | Select-Object Name,LinkType,Target
-```
-
-Se a criação for recusada, corrija a permissão de links e repita a criação dos links faltantes. Preserve sempre os destinos canônicos; os links não exigem cópias nem sincronização de arquivos.
+O resultado deve mostrar `SymbolicLink` com destino `.agents`, sem caminho absoluto. Se o clone foi feito sem suporte a symlinks, `.claude` pode ser um arquivo de texto contendo só `.agents`; habilitar a opção depois não o converte. Nesse caso, com `.agents/` íntegro, apague o arquivo e recrie o link (`New-Item -ItemType SymbolicLink -Path .claude -Target .agents`). Não mantenha cópias independentes de `.agents/` em `.claude/`.
 
 ## Conhecimento dos agentes
 
-`.agents/` é a fonte canônica do conhecimento local: `skills/` guarda os workflows e suas unidades, `agents/` guarda as oito definições de especialistas e `commands/opsx/` guarda os seis comandos do Claude. As instruções compartilhadas ficam em `AGENTS.md` na raiz. Edite os destinos canônicos; `.claude` e `CLAUDE.md` são apenas os links de compatibilidade descritos acima.
+O repositório não tem arquivo de instruções na raiz: o conhecimento do projeto está neste `README.md`, em [`docs/`](docs/README.md) e nas skills. `.agents/skills/` guarda os workflows de produção e suas unidades, e `.agents/agents/` guarda as oito definições de especialistas; edite sempre em `.agents/`, e `.claude` é só o link de compatibilidade.
 
-As seis skills locais são `diretor-de-pauta`, `diretor-criativo`, `diretor-de-arte`, `diretor-de-som`, `diretor-publicacao` e `diretor-producao`. A `creator`, a `grilling` e as seis skills `openspec-*` ficam na instalação global compartilhada. Os artefatos OpenSpec do projeto continuam em `openspec/`, e os comandos do Claude em `.agents/commands/opsx/`.
-
-O Codex descobre as skills em `.agents/skills/` e lê `AGENTS.md`; o Claude Code acessa o mesmo conteúdo pelos links. As definições Markdown de especialistas e os comandos `/opsx:*` mantêm o formato do Claude: centralizá-los não os registra automaticamente como subagentes ou comandos nativos do Codex. Para usar um especialista no Codex, a skill lê sua definição em `.agents/agents/` e a passa ao subagente disponível. O Codex usa as instruções do corpo Markdown, ignora o frontmatter `tools:` do Claude e interpreta os nomes de ferramentas do corpo conforme as ferramentas disponíveis. Skills globais externas, como `ponytail` e `remotion-best-practices`, continuam em suas instalações fora do projeto. Depois da migração, abra novas sessões para carregar o novo inventário.
-
-### Conhecimento global compartilhado
-
-A instalação pessoal é separada do repositório: `~/.agents/skills/` é a fonte física das skills globais compartilhadas. O Codex as descobre nesse diretório; a própria pasta `~/.claude/skills/` é um link simbólico para essa fonte. Adicionar, alterar ou remover uma skill na fonte se reflete automaticamente no caminho do Claude.
-
-As 17 skills pessoais compartilhadas são `creator`, `find-skills`, `skill-creator`, `grilling`, `openspec-apply-change`, `openspec-archive-change`, `openspec-explore`, `openspec-propose`, `openspec-sync-specs`, `openspec-update-change`, `ponytail`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help`, `ponytail-review` e `remotion-best-practices`. Elas continuam externas ao projeto; o conteúdo técnico da skill de Remotion é mantido pela origem, não editado à mão. A `grilling` global pessoal está em `~/.agents/skills/`, sem outra instalação pessoal em `.codex/skills/grilling`.
-
-As pastas globais `.claude` e `.codex` continuam físicas; o link é a pasta `.claude/skills`. Ela compartilha toda a árvore de `.agents/skills`, incluindo `synced`. As skills sincronizadas continuam mantidas pelos aplicativos; plugins, skills de sistema e ChatCut ficam nos caminhos gerenciados pelo aplicativo. As versões locais e gerenciadas podem ter o mesmo nome de uma skill pessoal.
-
-Edite a fonte em `~/.agents/skills/`. Para instalar uma skill pessoal nova, coloque ali o diretório completo; não crie links individuais nem substitua o link da pasta por uma pasta comum. Não substitua uma entrada existente antes de comparar e preservar seu conteúdo. Depois de atualizar por um instalador, confira se ele preservou o link da pasta; preserve e revise qualquer cópia física antes de restabelecer o link. Os scripts de avaliação de `skill-creator` ainda dependem de `claude -p`, mesmo quando a skill é consultada pelo Codex.
-
-Para conferir o link da pasta no Windows:
-
-```powershell
-Get-Item -Force -LiteralPath (Join-Path $env:USERPROFILE '.claude/skills') |
-    Select-Object FullName,LinkType,Target
-```
-
-O resultado deve mostrar `SymbolicLink` com destino na pasta `~/.agents/skills/`. Links globais exigem a mesma permissão do Windows explicada acima, mas não dependem de uma configuração do Git.
-
-As instruções globais têm uma única fonte regular em `~/.agents/AGENTS.md`, separada do `AGENTS.md` deste repositório:
-
-| Caminho lido pelo cliente | Destino relativo do link |
-| ------------------------ | ------------------------ |
-| `~/.codex/AGENTS.md` | `../.agents/AGENTS.md` |
-| `~/.claude/CLAUDE.md` | `../.agents/AGENTS.md` |
-
-Edite a fonte global para orientações que valem em todos os projetos; as regras de produção deste repositório continuam no arquivo local. Os dois arquivos globais anteriores estavam vazios, então a fonte inicial só explica essa organização. No Codex, um `AGENTS.override.md` não vazio no diretório global tem precedência; com `CODEX_HOME` definido, confira os arquivos nesse diretório efetivo. Não remova um override sem preservar e revisar suas instruções.
-
-```powershell
-$codexRoot = if ($env:CODEX_HOME) { $env:CODEX_HOME } else {
-    Join-Path $env:USERPROFILE '.codex'
-}
-$globalInstructionLinks = @(
-    (Join-Path $codexRoot 'AGENTS.md'),
-    (Join-Path $env:USERPROFILE '.claude/CLAUDE.md')
-)
-Get-Item -Force -LiteralPath $globalInstructionLinks | Select-Object FullName,LinkType,Target
-```
-
-Os dois resultados devem ser `SymbolicLink` para `../.agents/AGENTS.md` nesta instalação. Essa compatibilidade é para Codex e Claude Code locais; não presume o carregamento de links de instruções ou skills pessoais em Cowork ou sessões na nuvem. Abra novas sessões para conferir as fontes das instruções e o inventário de skills; ler o mesmo arquivo pelos links é uma conferência estrutural, não prova de descoberta no cliente.
-
-A migração global guarda o inventário, hashes, origens e referências anteriores em `out/rascunho/unificar-instrucoes-globais-em-agents/`. O `verification.md` dessa pasta descreve os resultados e a reversão seletiva: remova somente os links, sem percorrer seus destinos, e restaure as entradas envolvidas a partir do backup conferido. Preserve edições posteriores nas fontes; não restaure pastas globais inteiras nem use `git reset --hard`. A bancada é temporária: mantenha o backup enquanto precisar dessa reversão e descarte-o quando ela não for mais necessária.
+As seis skills locais são `diretor-de-pauta`, `diretor-criativo`, `diretor-de-arte`, `diretor-de-som`, `diretor-publicacao` e `diretor-producao`. Skills globais, como `creator`, `grilling`, `ponytail` e `remotion-best-practices`, ficam na instalação pessoal em `~/.agents/skills/`, fora do projeto (a de Remotion vem da origem e não é editada à mão). As definições dos especialistas mantêm o formato do Claude Code; os detalhes de uso estão em [`docs/agentes.md`](docs/agentes.md).
 
 ## Trabalhos, donos e artefatos
 
@@ -146,10 +74,8 @@ Outros comandos: `pnpm dev` abre o Remotion Studio, `pnpm lint` checa tipos e es
 ```
 .agents/skills/     skills locais e suas unidades de conhecimento
 .agents/agents/     definições Markdown dos especialistas do Claude
-.agents/commands/   comandos do Claude (opsx/)
-AGENTS.md           instruções compartilhadas dos agentes
 .claude             link relativo para .agents
-CLAUDE.md           link relativo para AGENTS.md
+docs/               documentação durável: comandos, arquitetura, convenções e critérios
 src/design/          direção de arte: paleta, tipografia, formas e movimento
 src/components/      primitivos visuais reutilizáveis
 src/art/             desenhos feitos em código
@@ -187,14 +113,4 @@ out/rascunho/              o que não tem lugar acima; pode ser apagada inteira
 
 ## Convenções
 
-- Nomes de arquivos, código e chaves do roteiro em inglês. Comentários, documentação, o conteúdo dos vídeos e as skills (com as suas etapas e unidades) em português do Brasil.
-- O nome da pasta de um vídeo é também o id da composição e o argumento de todos os comandos.
-- O que o usuário decidiu fica na pasta do vídeo, no git, no arquivo do dono: `pauta.md` (o briefing, quando há, e o tema escolhido, o termo buscado e as medições, ou a premissa), `script.md` (as decisões do texto, sem narração), `publication.md` (o pacote de saída de cada destino), `art.md` (a ficha visual), `score.md` (a partitura da animação), `sound.md` (o arco e o mapa de som) e `voice.json` (as tomadas de voz escolhidas de ouvido). A execução equivalente pode mudar; a decisão material que o usuário já tomou não é alterada em silêncio. `out/` guarda só o que pode ser gerado de novo.
-- Os arquivos `src/videos/<vídeo>/approvals.md` que existem são histórico legado dos vídeos feitos sob o processo antigo, de aprovações numeradas. Ficam como estão: não são apagados nem migrados, nada os consulta para decidir se um trabalho pode começar, e nenhuma linha nova é escrita neles. Um vídeo novo não tem esse arquivo, e não há outro registro global no lugar dele.
-- Nenhuma cena escreve cor solta. As cores de um vídeo ficam em `src/videos/<vídeo>/palette.ts`, com os modos e o elenco da ficha visual dele (`art.md`). Tamanhos de texto, formas e curvas de movimento vêm de `src/design/tokens.ts`.
-- A direção de arte base do canal é a `abissal`, em `src/design/tokens.ts`. Ela vale para as cenas que ainda não foram redesenhadas; as cores de cada vídeo ficam na `palette.ts` dele.
-- A duração de cada cena vem da narração. Cenas não têm durações fixas.
-- A cena é a unidade da fala; a da imagem é o plano. Cada cena do roteiro lista os seus planos (`shots`), e cada plano começa numa palavra da narração.
-- O som além da voz é dado do roteiro, e nenhuma cena toca som: a trilha, os momentos dela, os níveis e os silêncios ficam em `music`, e os efeitos, em `sfx`. O volume de cada um é uma distância em dB abaixo da voz (`src/audio/ducking.ts` e `src/audio/sfx.ts`), nunca um número ajustado à mão.
-  Um efeito usa a palavra `cue`, o começo do plano `shot` ou o começo da cena. Com `at: "end"`, usa o fim do plano indicado ou, sem `shot`, o fim da cena; não combina com `cue`. O `offsetMs` desloca dessa âncora até a ação, inclusive para antes do fim.
-- As versões do Remotion são fixas e iguais em todos os pacotes `@remotion/*`; atualize com `pnpm run upgrade`.
+As convenções de código e de conteúdo, o lugar de cada decisão, o que fica fora do Git e como um ajuste é feito estão em [`docs/convencoes.md`](docs/convencoes.md); os comandos, em [`docs/comandos.md`](docs/comandos.md); a arquitetura, em [`docs/arquitetura.md`](docs/arquitetura.md); os critérios de narração, desenho, som e escolha do tema, em [`docs/diretrizes/`](docs/README.md). Em resumo: nomes de arquivos, código e chaves do roteiro em inglês, e documentação, conteúdo dos vídeos e skills em português do Brasil; a duração de cada cena vem da narração; nenhuma cena escreve cor solta nem toca som; as decisões do usuário ficam na pasta do vídeo, no arquivo do dono. Não há processo de propostas: uma mudança de critério atualiza a página de `docs/` pertinente e fica no histórico do Git.

@@ -63,7 +63,7 @@ Nenhuma cena toca som. Os efeitos são da skill `diretor-de-som`, que os declara
 
 ## Ver e conferir
 
-Valide o código pela regra de `AGENTS.md`. Para conferir imagem e movimento:
+Valide o código pela regra de `docs/comandos.md` (Validação). Para conferir imagem e movimento:
 
 ```bash
 pnpm scene <vídeo> <id> [id...]  # só as cenas mexidas, em out/<vídeo>/cenas/<id>.mp4

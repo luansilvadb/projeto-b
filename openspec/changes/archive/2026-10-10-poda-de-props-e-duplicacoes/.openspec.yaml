@@ -1,4 +1,0 @@
-schema: spec-driven
-created: 2026-10-10
-# Refatoração: preserva o comportamento observável dos vídeos e comandos.
-skip_specs: true

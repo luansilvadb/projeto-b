@@ -233,7 +233,7 @@ Cada efeito acrescenta contato, peso, materialidade ou força à ação que o in
 
 ### Testes
 
-pnpm lint e pnpm test passaram: 224 testes TypeScript, 12 de narração Python e 6 de música Python. Roteiro válido e openspec validate --strict passou.
+pnpm lint e pnpm test passaram: 224 testes TypeScript, 12 de narração Python e 6 de música Python. Roteiro válido.
 
 ## Roteiro de escuta
 
