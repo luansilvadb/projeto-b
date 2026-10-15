@@ -8,7 +8,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { createInterface } from "node:readline";
 import type { TimedWord } from "../../src/narration/alignment";
-import { PYTHON_ENV } from "./tools";
+import { PYTHON_ENV, uvPythonArgs } from "./tools";
 import { NARRATION_TOOLS } from "./voice";
 
 /** Uma tomada como o processo a devolve: gerada, medida e transcrita. */
@@ -44,14 +44,11 @@ export const startVoiceWorker = (job: unknown): VoiceWorker => {
   writeFileSync(jobFile, JSON.stringify(job));
   const child = spawn(
     "uv",
-    [
-      "run",
-      "--project",
+    uvPythonArgs(
       NARRATION_TOOLS,
-      "python",
       `${NARRATION_TOOLS}/voice_worker.py`,
       jobFile,
-    ],
+    ),
     {
       env: { ...process.env, ...PYTHON_ENV },
       stdio: ["pipe", "pipe", "inherit"],

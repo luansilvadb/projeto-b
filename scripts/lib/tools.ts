@@ -66,6 +66,13 @@ export const renderFrames = async (
   );
 };
 
+/** Argumentos do `uv` para rodar um script Python no ambiente do projeto. */
+export const uvPythonArgs = (
+  project: string,
+  script: string,
+  ...args: string[]
+): string[] => ["run", "--project", project, "python", script, ...args];
+
 /**
  * Roda uma ferramenta Python num ambiente do uv. A ferramenta recebe um
  * arquivo JSON com o trabalho e responde com linhas JSON no stdout.
@@ -82,7 +89,7 @@ export const runPythonTool = async <Result>(
     writeFileSync(jobFile, JSON.stringify(job));
     const stdout = await run(
       "uv",
-      ["run", "--project", project, "python", script, jobFile],
+      uvPythonArgs(project, script, jobFile),
       {
         ...PYTHON_ENV,
         ...env,

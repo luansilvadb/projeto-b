@@ -15,7 +15,7 @@ import { SAMPLE, measure } from "../src/critique/measures";
 import { judge, type Stage } from "../src/critique/reference";
 import { judgeSound, type SoundMeasures } from "../src/critique/sound";
 import { readFrames } from "./lib/frames";
-import { PYTHON_ENV, run } from "./lib/tools";
+import { PYTHON_ENV, run, uvPythonArgs } from "./lib/tools";
 import { exitWithError } from "./lib/videos";
 
 const USAGE = "Uso: pnpm critique <vídeo ou arquivo de vídeo> [animatic | som]";
@@ -32,14 +32,7 @@ const measureSound = async (file: string): Promise<SoundMeasures> => {
   const python = (script: string, ...args: string[]) =>
     run(
       "uv",
-      [
-        "run",
-        "--project",
-        SOUND_TOOLS,
-        "python",
-        `${SOUND_TOOLS}/${script}`,
-        ...args,
-      ],
+      uvPythonArgs(SOUND_TOOLS, `${SOUND_TOOLS}/${script}`, ...args),
       PYTHON_ENV,
     );
   await python("separate.py", `${folder}/stems`, file);
