@@ -9,7 +9,7 @@ import { Shot } from "../../../video/Shot";
 import { Globe as ChannelPlanet } from "../../../vignette/PlanetWorld";
 import { home, ink, space, youtube } from "../palette";
 import { Cup, LOOK_UP, Vig } from "../parts/Actor";
-import { alive } from "../parts/EndAlive";
+import { alive } from "../parts/SpeedKit";
 import { Globe } from "../parts/Globe";
 import { Kitchen, KITCHEN } from "../parts/Kitchen";
 import { Frame, Push, SpaceBackdrop, Svg } from "../parts/kit";

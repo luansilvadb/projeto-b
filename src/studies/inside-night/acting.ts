@@ -22,7 +22,7 @@
 
 import { bones, mixPose, type Vec, spin } from "../../art/Vigilia";
 import { grip, LEVER as HUB, POSES, SLOPE, stand, type Pose } from "./poses";
-import { ACT, E, HIT, HOLD, key, KICK, leverAngle, mix, pulse, SIT, span, strain } from "./timing";
+import { ACT, clamp01, E, HIT, HOLD, key, KICK, leverAngle, mix, pulse, SIT, span, strain } from "./timing";
 
 const [FIRM, JOLT, PUSH, ALLIN, TAKEN, SAT, RISE, SLEEP] = POSES;
 
@@ -617,8 +617,6 @@ const stepOf = (t: number) => ({
   near: 7 * pulse(t, ACT.brace[0] + 0.02, 0.14) + 7 * pulse(t, ACT.rise[1] + 0.01, 0.14),
   far: 4 * pulse(t, ACT.rise[1], 0.12),
 });
-
-const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 
 /** Quanto o que está mais baixo nela (um casco, a barriga) está acima do chão: é o que afasta a sombra. */
 export const liftOf = (pose: Pose) => {

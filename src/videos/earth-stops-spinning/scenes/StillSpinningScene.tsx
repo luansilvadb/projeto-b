@@ -8,7 +8,7 @@ import { Shot, useShotLength } from "../../../video/Shot";
 import { earth, ink, space } from "../palette";
 import { mixPose, type VigiliaPose } from "../../../art/Vigilia";
 import { STAND } from "../parts/Actor";
-import { alive } from "../parts/EndAlive";
+import { alive } from "../parts/SpeedKit";
 import { Globe, House, landPoint, LatitudeRing, spinFor } from "../parts/Globe";
 import { Arrow, Frame, Push, SpaceBackdrop, Svg, Tag } from "../parts/kit";
 import { LeverStation } from "../parts/Lever";

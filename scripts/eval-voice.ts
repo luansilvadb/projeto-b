@@ -54,7 +54,6 @@ const VARIANTS: Readonly<Record<string, Partial<VoiceModel>>> = {
   "intonation 1.45": { intonation: 1.45 },
   // Tudo o que deixa a fala mais viva, junto: para julgar a energia de ouvido.
   energia: { intonation: 1.45, classTemperature: 0.5, speed: 0.95 },
-  "speed 1.0": { speed: 1 },
   "speed 0.95": { speed: 0.95 },
   "classTemperature 0.5": { classTemperature: 0.5 },
   "classTemperature 1.0": { classTemperature: 1 },
@@ -167,36 +166,21 @@ const evaluate = async (
   return evaluation;
 };
 
-const COLUMNS: readonly {
-  readonly title: string;
-  readonly format: (summary: EvaluationSummary) => string;
-}[] = [
-  { title: "naturalidade", format: (s) => s.naturalness.toFixed(2) },
-  { title: "entonação (st)", format: (s) => s.intonation.toFixed(2) },
-  { title: "altura (st)", format: (s) => s.pitchDistance.toFixed(2) },
-  { title: "inteiras", format: (s) => `${Math.round(s.completeRate * 100)}%` },
-  { title: "erros", format: (s) => s.errors.toFixed(2) },
-];
-
 const printTable = (
   title: string,
   rows: readonly (readonly [string, EvaluationSummary])[],
 ) => {
-  const width = Math.max(...rows.map(([name]) => name.length));
-  const cells = (values: readonly string[]) =>
-    values
-      .map((value, index) => value.padStart(COLUMNS[index].title.length))
-      .join("  ");
-
   console.log(`\n${title}`);
-  console.log(
-    `${"".padEnd(width)}  ${cells(COLUMNS.map((column) => column.title))}`,
+  console.table(
+    rows.map(([name, summary]) => ({
+      configuração: name,
+      naturalidade: summary.naturalness.toFixed(2),
+      "entonação (st)": summary.intonation.toFixed(2),
+      "altura (st)": summary.pitchDistance.toFixed(2),
+      inteiras: `${Math.round(summary.completeRate * 100)}%`,
+      erros: summary.errors.toFixed(2),
+    })),
   );
-  for (const [name, summary] of rows) {
-    console.log(
-      `${name.padEnd(width)}  ${cells(COLUMNS.map((column) => column.format(summary)))}`,
-    );
-  }
 };
 
 const main = async () => {

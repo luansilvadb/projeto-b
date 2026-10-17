@@ -7,7 +7,7 @@ import type { SceneProps } from "../../../video/NarratedVideo";
 import { Shot, useShotLength } from "../../../video/Shot";
 import { earth, home, ink, space } from "../palette";
 import { Cup, LOOK_UP, STARTLED, Vig } from "../parts/Actor";
-import { alive } from "../parts/EndAlive";
+import { alive } from "../parts/SpeedKit";
 import { Globe } from "../parts/Globe";
 import { Kitchen, KITCHEN } from "../parts/Kitchen";
 import { Frame, Push, SpaceBackdrop, Svg } from "../parts/kit";
