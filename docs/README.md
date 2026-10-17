@@ -13,7 +13,7 @@ Não há processo de propostas nem de validação formal: uma mudança que alter
 | [comandos.md](comandos.md) | Comandos `pnpm`, testes, validação e cuidados de execução |
 | [arquitetura.md](arquitetura.md) | Como o roteiro, a narração e as cenas se ligam; como uma cena é escrita; scripts e ferramentas |
 | [convencoes.md](convencoes.md) | Convenções de código e de conteúdo, onde ficam as decisões, como um ajuste é feito |
-| [agentes.md](agentes.md) | Skills, especialistas, `.agents/` e `.claude`, skills globais |
+| [agentes.md](agentes.md) | Skills, especialistas, fonte central em `.agents/`, destinos `.claude/` e `.codex/`, skills globais |
 
 ## Critérios de produção e revisão
 

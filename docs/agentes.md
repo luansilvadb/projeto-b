@@ -5,9 +5,11 @@
 `.agents/` é a fonte canônica do conhecimento local de agentes:
 
 - `.agents/skills/` guarda os workflows de produção e suas unidades (`SKILL.md`, `etapas/`, `equipe/` e afins);
-- `.agents/agents/` guarda as definições Markdown dos oito especialistas.
+- `.agents/agents/*.md` guarda a fonte central em Markdown dos oito especialistas.
 
-`.claude` é um link simbólico relativo para `.agents`: o Claude Code procura skills e subagentes em `.claude/`, e o link faz esses caminhos resolverem ao mesmo conteúdo, sem segunda cópia a sincronizar. Edite sempre em `.agents/`.
+`.claude/` e `.codex/` são diretórios separados, com os formatos que cada ferramenta espera. As pastas `.claude/skills/` e `.codex/skills/` são links simbólicos relativos para `../.agents/skills`, então ambas usam as skills da fonte central. Em `.claude/agents/` ficam cópias Markdown geradas para Claude Code; em `.codex/agents/` ficam definições TOML geradas para Codex.
+
+Edite apenas os Markdown em `.agents/agents/`. Depois de uma mudança, execute `pnpm agents:sync` para atualizar os dois destinos. `pnpm agents:check` confere se as cópias estão atualizadas sem escrever. Os arquivos dentro de `.claude/agents/` e `.codex/agents/` são gerados: não os edite manualmente.
 
 O repositório não tem arquivo de instruções na raiz (`AGENTS.md`, `CLAUDE.md`): o conhecimento do projeto está no `README.md`, em `docs/` e nas skills. Quem trabalha no repositório deve ler o `README.md` e as páginas de `docs/` pertinentes antes de tocar em vídeo ou convenção.
 
@@ -35,7 +37,7 @@ Regras de uso:
 
 As skills dirigem na conversa; os especialistas que levantam, executam e julgam são subagentes em `.agents/agents/`, acionados por elas e sem o contexto de quem fez o trabalho: `pesquisador`, `checador` e `editor` (do `diretor-criativo`; o `checador` volta no corte final, acionado pela `diretor-producao`), `ilustrador`, `motion-designer`, `critico-de-quadro` e `critico-de-movimento` (do `diretor-de-arte`), `critico-de-som` (do `diretor-de-som`). Servem aos dois modos.
 
-As definições mantêm o formato do Claude Code (frontmatter com `tools:`). O Claude Code as aciona pelo nome; em outro agente (por exemplo o Codex), a skill lê a definição e a passa ao subagente disponível, que usa o corpo Markdown, ignora o frontmatter `tools:` e interpreta os nomes de ferramentas conforme as ferramentas que tem.
+Os Markdown canônicos em `.agents/agents/` incluem o frontmatter usado por Claude, como `name`, `description` e `tools`. O gerador copia cada arquivo para `.claude/agents/<nome>.md` e cria `.codex/agents/<nome>.toml` com `name`, `description` e `developer_instructions` contendo o corpo Markdown após o frontmatter. Assim o texto das instruções é mantido em um lugar só, e cada ferramenta recebe seu formato nativo.
 
 ## Skills globais (fora do repositório)
 

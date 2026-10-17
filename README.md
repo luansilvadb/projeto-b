@@ -22,9 +22,9 @@ Para buscar efeitos sonoros no [Freesound](https://freesound.org), copie `.env.e
 
 Para narrar com a sua voz, grave de 5 a 10 segundos em ambiente silencioso e salve em `voice/reference.wav`. Sem esse arquivo a narração não roda.
 
-### Link simbólico no Windows
+### Skills compartilhadas e agentes gerados
 
-`.claude` é um link simbólico relativo para `.agents` (o Claude Code procura skills e subagentes em `.claude/`; o link evita uma segunda cópia). No Windows, habilite o Modo de Desenvolvedor nas configurações do sistema ou use uma conta com permissão para criar links simbólicos, e use `core.symlinks=true` ao materializar o checkout.
+`.claude/` e `.codex/` são diretórios próprios para os formatos de cada ferramenta. As pastas `.claude/skills/` e `.codex/skills/` são links simbólicos relativos para `../.agents/skills`, mantendo uma única cópia das skills locais. No Windows, habilite o Modo de Desenvolvedor ou use uma conta com permissão para criar links simbólicos; configure `core.symlinks=true` ao materializar o checkout.
 
 Para um clone novo, substitua `URL_DO_REPOSITORIO` pelo endereço do repositório:
 
@@ -32,16 +32,16 @@ Para um clone novo, substitua `URL_DO_REPOSITORIO` pelo endereço do repositóri
 git -c core.symlinks=true clone URL_DO_REPOSITORIO projeto-b
 Set-Location projeto-b
 git config --local core.symlinks true
-Get-Item -Force -LiteralPath .claude | Select-Object Name,LinkType,Target
+Get-Item -Force -LiteralPath .claude\skills, .codex\skills | Select-Object Name,LinkType,Target
 ```
 
-O resultado deve mostrar `SymbolicLink` com destino `.agents`, sem caminho absoluto. Se o clone foi feito sem suporte a symlinks, `.claude` pode ser um arquivo de texto contendo só `.agents`; habilitar a opção depois não o converte. Nesse caso, com `.agents/` íntegro, apague o arquivo e recrie o link (`New-Item -ItemType SymbolicLink -Path .claude -Target .agents`). Não mantenha cópias independentes de `.agents/` em `.claude/`.
+Os destinos dos especialistas são gerados a partir de `.agents/agents/*.md`. Execute `pnpm agents:sync` depois de editar a fonte; `pnpm agents:check` verifica as cópias sem escrever. Não edite manualmente `.claude/agents/` nem `.codex/agents/`.
 
 ## Conhecimento dos agentes
 
-O repositório não tem arquivo de instruções na raiz: o conhecimento do projeto está neste `README.md`, em [`docs/`](docs/README.md) e nas skills. `.agents/skills/` guarda os workflows de produção e suas unidades, e `.agents/agents/` guarda as oito definições de especialistas; edite sempre em `.agents/`, e `.claude` é só o link de compatibilidade.
+O repositório não tem arquivo de instruções na raiz: o conhecimento do projeto está neste `README.md`, em `docs/` e nas skills. `.agents/skills/` guarda os workflows de produção e suas unidades; `.agents/agents/*.md` é a fonte central em Markdown das oito definições de especialistas. `pnpm agents:sync` gera `.claude/agents/*.md` e `.codex/agents/*.toml` em seus formatos nativos, e `pnpm agents:check` detecta saídas desatualizadas sem escrever. Edite sempre os arquivos Markdown em `.agents/agents/`. Quem trabalha no repositório deve ler o `README.md` e as páginas de `docs/` pertinentes antes de tocar em vídeo ou convenção.
 
-As seis skills locais são `diretor-de-pauta`, `diretor-criativo`, `diretor-de-arte`, `diretor-de-som`, `diretor-publicacao` e `diretor-producao`. Skills globais, como `creator`, `grilling`, `ponytail` e `remotion-best-practices`, ficam na instalação pessoal em `~/.agents/skills/`, fora do projeto (a de Remotion vem da origem e não é editada à mão). As definições dos especialistas mantêm o formato do Claude Code; os detalhes de uso estão em [`docs/agentes.md`](docs/agentes.md).
+As seis skills locais são `diretor-de-pauta`, `diretor-criativo`, `diretor-de-arte`, `diretor-de-som`, `diretor-publicacao` e `diretor-producao`. Skills globais, como `creator`, `grilling`, `ponytail` e `remotion-best-practices`, ficam na instalação pessoal em `~/.agents/skills/`, fora do projeto (a de Remotion vem da origem e não é editada à mão). As definições canônicas dos especialistas estão em Markdown em `.agents/agents/`. O gerador mantém a cópia Markdown usada pelo Claude em `.claude/agents/` e cria os TOMLs do Codex em `.codex/agents/`; os detalhes de uso estão em [`docs/agentes.md`](docs/agentes.md).
 
 ## Trabalhos, donos e artefatos
 
@@ -73,22 +73,25 @@ Outros comandos: `pnpm dev` abre o Remotion Studio, `pnpm lint` checa tipos e es
 
 ```
 .agents/skills/     skills locais e suas unidades de conhecimento
-.agents/agents/     definições Markdown dos especialistas do Claude
-.claude             link relativo para .agents
-docs/               documentação durável: comandos, arquitetura, convenções e critérios
-src/design/          direção de arte: paleta, tipografia, formas e movimento
-src/components/      primitivos visuais reutilizáveis
-src/art/             desenhos feitos em código
-src/studies/         estudos de imagem e de movimento, fora de qualquer vídeo
-src/audio/           mixagem da trilha e catálogo de efeitos sonoros
-src/critique/        medidas do render e as faixas dos vídeos de referência
-src/narration/       regras do roteiro e tempos da narração
-src/video/           montagem de um vídeo narrado
-src/videos/<vídeo>/  pesquisa, roteiro, registros de decisão e cenas de cada vídeo
-scripts/             os comandos pnpm
-tools/               scripts Python que chamam os modelos de voz e de trilha e medem o som
-public/fonts/        fontes das direções de arte (OFL)
-public/sfx/          efeitos sonoros do Freesound (CC0)
+.agents/agents/    fonte central Markdown dos especialistas
+.claude/agents/    cópias Markdown geradas para o Claude Code
+.claude/skills/    link relativo para ../.agents/skills
+.codex/agents/     definições TOML geradas para Codex
+.codex/skills/     link relativo para ../.agents/skills
+docs/              documentação durável: comandos, arquitetura, convenções e critérios
+src/design/        direção de arte: paleta, tipografia, formas e movimento
+src/components/    primitivos visuais reutilizáveis
+src/art/           desenhos feitos em código
+src/studies/       estudos de imagem e de movimento, fora de qualquer vídeo
+src/audio/         mixagem da trilha e catálogo de efeitos sonoros
+src/critique/      medidas do render e as faixas dos vídeos de referência
+src/narration/     regras do roteiro e tempos da narração
+src/video/         montagem de um vídeo narrado
+src/videos/<vídeo>/ pesquisa, roteiro, registros de decisão e cenas de cada vídeo
+scripts/           os comandos pnpm
+tools/             scripts Python que chamam os modelos de voz e de trilha e medem o som
+public/fonts/      fontes das direções de arte (OFL)
+public/sfx/        efeitos sonoros do Freesound (CC0)
 ```
 
 Ficam fora do git: `public/videos/` (narração e trilha geradas), `vendor/` (ferramentas clonadas), `voice/` (amostras de voz), `out/` e `acervo/`.

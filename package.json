@@ -19,7 +19,9 @@
     "scene": "tsx scripts/scene.ts",
     "join": "tsx scripts/join.ts",
     "sound": "remotion render --config=remotion.sound.config.ts",
-    "setup:tools": "tsx scripts/setup-tools.ts"
+    "setup:tools": "tsx scripts/setup-tools.ts",
+    "agents:sync": "tsx scripts/sync-agents.ts",
+    "agents:check": "tsx scripts/sync-agents.ts --check"
   },
   "license": "UNLICENSED",
   "dependencies": {
